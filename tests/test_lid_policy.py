@@ -70,6 +70,24 @@ class LIDPolicyTests(unittest.TestCase):
         self.assertEqual(policy.choose(5.0, False).budget, 48)
         self.assertEqual(FixedBudgetPolicy(20, grid, 12).choose(999.0).budget, 20)
 
+    def test_policy_fingerprint_canonicalizes_cross_platform_float_noise(self):
+        common = {
+            "budgets": [32, 32, 32, 48],
+            "grid": [12, 20, 32, 48, 80],
+            "fallback_budget": 80,
+            "target": 0.9,
+        }
+        local = MonotoneBinnedPolicy(
+            edges=[5.332204714742856, 7.367760559001278, 9.311463422877734],
+            **common,
+        )
+        cluster = MonotoneBinnedPolicy(
+            edges=[5.332204714742856, 7.36776055900128, 9.31146342287773],
+            **common,
+        )
+        self.assertEqual(local.serialize(), cluster.serialize())
+        self.assertEqual(local.edges.tolist(), cluster.edges.tolist())
+
 
 if __name__ == "__main__":
     unittest.main()

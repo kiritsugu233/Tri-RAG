@@ -19,7 +19,7 @@ from .embeddings import normalize_rows
 from .indexes import ExactSquaredL2Index
 from .lid import estimate_lid_from_squared_distances
 from .manifest import build_manifest
-from .policies import FixedBudgetPolicy, MonotoneBinnedPolicy
+from .policies import FixedBudgetPolicy, MonotoneBinnedPolicy, TriPredictPolicy
 from .projection import dense_gaussian_projection, project_rows, projection_metadata
 from .reporting import generate_report
 from .synthetic import generate_synthetic_dataset
@@ -105,7 +105,9 @@ def _build_base_records(
 
 def _materialize_policy_records(
     base_records: List[Mapping[str, Any]],
-    policy: MonotoneBinnedPolicy,
+    policy: Any,
+    policy_name: str,
+    policy_version: int,
     corpus_ids: np.ndarray,
     corpus: np.ndarray,
     queries: np.ndarray,
@@ -170,8 +172,8 @@ def _materialize_policy_records(
             {
                 "query_id": base["query_id"],
                 "split": base["split"],
-                "policy_name": "monotone_binned_empirical",
-                "policy_version": 1,
+                "policy_name": policy_name,
+                "policy_version": policy_version,
                 "lid_mode": "pilot_rerank",
                 "lid_raw": base["pilot_lid"]["raw"],
                 "lid_clipped": base["pilot_lid"]["clipped"],
@@ -183,8 +185,10 @@ def _materialize_policy_records(
                 "oracle_lid_valid": base["oracle_lid"]["valid"],
                 "lid_bin": decision.bin_index,
                 "chosen_m": decision.budget,
-                "policy_saturated": decision.budget == config.retrieval.m_grid[-1],
+                "policy_saturated": decision.saturated,
                 "used_lid_fallback": decision.used_fallback,
+                "predicted_retention": decision.predicted_retention,
+                "raw_predicted_retention": decision.raw_predicted_retention,
                 "exact_top_k_ids": base["exact_top_k_ids"],
                 "projected_candidate_ids": candidate_ids.tolist(),
                 "reranked_top_k_ids": corpus_ids[
@@ -238,6 +242,10 @@ def _split_aggregate(records: List[Mapping[str, Any]], grid: Sequence[int]) -> D
             "mean_absolute_gap": float(np.mean(gaps)) if gaps else 0.0,
             "pilot_invalid_n": sum(not bool(record["lid_valid"]) for record in records),
         },
+        "policy_status": {
+            "saturated_n": sum(bool(record["policy_saturated"]) for record in records),
+            "fallback_n": sum(bool(record["used_lid_fallback"]) for record in records),
+        },
     }
 
 
@@ -273,9 +281,35 @@ def run_harness(config: HarnessConfig, output_dir: Path) -> Dict[str, Path]:
         fallback_budget=config.policy.fallback_budget,
     )
     policy_artifact = policy.serialize()
+    tri_predict_policy = TriPredictPolicy.fit(
+        tune_records,
+        corpus_size=len(corpus),
+        m_prime=config.retrieval.m_prime,
+        k_gt=config.retrieval.k_gt,
+        grid=config.retrieval.m_grid,
+        target=config.tri_predict.target,
+        max_rank_samples=config.tri_predict.max_rank_samples,
+        fit_safety_correction=config.tri_predict.fit_safety_correction,
+        safety_quantile=config.tri_predict.safety_quantile,
+    )
+    tri_predict_policy_artifact = tri_predict_policy.serialize()
     records = _materialize_policy_records(
         base_records,
         policy,
+        policy_artifact["name"],
+        policy_artifact["version"],
+        dataset.corpus.ids,
+        corpus,
+        queries,
+        projected_corpus,
+        projected_queries,
+        config,
+    )
+    tri_predict_records = _materialize_policy_records(
+        base_records,
+        tri_predict_policy,
+        tri_predict_policy_artifact["name"],
+        tri_predict_policy_artifact["version"],
         dataset.corpus.ids,
         corpus,
         queries,
@@ -285,6 +319,10 @@ def run_harness(config: HarnessConfig, output_dir: Path) -> Dict[str, Path]:
     )
     records_by_split = {
         split: [record for record in records if record["split"] == split]
+        for split in ("query_tune", "query_cert", "query_test")
+    }
+    tri_predict_records_by_split = {
+        split: [record for record in tri_predict_records if record["split"] == split]
         for split in ("query_tune", "query_cert", "query_test")
     }
     query_ids_by_split = {
@@ -306,6 +344,12 @@ def run_harness(config: HarnessConfig, output_dir: Path) -> Dict[str, Path]:
             corpus_hash=array_fingerprint(corpus),
         ),
         policy_fingerprint=policy_artifact["fingerprint"],
+        policy_fingerprints={
+            policy_artifact["name"]: policy_artifact["fingerprint"],
+            tri_predict_policy_artifact["name"]: tri_predict_policy_artifact[
+                "fingerprint"
+            ],
+        },
     )
     cert_records = records_by_split["query_cert"]
     cert_split_hash = stable_id_hash(query_ids_by_split["query_cert"])
@@ -335,9 +379,27 @@ def run_harness(config: HarnessConfig, output_dir: Path) -> Dict[str, Path]:
         policy_fingerprint=policy_artifact["fingerprint"],
         split_hash=cert_split_hash,
     )
+    tri_predict_cert_records = tri_predict_records_by_split["query_cert"]
+    tri_predict_certificate = make_certificate(
+        [float(record["embedding_retention"]) for record in tri_predict_cert_records],
+        alpha=config.certification.alpha,
+        target=config.certification.target,
+        policy_fingerprint=tri_predict_policy_artifact["fingerprint"],
+        split_hash=cert_split_hash,
+        planned_n=planned_n,
+    )
+    validate_certificate_identity(
+        tri_predict_certificate,
+        policy_fingerprint=tri_predict_policy_artifact["fingerprint"],
+        split_hash=cert_split_hash,
+    )
     aggregates = {
         split: _split_aggregate(split_records, config.retrieval.m_grid)
         for split, split_records in records_by_split.items()
+    }
+    tri_predict_aggregates = {
+        split: _split_aggregate(split_records, config.retrieval.m_grid)
+        for split, split_records in tri_predict_records_by_split.items()
     }
     fixed_certificates: Dict[str, Any] = {}
     passing_fixed = []
@@ -369,6 +431,17 @@ def run_harness(config: HarnessConfig, output_dir: Path) -> Dict[str, Path]:
         "smallest_certified_fixed_budget": smallest_fixed,
         "adaptive_candidate_saving": candidate_saving,
     }
+    tri_predict_mean_m = tri_predict_aggregates["query_cert"]["budget"]["mean"]
+    tri_predict_candidate_saving = (
+        None
+        if smallest_fixed is None
+        else 1.0 - tri_predict_mean_m / smallest_fixed
+    )
+    aggregates["tri_predict"] = tri_predict_aggregates
+    aggregates["tri_predict_certification_comparison"] = {
+        "smallest_certified_fixed_budget": smallest_fixed,
+        "adaptive_candidate_saving": tri_predict_candidate_saving,
+    }
     timings = {
         "mean_pilot_search_ms": float(np.mean([r["pilot_search_ms"] for r in records])),
         "mean_expansion_search_ms": float(
@@ -386,26 +459,74 @@ def run_harness(config: HarnessConfig, output_dir: Path) -> Dict[str, Path]:
             np.mean([r["additional_original_distance_count"] for r in records])
         ),
     }
-    report = generate_report(manifest, policy_artifact, certificate, aggregates, timings)
+    tri_predict_timings = {
+        "mean_pilot_search_ms": float(
+            np.mean([r["pilot_search_ms"] for r in tri_predict_records])
+        ),
+        "mean_expansion_search_ms": float(
+            np.mean([r["expansion_search_ms"] for r in tri_predict_records])
+        ),
+        "mean_policy_compute_ms": float(
+            np.mean([r["policy_compute_ms"] for r in tri_predict_records])
+        ),
+        "mean_rerank_ms": float(
+            np.mean([r["rerank_ms"] for r in tri_predict_records])
+        ),
+        "mean_total_retrieval_ms": float(
+            np.mean([r["total_retrieval_ms"] for r in tri_predict_records])
+        ),
+        "mean_pilot_original_distance_count": float(
+            np.mean([r["pilot_original_distance_count"] for r in tri_predict_records])
+        ),
+        "mean_additional_original_distance_count": float(
+            np.mean(
+                [r["additional_original_distance_count"] for r in tri_predict_records]
+            )
+        ),
+    }
+    report = generate_report(
+        manifest,
+        policy_artifact,
+        certificate,
+        aggregates,
+        timings,
+        tri_predict_policy=tri_predict_policy_artifact,
+        tri_predict_certification=tri_predict_certificate,
+        tri_predict_timings=tri_predict_timings,
+    )
 
     write_json(output_dir / "manifest.json", manifest)
     write_json(output_dir / "policy.json", policy_artifact)
+    write_json(output_dir / "tri_predict_policy.json", tri_predict_policy_artifact)
     with (output_dir / "per_query.jsonl").open("w", encoding="utf-8") as handle:
         for record in records:
             handle.write(json.dumps(record, sort_keys=True, allow_nan=False) + "\n")
+    with (output_dir / "tri_predict_per_query.jsonl").open(
+        "w", encoding="utf-8"
+    ) as handle:
+        for record in tri_predict_records:
+            handle.write(json.dumps(record, sort_keys=True, allow_nan=False) + "\n")
     write_json(output_dir / "certification.json", certificate)
+    write_json(
+        output_dir / "tri_predict_certification.json", tri_predict_certificate
+    )
     write_json(output_dir / "aggregates.json", aggregates)
     write_json(output_dir / "timings.json", timings)
+    write_json(output_dir / "tri_predict_timings.json", tri_predict_timings)
     (output_dir / "report.md").write_text(report, encoding="utf-8")
     return {
         name: output_dir / name
         for name in (
             "manifest.json",
             "policy.json",
+            "tri_predict_policy.json",
             "per_query.jsonl",
+            "tri_predict_per_query.jsonl",
             "certification.json",
+            "tri_predict_certification.json",
             "aggregates.json",
             "timings.json",
+            "tri_predict_timings.json",
             "report.md",
         )
     }

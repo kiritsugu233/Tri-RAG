@@ -23,6 +23,8 @@ class ConfigProjectionTests(unittest.TestCase):
     def test_default_config_validates(self):
         config = load_config(ROOT / "configs" / "synthetic_mvp.json")
         self.assertEqual(config.retrieval.m_grid[0], config.retrieval.m_pilot)
+        self.assertEqual(config.tri_predict.target, 0.9)
+        self.assertFalse(config.tri_predict.fit_safety_correction)
 
     def test_invalid_projection_scale_related_budget_rejected(self):
         raw = json.loads((ROOT / "configs" / "synthetic_mvp.json").read_text())

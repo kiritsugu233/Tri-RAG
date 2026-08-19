@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import platform
 from datetime import datetime, timezone
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 import numpy as np
 import scipy
@@ -20,6 +20,7 @@ def build_manifest(
     query_embeddings: np.ndarray,
     projection_metadata: Dict[str, Any],
     policy_fingerprint: str,
+    policy_fingerprints: Optional[Dict[str, str]] = None,
 ) -> Dict[str, Any]:
     return {
         "schema_version": 1,
@@ -60,6 +61,11 @@ def build_manifest(
             for split, ids in query_ids_by_split.items()
         },
         "policy_fingerprint": policy_fingerprint,
+        "policy_fingerprints": (
+            {"monotone_binned_empirical": policy_fingerprint}
+            if policy_fingerprints is None
+            else policy_fingerprints
+        ),
         "seeds": {
             "data": config.seeds.data,
             "projection": config.seeds.projection,

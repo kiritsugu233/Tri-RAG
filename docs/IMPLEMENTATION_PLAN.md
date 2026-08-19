@@ -72,16 +72,16 @@ Acceptance:
 
 ## Milestone 4: analytic query-adaptive Tri-Predict
 
-- [ ] Refuse to start this milestone unless the exact Tri-Law conformance tests pass.
-- [ ] Implement exact finite-rank summation for `h_j(y)` on small `N`.
-- [ ] Implement stable chi-square CDF evaluation.
-- [ ] Implement bounded root finding for `y_j_star`.
-- [ ] Implement `y_j_star = infinity` and unit retention when `M - j >= N - k_gt - 1`.
-- [ ] Implement predicted retention across `M_grid`.
-- [ ] Implement deterministic rank integration/geometric sampling for larger `N`.
-- [ ] Test approximation against exact summation on small problems.
-- [ ] Implement `M(q)` selection and saturation logging.
-- [ ] Add optional scalar safety correction fitted only on tune queries.
+- [x] Refuse to start this milestone unless the exact Tri-Law conformance tests pass.
+- [x] Implement exact finite-rank summation for `h_j(y)` on small `N`.
+- [x] Implement stable chi-square CDF evaluation.
+- [x] Implement bounded root finding for `y_j_star`.
+- [x] Implement `y_j_star = infinity` and unit retention when `M - j >= N - k_gt - 1`.
+- [x] Implement predicted retention across `M_grid`.
+- [x] Implement deterministic rank integration/geometric sampling for larger `N`.
+- [x] Test approximation against exact summation on small problems.
+- [x] Implement `M(q)` selection and saturation logging.
+- [x] Add optional scalar safety correction fitted only on tune queries.
 
 Acceptance:
 

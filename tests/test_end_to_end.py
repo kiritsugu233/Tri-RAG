@@ -36,10 +36,14 @@ class EndToEndTests(unittest.TestCase):
             for name in (
                 "manifest.json",
                 "policy.json",
+                "tri_predict_policy.json",
                 "per_query.jsonl",
+                "tri_predict_per_query.jsonl",
                 "certification.json",
+                "tri_predict_certification.json",
                 "aggregates.json",
                 "timings.json",
+                "tri_predict_timings.json",
                 "report.md",
             ):
                 self.assertTrue((directory / "run-one" / name).is_file())
@@ -54,9 +58,23 @@ class EndToEndTests(unittest.TestCase):
             policy_one = json.loads(paths_one["policy.json"].read_text())
             policy_two = json.loads(paths_two["policy.json"].read_text())
             self.assertEqual(policy_one, policy_two)
+            tri_policy_one = json.loads(paths_one["tri_predict_policy.json"].read_text())
+            tri_policy_two = json.loads(paths_two["tri_predict_policy.json"].read_text())
+            self.assertEqual(tri_policy_one, tri_policy_two)
             certificate_one = json.loads(paths_one["certification.json"].read_text())
             certificate_two = json.loads(paths_two["certification.json"].read_text())
             self.assertEqual(certificate_one, certificate_two)
+            tri_certificate_one = json.loads(
+                paths_one["tri_predict_certification.json"].read_text()
+            )
+            tri_certificate_two = json.loads(
+                paths_two["tri_predict_certification.json"].read_text()
+            )
+            self.assertEqual(tri_certificate_one, tri_certificate_two)
+            self.assertEqual(
+                tri_certificate_one["policy_fingerprint"],
+                tri_policy_one["fingerprint"],
+            )
             aggregate_one = json.loads(paths_one["aggregates.json"].read_text())
             aggregate_two = json.loads(paths_two["aggregates.json"].read_text())
             self.assertEqual(aggregate_one, aggregate_two)
@@ -71,6 +89,23 @@ class EndToEndTests(unittest.TestCase):
                 for row in rows_two
             ]
             self.assertEqual(stripped_one, stripped_two)
+            tri_rows_one = [
+                json.loads(line)
+                for line in paths_one["tri_predict_per_query.jsonl"].read_text().splitlines()
+            ]
+            tri_rows_two = [
+                json.loads(line)
+                for line in paths_two["tri_predict_per_query.jsonl"].read_text().splitlines()
+            ]
+            stripped_tri_one = [
+                {key: value for key, value in row.items() if key not in TIMING_KEYS}
+                for row in tri_rows_one
+            ]
+            stripped_tri_two = [
+                {key: value for key, value in row.items() if key not in TIMING_KEYS}
+                for row in tri_rows_two
+            ]
+            self.assertEqual(stripped_tri_one, stripped_tri_two)
             query_ids = {
                 split: {row["query_id"] for row in rows_one if row["split"] == split}
                 for split in ("query_tune", "query_cert", "query_test")
@@ -86,6 +121,10 @@ class EndToEndTests(unittest.TestCase):
             report = paths_one["report.md"].read_text()
             expected_status = "PASS" if certificate_one["passed"] else "FAIL"
             self.assertIn(f"Stored artifact decision: **{expected_status}**", report)
+            tri_expected_status = "PASS" if tri_certificate_one["passed"] else "FAIL"
+            self.assertIn(
+                f"Stored certificate decision: **{tri_expected_status}**", report
+            )
 
 
 if __name__ == "__main__":

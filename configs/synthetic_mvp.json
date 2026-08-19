@@ -38,6 +38,12 @@
     "safety_margin": 0.0,
     "fallback_budget": 80
   },
+  "tri_predict": {
+    "target": 0.90,
+    "max_rank_samples": 256,
+    "fit_safety_correction": false,
+    "safety_quantile": 0.90
+  },
   "certification": {
     "alpha": 0.05,
     "target": 0.80,

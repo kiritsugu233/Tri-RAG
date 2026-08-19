@@ -60,6 +60,14 @@ class PolicyConfig:
 
 
 @dataclass(frozen=True)
+class TriPredictConfig:
+    target: float
+    max_rank_samples: int
+    fit_safety_correction: bool
+    safety_quantile: float
+
+
+@dataclass(frozen=True)
 class CertificationConfig:
     alpha: float
     target: float
@@ -77,6 +85,7 @@ class HarnessConfig:
     retrieval: RetrievalConfig
     lid: LIDConfig
     policy: PolicyConfig
+    tri_predict: TriPredictConfig
     certification: CertificationConfig
     raw: Dict[str, Any]
     config_fingerprint: str
@@ -119,10 +128,11 @@ def load_config(path: Union[str, Path]) -> HarnessConfig:
         "policy",
         "certification",
     }
-    if set(raw) != required_root:
+    optional_root = {"tri_predict"}
+    if not required_root.issubset(raw) or set(raw) - required_root - optional_root:
         raise ConfigError(
             f"invalid root keys; missing={sorted(required_root-set(raw))}, "
-            f"unknown={sorted(set(raw)-required_root)}"
+            f"unknown={sorted(set(raw)-required_root-optional_root)}"
         )
 
     seeds = _section(raw, "seeds", {"data", "projection"})
@@ -163,6 +173,20 @@ def load_config(path: Union[str, Path]) -> HarnessConfig:
         "policy",
         {"n_bins", "tune_target", "safety_margin", "fallback_budget"},
     )
+    tri_predict_default = {
+        "target": 0.90,
+        "max_rank_samples": 256,
+        "fit_safety_correction": False,
+        "safety_quantile": 0.90,
+    }
+    if "tri_predict" in raw:
+        tri_predict = _section(
+            raw,
+            "tri_predict",
+            {"target", "max_rank_samples", "fit_safety_correction", "safety_quantile"},
+        )
+    else:
+        tri_predict = tri_predict_default
     certification = _section(
         raw,
         "certification",
@@ -234,6 +258,13 @@ def load_config(path: Union[str, Path]) -> HarnessConfig:
         raise ConfigError("policy.safety_margin must lie in [0,1]")
     if policy["tune_target"] + policy["safety_margin"] > 1:
         raise ConfigError("tune_target + safety_margin cannot exceed 1")
+    if not 0 < tri_predict["target"] <= 1:
+        raise ConfigError("tri_predict.target must lie in (0,1]")
+    _positive_int(tri_predict["max_rank_samples"], "tri_predict.max_rank_samples")
+    if not isinstance(tri_predict["fit_safety_correction"], bool):
+        raise ConfigError("tri_predict.fit_safety_correction must be Boolean")
+    if not 0 < tri_predict["safety_quantile"] <= 1:
+        raise ConfigError("tri_predict.safety_quantile must lie in (0,1]")
     if not 0 < certification["alpha"] < 1:
         raise ConfigError("certification.alpha must lie in (0,1)")
     for key in ("target", "desired_radius"):
@@ -251,6 +282,7 @@ def load_config(path: Union[str, Path]) -> HarnessConfig:
         retrieval=RetrievalConfig(**retrieval),
         lid=LIDConfig(**lid),
         policy=PolicyConfig(**policy),
+        tri_predict=TriPredictConfig(**tri_predict),
         certification=CertificationConfig(**certification),
         raw=raw,
         config_fingerprint=fingerprint(raw),
