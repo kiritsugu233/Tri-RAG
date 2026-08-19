@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "run_name": "synthetic_attribution_fresh",
+  "seeds": {
+    "data": 7301,
+    "projection": 8111
+  },
+  "synthetic": {
+    "n_clusters": 8,
+    "docs_per_cluster": 20,
+    "query_tune": 256,
+    "query_cert": 512,
+    "query_test": 160,
+    "dimension": 32,
+    "cluster_noise": 0.18,
+    "query_noise_min": 0.10,
+    "query_noise_max": 0.35
+  },
+  "retrieval": {
+    "m_prime": 4,
+    "k_gt": 5,
+    "k_ctx": 3,
+    "m_pilot": 12,
+    "s_lid": 10,
+    "min_lid_neighbors": 6,
+    "m_grid": [12, 20, 32, 48, 80],
+    "batch_size": 64
+  },
+  "lid": {
+    "clip_min": 1.0,
+    "clip_max": 100.0,
+    "duplicate_tolerance": 1e-12,
+    "fallback": 100.0
+  },
+  "policy": {
+    "n_bins": 4,
+    "tune_target": 0.90,
+    "safety_margin": 0.0,
+    "fallback_budget": 80
+  },
+  "tri_predict": {
+    "target": 0.89,
+    "max_rank_samples": 256,
+    "fit_safety_correction": false,
+    "safety_quantile": 0.90
+  },
+  "certification": {
+    "alpha": 0.05,
+    "target": 0.80,
+    "desired_radius": 0.15,
+    "per_bin": true,
+    "min_bin_size": 2
+  }
+}

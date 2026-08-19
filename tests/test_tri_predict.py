@@ -5,6 +5,7 @@ import numpy as np
 from tri_rag_harness.policies import MonotoneBinnedPolicy, TriPredictPolicy
 from tri_rag_harness.tri_law import tri_law_conditional_orthogonal
 from tri_rag_harness.tri_predict import (
+    actual_distance_retention_grid,
     deterministic_rank_quadrature,
     solve_y_star,
     tri_predict_h_j,
@@ -154,6 +155,31 @@ class TriPredictTests(unittest.TestCase):
             max_rank_samples=32,
         )
         self.assertLess(abs(approximate_retention - exact_retention), 0.001)
+
+    def test_actual_distance_diagnostic_matches_rank_model_when_power_law_is_exact(self):
+        lid = 7.0
+        corpus_size = 40
+        squared_distances = np.arange(1, corpus_size + 1, dtype=np.float64) ** (
+            2.0 / lid
+        )
+        budgets = [8, 16, 32]
+        rank_model = tri_predict_retention_grid(
+            lid=lid,
+            m_prime=12,
+            k_gt=4,
+            budgets=budgets,
+            corpus_size=corpus_size,
+        )
+        actual_distance = actual_distance_retention_grid(
+            sorted_squared_distances=squared_distances,
+            m_prime=12,
+            k_gt=4,
+            budgets=budgets,
+        )
+        for budget in budgets:
+            self.assertAlmostEqual(
+                rank_model[budget], actual_distance[budget], places=11
+            )
 
     def test_analytic_policy_is_grid_safe_lid_monotone_and_logs_saturation(self):
         policy = TriPredictPolicy(

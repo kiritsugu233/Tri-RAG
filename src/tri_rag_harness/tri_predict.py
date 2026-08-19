@@ -304,3 +304,87 @@ def tri_predict_retention_grid(
         raise FloatingPointError("Tri-Predict retention decreased as budget increased")
     predictions = np.maximum.accumulate(predictions)
     return {budget: float(value) for budget, value in zip(budget_values, predictions)}
+
+
+def actual_distance_retention_grid(
+    *,
+    sorted_squared_distances: np.ndarray,
+    m_prime: int,
+    k_gt: int,
+    budgets: Sequence[int],
+) -> Dict[int, float]:
+    """Diagnostic mean-field prediction using actual gaps instead of an LID rank model.
+
+    This is oracle-only: it consumes the full original-space distance ranking and
+    must never be used by a deployable policy.
+    """
+    distances = np.asarray(sorted_squared_distances, dtype=np.float64).reshape(-1)
+    if len(distances) < 3 or not np.all(np.isfinite(distances)):
+        raise ValueError("sorted_squared_distances must contain finite corpus distances")
+    if np.any(distances <= 0.0) or np.any(np.diff(distances) < 0.0):
+        raise ValueError("squared distances must be positive and nondecreasing")
+    m_value = _positive_integer(m_prime, "m_prime")
+    k_value = _positive_integer(k_gt, "k_gt")
+    corpus_size = len(distances)
+    if corpus_size < k_value + 2:
+        raise ValueError("distance ranking must leave a modeled competitor")
+    budget_values = [_positive_integer(value, "budget") for value in budgets]
+    if budget_values != sorted(set(budget_values)):
+        raise ValueError("budgets must be strictly increasing")
+    if budget_values[0] < k_value or budget_values[-1] > corpus_size:
+        raise ValueError("budgets must lie in [k_gt, corpus_size]")
+    competitor_distances = distances[k_value : corpus_size - 1]
+    competitor_count = len(competitor_distances)
+    output: Dict[int, float] = {}
+    for budget in budget_values:
+        retention_probabilities = []
+        for neighbor_rank in range(1, k_value + 1):
+            neighbor_distance = distances[neighbor_rank - 1]
+            beta = competitor_distances / neighbor_distance
+            if np.any(beta <= 1.0):
+                raise ValueError("actual-distance diagnostic requires strict neighbor gaps")
+            target = float(budget - neighbor_rank)
+            if target >= competitor_count:
+                retention_probabilities.append(1.0)
+                continue
+            if target < 0.0:
+                raise ValueError("budget must be at least neighbor_rank")
+            if target == 0.0:
+                y_star = 0.0
+            else:
+                def objective(y_value: float) -> float:
+                    probabilities = gammainc(
+                        m_value / 2.0, (m_value * y_value / 2.0) / beta
+                    )
+                    return float(np.sum(probabilities)) - target
+
+                upper = 1.0
+                while objective(upper) < 0.0:
+                    upper *= 2.0
+                    if upper > 2.0**40:
+                        raise FloatingPointError(
+                            "could not bracket actual-distance mean-field root"
+                        )
+                y_star = float(
+                    brentq(
+                        objective,
+                        0.0,
+                        upper,
+                        xtol=ROOT_ABSOLUTE_TOLERANCE,
+                        rtol=ROOT_RELATIVE_TOLERANCE,
+                        maxiter=200,
+                    )
+                )
+            retention_probabilities.append(
+                float(gammainc(m_value / 2.0, m_value * y_star / 2.0))
+            )
+        output[budget] = float(
+            np.clip(np.mean(retention_probabilities), 0.0, 1.0)
+        )
+    values = np.asarray(list(output.values()), dtype=np.float64)
+    if np.any(np.diff(values) < -MONOTONICITY_TOLERANCE):
+        raise FloatingPointError(
+            "actual-distance predicted retention decreased with budget"
+        )
+    values = np.maximum.accumulate(values)
+    return {budget: float(value) for budget, value in zip(budget_values, values)}

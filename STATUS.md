@@ -37,10 +37,11 @@ scripts/run_tests.sh
 
 ## Tests passed/failed
 
-- Passed: 34
+- Passed: 37
 - Failed: 0
 - Runtime in the current environment: approximately 1.8 seconds
 - Added coverage includes cross-platform policy-float canonicalization, exact `h_j(y)` term-by-term agreement with the orthogonal conditional law, geometric rank-strata population conservation and approximation error, root residuals, the infinite-root/unit-retention boundary, budget monotonicity, LID-to-budget monotonicity, saturation, analytic/empirical interface compatibility, and tune-only scalar safety correction.
+- Attribution coverage verifies that actual squared-distance ratios reproduce the rank-model prediction when the assumed power law is exact, that attribution modes produce complete query-level artifacts, and that different synthetic seeds create disjoint stable ID namespaces.
 - The pre-Milestone-4 baseline also passed all then-current 22 tests on Slurm job `371035`, node `genoa05`, using Python `3.9.23`, NumPy `1.26.4`, and SciPy `1.13.0` from micromamba environment `tri-rag`.
 
 ## Current artifacts
@@ -59,15 +60,24 @@ scripts/run_tests.sh
 - `tri_predict_timings.json`
 - `report.md`
 
+Additional diagnostic run directories:
+
+- `runs/attribution_m16/`: pilot/oracle/actual-beta attribution summary and 512 query-level records;
+- `runs/synthetic_attribution_fresh/`: separately seeded 928-query repair run with empirical and analytic artifacts.
+
 The default frozen run has 160 corpus items and 512 disjoint external queries. Its overall adaptive certificate passes: mean retention `0.9227`, empirical-Bernstein lower bound `0.8640`, target `0.80`, and `n=256`. The planned sample size for radius `0.15` is 180, so the overall certification sample is sufficient.
 
 This is not a positive efficiency result. The four fitted LID bins choose `[32, 32, 32, 48]`; the smallest fixed budget passing the same certificate is `M=32`, so certification-split candidate saving is `-0.1074`. Bonferroni-corrected per-bin lower bounds also fail the `0.80` target. These outcomes are preserved in the artifacts and report.
 
 The uncorrected Tri-Predict policy also passes the synthetic development certificate, with mean retention `0.9008`, lower bound `0.8391`, mean certification budget `39.2812`, and 9 saturated certification queries. Its candidate saving against fixed `M=32` is `-0.2275`, another negative efficiency result. The optional 90th-percentile additive safety correction is implemented and tested but disabled in the default config because its tune-only fitted value (`0.2287`) saturates every synthetic query at `M=80`.
 
+The completed attribution experiment is documented in `docs/ATTRIBUTION.md`. On the development certification split, pilot-rank MAE is `0.1369`, oracle-rank MAE is `0.2448`, and actual-distance-beta MAE is `0.1132`. Oracle LID therefore does not repair prediction; the LID rank model contributes some error, while most residual error remains in the downstream approximation stack.
+
+A separately frozen fresh synthetic run uses data seed `7301`, projection seed `8111`, `m_prime=4`, analytic threshold `0.89`, 256 tune queries, 512 certification queries, and 160 test queries. It passes with mean retention `0.8535`, lower bound `0.8130`, mean `M=63.6953`, and `20.38%` saving versus the smallest certified fixed budget `M=80`. It has 125 saturated certification queries and remains a synthetic result.
+
 ## Next task
 
-First, push the Milestone 4 changes and repeat the 34-test/default-run baseline on Genoa to confirm the canonical policy fingerprint across platforms. Then begin Milestone 5 with one pinned real external-query dataset adapter and a frozen text-embedding model. Generation remains out of scope until real retrieval and evidence evaluation pass.
+Push the attribution/fresh-split changes and repeat the 37-test attribution and fresh-run commands on Genoa. If fingerprints and metrics agree, begin Milestone 5 with one pinned real external-query dataset adapter and a frozen text-embedding model. Generation remains out of scope until real retrieval and evidence evaluation pass.
 
 ## Known deviations and risks
 

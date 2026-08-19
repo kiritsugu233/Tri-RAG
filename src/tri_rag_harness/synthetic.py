@@ -26,6 +26,7 @@ class SyntheticDataset:
 def generate_synthetic_dataset(config: SyntheticConfig, seed: int) -> SyntheticDataset:
     """Generate independently sampled external queries around corpus clusters."""
     rng = np.random.default_rng(seed)
+    id_namespace = f"seed-{seed:010d}"
     centers = rng.normal(size=(config.n_clusters, config.dimension))
     centers /= np.linalg.norm(centers, axis=1, keepdims=True)
 
@@ -38,7 +39,8 @@ def generate_synthetic_dataset(config: SyntheticConfig, seed: int) -> SyntheticD
         )
         corpus_vectors.append(centers[cluster] + noise)
         corpus_ids.extend(
-            f"doc-{cluster:02d}-{row:04d}" for row in range(config.docs_per_cluster)
+            f"{id_namespace}-doc-{cluster:02d}-{row:04d}"
+            for row in range(config.docs_per_cluster)
         )
 
     split_counts = (
@@ -61,7 +63,7 @@ def generate_synthetic_dataset(config: SyntheticConfig, seed: int) -> SyntheticD
             query_vectors.append(
                 centers[cluster] + rng.normal(scale=noise_scale, size=config.dimension)
             )
-            query_ids.append(f"{split}-{local_row:05d}")
+            query_ids.append(f"{id_namespace}-{split}-{local_row:05d}")
             split_names.append(split)
             relevant_clusters.append(cluster)
             global_row += 1
