@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools==68.2.2", "wheel==0.41.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tri-rag-harness"
+version = "0.1.0"
+description = "Correctness-first harness for query-adaptive projected retrieval"
+requires-python = ">=3.9"
+dependencies = [
+  "numpy==1.26.4",
+  "scipy==1.13.0",
+]
+
+[project.scripts]
+tri-rag-harness = "tri_rag_harness.run:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
