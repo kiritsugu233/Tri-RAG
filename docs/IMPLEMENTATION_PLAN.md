@@ -82,6 +82,9 @@ Acceptance:
 - [x] Test approximation against exact summation on small problems.
 - [x] Implement `M(q)` selection and saturation logging.
 - [x] Add optional scalar safety correction fitted only on tune queries.
+- [x] Add a tune-only global `m_prime`/threshold sweep with a serialized selection rule.
+- [x] Freeze the selected dimension before an independent fresh certification run.
+- [x] Reject cert/test records at the dimension-selection boundary.
 
 Acceptance:
 

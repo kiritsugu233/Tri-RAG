@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, List, Optional, Union
 
 from .utils import fingerprint
 
@@ -77,6 +77,14 @@ class CertificationConfig:
 
 
 @dataclass(frozen=True)
+class MPrimeSweepConfig:
+    candidates: List[int]
+    threshold_grid: List[float]
+    tune_lower_bound_target: float
+    max_saturation_fraction: float
+
+
+@dataclass(frozen=True)
 class HarnessConfig:
     schema_version: int
     run_name: str
@@ -87,6 +95,7 @@ class HarnessConfig:
     policy: PolicyConfig
     tri_predict: TriPredictConfig
     certification: CertificationConfig
+    m_prime_sweep: Optional[MPrimeSweepConfig]
     raw: Dict[str, Any]
     config_fingerprint: str
 
@@ -128,7 +137,7 @@ def load_config(path: Union[str, Path]) -> HarnessConfig:
         "policy",
         "certification",
     }
-    optional_root = {"tri_predict"}
+    optional_root = {"tri_predict", "m_prime_sweep"}
     if not required_root.issubset(raw) or set(raw) - required_root - optional_root:
         raise ConfigError(
             f"invalid root keys; missing={sorted(required_root-set(raw))}, "
@@ -192,6 +201,19 @@ def load_config(path: Union[str, Path]) -> HarnessConfig:
         "certification",
         {"alpha", "target", "desired_radius", "per_bin", "min_bin_size"},
     )
+    if "m_prime_sweep" in raw:
+        m_prime_sweep = _section(
+            raw,
+            "m_prime_sweep",
+            {
+                "candidates",
+                "threshold_grid",
+                "tune_lower_bound_target",
+                "max_saturation_fraction",
+            },
+        )
+    else:
+        m_prime_sweep = None
 
     if raw["schema_version"] != 1:
         raise ConfigError("schema_version must be 1")
@@ -273,6 +295,38 @@ def load_config(path: Union[str, Path]) -> HarnessConfig:
     if not isinstance(certification["per_bin"], bool):
         raise ConfigError("certification.per_bin must be Boolean")
     _positive_int(certification["min_bin_size"], "certification.min_bin_size")
+    if m_prime_sweep is not None:
+        candidates = m_prime_sweep["candidates"]
+        if not isinstance(candidates, list) or not candidates:
+            raise ConfigError("m_prime_sweep.candidates must be a nonempty list")
+        for value in candidates:
+            _positive_int(value, "m_prime_sweep.candidates item")
+        if candidates != sorted(set(candidates)):
+            raise ConfigError("m_prime_sweep.candidates must be strictly increasing")
+        if candidates[-1] > synthetic["dimension"]:
+            raise ConfigError(
+                "m_prime_sweep candidates cannot exceed synthetic.dimension"
+            )
+        thresholds = m_prime_sweep["threshold_grid"]
+        if not isinstance(thresholds, list) or not thresholds:
+            raise ConfigError("m_prime_sweep.threshold_grid must be a nonempty list")
+        for value in thresholds:
+            if not isinstance(value, (int, float)) or not 0 < value <= 1:
+                raise ConfigError(
+                    "m_prime_sweep.threshold_grid items must lie in (0,1]"
+                )
+        if thresholds != sorted(set(thresholds)):
+            raise ConfigError(
+                "m_prime_sweep.threshold_grid must be strictly increasing"
+            )
+        if not 0 < m_prime_sweep["tune_lower_bound_target"] <= 1:
+            raise ConfigError(
+                "m_prime_sweep.tune_lower_bound_target must lie in (0,1]"
+            )
+        if not 0 <= m_prime_sweep["max_saturation_fraction"] <= 1:
+            raise ConfigError(
+                "m_prime_sweep.max_saturation_fraction must lie in [0,1]"
+            )
 
     return HarnessConfig(
         schema_version=1,
@@ -284,6 +338,11 @@ def load_config(path: Union[str, Path]) -> HarnessConfig:
         policy=PolicyConfig(**policy),
         tri_predict=TriPredictConfig(**tri_predict),
         certification=CertificationConfig(**certification),
+        m_prime_sweep=(
+            MPrimeSweepConfig(**m_prime_sweep)
+            if m_prime_sweep is not None
+            else None
+        ),
         raw=raw,
         config_fingerprint=fingerprint(raw),
     )

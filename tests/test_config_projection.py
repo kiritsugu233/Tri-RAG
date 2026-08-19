@@ -28,6 +28,11 @@ class ConfigProjectionTests(unittest.TestCase):
         fresh = load_config(ROOT / "configs" / "synthetic_attribution_fresh.json")
         self.assertEqual(fresh.retrieval.m_prime, 4)
         self.assertEqual(fresh.tri_predict.target, 0.89)
+        sweep = load_config(
+            ROOT / "configs" / "synthetic_mprime_sweep_fresh.json"
+        )
+        self.assertEqual(sweep.m_prime_sweep.candidates, [4, 8, 12, 16, 24])
+        self.assertEqual(sweep.m_prime_sweep.tune_lower_bound_target, 0.8)
 
     def test_invalid_projection_scale_related_budget_rejected(self):
         raw = json.loads((ROOT / "configs" / "synthetic_mvp.json").read_text())
