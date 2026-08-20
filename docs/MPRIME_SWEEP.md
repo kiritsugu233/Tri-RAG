@@ -106,3 +106,75 @@ scripts/run_tests.sh
 The important top-level artifacts are `selection.json`, `selected_config.json`,
 `sweep_result.json`, and `sweep_report.md`. The full frozen run is under
 `selected_run/`.
+
+## Extended-range experiment
+
+An additional, independently seeded experiment was predeclared in
+`configs/synthetic_mprime_sweep_extended_fresh.json`. It keeps ambient dimension
+`d=32`, expands the candidate set to
+`[2, 4, 6, 8, 10, 12, 14, 16, 20, 24, 28, 32]`, and uses data/projection seeds
+`16001`/`17011`. It has 768 tune, 1024 certification, and 320 test queries. The
+threshold grid is `0.80` through `0.99`; all other selection rules are unchanged.
+
+Tune-only results:
+
+| `m_prime` | eligible | threshold | tune lower bound | mean `M` | fixed `M` | relative saving | saturation |
+| ---: | :---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 2 | no | — | — | — | — | — | — |
+| 4 | yes | 0.93 | 0.8045 | 69.7552 | 80 | 12.81% | 39.58% |
+| 6 | yes | 0.95 | 0.8025 | 61.9583 | 80 | 22.55% | 26.69% |
+| 8 | yes | 0.95 | 0.8064 | 53.8229 | 80 | 32.72% | 17.06% |
+| 10 | yes | 0.95 | 0.8070 | 47.4375 | 48 | 1.17% | 11.46% |
+| 12 | yes | 0.95 | 0.8056 | 43.5052 | 48 | 9.36% | 8.59% |
+| 14 | yes | 0.94 | 0.8024 | 38.5521 | 32 | -20.48% | 4.43% |
+| 16 | yes | 0.92 | 0.8069 | 34.6875 | 32 | -8.40% | 3.12% |
+| 20 | yes | 0.90 | 0.8039 | 29.6562 | 32 | 7.32% | 1.17% |
+| 24 | yes | 0.89 | 0.8068 | 26.2552 | 20 | -31.28% | 0.78% |
+| 28 | yes | 0.84 | 0.8025 | 21.0104 | 20 | -5.05% | 0.00% |
+| 32 | yes | 0.83 | 0.8016 | 18.7760 | 20 | 6.12% | 0.00% |
+
+The predeclared rule froze `m_prime=8`, threshold `0.95`, with selection
+fingerprint
+`655d8c9530366ee7dcf3bb9f0f784cf4ba20fabbb95454a8bce8c7ba07af7def`.
+Fresh certification then produced:
+
+- `n=1024`, planned `n=336`;
+- mean retention `0.841602`, radius `0.024058`, lower bound `0.817544`:
+  **PASS** against `0.80`;
+- mean `M=54.863281`;
+- smallest certified fixed budget `M=80`;
+- relative candidate saving `31.4209%`;
+- 186 saturated queries (`18.16%`);
+- policy fingerprint
+  `a503d27a2f1f2e8613f3986e7b8f7b79e6627325ffd84d37014343c51fc4361f`.
+
+### What the expanded range reveals
+
+The selected dimension is not stable across the two independent synthetic
+experiments (`24` in the five-point sweep, `8` in the extended sweep). More
+importantly, maximizing relative saving against a dimension-specific fixed
+baseline is not a sound cross-dimension compute objective:
+
+- absolute mean `M` decreases almost continuously as `m_prime` grows;
+- the fixed baseline changes discontinuously from `80` to `48`, `32`, and `20`;
+- those denominator jumps create the sawtooth relative-saving column and favor
+  dimensions immediately before a fixed-baseline transition;
+- at the selected `m_prime=8`, fixed `M=48` missed certification by only
+  `0.000207` (`0.799793` versus `0.80`). Had it crossed that boundary, the same
+  adaptive mean would imply `-14.30%` rather than `+31.42%` relative saving.
+
+Therefore the extended certificate is valid for the frozen `m_prime=8` policy,
+but its `31.42%` headline is fragile and must not be interpreted as global
+compute optimality. Before another selection run, the protocol should
+predeclare a cross-dimension objective that includes projected-search work and
+original-space reranking, and should densify the fixed-`M` grid to reduce
+threshold cliffs. Any such revised rule requires new tune/cert seeds; this
+already inspected certification split cannot be reused for selection.
+
+Extended local or Genoa command:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 -m tri_rag_harness.mprime_sweep \
+  --config configs/synthetic_mprime_sweep_extended_fresh.json \
+  --output runs/synthetic_mprime_sweep_extended_fresh
+```

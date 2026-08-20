@@ -43,6 +43,14 @@ PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 -m tri_rag_harness.mprime_sweep
   --output runs/synthetic_mprime_sweep_fresh
 ```
 
+Extended 12-dimension sweep with independent seeds:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 -m tri_rag_harness.mprime_sweep \
+  --config configs/synthetic_mprime_sweep_extended_fresh.json \
+  --output runs/synthetic_mprime_sweep_extended_fresh
+```
+
 ## Tests passed/failed
 
 - Passed: 39
@@ -73,6 +81,7 @@ Additional diagnostic run directories:
 - `runs/attribution_m16/`: pilot/oracle/actual-beta attribution summary and 512 query-level records;
 - `runs/synthetic_attribution_fresh/`: separately seeded 928-query repair run with empirical and analytic artifacts.
 - `runs/synthetic_mprime_sweep_fresh/`: tune-only five-dimension sweep, frozen selection artifacts, and a 768-query fresh certificate.
+- `runs/synthetic_mprime_sweep_extended_fresh/`: independently seeded 12-dimension sweep and a 1024-query fresh certificate.
 
 The default frozen run has 160 corpus items and 512 disjoint external queries. Its overall adaptive certificate passes: mean retention `0.9227`, empirical-Bernstein lower bound `0.8640`, target `0.80`, and `n=256`. The planned sample size for radius `0.15` is 180, so the overall certification sample is sufficient.
 
@@ -86,9 +95,11 @@ A separately frozen fresh synthetic run uses data seed `7301`, projection seed `
 
 The rigorous tune-only global sweep uses previously unused data/projection seeds `12011`/`13007`, 512 tune queries, candidate dimensions `[4, 8, 12, 16, 24]`, and a predeclared threshold grid. It froze `m_prime=24` and threshold `0.91` before certification. On 768 fresh certification queries, Tri-Predict passes with mean retention `0.847917`, empirical-Bernstein lower bound `0.817234`, mean `M=28.40625`, 7 saturated queries, and `11.2305%` candidate saving versus the smallest certified fixed budget `M=32`. The selection and policy fingerprints are recorded in `docs/MPRIME_SWEEP.md`.
 
+The independent extended sweep covers twelve dimensions from `2` through `32` with seeds `16001`/`17011`. Its predeclared rule froze `m_prime=8`, threshold `0.95`; the 1024-query fresh certificate passes with lower bound `0.817544`, mean `M=54.863281`, and `31.4209%` saving versus certified fixed `M=80`. This result exposes a metric problem rather than establishing that dimension 8 is globally optimal: the dimension-specific fixed baseline jumps from 80 to 48 to 32 to 20, and fixed `M=48` missed the selected run's certificate by only `0.000207`. The full analysis is in `docs/MPRIME_SWEEP.md`.
+
 ## Next task
 
-Repeat the 39 tests and the global sweep command on Genoa, preserving the Slurm log and checking the selection/policy fingerprints against the local artifacts. If they agree, begin Milestone 5 with one pinned real external-query dataset adapter and a frozen text-embedding model. Generation remains out of scope until real retrieval and evidence evaluation pass.
+Repeat the 39 tests and extended sweep command on Genoa, preserving the Slurm log and checking the selection/policy fingerprints. Before any further dimension selection, replace the discontinuous relative-saving objective with a predeclared cross-dimension compute objective and densify the fixed-budget grid, using new tune/cert seeds. Real-data work follows after that synthetic design issue is resolved.
 
 ## Known deviations and risks
 
@@ -97,6 +108,7 @@ Repeat the 39 tests and the global sweep command on Genoa, preserving the Slurm 
 - The current synthetic pilot LID differentiates the hardest fitted bin, but the allocation is not efficient relative to the certified fixed baseline. The negative result is a dataset/policy outcome, not hidden by retuning certification data.
 - The current synthetic certification split has been inspected repeatedly during implementation. Its artifacts validate code paths but must not be presented as a fresh research claim or reused to choose new hyperparameters. Real-data policy selection and certification require newly frozen independent splits.
 - The new global sweep avoids that old split and enforces tune-only selection in code. Its positive `11.23%` result is candidate-count efficiency, not a latency claim; `m_prime=24` increases projected-search arithmetic relative to `m_prime=16`.
+- The extended sweep shows that maximizing relative saving against a dimension-specific certified fixed baseline is unstable across dimensions and seeds. Its selected `m_prime=8` policy passes independently, but the `31.42%` saving is amplified by a coarse-grid certification cliff and is not a global cost optimum.
 - Tri-Predict's exact rank summation is intentionally correctness-oriented and currently costs several milliseconds per synthetic query. Large real corpora should use and validate the deterministic rank approximation before performance claims.
 - Runtime timestamps and timing measurements are intentionally nondeterministic. Policy, metric, certificate, candidate, and reranked-ID values reproduce under the same manifest and seeds.
 - The repository is now connected to GitHub; Slurm runs remain user-executed and their logs should be retained alongside commit IDs and environment versions.
