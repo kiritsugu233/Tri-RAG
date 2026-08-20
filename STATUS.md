@@ -1,6 +1,6 @@
 # Status
 
-Updated: 2026-08-19
+Updated: 2026-08-20
 
 ## What runs
 
@@ -59,6 +59,7 @@ PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 -m tri_rag_harness.mprime_sweep
 - Added coverage includes cross-platform policy-float canonicalization, exact `h_j(y)` term-by-term agreement with the orthogonal conditional law, geometric rank-strata population conservation and approximation error, root residuals, the infinite-root/unit-retention boundary, budget monotonicity, LID-to-budget monotonicity, saturation, analytic/empirical interface compatibility, and tune-only scalar safety correction.
 - Attribution coverage verifies that actual squared-distance ratios reproduce the rank-model prediction when the assumed power law is exact, that attribution modes produce complete query-level artifacts, and that different synthetic seeds create disjoint stable ID namespaces.
 - The pre-Milestone-4 baseline also passed all then-current 22 tests on Slurm job `371035`, node `genoa05`, using Python `3.9.23`, NumPy `1.26.4`, and SciPy `1.13.0` from micromamba environment `tri-rag`.
+- The extended sweep passed all 39 tests on Slurm job `371643`, node `genoa04`, commit `d5ec795abf0ca604c90ac2b5300708232874ef32`, using Python `3.9.23`, NumPy `1.26.4`, and SciPy `1.13.0`.
 
 ## Current artifacts
 
@@ -97,9 +98,11 @@ The rigorous tune-only global sweep uses previously unused data/projection seeds
 
 The independent extended sweep covers twelve dimensions from `2` through `32` with seeds `16001`/`17011`. Its predeclared rule froze `m_prime=8`, threshold `0.95`; the 1024-query fresh certificate passes with lower bound `0.817544`, mean `M=54.863281`, and `31.4209%` saving versus certified fixed `M=80`. This result exposes a metric problem rather than establishing that dimension 8 is globally optimal: the dimension-specific fixed baseline jumps from 80 to 48 to 32 to 20, and fixed `M=48` missed the selected run's certificate by only `0.000207`. The full analysis is in `docs/MPRIME_SWEEP.md`.
 
+Slurm job `371643` exactly reproduced the selection, frozen config, sweep result, Tri-Predict policy, and Tri-Predict certificate byte for byte. The aggregate files differ only in the test-split mean pilot/oracle LID gap at approximately `4e-15`; the manifest differs only in timestamp and software platform fields. On Genoa, Tri-Predict averaged `6.0325 ms/query`, of which `5.9988 ms` was analytic policy computation. The empirical policy path averaged `0.0404 ms/query`. Thus the current analytic implementation has no demonstrated wall-clock benefit on this tiny corpus despite reducing candidate count.
+
 ## Next task
 
-Repeat the 39 tests and extended sweep command on Genoa, preserving the Slurm log and checking the selection/policy fingerprints. Before any further dimension selection, replace the discontinuous relative-saving objective with a predeclared cross-dimension compute objective and densify the fixed-budget grid, using new tune/cert seeds. Real-data work follows after that synthetic design issue is resolved.
+Before any further dimension selection, replace the discontinuous relative-saving objective with a predeclared cross-dimension compute objective, densify the fixed-budget grid, and separate/cache pilot and expansion work explicitly. Use new tune/cert seeds for that revised protocol. Real-data work follows after this synthetic design issue is resolved.
 
 ## Known deviations and risks
 
@@ -109,6 +112,7 @@ Repeat the 39 tests and extended sweep command on Genoa, preserving the Slurm lo
 - The current synthetic certification split has been inspected repeatedly during implementation. Its artifacts validate code paths but must not be presented as a fresh research claim or reused to choose new hyperparameters. Real-data policy selection and certification require newly frozen independent splits.
 - The new global sweep avoids that old split and enforces tune-only selection in code. Its positive `11.23%` result is candidate-count efficiency, not a latency claim; `m_prime=24` increases projected-search arithmetic relative to `m_prime=16`.
 - The extended sweep shows that maximizing relative saving against a dimension-specific certified fixed baseline is unstable across dimensions and seeds. Its selected `m_prime=8` policy passes independently, but the `31.42%` saving is amplified by a coarse-grid certification cliff and is not a global cost optimum.
+- On Genoa, scalar Tri-Predict root solving dominates measured retrieval latency (`5.9988` of `6.0325 ms/query`) on the 160-item synthetic corpus. Candidate-count saving must not be presented as latency saving; vectorization, lookup-table caching, or a validated approximation is required before serving claims.
 - Tri-Predict's exact rank summation is intentionally correctness-oriented and currently costs several milliseconds per synthetic query. Large real corpora should use and validate the deterministic rank approximation before performance claims.
 - Runtime timestamps and timing measurements are intentionally nondeterministic. Policy, metric, certificate, candidate, and reranked-ID values reproduce under the same manifest and seeds.
 - The repository is now connected to GitHub; Slurm runs remain user-executed and their logs should be retained alongside commit IDs and environment versions.

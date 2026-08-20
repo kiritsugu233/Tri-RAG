@@ -1,6 +1,6 @@
 # Tune-only global `m_prime` sweep
 
-Updated: 2026-08-19
+Updated: 2026-08-20
 
 ## Purpose
 
@@ -178,3 +178,40 @@ PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 -m tri_rag_harness.mprime_sweep
   --config configs/synthetic_mprime_sweep_extended_fresh.json \
   --output runs/synthetic_mprime_sweep_extended_fresh
 ```
+
+### Genoa reproduction and timing audit
+
+Slurm job `371643` reproduced the extended run on
+`genoa04.cloud.r-ccs.riken.jp` at commit
+`d5ec795abf0ca604c90ac2b5300708232874ef32`, using Python `3.9.23`, NumPy
+`1.26.4`, and SciPy `1.13.0`. All 39 tests passed in `4.211 s`.
+
+The following Slurm artifacts are byte-identical to the local run:
+
+- `selection.json`;
+- `selected_config.json`;
+- `sweep_result.json`;
+- `tri_predict_policy.json`;
+- `tri_predict_certification.json`.
+
+The only deterministic aggregate difference is a platform-level floating-point
+rounding change in the test mean pilot/oracle LID gap (`8.252871586613274`
+locally versus `8.25287158661327` on Genoa). The manifest's semantic contents
+match; its timestamp, platform, and Python-version fields correctly differ.
+
+Genoa timing for the frozen Tri-Predict policy was:
+
+| component | mean ms/query |
+| --- | ---: |
+| pilot projected search | 0.006577 |
+| expansion projected search | 0.006809 |
+| original-space rerank | 0.020316 |
+| analytic policy computation | 5.998815 |
+| total retrieval path | 6.032517 |
+
+The empirical binned policy path averaged `0.040392 ms/query` on the same run.
+The analytic policy computation therefore dominates the synthetic latency and
+makes the current Tri-Predict path roughly 149 times slower than the empirical
+path, even though it uses fewer original-space candidate distances. These
+timings are for a 160-item corpus and are not a serving benchmark, but they rule
+out interpreting candidate-count saving as demonstrated latency saving.
