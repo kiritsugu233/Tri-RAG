@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 
 from tri_rag_harness.embeddings import normalize_rows
-from tri_rag_harness.indexes import ExactSquaredL2Index
+from tri_rag_harness.indexes import ExactSquaredL2Index, StreamingExactSquaredL2Index
 
 
 class ExactIndexTests(unittest.TestCase):
@@ -39,6 +39,27 @@ class ExactIndexTests(unittest.TestCase):
         candidate_retention = len(set(exact) & set(candidate_rows)) / 5
         rerank_retention = len(set(exact) & set(candidate_rows[order[:5]])) / 5
         self.assertEqual(candidate_retention, rerank_retention)
+
+    def test_streaming_top_k_matches_brute_force_and_counts_scans(self):
+        rng = np.random.default_rng(101)
+        corpus = normalize_rows(rng.normal(size=(53, 11))).astype(np.float32)
+        query = normalize_rows(rng.normal(size=(1, 11))).astype(np.float32)[0]
+        norms = np.einsum("ij,ij->i", corpus, corpus)
+        index = StreamingExactSquaredL2Index(
+            corpus, squared_norms=norms, block_rows=7
+        )
+        result = index.search_one(query, 9)
+        distances = np.maximum(
+            float(np.dot(query, query)) + norms - 2.0 * (corpus @ query), 0.0
+        )
+        expected = np.lexsort((np.arange(len(corpus)), distances))[:9]
+        np.testing.assert_array_equal(result.rows, expected)
+        np.testing.assert_allclose(
+            result.squared_distances, distances[expected], atol=1e-6
+        )
+        self.assertEqual(index.scan_calls, 1)
+        self.assertEqual(result.distance_evaluations, len(corpus))
+        self.assertEqual(result.scanned_vector_bytes, corpus.nbytes)
 
 
 if __name__ == "__main__":

@@ -39,7 +39,7 @@ For each external query:
 7. Expand projected retrieval to `M(q)`, cache/reuse pilot work, and exactly rerank in the original embedding space.
 8. Return the top `k_ctx` passages to the RAG generator.
 
-The first implementation may execute a second projected search in step 7. It must report that overhead separately. A later optimized backend may implement incremental expansion.
+The exact backend caches top-`M_max` from one projected scan, so step 7 slices the cached ranking rather than scanning the corpus again. The retrieval-only latency benchmark retains an explicit legacy double-scan control and reports both paths separately.
 
 ## Required theoretical primitive
 

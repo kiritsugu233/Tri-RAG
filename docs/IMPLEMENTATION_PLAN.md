@@ -92,6 +92,26 @@ Acceptance:
 - increasing LID does not accidentally yield a lower configured budget after monotonic enforcement;
 - analytic and empirical adaptive policies can be compared through the same interface.
 
+## Milestone 4.5: retrieval-only systems benchmark
+
+- [x] Add a memmap-compatible streaming exact squared-L2 backend.
+- [x] Eliminate repeated pilot/expansion projected scans in the main harness.
+- [x] Retain a legacy double-scan control in the latency benchmark.
+- [x] Add realistic `100k x 768` and `1M x 1024` configurations.
+- [x] Record query projection, search, LID, Tri-Predict, expansion, rerank, and total latency.
+- [x] Record p50/p95/p99, distance counts, bytes scanned, cache size, and process RSS.
+- [x] Verify that reuse and double scan make identical decisions under exact search.
+- [ ] Reproduce the 100k baseline on Genoa with one BLAS thread.
+- [ ] Run the 1M scale-up after the 100k gate passes.
+- [ ] Add FAISS CPU/GPU only after the exact baseline is archived.
+
+Acceptance:
+
+- no query-by-corpus distance matrix is materialized;
+- reuse performs one projected scan and the legacy control performs two;
+- both Tri-Predict paths choose identical budgets and retention;
+- run artifacts contain stage latency, work, memory, environment, and query-level records.
+
 ## Milestone 5: one real external-query retrieval dataset
 
 - [ ] Implement a dataset adapter producing corpus, external queries, splits, qrels, and optional answers.

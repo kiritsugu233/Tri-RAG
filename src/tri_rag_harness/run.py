@@ -54,18 +54,17 @@ def _build_base_records(
     )
     oracle_k = max(retrieval.k_gt, retrieval.s_lid)
     original = original_index.search(queries, oracle_k)
-    pilot = projected_index.search(projected_queries, retrieval.m_pilot)
+    projected_scan_started = perf_counter()
     expanded = projected_index.search(projected_queries, retrieval.m_grid[-1])
+    projected_scan_ms = (perf_counter() - projected_scan_started) * 1000.0
     query_count = len(queries)
     base_records: List[Dict[str, Any]] = []
     for row in range(query_count):
-        pilot_rows = pilot.rows[row]
+        pilot_rows = expanded.rows[row, : retrieval.m_pilot]
         full_rows = expanded.rows[row]
         pilot_sq = np.einsum(
             "ij,ij->i", corpus[pilot_rows] - queries[row], corpus[pilot_rows] - queries[row]
         )
-        if not np.array_equal(pilot_rows, full_rows[: retrieval.m_pilot]):
-            raise AssertionError("exact expansion must preserve the pilot prefix")
         lid_kwargs = {
             "s_lid": retrieval.s_lid,
             "min_neighbors": retrieval.min_lid_neighbors,
@@ -97,7 +96,10 @@ def _build_base_records(
                 "pilot_rows": pilot_rows.tolist(),
                 "pilot_squared_distances": pilot_sq.tolist(),
                 "expanded_rows": full_rows.tolist(),
-                "pilot_search_ms": pilot.search_ms / query_count,
+                "pilot_search_ms": projected_scan_ms / query_count,
+                "projected_scan_count": 1,
+                "projected_distance_count": len(corpus),
+                "projected_cache_budget": retrieval.m_grid[-1],
             }
         )
     return base_records
@@ -120,19 +122,14 @@ def _materialize_policy_records(
         policy_started = perf_counter()
         decision = policy.choose(float(base["lid"]), bool(base["lid_valid"]))
         decisions.append((decision, (perf_counter() - policy_started) * 1000.0))
-    projected_index = ExactSquaredL2Index(
-        corpus_ids, projected_corpus, batch_size=config.retrieval.batch_size
-    )
     expansion_by_row: Dict[int, Any] = {}
     expansion_ms_by_row: Dict[int, float] = {}
-    for budget in config.retrieval.m_grid:
-        rows = [row for row, (decision, _) in enumerate(decisions) if decision.budget == budget]
-        if not rows:
-            continue
-        search = projected_index.search(projected_queries[rows], budget)
-        for local_row, global_row in enumerate(rows):
-            expansion_by_row[global_row] = search.rows[local_row]
-            expansion_ms_by_row[global_row] = search.search_ms / len(rows)
+    for row, (decision, _) in enumerate(decisions):
+        expansion_started = perf_counter()
+        expansion_by_row[row] = np.asarray(
+            base_records[row]["expanded_rows"][: decision.budget], dtype=np.int64
+        )
+        expansion_ms_by_row[row] = (perf_counter() - expansion_started) * 1000.0
     results: List[Dict[str, Any]] = []
     for row, base in enumerate(base_records):
         decision, policy_ms = decisions[row]
@@ -203,6 +200,9 @@ def _materialize_policy_records(
                 "total_retrieval_ms": total_ms,
                 "pilot_original_distance_count": config.retrieval.m_pilot,
                 "additional_original_distance_count": additional,
+                "projected_scan_count": int(base["projected_scan_count"]),
+                "projected_distance_count": int(base["projected_distance_count"]),
+                "projected_cache_budget": int(base["projected_cache_budget"]),
             }
         )
     return results
@@ -458,6 +458,12 @@ def run_harness(config: HarnessConfig, output_dir: Path) -> Dict[str, Path]:
         "mean_additional_original_distance_count": float(
             np.mean([r["additional_original_distance_count"] for r in records])
         ),
+        "mean_projected_scan_count": float(
+            np.mean([r["projected_scan_count"] for r in records])
+        ),
+        "mean_projected_distance_count": float(
+            np.mean([r["projected_distance_count"] for r in records])
+        ),
     }
     tri_predict_timings = {
         "mean_pilot_search_ms": float(
@@ -482,6 +488,12 @@ def run_harness(config: HarnessConfig, output_dir: Path) -> Dict[str, Path]:
             np.mean(
                 [r["additional_original_distance_count"] for r in tri_predict_records]
             )
+        ),
+        "mean_projected_scan_count": float(
+            np.mean([r["projected_scan_count"] for r in tri_predict_records])
+        ),
+        "mean_projected_distance_count": float(
+            np.mean([r["projected_distance_count"] for r in tri_predict_records])
         ),
     }
     report = generate_report(

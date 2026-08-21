@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "run_name": "retrieval_latency_100k_d768",
+  "seeds": {
+    "corpus": 21001,
+    "queries": 22003,
+    "projection": 23003
+  },
+  "dataset": {
+    "corpus_size": 100000,
+    "query_count": 64,
+    "warmup_query_count": 4,
+    "dimension": 768,
+    "dtype": "float32",
+    "generation_batch_rows": 4096
+  },
+  "projection": {
+    "m_prime": 96
+  },
+  "search": {
+    "k_gt": 10,
+    "m_pilot": 32,
+    "s_lid": 24,
+    "min_lid_neighbors": 12,
+    "m_grid": [
+      32,
+      64,
+      128,
+      256,
+      512,
+      1024
+    ],
+    "fixed_budget": 512,
+    "corpus_block_rows": 8192
+  },
+  "lid": {
+    "clip_min": 1.0,
+    "clip_max": 200.0,
+    "duplicate_tolerance": 1e-12,
+    "fallback": 200.0
+  },
+  "tri_predict": {
+    "target": 0.90,
+    "max_rank_samples": 256
+  }
+}

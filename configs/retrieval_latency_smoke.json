@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "run_name": "retrieval_latency_smoke",
+  "seeds": {
+    "corpus": 11003,
+    "queries": 12007,
+    "projection": 13001
+  },
+  "dataset": {
+    "corpus_size": 10000,
+    "query_count": 8,
+    "warmup_query_count": 1,
+    "dimension": 128,
+    "dtype": "float32",
+    "generation_batch_rows": 1024
+  },
+  "projection": {
+    "m_prime": 32
+  },
+  "search": {
+    "k_gt": 5,
+    "m_pilot": 16,
+    "s_lid": 12,
+    "min_lid_neighbors": 6,
+    "m_grid": [
+      16,
+      32,
+      64,
+      128
+    ],
+    "fixed_budget": 64,
+    "corpus_block_rows": 1024
+  },
+  "lid": {
+    "clip_min": 1.0,
+    "clip_max": 200.0,
+    "duplicate_tolerance": 1e-12,
+    "fallback": 200.0
+  },
+  "tri_predict": {
+    "target": 0.90,
+    "max_rank_samples": 128
+  }
+}

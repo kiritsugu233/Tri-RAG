@@ -118,6 +118,14 @@ class EndToEndTests(unittest.TestCase):
                 self.assertTrue(all(left <= right for left, right in zip(fixed, fixed[1:])))
                 expected = len(set(row["exact_top_k_ids"]) & set(row["reranked_top_k_ids"])) / config.retrieval.k_gt
                 self.assertEqual(row["embedding_retention"], expected)
+                self.assertEqual(row["projected_scan_count"], 1)
+                self.assertEqual(
+                    row["projected_distance_count"],
+                    config.synthetic.n_clusters * config.synthetic.docs_per_cluster,
+                )
+                self.assertEqual(
+                    row["projected_cache_budget"], config.retrieval.m_grid[-1]
+                )
             report = paths_one["report.md"].read_text()
             expected_status = "PASS" if certificate_one["passed"] else "FAIL"
             self.assertIn(f"Stored artifact decision: **{expected_status}**", report)
