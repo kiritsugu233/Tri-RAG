@@ -1,6 +1,6 @@
 # Retrieval-only latency benchmark
 
-Updated: 2026-08-20
+Updated: 2026-08-21
 
 ## Purpose
 
@@ -126,6 +126,54 @@ invariant: reuse performed 100,000 projected distances and scanned 38.4 MB per
 query, versus 200,000 distances and 76.8 MB for the legacy control. It selected
 the same budgets and retention. Mac latency is not a Genoa result and is not
 used for serving claims.
+
+## Genoa 100k result
+
+Slurm job `371643` ran on `genoa04` at commit
+`fc2ce25d7fb29c1f005d61ddc5c847981ebe7e3b` with Python `3.9.23`, NumPy
+`1.26.4`, SciPy `1.13.0`, and one thread for each configured BLAS runtime. All
+41 offline tests passed before the benchmark. The audit archive has SHA-256
+`3b4d5a76d2a0005a237f1e86df6b8ba992c9b2b51a3a4a9f649700672d999c10`.
+
+| Path | mean (ms) | p50 (ms) | p95 (ms) | p99 (ms) | mean M | mean retention |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| original fixed | 17.0579 | 17.0539 | 17.1631 | 17.2223 | 512 | 1.0000 |
+| projected fixed | 3.5866 | 3.3435 | 4.2215 | 4.2990 | 512 | 0.0578 |
+| Tri-Predict, reuse | 61.0718 | 60.9780 | 62.3908 | 63.8409 | 1024 | 0.0969 |
+| Tri-Predict, double scan | 63.9405 | 64.1006 | 65.1323 | 65.5186 | 1024 | 0.0969 |
+
+The reuse path evaluated `100,000` projected distances and scanned 38.4 MB per
+query. The control evaluated `200,000` and scanned 76.8 MB. Reuse therefore
+removed exactly 50% of projected distance work and bytes. It reduced mean total
+latency by 4.49% and p95 by 4.21%. Query-level audit found identical budgets and
+retention for all 64 paired queries; reuse was faster for 63 of 64 individual
+pairs. The one slower pair is timing noise rather than a decision mismatch.
+
+All 64 pilot LID estimates were valid, with raw LID from `34.43` to `84.96`
+(mean `54.30`), but all 64 policy decisions saturated at the maximum budget
+`M=1024`. Tri-Predict itself averaged 55.7710 ms, or 91.32% of the reuse path's
+total time. Its mean top-10 embedding retention was only 9.69%; 23 of 64
+queries retained none of the original top-10. Projected fixed `M=512` retained
+5.78% on average and had zero retention on 37 of 64 queries.
+
+The operational 100k gate passes: the run completed within the memory bound,
+the exact backend remained streaming, work counters prove one-scan reuse, and
+reuse preserved decisions and quality. Peak process RSS was approximately
+424.1 MiB (`444,706,816` bytes), while the node reported approximately 738 GiB
+available before the run. The semantic/policy-efficiency gate does not pass:
+the normalized-Gaussian fixture has no text semantics, the adaptive policy
+saturates every query, and its analytic computation makes it slower than both
+fixed baselines.
+
+The 1M run is therefore authorized only as a systems-scaling measurement. It
+may test scan bandwidth, tail latency, memory, and the crossover between scan
+cost and the current scalar analytic overhead; it must not be reported as
+evidence that Tri-Predict is adaptive, quality-preserving, or latency-efficient.
+Because the checked-in 1M configuration also changes `d` from 768 to 1024 and
+`m_prime` from 96 to 128, it is a second deployment-shaped operating point,
+not a controlled estimate of corpus-size scaling alone.
+Meaningful policy evaluation still requires the real external-query embedding
+adapter and an independently tuned/frozen policy.
 
 ## Interpretation limits
 

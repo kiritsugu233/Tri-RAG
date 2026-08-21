@@ -1,6 +1,6 @@
 # Status
 
-Updated: 2026-08-20
+Updated: 2026-08-21
 
 ## What runs
 
@@ -67,7 +67,7 @@ python3 -m tri_rag_harness.retrieval_benchmark \
 
 - Passed: 41
 - Failed: 0
-- Runtime in the current environment: approximately 3.2 seconds
+- Runtime in the current environment: approximately 3.4 seconds
 - Added coverage includes cross-platform policy-float canonicalization, exact `h_j(y)` term-by-term agreement with the orthogonal conditional law, geometric rank-strata population conservation and approximation error, root residuals, the infinite-root/unit-retention boundary, budget monotonicity, LID-to-budget monotonicity, saturation, analytic/empirical interface compatibility, and tune-only scalar safety correction.
 - Attribution coverage verifies that actual squared-distance ratios reproduce the rank-model prediction when the assumed power law is exact, that attribution modes produce complete query-level artifacts, and that different synthetic seeds create disjoint stable ID namespaces.
 - The pre-Milestone-4 baseline also passed all then-current 22 tests on Slurm job `371035`, node `genoa05`, using Python `3.9.23`, NumPy `1.26.4`, and SciPy `1.13.0` from micromamba environment `tri-rag`.
@@ -114,11 +114,11 @@ The independent extended sweep covers twelve dimensions from `2` through `32` wi
 
 Slurm job `371643` exactly reproduced the selection, frozen config, sweep result, Tri-Predict policy, and Tri-Predict certificate byte for byte. The aggregate files differ only in the test-split mean pilot/oracle LID gap at approximately `4e-15`; the manifest differs only in timestamp and software platform fields. On Genoa, Tri-Predict averaged `6.0325 ms/query`, of which `5.9988 ms` was analytic policy computation. The empirical policy path averaged `0.0404 ms/query`. Thus the current analytic implementation has no demonstrated wall-clock benefit on this tiny corpus despite reducing candidate count.
 
-The retrieval-only benchmark is documented in `docs/RETRIEVAL_LATENCY.md`. Its local 100k/d768 structural run proves that the reuse path performs one projected scan (`N` distances, 38.4 MB scanned per query) while the legacy control performs two (`2N`, 76.8 MB), with identical Tri-Predict budgets and retention. The main certification harness has also been changed to one projected scan per query. Final latency conclusions await the controlled Genoa run.
+The retrieval-only benchmark is documented in `docs/RETRIEVAL_LATENCY.md`. Slurm job `371643` completed the controlled 100k/d768 run on `genoa04` at commit `fc2ce25d7fb29c1f005d61ddc5c847981ebe7e3b`; all 41 tests passed. Reuse performs one projected scan (`N` distances, 38.4 MB per query) while the control performs two (`2N`, 76.8 MB), and all 64 paired queries have identical budgets and retention. Mean latency fell from `63.9405` to `61.0718 ms/query` (4.49%), but scalar Tri-Predict alone costs `55.7710 ms/query`. All 64 decisions saturate at `M=1024`; mean retention is only `0.096875`, with zero top-10 retention on 23 queries. Peak RSS was `444,706,816` bytes. The systems/reuse gate passes, while the semantic and adaptive-efficiency gate fails as expected for the normalized-Gaussian fixture.
 
 ## Next task
 
-Run and archive the single-threaded 100k/d768 retrieval-only benchmark on Genoa. Verify one-versus-two scan work counters, memory, p50/p95/p99, and identical reuse/control decisions. If that gate passes, run the 1M/d1024 configuration before adding FAISS CPU/GPU. Cross-dimension policy selection remains blocked on a predeclared compute objective and denser fixed-budget grid.
+Run and archive the 1M/d1024 exact benchmark on Genoa as a systems-scaling experiment. Preserve the one-versus-two scan assertions and report generation/setup time separately from measured query latency. Do not interpret it as a positive adaptive-policy result: the 100k Gaussian fixture saturated every Tri-Predict decision and failed to preserve useful top-10 retention. After the exact 1M run, add the real external-query embedding adapter before making policy-quality claims; FAISS CPU/GPU should be compared against the archived exact baselines. Cross-dimension policy selection remains blocked on a predeclared compute objective and denser fixed-budget grid.
 
 ## Known deviations and risks
 
@@ -130,6 +130,7 @@ Run and archive the single-threaded 100k/d768 retrieval-only benchmark on Genoa.
 - The extended sweep shows that maximizing relative saving against a dimension-specific certified fixed baseline is unstable across dimensions and seeds. Its selected `m_prime=8` policy passes independently, but the `31.42%` saving is amplified by a coarse-grid certification cliff and is not a global cost optimum.
 - On Genoa, scalar Tri-Predict root solving dominates measured retrieval latency (`5.9988` of `6.0325 ms/query`) on the 160-item synthetic corpus. Candidate-count saving must not be presented as latency saving; vectorization, lookup-table caching, or a validated approximation is required before serving claims.
 - The retrieval latency fixture uses normalized Gaussian vectors with realistic shapes and memory traffic, not embeddings from a text model. It is a systems benchmark only; semantic retrieval conclusions require the real external-query adapter.
+- The Genoa 100k run passes the systems gate but not the policy gate: all queries saturate at `M=1024`, mean top-10 retention is `0.096875`, and Tri-Predict accounts for 91.32% of reuse-path latency. The 1M run can establish scaling behavior only.
 - Tri-Predict's exact rank summation is intentionally correctness-oriented and currently costs several milliseconds per synthetic query. Large real corpora should use and validate the deterministic rank approximation before performance claims.
 - Runtime timestamps and timing measurements are intentionally nondeterministic. Policy, metric, certificate, candidate, and reranked-ID values reproduce under the same manifest and seeds.
 - The repository is now connected to GitHub; Slurm runs remain user-executed and their logs should be retained alongside commit IDs and environment versions.
