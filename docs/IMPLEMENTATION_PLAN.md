@@ -102,7 +102,7 @@ Acceptance:
 - [x] Record p50/p95/p99, distance counts, bytes scanned, cache size, and process RSS.
 - [x] Verify that reuse and double scan make identical decisions under exact search.
 - [x] Reproduce the 100k baseline on Genoa with one BLAS thread.
-- [ ] Run the 1M scale-up after the 100k gate passes.
+- [x] Run the 1M scale-up after the 100k gate passes.
 - [ ] Add FAISS CPU/GPU only after the exact baseline is archived.
 
 Acceptance:

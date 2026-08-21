@@ -175,6 +175,58 @@ not a controlled estimate of corpus-size scaling alone.
 Meaningful policy evaluation still requires the real external-query embedding
 adapter and an independently tuned/frozen policy.
 
+## Genoa 1M result
+
+Slurm job `371643` also ran the 1M/d1024 configuration on `genoa04` at commit
+`37e60d5da57817efe3af8a7874b16206586f672c`. The environment again used Python
+`3.9.23`, NumPy `1.26.4`, SciPy
+`1.13.0`, and one BLAS thread. All 41 offline tests passed. The audit archive
+has SHA-256
+`fa6b8763d0ebff0dd7421cc6d81cd5b3dfad7fb4b0cb7e4ab00cdcabe83b8c77`.
+
+| Path | mean (ms) | p50 (ms) | p95 (ms) | p99 (ms) | mean M | mean retention |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| original fixed | 193.2208 | 193.2184 | 193.6270 | 193.8720 | 1024 | 1.0000 |
+| projected fixed | 64.4080 | 63.8469 | 66.7349 | 66.8708 | 1024 | 0.0312 |
+| Tri-Predict, reuse | 146.7481 | 146.0945 | 151.3177 | 152.4968 | 2048 | 0.0688 |
+| Tri-Predict, double scan | 194.9228 | 195.4949 | 198.2416 | 198.7729 | 2048 | 0.0688 |
+
+The reuse path scanned 512 MB and evaluated one million projected distances per
+query. The control scanned 1.024 GB and evaluated two million. Reuse reduced
+mean latency by 24.71% and p95 by 23.67%, and was faster on all 32 paired
+queries. The paired saving averaged 48.175 ms and ranged from 37.264 to
+52.673 ms. All paired budgets and retention values were identical.
+
+At this operating point the single top-`M_max` projected scan averaged
+85.902 ms, or 58.54% of reuse-path latency. Tri-Predict averaged 59.298 ms, or
+40.41%. This is the intended systems crossover: scan work has become the
+largest stage, so eliminating the second pass has a material end-to-end effect.
+The scalar policy cost nevertheless remains too large for a serving path. Its
+latency grew only 1.06x from 100k while the reuse scan grew 18.78x, consistent
+with policy computation depending primarily on the frozen rank approximation
+rather than scanning every corpus item.
+
+The quality result remains negative. All 32 LID estimates were valid, with raw
+LID from `42.17` to `71.14` (mean `58.36`), but all 32 decisions saturated at
+`M=2048`. Mean top-10 retention was 6.875%, and 17 of 32 queries had zero
+retention. Projected fixed `M=1024` retained 3.125% on average and had zero
+retention on 24 queries. Although the maximum budget doubled relative to the
+100k run, its corpus fraction fell from 1.024% to 0.2048%, which helps explain
+the lower retention on the Gaussian fixture.
+
+Original and projected corpus storage were 4.096 GB and 512 MB; measured peak
+RSS was 4.364 GiB. Corpus generation took 72.19 seconds and projection
+generation took 4.74 seconds. The complete benchmark process took 99.88 seconds
+of wall time and exited successfully.
+
+The exact CPU baseline is now sufficient to begin a FAISS adapter experiment,
+but raw backend latency and end-to-end latency must remain separate. Before an
+end-to-end GPU claim, the frozen analytic policy should be compiled into tested
+LID-to-budget decision boundaries or an equivalently validated lookup, because
+a faster projected backend would otherwise expose the roughly 59 ms scalar
+policy computation as the dominant cost. Real embedding data is still required
+for any retention, evidence, or adaptive-policy claim.
+
 ## Interpretation limits
 
 - Exact NumPy streaming search is the correctness baseline, not the final
