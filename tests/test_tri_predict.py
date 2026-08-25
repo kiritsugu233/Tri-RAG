@@ -2,7 +2,11 @@ import unittest
 
 import numpy as np
 
-from tri_rag_harness.policies import MonotoneBinnedPolicy, TriPredictPolicy
+from tri_rag_harness.policies import (
+    CompiledTriPredictPolicy,
+    MonotoneBinnedPolicy,
+    TriPredictPolicy,
+)
 from tri_rag_harness.tri_law import tri_law_conditional_orthogonal
 from tri_rag_harness.tri_predict import (
     actual_distance_retention_grid,
@@ -198,6 +202,79 @@ class TriPredictTests(unittest.TestCase):
         fallback = policy.choose(100.0, False)
         self.assertTrue(fallback.used_fallback)
         self.assertEqual(fallback.budget, 80)
+
+    def test_compiled_policy_matches_dense_reference_and_adjacent_boundaries(self):
+        reference = TriPredictPolicy(
+            corpus_size=40,
+            m_prime=8,
+            k_gt=3,
+            grid=[4, 8, 16, 32],
+            target=0.8,
+            max_rank_samples=32,
+        )
+        compiled = CompiledTriPredictPolicy.compile(
+            reference,
+            lid_min=1.0,
+            lid_max=100.0,
+            validation_samples=17,
+        )
+        dense = np.unique(
+            np.concatenate(
+                (
+                    np.linspace(1.0, 100.0, 257),
+                    np.geomspace(1.0, 100.0, 257),
+                )
+            )
+        )
+        self.assertEqual(compiled.assert_equivalent(reference, dense), len(dense))
+        for upper_lid in compiled.upper_lids:
+            next_lid = np.nextafter(upper_lid, np.inf)
+            for lid_value in (upper_lid, next_lid):
+                compiled_decision = compiled.choose(lid_value)
+                reference_decision = reference.choose(lid_value)
+                self.assertEqual(compiled_decision.budget, reference_decision.budget)
+                self.assertEqual(
+                    compiled_decision.saturated, reference_decision.saturated
+                )
+                self.assertFalse(compiled_decision.used_fallback)
+                self.assertIsNone(compiled_decision.predicted_retention)
+        artifact = compiled.serialize()
+        self.assertEqual(artifact["reference_policy_fingerprint"], reference.serialize()["fingerprint"])
+        self.assertEqual(artifact["compile_validation"]["mismatches"], 0)
+        self.assertEqual(artifact["fingerprint"], compiled.serialize()["fingerprint"])
+        loaded = CompiledTriPredictPolicy.from_serialized(
+            artifact,
+            expected_reference_policy_fingerprint=reference.serialize()["fingerprint"],
+        )
+        self.assertEqual(loaded.serialize(), artifact)
+        self.assertEqual(loaded.assert_equivalent(reference, dense), len(dense))
+
+        tampered = dict(artifact)
+        tampered["upper_lids"] = list(artifact["upper_lids"])
+        tampered["upper_lids"][0] += 0.01
+        with self.assertRaises(ValueError):
+            CompiledTriPredictPolicy.from_serialized(tampered)
+
+    def test_compiled_policy_falls_back_outside_frozen_lid_domain(self):
+        reference = TriPredictPolicy(
+            corpus_size=30,
+            m_prime=8,
+            k_gt=3,
+            grid=[4, 8, 16],
+            target=0.8,
+            max_rank_samples=16,
+        )
+        compiled = CompiledTriPredictPolicy.compile(
+            reference,
+            lid_min=2.0,
+            lid_max=20.0,
+            validation_samples=5,
+        )
+        for lid_value, lid_valid in ((1.0, True), (21.0, True), (5.0, False)):
+            decision = compiled.choose(lid_value, lid_valid)
+            self.assertEqual(decision.budget, 16)
+            self.assertTrue(decision.used_fallback)
+            self.assertFalse(decision.saturated)
 
     def test_safety_correction_is_fit_only_from_supplied_tune_records(self):
         base = TriPredictPolicy(

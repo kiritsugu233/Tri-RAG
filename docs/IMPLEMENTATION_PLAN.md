@@ -103,6 +103,9 @@ Acceptance:
 - [x] Verify that reuse and double scan make identical decisions under exact search.
 - [x] Reproduce the 100k baseline on Genoa with one BLAS thread.
 - [x] Run the 1M scale-up after the 100k gate passes.
+- [x] Compile a frozen analytic policy into adjacent-float64 LID decision intervals.
+- [x] Add fingerprinted artifact loading and dense/reference boundary equivalence tests.
+- [ ] Reproduce compiled-policy lookup latency and exact decision equivalence on Genoa.
 - [ ] Add FAISS CPU/GPU only after the exact baseline is archived.
 
 Acceptance:

@@ -52,6 +52,10 @@ class RetrievalBenchmarkTests(unittest.TestCase):
             config = self._small_config(directory)
             paths = run_retrieval_benchmark(config, directory / "run")
             summary = json.loads(paths["summary.json"].read_text())
+            manifest = json.loads(paths["manifest.json"].read_text())
+            compiled_policy = json.loads(
+                paths["tri_predict_compiled_policy.json"].read_text()
+            )
             rows = [
                 json.loads(line)
                 for line in paths["per_query.jsonl"].read_text().splitlines()
@@ -77,6 +81,22 @@ class RetrievalBenchmarkTests(unittest.TestCase):
                 ],
                 0.5,
             )
+            self.assertEqual(
+                manifest["policy_execution"]["implementation"],
+                "compiled_float64_lid_decision_boundaries",
+            )
+            self.assertEqual(
+                compiled_policy["reference_policy_fingerprint"],
+                manifest["policy"]["fingerprint"],
+            )
+            self.assertEqual(
+                summary["policy_execution"]["observed_equivalence_n"],
+                config.dataset.query_count,
+            )
+            self.assertEqual(
+                summary["policy_execution"]["observed_equivalence_mismatches"],
+                0,
+            )
             for query_index in range(config.dataset.query_count):
                 reuse_row = next(
                     row
@@ -97,6 +117,7 @@ class RetrievalBenchmarkTests(unittest.TestCase):
                 )
             self.assertTrue(paths["report.md"].is_file())
             self.assertTrue(paths["memory.json"].is_file())
+            self.assertTrue(paths["tri_predict_compiled_policy.json"].is_file())
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 # Retrieval-only latency benchmark
 
-Updated: 2026-08-21
+Updated: 2026-08-25
 
 ## Purpose
 
@@ -35,6 +35,42 @@ reranking in both paths.
 The main synthetic certification harness now uses the same one-scan invariant:
 it scans to `M_max` once, obtains the pilot from the prefix, and slices the
 cached ranking after the policy decision.
+
+## Compiled Tri-Predict serving policy
+
+The retrieval benchmark no longer evaluates scalar Tri-Predict roots in the
+measured query path. Before queries start, it compiles the frozen analytic
+policy over the configured LID clipping interval into monotone float64 decision
+intervals. Compilation locates each transition down to adjacent representable
+positive float64 values. Runtime inference performs one interval lookup.
+
+The compiled artifact records the analytic reference-policy fingerprint,
+numeric and hexadecimal transition boundaries, budget/saturation states, LID
+domain, validation counts, and its own fingerprint. Loading refuses a modified
+artifact, a mismatched analytic policy, inconsistent hexadecimal boundaries,
+or an incompatible input domain. Invalid or out-of-domain LID inputs use the
+maximum-budget fallback.
+
+Compilation validates linear, geometric, exact-boundary, and immediately
+adjacent float64 inputs. Every benchmark also evaluates the analytic reference
+on every observed reuse-path LID after latency measurement and refuses to emit
+results if budget, fallback, or saturation differs. Predicted-retention values
+remain reference-only diagnostics and are intentionally not synthesized by the
+decision-only serving artifact.
+
+The local 10k smoke run produced five decision states and zero equivalence
+mismatches. The analytic reference averaged 5.8602 ms/decision; frozen lookup
+averaged 0.0021 ms/decision, a measured 2,845x speedup. These Mac timings are a
+structural result only. Controlled Genoa 100k and 1M reruns are required before
+updating CPU latency claims.
+
+The local 100k/d768 run produced seven decision states, loaded its frozen
+artifact in 0.1093 ms, and reproduced all 64 previous LID values, budgets, and
+retention values exactly. Reference validation averaged 38.4606 ms/decision;
+lookup averaged 0.0021 ms/decision. The measured reuse path fell from 44.7511
+to 4.2712 ms/query across separate local runs. Compilation took 17.9965 seconds
+and remains explicitly outside per-query latency. This is also diagnostic until
+the controlled Genoa rerun completes.
 
 ## Memory-bounded exact backend
 
@@ -92,6 +128,8 @@ artifacts pass scan-count and memory checks.
 - `per_query.jsonl`: query-level stage timings and work counters;
 - `memory.json`: memmap sizes, query/projection sizes, cache size, and peak RSS;
 - `tri_predict_policy.json`;
+- `tri_predict_compiled_policy.json`: loadable decision intervals tied to the
+  analytic reference fingerprint;
 - `report.md`.
 
 Stages include query projection, original scan, pilot scan, original pilot
@@ -239,4 +277,6 @@ for any retention, evidence, or adaptive-policy claim.
   count are part of the benchmark environment.
 - Candidate-count saving is not latency saving. Tri-Predict root solving,
   projected scans, and memory traffic are all reported independently.
+- Compilation time is setup cost and is reported separately. The per-query
+  policy stage measures only the loaded frozen lookup.
 - FAISS CPU/GPU comparisons come only after the exact Genoa baseline passes.

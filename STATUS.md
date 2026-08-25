@@ -1,12 +1,16 @@
 # Status
 
-Updated: 2026-08-21
+Updated: 2026-08-25
 
 ## What runs
 
 Milestones 0 through 4 and the retrieval-only systems benchmark are implemented as CPU-only, network-free harnesses. The certification run generates external tune/cert/test queries, normalizes embeddings, builds one fixed dense-Gaussian projection, runs exact original/projected squared-L2 retrieval, fits and freezes both monotone-binned and query-adaptive Tri-Predict policies on tune queries, evaluates each policy independently, and writes auditable artifacts. A separate two-stage command performs a predeclared global `m_prime`/Tri-Predict-threshold sweep on tune only, writes frozen selection artifacts, and then evaluates one fresh certification split.
 
 Pilot and expansion now reuse one exact projected scan in the main harness: the backend retains top `M_max`, exposes the pilot prefix, and slices the cached ranking after `M(q)` is chosen. A separate retrieval-only benchmark provides a memmap-compatible streaming exact backend plus an explicit legacy double-scan control at `100k x 768` and `1M x 1024` scale.
+
+The retrieval benchmark now compiles the frozen analytic Tri-Predict policy into adjacent-float64 LID decision intervals before query measurement. Its serving path loads a fingerprint-checked artifact and uses one interval lookup per query. Compilation and analytic-reference validation are outside measured retrieval latency. Every observed query LID is checked against the analytic reference after measurement, and a mismatch aborts artifact generation. The main certification harness retains the analytic policy so its predicted-retention diagnostics and existing certificate identity do not change.
+
+The local compiled-policy 100k/d768 structural run created seven states, loaded the artifact in `0.1093 ms`, and exactly matched all 64 prior local LID values, budgets, and retention values. Analytic validation averaged `38.4606 ms/decision`; lookup averaged `0.0021 ms/decision`. Reuse-path latency fell from `44.7511` to `4.2712 ms/query` across the old and new local runs. Compilation cost `17.9965 s` once at setup. These are not Genoa serving claims.
 
 The exact single-triplet Tri-Law and orthogonal conditional specialization remain independent of Tri-Predict. Tri-Predict adds the documented LID rank-distance, orthogonality, structural, conditional-independence, and mean-field approximations. It uses exact finite-rank summation for small competitor populations and deterministic geometric rank strata for larger populations.
 
@@ -65,10 +69,11 @@ python3 -m tri_rag_harness.retrieval_benchmark \
 
 ## Tests passed/failed
 
-- Passed: 41
+- Passed: 43
 - Failed: 0
-- Runtime in the current environment: approximately 3.4 seconds
+- Runtime in the current environment: approximately 6.3 seconds
 - Added coverage includes cross-platform policy-float canonicalization, exact `h_j(y)` term-by-term agreement with the orthogonal conditional law, geometric rank-strata population conservation and approximation error, root residuals, the infinite-root/unit-retention boundary, budget monotonicity, LID-to-budget monotonicity, saturation, analytic/empirical interface compatibility, and tune-only scalar safety correction.
+- Compiled-policy coverage checks dense linear/geometric LID values, both sides of every adjacent-float64 transition, invalid/out-of-domain fallback, deterministic serialization, artifact round-trip loading, and tamper rejection.
 - Attribution coverage verifies that actual squared-distance ratios reproduce the rank-model prediction when the assumed power law is exact, that attribution modes produce complete query-level artifacts, and that different synthetic seeds create disjoint stable ID namespaces.
 - The pre-Milestone-4 baseline also passed all then-current 22 tests on Slurm job `371035`, node `genoa05`, using Python `3.9.23`, NumPy `1.26.4`, and SciPy `1.13.0` from micromamba environment `tri-rag`.
 - The extended sweep passed all 39 tests on Slurm job `371643`, node `genoa04`, commit `d5ec795abf0ca604c90ac2b5300708232874ef32`, using Python `3.9.23`, NumPy `1.26.4`, and SciPy `1.13.0`.
@@ -120,7 +125,7 @@ The 1M/d1024 follow-up completed in the same allocation at commit `37e60d5da5781
 
 ## Next task
 
-Compile the frozen analytic policy into validated LID-to-budget decision boundaries or an equivalently conservative lookup so inference does not rerun approximately 59 ms of scalar root solving. Require dense equivalence and boundary tests against the analytic reference. Then add FAISS behind the existing index adapter and compare raw CPU/GPU backend latency separately from full retrieval latency against the archived exact 100k and 1M baselines. In parallel with systems work, begin the real external-query embedding adapter before making policy-quality claims. Cross-dimension policy selection remains blocked on a predeclared compute objective and denser fixed-budget grid.
+Reproduce the compiled-policy 100k and 1M retrieval benchmarks on Genoa. Require zero compile/reference mismatches, identical budgets and retention versus the archived analytic runs, and report setup compilation separately from loaded lookup latency. If that gate passes, add FAISS behind the existing index adapter and compare raw CPU/GPU backend latency separately from full retrieval latency. Independently, begin the real external-query embedding adapter before making policy-quality claims. Cross-dimension policy selection remains blocked on a predeclared compute objective and denser fixed-budget grid.
 
 ## Known deviations and risks
 
@@ -131,6 +136,7 @@ Compile the frozen analytic policy into validated LID-to-budget decision boundar
 - The new global sweep avoids that old split and enforces tune-only selection in code. Its positive `11.23%` result is candidate-count efficiency, not a latency claim; `m_prime=24` increases projected-search arithmetic relative to `m_prime=16`.
 - The extended sweep shows that maximizing relative saving against a dimension-specific certified fixed baseline is unstable across dimensions and seeds. Its selected `m_prime=8` policy passes independently, but the `31.42%` saving is amplified by a coarse-grid certification cliff and is not a global cost optimum.
 - On Genoa, scalar Tri-Predict root solving dominates measured retrieval latency (`5.9988` of `6.0325 ms/query`) on the 160-item synthetic corpus. Candidate-count saving must not be presented as latency saving; vectorization, lookup-table caching, or a validated approximation is required before serving claims.
+- The compiled policy preserves only decision fields. Analytic predicted-retention values remain diagnostics produced by the reference policy; they are not reconstructed or interpolated online.
 - The retrieval latency fixture uses normalized Gaussian vectors with realistic shapes and memory traffic, not embeddings from a text model. It is a systems benchmark only; semantic retrieval conclusions require the real external-query adapter.
 - The Genoa 100k run passes the systems gate but not the policy gate: all queries saturate at `M=1024`, mean top-10 retention is `0.096875`, and Tri-Predict accounts for 91.32% of reuse-path latency. The 1M run can establish scaling behavior only.
 - The Genoa 1M run also passes only the systems gate. Reuse saves 24.71% mean latency, but all queries saturate at `M=2048` and mean retention falls to `0.06875`. The checked-in 100k and 1M configurations change `N`, `d`, `m_prime`, pilot size, and budget together, so their ratio is not a controlled single-variable scaling law.

@@ -19,7 +19,7 @@ import scipy
 
 from .indexes import StreamingExactSquaredL2Index, StreamingSearchResult
 from .lid import LIDEstimate, estimate_lid_from_squared_distances
-from .policies import TriPredictPolicy
+from .policies import CompiledTriPredictPolicy, PolicyDecision, TriPredictPolicy
 from .projection import dense_gaussian_projection, projection_metadata
 from .utils import array_fingerprint, fingerprint, write_json
 
@@ -439,6 +439,7 @@ def _base_record(
         "lid_valid": None,
         "lid_failure_reason": None,
         "policy_saturated": False,
+        "policy_used_fallback": False,
         "projected_scan_count": 0,
         "original_scan_count": 0,
         "projected_distance_evaluations": 0,
@@ -605,7 +606,7 @@ def _run_tri_predict(
     projected_index: StreamingExactSquaredL2Index,
     corpus: np.ndarray,
     corpus_norms: np.ndarray,
-    policy: TriPredictPolicy,
+    policy: CompiledTriPredictPolicy,
     config: RetrievalBenchmarkConfig,
 ) -> Dict[str, Any]:
     record = _base_record(method, query_index, config)
@@ -661,6 +662,7 @@ def _run_tri_predict(
         gt_rows, reranked[: config.search.k_gt]
     )
     record["policy_saturated"] = decision.saturated
+    record["policy_used_fallback"] = decision.used_fallback
     record["projected_scan_count"] = 1 if reuse_projected_distances else 2
     record["projected_distance_evaluations"] = pilot.distance_evaluations + (
         0 if expansion is None else expansion.distance_evaluations
@@ -776,6 +778,7 @@ def _report(
         f"- corpus block rows: {config['search']['corpus_block_rows']}",
         f"- dtype: {config['dataset']['dtype']}",
         "- projected vectors renormalized: false",
+        "- Tri-Predict execution: compiled float64 LID decision boundaries",
         "",
         "## End-to-end latency",
         "",
@@ -797,7 +800,7 @@ def _report(
             "",
             "## Mean stage latency (ms/query)",
             "",
-            "| method | query projection | original search | pilot search | LID total | Tri-Predict | expansion | rerank |",
+            "| method | query projection | original search | pilot search | LID total | policy lookup | expansion | rerank |",
             "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
         ]
     )
@@ -830,6 +833,7 @@ def _report(
             f"{work['original_vector_bytes_scanned']:.0f} |"
         )
     comparison = summary["reuse_comparison"]
+    policy_execution = summary["policy_execution"]
     lines.extend(
         [
             "",
@@ -843,6 +847,20 @@ def _report(
             "The reuse path performs one exact projected scan and retains top-M_max. "
             "The legacy path performs one pilot scan and one expansion scan. Original "
             "pilot distances are reused by reranking in both paths.",
+            "",
+            "## Compiled Tri-Predict",
+            "",
+            f"- compiled intervals: {policy_execution['compiled_interval_count']}",
+            f"- one-time compilation: {policy_execution['compilation_seconds']:.6f} seconds",
+            f"- frozen artifact load: {policy_execution['artifact_load_ms']:.6f} ms",
+            f"- observed LID equivalence checks: {policy_execution['observed_equivalence_n']}",
+            f"- analytic reference decision: {policy_execution['reference_mean_ms']:.6f} ms/query",
+            f"- compiled lookup decision: {policy_execution['compiled_mean_ms']:.6f} ms/query",
+            f"- decision speedup: {policy_execution['decision_speedup']:.2f}x",
+            "",
+            "Compilation searches adjacent positive float64 values inside the frozen "
+            "LID clipping interval. The online lookup preserves budget, fallback, and "
+            "saturation decisions; prediction values remain reference-only diagnostics.",
             "",
             "## Memory",
             "",
@@ -871,6 +889,30 @@ def run_retrieval_benchmark(
         )
     output_dir.mkdir(parents=True, exist_ok=True)
     created_at = datetime.now(timezone.utc).isoformat()
+    reference_policy = TriPredictPolicy(
+        corpus_size=config.dataset.corpus_size,
+        m_prime=config.projection.m_prime,
+        k_gt=config.search.k_gt,
+        grid=config.search.m_grid,
+        target=config.tri_predict.target,
+        max_rank_samples=config.tri_predict.max_rank_samples,
+    )
+    policy_artifact = reference_policy.serialize()
+    compilation_started = perf_counter()
+    compiled_policy = CompiledTriPredictPolicy.compile(
+        reference_policy,
+        lid_min=config.lid.clip_min,
+        lid_max=config.lid.clip_max,
+        validation_samples=65,
+    )
+    compilation_seconds = perf_counter() - compilation_started
+    compiled_policy_artifact = compiled_policy.serialize()
+    artifact_load_started = perf_counter()
+    policy = CompiledTriPredictPolicy.from_serialized(
+        compiled_policy_artifact,
+        expected_reference_policy_fingerprint=policy_artifact["fingerprint"],
+    )
+    artifact_load_ms = (perf_counter() - artifact_load_started) * 1000.0
     generated = _generate_embeddings(config, output_dir / "data")
     corpus, corpus_norms, projected, projected_norms, queries = _load_generated(
         config, generated
@@ -890,15 +932,6 @@ def run_retrieval_benchmark(
         squared_norms=projected_norms,
         block_rows=config.search.corpus_block_rows,
     )
-    policy = TriPredictPolicy(
-        corpus_size=config.dataset.corpus_size,
-        m_prime=config.projection.m_prime,
-        k_gt=config.search.k_gt,
-        grid=config.search.m_grid,
-        target=config.tri_predict.target,
-        max_rank_samples=config.tri_predict.max_rank_samples,
-    )
-    policy_artifact = policy.serialize()
     records: List[Dict[str, Any]] = []
     warmup_count = config.dataset.warmup_query_count
     total_count = warmup_count + config.dataset.query_count
@@ -948,7 +981,65 @@ def run_retrieval_benchmark(
         if global_index >= warmup_count:
             records.append(original_record)
             records.extend(query_records[method] for method in METHODS[1:])
+    observed_rows = [
+        record for record in records if record["method"] == METHOD_TRI_REUSE
+    ]
+    reference_started = perf_counter()
+    reference_decisions = [
+        reference_policy.choose(float(record["lid_clipped"]), bool(record["lid_valid"]))
+        for record in observed_rows
+    ]
+    reference_seconds = perf_counter() - reference_started
+    lookup_repetitions = 1000
+    compiled_started = perf_counter()
+    compiled_decisions: List[PolicyDecision] = []
+    for _ in range(lookup_repetitions):
+        compiled_decisions = [
+            policy.choose(float(record["lid_clipped"]), bool(record["lid_valid"]))
+            for record in observed_rows
+        ]
+    compiled_seconds = perf_counter() - compiled_started
+    for row, reference_decision, compiled_decision in zip(
+        observed_rows, reference_decisions, compiled_decisions
+    ):
+        reference_signature = (
+            reference_decision.budget,
+            reference_decision.used_fallback,
+            reference_decision.saturated,
+        )
+        compiled_signature = (
+            compiled_decision.budget,
+            compiled_decision.used_fallback,
+            compiled_decision.saturated,
+        )
+        recorded_signature = (
+            int(row["chosen_m"]),
+            bool(row["policy_used_fallback"]),
+            bool(row["policy_saturated"]),
+        )
+        if compiled_signature != reference_signature or recorded_signature != reference_signature:
+            raise AssertionError(
+                "compiled Tri-Predict disagrees with the analytic reference on an observed LID"
+            )
+    observed_n = len(observed_rows)
+    reference_mean_ms = reference_seconds * 1000.0 / observed_n
+    compiled_mean_ms = (
+        compiled_seconds * 1000.0 / (observed_n * lookup_repetitions)
+    )
+    policy_execution = {
+        "implementation": "compiled_float64_lid_decision_boundaries",
+        "compilation_seconds": compilation_seconds,
+        "artifact_load_ms": artifact_load_ms,
+        "compiled_interval_count": len(policy.states),
+        "observed_equivalence_n": observed_n,
+        "observed_equivalence_mismatches": 0,
+        "reference_mean_ms": reference_mean_ms,
+        "compiled_mean_ms": compiled_mean_ms,
+        "lookup_repetitions": lookup_repetitions,
+        "decision_speedup": reference_mean_ms / compiled_mean_ms,
+    }
     summary = _summarize_records(records)
+    summary["policy_execution"] = policy_execution
     dtype_bytes = np.dtype(np.float32).itemsize
     memory_artifacts = {
         "original_corpus_bytes": int(config.dataset.corpus_size * config.dataset.dimension * dtype_bytes),
@@ -1009,6 +1100,8 @@ def run_retrieval_benchmark(
             },
         },
         "policy": policy_artifact,
+        "compiled_policy": compiled_policy_artifact,
+        "policy_execution": policy_execution,
     }
     manifest["reproducibility_fingerprint"] = fingerprint(
         {
@@ -1019,12 +1112,16 @@ def run_retrieval_benchmark(
             "projection_fingerprint": manifest["projection"]["fingerprint"],
             "search": manifest["search"],
             "policy_fingerprint": policy_artifact["fingerprint"],
+            "compiled_policy_fingerprint": compiled_policy_artifact["fingerprint"],
         }
     )
     write_json(output_dir / "manifest.json", manifest)
     write_json(output_dir / "summary.json", summary)
     write_json(output_dir / "memory.json", memory_artifacts)
     write_json(output_dir / "tri_predict_policy.json", policy_artifact)
+    write_json(
+        output_dir / "tri_predict_compiled_policy.json", compiled_policy_artifact
+    )
     with (output_dir / "per_query.jsonl").open("w", encoding="utf-8") as handle:
         for record in records:
             handle.write(json.dumps(record, sort_keys=True, allow_nan=False) + "\n")
@@ -1035,6 +1132,8 @@ def run_retrieval_benchmark(
         "summary.json": output_dir / "summary.json",
         "memory.json": output_dir / "memory.json",
         "tri_predict_policy.json": output_dir / "tri_predict_policy.json",
+        "tri_predict_compiled_policy.json": output_dir
+        / "tri_predict_compiled_policy.json",
         "per_query.jsonl": output_dir / "per_query.jsonl",
         "report.md": report_path,
     }
