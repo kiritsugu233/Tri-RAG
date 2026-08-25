@@ -61,8 +61,7 @@ decision-only serving artifact.
 The local 10k smoke run produced five decision states and zero equivalence
 mismatches. The analytic reference averaged 5.8602 ms/decision; frozen lookup
 averaged 0.0021 ms/decision, a measured 2,845x speedup. These Mac timings are a
-structural result only. Controlled Genoa 100k and 1M reruns are required before
-updating CPU latency claims.
+structural result only.
 
 The local 100k/d768 run produced seven decision states, loaded its frozen
 artifact in 0.1093 ms, and reproduced all 64 previous LID values, budgets, and
@@ -70,7 +69,51 @@ retention values exactly. Reference validation averaged 38.4606 ms/decision;
 lookup averaged 0.0021 ms/decision. The measured reuse path fell from 44.7511
 to 4.2712 ms/query across separate local runs. Compilation took 17.9965 seconds
 and remains explicitly outside per-query latency. This is also diagnostic until
-the controlled Genoa rerun completes.
+the controlled Genoa result below.
+
+### Genoa compiled-policy result
+
+Slurm job `373123` ran both configurations on `genoa00` at commit
+`0407c831c263e7505543b3701b84e7cd4a4b4bd0`. The environment used Python
+`3.9.23`, NumPy `1.26.4`, SciPy `1.13.0`, and one BLAS thread; all 43 tests
+passed. The combined audit archive has SHA-256
+`12f2480532a221260ff2e2fd9089570b3ea3459c3578e1e67d01b5c90384bb22`.
+
+| Corpus | old analytic reuse | compiled reuse | mean reduction | old p95 | compiled p95 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 100k/d768 | 61.0718 ms | 5.2163 ms | 91.46% | 62.3908 ms | 5.4572 ms |
+| 1M/d1024 | 146.7481 ms | 87.5176 ms | 40.36% | 151.3177 ms | 90.2264 ms |
+
+At 100k, analytic validation averaged 55.8130 ms/decision and compiled lookup
+averaged 0.002544 ms, a 21,939x speedup. Compilation took 26.106 seconds and
+artifact loading took 0.149 ms. The reuse scan remained stable at 4.593 ms and
+now accounts for 88.05% of end-to-end reuse latency. Removing the shared scalar
+policy overhead increases the observable one-scan benefit over the double-scan
+control from 4.49% to 32.89% mean latency.
+
+At 1M, analytic validation averaged 58.3822 ms/decision and lookup averaged
+0.002587 ms, a 22,564x speedup. Compilation took 27.898 seconds and artifact
+loading took 0.142 ms. The reuse scan remained stable at 85.827 ms and now
+accounts for 98.07% of end-to-end reuse latency. The one-scan benefit over the
+double-scan control increases from 24.71% to 35.22% mean latency.
+
+The old and new Genoa runs have identical corpus, projected-corpus, and query
+hashes. Across all four methods and every query, LID values, budgets,
+saturation, retention, scan counts, distance counts, and byte counts are
+identical. Both analytic reference artifacts are unchanged. The 100k compiled
+artifact, including every hexadecimal transition boundary, is also byte-value
+identical between Mac and Genoa.
+
+Compilation is an offline policy-build cost. A serving process loads the frozen
+artifact in approximately 0.15 ms and does not repay the 26--28 second build
+cost. Even if a process compiled at startup, the measured per-query saving would
+amortize that cost after roughly 470 queries. The benchmark process wall time
+must not be confused with serving latency because it includes policy
+compilation, corpus generation, projection generation, and reference audits.
+
+This completes the exact CPU systems gate for a FAISS adapter. It does not
+repair the Gaussian quality result: every query still saturates at the maximum
+budget, and retention remains exactly 9.6875% at 100k and 6.875% at 1M.
 
 ## Memory-bounded exact backend
 
