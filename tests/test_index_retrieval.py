@@ -4,9 +4,11 @@ import numpy as np
 
 from tri_rag_harness.embeddings import normalize_rows
 from tri_rag_harness.indexes import (
+    FAISS_GPU_MAX_K_SELECTION,
     ExactSquaredL2Index,
     FaissBoundaryTieError,
     FaissExactSquaredL2Index,
+    FaissGpuKSelectionLimitError,
     FaissUnavailableError,
     StreamingExactSquaredL2Index,
 )
@@ -194,6 +196,20 @@ class ExactIndexTests(unittest.TestCase):
         self.assertEqual(_FakeGpuFaiss.resources_created, 1)
         self.assertFalse(first.build_metrics.gpu_resources_shared)
         self.assertTrue(second.build_metrics.gpu_resources_shared)
+
+    def test_faiss_gpu_adapter_rejects_k_plus_guard_above_selection_limit(self):
+        corpus = np.arange(2113, dtype=np.float32)[:, None]
+        index = FaissExactSquaredL2Index(
+            corpus,
+            device="gpu",
+            faiss_module=_FakeGpuFaiss,
+            enable_torch_transfer_timing=False,
+        )
+        with self.assertRaisesRegex(
+            FaissGpuKSelectionLimitError,
+            rf"at most {FAISS_GPU_MAX_K_SELECTION}.*requires 2112",
+        ):
+            index.search_one(np.asarray([0.0], dtype=np.float32), 2048)
 
     def test_real_faiss_cpu_conformance_when_installed(self):
         try:

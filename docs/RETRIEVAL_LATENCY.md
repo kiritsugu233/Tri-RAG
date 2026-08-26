@@ -265,6 +265,19 @@ slower than both GPU fixed baselines. The strong 6.28x acceleration applies to
 original fixed full-corpus search; it must not be generalized to the complete
 adaptive path.
 
+The first 1M attempt on the same job completed the FAISS CPU run, then stopped
+the GPU run during its pre-measurement NumPy conformance probe. The configured
+maximum budget was 2048 and deterministic boundary refinement requested 64
+additional rows, producing a top-2112 request. FAISS GPU's exact k-selection
+kernel accepts at most 2048. No measured GPU queries ran, and this failure says
+nothing about GPU memory capacity or retrieval quality.
+
+The harness now checks this compatibility constraint before creating the run
+directory, compiling the policy, generating multi-gigabyte fixtures, or
+constructing indexes. The adapter also checks it immediately before any direct
+search call. Both paths raise a targeted error that reports maximum `k`, guard,
+requested count, and backend limit.
+
 ## Configurations
 
 ### Smoke
@@ -293,6 +306,23 @@ adaptive path.
 - fixed `M=1024`;
 - `M_grid=[64,128,256,512,1024,2048]`;
 - approximately 4.096 GB original and 512 MB projected corpus storage.
+
+### A100-compatible 1M FAISS operating point
+
+`configs/retrieval_latency_1m_d1024_faiss_k1984.json` retains the same corpus,
+query and projection seeds, `N=1,000,000`, `d=1024`, `m_prime=128`, pilot
+settings, fixed `M=1024`, target, and rank sampling as the Genoa scale-up. Its
+only search-policy change is the final grid value:
+
+- `M_grid=[64,128,256,512,1024,1984]`;
+- stable-boundary overfetch `64`;
+- maximum FAISS request `1984+64=2048`.
+
+This is a separately named and fingerprinted operating point. CPU and GPU must
+both be rerun with it for a controlled comparison. Its adaptive budgets,
+retention and policy fingerprint cannot be substituted for, or directly
+reported as, the earlier `M_max=2048` result. The unchanged deterministic
+seeds still allow data-identity checks across runs.
 
 The 100k run is the first gate. Run the 1M configuration only after the 100k
 artifacts pass scan-count and memory checks.
@@ -461,6 +491,8 @@ for any retention, evidence, or adaptive-policy claim.
   policy stage measures only the loaded frozen lookup.
 - FAISS CPU/GPU comparisons come only after the exact Genoa baseline passes.
 - Real FAISS CPU conformance, the 10k A100 correctness/shared-resource smoke,
-  and the 100k CPU/GPU comparison pass. The 1M FAISS comparison is the next
-  systems gate; semantic and adaptive-quality claims remain blocked on real
-  embeddings and independently frozen policy evaluation.
+  and the 100k CPU/GPU comparison pass. The original 1M GPU attempt failed
+  before measurement because `2048+64` exceeded the backend's top-2048
+  k-selection limit. The separately frozen `M_max=1984` CPU/GPU comparison is
+  the next systems gate; semantic and adaptive-quality claims remain blocked
+  on real embeddings and independently frozen policy evaluation.

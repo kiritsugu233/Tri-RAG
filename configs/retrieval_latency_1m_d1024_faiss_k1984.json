@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "run_name": "retrieval_latency_1m_d1024_faiss_k1984",
+  "seeds": {
+    "corpus": 31013,
+    "queries": 32003,
+    "projection": 33013
+  },
+  "dataset": {
+    "corpus_size": 1000000,
+    "query_count": 32,
+    "warmup_query_count": 2,
+    "dimension": 1024,
+    "dtype": "float32",
+    "generation_batch_rows": 2048
+  },
+  "projection": {
+    "m_prime": 128
+  },
+  "search": {
+    "k_gt": 10,
+    "m_pilot": 64,
+    "s_lid": 48,
+    "min_lid_neighbors": 24,
+    "m_grid": [
+      64,
+      128,
+      256,
+      512,
+      1024,
+      1984
+    ],
+    "fixed_budget": 1024,
+    "corpus_block_rows": 8192
+  },
+  "lid": {
+    "clip_min": 1.0,
+    "clip_max": 200.0,
+    "duplicate_tolerance": 1e-12,
+    "fallback": 200.0
+  },
+  "tri_predict": {
+    "target": 0.90,
+    "max_rank_samples": 256
+  }
+}

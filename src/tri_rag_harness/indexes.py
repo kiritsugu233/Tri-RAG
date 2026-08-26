@@ -7,6 +7,12 @@ from typing import Any, Dict, Optional, Sequence
 import numpy as np
 
 
+# FAISS GPU's warp/block k-selection kernel rejects larger requested k values.
+# Keep this explicit so callers can reject incompatible benchmark configurations
+# before generating multi-gigabyte fixtures or constructing indexes.
+FAISS_GPU_MAX_K_SELECTION = 2048
+
+
 @dataclass(frozen=True)
 class SearchResult:
     ids: np.ndarray
@@ -54,6 +60,10 @@ class FaissUnavailableError(RuntimeError):
 
 
 class FaissBoundaryTieError(RuntimeError):
+    pass
+
+
+class FaissGpuKSelectionLimitError(ValueError):
     pass
 
 
@@ -423,6 +433,13 @@ class FaissExactSquaredL2Index:
         requested_k = min(
             self.vector_count, k + self.boundary_tie_overfetch
         )
+        if self.device == "gpu" and requested_k > FAISS_GPU_MAX_K_SELECTION:
+            raise FaissGpuKSelectionLimitError(
+                "FAISS GPU exact search supports at most "
+                f"{FAISS_GPU_MAX_K_SELECTION} requested neighbors, but stable "
+                f"top-{k} refinement requires {requested_k} "
+                f"(k + boundary_tie_overfetch={self.boundary_tie_overfetch})"
+            )
         query_matrix = np.ascontiguousarray(query_value[None, :], dtype=np.float32)
         total_started = perf_counter()
         if self._torch_transfer_timing:

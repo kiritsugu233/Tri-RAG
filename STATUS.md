@@ -22,6 +22,8 @@ The fresh 100k CPU/GPU run at commit `05ccf91` completed on the same A100 alloca
 
 The A100 reuse path still performs exactly one projected full-corpus search and reduces projected distance work by 50% relative to the control. This lowers mean/p95 GPU latency by `20.17%/20.22%`; the corresponding CPU reductions are `31.79%/31.83%`. GPU query upload, search, result download, and deterministic refinement are all separately nonzero and recorded. Device memory rose from 0 to 2307 MiB when the shared original/projected indexes were installed and remained at 2307 MiB after all queries, so no query-loop growth was observed. The raw index vectors occupy approximately 329.6 MiB; the remaining approximately 1.93 GiB includes the CUDA context, shared FAISS resources/scratch, and other device allocations and is not attributed to a specific allocator by `nvidia-smi`.
 
+The first 1M FAISS attempt on job `373268` completed the CPU run but stopped the GPU run during pre-measurement conformance. The original 1M grid ends at `M=2048`; adding the required 64-neighbor stable-boundary guard requested top-2112, while this FAISS GPU build supports k-selection only through 2048. This is a backend capability mismatch, not an out-of-memory or retrieval mismatch. The harness now rejects such a configuration before creating the output directory or generating embeddings. A separate frozen FAISS operating-point config retains the same seeds, `N=1M`, `d=1024`, `m_prime=128`, and fixed `M=1024`, but uses `M_max=1984`, so the full `1984+64=2048` guard remains valid. Results from that policy grid must not be presented as the old `M_max=2048` policy result.
+
 The retrieval benchmark now compiles the frozen analytic Tri-Predict policy into adjacent-float64 LID decision intervals before query measurement. Its serving path loads a fingerprint-checked artifact and uses one interval lookup per query. Compilation and analytic-reference validation are outside measured retrieval latency. Every observed query LID is checked against the analytic reference after measurement, and a mismatch aborts artifact generation. The main certification harness retains the analytic policy so its predicted-retention diagnostics and existing certificate identity do not change.
 
 The local compiled-policy 100k/d768 structural run created seven states, loaded the artifact in `0.1093 ms`, and exactly matched all 64 prior local LID values, budgets, and retention values. Analytic validation averaged `38.4606 ms/decision`; lookup averaged `0.0021 ms/decision`. Reuse-path latency fell from `44.7511` to `4.2712 ms/query` across the old and new local runs. Compilation cost `17.9965 s` once at setup. These are not Genoa serving claims.
@@ -92,7 +94,7 @@ Optional exact FAISS CPU/GPU selection adds, respectively:
 
 ## Tests passed/failed
 
-- Passed locally: 50
+- Passed locally: 53
 - Skipped locally: 1 conditional real-FAISS CPU conformance test because FAISS is not installed on the Mac environment
 - Failed: 0
 - Runtime in the current environment: approximately 7.4 seconds
@@ -153,7 +155,7 @@ The FAISS 100k CPU/GPU comparison from job `373268` uses the same 64 queries and
 
 ## Next task
 
-Archive the passed 100k A100 artifacts, then run the exact FAISS CPU/GPU comparison at 1M/d1024 with the same frozen config and one thread. Require identity-matched inputs/policies, zero conformance mismatches, exact query-level decision/work equivalence, one-versus-two projected searches, complete GPU component timings, and a stable post-query memory snapshot. After that systems result is archived, begin the real external-query embedding adapter before making policy-quality claims. Cross-dimension policy selection remains blocked on a predeclared compute objective and denser fixed-budget grid.
+Archive the failed 1M attempt without its deterministic data memmaps, pull the GPU-limit preflight fix, and run a fresh CPU/GPU pair using `configs/retrieval_latency_1m_d1024_faiss_k1984.json`. Require identity-matched inputs/policies, zero conformance mismatches, exact query-level decision/work equivalence, one-versus-two projected searches, complete GPU component timings, and a stable post-query memory snapshot. After that systems result is archived, begin the real external-query embedding adapter before making policy-quality claims. Cross-dimension policy selection remains blocked on a predeclared compute objective and denser fixed-budget grid.
 
 ## Known deviations and risks
 
@@ -171,6 +173,7 @@ Archive the passed 100k A100 artifacts, then run the exact FAISS CPU/GPU compari
 - FAISS `IndexFlatL2` is exact in float32 but does not guarantee stable candidate identity at an exact top-k boundary tie. The adapter deterministically refines a bounded one-scan overfetch pool and aborts if that guard does not close the raw tie band; refinement therefore adds host work and latency even when the GPU scan is fast.
 - `nvidia-smi` memory snapshots are whole-device observations. They are useful on an exclusive node but are not process allocator ownership measurements.
 - At 100k on A100, GPU Tri-Predict reuse is only 1.08x faster than FAISS CPU and is slower than both GPU fixed paths. Exact original search benefits most (6.28x); small projected scans expose fixed upload/download, boundary-refinement, LID, lookup, and reranking costs.
+- FAISS GPU exact k-selection is capped at 2048 in the tested build. The stable-boundary contract consumes `M + overfetch`, not only `M`; therefore the original 1M `M_max=2048` configuration is incompatible with a 64-neighbor guard. The new `M_max=1984` FAISS config is a distinct frozen operating point, not a silent edit or continuation of the old policy.
 - The Genoa 100k run passes the systems gate but not the policy gate: all queries saturate at `M=1024`, mean top-10 retention is `0.096875`, and Tri-Predict accounts for 91.32% of reuse-path latency. The 1M run can establish scaling behavior only.
 - The Genoa 1M run also passes only the systems gate. Reuse saves 24.71% mean latency, but all queries saturate at `M=2048` and mean retention falls to `0.06875`. The checked-in 100k and 1M configurations change `N`, `d`, `m_prime`, pilot size, and budget together, so their ratio is not a controlled single-variable scaling law.
 - Tri-Predict's exact rank summation is intentionally correctness-oriented and currently costs several milliseconds per synthetic query. Large real corpora should use and validate the deterministic rank approximation before performance claims.

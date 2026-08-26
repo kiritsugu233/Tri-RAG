@@ -19,7 +19,9 @@ import numpy as np
 import scipy
 
 from .indexes import (
+    FAISS_GPU_MAX_K_SELECTION,
     FaissExactSquaredL2Index,
+    FaissGpuKSelectionLimitError,
     StreamingExactSquaredL2Index,
     StreamingSearchResult,
 )
@@ -845,6 +847,10 @@ def _report(
         f"- FAISS threads: {manifest['search']['faiss_threads']}",
         "- FAISS boundary tie overfetch: "
         f"{manifest['search']['faiss_boundary_tie_overfetch']}",
+        "- maximum configured backend request: "
+        f"{manifest['search']['maximum_configured_requested_neighbors']}",
+        "- FAISS GPU k-selection limit: "
+        f"{manifest['search']['faiss_gpu_k_selection_limit']}",
         f"- dtype: {config['dataset']['dtype']}",
         "- projected vectors renormalized: false",
         "- Tri-Predict execution: compiled float64 LID decision boundaries",
@@ -1221,6 +1227,24 @@ def run_retrieval_benchmark(
         or faiss_boundary_tie_overfetch < 1
     ):
         raise ValueError("faiss_boundary_tie_overfetch must be a positive integer")
+    maximum_search_k = max(config.search.k_gt, config.search.m_grid[-1])
+    maximum_requested_neighbors = min(
+        config.dataset.corpus_size,
+        maximum_search_k + faiss_boundary_tie_overfetch,
+    )
+    if (
+        backend == "faiss-gpu"
+        and maximum_requested_neighbors > FAISS_GPU_MAX_K_SELECTION
+    ):
+        raise FaissGpuKSelectionLimitError(
+            "incompatible FAISS GPU benchmark configuration: maximum search "
+            f"k={maximum_search_k} plus boundary_tie_overfetch="
+            f"{faiss_boundary_tie_overfetch} requests "
+            f"{maximum_requested_neighbors} neighbors, exceeding the FAISS GPU "
+            f"k-selection limit {FAISS_GPU_MAX_K_SELECTION}; use a separately "
+            "frozen config whose maximum budget leaves room for the refinement "
+            "guard"
+        )
     if output_dir.exists() and any(output_dir.iterdir()):
         raise FileExistsError(
             f"refusing to overwrite nonempty benchmark directory: {output_dir}"
@@ -1497,6 +1521,12 @@ def run_retrieval_benchmark(
             "faiss_boundary_tie_overfetch": (
                 faiss_boundary_tie_overfetch if backend != "numpy" else None
             ),
+            "maximum_configured_requested_neighbors": (
+                maximum_requested_neighbors if backend != "numpy" else None
+            ),
+            "faiss_gpu_k_selection_limit": (
+                FAISS_GPU_MAX_K_SELECTION if backend == "faiss-gpu" else None
+            ),
             "corpus_block_rows": config.search.corpus_block_rows,
             "pilot_expansion_reuse": "top_m_max_from_single_projected_scan",
             "legacy_control": "independent_pilot_and_expansion_projected_scans",
@@ -1538,6 +1568,8 @@ def run_retrieval_benchmark(
                     "gpu_device",
                     "faiss_threads",
                     "faiss_boundary_tie_overfetch",
+                    "maximum_configured_requested_neighbors",
+                    "faiss_gpu_k_selection_limit",
                     "corpus_block_rows",
                     "pilot_expansion_reuse",
                     "legacy_control",

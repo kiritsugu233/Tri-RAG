@@ -5,7 +5,11 @@ from pathlib import Path
 
 import numpy as np
 
-from tri_rag_harness.indexes import StreamingSearchResult
+from tri_rag_harness.indexes import (
+    FAISS_GPU_MAX_K_SELECTION,
+    FaissGpuKSelectionLimitError,
+    StreamingSearchResult,
+)
 from tri_rag_harness.retrieval_benchmark import (
     METHOD_TRI_DOUBLE,
     METHOD_TRI_REUSE,
@@ -192,6 +196,31 @@ class RetrievalBenchmarkTests(unittest.TestCase):
             self.assertTrue(paths["memory.json"].is_file())
             self.assertTrue(paths["tri_predict_compiled_policy.json"].is_file())
 
+    def test_gpu_k_limit_is_rejected_before_output_or_fixture_generation(self):
+        config = load_retrieval_benchmark_config(
+            ROOT / "configs" / "retrieval_latency_1m_d1024.json"
+        )
+        with tempfile.TemporaryDirectory() as directory_name:
+            output = Path(directory_name) / "must-not-exist"
+            with self.assertRaisesRegex(
+                FaissGpuKSelectionLimitError,
+                r"k=2048.*overfetch=64.*2112.*limit 2048",
+            ):
+                run_retrieval_benchmark(config, output, backend="faiss-gpu")
+            self.assertFalse(output.exists())
+
+    def test_faiss_1m_config_leaves_exactly_one_guard_below_gpu_limit(self):
+        config = load_retrieval_benchmark_config(
+            ROOT
+            / "configs"
+            / "retrieval_latency_1m_d1024_faiss_k1984.json"
+        )
+        self.assertEqual(config.search.m_grid[-1], 1984)
+        self.assertEqual(
+            config.search.m_grid[-1] + 64,
+            FAISS_GPU_MAX_K_SELECTION,
+        )
+
     def test_tiny_faiss_cpu_benchmark_conforms_to_numpy(self):
         with tempfile.TemporaryDirectory() as directory_name:
             directory = Path(directory_name)
@@ -214,6 +243,13 @@ class RetrievalBenchmarkTests(unittest.TestCase):
             )
             self.assertEqual(
                 manifest["search"]["faiss_boundary_tie_overfetch"], 64
+            )
+            self.assertEqual(
+                manifest["search"]["maximum_configured_requested_neighbors"],
+                88,
+            )
+            self.assertIsNone(
+                manifest["search"]["faiss_gpu_k_selection_limit"]
             )
             self.assertEqual(
                 manifest["search"]["backend_validation"]["mismatches"], 0
