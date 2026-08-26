@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "adapter": "beir_zip_v1",
+  "dataset_name": "BEIR SciFact",
+  "dataset_version": "scifact.zip-md5-5f7d1de60b170fc8027bb7898e2efca1",
+  "id_namespace": "beir-scifact",
+  "minimum_relevance": 1,
+  "source": {
+    "url": "https://public.ukp.informatik.tu-darmstadt.de/thakur/BEIR/datasets/scifact.zip",
+    "archive_md5": "5f7d1de60b170fc8027bb7898e2efca1",
+    "archive_root": "scifact",
+    "corpus_member": "corpus.jsonl",
+    "queries_member": "queries.jsonl",
+    "qrels_members": {
+      "development": "qrels/train.tsv",
+      "test": "qrels/test.tsv"
+    },
+    "homepage": "https://github.com/allenai/scifact",
+    "licenses": [
+      {
+        "component": "claims and evidence annotations",
+        "identifier": "CC-BY-4.0",
+        "url": "https://github.com/allenai/scifact/blob/master/LICENSE.md"
+      },
+      {
+        "component": "abstract corpus from S2ORC",
+        "identifier": "ODC-By-1.0",
+        "url": "https://github.com/allenai/scifact/blob/master/LICENSE.md"
+      }
+    ]
+  },
+  "splits": {
+    "seed": 41017,
+    "development_qrels": "development",
+    "test_qrels": "test",
+    "tune_fraction": 0.5
+  }
+}

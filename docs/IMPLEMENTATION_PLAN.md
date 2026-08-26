@@ -129,8 +129,8 @@ Acceptance:
 
 ## Milestone 5: one real external-query retrieval dataset
 
-- [ ] Implement a dataset adapter producing corpus, external queries, splits, qrels, and optional answers.
-- [ ] Pin dataset revision/hash and store license/source metadata.
+- [x] Implement a dataset adapter producing corpus, external queries, splits, qrels, and optional answers.
+- [x] Pin dataset revision/hash and store license/source metadata.
 - [ ] Implement pluggable text embedding with caching and explicit model revision.
 - [ ] Run exact original/projected retrieval in memory-safe batches.
 - [ ] Freeze one `m_prime` using tune queries only.

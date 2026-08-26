@@ -32,6 +32,8 @@ This closes the exact 1M FAISS systems gate but not the adaptive-efficiency or q
 
 The retrieval benchmark now compiles the frozen analytic Tri-Predict policy into adjacent-float64 LID decision intervals before query measurement. Its serving path loads a fingerprint-checked artifact and uses one interval lookup per query. Compilation and analytic-reference validation are outside measured retrieval latency. Every observed query LID is checked against the analytic reference after measurement, and a mismatch aborts artifact generation. The main certification harness retains the analytic policy so its predicted-retention diagnostics and existing certificate identity do not change.
 
+Milestone 5 now has a network-free BEIR ZIP adapter and a pinned Stage-1 SciFact configuration. The adapter verifies the publisher-listed archive MD5, records archive/member SHA-256 identities, rejects corrupt or structurally inconsistent data, gives corpus and external queries separate stable-ID namespaces, and deterministically divides only the official development query IDs into disjoint tune/cert subsets. The official test queries remain `query_test`. It writes canonical corpus, query, qrel, split, and manifest artifacts without timestamps or machine paths, so identical source/config inputs reproduce byte for byte. No embedding, projection, or policy choice is made by this preparation stage.
+
 The local compiled-policy 100k/d768 structural run created seven states, loaded the artifact in `0.1093 ms`, and exactly matched all 64 prior local LID values, budgets, and retention values. Analytic validation averaged `38.4606 ms/decision`; lookup averaged `0.0021 ms/decision`. Reuse-path latency fell from `44.7511` to `4.2712 ms/query` across the old and new local runs. Compilation cost `17.9965 s` once at setup. These are not Genoa serving claims.
 
 Slurm job `373123` reproduced the compiled policy on `genoa00` at commit `0407c831c263e7505543b3701b84e7cd4a4b4bd0`; all 43 tests passed. At 100k, lookup averaged `0.002544 ms` versus `55.8130 ms` for the analytic reference (21,939x), and reuse fell from `61.0718` to `5.2163 ms/query` with p95 `5.4572 ms`. At 1M, lookup averaged `0.002587 ms` versus `58.3822 ms` (22,564x), and reuse fell from `146.7481` to `87.5176 ms/query` with p95 `90.2264 ms`. Artifact loading took `0.149/0.142 ms`; offline compilation took `26.106/27.898 s`. Every old/new query-level LID, budget, saturation flag, retention value, and work counter is identical, and both reference policies are unchanged. The exact CPU and compiled-policy systems gates pass.
@@ -98,12 +100,22 @@ Optional exact FAISS CPU/GPU selection adds, respectively:
 --backend faiss-gpu --gpu-device 0 --faiss-threads 1
 ```
 
+Pinned SciFact preparation (after downloading the configured archive):
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src \
+python3 -m tri_rag_harness.beir_dataset \
+  --config configs/real_scifact_dataset.json \
+  --archive data/source/scifact.zip \
+  --output data/prepared/scifact
+```
+
 ## Tests passed/failed
 
-- Passed locally: 53
+- Passed locally: 58
 - Skipped locally: 1 conditional real-FAISS CPU conformance test because FAISS is not installed on the Mac environment
 - Failed: 0
-- Runtime in the current environment: approximately 7.4 seconds
+- Runtime in the current environment: approximately 7.8 seconds
 - FAISS coverage checks the exact CPU adapter contract, row-aligned distances, semantic-cutoff candidate sets, accepted internal permutations, rejected cross-cutoff permutations, bounded tie resolution, unclosed tie-band refusal, missing GPU support, shared GPU resource-pool ownership, refinement accounting, full benchmark integration, NumPy decision/rerank/retention equivalence, and GPU-memory artifact creation. The conditional real-FAISS test must execute rather than skip on the cluster before the CPU/GPU milestone passes.
 - Added coverage includes cross-platform policy-float canonicalization, exact `h_j(y)` term-by-term agreement with the orthogonal conditional law, geometric rank-strata population conservation and approximation error, root residuals, the infinite-root/unit-retention boundary, budget monotonicity, LID-to-budget monotonicity, saturation, analytic/empirical interface compatibility, and tune-only scalar safety correction.
 - Compiled-policy coverage checks dense linear/geometric LID values, both sides of every adjacent-float64 transition, invalid/out-of-domain fallback, deterministic serialization, artifact round-trip loading, and tamper rejection.
@@ -112,8 +124,14 @@ Optional exact FAISS CPU/GPU selection adds, respectively:
 - The extended sweep passed all 39 tests on Slurm job `371643`, node `genoa04`, commit `d5ec795abf0ca604c90ac2b5300708232874ef32`, using Python `3.9.23`, NumPy `1.26.4`, and SciPy `1.13.0`.
 - The FAISS A100 milestone passed all 51 tests on Slurm job `373268`, node `a100-0`, commit `05ccf91`, using Python `3.9.23`, NumPy `1.26.4`, SciPy `1.13.0`, FAISS GPU `1.10.0` for CUDA `12.1.1`, and PyTorch `2.5.1` with CUDA `12.1`.
 - The corrected 1M FAISS milestone passed all 54 tests on the same job and node at commit `0d387a1`; the real-FAISS CPU conformance test executed rather than skipping.
+- The initial BEIR SciFact adapter suite runs 59 local tests: 58 pass and the one real-FAISS conformance test is skipped because FAISS is intentionally absent from the base environment. Five adapter tests cover byte reproducibility, the pinned config, checksum refusal, missing-document qrels, and development/test overlap.
 
 ## Current artifacts
+
+The real-data Stage-1 implementation consists of
+`configs/real_scifact_dataset.json`, `tri_rag_harness.beir_dataset`, and
+`docs/REAL_DATA.md`. The ignored `data/prepared/scifact/` artifacts do not
+exist until the pinned upstream archive is downloaded and validated.
 
 `runs/synthetic_mvp/` contains:
 
@@ -164,12 +182,12 @@ The separately frozen `M_max=1984` FAISS 1M comparison also passes every exact s
 
 ## Next task
 
-Begin Milestone 5 with a real external-query retrieval dataset adapter, pinned dataset revision and disjoint tune/cert/test IDs. Add a pluggable cached text-embedding ingestion path before any real-policy tuning, then freeze the corpus, embedding model/revision, projection, dimension, budget grid, and splits. Do not carry the Gaussian policy or its saturation result into the real-data experiment. Cross-dimension policy selection remains blocked on a predeclared compute objective and denser fixed-budget grid.
+Download and prepare the pinned SciFact archive, then validate and retain its generated dataset manifest. After that gate passes, add a pluggable cached text-embedding ingestion path with an explicit model revision before any real-policy tuning. Then freeze the corpus, embedding model/revision, projection, dimension, budget grid, and splits. Do not carry the Gaussian policy or its saturation result into the real-data experiment. Cross-dimension policy selection remains blocked on a predeclared compute objective and denser fixed-budget grid.
 
 ## Known deviations and risks
 
 - Configuration is JSON rather than YAML, and query-level output is JSONL rather than Parquet, to keep the first pass runnable with only the already available NumPy/SciPy stack. The artifacts remain machine-readable and auditable.
-- The checked-in default is synthetic only; no external dataset, text embedding model, evidence evaluation, or answer generation has been added.
+- A pinned external-data adapter is checked in, but the real SciFact archive and prepared artifacts have not yet been validated in this repository. No text embedding model, evidence evaluation, or answer generation has been added.
 - The current synthetic pilot LID differentiates the hardest fitted bin, but the allocation is not efficient relative to the certified fixed baseline. The negative result is a dataset/policy outcome, not hidden by retuning certification data.
 - The current synthetic certification split has been inspected repeatedly during implementation. Its artifacts validate code paths but must not be presented as a fresh research claim or reused to choose new hyperparameters. Real-data policy selection and certification require newly frozen independent splits.
 - The new global sweep avoids that old split and enforces tune-only selection in code. Its positive `11.23%` result is candidate-count efficiency, not a latency claim; `m_prime=24` increases projected-search arithmetic relative to `m_prime=16`.
