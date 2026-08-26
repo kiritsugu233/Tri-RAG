@@ -111,7 +111,7 @@ Acceptance:
 - [x] Share one FAISS GPU resource pool across original/projected indexes.
 - [x] Resolve bounded FAISS boundary ties with one-scan overfetch and recorded deterministic refinement.
 - [x] Pass conformance against a real FAISS CPU build on the cluster.
-- [ ] Pass the 100k FAISS GPU smoke/latency gate before running the 1M comparison.
+- [x] Pass the 100k FAISS GPU smoke/latency gate before running the 1M comparison.
 
 Acceptance:
 

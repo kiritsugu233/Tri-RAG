@@ -1,6 +1,6 @@
 # Retrieval-only latency benchmark
 
-Updated: 2026-08-25
+Updated: 2026-08-26
 
 ## Purpose
 
@@ -196,8 +196,8 @@ FAISS is intentionally optional rather than a base dependency: all required
 offline CPU tests still run without it. The local suite uses an exact test
 double for adapter/control-flow coverage and conditionally runs an additional
 real-FAISS CPU conformance test when the module is installed. Slurm job
-`373268` passed that real CPU test and the initial 10k A100 correctness smoke;
-the shared-resource memory rerun and 100k latency comparison remain required.
+`373268` passed that real CPU test, the 10k A100 correctness/shared-resource
+smoke, and the 100k CPU/GPU latency comparison.
 
 Example commands, after the cluster environment passes the FAISS probe:
 
@@ -207,7 +207,8 @@ python3 -m tri_rag_harness.retrieval_benchmark \
   --config configs/retrieval_latency_100k_d768.json \
   --output runs/faiss-cpu-100k \
   --backend faiss-cpu \
-  --faiss-threads 1
+  --faiss-threads 1 \
+  --faiss-boundary-tie-overfetch 64
 
 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src \
 python3 -m tri_rag_harness.retrieval_benchmark \
@@ -215,8 +216,54 @@ python3 -m tri_rag_harness.retrieval_benchmark \
   --output runs/faiss-gpu-100k \
   --backend faiss-gpu \
   --gpu-device 0 \
-  --faiss-threads 1
+  --faiss-threads 1 \
+  --faiss-boundary-tie-overfetch 64
 ```
+
+### A100 100k FAISS result
+
+Slurm job `373268` ran the controlled 100k comparison on `a100-0` at commit
+`05ccf91`. The environment used Python `3.9.23`, NumPy `1.26.4`, SciPy
+`1.13.0`, FAISS GPU `1.10.0` built for CUDA `12.1.1`, and PyTorch `2.5.1`
+with CUDA `12.1`. All 51 tests passed before the fresh runs.
+
+| Path | FAISS CPU mean (ms) | FAISS GPU mean (ms) | CPU/GPU speedup | GPU p50 | GPU p95 | GPU p99 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| original fixed | 12.4316 | 1.9796 | 6.28x | 1.9471 | 2.0842 | 2.0879 |
+| projected fixed | 2.7146 | 1.8744 | 1.45x | 1.9030 | 2.0652 | 2.0926 |
+| Tri-Predict, reuse | 3.7243 | 3.4357 | 1.08x | 3.4491 | 3.7839 | 3.8037 |
+| Tri-Predict, double scan | 5.4599 | 4.3035 | 1.27x | 4.3488 | 4.7427 | 4.7551 |
+
+Both runs used identical corpus, projected-corpus, query, projection,
+analytic-policy, and compiled-policy identities. Across all four methods and
+64 queries, CPU and GPU records agree on budget, embedding retention, raw and
+clipped LID, validity/failure state, saturation/fallback state, scan counts,
+and distance counts. Both NumPy conformance probes report zero mismatches at
+all semantic cutoffs and downstream checks.
+
+The reuse path evaluates 100,000 projected distances per query while the
+control evaluates 200,000. On GPU this exact 50% work reduction lowers mean
+latency from `4.3035` to `3.4357 ms` (20.17%) and p95 from `4.7427` to
+`3.7839 ms` (20.22%). On CPU it lowers mean/p95 by 31.79%/31.83%. GPU reuse
+spends, on average, `0.0405 ms` uploading the projected query, `1.7112 ms` in
+backend search, `0.0821 ms` downloading results, and `0.2928 ms` in canonical
+boundary refinement. These component timings explain why halving scan count
+does not halve end-to-end latency.
+
+Installing both shared-resource GPU indexes increased whole-device memory from
+0 to 2307 MiB, and the snapshot remained 2307 MiB after all measured queries.
+The raw original/projected index vectors total approximately 329.6 MiB. The
+remaining approximately 1.93 GiB includes the CUDA context, shared FAISS
+resources/scratch, and other device allocations; `nvidia-smi` cannot assign it
+to individual allocators. Original/projected host-to-device construction took
+`572.53/75.50 ms`, outside per-query latency.
+
+This passes the 100k exact-backend systems gate and authorizes the 1M FAISS
+comparison. It is not a positive adaptive result: all queries still saturate
+at `M=1024`, Tri-Predict retention is `0.096875`, and the GPU reuse path is
+slower than both GPU fixed baselines. The strong 6.28x acceleration applies to
+original fixed full-corpus search; it must not be generalized to the complete
+adaptive path.
 
 ## Configurations
 
@@ -413,6 +460,7 @@ for any retention, evidence, or adaptive-policy claim.
 - Compilation time is setup cost and is reported separately. The per-query
   policy stage measures only the loaded frozen lookup.
 - FAISS CPU/GPU comparisons come only after the exact Genoa baseline passes.
-- Real FAISS CPU conformance and an initial 10k A100 correctness smoke pass.
-  The shared-resource memory rerun and 100k CPU/GPU comparison are still
-  pending, so no acceleration claim exists yet.
+- Real FAISS CPU conformance, the 10k A100 correctness/shared-resource smoke,
+  and the 100k CPU/GPU comparison pass. The 1M FAISS comparison is the next
+  systems gate; semantic and adaptive-quality claims remain blocked on real
+  embeddings and independently frozen policy evaluation.
