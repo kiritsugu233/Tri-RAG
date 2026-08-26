@@ -8,6 +8,8 @@ Milestones 0 through 4 and the retrieval-only systems benchmark are implemented 
 
 Pilot and expansion now reuse one exact projected scan in the main harness: the backend retains top `M_max`, exposes the pilot prefix, and slices the cached ranking after `M(q)` is chosen. A separate retrieval-only benchmark provides a memmap-compatible streaming exact backend plus an explicit legacy double-scan control at `100k x 768` and `1M x 1024` scale.
 
+An optional exact FAISS adapter is now implemented behind that benchmark interface for CPU and one NVIDIA GPU. It uses float32 `IndexFlatL2`, records index-build/host-to-device timing, separates GPU upload/search/download when PyTorch tensor interop is available, captures device-memory snapshots, and retains the one-scan reuse/control accounting. Before measurement it must match the NumPy reference on original/projected rows and squared distances, compiled-policy decisions, reranked top-k rows, and retention. Boundary ties are refused because FAISS does not provide the benchmark's stable-row tie contract. The adapter has passed offline test-double integration; real FAISS CPU and A100 validation remain pending and no FAISS performance result is claimed yet.
+
 The retrieval benchmark now compiles the frozen analytic Tri-Predict policy into adjacent-float64 LID decision intervals before query measurement. Its serving path loads a fingerprint-checked artifact and uses one interval lookup per query. Compilation and analytic-reference validation are outside measured retrieval latency. Every observed query LID is checked against the analytic reference after measurement, and a mismatch aborts artifact generation. The main certification harness retains the analytic policy so its predicted-retention diagnostics and existing certificate identity do not change.
 
 The local compiled-policy 100k/d768 structural run created seven states, loaded the artifact in `0.1093 ms`, and exactly matched all 64 prior local LID values, budgets, and retention values. Analytic validation averaged `38.4606 ms/decision`; lookup averaged `0.0021 ms/decision`. Reuse-path latency fell from `44.7511` to `4.2712 ms/query` across the old and new local runs. Compilation cost `17.9965 s` once at setup. These are not Genoa serving claims.
@@ -69,11 +71,20 @@ python3 -m tri_rag_harness.retrieval_benchmark \
   --output runs/retrieval_latency-100k
 ```
 
+Optional exact FAISS CPU/GPU selection adds, respectively:
+
+```bash
+--backend faiss-cpu --faiss-threads 1
+--backend faiss-gpu --gpu-device 0 --faiss-threads 1
+```
+
 ## Tests passed/failed
 
-- Passed: 43
+- Passed locally: 46
+- Skipped locally: 1 conditional real-FAISS CPU conformance test because FAISS is not installed on the Mac environment
 - Failed: 0
-- Runtime in the current environment: approximately 6.3 seconds
+- Runtime in the current environment: approximately 6.9 seconds
+- FAISS coverage checks the exact CPU adapter contract, distance/row conformance, top-k boundary-tie refusal, missing GPU support, full benchmark integration, NumPy decision/rerank/retention equivalence, and GPU-memory artifact creation. The conditional real-FAISS test must execute rather than skip on the cluster before the CPU/GPU milestone passes.
 - Added coverage includes cross-platform policy-float canonicalization, exact `h_j(y)` term-by-term agreement with the orthogonal conditional law, geometric rank-strata population conservation and approximation error, root residuals, the infinite-root/unit-retention boundary, budget monotonicity, LID-to-budget monotonicity, saturation, analytic/empirical interface compatibility, and tune-only scalar safety correction.
 - Compiled-policy coverage checks dense linear/geometric LID values, both sides of every adjacent-float64 transition, invalid/out-of-domain fallback, deterministic serialization, artifact round-trip loading, and tamper rejection.
 - Attribution coverage verifies that actual squared-distance ratios reproduce the rank-model prediction when the assumed power law is exact, that attribution modes produce complete query-level artifacts, and that different synthetic seeds create disjoint stable ID namespaces.
@@ -127,7 +138,7 @@ The 1M/d1024 follow-up completed in the same allocation at commit `37e60d5da5781
 
 ## Next task
 
-Add FAISS behind the existing index adapter. First require a CPU `IndexFlatL2` conformance test against the exact NumPy backend, including squared-L2 values, stable IDs, candidate retention, and compiled-policy decisions. Then benchmark FAISS CPU and one NVIDIA GPU with raw backend latency separated from query projection, LID, policy lookup, transfer, and original reranking. Use the archived exact 100k and 1M runs as systems baselines. Independently, begin the real external-query embedding adapter before making policy-quality claims. Cross-dimension policy selection remains blocked on a predeclared compute objective and denser fixed-budget grid.
+Probe the allocated A100 environment for a real FAISS GPU build, CUDA visibility, and PyTorch tensor interop. Then run the full CPU suite so the conditional real-FAISS conformance test executes, followed by separate 100k FAISS CPU and GPU gates. Accept the GPU gate only if runtime conformance reports zero mismatches, reuse still performs one projected scan, paired reuse/control decisions and retention remain identical, and GPU memory/timing artifacts are present. Run the 1M comparison only after that gate passes. Independently, begin the real external-query embedding adapter before making policy-quality claims. Cross-dimension policy selection remains blocked on a predeclared compute objective and denser fixed-budget grid.
 
 ## Known deviations and risks
 
@@ -141,6 +152,9 @@ Add FAISS behind the existing index adapter. First require a CPU `IndexFlatL2` c
 - The compiled policy preserves only decision fields. Analytic predicted-retention values remain diagnostics produced by the reference policy; they are not reconstructed or interpolated online.
 - Policy compilation is deterministic for the tested Mac/Genoa 100k environment, but the frozen artifact rather than platform-local recompilation is the deployment identity.
 - The retrieval latency fixture uses normalized Gaussian vectors with realistic shapes and memory traffic, not embeddings from a text model. It is a systems benchmark only; semantic retrieval conclusions require the real external-query adapter.
+- FAISS is optional and intentionally absent from the base NumPy/SciPy dependency set. Offline exact test doubles validate adapter behavior, but only the pending cluster probe can establish whether the allocated environment has compatible real CPU/GPU FAISS and PyTorch interop.
+- FAISS `IndexFlatL2` is exact in float32 but does not guarantee stable candidate identity at an exact top-k boundary tie; the adapter aborts such a query instead of weakening the NumPy row-tie contract.
+- `nvidia-smi` memory snapshots are whole-device observations. They are useful on an exclusive node but are not process allocator ownership measurements.
 - The Genoa 100k run passes the systems gate but not the policy gate: all queries saturate at `M=1024`, mean top-10 retention is `0.096875`, and Tri-Predict accounts for 91.32% of reuse-path latency. The 1M run can establish scaling behavior only.
 - The Genoa 1M run also passes only the systems gate. Reuse saves 24.71% mean latency, but all queries saturate at `M=2048` and mean retention falls to `0.06875`. The checked-in 100k and 1M configurations change `N`, `d`, `m_prime`, pilot size, and budget together, so their ratio is not a controlled single-variable scaling law.
 - Tri-Predict's exact rank summation is intentionally correctness-oriented and currently costs several milliseconds per synthetic query. Large real corpora should use and validate the deterministic rank approximation before performance claims.

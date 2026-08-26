@@ -130,6 +130,63 @@ query-by-corpus distance matrix. Each result records:
 Top-k ties use stable corpus row number, corresponding to the benchmark's
 implicit stable `doc-{row}` IDs.
 
+## Optional exact FAISS backend
+
+The same benchmark now accepts `--backend faiss-cpu` and
+`--backend faiss-gpu`. Both use float32 `IndexFlatL2`; IVF, PQ, HNSW, and other
+approximate indexes remain out of scope. The adapter remains behind the small
+single-query index interface used by the NumPy reference, so projection, pilot
+LID, compiled policy lookup, candidate reranking, and query-level accounting
+are shared across backends.
+
+Before query measurement, a FAISS run performs a mandatory NumPy conformance
+probe in both original and projected space. It checks returned rows and
+squared-L2 distances, then checks the compiled-policy decision, reranked top-k
+rows, and embedding retention. A mismatch aborts before final artifacts are
+written. Because FAISS does not promise the benchmark's row-stable result at an
+exact top-k distance tie, the adapter requests `k+1` and refuses a tied
+boundary instead of accepting backend-dependent candidate identity.
+
+The run records host index construction and host-to-device transfer for both
+indexes. Per-query records add backend query-upload, device/CPU search, and
+result-download fields. When FAISS GPU and its PyTorch tensor bridge are both
+available, the three GPU stages are synchronized and timed separately. With
+the synchronous NumPy API, transfers are included in `backend_search_ms` and
+the explicit transfer fields remain zero. `search_ms` and end-to-end latency
+also include adapter validation and stable ordering around that call, so stage
+components must not be assumed to sum exactly to total latency.
+
+`gpu_memory.json` contains `nvidia-smi` snapshots before index construction,
+after both original/projected indexes are resident, and after measured queries,
+along with `CUDA_VISIBLE_DEVICES` and `SLURM_JOB_GPUS`. These are device-level
+snapshots, not allocator-specific ownership accounting. CPU process peak RSS
+continues to be reported separately.
+
+FAISS is intentionally optional rather than a base dependency: all required
+offline CPU tests still run without it. The local suite uses an exact test
+double for adapter/control-flow coverage and conditionally runs an additional
+real-FAISS CPU conformance test when the module is installed. A cluster run is
+required before either real FAISS path can be marked complete.
+
+Example commands, after the cluster environment passes the FAISS probe:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src \
+python3 -m tri_rag_harness.retrieval_benchmark \
+  --config configs/retrieval_latency_100k_d768.json \
+  --output runs/faiss-cpu-100k \
+  --backend faiss-cpu \
+  --faiss-threads 1
+
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src \
+python3 -m tri_rag_harness.retrieval_benchmark \
+  --config configs/retrieval_latency_100k_d768.json \
+  --output runs/faiss-gpu-100k \
+  --backend faiss-gpu \
+  --gpu-device 0 \
+  --faiss-threads 1
+```
+
 ## Configurations
 
 ### Smoke
@@ -170,6 +227,7 @@ artifacts pass scan-count and memory checks.
   and reuse comparison;
 - `per_query.jsonl`: query-level stage timings and work counters;
 - `memory.json`: memmap sizes, query/projection sizes, cache size, and peak RSS;
+- `gpu_memory.json`: GPU environment and device-memory snapshots for FAISS GPU;
 - `tri_predict_policy.json`;
 - `tri_predict_compiled_policy.json`: loadable decision intervals tied to the
   analytic reference fingerprint;
@@ -323,3 +381,5 @@ for any retention, evidence, or adaptive-policy claim.
 - Compilation time is setup cost and is reported separately. The per-query
   policy stage measures only the loaded frozen lookup.
 - FAISS CPU/GPU comparisons come only after the exact Genoa baseline passes.
+- The adapter and offline integration tests are implemented, but a real FAISS
+  CPU/GPU cluster result is still pending and no acceleration claim exists yet.

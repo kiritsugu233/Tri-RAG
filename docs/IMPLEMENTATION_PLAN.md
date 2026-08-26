@@ -106,13 +106,19 @@ Acceptance:
 - [x] Compile a frozen analytic policy into adjacent-float64 LID decision intervals.
 - [x] Add fingerprinted artifact loading and dense/reference boundary equivalence tests.
 - [x] Reproduce compiled-policy lookup latency and exact decision equivalence on Genoa.
-- [ ] Add FAISS CPU/GPU only after the exact baseline is archived.
+- [x] Add an optional exact FAISS `IndexFlatL2` CPU/GPU adapter after archiving the exact baseline.
+- [x] Add offline adapter, boundary-tie refusal, and benchmark integration tests.
+- [ ] Pass conformance against a real FAISS CPU build on the cluster.
+- [ ] Pass the 100k FAISS GPU smoke/latency gate before running the 1M comparison.
 
 Acceptance:
 
 - no query-by-corpus distance matrix is materialized;
 - reuse performs one projected scan and the legacy control performs two;
 - both Tri-Predict paths choose identical budgets and retention;
+- a non-NumPy backend must match NumPy rows, squared distances, compiled-policy
+  decisions, reranked top-k rows, and retention before measurement artifacts
+  are accepted;
 - run artifacts contain stage latency, work, memory, environment, and query-level records.
 
 ## Milestone 5: one real external-query retrieval dataset

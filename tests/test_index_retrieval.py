@@ -3,7 +3,45 @@ import unittest
 import numpy as np
 
 from tri_rag_harness.embeddings import normalize_rows
-from tri_rag_harness.indexes import ExactSquaredL2Index, StreamingExactSquaredL2Index
+from tri_rag_harness.indexes import (
+    ExactSquaredL2Index,
+    FaissBoundaryTieError,
+    FaissExactSquaredL2Index,
+    FaissUnavailableError,
+    StreamingExactSquaredL2Index,
+)
+
+
+class _FakeIndexFlatL2:
+    def __init__(self, dimension):
+        self.dimension = dimension
+        self.vectors = np.empty((0, dimension), dtype=np.float32)
+
+    @property
+    def ntotal(self):
+        return len(self.vectors)
+
+    def add(self, vectors):
+        values = np.asarray(vectors, dtype=np.float32)
+        if values.ndim != 2 or values.shape[1] != self.dimension:
+            raise ValueError("invalid fake FAISS vectors")
+        self.vectors = np.concatenate([self.vectors, values])
+
+    def search(self, queries, k):
+        values = np.asarray(queries, dtype=np.float32)
+        distances = np.sum(
+            (values[:, None, :] - self.vectors[None, :, :]) ** 2,
+            axis=2,
+            dtype=np.float32,
+        )
+        rows = np.argsort(distances, axis=1, kind="stable")[:, :k]
+        selected = np.take_along_axis(distances, rows, axis=1)
+        return selected.astype(np.float32), rows.astype(np.int64)
+
+
+class _FakeFaiss:
+    __version__ = "test-double"
+    IndexFlatL2 = _FakeIndexFlatL2
 
 
 class ExactIndexTests(unittest.TestCase):
@@ -60,6 +98,70 @@ class ExactIndexTests(unittest.TestCase):
         self.assertEqual(index.scan_calls, 1)
         self.assertEqual(result.distance_evaluations, len(corpus))
         self.assertEqual(result.scanned_vector_bytes, corpus.nbytes)
+
+    def test_faiss_cpu_adapter_matches_streaming_contract(self):
+        rng = np.random.default_rng(912)
+        corpus = normalize_rows(rng.normal(size=(61, 13))).astype(np.float32)
+        query = normalize_rows(rng.normal(size=(1, 13))).astype(np.float32)[0]
+        norms = np.einsum("ij,ij->i", corpus, corpus)
+        reference = StreamingExactSquaredL2Index(
+            corpus, squared_norms=norms, block_rows=9
+        ).search_one(query, 11)
+        index = FaissExactSquaredL2Index(
+            corpus, device="cpu", faiss_module=_FakeFaiss()
+        )
+        result = index.search_one(query, 11)
+        np.testing.assert_array_equal(result.rows, reference.rows)
+        np.testing.assert_allclose(
+            result.squared_distances,
+            reference.squared_distances,
+            rtol=1e-5,
+            atol=1e-6,
+        )
+        self.assertEqual(result.distance_evaluations, len(corpus))
+        self.assertEqual(result.scanned_vector_bytes, corpus.nbytes)
+        self.assertGreater(result.backend_search_ms, 0.0)
+        self.assertEqual(index.build_metrics.backend, "faiss_cpu_index_flat_l2")
+
+    def test_faiss_adapter_refuses_boundary_ties_and_missing_gpu_support(self):
+        corpus = np.asarray(
+            [[1.0, 0.0], [1.0, 0.0], [-1.0, 0.0]], dtype=np.float32
+        )
+        cpu = FaissExactSquaredL2Index(
+            corpus, device="cpu", faiss_module=_FakeFaiss()
+        )
+        with self.assertRaises(FaissBoundaryTieError):
+            cpu.search_one(np.asarray([1.0, 0.0], dtype=np.float32), 1)
+        with self.assertRaises(FaissUnavailableError):
+            FaissExactSquaredL2Index(
+                corpus,
+                device="gpu",
+                faiss_module=_FakeFaiss(),
+                enable_torch_transfer_timing=False,
+            )
+
+    def test_real_faiss_cpu_conformance_when_installed(self):
+        try:
+            import faiss  # type: ignore
+        except ImportError:
+            self.skipTest("real FAISS is not installed in the offline test environment")
+        rng = np.random.default_rng(913)
+        corpus = normalize_rows(rng.normal(size=(97, 17))).astype(np.float32)
+        query = normalize_rows(rng.normal(size=(1, 17))).astype(np.float32)[0]
+        norms = np.einsum("ij,ij->i", corpus, corpus)
+        reference = StreamingExactSquaredL2Index(
+            corpus, squared_norms=norms, block_rows=13
+        ).search_one(query, 12)
+        actual = FaissExactSquaredL2Index(
+            corpus, device="cpu", faiss_module=faiss
+        ).search_one(query, 12)
+        np.testing.assert_array_equal(actual.rows, reference.rows)
+        np.testing.assert_allclose(
+            actual.squared_distances,
+            reference.squared_distances,
+            rtol=1e-4,
+            atol=1e-5,
+        )
 
 
 if __name__ == "__main__":

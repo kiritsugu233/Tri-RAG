@@ -3,6 +3,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import numpy as np
+
 from tri_rag_harness.retrieval_benchmark import (
     METHOD_TRI_DOUBLE,
     METHOD_TRI_REUSE,
@@ -12,6 +14,37 @@ from tri_rag_harness.retrieval_benchmark import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+class _FakeIndexFlatL2:
+    def __init__(self, dimension):
+        self.dimension = dimension
+        self.vectors = np.empty((0, dimension), dtype=np.float32)
+
+    @property
+    def ntotal(self):
+        return len(self.vectors)
+
+    def add(self, vectors):
+        self.vectors = np.asarray(vectors, dtype=np.float32).copy()
+
+    def search(self, queries, k):
+        distances = np.sum(
+            (
+                np.asarray(queries, dtype=np.float32)[:, None, :]
+                - self.vectors[None, :, :]
+            )
+            ** 2,
+            axis=2,
+            dtype=np.float32,
+        )
+        rows = np.argsort(distances, axis=1, kind="stable")[:, :k]
+        return np.take_along_axis(distances, rows, axis=1), rows.astype(np.int64)
+
+
+class _FakeFaiss:
+    __version__ = "test-double"
+    IndexFlatL2 = _FakeIndexFlatL2
 
 
 class RetrievalBenchmarkTests(unittest.TestCase):
@@ -118,6 +151,50 @@ class RetrievalBenchmarkTests(unittest.TestCase):
             self.assertTrue(paths["report.md"].is_file())
             self.assertTrue(paths["memory.json"].is_file())
             self.assertTrue(paths["tri_predict_compiled_policy.json"].is_file())
+
+    def test_tiny_faiss_cpu_benchmark_conforms_to_numpy(self):
+        with tempfile.TemporaryDirectory() as directory_name:
+            directory = Path(directory_name)
+            config = self._small_config(directory)
+            paths = run_retrieval_benchmark(
+                config,
+                directory / "faiss-run",
+                backend="faiss-cpu",
+                faiss_module=_FakeFaiss(),
+            )
+            manifest = json.loads(paths["manifest.json"].read_text())
+            summary = json.loads(paths["summary.json"].read_text())
+            self.assertEqual(
+                manifest["search"]["backend"], "faiss-cpu_index_flat_l2"
+            )
+            self.assertEqual(
+                manifest["search"]["backend_validation"]["mismatches"], 0
+            )
+            self.assertEqual(
+                len(manifest["search"]["backend_validation"]["checks"]), 2
+            )
+            self.assertTrue(
+                manifest["search"]["backend_validation"][
+                    "compiled_policy_decision_equal"
+                ]
+            )
+            self.assertTrue(
+                manifest["search"]["backend_validation"][
+                    "reranked_top_k_rows_equal"
+                ]
+            )
+            self.assertTrue(
+                manifest["search"]["backend_validation"][
+                    "embedding_retention_equal"
+                ]
+            )
+            self.assertTrue(paths["gpu_memory.json"].is_file())
+            self.assertGreater(
+                summary[METHOD_TRI_REUSE]["latency_ms"]["backend_search_ms"][
+                    "mean"
+                ],
+                0.0,
+            )
 
 
 if __name__ == "__main__":

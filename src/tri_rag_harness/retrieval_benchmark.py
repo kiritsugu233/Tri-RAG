@@ -8,6 +8,7 @@ import json
 import os
 import platform
 import resource
+import subprocess
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -17,7 +18,11 @@ from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple, Union
 import numpy as np
 import scipy
 
-from .indexes import StreamingExactSquaredL2Index, StreamingSearchResult
+from .indexes import (
+    FaissExactSquaredL2Index,
+    StreamingExactSquaredL2Index,
+    StreamingSearchResult,
+)
 from .lid import LIDEstimate, estimate_lid_from_squared_distances
 from .policies import CompiledTriPredictPolicy, PolicyDecision, TriPredictPolicy
 from .projection import dense_gaussian_projection, projection_metadata
@@ -123,6 +128,9 @@ LATENCY_FIELDS = (
     "tri_predict_ms",
     "expansion_ms",
     "original_rerank_ms",
+    "backend_query_upload_ms",
+    "backend_search_ms",
+    "backend_result_download_ms",
     "total_ms",
 )
 
@@ -293,6 +301,40 @@ def _current_rss_bytes() -> int:
 def _peak_rss_bytes() -> int:
     value = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
     return int(value if platform.system() == "Darwin" else value * 1024)
+
+
+def _nvidia_memory_snapshot() -> Dict[str, Any]:
+    command = [
+        "nvidia-smi",
+        "--query-gpu=index,uuid,name,memory.total,memory.used,memory.free",
+        "--format=csv,noheader,nounits",
+    ]
+    try:
+        completed = subprocess.run(
+            command,
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+    except (FileNotFoundError, subprocess.SubprocessError) as exc:
+        return {"available": False, "error": str(exc), "gpus": []}
+    rows = []
+    for line in completed.stdout.splitlines():
+        fields = [field.strip() for field in line.split(",")]
+        if len(fields) != 6:
+            continue
+        rows.append(
+            {
+                "index": int(fields[0]),
+                "uuid": fields[1],
+                "name": fields[2],
+                "memory_total_mib": int(fields[3]),
+                "memory_used_mib": int(fields[4]),
+                "memory_free_mib": int(fields[5]),
+            }
+        )
+    return {"available": True, "error": None, "gpus": rows}
 
 
 def _normalized_random_rows(
@@ -478,11 +520,19 @@ def _finish_record(
     return record
 
 
+def _add_backend_timing(
+    record: Dict[str, Any], result: StreamingSearchResult
+) -> None:
+    record["backend_query_upload_ms"] += result.query_upload_ms
+    record["backend_search_ms"] += result.backend_search_ms
+    record["backend_result_download_ms"] += result.result_download_ms
+
+
 def _run_original_fixed(
     *,
     query_index: int,
     query: np.ndarray,
-    original_index: StreamingExactSquaredL2Index,
+    original_index: Any,
     config: RetrievalBenchmarkConfig,
 ) -> Tuple[Dict[str, Any], np.ndarray]:
     method = METHOD_ORIGINAL_FIXED
@@ -490,6 +540,7 @@ def _run_original_fixed(
     started = perf_counter()
     result = original_index.search_one(query, config.search.fixed_budget)
     record["original_search_ms"] = result.search_ms
+    _add_backend_timing(record, result)
     record["chosen_m"] = config.search.fixed_budget
     record["embedding_retention"] = 1.0
     record["original_scan_count"] = 1
@@ -535,7 +586,7 @@ def _run_projected_fixed(
     query: np.ndarray,
     gt_rows: np.ndarray,
     matrix: np.ndarray,
-    projected_index: StreamingExactSquaredL2Index,
+    projected_index: Any,
     corpus: np.ndarray,
     corpus_norms: np.ndarray,
     config: RetrievalBenchmarkConfig,
@@ -549,6 +600,7 @@ def _run_projected_fixed(
     )
     search = projected_index.search_one(projected_query, config.search.fixed_budget)
     record["expansion_ms"] = search.search_ms
+    _add_backend_timing(record, search)
     reranked, rerank_ms, distance_count = _rerank_candidates(
         corpus=corpus,
         corpus_norms=corpus_norms,
@@ -603,7 +655,7 @@ def _run_tri_predict(
     query: np.ndarray,
     gt_rows: np.ndarray,
     matrix: np.ndarray,
-    projected_index: StreamingExactSquaredL2Index,
+    projected_index: Any,
     corpus: np.ndarray,
     corpus_norms: np.ndarray,
     policy: CompiledTriPredictPolicy,
@@ -619,6 +671,7 @@ def _run_tri_predict(
     pilot_k = config.search.m_grid[-1] if reuse_projected_distances else config.search.m_pilot
     pilot = projected_index.search_one(projected_query, pilot_k)
     record["pilot_search_ms"] = pilot.search_ms
+    _add_backend_timing(record, pilot)
     pilot_rows = pilot.rows[: config.search.m_pilot]
     estimate, pilot_original_distances, distance_ms, estimation_ms = _estimate_pilot_lid(
         corpus=corpus,
@@ -649,6 +702,7 @@ def _run_tri_predict(
     record["expansion_ms"] = (perf_counter() - expansion_started) * 1000.0
     if expansion is not None:
         record["expansion_ms"] = expansion.search_ms
+        _add_backend_timing(record, expansion)
     reranked, rerank_ms, additional_count = _rerank_candidates(
         corpus=corpus,
         corpus_norms=corpus_norms,
@@ -764,6 +818,7 @@ def _report(
 ) -> str:
     config = manifest["config"]
     memory = manifest["memory_artifacts"]
+    gpu_memory = manifest["gpu_memory"]
     gib = float(1024**3)
     lines = [
         "# Retrieval-only latency benchmark",
@@ -776,6 +831,8 @@ def _report(
         f"- fixed M: {config['search']['fixed_budget']}",
         f"- M grid: {config['search']['m_grid']}",
         f"- corpus block rows: {config['search']['corpus_block_rows']}",
+        f"- search backend: {manifest['search']['backend']}",
+        f"- FAISS threads: {manifest['search']['faiss_threads']}",
         f"- dtype: {config['dataset']['dtype']}",
         "- projected vectors renormalized: false",
         "- Tri-Predict execution: compiled float64 LID decision boundaries",
@@ -818,6 +875,22 @@ def _report(
     lines.extend(
         [
             "",
+            "## Backend timing components (mean ms/query)",
+            "",
+            "| method | query upload | backend search | result download |",
+            "| --- | ---: | ---: | ---: |",
+        ]
+    )
+    for method in METHODS:
+        latency = summary[method]["latency_ms"]
+        lines.append(
+            f"| {method} | {latency['backend_query_upload_ms']['mean']:.6f} | "
+            f"{latency['backend_search_ms']['mean']:.6f} | "
+            f"{latency['backend_result_download_ms']['mean']:.6f} |"
+        )
+    lines.extend(
+        [
+            "",
             "## Mean work per query",
             "",
             "| method | projected distances | original distances | projected bytes scanned | original bytes read |",
@@ -834,6 +907,8 @@ def _report(
         )
     comparison = summary["reuse_comparison"]
     policy_execution = summary["policy_execution"]
+    index_build = manifest["search"]["index_build"]
+    backend_validation = manifest["search"]["backend_validation"]
     lines.extend(
         [
             "",
@@ -862,6 +937,26 @@ def _report(
             "LID clipping interval. The online lookup preserves budget, fallback, and "
             "saturation decisions; prediction values remain reference-only diagnostics.",
             "",
+            "## Backend construction and conformance",
+            "",
+            f"- original host index build: {index_build['original'].get('host_index_build_ms', 0.0):.6f} ms",
+            f"- original host-to-device: {index_build['original'].get('host_to_device_ms', 0.0):.6f} ms",
+            f"- projected host index build: {index_build['projected'].get('host_index_build_ms', 0.0):.6f} ms",
+            f"- projected host-to-device: {index_build['projected'].get('host_to_device_ms', 0.0):.6f} ms",
+            f"- backend validation queries: {backend_validation['query_count']}",
+            f"- backend validation mismatches: {backend_validation['mismatches']}",
+            "- compiled decision equal: "
+            f"{backend_validation.get('compiled_policy_decision_equal', 'reference backend')}",
+            "- reranked top-k rows equal: "
+            f"{backend_validation.get('reranked_top_k_rows_equal', 'reference backend')}",
+            "- embedding retention equal: "
+            f"{backend_validation.get('embedding_retention_equal', 'reference backend')}",
+            "",
+            "For FAISS GPU with PyTorch tensor interop, upload, device search, and "
+            "download are timed separately with CUDA synchronization. Otherwise the "
+            "FAISS NumPy API reports one synchronous search duration in the backend "
+            "search column and the transfer columns remain zero.",
+            "",
             "## Memory",
             "",
             f"- original corpus memmap: {memory['original_corpus_bytes'] / gib:.3f} GiB",
@@ -871,6 +966,9 @@ def _report(
             f"- projection matrix: {memory['projection_matrix_bytes'] / gib:.6f} GiB",
             f"- reusable top-M cache per query: {memory['reuse_top_m_cache_bytes_per_query']} bytes",
             f"- measured process peak RSS: {memory['process_peak_rss_bytes'] / gib:.3f} GiB",
+            f"- CUDA_VISIBLE_DEVICES: {gpu_memory['cuda_visible_devices']}",
+            f"- SLURM_JOB_GPUS: {gpu_memory['slurm_job_gpus']}",
+            f"- NVIDIA memory snapshots recorded: {gpu_memory['after_index'] is not None}",
             "",
             "This benchmark uses deterministic normalized Gaussian embeddings with "
             "realistic dimensions. It is a systems benchmark, not a semantic retrieval "
@@ -880,9 +978,155 @@ def _report(
     return "\n".join(lines) + "\n"
 
 
+def _validate_backend_against_numpy(
+    *,
+    original_index: Any,
+    projected_index: Any,
+    corpus: np.ndarray,
+    corpus_norms: np.ndarray,
+    projected: np.ndarray,
+    projected_norms: np.ndarray,
+    query: np.ndarray,
+    projected_query: np.ndarray,
+    policy: CompiledTriPredictPolicy,
+    config: RetrievalBenchmarkConfig,
+) -> Dict[str, Any]:
+    checks = []
+    results: Dict[str, Tuple[StreamingSearchResult, StreamingSearchResult]] = {}
+    specifications = (
+        (
+            "original",
+            original_index,
+            corpus,
+            corpus_norms,
+            query,
+            config.search.k_gt,
+        ),
+        (
+            "projected",
+            projected_index,
+            projected,
+            projected_norms,
+            projected_query,
+            config.search.m_grid[-1],
+        ),
+    )
+    for name, backend_index, vectors, norms, query_value, k in specifications:
+        reference_index = StreamingExactSquaredL2Index(
+            vectors,
+            squared_norms=norms,
+            block_rows=config.search.corpus_block_rows,
+        )
+        reference = reference_index.search_one(query_value, k)
+        actual = backend_index.search_one(query_value, k)
+        rows_equal = bool(np.array_equal(reference.rows, actual.rows))
+        distances_close = bool(
+            np.allclose(
+                reference.squared_distances,
+                actual.squared_distances,
+                rtol=1e-4,
+                atol=1e-5,
+            )
+        )
+        if not rows_equal or not distances_close:
+            raise AssertionError(
+                f"{name} FAISS exact search disagrees with NumPy reference: "
+                f"rows_equal={rows_equal}, distances_close={distances_close}"
+            )
+        results[name] = (reference, actual)
+        checks.append(
+            {
+                "space": name,
+                "k": k,
+                "rows_equal": rows_equal,
+                "distances_close": distances_close,
+                "maximum_absolute_distance_error": float(
+                    np.max(
+                        np.abs(
+                            reference.squared_distances
+                            - actual.squared_distances
+                        )
+                    )
+                ),
+            }
+        )
+    reference_gt = results["original"][0].rows
+    reference_projected, actual_projected = results["projected"]
+    decisions = []
+    retentions = []
+    reranked_rows = []
+    for label, search_result in (
+        ("numpy", reference_projected),
+        ("backend", actual_projected),
+    ):
+        pilot_rows = search_result.rows[: config.search.m_pilot]
+        estimate, pilot_distances, _, _ = _estimate_pilot_lid(
+            corpus=corpus,
+            corpus_norms=corpus_norms,
+            query=query,
+            pilot_rows=pilot_rows,
+            config=config,
+        )
+        decision = policy.choose(estimate.clipped, estimate.valid)
+        candidate_rows = search_result.rows[: decision.budget]
+        reranked, _, _ = _rerank_candidates(
+            corpus=corpus,
+            corpus_norms=corpus_norms,
+            query=query,
+            rows=candidate_rows,
+            known_prefix_distances=pilot_distances,
+        )
+        decisions.append(
+            (
+                decision.budget,
+                decision.used_fallback,
+                decision.saturated,
+            )
+        )
+        retentions.append(_retention(reference_gt, reranked[: config.search.k_gt]))
+        reranked_rows.append(reranked[: config.search.k_gt])
+    decisions_equal = decisions[0] == decisions[1]
+    retention_equal = retentions[0] == retentions[1]
+    reranked_rows_equal = bool(np.array_equal(reranked_rows[0], reranked_rows[1]))
+    if not decisions_equal or not retention_equal or not reranked_rows_equal:
+        raise AssertionError(
+            "FAISS conformance changed the compiled-policy decision or reranked "
+            "candidate result"
+        )
+    return {
+        "query_count": 1,
+        "checks": checks,
+        "mismatches": 0,
+        "compiled_policy_decision_equal": decisions_equal,
+        "reranked_top_k_rows_equal": reranked_rows_equal,
+        "embedding_retention_equal": retention_equal,
+        "embedding_retention": retentions[0],
+    }
+
+
 def run_retrieval_benchmark(
-    config: RetrievalBenchmarkConfig, output_dir: Path
+    config: RetrievalBenchmarkConfig,
+    output_dir: Path,
+    *,
+    backend: str = "numpy",
+    gpu_device: int = 0,
+    faiss_threads: int = 1,
+    faiss_module: Optional[Any] = None,
 ) -> Dict[str, Path]:
+    if backend not in {"numpy", "faiss-cpu", "faiss-gpu"}:
+        raise ValueError("backend must be numpy, faiss-cpu, or faiss-gpu")
+    if (
+        isinstance(gpu_device, bool)
+        or not isinstance(gpu_device, int)
+        or gpu_device < 0
+    ):
+        raise ValueError("gpu_device must be a nonnegative integer")
+    if (
+        isinstance(faiss_threads, bool)
+        or not isinstance(faiss_threads, int)
+        or faiss_threads < 1
+    ):
+        raise ValueError("faiss_threads must be a positive integer")
     if output_dir.exists() and any(output_dir.iterdir()):
         raise FileExistsError(
             f"refusing to overwrite nonempty benchmark directory: {output_dir}"
@@ -922,15 +1166,66 @@ def run_retrieval_benchmark(
         config.dataset.dimension,
         config.seeds.projection,
     ).astype(np.float32)
-    original_index = StreamingExactSquaredL2Index(
-        corpus,
-        squared_norms=corpus_norms,
-        block_rows=config.search.corpus_block_rows,
+    gpu_memory_before_index = (
+        _nvidia_memory_snapshot() if backend == "faiss-gpu" else None
     )
-    projected_index = StreamingExactSquaredL2Index(
-        projected,
-        squared_norms=projected_norms,
-        block_rows=config.search.corpus_block_rows,
+    if backend == "numpy":
+        original_index = StreamingExactSquaredL2Index(
+            corpus,
+            squared_norms=corpus_norms,
+            block_rows=config.search.corpus_block_rows,
+        )
+        projected_index = StreamingExactSquaredL2Index(
+            projected,
+            squared_norms=projected_norms,
+            block_rows=config.search.corpus_block_rows,
+        )
+        index_build = {
+            "original": {"backend": "numpy_streaming_exact_squared_l2"},
+            "projected": {"backend": "numpy_streaming_exact_squared_l2"},
+        }
+        backend_validation = {
+            "query_count": 0,
+            "checks": [],
+            "mismatches": 0,
+            "reason": "backend is the NumPy reference",
+        }
+    else:
+        faiss_device = "cpu" if backend == "faiss-cpu" else "gpu"
+        original_index = FaissExactSquaredL2Index(
+            corpus,
+            device=faiss_device,
+            gpu_device=gpu_device,
+            faiss_threads=faiss_threads,
+            faiss_module=faiss_module,
+        )
+        projected_index = FaissExactSquaredL2Index(
+            projected,
+            device=faiss_device,
+            gpu_device=gpu_device,
+            faiss_threads=faiss_threads,
+            faiss_module=faiss_module,
+        )
+        index_build = {
+            "original": original_index.build_metrics.serialize(),
+            "projected": projected_index.build_metrics.serialize(),
+        }
+        validation_query = np.asarray(queries[0], dtype=np.float32)
+        validation_projected_query, _ = _project_query(validation_query, matrix)
+        backend_validation = _validate_backend_against_numpy(
+            original_index=original_index,
+            projected_index=projected_index,
+            corpus=corpus,
+            corpus_norms=corpus_norms,
+            projected=projected,
+            projected_norms=projected_norms,
+            query=validation_query,
+            projected_query=validation_projected_query,
+            policy=policy,
+            config=config,
+        )
+    gpu_memory_after_index = (
+        _nvidia_memory_snapshot() if backend == "faiss-gpu" else None
     )
     records: List[Dict[str, Any]] = []
     warmup_count = config.dataset.warmup_query_count
@@ -1042,8 +1337,12 @@ def run_retrieval_benchmark(
     summary["policy_execution"] = policy_execution
     dtype_bytes = np.dtype(np.float32).itemsize
     memory_artifacts = {
-        "original_corpus_bytes": int(config.dataset.corpus_size * config.dataset.dimension * dtype_bytes),
-        "projected_corpus_bytes": int(config.dataset.corpus_size * config.projection.m_prime * dtype_bytes),
+        "original_corpus_bytes": int(
+            config.dataset.corpus_size * config.dataset.dimension * dtype_bytes
+        ),
+        "projected_corpus_bytes": int(
+            config.dataset.corpus_size * config.projection.m_prime * dtype_bytes
+        ),
         "corpus_norms_bytes": int(corpus_norms.nbytes),
         "projected_norms_bytes": int(projected_norms.nbytes),
         "queries_bytes": int(queries.nbytes),
@@ -1053,6 +1352,15 @@ def run_retrieval_benchmark(
             * (np.dtype(np.int64).itemsize + np.dtype(np.float64).itemsize)
         ),
         "process_peak_rss_bytes": _peak_rss_bytes(),
+    }
+    gpu_memory_artifacts = {
+        "before_index": gpu_memory_before_index,
+        "after_index": gpu_memory_after_index,
+        "after_queries": (
+            _nvidia_memory_snapshot() if backend == "faiss-gpu" else None
+        ),
+        "cuda_visible_devices": os.environ.get("CUDA_VISIBLE_DEVICES"),
+        "slurm_job_gpus": os.environ.get("SLURM_JOB_GPUS"),
     }
     manifest = {
         "schema_version": 1,
@@ -1078,12 +1386,21 @@ def run_retrieval_benchmark(
             corpus_hash=generated.corpus_hash,
         ),
         "search": {
-            "backend": "numpy_streaming_exact_squared_l2",
+            "backend": (
+                "numpy_streaming_exact_squared_l2"
+                if backend == "numpy"
+                else f"{backend}_index_flat_l2"
+            ),
+            "gpu_device": gpu_device if backend == "faiss-gpu" else None,
+            "faiss_threads": faiss_threads if backend != "numpy" else None,
             "corpus_block_rows": config.search.corpus_block_rows,
             "pilot_expansion_reuse": "top_m_max_from_single_projected_scan",
             "legacy_control": "independent_pilot_and_expansion_projected_scans",
+            "index_build": index_build,
+            "backend_validation": backend_validation,
         },
         "memory_artifacts": memory_artifacts,
+        "gpu_memory": gpu_memory_artifacts,
         "software": {
             "python": platform.python_version(),
             "platform": platform.platform(),
@@ -1110,7 +1427,17 @@ def run_retrieval_benchmark(
             "projected_corpus_hash": generated.projected_hash,
             "query_hash": generated.query_hash,
             "projection_fingerprint": manifest["projection"]["fingerprint"],
-            "search": manifest["search"],
+            "search": {
+                key: manifest["search"][key]
+                for key in (
+                    "backend",
+                    "gpu_device",
+                    "faiss_threads",
+                    "corpus_block_rows",
+                    "pilot_expansion_reuse",
+                    "legacy_control",
+                )
+            },
             "policy_fingerprint": policy_artifact["fingerprint"],
             "compiled_policy_fingerprint": compiled_policy_artifact["fingerprint"],
         }
@@ -1118,6 +1445,7 @@ def run_retrieval_benchmark(
     write_json(output_dir / "manifest.json", manifest)
     write_json(output_dir / "summary.json", summary)
     write_json(output_dir / "memory.json", memory_artifacts)
+    write_json(output_dir / "gpu_memory.json", gpu_memory_artifacts)
     write_json(output_dir / "tri_predict_policy.json", policy_artifact)
     write_json(
         output_dir / "tri_predict_compiled_policy.json", compiled_policy_artifact
@@ -1131,6 +1459,7 @@ def run_retrieval_benchmark(
         "manifest.json": output_dir / "manifest.json",
         "summary.json": output_dir / "summary.json",
         "memory.json": output_dir / "memory.json",
+        "gpu_memory.json": output_dir / "gpu_memory.json",
         "tri_predict_policy.json": output_dir / "tri_predict_policy.json",
         "tri_predict_compiled_policy.json": output_dir
         / "tri_predict_compiled_policy.json",
@@ -1143,9 +1472,22 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument(
+        "--backend",
+        choices=("numpy", "faiss-cpu", "faiss-gpu"),
+        default="numpy",
+    )
+    parser.add_argument("--gpu-device", type=int, default=0)
+    parser.add_argument("--faiss-threads", type=int, default=1)
     args = parser.parse_args(argv)
     config = load_retrieval_benchmark_config(args.config)
-    artifacts = run_retrieval_benchmark(config, args.output)
+    artifacts = run_retrieval_benchmark(
+        config,
+        args.output,
+        backend=args.backend,
+        gpu_device=args.gpu_device,
+        faiss_threads=args.faiss_threads,
+    )
     print(f"completed retrieval benchmark: {artifacts['report.md']}")
     return 0
 
