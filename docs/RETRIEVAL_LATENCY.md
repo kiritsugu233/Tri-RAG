@@ -140,12 +140,23 @@ LID, compiled policy lookup, candidate reranking, and query-level accounting
 are shared across backends.
 
 Before query measurement, a FAISS run performs a mandatory NumPy conformance
-probe in both original and projected space. It checks returned rows and
-squared-L2 distances, then checks the compiled-policy decision, reranked top-k
-rows, and embedding retention. A mismatch aborts before final artifacts are
-written. Because FAISS does not promise the benchmark's row-stable result at an
-exact top-k distance tie, the adapter requests `k+1` and refuses a tied
-boundary instead of accepting backend-dependent candidate identity.
+probe in both original and projected space. It checks candidate-set identity
+at every prefix consumed by the harness (`k_gt`, `M_pilot`, and every budget
+grid value), compares squared-L2 distances after aligning by corpus row, then
+checks the compiled-policy decision, reranked top-k rows, and embedding
+retention. A mismatch aborts before final artifacts are written. Because FAISS
+does not promise the benchmark's row-stable result at an exact top-k distance
+tie, the adapter requests `k+1` and refuses a tied boundary instead of
+accepting backend-dependent candidate identity.
+
+The first 100k FAISS CPU gate found two nearly equal projected rows exchanged
+at positions 969/970. All semantic cutoff sets, including top-1024, were
+identical and the maximum row-aligned distance difference was
+`3.5762786865234375e-7`; the exchange came from float32 accumulation order and
+could not change pilot input or any candidate budget. Conformance therefore
+records and accepts order-only permutations strictly inside retained prefixes.
+A row crossing any semantic cutoff remains a hard failure even if distances
+are numerically close. Dedicated tests cover both cases.
 
 The run records host index construction and host-to-device transfer for both
 indexes. Per-query records add backend query-upload, device/CPU search, and

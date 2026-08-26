@@ -5,9 +5,11 @@ from pathlib import Path
 
 import numpy as np
 
+from tri_rag_harness.indexes import StreamingSearchResult
 from tri_rag_harness.retrieval_benchmark import (
     METHOD_TRI_DOUBLE,
     METHOD_TRI_REUSE,
+    _compare_search_results,
     load_retrieval_benchmark_config,
     run_retrieval_benchmark,
 )
@@ -48,6 +50,44 @@ class _FakeFaiss:
 
 
 class RetrievalBenchmarkTests(unittest.TestCase):
+    @staticmethod
+    def _search_result(rows, distances):
+        return StreamingSearchResult(
+            rows=np.asarray(rows, dtype=np.int64),
+            squared_distances=np.asarray(distances, dtype=np.float64),
+            search_ms=0.0,
+            distance_evaluations=10,
+            scanned_vector_bytes=40,
+        )
+
+    def test_conformance_accepts_only_internal_cutoff_permutations(self):
+        reference = self._search_result(
+            [0, 1, 2, 3], [0.1, 0.2, 0.3000000, 0.3000002]
+        )
+        internal_swap = self._search_result(
+            [0, 1, 3, 2], [0.1, 0.2, 0.3000001, 0.3000003]
+        )
+        comparison = _compare_search_results(
+            reference, internal_swap, semantic_cutoffs=(2, 4)
+        )
+        self.assertTrue(comparison["accepted"])
+        self.assertFalse(comparison["rows_equal"])
+        self.assertTrue(comparison["rows_set_equal"])
+        self.assertTrue(comparison["semantic_cutoffs_equal"])
+        self.assertTrue(comparison["order_only_permutation_accepted"])
+
+    def test_conformance_rejects_a_row_crossing_a_semantic_cutoff(self):
+        reference = self._search_result([0, 1, 2, 3], [0.1, 0.2, 0.3, 0.4])
+        crossing_swap = self._search_result(
+            [0, 2, 1, 3], [0.1, 0.3, 0.2, 0.4]
+        )
+        comparison = _compare_search_results(
+            reference, crossing_swap, semantic_cutoffs=(2, 4)
+        )
+        self.assertFalse(comparison["accepted"])
+        self.assertFalse(comparison["semantic_cutoffs_equal"])
+        self.assertTrue(comparison["distances_close"])
+
     def _small_config(self, directory: Path):
         raw = json.loads(
             (ROOT / "configs" / "retrieval_latency_100k_d768.json").read_text()

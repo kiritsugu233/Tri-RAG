@@ -947,6 +947,8 @@ def _report(
             f"{index_build['projected'].get('gpu_resources_shared', False)}",
             f"- backend validation queries: {backend_validation['query_count']}",
             f"- backend validation mismatches: {backend_validation['mismatches']}",
+            "- accepted order-only permutations: "
+            f"{backend_validation.get('order_only_permutation_checks', 0)}",
             "- compiled decision equal: "
             f"{backend_validation.get('compiled_policy_decision_equal', 'reference backend')}",
             "- reranked top-k rows equal: "
@@ -980,6 +982,81 @@ def _report(
     return "\n".join(lines) + "\n"
 
 
+def _compare_search_results(
+    reference: StreamingSearchResult,
+    actual: StreamingSearchResult,
+    *,
+    semantic_cutoffs: Sequence[int],
+) -> Dict[str, Any]:
+    """Compare outputs at every prefix that pilot or budget slicing consumes.
+
+    Float32 accumulation order can exchange almost-equal rows inside a retained
+    prefix even when every candidate set used by the harness is unchanged.
+    Such internal permutations are recorded but accepted. Moving a row across
+    any semantic cutoff remains a hard conformance failure.
+    """
+    if len(reference.rows) != len(actual.rows):
+        raise ValueError("search results must have the same requested length")
+    cutoffs = tuple(sorted(set(int(value) for value in semantic_cutoffs)))
+    if not cutoffs or cutoffs[0] < 1 or cutoffs[-1] > len(reference.rows):
+        raise ValueError("semantic cutoffs must lie within the search result")
+    reference_rows = np.asarray(reference.rows, dtype=np.int64)
+    actual_rows = np.asarray(actual.rows, dtype=np.int64)
+    rows_equal = bool(np.array_equal(reference_rows, actual_rows))
+    rows_set_equal = set(reference_rows.tolist()) == set(actual_rows.tolist())
+    cutoff_checks = []
+    for cutoff in cutoffs:
+        reference_set = set(reference_rows[:cutoff].tolist())
+        actual_set = set(actual_rows[:cutoff].tolist())
+        cutoff_checks.append(
+            {
+                "cutoff": cutoff,
+                "set_equal": reference_set == actual_set,
+                "overlap": len(reference_set.intersection(actual_set)),
+                "reference_only": sorted(reference_set - actual_set),
+                "backend_only": sorted(actual_set - reference_set),
+            }
+        )
+    semantic_cutoffs_equal = all(
+        bool(check["set_equal"]) for check in cutoff_checks
+    )
+    maximum_error: Optional[float] = None
+    distances_close = False
+    if rows_set_equal:
+        actual_by_row = {
+            int(row): float(distance)
+            for row, distance in zip(actual_rows, actual.squared_distances)
+        }
+        aligned_actual = np.asarray(
+            [actual_by_row[int(row)] for row in reference_rows],
+            dtype=np.float64,
+        )
+        reference_distances = np.asarray(
+            reference.squared_distances, dtype=np.float64
+        )
+        maximum_error = float(np.max(np.abs(reference_distances - aligned_actual)))
+        distances_close = bool(
+            np.allclose(
+                reference_distances,
+                aligned_actual,
+                rtol=1e-4,
+                atol=1e-5,
+            )
+        )
+    accepted = rows_set_equal and semantic_cutoffs_equal and distances_close
+    return {
+        "accepted": accepted,
+        "rows_equal": rows_equal,
+        "rows_set_equal": rows_set_equal,
+        "position_mismatches": int(np.sum(reference_rows != actual_rows)),
+        "semantic_cutoffs_equal": semantic_cutoffs_equal,
+        "semantic_cutoffs": cutoff_checks,
+        "distances_close": distances_close,
+        "maximum_absolute_distance_error": maximum_error,
+        "order_only_permutation_accepted": bool(accepted and not rows_equal),
+    }
+
+
 def _validate_backend_against_numpy(
     *,
     original_index: Any,
@@ -1003,6 +1080,7 @@ def _validate_backend_against_numpy(
             corpus_norms,
             query,
             config.search.k_gt,
+            (config.search.k_gt,),
         ),
         (
             "projected",
@@ -1011,9 +1089,18 @@ def _validate_backend_against_numpy(
             projected_norms,
             projected_query,
             config.search.m_grid[-1],
+            tuple(sorted(set((config.search.m_pilot, *config.search.m_grid)))),
         ),
     )
-    for name, backend_index, vectors, norms, query_value, k in specifications:
+    for (
+        name,
+        backend_index,
+        vectors,
+        norms,
+        query_value,
+        k,
+        semantic_cutoffs,
+    ) in specifications:
         reference_index = StreamingExactSquaredL2Index(
             vectors,
             squared_norms=norms,
@@ -1021,46 +1108,26 @@ def _validate_backend_against_numpy(
         )
         reference = reference_index.search_one(query_value, k)
         actual = backend_index.search_one(query_value, k)
-        rows_equal = bool(np.array_equal(reference.rows, actual.rows))
-        distances_close = bool(
-            np.allclose(
-                reference.squared_distances,
-                actual.squared_distances,
-                rtol=1e-4,
-                atol=1e-5,
-            )
+        comparison = _compare_search_results(
+            reference,
+            actual,
+            semantic_cutoffs=semantic_cutoffs,
         )
-        if not rows_equal or not distances_close:
+        if not comparison["accepted"]:
             raise AssertionError(
                 f"{name} FAISS exact search disagrees with NumPy reference: "
-                f"rows_equal={rows_equal}, distances_close={distances_close}"
+                f"rows_set_equal={comparison['rows_set_equal']}, "
+                f"semantic_cutoffs_equal={comparison['semantic_cutoffs_equal']}, "
+                f"aligned_distances_close={comparison['distances_close']}"
             )
         results[name] = (reference, actual)
-        checks.append(
-            {
-                "space": name,
-                "k": k,
-                "rows_equal": rows_equal,
-                "distances_close": distances_close,
-                "maximum_absolute_distance_error": float(
-                    np.max(
-                        np.abs(
-                            reference.squared_distances
-                            - actual.squared_distances
-                        )
-                    )
-                ),
-            }
-        )
+        checks.append({"space": name, "k": k, **comparison})
     reference_gt = results["original"][0].rows
     reference_projected, actual_projected = results["projected"]
     decisions = []
     retentions = []
     reranked_rows = []
-    for label, search_result in (
-        ("numpy", reference_projected),
-        ("backend", actual_projected),
-    ):
+    for search_result in (reference_projected, actual_projected):
         pilot_rows = search_result.rows[: config.search.m_pilot]
         estimate, pilot_distances, _, _ = _estimate_pilot_lid(
             corpus=corpus,
@@ -1103,6 +1170,9 @@ def _validate_backend_against_numpy(
         "reranked_top_k_rows_equal": reranked_rows_equal,
         "embedding_retention_equal": retention_equal,
         "embedding_retention": retentions[0],
+        "order_only_permutation_checks": sum(
+            bool(check["order_only_permutation_accepted"]) for check in checks
+        ),
     }
 
 

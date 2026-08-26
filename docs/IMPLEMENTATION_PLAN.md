@@ -117,9 +117,9 @@ Acceptance:
 - no query-by-corpus distance matrix is materialized;
 - reuse performs one projected scan and the legacy control performs two;
 - both Tri-Predict paths choose identical budgets and retention;
-- a non-NumPy backend must match NumPy rows, squared distances, compiled-policy
-  decisions, reranked top-k rows, and retention before measurement artifacts
-  are accepted;
+- a non-NumPy backend must match NumPy candidate sets at `k_gt`, `M_pilot`, and
+  every budget cutoff, row-aligned squared distances, compiled-policy
+  decisions, reranked top-k rows, and retention before artifacts are accepted;
 - run artifacts contain stage latency, work, memory, environment, and query-level records.
 
 ## Milestone 5: one real external-query retrieval dataset
