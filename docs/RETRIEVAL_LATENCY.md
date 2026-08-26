@@ -278,6 +278,61 @@ constructing indexes. The adapter also checks it immediately before any direct
 search call. Both paths raise a targeted error that reports maximum `k`, guard,
 requested count, and backend limit.
 
+### A100 1M FAISS result
+
+The separately frozen `M_max=1984` CPU/GPU pair completed on Slurm job
+`373268`, node `a100-0`, at commit `0d387a1`. All 54 tests passed in the real
+FAISS environment. The audit archive has SHA-256
+`9f589694b7fddbf6ef0d134468a753b54806fae04f2d816b6c409f1e07edc2aa`.
+
+| Path | FAISS CPU mean (ms) | FAISS GPU mean (ms) | CPU/GPU speedup | GPU p50 | GPU p95 | GPU p99 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| original fixed | 157.9387 | 16.6473 | 9.49x | 16.5589 | 17.3339 | 18.2510 |
+| projected fixed | 22.8045 | 14.7312 | 1.55x | 14.5758 | 15.5201 | 16.4050 |
+| Tri-Predict, reuse | 24.9773 | 18.3728 | 1.36x | 18.2734 | 19.3877 | 20.4355 |
+| Tri-Predict, double scan | 45.4543 | 23.6353 | 1.92x | 23.4726 | 23.9712 | 25.7745 |
+
+CPU and GPU have identical configuration, corpus, projected-corpus, query,
+projection, analytic-policy, and compiled-policy fingerprints. The analytic
+and compiled policy files are also byte-identical across backends. An
+independent audit of all 128 records per backend found exact equality in every
+saved non-timing comparison field: query/method ID, selected budget, retention,
+raw/clipped LID, validity/failure, saturation/fallback, scan counts, distance
+counts, refinement evaluations, and requested neighbors. Each backend's
+mandatory NumPy probe matched row sets and row-aligned distances exactly at
+`k_gt`, `M_pilot`, and every grid cutoff; compiled decision, reranked top-k and
+retention checks all report zero mismatches.
+
+Reuse evaluates one million projected distances and scans 512 MB per query;
+the control evaluates two million and scans 1.024 GB. On CPU, reuse reduces
+mean/p95 latency by 45.05%/45.04%, saving 20.4770 ms/query. On GPU it reduces
+mean/p95 by 22.27%/19.12%, saving 5.2626 ms/query. The latency saving is less
+than the 50% distance-work reduction because the removed pilot request asks
+for only 128 rows, while both paths retain the more expensive top-2048
+expansion request; reranking and other CPU work also remain.
+
+The GPU reuse backend components average `0.0421 ms` query upload,
+`14.6285 ms` search, `0.0961 ms` result download, and `0.6600 ms` canonical
+boundary refinement. Original fixed benefits most from the GPU at 9.49x.
+Projected fixed gains 1.55x and the complete reuse path only 1.36x, showing
+that full-corpus arithmetic speedup cannot be used as the end-to-end adaptive
+speedup.
+
+The shared original/projected indexes increased whole-device memory from 0 to
+6383 MiB, and the same 6383 MiB remained after measured queries. Raw index
+vectors account for approximately 4394.5 MiB, leaving approximately 1988.5
+MiB for the CUDA context, shared FAISS resources/scratch and other device
+allocations. This overhead is close to the approximately 1977 MiB observed at
+100k, while the vector-resident portion scales with corpus bytes. Peak host RSS
+was 8.753 GiB for CPU and 8.338 GiB for GPU.
+
+The systems gate passes, but the policy/quality result is negative. Every one
+of 32 adaptive queries saturates at `M=1984`; mean top-10 retention is
+`0.065625`, and 18 queries retain none of the original top-10. GPU reuse is
+10.37% slower than GPU original fixed and 24.72% slower than GPU projected
+fixed. This Gaussian fixture therefore demonstrates exact backend scaling and
+one-scan reuse, not useful query adaptation or semantic retrieval.
+
 ## Configurations
 
 ### Smoke
@@ -318,14 +373,14 @@ only search-policy change is the final grid value:
 - stable-boundary overfetch `64`;
 - maximum FAISS request `1984+64=2048`.
 
-This is a separately named and fingerprinted operating point. CPU and GPU must
-both be rerun with it for a controlled comparison. Its adaptive budgets,
+This is a separately named and fingerprinted operating point. CPU and GPU both
+completed with it for the controlled comparison above. Its adaptive budgets,
 retention and policy fingerprint cannot be substituted for, or directly
 reported as, the earlier `M_max=2048` result. The unchanged deterministic
-seeds still allow data-identity checks across runs.
+seeds allow data-identity checks across runs.
 
-The 100k run is the first gate. Run the 1M configuration only after the 100k
-artifacts pass scan-count and memory checks.
+The 100k run was the first gate. The 1M configuration was executed only after
+the 100k scan-count, correctness and memory checks passed.
 
 ## Recorded artifacts
 
@@ -467,13 +522,12 @@ RSS was 4.364 GiB. Corpus generation took 72.19 seconds and projection
 generation took 4.74 seconds. The complete benchmark process took 99.88 seconds
 of wall time and exited successfully.
 
-The exact CPU baseline is now sufficient to begin a FAISS adapter experiment,
-but raw backend latency and end-to-end latency must remain separate. Before an
-end-to-end GPU claim, the frozen analytic policy should be compiled into tested
-LID-to-budget decision boundaries or an equivalently validated lookup, because
-a faster projected backend would otherwise expose the roughly 59 ms scalar
-policy computation as the dominant cost. Real embedding data is still required
-for any retention, evidence, or adaptive-policy claim.
+The exact CPU baseline serves as the reference for the completed FAISS adapter
+experiments above, but raw backend latency and end-to-end latency remain
+separate. The frozen policy is now compiled into tested LID-to-budget decision
+boundaries, removing the roughly 59 ms scalar analytic computation from the
+measured serving path. Real embedding data is still required for any retention,
+evidence, or adaptive-policy claim.
 
 ## Interpretation limits
 
@@ -493,6 +547,6 @@ for any retention, evidence, or adaptive-policy claim.
 - Real FAISS CPU conformance, the 10k A100 correctness/shared-resource smoke,
   and the 100k CPU/GPU comparison pass. The original 1M GPU attempt failed
   before measurement because `2048+64` exceeded the backend's top-2048
-  k-selection limit. The separately frozen `M_max=1984` CPU/GPU comparison is
-  the next systems gate; semantic and adaptive-quality claims remain blocked
+  k-selection limit. The separately frozen `M_max=1984` CPU/GPU comparison now
+  passes its systems gate; semantic and adaptive-quality claims remain blocked
   on real embeddings and independently frozen policy evaluation.

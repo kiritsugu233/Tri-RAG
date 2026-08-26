@@ -113,7 +113,7 @@ Acceptance:
 - [x] Pass conformance against a real FAISS CPU build on the cluster.
 - [x] Pass the 100k FAISS GPU smoke/latency gate before running the 1M comparison.
 - [x] Reject FAISS GPU `k + boundary guard > 2048` before fixture generation.
-- [ ] Complete the 1M FAISS CPU/GPU comparison with a separately frozen `M_max=1984` grid.
+- [x] Complete the 1M FAISS CPU/GPU comparison with a separately frozen `M_max=1984` grid.
 
 Acceptance:
 
