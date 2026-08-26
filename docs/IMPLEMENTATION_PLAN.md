@@ -109,6 +109,7 @@ Acceptance:
 - [x] Add an optional exact FAISS `IndexFlatL2` CPU/GPU adapter after archiving the exact baseline.
 - [x] Add offline adapter, boundary-tie refusal, and benchmark integration tests.
 - [x] Share one FAISS GPU resource pool across original/projected indexes.
+- [x] Resolve bounded FAISS boundary ties with one-scan overfetch and recorded deterministic refinement.
 - [x] Pass conformance against a real FAISS CPU build on the cluster.
 - [ ] Pass the 100k FAISS GPU smoke/latency gate before running the 1M comparison.
 
@@ -120,6 +121,8 @@ Acceptance:
 - a non-NumPy backend must match NumPy candidate sets at `k_gt`, `M_pilot`, and
   every budget cutoff, row-aligned squared distances, compiled-policy
   decisions, reranked top-k rows, and retention before artifacts are accepted;
+- FAISS boundary refinement must report its requested neighbors, host distance
+  evaluations, and latency without counting an unreported second scan;
 - run artifacts contain stage latency, work, memory, environment, and query-level records.
 
 ## Milestone 5: one real external-query retrieval dataset

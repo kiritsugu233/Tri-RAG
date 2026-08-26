@@ -146,8 +146,13 @@ grid value), compares squared-L2 distances after aligning by corpus row, then
 checks the compiled-policy decision, reranked top-k rows, and embedding
 retention. A mismatch aborts before final artifacts are written. Because FAISS
 does not promise the benchmark's row-stable result at an exact top-k distance
-tie, the adapter requests `k+1` and refuses a tied boundary instead of
-accepting backend-dependent candidate identity.
+tie, the adapter overfetches a fixed guard in the same FAISS scan, recomputes
+that small returned pool with the NumPy squared-L2 formula, and selects by
+`(distance,row)`. It still aborts if the guard does not close the raw tie band;
+it never hides the event with an unaccounted second scan.
+The guard defaults to 64, is configurable with
+`--faiss-boundary-tie-overfetch`, and is included in the manifest and
+reproducibility fingerprint.
 
 The first 100k FAISS CPU gate found two nearly equal projected rows exchanged
 at positions 969/970. All semantic cutoff sets, including top-1024, were
@@ -157,6 +162,13 @@ could not change pilot input or any candidate budget. Conformance therefore
 records and accepts order-only permutations strictly inside retained prefixes.
 A row crossing any semantic cutoff remains a hard failure even if distances
 are numerically close. Dedicated tests cover both cases.
+
+The first measured 100k GPU attempt then exposed an exact float32-quantized tie
+at the original-space top-512 boundary. Deterministic refinement now reports
+its latency, number of host distance evaluations, and requested neighbor count
+separately. Projected scan counters continue to count full-corpus FAISS scans;
+refinement work is not folded into or hidden behind those counters. CPU and GPU
+use the same overfetch/refinement rule for a controlled comparison.
 
 The run records host index construction and host-to-device transfer for both
 indexes. Per-query records add backend query-upload, device/CPU search, and
@@ -253,8 +265,9 @@ artifacts pass scan-count and memory checks.
 - `report.md`.
 
 Stages include query projection, original scan, pilot scan, original pilot
-distance computation, LID estimation, Tri-Predict, expansion, original rerank,
-and end-to-end latency. Summary latency includes mean, p50, p95, and p99.
+distance computation, LID estimation, Tri-Predict, expansion, deterministic
+FAISS refinement, original rerank, and end-to-end latency. Summary latency
+includes mean, p50, p95, and p99.
 
 ## Reproducible CPU command
 

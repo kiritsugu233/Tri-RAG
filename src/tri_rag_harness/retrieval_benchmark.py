@@ -131,6 +131,7 @@ LATENCY_FIELDS = (
     "backend_query_upload_ms",
     "backend_search_ms",
     "backend_result_download_ms",
+    "backend_refinement_ms",
     "total_ms",
 )
 
@@ -491,6 +492,8 @@ def _base_record(
         "original_distance_coordinate_ops": 0,
         "projected_vector_bytes_scanned": 0,
         "original_vector_bytes_scanned": 0,
+        "backend_refinement_distance_evaluations": 0,
+        "backend_requested_neighbors": 0,
         "rss_before_bytes": _current_rss_bytes(),
         "rss_after_bytes": None,
         "peak_rss_bytes": None,
@@ -526,6 +529,11 @@ def _add_backend_timing(
     record["backend_query_upload_ms"] += result.query_upload_ms
     record["backend_search_ms"] += result.backend_search_ms
     record["backend_result_download_ms"] += result.result_download_ms
+    record["backend_refinement_ms"] += result.refinement_ms
+    record["backend_refinement_distance_evaluations"] += (
+        result.refinement_distance_evaluations
+    )
+    record["backend_requested_neighbors"] += result.requested_neighbors
 
 
 def _run_original_fixed(
@@ -786,6 +794,8 @@ def _summarize_records(records: Sequence[Mapping[str, Any]]) -> Dict[str, Any]:
                     "original_distance_coordinate_ops",
                     "projected_vector_bytes_scanned",
                     "original_vector_bytes_scanned",
+                    "backend_refinement_distance_evaluations",
+                    "backend_requested_neighbors",
                 )
             },
             "memory": {
@@ -833,6 +843,8 @@ def _report(
         f"- corpus block rows: {config['search']['corpus_block_rows']}",
         f"- search backend: {manifest['search']['backend']}",
         f"- FAISS threads: {manifest['search']['faiss_threads']}",
+        "- FAISS boundary tie overfetch: "
+        f"{manifest['search']['faiss_boundary_tie_overfetch']}",
         f"- dtype: {config['dataset']['dtype']}",
         "- projected vectors renormalized: false",
         "- Tri-Predict execution: compiled float64 LID decision boundaries",
@@ -877,8 +889,8 @@ def _report(
             "",
             "## Backend timing components (mean ms/query)",
             "",
-            "| method | query upload | backend search | result download |",
-            "| --- | ---: | ---: | ---: |",
+            "| method | query upload | backend search | result download | deterministic refinement |",
+            "| --- | ---: | ---: | ---: | ---: |",
         ]
     )
     for method in METHODS:
@@ -886,15 +898,16 @@ def _report(
         lines.append(
             f"| {method} | {latency['backend_query_upload_ms']['mean']:.6f} | "
             f"{latency['backend_search_ms']['mean']:.6f} | "
-            f"{latency['backend_result_download_ms']['mean']:.6f} |"
+            f"{latency['backend_result_download_ms']['mean']:.6f} | "
+            f"{latency['backend_refinement_ms']['mean']:.6f} |"
         )
     lines.extend(
         [
             "",
             "## Mean work per query",
             "",
-            "| method | projected distances | original distances | projected bytes scanned | original bytes read |",
-            "| --- | ---: | ---: | ---: | ---: |",
+            "| method | projected distances | original distances | refinement distances | requested neighbors | projected bytes scanned | original bytes read |",
+            "| --- | ---: | ---: | ---: | ---: | ---: | ---: |",
         ]
     )
     for method in METHODS:
@@ -902,6 +915,8 @@ def _report(
         lines.append(
             f"| {method} | {work['projected_distance_evaluations']:.0f} | "
             f"{work['original_distance_evaluations']:.2f} | "
+            f"{work['backend_refinement_distance_evaluations']:.2f} | "
+            f"{work['backend_requested_neighbors']:.2f} | "
             f"{work['projected_vector_bytes_scanned']:.0f} | "
             f"{work['original_vector_bytes_scanned']:.0f} |"
         )
@@ -1183,6 +1198,7 @@ def run_retrieval_benchmark(
     backend: str = "numpy",
     gpu_device: int = 0,
     faiss_threads: int = 1,
+    faiss_boundary_tie_overfetch: int = 64,
     faiss_module: Optional[Any] = None,
 ) -> Dict[str, Path]:
     if backend not in {"numpy", "faiss-cpu", "faiss-gpu"}:
@@ -1199,6 +1215,12 @@ def run_retrieval_benchmark(
         or faiss_threads < 1
     ):
         raise ValueError("faiss_threads must be a positive integer")
+    if (
+        isinstance(faiss_boundary_tie_overfetch, bool)
+        or not isinstance(faiss_boundary_tie_overfetch, int)
+        or faiss_boundary_tie_overfetch < 1
+    ):
+        raise ValueError("faiss_boundary_tie_overfetch must be a positive integer")
     if output_dir.exists() and any(output_dir.iterdir()):
         raise FileExistsError(
             f"refusing to overwrite nonempty benchmark directory: {output_dir}"
@@ -1270,6 +1292,8 @@ def run_retrieval_benchmark(
             gpu_device=gpu_device,
             faiss_threads=faiss_threads,
             faiss_module=faiss_module,
+            squared_norms=corpus_norms,
+            boundary_tie_overfetch=faiss_boundary_tie_overfetch,
         )
         projected_index = FaissExactSquaredL2Index(
             projected,
@@ -1280,6 +1304,8 @@ def run_retrieval_benchmark(
             gpu_resources=(
                 original_index.gpu_resources if faiss_device == "gpu" else None
             ),
+            squared_norms=projected_norms,
+            boundary_tie_overfetch=faiss_boundary_tie_overfetch,
         )
         index_build = {
             "original": original_index.build_metrics.serialize(),
@@ -1468,6 +1494,9 @@ def run_retrieval_benchmark(
             ),
             "gpu_device": gpu_device if backend == "faiss-gpu" else None,
             "faiss_threads": faiss_threads if backend != "numpy" else None,
+            "faiss_boundary_tie_overfetch": (
+                faiss_boundary_tie_overfetch if backend != "numpy" else None
+            ),
             "corpus_block_rows": config.search.corpus_block_rows,
             "pilot_expansion_reuse": "top_m_max_from_single_projected_scan",
             "legacy_control": "independent_pilot_and_expansion_projected_scans",
@@ -1508,6 +1537,7 @@ def run_retrieval_benchmark(
                     "backend",
                     "gpu_device",
                     "faiss_threads",
+                    "faiss_boundary_tie_overfetch",
                     "corpus_block_rows",
                     "pilot_expansion_reuse",
                     "legacy_control",
@@ -1554,6 +1584,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     )
     parser.add_argument("--gpu-device", type=int, default=0)
     parser.add_argument("--faiss-threads", type=int, default=1)
+    parser.add_argument("--faiss-boundary-tie-overfetch", type=int, default=64)
     args = parser.parse_args(argv)
     config = load_retrieval_benchmark_config(args.config)
     artifacts = run_retrieval_benchmark(
@@ -1562,6 +1593,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         backend=args.backend,
         gpu_device=args.gpu_device,
         faiss_threads=args.faiss_threads,
+        faiss_boundary_tie_overfetch=args.faiss_boundary_tie_overfetch,
     )
     print(f"completed retrieval benchmark: {artifacts['report.md']}")
     return 0

@@ -140,17 +140,30 @@ class ExactIndexTests(unittest.TestCase):
         self.assertEqual(result.distance_evaluations, len(corpus))
         self.assertEqual(result.scanned_vector_bytes, corpus.nbytes)
         self.assertGreater(result.backend_search_ms, 0.0)
+        self.assertEqual(result.refinement_distance_evaluations, len(corpus))
+        self.assertEqual(result.requested_neighbors, len(corpus))
         self.assertEqual(index.build_metrics.backend, "faiss_cpu_index_flat_l2")
+        self.assertEqual(index.build_metrics.boundary_tie_overfetch, 64)
 
-    def test_faiss_adapter_refuses_boundary_ties_and_missing_gpu_support(self):
+    def test_faiss_adapter_resolves_bounded_ties_and_refuses_unclosed_tie_band(self):
         corpus = np.asarray(
             [[1.0, 0.0], [1.0, 0.0], [-1.0, 0.0]], dtype=np.float32
         )
         cpu = FaissExactSquaredL2Index(
             corpus, device="cpu", faiss_module=_FakeFaiss()
         )
+        result = cpu.search_one(np.asarray([1.0, 0.0], dtype=np.float32), 1)
+        self.assertEqual(result.rows.tolist(), [0])
+        unclosed = FaissExactSquaredL2Index(
+            np.repeat(corpus[:1], 100, axis=0),
+            device="cpu",
+            faiss_module=_FakeFaiss(),
+        )
         with self.assertRaises(FaissBoundaryTieError):
-            cpu.search_one(np.asarray([1.0, 0.0], dtype=np.float32), 1)
+            unclosed.search_one(np.asarray([1.0, 0.0], dtype=np.float32), 1)
+
+    def test_faiss_adapter_refuses_missing_gpu_support(self):
+        corpus = np.asarray([[1.0, 0.0]], dtype=np.float32)
         with self.assertRaises(FaissUnavailableError):
             FaissExactSquaredL2Index(
                 corpus,

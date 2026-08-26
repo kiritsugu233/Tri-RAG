@@ -25,6 +25,9 @@ class StreamingSearchResult:
     query_upload_ms: float = 0.0
     backend_search_ms: float = 0.0
     result_download_ms: float = 0.0
+    refinement_ms: float = 0.0
+    refinement_distance_evaluations: int = 0
+    requested_neighbors: int = 0
 
 
 @dataclass(frozen=True)
@@ -38,6 +41,7 @@ class FaissIndexBuildMetrics:
     host_to_device_ms: float
     gpu_device: Optional[int]
     gpu_resources_shared: bool
+    boundary_tie_overfetch: int
     transfer_timing_mode: str
     faiss_max_threads: Optional[int]
 
@@ -227,6 +231,7 @@ class StreamingExactSquaredL2Index:
             distance_evaluations=len(self.vectors),
             scanned_vector_bytes=int(self.vectors.nbytes),
             backend_search_ms=elapsed_ms,
+            requested_neighbors=k,
         )
 
 
@@ -234,9 +239,9 @@ class FaissExactSquaredL2Index:
     """Exact float32 FAISS FlatL2 adapter for CPU or one NVIDIA GPU.
 
     FAISS does not expose a stable-ID tie contract at the top-k boundary. The
-    adapter requests one extra result and refuses a boundary tie rather than
-    silently returning a backend-dependent candidate set. Returned non-boundary
-    ties are ordered by squared distance and then corpus row.
+    adapter overfetches a fixed guard in one search, recomputes that returned
+    pool with the canonical NumPy squared-L2 expression, and orders by distance
+    then corpus row. It refuses a raw tie band that exhausts the guard.
     """
 
     def __init__(
@@ -248,6 +253,8 @@ class FaissExactSquaredL2Index:
         faiss_threads: int = 1,
         faiss_module: Optional[Any] = None,
         gpu_resources: Optional[Any] = None,
+        squared_norms: Optional[np.ndarray] = None,
+        boundary_tie_overfetch: int = 64,
         enable_torch_transfer_timing: bool = True,
     ):
         values = np.asanyarray(vectors)
@@ -271,6 +278,20 @@ class FaissExactSquaredL2Index:
             or faiss_threads < 1
         ):
             raise ValueError("faiss_threads must be a positive integer")
+        if (
+            isinstance(boundary_tie_overfetch, bool)
+            or not isinstance(boundary_tie_overfetch, int)
+            or boundary_tie_overfetch < 1
+        ):
+            raise ValueError("boundary_tie_overfetch must be a positive integer")
+        if squared_norms is None:
+            norms = np.einsum("ij,ij->i", values, values)
+        else:
+            norms = np.asarray(squared_norms)
+        if norms.ndim != 1 or len(norms) != len(values):
+            raise ValueError("squared_norms must align with vector rows")
+        if not np.all(np.isfinite(norms)) or np.any(norms < 0.0):
+            raise ValueError("squared_norms must be finite and nonnegative")
         self.faiss = _load_faiss() if faiss_module is None else faiss_module
         if hasattr(self.faiss, "omp_set_num_threads"):
             self.faiss.omp_set_num_threads(faiss_threads)
@@ -279,6 +300,8 @@ class FaissExactSquaredL2Index:
         self.vectors = values
         self.vector_count = len(values)
         self.dimension = values.shape[1]
+        self.squared_norms = norms
+        self.boundary_tie_overfetch = boundary_tie_overfetch
         self.scan_calls = 0
         self._torch = None
         self._torch_transfer_timing = False
@@ -339,6 +362,7 @@ class FaissExactSquaredL2Index:
             host_to_device_ms=host_to_device_ms,
             gpu_device=self.gpu_device,
             gpu_resources_shared=gpu_resources_shared,
+            boundary_tie_overfetch=boundary_tie_overfetch,
             transfer_timing_mode=transfer_timing_mode,
             faiss_max_threads=(
                 int(self.faiss.omp_get_max_threads())
@@ -396,7 +420,9 @@ class FaissExactSquaredL2Index:
         ):
             raise ValueError("k must lie between 1 and corpus size")
         self.scan_calls += 1
-        requested_k = min(self.vector_count, k + 1)
+        requested_k = min(
+            self.vector_count, k + self.boundary_tie_overfetch
+        )
         query_matrix = np.ascontiguousarray(query_value[None, :], dtype=np.float32)
         total_started = perf_counter()
         if self._torch_transfer_timing:
@@ -407,23 +433,37 @@ class FaissExactSquaredL2Index:
             distances, rows, upload_ms, backend_ms, download_ms = self._search_numpy(
                 query_matrix, requested_k
             )
-        total_ms = (perf_counter() - total_started) * 1000.0
         row_values = np.asarray(rows[0], dtype=np.int64)
         distance_values = np.asarray(distances[0], dtype=np.float64)
         if np.any(row_values < 0) or np.any(row_values >= self.vector_count):
             raise FloatingPointError("FAISS returned an invalid corpus row")
         if not np.all(np.isfinite(distance_values)) or np.any(distance_values < 0.0):
             raise FloatingPointError("FAISS returned an invalid squared L2 distance")
-        if requested_k > k and distance_values[k - 1] == distance_values[k]:
+        raw_boundary = float(np.partition(distance_values, k - 1)[k - 1])
+        if (
+            requested_k < self.vector_count
+            and float(np.max(distance_values)) == raw_boundary
+        ):
             raise FaissBoundaryTieError(
-                "FAISS top-k boundary is tied; stable candidate identity is undefined"
+                "FAISS top-k tie band exhausted boundary_tie_overfetch"
             )
-        selected_rows = row_values[:k]
-        selected_distances = distance_values[:k]
-        order = np.lexsort((selected_rows, selected_distances))
+        refinement_started = perf_counter()
+        candidate_vectors = np.asarray(self.vectors[row_values])
+        refined_distances = (
+            float(np.dot(query_value, query_value))
+            + self.squared_norms[row_values]
+            - 2.0 * (candidate_vectors @ query_value)
+        )
+        refined_distances = np.asarray(refined_distances)
+        np.maximum(refined_distances, 0.0, out=refined_distances)
+        selected_rows, selected_distances = _stable_top_k_rows(
+            refined_distances, row_values, k
+        )
+        refinement_ms = (perf_counter() - refinement_started) * 1000.0
+        total_ms = (perf_counter() - total_started) * 1000.0
         return StreamingSearchResult(
-            rows=selected_rows[order],
-            squared_distances=selected_distances[order],
+            rows=selected_rows,
+            squared_distances=np.asarray(selected_distances, dtype=np.float64),
             search_ms=total_ms,
             distance_evaluations=self.vector_count,
             scanned_vector_bytes=int(
@@ -432,4 +472,7 @@ class FaissExactSquaredL2Index:
             query_upload_ms=upload_ms,
             backend_search_ms=backend_ms,
             result_download_ms=download_ms,
+            refinement_ms=refinement_ms,
+            refinement_distance_evaluations=requested_k,
+            requested_neighbors=requested_k,
         )

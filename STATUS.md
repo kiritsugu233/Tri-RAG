@@ -16,6 +16,8 @@ The same allocation used Python `3.9.23`, NumPy `1.26.4`, SciPy `1.13.0`, FAISS 
 
 The first 100k FAISS CPU attempt stopped at the pre-measurement NumPy gate. The projected top-1024 results differed only by exchanging positions 969/970: every pilot/budget cutoff candidate set was identical and maximum row-aligned distance error was `3.5763e-7`. This is float32 accumulation-order variation, not a candidate, policy, or retention change. The gate now compares exact candidate sets at `k_gt`, `M_pilot`, and every configured budget, plus row-aligned distances and downstream decisions. It accepts and records permutations strictly inside a retained prefix but still rejects any row crossing a semantic cutoff.
 
+The subsequent 100k CPU run completed, but the GPU run stopped on an exact float32-quantized tie at the original top-512 boundary. The adapter now overfetches a fixed guard within one FAISS search, recomputes that small pool with the canonical NumPy squared-L2 formula, and deterministically selects by distance/row. Refinement latency, requested neighbors, and extra host distance evaluations are recorded separately. A tie band larger than the guard remains a terminal error rather than triggering an unreported second full scan.
+
 The retrieval benchmark now compiles the frozen analytic Tri-Predict policy into adjacent-float64 LID decision intervals before query measurement. Its serving path loads a fingerprint-checked artifact and uses one interval lookup per query. Compilation and analytic-reference validation are outside measured retrieval latency. Every observed query LID is checked against the analytic reference after measurement, and a mismatch aborts artifact generation. The main certification harness retains the analytic policy so its predicted-retention diagnostics and existing certificate identity do not change.
 
 The local compiled-policy 100k/d768 structural run created seven states, loaded the artifact in `0.1093 ms`, and exactly matched all 64 prior local LID values, budgets, and retention values. Analytic validation averaged `38.4606 ms/decision`; lookup averaged `0.0021 ms/decision`. Reuse-path latency fell from `44.7511` to `4.2712 ms/query` across the old and new local runs. Compilation cost `17.9965 s` once at setup. These are not Genoa serving claims.
@@ -86,11 +88,11 @@ Optional exact FAISS CPU/GPU selection adds, respectively:
 
 ## Tests passed/failed
 
-- Passed locally: 49
+- Passed locally: 50
 - Skipped locally: 1 conditional real-FAISS CPU conformance test because FAISS is not installed on the Mac environment
 - Failed: 0
-- Runtime in the current environment: approximately 6.8 seconds
-- FAISS coverage checks the exact CPU adapter contract, row-aligned distances, semantic-cutoff candidate sets, accepted internal permutations, rejected cross-cutoff permutations, top-k boundary-tie refusal, missing GPU support, shared GPU resource-pool ownership, full benchmark integration, NumPy decision/rerank/retention equivalence, and GPU-memory artifact creation. The conditional real-FAISS test must execute rather than skip on the cluster before the CPU/GPU milestone passes.
+- Runtime in the current environment: approximately 7.4 seconds
+- FAISS coverage checks the exact CPU adapter contract, row-aligned distances, semantic-cutoff candidate sets, accepted internal permutations, rejected cross-cutoff permutations, bounded tie resolution, unclosed tie-band refusal, missing GPU support, shared GPU resource-pool ownership, refinement accounting, full benchmark integration, NumPy decision/rerank/retention equivalence, and GPU-memory artifact creation. The conditional real-FAISS test must execute rather than skip on the cluster before the CPU/GPU milestone passes.
 - Added coverage includes cross-platform policy-float canonicalization, exact `h_j(y)` term-by-term agreement with the orthogonal conditional law, geometric rank-strata population conservation and approximation error, root residuals, the infinite-root/unit-retention boundary, budget monotonicity, LID-to-budget monotonicity, saturation, analytic/empirical interface compatibility, and tune-only scalar safety correction.
 - Compiled-policy coverage checks dense linear/geometric LID values, both sides of every adjacent-float64 transition, invalid/out-of-domain fallback, deterministic serialization, artifact round-trip loading, and tamper rejection.
 - Attribution coverage verifies that actual squared-distance ratios reproduce the rank-model prediction when the assumed power law is exact, that attribution modes produce complete query-level artifacts, and that different synthetic seeds create disjoint stable ID namespaces.
@@ -144,7 +146,7 @@ The 1M/d1024 follow-up completed in the same allocation at commit `37e60d5da5781
 
 ## Next task
 
-Push the semantic-cutoff conformance change, require all 50 tests to pass without a skip on A100, and rerun the 100k FAISS CPU/GPU gates into fresh output directories. Accept the GPU gate only if every cutoff set and downstream decision matches, reuse still performs one projected scan, paired CPU/GPU decisions and retention remain identical, and GPU memory/timing artifacts are present. Run the 1M comparison only after that gate passes. Independently, begin the real external-query embedding adapter before making policy-quality claims. Cross-dimension policy selection remains blocked on a predeclared compute objective and denser fixed-budget grid.
+Push the deterministic boundary-refinement change, require all 51 tests to pass without a skip on A100, and rerun the 100k FAISS CPU/GPU gates into fresh output directories. Accept the GPU gate only if every cutoff set and downstream decision matches, reuse still performs one projected scan, paired CPU/GPU decisions and retention remain identical, and GPU memory/refinement/timing artifacts are present. Run the 1M comparison only after that gate passes. Independently, begin the real external-query embedding adapter before making policy-quality claims. Cross-dimension policy selection remains blocked on a predeclared compute objective and denser fixed-budget grid.
 
 ## Known deviations and risks
 

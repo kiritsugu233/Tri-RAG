@@ -213,6 +213,9 @@ class RetrievalBenchmarkTests(unittest.TestCase):
                 ]
             )
             self.assertEqual(
+                manifest["search"]["faiss_boundary_tie_overfetch"], 64
+            )
+            self.assertEqual(
                 manifest["search"]["backend_validation"]["mismatches"], 0
             )
             self.assertEqual(
@@ -239,6 +242,30 @@ class RetrievalBenchmarkTests(unittest.TestCase):
                     "mean"
                 ],
                 0.0,
+            )
+            self.assertGreater(
+                summary[METHOD_TRI_REUSE]["latency_ms"][
+                    "backend_refinement_ms"
+                ]["mean"],
+                0.0,
+            )
+            alternate_paths = run_retrieval_benchmark(
+                config,
+                directory / "faiss-run-overfetch-32",
+                backend="faiss-cpu",
+                faiss_module=_FakeFaiss(),
+                faiss_boundary_tie_overfetch=32,
+            )
+            alternate_manifest = json.loads(
+                alternate_paths["manifest.json"].read_text()
+            )
+            self.assertEqual(
+                alternate_manifest["search"]["faiss_boundary_tie_overfetch"],
+                32,
+            )
+            self.assertNotEqual(
+                alternate_manifest["reproducibility_fingerprint"],
+                manifest["reproducibility_fingerprint"],
             )
 
 
