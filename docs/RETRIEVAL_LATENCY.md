@@ -156,6 +156,13 @@ the explicit transfer fields remain zero. `search_ms` and end-to-end latency
 also include adapter validation and stable ordering around that call, so stage
 components must not be assumed to sum exactly to total latency.
 
+Original-space and projected-space GPU indexes share one
+`StandardGpuResources` instance. This avoids reserving a separate FAISS scratch
+memory pool for each index; the manifest records which index created the pool
+and which reused it. The 10k A100 smoke audit initially exposed approximately
+3.5 GiB of device use for only 6.4 MB of vectors when two pools were created,
+so shared-resource behavior is a required gate before the 100k comparison.
+
 `gpu_memory.json` contains `nvidia-smi` snapshots before index construction,
 after both original/projected indexes are resident, and after measured queries,
 along with `CUDA_VISIBLE_DEVICES` and `SLURM_JOB_GPUS`. These are device-level
@@ -165,8 +172,9 @@ continues to be reported separately.
 FAISS is intentionally optional rather than a base dependency: all required
 offline CPU tests still run without it. The local suite uses an exact test
 double for adapter/control-flow coverage and conditionally runs an additional
-real-FAISS CPU conformance test when the module is installed. A cluster run is
-required before either real FAISS path can be marked complete.
+real-FAISS CPU conformance test when the module is installed. Slurm job
+`373268` passed that real CPU test and the initial 10k A100 correctness smoke;
+the shared-resource memory rerun and 100k latency comparison remain required.
 
 Example commands, after the cluster environment passes the FAISS probe:
 
@@ -381,5 +389,6 @@ for any retention, evidence, or adaptive-policy claim.
 - Compilation time is setup cost and is reported separately. The per-query
   policy stage measures only the loaded frozen lookup.
 - FAISS CPU/GPU comparisons come only after the exact Genoa baseline passes.
-- The adapter and offline integration tests are implemented, but a real FAISS
-  CPU/GPU cluster result is still pending and no acceleration claim exists yet.
+- Real FAISS CPU conformance and an initial 10k A100 correctness smoke pass.
+  The shared-resource memory rerun and 100k CPU/GPU comparison are still
+  pending, so no acceleration claim exists yet.

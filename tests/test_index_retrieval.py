@@ -44,6 +44,25 @@ class _FakeFaiss:
     IndexFlatL2 = _FakeIndexFlatL2
 
 
+class _FakeGpuResources:
+    pass
+
+
+class _FakeGpuFaiss(_FakeFaiss):
+    resources_created = 0
+
+    @classmethod
+    def StandardGpuResources(cls):
+        cls.resources_created += 1
+        return _FakeGpuResources()
+
+    @staticmethod
+    def index_cpu_to_gpu(resources, device, index):
+        if not isinstance(resources, _FakeGpuResources) or device != 0:
+            raise ValueError("invalid fake GPU transfer")
+        return index
+
+
 class ExactIndexTests(unittest.TestCase):
     def test_exact_top_k_matches_brute_force(self):
         rng = np.random.default_rng(33)
@@ -139,6 +158,29 @@ class ExactIndexTests(unittest.TestCase):
                 faiss_module=_FakeFaiss(),
                 enable_torch_transfer_timing=False,
             )
+
+    def test_faiss_gpu_indexes_can_share_one_resource_pool(self):
+        rng = np.random.default_rng(914)
+        original = rng.normal(size=(31, 12)).astype(np.float32)
+        projected = rng.normal(size=(31, 5)).astype(np.float32)
+        _FakeGpuFaiss.resources_created = 0
+        first = FaissExactSquaredL2Index(
+            original,
+            device="gpu",
+            faiss_module=_FakeGpuFaiss,
+            enable_torch_transfer_timing=False,
+        )
+        second = FaissExactSquaredL2Index(
+            projected,
+            device="gpu",
+            faiss_module=_FakeGpuFaiss,
+            gpu_resources=first.gpu_resources,
+            enable_torch_transfer_timing=False,
+        )
+        self.assertIs(first.gpu_resources, second.gpu_resources)
+        self.assertEqual(_FakeGpuFaiss.resources_created, 1)
+        self.assertFalse(first.build_metrics.gpu_resources_shared)
+        self.assertTrue(second.build_metrics.gpu_resources_shared)
 
     def test_real_faiss_cpu_conformance_when_installed(self):
         try:

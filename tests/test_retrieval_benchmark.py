@@ -167,6 +167,11 @@ class RetrievalBenchmarkTests(unittest.TestCase):
             self.assertEqual(
                 manifest["search"]["backend"], "faiss-cpu_index_flat_l2"
             )
+            self.assertFalse(
+                manifest["search"]["index_build"]["original"][
+                    "gpu_resources_shared"
+                ]
+            )
             self.assertEqual(
                 manifest["search"]["backend_validation"]["mismatches"], 0
             )

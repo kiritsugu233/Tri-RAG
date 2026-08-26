@@ -37,6 +37,7 @@ class FaissIndexBuildMetrics:
     host_index_build_ms: float
     host_to_device_ms: float
     gpu_device: Optional[int]
+    gpu_resources_shared: bool
     transfer_timing_mode: str
     faiss_max_threads: Optional[int]
 
@@ -246,6 +247,7 @@ class FaissExactSquaredL2Index:
         gpu_device: int = 0,
         faiss_threads: int = 1,
         faiss_module: Optional[Any] = None,
+        gpu_resources: Optional[Any] = None,
         enable_torch_transfer_timing: bool = True,
     ):
         values = np.asanyarray(vectors)
@@ -255,6 +257,8 @@ class FaissExactSquaredL2Index:
             raise ValueError("index vectors must be finite")
         if device not in {"cpu", "gpu"}:
             raise ValueError("FAISS device must be 'cpu' or 'gpu'")
+        if device == "cpu" and gpu_resources is not None:
+            raise ValueError("gpu_resources can only be supplied for a GPU index")
         if (
             isinstance(gpu_device, bool)
             or not isinstance(gpu_device, int)
@@ -284,17 +288,23 @@ class FaissExactSquaredL2Index:
         host_build_ms = (perf_counter() - host_started) * 1000.0
         host_to_device_ms = 0.0
         transfer_timing_mode = "host_numpy_api_inclusive"
-        self._gpu_resources = None
+        self.gpu_resources = None
+        gpu_resources_shared = False
         if device == "gpu":
             required = ("StandardGpuResources", "index_cpu_to_gpu")
             if any(not hasattr(self.faiss, name) for name in required):
                 raise FaissUnavailableError(
                     "installed FAISS build has no NVIDIA GPU support"
                 )
-            self._gpu_resources = self.faiss.StandardGpuResources()
+            gpu_resources_shared = gpu_resources is not None
+            self.gpu_resources = (
+                gpu_resources
+                if gpu_resources is not None
+                else self.faiss.StandardGpuResources()
+            )
             transfer_started = perf_counter()
             self.index = self.faiss.index_cpu_to_gpu(
-                self._gpu_resources, gpu_device, host_index
+                self.gpu_resources, gpu_device, host_index
             )
             host_to_device_ms = (perf_counter() - transfer_started) * 1000.0
             if enable_torch_transfer_timing:
@@ -328,6 +338,7 @@ class FaissExactSquaredL2Index:
             host_index_build_ms=host_build_ms,
             host_to_device_ms=host_to_device_ms,
             gpu_device=self.gpu_device,
+            gpu_resources_shared=gpu_resources_shared,
             transfer_timing_mode=transfer_timing_mode,
             faiss_max_threads=(
                 int(self.faiss.omp_get_max_threads())

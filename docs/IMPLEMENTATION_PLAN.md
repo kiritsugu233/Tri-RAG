@@ -108,7 +108,8 @@ Acceptance:
 - [x] Reproduce compiled-policy lookup latency and exact decision equivalence on Genoa.
 - [x] Add an optional exact FAISS `IndexFlatL2` CPU/GPU adapter after archiving the exact baseline.
 - [x] Add offline adapter, boundary-tie refusal, and benchmark integration tests.
-- [ ] Pass conformance against a real FAISS CPU build on the cluster.
+- [x] Share one FAISS GPU resource pool across original/projected indexes.
+- [x] Pass conformance against a real FAISS CPU build on the cluster.
 - [ ] Pass the 100k FAISS GPU smoke/latency gate before running the 1M comparison.
 
 Acceptance:

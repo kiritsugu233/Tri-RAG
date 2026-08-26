@@ -943,6 +943,8 @@ def _report(
             f"- original host-to-device: {index_build['original'].get('host_to_device_ms', 0.0):.6f} ms",
             f"- projected host index build: {index_build['projected'].get('host_index_build_ms', 0.0):.6f} ms",
             f"- projected host-to-device: {index_build['projected'].get('host_to_device_ms', 0.0):.6f} ms",
+            "- projected index shares GPU resources: "
+            f"{index_build['projected'].get('gpu_resources_shared', False)}",
             f"- backend validation queries: {backend_validation['query_count']}",
             f"- backend validation mismatches: {backend_validation['mismatches']}",
             "- compiled decision equal: "
@@ -1205,6 +1207,9 @@ def run_retrieval_benchmark(
             gpu_device=gpu_device,
             faiss_threads=faiss_threads,
             faiss_module=faiss_module,
+            gpu_resources=(
+                original_index.gpu_resources if faiss_device == "gpu" else None
+            ),
         )
         index_build = {
             "original": original_index.build_metrics.serialize(),
