@@ -245,6 +245,33 @@ lookup identity moves under a separate deployment section of the manifest.
 Two fresh local v2 runs are byte-identical for every deterministic artifact,
 and independent reduction reproduced the new result identity above.
 
+### Accepted Genoa protocol-v2 gate
+
+Slurm job `373780` on `genoa02` ran protocol v2 at commit `5389745` with
+Python `3.9.23`, NumPy `1.26.4`, and SciPy `1.13.0`. The run completed after 85
+tests passed and the one optional real-FAISS conformance test skipped. Its seven
+scientific files—query records, selection, fixed grid, monotone policy,
+analytic Tri-Predict policy, summary, and report—are byte-identical to the
+independent Mac output. Consequently the portable result and selection
+fingerprints remain
+`2c31279a8f8038eebb049b0630548b2edd533ee5e1e01adb6cbd0a41e7e9bcb8`
+and `2eaed81134b1621e9f2f072a3c800cb6eaa8610bcaeb02f0a8465c34509f1`.
+
+The Genoa-local compiled deployment fingerprint is
+`687d47f7fa1f93babaec6049ceaf825929445a92be52df48f26945ab38b42c30`.
+It references analytic policy
+`7838e1be673932f38c5b4db9d1cea06e168565b0b7feba3014bef618f89d4423`,
+contains the expected 16 states and 15 transition boundaries, and passed all
+158 validation points with zero mismatches. It differs from the Mac compiled
+fingerprint only in the explicitly non-scientific platform deployment layer.
+
+The returned archive `scifact-policy-v2-373780-audit.tar.gz` has SHA-256
+`b091a1ac57fdaca61bbb0d849cdadf9e91507fe779d5b5f95c7937076841246c`.
+Independent local audit rehashed every artifact, reconstructed the result
+identity, verified the 403-query tune scope and ID hash, and recomputed all
+three empirical-Bernstein statistics and the nine-decimal LID diagnostic. No
+certification or test records were accessed during this gate.
+
 Run policy fitting with:
 
 ```bash
@@ -260,11 +287,10 @@ python3 -m tri_rag_harness.real_policy_tune \
 
 ## Next gate
 
-Run protocol v2 once on Genoa and require the portable result and selection
-fingerprints above. The compiled deployment fingerprint may be machine-specific
-but must bind the analytic fingerprint and pass zero-mismatch validation. After
-accepting that archive, implement a certification-only runner that loads the
-frozen analytic and Genoa deployment artifacts before accessing `query_cert`.
-Evaluate the fixed reference and both adaptive policies exactly once on that
-untouched split. A failed certificate remains terminal and must not trigger
-retuning on the same certification queries.
+Implement a certification-only runner that loads and validates the frozen fixed,
+monotone-binned, analytic Tri-Predict, and accepted Genoa deployment artifacts
+before accessing `query_cert`. Develop and test it only with tiny synthetic
+fixtures; do not inspect real certification outcomes while changing its
+protocol. Once frozen, evaluate all three policies exactly once on the untouched
+404-query certification split. A failed certificate remains terminal and must
+not trigger retuning on the same certification queries.

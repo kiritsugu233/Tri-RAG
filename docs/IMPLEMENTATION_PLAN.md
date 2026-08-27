@@ -137,6 +137,7 @@ Acceptance:
 - [x] Freeze one `m_prime` using tune queries only.
 - [x] Run required policies on tune, then freeze them.
 - [x] Freeze cross-platform LID precision and separate compiled deployment identity.
+- [x] Reproduce and independently audit the frozen scientific policy result on Genoa.
 - [ ] Certify on untouched certification queries.
 - [ ] Evaluate on test queries.
 

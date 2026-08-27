@@ -106,6 +106,20 @@ at that precision changes zero budgets. Protocol v2 therefore separates the
 platform-bound compiled lookup from scientific identity while still binding it
 to the analytic policy and requiring zero validation mismatches.
 
+The repaired protocol-v2 gate is now accepted. Slurm job `373780` on
+`genoa02` ran commit `5389745` with Python `3.9.23`, NumPy `1.26.4`, and SciPy
+`1.13.0`; 85 of 86 tests passed and the optional real-FAISS conformance test
+skipped in the NumPy environment. All seven scientific result files are byte
+identical to the independent Mac run, including all 403 query-level records.
+An independent local audit recomputed every embedded/file/result fingerprint,
+the tune ID hash, all three empirical-Bernstein bounds, and the rounded LID
+diagnostic. Genoa compiled deployment fingerprint
+`687d47f7fa1f93babaec6049ceaf825929445a92be52df48f26945ab38b42c30`
+differs from the local deployment artifact as expected, but references the same
+analytic policy, has 16 states and 15 boundaries, and reports zero validation
+mismatches. The accepted audit archive SHA-256 is
+`b091a1ac57fdaca61bbb0d849cdadf9e91507fe779d5b5f95c7937076841246c`.
+
 The local compiled-policy 100k/d768 structural run created seven states, loaded the artifact in `0.1093 ms`, and exactly matched all 64 prior local LID values, budgets, and retention values. Analytic validation averaged `38.4606 ms/decision`; lookup averaged `0.0021 ms/decision`. Reuse-path latency fell from `44.7511` to `4.2712 ms/query` across the old and new local runs. Compilation cost `17.9965 s` once at setup. These are not Genoa serving claims.
 
 Slurm job `373123` reproduced the compiled policy on `genoa00` at commit `0407c831c263e7505543b3701b84e7cd4a4b4bd0`; all 43 tests passed. At 100k, lookup averaged `0.002544 ms` versus `55.8130 ms` for the analytic reference (21,939x), and reuse fell from `61.0718` to `5.2163 ms/query` with p95 `5.4572 ms`. At 1M, lookup averaged `0.002587 ms` versus `58.3822 ms` (22,564x), and reuse fell from `146.7481` to `87.5176 ms/query` with p95 `90.2264 ms`. Artifact loading took `0.149/0.142 ms`; offline compilation took `26.106/27.898 s`. Every old/new query-level LID, budget, saturation flag, retention value, and work counter is identical, and both reference policies are unchanged. The exact CPU and compiled-policy systems gates pass.
@@ -252,6 +266,7 @@ python3 -m tri_rag_harness.real_policy_tune \
 - Five real-original-baseline tests cover tune-only enforcement, strict cache tamper refusal, graded nDCG, stable tie breaking, deterministic artifacts, pinned real identities, and exclusion of timings from result identity.
 - Five real-dimension-sweep tests cover protected-split refusal, immutable common-cost semantics, exact query-projection accounting, stable projected ranking conformance, terminal full-corpus behavior, query-level auditability, and deterministic tune-only artifacts.
 - Eight real-policy tests cover immutable tune-only/determinism configuration, the observed Mac/Genoa LID-tail fixture, compiled/scientific identity separation, protected-split and common-cost refusal, terminal fallback, exact coordinate accounting, cached/analytic full-corpus boundary equivalence, and query-aligned decision reduction. Two additional Tri-Predict regressions prevent finite-budget floating-point saturation from satisfying an exact unit target and preserve deterministic unit retention at a complete-corpus budget. The full local suite now contains 86 tests: 85 pass and one optional real-FAISS test skips.
+- The accepted protocol-v2 Genoa policy gate ran the same 86-test suite on job `373780`, node `genoa02`, commit `5389745`: 85 passed, the optional real-FAISS test skipped, and the run reached its terminal portable-scientific-identity assertion.
 
 ## Current artifacts
 
@@ -295,7 +310,17 @@ It is retained as the authoritative protocol-v1 cross-platform diagnostic: its
 two Genoa runs are internally byte-identical and its scientific decisions match
 the Mac, but its result fingerprint is not accepted because platform-bound LID
 tail noise and compiled boundaries contaminated that identity. A fresh Genoa
-protocol-v2 run is required before accepting the final frozen policy archive.
+protocol-v2 run was therefore required before accepting the final frozen policy
+archive.
+
+The accepted frozen-policy archive is
+`scifact-policy-v2-373780-audit.tar.gz`, SHA-256
+`b091a1ac57fdaca61bbb0d849cdadf9e91507fe779d5b5f95c7937076841246c`.
+It contains the Genoa log, all seven portable scientific result artifacts,
+separate timings, the platform deployment table, and the exact source/config/
+test/documentation snapshot. The portable result and selection fingerprints
+match the Mac exactly; only the non-scientific manifest/deployment identities
+reflect the platform-specific compiled table and Python version.
 
 `runs/synthetic_mvp/` contains:
 
@@ -346,18 +371,14 @@ The separately frozen `M_max=1984` FAISS 1M comparison also passes every exact s
 
 ## Next task
 
-Run protocol v2 once on Genoa and require scientific result fingerprint
-`2c31279a8f8038eebb049b0630548b2edd533ee5e1e01adb6cbd0a41e7e9bcb8`
-and selection fingerprint
-`2eaed81134b1621e9f2fd2f072a3c800cb6eaa8610bcaeb02f0a8465c34509f1`.
-The Genoa compiled deployment fingerprint may differ from the local value, but
-must reference analytic policy
-`7838e1be673932f38c5b4db9d1cea06e168565b0b7feba3014bef618f89d4423`
-and report zero validation mismatches. Archive the full query-level result and
-separate timings. Only after that gate, implement the certification-only runner,
-load the frozen fixed, monotone-binned, and Genoa compiled Tri-Predict artifacts,
-and evaluate untouched `query_cert` exactly once. A failure is terminal and
-must not trigger retuning on those queries.
+Implement and test a certification-only runner without reading real
+`query_cert` outcomes during development. It must load and fingerprint-check the
+accepted fixed `M=768`, monotone-binned, analytic Tri-Predict, and exact Genoa
+compiled deployment artifacts before permitting protected-split access. Then
+run all three policies exactly once on untouched `query_cert`, save complete
+query-level records, and compute independent certificates under the frozen
+`alpha=0.05`, target `0.95` protocol. A failure is terminal and must not trigger
+retuning or artifact replacement on those queries.
 
 ## Known deviations and risks
 
