@@ -120,6 +120,21 @@ analytic policy, has 16 states and 15 boundaries, and reports zero validation
 mismatches. The accepted audit archive SHA-256 is
 `b091a1ac57fdaca61bbb0d849cdadf9e91507fe779d5b5f95c7937076841246c`.
 
+A certification-only real runner is now implemented but has not yet been used
+on the real certification split. Config fingerprint
+`e5545a4aa4c07a1bc188870538c7d346ff26faf38f135c03d4b32f4a18c7ce74`
+freezes the 404-query cert ID hash, fixed `M=768`, both adaptive policy
+fingerprints, the exact Genoa compiled fingerprint and file SHA-256, projection,
+pilot/LID rules, one-scan reuse, target `0.95`, and per-policy `alpha=0.05`.
+There are three predeclared standalone certificates and no selection among them
+on cert. Policy files and their transitive result identity are validated before
+the protected split is selected. Query-level output contains exact top-k IDs,
+pilot/oracle LID, chosen budgets, prefix hashes, reranked top-k IDs, retention,
+fallback/saturation, and compiled/analytic agreement. A failed target is written
+as a terminal result and does not change the process exit status or trigger
+retuning. Development used only synthetic fixtures; no real cert outcome was
+read.
+
 The local compiled-policy 100k/d768 structural run created seven states, loaded the artifact in `0.1093 ms`, and exactly matched all 64 prior local LID values, budgets, and retention values. Analytic validation averaged `38.4606 ms/decision`; lookup averaged `0.0021 ms/decision`. Reuse-path latency fell from `44.7511` to `4.2712 ms/query` across the old and new local runs. Compilation cost `17.9965 s` once at setup. These are not Genoa serving claims.
 
 Slurm job `373123` reproduced the compiled policy on `genoa00` at commit `0407c831c263e7505543b3701b84e7cd4a4b4bd0`; all 43 tests passed. At 100k, lookup averaged `0.002544 ms` versus `55.8130 ms` for the analytic reference (21,939x), and reuse fell from `61.0718` to `5.2163 ms/query` with p95 `5.4572 ms`. At 1M, lookup averaged `0.002587 ms` versus `58.3822 ms` (22,564x), and reuse fell from `146.7481` to `87.5176 ms/query` with p95 `90.2264 ms`. Artifact loading took `0.149/0.142 ms`; offline compilation took `26.106/27.898 s`. Every old/new query-level LID, budget, saturation flag, retention value, and work counter is identical, and both reference policies are unchanged. The exact CPU and compiled-policy systems gates pass.
@@ -246,12 +261,25 @@ python3 -m tri_rag_harness.real_policy_tune \
   --output runs/scifact-policy-tune
 ```
 
+One-time frozen SciFact policy certification:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src \
+python3 -m tri_rag_harness.real_policy_certify \
+  --config configs/real_scifact_policy_certify.json \
+  --dataset data/prepared/scifact-dedup-v2 \
+  --embedding-config configs/real_scifact_e5_base_v2_embeddings.json \
+  --embedding-cache data/embeddings/scifact-e5-base-v2-dedup-v2 \
+  --policy-run runs/slurm-scifact-policy-v2-373780 \
+  --output runs/scifact-policy-cert
+```
+
 ## Tests passed/failed
 
-- Passed locally: 85
+- Passed locally: 91
 - Skipped locally: 1 conditional real-FAISS CPU conformance test because FAISS is not installed on the Mac environment
 - Failed: 0
-- Runtime in the current environment: approximately 7.5 seconds
+- Runtime in the current environment: approximately 7.8 seconds
 - FAISS coverage checks the exact CPU adapter contract, row-aligned distances, semantic-cutoff candidate sets, accepted internal permutations, rejected cross-cutoff permutations, bounded tie resolution, unclosed tie-band refusal, missing GPU support, shared GPU resource-pool ownership, refinement accounting, full benchmark integration, NumPy decision/rerank/retention equivalence, and GPU-memory artifact creation. The conditional real-FAISS test must execute rather than skip on the cluster before the CPU/GPU milestone passes.
 - Added coverage includes cross-platform policy-float canonicalization, exact `h_j(y)` term-by-term agreement with the orthogonal conditional law, geometric rank-strata population conservation and approximation error, root residuals, the infinite-root/unit-retention boundary, budget monotonicity, LID-to-budget monotonicity, saturation, analytic/empirical interface compatibility, and tune-only scalar safety correction.
 - Compiled-policy coverage checks dense linear/geometric LID values, both sides of every adjacent-float64 transition, invalid/out-of-domain fallback, deterministic serialization, artifact round-trip loading, and tamper rejection.
@@ -265,7 +293,7 @@ python3 -m tri_rag_harness.real_policy_tune \
 - Six text-embedding tests cover the pinned dataset/model request, exact E5 prefix preservation, fake-provider normalization, cache reuse without model loading, source-artifact mutation refusal, request mutation refusal, array-tamper refusal, and partial-cache suppression on invalid provider output.
 - Five real-original-baseline tests cover tune-only enforcement, strict cache tamper refusal, graded nDCG, stable tie breaking, deterministic artifacts, pinned real identities, and exclusion of timings from result identity.
 - Five real-dimension-sweep tests cover protected-split refusal, immutable common-cost semantics, exact query-projection accounting, stable projected ranking conformance, terminal full-corpus behavior, query-level auditability, and deterministic tune-only artifacts.
-- Eight real-policy tests cover immutable tune-only/determinism configuration, the observed Mac/Genoa LID-tail fixture, compiled/scientific identity separation, protected-split and common-cost refusal, terminal fallback, exact coordinate accounting, cached/analytic full-corpus boundary equivalence, and query-aligned decision reduction. Two additional Tri-Predict regressions prevent finite-budget floating-point saturation from satisfying an exact unit target and preserve deterministic unit retention at a complete-corpus budget. The full local suite now contains 86 tests: 85 pass and one optional real-FAISS test skips.
+- Eight tune-policy tests cover immutable tune-only/determinism configuration, the observed Mac/Genoa LID-tail fixture, compiled/scientific identity separation, protected-split and common-cost refusal, terminal fallback, exact coordinate accounting, cached/analytic full-corpus boundary equivalence, and query-aligned decision reduction. Four certification-only tests freeze the real cert/Genoa identities, reject protected-scope and post-cert selection mutations, reject deployment tampering before protected-data access, and reproduce complete synthetic query-level/certificate artifacts byte for byte. Policy-loader regressions reject tampered monotone and analytic artifacts. The full local suite now contains 92 tests: 91 pass and one optional real-FAISS test skips.
 - The accepted protocol-v2 Genoa policy gate ran the same 86-test suite on job `373780`, node `genoa02`, commit `5389745`: 85 passed, the optional real-FAISS test skipped, and the run reached its terminal portable-scientific-identity assertion.
 
 ## Current artifacts
@@ -299,9 +327,8 @@ The accepted Genoa fixed-dimension archive is
 `99cf703cd384555305d8d526224ccc01208c76539cd79acb45b8ea600b737b21`.
 It contains both byte-identical dimension runs, the original baseline identity,
 frozen selection artifacts, source/config/test files, and the complete Slurm
-log. The real policy outputs are currently independently reproduced local
-artifacts in `/tmp`; their deterministic identities are listed above and await
-the cluster reproduction gate before an audit archive is accepted.
+log. The subsequent accepted policy archive below closes the cluster
+reproduction gate for those selected inputs.
 
 The first Genoa policy archive is
 `scifact-policy-tune-373780-audit.tar.gz`, SHA-256
@@ -371,14 +398,13 @@ The separately frozen `M_max=1984` FAISS 1M comparison also passes every exact s
 
 ## Next task
 
-Implement and test a certification-only runner without reading real
-`query_cert` outcomes during development. It must load and fingerprint-check the
-accepted fixed `M=768`, monotone-binned, analytic Tri-Predict, and exact Genoa
-compiled deployment artifacts before permitting protected-split access. Then
-run all three policies exactly once on untouched `query_cert`, save complete
-query-level records, and compute independent certificates under the frozen
-`alpha=0.05`, target `0.95` protocol. A failure is terminal and must not trigger
-retuning or artifact replacement on those queries.
+Run the frozen certification command exactly once on Genoa using the accepted
+policy directory and untouched `query_cert`. Require all 92 tests to pass apart
+from the expected optional real-FAISS skip before starting the cert command.
+Archive the complete output and log regardless of PASS/FAIL; do not edit the
+config, replace a policy, enlarge a budget, or rerun with changed parameters
+after observing the result. Return the archive for independent fingerprint and
+empirical-Bernstein recomputation before any `query_test` work begins.
 
 ## Known deviations and risks
 
@@ -395,6 +421,7 @@ retuning or artifact replacement on those queries.
 - On Genoa, scalar Tri-Predict root solving dominates measured retrieval latency (`5.9988` of `6.0325 ms/query`) on the 160-item synthetic corpus. Candidate-count saving must not be presented as latency saving; vectorization, lookup-table caching, or a validated approximation is required before serving claims.
 - The compiled policy preserves only decision fields. Analytic predicted-retention values remain diagnostics produced by the reference policy; they are not reconstructed or interpolated online. Adjacent-float64 transition locations depend on the SciPy/platform special-function implementation, so the compiled lookup is a deployment artifact bound to—but intentionally excluded from—the analytic scientific policy identity.
 - A deployment must load the archived compiled artifact rather than silently recompiling it. The certification manifest must bind both the cross-platform analytic policy fingerprint and the exact platform deployment fingerprint used for lookup.
+- The real cert-only runner and config are frozen and tested, but the real 404-query certificate remains unobserved at this commit. Its three `alpha=0.05` bounds are standalone predeclared policy claims, not a family-wise procedure for selecting the best policy after certification.
 - The retrieval latency fixture uses normalized Gaussian vectors with realistic shapes and memory traffic, not embeddings from a text model. It is a systems benchmark only; semantic retrieval conclusions require the real external-query adapter.
 - FAISS is optional and intentionally absent from the base NumPy/SciPy dependency set. The isolated A100 environment has compatible real CPU/GPU FAISS and PyTorch interop, but its packages and exact versions must remain part of every run manifest/log because they are not installed by the base project metadata.
 - FAISS `IndexFlatL2` is exact in float32 but does not guarantee stable candidate identity at an exact top-k boundary tie. The adapter deterministically refines a bounded one-scan overfetch pool and aborts if that guard does not close the raw tie band; refinement therefore adds host work and latency even when the GPU scan is fast.

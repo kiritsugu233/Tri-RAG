@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "benchmark": "real_frozen_policy_certification_v1",
+  "dataset_manifest_fingerprint": "4a73586d3a29a0567287e501ac3c06c998af661cdc74dbc589e7525a7924f903",
+  "embedding_config_fingerprint": "705153fdd5110981e1bb0f37c7007064b851c50af722a34f41e6c2050e077af7",
+  "embedding_request_fingerprint": "c0b7992d73434f0f421688f14f3a57ecfe92f3d16e44c90c43fe710f798102ca",
+  "embedding_manifest_fingerprint": "2ec53ce38e226129ba0feffcd28ba1da1081e0627ad8e54f4a60e430c341e914",
+  "evaluation_split": "query_cert",
+  "query_split": {
+    "n": 404,
+    "id_hash": "9e5923b4c4a8a170a3d2774f98fccd3236a5f4179afe98de3c5af6774e038e4a"
+  },
+  "policy_source": {
+    "manifest_fingerprint": "22abce45dedec75c422293899d365691604ffad7e8cd87ec2fb1ced6093a59ed",
+    "result_fingerprint": "2c31279a8f8038eebb049b0630548b2edd533ee5e1e01adb6cbd0a41e7e9bcb8",
+    "selection_fingerprint": "2eaed81134b1621e9f2fd2f072a3c800cb6eaa8610bcaeb02f0a8465c34509f1",
+    "fixed_grid_fingerprint": "50c332ea015bda36f30803b31f480777d0129720e2bc7988b13d63fe8c6cea0f",
+    "fixed_reference_budget": 768,
+    "fixed_reference_policy_fingerprint": "061a07e33a96bdb7488b01b068118579aa4ca2e7b098d3288411a4b4117434a3",
+    "monotone_binned_fingerprint": "7734ac4efb84a66af837028a289422ff21ce77d1e9cfae68f484d52d10286f38",
+    "analytic_tri_predict_fingerprint": "7838e1be673932f38c5b4db9d1cea06e168565b0b7feba3014bef618f89d4423",
+    "compiled_tri_predict_fingerprint": "687d47f7fa1f93babaec6049ceaf825929445a92be52df48f26945ab38b42c30",
+    "compiled_artifact_sha256": "b38a2fd337c72bc40aabecf64c596a98685b7ac413969ccd48f40b42788b0856",
+    "compiled_policy_role": "platform_deployment_artifact_excluded_from_scientific_identity"
+  },
+  "projection": {
+    "family": "dense_gaussian_n0_variance_1_over_m_prime",
+    "seed": 27011,
+    "m_prime": 192,
+    "post_projection_normalize": false,
+    "frozen_projection_fingerprint": "8a9a1148527db16c43bc3fedf6da1ac79ae00c0d76f2a31321cd6d9fe049809e",
+    "projection_fingerprint": "82ba6c549bdc01249883314972e233f7049027a204dc03fcd7e1e55e8eda357c"
+  },
+  "search": {
+    "normalized_inputs": true,
+    "distance": "squared_l2",
+    "arithmetic": "numpy_float64",
+    "stable_tie_break": "lexicographic_doc_id",
+    "query_batch_size": 32,
+    "k_ctx": 5,
+    "k_gt": 10,
+    "m_pilot": 32,
+    "s_lid": 20,
+    "min_lid_neighbors": 12,
+    "m_grid": [
+      32,
+      48,
+      64,
+      96,
+      128,
+      192,
+      256,
+      384,
+      512,
+      768,
+      1024,
+      1536,
+      2048,
+      3072,
+      4096,
+      5183
+    ],
+    "fixed_reference_budget": 768,
+    "pilot_expansion_reuse": "one_projected_scan_and_reuse_pilot_original_distances"
+  },
+  "lid": {
+    "decimal_places": 9,
+    "feature_version": "pilot_rerank_lid_rounded_9_v2",
+    "clip_min": 1.0,
+    "clip_max": 100.0,
+    "duplicate_tolerance": 1e-12,
+    "fallback": 100.0
+  },
+  "certification": {
+    "metric": "embedding_neighbor_retention_at_k_gt",
+    "alpha": 0.05,
+    "target": 0.95,
+    "planned_n": 404,
+    "statistic_role": "independent_empirical_bernstein_certificate",
+    "policies": [
+      "fixed_reference",
+      "monotone_binned",
+      "tri_predict"
+    ],
+    "familywise_adjustment": "none_three_predeclared_standalone_certificates_no_selection",
+    "failure_behavior": "terminal_no_retuning_no_budget_expansion",
+    "evidence_labels_used": false
+  }
+}

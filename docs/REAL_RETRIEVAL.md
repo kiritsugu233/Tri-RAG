@@ -285,12 +285,57 @@ python3 -m tri_rag_harness.real_policy_tune \
   --output runs/scifact-policy-tune
 ```
 
+## Frozen certification-only runner
+
+`configs/real_scifact_policy_certify.json` and
+`tri_rag_harness.real_policy_certify` are implemented and frozen before any
+real certification retrieval outcome is read. Config fingerprint
+`e5545a4aa4c07a1bc188870538c7d346ff26faf38f135c03d4b32f4a18c7ce74`
+binds the accepted dataset/cache, 404-query cert ID hash, fixed projection and
+dimension, complete budget grid, fixed reference, both adaptive policies, and
+the exact Genoa compiled policy fingerprint/file hash.
+
+The loader verifies the policy manifest, every scientific artifact hash, the
+reconstructed scientific result identity, selection, fixed-grid and selected
+fixed-policy identities, monotone and analytic policy serialization, and the
+compiled deployment binding before selecting or scoring `query_cert`. The
+runtime reconstructs one non-renormalized Gaussian projection, performs one
+exact projected full-corpus ranking per query, estimates deployable LID from
+the first 32 candidates in original space, and reuses both projected ranking
+and pilot original distances for expansion/reranking. The compiled Tri-Predict
+decision must match the analytic policy on every query or the run aborts.
+
+The three policies are predeclared standalone certificates rather than
+candidates for post-cert selection. Each uses the empirical-Bernstein lower
+bound with `alpha=0.05`, target `0.95`, and all 404 frozen queries. A FAIL is a
+valid terminal artifact: the command still publishes the query-level result
+and must not trigger retuning or budget expansion. Evidence qrels are not
+loaded, oracle LID remains diagnostic only, and `query_test` is not evaluated.
+Candidate and coordinate savings are work proxies rather than latency claims.
+
+Four synthetic-only end-to-end tests verify protected-scope refusal, rejection
+of policy tampering before protected data access, one projected scan, pilot
+distance reuse accounting, candidate/rerank overlap equivalence, complete
+query-level auditability, terminal failure semantics, and byte reproducibility.
+The full local suite has 92 tests: 91 pass and the optional real-FAISS test
+skips. No real certification output exists yet.
+
+The one-time command is:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src \
+python3 -m tri_rag_harness.real_policy_certify \
+  --config configs/real_scifact_policy_certify.json \
+  --dataset data/prepared/scifact-dedup-v2 \
+  --embedding-config configs/real_scifact_e5_base_v2_embeddings.json \
+  --embedding-cache data/embeddings/scifact-e5-base-v2-dedup-v2 \
+  --policy-run runs/slurm-scifact-policy-v2-373780 \
+  --output runs/scifact-policy-cert
+```
+
 ## Next gate
 
-Implement a certification-only runner that loads and validates the frozen fixed,
-monotone-binned, analytic Tri-Predict, and accepted Genoa deployment artifacts
-before accessing `query_cert`. Develop and test it only with tiny synthetic
-fixtures; do not inspect real certification outcomes while changing its
-protocol. Once frozen, evaluate all three policies exactly once on the untouched
-404-query certification split. A failed certificate remains terminal and must
-not trigger retuning on the same certification queries.
+Run the frozen command exactly once on Genoa and archive the output and complete
+log regardless of PASS/FAIL. Do not change any policy/configuration after the
+result. Independently recompute artifact identities and all three bounds from
+the returned query-level records before beginning untouched `query_test` work.

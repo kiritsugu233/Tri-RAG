@@ -293,6 +293,22 @@ class TriPredictTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             CompiledTriPredictPolicy.from_serialized(tampered)
 
+    def test_frozen_analytic_policy_loader_rejects_tampering(self):
+        policy = TriPredictPolicy(
+            corpus_size=40,
+            m_prime=8,
+            k_gt=3,
+            grid=[4, 8, 16, 40],
+            target=0.9,
+            max_rank_samples=32,
+        )
+        artifact = policy.serialize()
+        self.assertEqual(TriPredictPolicy.from_serialized(artifact).serialize(), artifact)
+        tampered = dict(artifact)
+        tampered["target"] = 0.8
+        with self.assertRaisesRegex(ValueError, "fingerprint or schema"):
+            TriPredictPolicy.from_serialized(tampered)
+
     def test_compiled_policy_falls_back_outside_frozen_lid_domain(self):
         reference = TriPredictPolicy(
             corpus_size=30,

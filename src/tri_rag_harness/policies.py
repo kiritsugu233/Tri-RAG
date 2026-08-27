@@ -153,6 +153,31 @@ class MonotoneBinnedPolicy:
         result["fingerprint"] = fingerprint(result)
         return result
 
+    @classmethod
+    def from_serialized(cls, artifact: Mapping[str, Any]) -> "MonotoneBinnedPolicy":
+        raw = dict(artifact)
+        stored_fingerprint = raw.get("fingerprint")
+        if not isinstance(stored_fingerprint, str) or not stored_fingerprint:
+            raise ValueError("monotone policy artifact is missing its fingerprint")
+        if raw.get("name") != "monotone_binned_empirical":
+            raise ValueError("unexpected monotone policy artifact name")
+        if raw.get("version") != cls.VERSION:
+            raise ValueError("unsupported monotone policy artifact version")
+        try:
+            result = cls(
+                edges=raw["edges"],
+                budgets=raw["budgets"],
+                grid=raw["grid"],
+                fallback_budget=raw["fallback_budget"],
+                target=raw["tune_required_mean_retention"],
+                feature_version=raw["feature_version"],
+            )
+        except (KeyError, TypeError) as exc:
+            raise ValueError("invalid monotone policy artifact") from exc
+        if result.serialize() != raw:
+            raise ValueError("monotone policy artifact fingerprint or schema mismatch")
+        return result
+
 
 class TriPredictPolicy:
     """Query-local analytic policy using only deployable LID at inference time."""
@@ -328,6 +353,37 @@ class TriPredictPolicy:
             ),
         }
         result["fingerprint"] = fingerprint(result)
+        return result
+
+    @classmethod
+    def from_serialized(cls, artifact: Mapping[str, Any]) -> "TriPredictPolicy":
+        raw = dict(artifact)
+        stored_fingerprint = raw.get("fingerprint")
+        if not isinstance(stored_fingerprint, str) or not stored_fingerprint:
+            raise ValueError("Tri-Predict artifact is missing its fingerprint")
+        if raw.get("name") != "query_adaptive_tri_predict":
+            raise ValueError("unexpected Tri-Predict artifact name")
+        if raw.get("version") != cls.VERSION:
+            raise ValueError("unsupported Tri-Predict artifact version")
+        if raw.get("rank_aggregation") != "exact_or_deterministic_geometric_strata":
+            raise ValueError("unsupported Tri-Predict rank aggregation")
+        try:
+            result = cls(
+                corpus_size=raw["corpus_size"],
+                m_prime=raw["m_prime"],
+                k_gt=raw["k_gt"],
+                grid=raw["grid"],
+                target=raw["target"],
+                max_rank_samples=raw["max_rank_samples"],
+                safety_correction=raw["safety_correction"],
+                safety_quantile=raw["safety_quantile"],
+                correction_fit_observations=raw["correction_fit_observations"],
+                feature_version=raw["feature_version"],
+            )
+        except (KeyError, TypeError) as exc:
+            raise ValueError("invalid Tri-Predict artifact") from exc
+        if result.serialize() != raw:
+            raise ValueError("Tri-Predict artifact fingerprint or schema mismatch")
         return result
 
 

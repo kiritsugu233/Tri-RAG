@@ -88,6 +88,23 @@ class LIDPolicyTests(unittest.TestCase):
         self.assertEqual(local.serialize(), cluster.serialize())
         self.assertEqual(local.edges.tolist(), cluster.edges.tolist())
 
+    def test_frozen_monotone_policy_loader_rejects_tampering(self):
+        policy = MonotoneBinnedPolicy(
+            edges=[4.0, 8.0],
+            budgets=[12, 20, 32],
+            grid=[12, 20, 32, 48],
+            fallback_budget=48,
+            target=0.9,
+        )
+        artifact = policy.serialize()
+        self.assertEqual(
+            MonotoneBinnedPolicy.from_serialized(artifact).serialize(), artifact
+        )
+        tampered = dict(artifact)
+        tampered["budgets"] = [12, 20, 48]
+        with self.assertRaisesRegex(ValueError, "fingerprint or schema"):
+            MonotoneBinnedPolicy.from_serialized(tampered)
+
 
 if __name__ == "__main__":
     unittest.main()

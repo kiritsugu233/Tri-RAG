@@ -141,3 +141,21 @@ Suggested structure:
 ```
 
 The report generator must derive its displayed certificate from this artifact, not recompute it from rounded aggregate values.
+
+## 10. Frozen real SciFact protocol
+
+The real certification runner uses three policies selected entirely on
+`query_tune`: fixed `M=768`, the frozen monotone-binned policy, and the frozen
+analytic Tri-Predict policy. The exact Genoa compiled Tri-Predict table is a
+separately bound deployment input and must match the analytic decision on every
+certification query. These are three predeclared standalone certificates at
+`alpha=0.05`; certification results are not used to select among them.
+
+Config fingerprint
+`e5545a4aa4c07a1bc188870538c7d346ff26faf38f135c03d4b32f4a18c7ce74`
+freezes target `0.95`, all 404 certification IDs, the projection and LID
+contract, all policy identities, and terminal failure behavior. The runner
+validates the complete frozen policy bundle before selecting `query_cert` and
+writes all outcomes even when a lower bound fails. Development and regression
+testing use synthetic fixtures only; the real cert split remains untouched
+until the single frozen Genoa run.
