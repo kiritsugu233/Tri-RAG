@@ -34,9 +34,11 @@ The retrieval benchmark now compiles the frozen analytic Tri-Predict policy into
 
 Milestone 5 now has a network-free BEIR ZIP adapter and a pinned SciFact configuration. Adapter v2 verifies the publisher-listed archive MD5, records archive/member SHA-256 identities, rejects corrupt or structurally inconsistent data, and gives corpus and external queries separate stable-ID namespaces. It also normalizes query text with NFKC/casefold/whitespace collapse, excludes development text duplicated in untouched official test, and assigns remaining development duplicate-text groups wholly to tune or cert using a seeded label-free ordering. Canonical artifacts contain no timestamps or machine paths and reproduce byte for byte.
 
-The original v1 preparation completed on 2026-08-27 at commit `aff63e4` and passed all ID-level and artifact checks, but an independent post-embedding audit found four duplicate query-text groups, three crossing tune/cert/test. Dataset fingerprint `6f54d75d95c40569f7382270e833c8602afd317042e2a791118e4a15992038df` is now quarantined from downstream claims. Adapter v2 was regenerated locally from the archived source ZIP without retrieval or label inspection. Its new fingerprint is `4a73586d3a29a0567287e501ac3c06c998af661cdc74dbc589e7525a7924f903`: 5,183 documents, 1,107 retained queries, 1,256 qrels, and 403/404/300 tune/cert/test queries. Development IDs `1291` and `871` were excluded in favor of their official-test text duplicates, and all normalized-text intersections are empty. Cluster byte reproduction remains pending.
+The original v1 preparation completed on 2026-08-27 at commit `aff63e4` and passed all ID-level and artifact checks, but an independent post-embedding audit found four duplicate query-text groups, three crossing tune/cert/test. Dataset fingerprint `6f54d75d95c40569f7382270e833c8602afd317042e2a791118e4a15992038df` is now quarantined from downstream claims. Adapter v2 was regenerated on Slurm job `373564` and then independently reproduced byte for byte from the returned source ZIP. Its accepted fingerprint is `4a73586d3a29a0567287e501ac3c06c998af661cdc74dbc589e7525a7924f903`: 5,183 documents, 1,107 retained queries, 1,256 qrels, and 403/404/300 tune/cert/test queries. Development IDs `1291` and `871` were excluded in favor of their official-test text duplicates, and all normalized-text intersections are empty.
 
-A pluggable text-embedding cache is implemented and now bound to the repaired dataset fingerprint. The frozen provider is `intfloat/e5-base-v2` at Hugging Face commit `f52bf8ec8c7124536f0efb74aca902b2995e5bcd`, with explicit E5 query/passage formatting, 768 dimensions, 512-token maximum, float32 computation/output, canonical L2 normalization, deterministic algorithms, eager attention, TF32 disabled, cuDNN deterministic mode, and a required deterministic cuBLAS workspace configuration. Slurm job `373564` on `a100-1` passed all 65 then-current tests and created/reused a real cache with the pinned A100 runtime. Its arrays, model snapshot, token statistics, and hashes validate, but embedding fingerprint `4c95bbabd03afb82493843bff9856864f0506b1714e7344a490c8f386369b470` is quarantined because it is bound to the leaky v1 split. A fresh v2-bound cache is required before retrieval.
+A pluggable text-embedding cache is implemented and bound to the repaired dataset fingerprint. The frozen provider is `intfloat/e5-base-v2` at Hugging Face commit `f52bf8ec8c7124536f0efb74aca902b2995e5bcd`, with explicit E5 query/passage formatting, 768 dimensions, 512-token maximum, float32 computation/output, canonical L2 normalization, deterministic algorithms, eager attention, TF32 disabled, cuDNN deterministic mode, and a required deterministic cuBLAS workspace configuration. Slurm job `373564` on `a100-1` passed all 66 then-current tests and created then reused the repaired cache. Independent audit rehashed every input/output, validated IDs/qrels/norms/splits, and accepted embedding fingerprint `2ec53ce38e226129ba0feffcd28ba1da1081e0627ad8e54f4a60e430c341e914`. The returned archive SHA-256 is `dddd51c97d04171f253820131ca37feae450e1ba2b620ed83bf2e9de29e0dd63`. The earlier v1-bound embedding fingerprint remains quarantined.
+
+The first real retrieval runner now provides a strict exact original-space baseline on `query_tune` only and rejects cert/test scope at config load. It binds the complete dataset/config/request/cache identities, uses normalized squared L2 with NumPy float64 and stable document-ID ties, writes 403 query-level evidence records, separates timing from deterministic result identity, and revalidates every input before search. Two local runs over the accepted arrays matched byte for byte with result fingerprint `2921f39dc051bc3331da8bf9b0ddc6c584dcd1f043099d8dda353653a1926b1c`. Tune evidence hit/recall/nDCG are `0.803970/0.786849/0.713828` at context cutoff 5 and `0.866005/0.850124/0.735501` at neighbor-reference cutoff 10. No cert/test retrieval outcome was computed.
 
 The local compiled-policy 100k/d768 structural run created seven states, loaded the artifact in `0.1093 ms`, and exactly matched all 64 prior local LID values, budgets, and retention values. Analytic validation averaged `38.4606 ms/decision`; lookup averaged `0.0021 ms/decision`. Reuse-path latency fell from `44.7511` to `4.2712 ms/query` across the old and new local runs. Compilation cost `17.9965 s` once at setup. These are not Genoa serving claims.
 
@@ -126,12 +128,24 @@ python3 -m tri_rag_harness.text_embeddings \
   --model-cache data/model_cache
 ```
 
+Tune-only exact original-space SciFact baseline:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src \
+python3 -m tri_rag_harness.real_original_baseline \
+  --config configs/real_scifact_original_exact_tune.json \
+  --dataset data/prepared/scifact-dedup-v2 \
+  --embedding-config configs/real_scifact_e5_base_v2_embeddings.json \
+  --embedding-cache data/embeddings/scifact-e5-base-v2-dedup-v2 \
+  --output runs/scifact-original-exact-tune
+```
+
 ## Tests passed/failed
 
-- Passed locally: 65
+- Passed locally: 70
 - Skipped locally: 1 conditional real-FAISS CPU conformance test because FAISS is not installed on the Mac environment
 - Failed: 0
-- Runtime in the current environment: approximately 7.5 seconds
+- Runtime in the current environment: approximately 7.0 seconds
 - FAISS coverage checks the exact CPU adapter contract, row-aligned distances, semantic-cutoff candidate sets, accepted internal permutations, rejected cross-cutoff permutations, bounded tie resolution, unclosed tie-band refusal, missing GPU support, shared GPU resource-pool ownership, refinement accounting, full benchmark integration, NumPy decision/rerank/retention equivalence, and GPU-memory artifact creation. The conditional real-FAISS test must execute rather than skip on the cluster before the CPU/GPU milestone passes.
 - Added coverage includes cross-platform policy-float canonicalization, exact `h_j(y)` term-by-term agreement with the orthogonal conditional law, geometric rank-strata population conservation and approximation error, root residuals, the infinite-root/unit-retention boundary, budget monotonicity, LID-to-budget monotonicity, saturation, analytic/empirical interface compatibility, and tune-only scalar safety correction.
 - Compiled-policy coverage checks dense linear/geometric LID values, both sides of every adjacent-float64 transition, invalid/out-of-domain fallback, deterministic serialization, artifact round-trip loading, and tamper rejection.
@@ -140,8 +154,10 @@ python3 -m tri_rag_harness.text_embeddings \
 - The extended sweep passed all 39 tests on Slurm job `371643`, node `genoa04`, commit `d5ec795abf0ca604c90ac2b5300708232874ef32`, using Python `3.9.23`, NumPy `1.26.4`, and SciPy `1.13.0`.
 - The FAISS A100 milestone passed all 51 tests on Slurm job `373268`, node `a100-0`, commit `05ccf91`, using Python `3.9.23`, NumPy `1.26.4`, SciPy `1.13.0`, FAISS GPU `1.10.0` for CUDA `12.1.1`, and PyTorch `2.5.1` with CUDA `12.1`.
 - The corrected 1M FAISS milestone passed all 54 tests on the same job and node at commit `0d387a1`; the real-FAISS CPU conformance test executed rather than skipping.
+- The repaired SciFact v2 A100 gate passed all 66 then-current tests on job `373564`, node `a100-1`, commit `d776404`; the real-FAISS test executed rather than skipping.
 - The BEIR SciFact adapter suite has six tests covering byte reproducibility, pinned config/checksum refusal, missing-document qrels, development/test ID overlap, development/test text exclusion, normalized-text grouping, and cross-split text disjointness.
-- Six text-embedding tests cover the pinned dataset/model request, exact E5 prefix preservation, fake-provider normalization, cache reuse without model loading, source-artifact mutation refusal, request mutation refusal, array-tamper refusal, and partial-cache suppression on invalid provider output. The full local suite now contains 66 tests: 65 pass and one real-FAISS test skips.
+- Six text-embedding tests cover the pinned dataset/model request, exact E5 prefix preservation, fake-provider normalization, cache reuse without model loading, source-artifact mutation refusal, request mutation refusal, array-tamper refusal, and partial-cache suppression on invalid provider output. The full local suite now contains 71 tests: 70 pass and one real-FAISS test skips.
+- Five real-original-baseline tests cover tune-only enforcement, strict cache tamper refusal, graded nDCG, stable tie breaking, deterministic artifacts, pinned real identities, and exclusion of timings from result identity.
 
 ## Current artifacts
 
@@ -155,6 +171,13 @@ audit archive is `scifact-e5-373564-audit.tar.gz`, SHA-256
 `3d87f889cc5a5937ea3666b1f8f7657d02bb14467fb23151daa70dc7fcfa6941`;
 its model/runtime validation passes, but its v1-bound arrays are likewise
 quarantined. Neither artifact may be used for retrieval selection or claims.
+
+The accepted v2 archive is `scifact-e5-v2-373564-audit.tar.gz`, SHA-256
+`dddd51c97d04171f253820131ca37feae450e1ba2b620ed83bf2e9de29e0dd63`.
+It contains the repaired canonical dataset, accepted embedding arrays and
+manifest, source ZIP, configs, documentation, and full Slurm log. It remains
+ignored rather than committed; downstream real runs bind its dataset and
+embedding fingerprints.
 
 `runs/synthetic_mvp/` contains:
 
@@ -205,12 +228,12 @@ The separately frozen `M_max=1984` FAISS 1M comparison also passes every exact s
 
 ## Next task
 
-Reproduce the repaired v2 dataset byte for byte on the active A100 allocation, then create and audit a new E5 cache under a new directory. Only after its dataset/request identities, shapes, norms, snapshot, runtime, and no-cross-split-text checks pass should exact original-space SciFact retrieval be implemented. Do not inspect cert/test retrieval outcomes or carry the Gaussian policy and its saturation result into the real-data experiment.
+Reproduce the tune-only exact original-space result fingerprint on Genoa and retain timing as a separate systems observation. Then freeze a cross-dimension projected-search compute objective, projection seed, candidate `m_prime` values, pilot parameters, and budget grid before running any projected tune outcomes. Do not inspect cert/test retrieval outcomes or carry the Gaussian policy and its saturation result into the real-data experiment.
 
 ## Known deviations and risks
 
 - Configuration is JSON rather than YAML, and query-level output is JSONL rather than Parquet, to keep the first pass runnable with only the already available NumPy/SciPy stack. The artifacts remain machine-readable and auditable.
-- Real E5 inference passed on A100, but its first cache is quarantined because the independently audited v1 dataset split allowed duplicate query text across tune/cert/test. The repaired v2 dataset is locally deterministic but still needs cluster byte reproduction and a fresh v2-bound E5 cache. The public E5 model card already reports SciFact performance, so the off-the-shelf model choice is not a fully blind model-family selection even though no local cert/test retrieval outcome was inspected. No projection/policy tuning, evidence evaluation, or answer generation has been performed on real embeddings.
+- Real E5 inference and the repaired v2 cache passed independent audit. The first v1 cache remains quarantined because its dataset split allowed duplicate query text across tune/cert/test. The public E5 model card already reports SciFact performance, so the off-the-shelf model choice is not a fully blind model-family selection even though no local cert/test retrieval outcome was inspected. Tune-only evidence evaluation has begun, but no projection/policy tuning, certification/test evaluation, or answer generation has been performed on real embeddings.
 - E5 is English-only and truncates inputs above 512 tokens. The embedding manifest exposes separate corpus/query truncation counts, but any effect on SciFact retrieval remains unknown until the frozen cache exists.
 - GPU and CPU transformer kernels may differ slightly even under fixed packages, float32, deterministic algorithms, eager attention, disabled TF32, and a fixed cuBLAS workspace. The generated array hashes—not an assumption of cross-device bit identity—become the frozen downstream experiment identity.
 - The current synthetic pilot LID differentiates the hardest fitted bin, but the allocation is not efficient relative to the certified fixed baseline. The negative result is a dataset/policy outcome, not hidden by retuning certification data.

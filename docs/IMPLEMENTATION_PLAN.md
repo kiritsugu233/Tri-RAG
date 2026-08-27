@@ -132,6 +132,7 @@ Acceptance:
 - [x] Implement a dataset adapter producing corpus, external queries, splits, qrels, and optional answers.
 - [x] Pin dataset revision/hash and store license/source metadata.
 - [x] Implement pluggable text embedding with caching and explicit model revision.
+- [x] Run a fingerprint-bound exact original-space baseline on `query_tune` only.
 - [ ] Run exact original/projected retrieval in memory-safe batches.
 - [ ] Freeze one `m_prime` using tune queries only.
 - [ ] Run required policies on tune, then freeze them.

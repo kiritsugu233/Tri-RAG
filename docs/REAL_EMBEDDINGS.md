@@ -137,6 +137,34 @@ quarantined from all downstream retrieval and certification claims. The v2
 command above must create a new cache bound to the repaired dataset; no old
 cache directory is overwritten or silently reused.
 
+## Accepted v2 A100 artifact
+
+The repaired run completed on Slurm job `373564`, node `a100-1`, at commit
+`d776404`. All 66 tests passed with real FAISS enabled. Dataset regeneration,
+embedding creation, and a second no-model-load cache reuse all succeeded. The
+returned audit archive has SHA-256
+`dddd51c97d04171f253820131ca37feae450e1ba2b620ed83bf2e9de29e0dd63`.
+
+Independent local audit safely extracted the archive, rehashed both manifests
+and every declared artifact, verified array/ID row alignment and finite unit
+norms, checked every qrel reference, recomputed normalized-text split
+disjointness, and regenerated all five dataset artifacts byte for byte from the
+archived source ZIP. The accepted embedding-cache fingerprint is
+`2ec53ce38e226129ba0feffcd28ba1da1081e0627ad8e54f4a60e430c341e914`.
+The corpus/query array SHA-256 values are respectively
+`e6c81429c5b126c37c367bef553615fa9750c8791df263045b3b8d285b9686c7`
+and
+`5c9ee9d68b65b870ae1ec6ed73aefdea00b9fd1fad4a0cd3e8aadda09a3c7497`.
+Corpus truncation remains 466/5,183 (8.9909%); query truncation is 0/1,107.
+
+The two remaining same-text query pairs produce exactly equal vectors and stay
+within a single split, leaving 1,105 unique vectors among 1,107 query rows.
+The old and new corpus arrays are byte-identical. Reordering queries for the
+repaired split changed batch padding, so 85 retained query vectors differ from
+their quarantined v1 counterparts by at most `1.081e-7`; this is expected
+floating-point behavior and is why downstream runs bind the complete v2 cache
+fingerprint rather than mixing rows from different embedding requests.
+
 ## Interpretation limit
 
 The public E5 model card already reports benchmark results on SciFact. We chose

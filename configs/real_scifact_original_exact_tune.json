@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "benchmark": "real_original_exact_v1",
+  "dataset_manifest_fingerprint": "4a73586d3a29a0567287e501ac3c06c998af661cdc74dbc589e7525a7924f903",
+  "embedding_config_fingerprint": "705153fdd5110981e1bb0f37c7007064b851c50af722a34f41e6c2050e077af7",
+  "embedding_request_fingerprint": "c0b7992d73434f0f421688f14f3a57ecfe92f3d16e44c90c43fe710f798102ca",
+  "embedding_manifest_fingerprint": "2ec53ce38e226129ba0feffcd28ba1da1081e0627ad8e54f4a60e430c341e914",
+  "evaluation_split": "query_tune",
+  "search": {
+    "normalized_inputs": true,
+    "distance": "squared_l2",
+    "arithmetic": "numpy_float64",
+    "stable_tie_break": "lexicographic_doc_id",
+    "query_batch_size": 32,
+    "cutoffs": [
+      1,
+      5,
+      10
+    ],
+    "k_ctx": 5,
+    "k_gt": 10
+  }
+}

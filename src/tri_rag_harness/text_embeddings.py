@@ -589,6 +589,38 @@ def _validate_cache(
     return manifest
 
 
+def validate_text_embedding_cache(
+    config: TextEmbeddingConfig,
+    prepared_dir: Union[str, Path],
+    cache_dir: Union[str, Path],
+) -> Dict[str, Any]:
+    """Validate a complete cache without loading the embedding model."""
+    prepared_value = Path(prepared_dir)
+    cache_value = Path(cache_dir)
+    if not cache_value.is_dir():
+        raise TextEmbeddingError(
+            f"embedding cache is not a directory: {cache_value}"
+        )
+    dataset_manifest = _validate_dataset_manifest(
+        prepared_value, config.dataset_manifest_fingerprint
+    )
+    request_fingerprint = fingerprint(
+        _request_identity(config, dataset_manifest)
+    )
+    embedding_manifest = _validate_cache(
+        cache_value,
+        expected_request_fingerprint=request_fingerprint,
+        expected_dimension=config.model.embedding_dimension,
+        expected_counts=dataset_manifest["counts"],
+        expected_id_hashes=dataset_manifest["ids"],
+    )
+    return {
+        "dataset_manifest": dataset_manifest,
+        "embedding_manifest": embedding_manifest,
+        "request_fingerprint": request_fingerprint,
+    }
+
+
 class SentenceTransformerProvider:
     def __init__(
         self,
