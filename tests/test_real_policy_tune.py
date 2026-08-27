@@ -6,6 +6,8 @@ from pathlib import Path
 from tri_rag_harness.policies import PolicyDecision, TriPredictPolicy
 from tri_rag_harness.real_policy_tune import (
     RealPolicyTuneError,
+    _SCIENTIFIC_RESULT_NAMES,
+    _canonical_lid_float,
     _choose_tri_from_raw,
     _coordinate_work,
     _evaluate_decisions,
@@ -28,12 +30,16 @@ class RealPolicyTuneTests(unittest.TestCase):
         self.assertEqual(config.m_grid[-1], 5183)
         self.assertEqual(config.fallback_budget, 5183)
         self.assertEqual(config.selection_target, 0.95)
+        self.assertEqual(config.lid_decimal_places, 9)
+        self.assertEqual(
+            config.feature_version, "pilot_rerank_lid_rounded_9_v2"
+        )
         self.assertEqual(config.tri_target_grid[0], 0.95)
         self.assertEqual(config.tri_target_grid[-1], 1.0)
         self.assertIn(0.99999, config.tri_target_grid)
         self.assertEqual(
             config.config_fingerprint,
-            "f8edc3662369980b9b54d7988f40683ae32275e5e58349306b6d7f4c44add5eb",
+            "47d37917974869641951a0155e71ffbb76f676d8229ff606fef56fabc83ba812",
         )
 
     def test_config_rejects_protected_scope_and_cost_mutation(self):
@@ -42,6 +48,7 @@ class RealPolicyTuneTests(unittest.TestCase):
             ("evaluation_split", "query_cert", "query_tune only"),
             ("cost", "mean_budget", "selection contract"),
             ("fallback", 4096, "terminal M_grid"),
+            ("lid_precision", 12, "determinism contract"),
         )
         with tempfile.TemporaryDirectory() as directory_name:
             directory = Path(directory_name)
@@ -51,6 +58,8 @@ class RealPolicyTuneTests(unittest.TestCase):
                     raw["evaluation_split"] = value
                 elif kind == "cost":
                     raw["selection"]["cost_formula"] = value
+                elif kind == "lid_precision":
+                    raw["determinism"]["lid_decimal_places"] = value
                 else:
                     raw["monotone_binned"]["fallback_budget"] = value
                 path = directory / f"mutation-{index}.json"
@@ -58,6 +67,26 @@ class RealPolicyTuneTests(unittest.TestCase):
                 with self.subTest(kind=kind):
                     with self.assertRaisesRegex(RealPolicyTuneError, message):
                         load_real_policy_tune_config(path)
+
+    def test_genoa_lid_tail_noise_is_canonicalized_before_policy_use(self):
+        observed_mac_genoa_pairs = (
+            (43.414943091916, 43.414943091918),
+            (41.992304850850, 41.992304850851),
+            (102.784422311142, 102.784422311150),
+            (77.595829699649, 77.595829699642),
+            (21.185334478594, 21.185334478595),
+        )
+        for mac_value, genoa_value in observed_mac_genoa_pairs:
+            with self.subTest(mac_value=mac_value, genoa_value=genoa_value):
+                self.assertEqual(
+                    _canonical_lid_float(mac_value, 9),
+                    _canonical_lid_float(genoa_value, 9),
+                )
+
+    def test_compiled_lookup_is_not_a_scientific_result_artifact(self):
+        self.assertNotIn(
+            "compiled_tri_predict_policy.json", _SCIENTIFIC_RESULT_NAMES
+        )
 
     def test_tune_scope_guard_rejects_certification_records(self):
         _validate_tune_only(

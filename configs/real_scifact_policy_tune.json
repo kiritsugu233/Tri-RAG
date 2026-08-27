@@ -1,6 +1,6 @@
 {
-  "schema_version": 1,
-  "benchmark": "real_tune_only_policy_fit_v1",
+  "schema_version": 2,
+  "benchmark": "real_tune_only_policy_fit_v2",
   "dataset_manifest_fingerprint": "4a73586d3a29a0567287e501ac3c06c998af661cdc74dbc589e7525a7924f903",
   "embedding_config_fingerprint": "705153fdd5110981e1bb0f37c7007064b851c50af722a34f41e6c2050e077af7",
   "embedding_request_fingerprint": "c0b7992d73434f0f421688f14f3a57ecfe92f3d16e44c90c43fe710f798102ca",
@@ -11,6 +11,11 @@
   "frozen_projection_fingerprint": "8a9a1148527db16c43bc3fedf6da1ac79ae00c0d76f2a31321cd6d9fe049809e",
   "projection_fingerprint": "82ba6c549bdc01249883314972e233f7049027a204dc03fcd7e1e55e8eda357c",
   "evaluation_split": "query_tune",
+  "determinism": {
+    "lid_decimal_places": 9,
+    "feature_version": "pilot_rerank_lid_rounded_9_v2",
+    "compiled_policy_role": "platform_deployment_artifact_excluded_from_scientific_identity"
+  },
   "projection": {
     "family": "dense_gaussian_n0_variance_1_over_m_prime",
     "seed": 27011,

@@ -49,6 +49,9 @@ class RealPolicyTuneConfig:
     frozen_projection_fingerprint: str
     projection_fingerprint: str
     evaluation_split: str
+    lid_decimal_places: int
+    feature_version: str
+    compiled_policy_role: str
     projection_seed: int
     m_prime: int
     query_batch_size: int
@@ -77,6 +80,20 @@ class RealPolicyTuneConfig:
 
 _SHA256_LENGTH = 64
 _POLICY_FLOAT_DECIMALS = 12
+_SUPPORTED_LID_DECIMAL_PLACES = 9
+_SUPPORTED_FEATURE_VERSION = "pilot_rerank_lid_rounded_9_v2"
+_COMPILED_POLICY_ROLE = (
+    "platform_deployment_artifact_excluded_from_scientific_identity"
+)
+_SCIENTIFIC_RESULT_NAMES = (
+    "per_query.jsonl",
+    "selection.json",
+    "fixed_policies.json",
+    "monotone_binned_policy.json",
+    "tri_predict_policy.json",
+    "summary.json",
+    "report.md",
+)
 _SELECTION_RULE = {
     "common_eligibility": (
         "query_tune empirical-Bernstein embedding-retention lower bound must "
@@ -180,6 +197,7 @@ def load_real_policy_tune_config(path: Union[str, Path]) -> RealPolicyTuneConfig
             "frozen_projection_fingerprint",
             "projection_fingerprint",
             "evaluation_split",
+            "determinism",
             "projection",
             "search",
             "lid",
@@ -189,10 +207,24 @@ def load_real_policy_tune_config(path: Union[str, Path]) -> RealPolicyTuneConfig
         },
         "root",
     )
-    if root["schema_version"] != 1 or root["benchmark"] != "real_tune_only_policy_fit_v1":
+    if root["schema_version"] != 2 or root["benchmark"] != "real_tune_only_policy_fit_v2":
         raise RealPolicyTuneError("unsupported policy config schema/benchmark")
     if root["evaluation_split"] != "query_tune":
         raise RealPolicyTuneError("real policy fitting accepts query_tune only")
+    determinism = _exact_keys(
+        root["determinism"],
+        {"lid_decimal_places", "feature_version", "compiled_policy_role"},
+        "determinism",
+    )
+    lid_decimal_places = _positive_integer(
+        determinism["lid_decimal_places"], "determinism.lid_decimal_places"
+    )
+    if (
+        lid_decimal_places != _SUPPORTED_LID_DECIMAL_PLACES
+        or determinism["feature_version"] != _SUPPORTED_FEATURE_VERSION
+        or determinism["compiled_policy_role"] != _COMPILED_POLICY_ROLE
+    ):
+        raise RealPolicyTuneError("unsupported cross-platform determinism contract")
     projection = _exact_keys(
         root["projection"],
         {"family", "seed", "m_prime", "post_projection_normalize"},
@@ -381,6 +413,9 @@ def load_real_policy_tune_config(path: Union[str, Path]) -> RealPolicyTuneConfig
             root["projection_fingerprint"], "projection_fingerprint"
         ),
         evaluation_split="query_tune",
+        lid_decimal_places=lid_decimal_places,
+        feature_version=_SUPPORTED_FEATURE_VERSION,
+        compiled_policy_role=_COMPILED_POLICY_ROLE,
         projection_seed=_positive_integer(projection["seed"], "projection.seed"),
         m_prime=_positive_integer(projection["m_prime"], "projection.m_prime"),
         query_batch_size=_positive_integer(
@@ -470,6 +505,17 @@ def _canonical_float(value: Optional[float]) -> Optional[float]:
     result = float(np.round(float(value), decimals=_POLICY_FLOAT_DECIMALS))
     if not np.isfinite(result):
         raise RealPolicyTuneError("nonfinite deterministic policy value")
+    return result
+
+
+def _canonical_lid_float(value: Optional[float], decimal_places: int) -> Optional[float]:
+    if value is None:
+        return None
+    if decimal_places != _SUPPORTED_LID_DECIMAL_PLACES:
+        raise RealPolicyTuneError("unsupported LID canonicalization precision")
+    result = float(np.round(float(value), decimals=decimal_places))
+    if not np.isfinite(result):
+        raise RealPolicyTuneError("nonfinite deterministic LID value")
     return result
 
 
@@ -723,11 +769,11 @@ def _select_candidate(
     )
 
 
-def _serialize_lid(estimate: Any) -> Dict[str, Any]:
+def _serialize_lid(estimate: Any, decimal_places: int) -> Dict[str, Any]:
     return {
         "valid": bool(estimate.valid),
-        "raw": _canonical_float(estimate.raw),
-        "clipped": _canonical_float(estimate.clipped),
+        "raw": _canonical_lid_float(estimate.raw, decimal_places),
+        "clipped": _canonical_lid_float(estimate.clipped, decimal_places),
         "valid_distance_count": int(estimate.valid_distance_count),
         "reason": estimate.reason,
     }
@@ -781,13 +827,13 @@ def _report(summary: Mapping[str, Any]) -> str:
             f"`{tri['policy']['safety_correction']}`",
             "- analytic Tri-Predict fingerprint: "
             f"`{tri['policy']['fingerprint']}`",
-            "- compiled Tri-Predict fingerprint: "
-            f"`{tri['compiled_policy_fingerprint']}`",
             f"- policy-selection fingerprint: `{summary['selection_fingerprint']}`",
             "",
             "The coordinate metric includes one query projection, one projected "
             "full-corpus scan, and original reranking. It is not a latency claim. "
-            "No policy has yet been evaluated on `query_cert` or `query_test`.",
+            "The compiled lookup table is a platform deployment artifact and is "
+            "excluded from scientific selection/result identity. No policy has "
+            "yet been evaluated on `query_cert` or `query_test`.",
             "",
         ]
     )
@@ -944,8 +990,12 @@ def run_real_policy_tune(
         oracle_lid = estimate_lid_from_squared_distances(
             oracle.squared_distances[query_index, : config.s_lid], **lid_kwargs
         )
-        pilot_serialized = _serialize_lid(pilot_lid)
-        oracle_serialized = _serialize_lid(oracle_lid)
+        pilot_serialized = _serialize_lid(
+            pilot_lid, config.lid_decimal_places
+        )
+        oracle_serialized = _serialize_lid(
+            oracle_lid, config.lid_decimal_places
+        )
         base_records.append(
             {
                 "query_index": query_index,
@@ -1009,6 +1059,7 @@ def run_real_policy_tune(
             target=bin_target,
             safety_margin=0.0,
             fallback_budget=config.fallback_budget,
+            feature_version=config.feature_version,
         )
         artifact = policy.serialize()
         decisions = [
@@ -1049,6 +1100,7 @@ def run_real_policy_tune(
         grid=config.m_grid,
         target=config.tri_target_grid[0],
         max_rank_samples=config.max_rank_samples,
+        feature_version=config.feature_version,
     )
     raw_predictions: list[Optional[Dict[int, float]]] = []
     residuals: list[float] = []
@@ -1092,6 +1144,7 @@ def run_real_policy_tune(
                 safety_correction=correction,
                 safety_quantile=quantile,
                 correction_fit_observations=observations,
+                feature_version=config.feature_version,
             )
             artifact = policy.serialize()
             decisions = [
@@ -1167,8 +1220,8 @@ def run_real_policy_tune(
     }
     fixed_artifact["fingerprint"] = fingerprint(fixed_artifact)
     selection_artifact = {
-        "schema_version": 1,
-        "kind": "real_tune_policy_selection_v1",
+        "schema_version": 2,
+        "kind": "real_tune_policy_selection_v2",
         "data_scope": "query_tune_only",
         "config_fingerprint": config.config_fingerprint,
         "query_tune_n": len(base_records),
@@ -1187,9 +1240,6 @@ def run_real_policy_tune(
                 "policy"
             ]["fingerprint"],
             "tri_predict_policy_fingerprint": selected_tri_candidate["policy"][
-                "fingerprint"
-            ],
-            "compiled_tri_predict_policy_fingerprint": compiled_artifact[
                 "fingerprint"
             ],
         },
@@ -1240,12 +1290,11 @@ def run_real_policy_tune(
         "prediction_target": selected_tri_candidate["prediction_target"],
         "safety_quantile": selected_tri_candidate["safety_quantile"],
         "policy": selected_tri_candidate["policy"],
-        "compiled_policy_fingerprint": compiled_artifact["fingerprint"],
         "evaluation": selected_tri_candidate["evaluation"],
     }
     summary = {
-        "schema_version": 1,
-        "kind": "real_tune_policy_summary_v1",
+        "schema_version": 2,
+        "kind": "real_tune_policy_summary_v2",
         "data_scope": "query_tune_only",
         "n_queries": len(base_records),
         "corpus_size": corpus_size,
@@ -1268,7 +1317,11 @@ def run_real_policy_tune(
             ),
             "paired_valid_n": len(paired_gaps),
             "mean_absolute_clipped_gap": (
-                0.0 if not paired_gaps else float(np.mean(paired_gaps))
+                0.0
+                if not paired_gaps
+                else _canonical_lid_float(
+                    float(np.mean(paired_gaps)), config.lid_decimal_places
+                )
             ),
             "oracle_role": "diagnostic_only_not_used_for_policy_selection",
         },
@@ -1315,18 +1368,13 @@ def run_real_policy_tune(
         write_json(paths["summary.json"], summary)
         write_json(paths["timings.json"], timings)
         paths["report.md"].write_text(_report(summary), encoding="utf-8")
-        result_names = (
-            "per_query.jsonl",
-            "selection.json",
-            "fixed_policies.json",
-            "monotone_binned_policy.json",
-            "tri_predict_policy.json",
-            "compiled_tri_predict_policy.json",
-            "summary.json",
-            "report.md",
-        )
         result_artifacts = {
-            name: _file_identity(paths[name]) for name in result_names
+            name: _file_identity(paths[name]) for name in _SCIENTIFIC_RESULT_NAMES
+        }
+        deployment_artifacts = {
+            "compiled_tri_predict_policy.json": _file_identity(
+                paths["compiled_tri_predict_policy.json"]
+            )
         }
         result_identity = {
             "config_fingerprint": config.config_fingerprint,
@@ -1338,8 +1386,8 @@ def run_real_policy_tune(
             "artifacts": result_artifacts,
         }
         manifest = {
-            "schema_version": 1,
-            "kind": "real_tune_policy_manifest_v1",
+            "schema_version": 2,
+            "kind": "real_tune_policy_manifest_v2",
             "data_scope": "query_tune_only",
             "config_fingerprint": config.config_fingerprint,
             "dataset_manifest_fingerprint": dataset_manifest["fingerprint"],
@@ -1356,10 +1404,17 @@ def run_real_policy_tune(
                 "fixed_grid": fixed_artifact["fingerprint"],
                 "monotone_binned": selected_binned_policy.serialize()["fingerprint"],
                 "tri_predict": selected_tri_policy.serialize()["fingerprint"],
-                "compiled_tri_predict": compiled_artifact["fingerprint"],
             },
             "result_artifacts": result_artifacts,
             "result_fingerprint": fingerprint(result_identity),
+            "deployment": {
+                "role": config.compiled_policy_role,
+                "reference_policy_fingerprint": selected_tri_policy.serialize()[
+                    "fingerprint"
+                ],
+                "policy_fingerprint": compiled_artifact["fingerprint"],
+                "artifacts": deployment_artifacts,
+            },
             "timings_artifact": "timings.json",
             "software": {
                 "python": platform.python_version(),

@@ -54,14 +54,15 @@ An independent local audit rehashed every artifact and recomputed all 192
 empirical-Bernstein bounds before accepting the archive.
 
 The required real policies have now been fit and frozen on `query_tune` only at
-`m_prime=192`. Config fingerprint
-`f8edc3662369980b9b54d7988f40683ae32275e5e58349306b6d7f4c44add5eb`
-freezes the pilot/LID contract, complete budget grid, common coordinate-work
-objective, monotone-bin target grid, dense near-one Tri-Predict threshold grid,
-and tune-only residual-correction grid. It rejects cert/test scope and evidence
-labels. Two independent local runs produced byte-identical deterministic
-artifacts for all 403 tune queries, and an independent reduction reproduced the
-selected-policy bounds and all result hashes.
+`m_prime=192`. The repaired protocol-v2 config fingerprint
+`47d37917974869641951a0155e71ffbb76f676d8229ff606fef56fabc83ba812`
+freezes the pilot/LID contract, nine-decimal deployable LID canonicalization,
+complete budget grid, common coordinate-work objective, monotone-bin target
+grid, dense near-one Tri-Predict threshold grid, and tune-only residual-
+correction grid. It rejects cert/test scope, determinism-contract mutation, and
+evidence labels. Two independent local v2 runs produced byte-identical
+scientific artifacts for all 403 tune queries, and an independent reduction
+reproduced the selected-policy bounds and result identity.
 
 The fixed reference remains `M=768` with mean retention `0.985360` and tune
 lower bound `0.958051`. The selected monotone-binned policy uses budgets
@@ -75,18 +76,35 @@ Tri-Predict tune-efficiency result, not an independent certificate. The pilot
 versus oracle clipped-LID mean absolute gap is `14.8902`, with both estimators
 valid on all 403 tune queries; oracle LID remains diagnostic only.
 
-The policy result/selection fingerprints are
-`f5464cf16d5a3f64d7f6414cae293f51443601fb64e42ea49d483a417ceed289`
-and `819383c07d4d923b8f74ac66cf3f3f3243d75d8a65abae519055ac622efdf47b`.
-The monotone/analytic/compiled policy fingerprints are
-`0e6bbe66f5cab32974f3f98672680ee09afcba075fba6e61638e7fcc71efb5d9`,
-`db945a97d82288828b75db0d263f771e453a791a03c12863b4400703878548a1`,
-and `113f9ac6bb38bb9fa74a9c3b547c99083c146eee0eaf618910f9c843c99e6160`.
+The v2 policy result/selection fingerprints are
+`2c31279a8f8038eebb049b0630548b2edd533ee5e1e01adb6cbd0a41e7e9bcb8`
+and `2eaed81134b1621e9f2fd2f072a3c800cb6eaa8610bcaeb02f0a8465c34509f1`.
+The fixed-grid/monotone/analytic policy fingerprints are
+`50c332ea015bda36f30803b31f480777d0129720e2bc7988b13d63fe8c6cea0f`,
+`7734ac4efb84a66af837028a289422ff21ce77d1e9cfae68f484d52d10286f38`,
+and `7838e1be673932f38c5b4db9d1cea06e168565b0b7feba3014bef618f89d4423`.
+The local compiled deployment fingerprint is
+`4530a8a5bc9ef8d3c9858da8774490f98ffdf722fae943356205abd185dadd7b`;
+it is deliberately excluded from selection and scientific result identity.
 The exact target-1 boundary now requires retrieving the complete corpus instead
 of accepting a finite-budget special-function value rounded to one; a full
 corpus also retains exact unit retention regardless of a tune-fit correction.
 This decision-semantic change is explicitly serialized as Tri-Predict policy
 version 2, so old and new behavior cannot share a policy fingerprint.
+
+The first Genoa policy run at commit `516c1e4` was internally reproducible: two
+runs on job `373780` were byte-identical, and all selected policies, budgets,
+retention values, and empirical-Bernstein bounds matched the Mac exactly. Its
+cross-platform fingerprint assertion nevertheless failed. Independent audit of
+archive SHA-256
+`a74ce1d5ad1a13f4c7851deccac9314bfbec378c5c085194d134eeac1fd3bb13`
+found only two causes: 447 LID fields across 222 query records differed in the
+last decimal places (maximum `8.01e-12`), and 13 of 15 adjacent-float compiled
+boundaries differed by at most `7.82e-14`. Canonicalizing LID to nine decimals
+makes all 403 Mac/Genoa features identical, and replaying both selected policies
+at that precision changes zero budgets. Protocol v2 therefore separates the
+platform-bound compiled lookup from scientific identity while still binding it
+to the analytic policy and requiring zero validation mismatches.
 
 The local compiled-policy 100k/d768 structural run created seven states, loaded the artifact in `0.1093 ms`, and exactly matched all 64 prior local LID values, budgets, and retention values. Analytic validation averaged `38.4606 ms/decision`; lookup averaged `0.0021 ms/decision`. Reuse-path latency fell from `44.7511` to `4.2712 ms/query` across the old and new local runs. Compilation cost `17.9965 s` once at setup. These are not Genoa serving claims.
 
@@ -216,10 +234,10 @@ python3 -m tri_rag_harness.real_policy_tune \
 
 ## Tests passed/failed
 
-- Passed locally: 83
+- Passed locally: 85
 - Skipped locally: 1 conditional real-FAISS CPU conformance test because FAISS is not installed on the Mac environment
 - Failed: 0
-- Runtime in the current environment: approximately 7.8 seconds
+- Runtime in the current environment: approximately 7.5 seconds
 - FAISS coverage checks the exact CPU adapter contract, row-aligned distances, semantic-cutoff candidate sets, accepted internal permutations, rejected cross-cutoff permutations, bounded tie resolution, unclosed tie-band refusal, missing GPU support, shared GPU resource-pool ownership, refinement accounting, full benchmark integration, NumPy decision/rerank/retention equivalence, and GPU-memory artifact creation. The conditional real-FAISS test must execute rather than skip on the cluster before the CPU/GPU milestone passes.
 - Added coverage includes cross-platform policy-float canonicalization, exact `h_j(y)` term-by-term agreement with the orthogonal conditional law, geometric rank-strata population conservation and approximation error, root residuals, the infinite-root/unit-retention boundary, budget monotonicity, LID-to-budget monotonicity, saturation, analytic/empirical interface compatibility, and tune-only scalar safety correction.
 - Compiled-policy coverage checks dense linear/geometric LID values, both sides of every adjacent-float64 transition, invalid/out-of-domain fallback, deterministic serialization, artifact round-trip loading, and tamper rejection.
@@ -233,7 +251,7 @@ python3 -m tri_rag_harness.real_policy_tune \
 - Six text-embedding tests cover the pinned dataset/model request, exact E5 prefix preservation, fake-provider normalization, cache reuse without model loading, source-artifact mutation refusal, request mutation refusal, array-tamper refusal, and partial-cache suppression on invalid provider output.
 - Five real-original-baseline tests cover tune-only enforcement, strict cache tamper refusal, graded nDCG, stable tie breaking, deterministic artifacts, pinned real identities, and exclusion of timings from result identity.
 - Five real-dimension-sweep tests cover protected-split refusal, immutable common-cost semantics, exact query-projection accounting, stable projected ranking conformance, terminal full-corpus behavior, query-level auditability, and deterministic tune-only artifacts.
-- Six real-policy tests cover immutable tune-only configuration, protected-split and common-cost refusal, terminal fallback, exact coordinate accounting, cached/analytic full-corpus boundary equivalence, and query-aligned decision reduction. Two additional Tri-Predict regressions prevent finite-budget floating-point saturation from satisfying an exact unit target and preserve deterministic unit retention at a complete-corpus budget. The full local suite now contains 84 tests: 83 pass and one optional real-FAISS test skips.
+- Eight real-policy tests cover immutable tune-only/determinism configuration, the observed Mac/Genoa LID-tail fixture, compiled/scientific identity separation, protected-split and common-cost refusal, terminal fallback, exact coordinate accounting, cached/analytic full-corpus boundary equivalence, and query-aligned decision reduction. Two additional Tri-Predict regressions prevent finite-budget floating-point saturation from satisfying an exact unit target and preserve deterministic unit retention at a complete-corpus budget. The full local suite now contains 86 tests: 85 pass and one optional real-FAISS test skips.
 
 ## Current artifacts
 
@@ -269,6 +287,15 @@ frozen selection artifacts, source/config/test files, and the complete Slurm
 log. The real policy outputs are currently independently reproduced local
 artifacts in `/tmp`; their deterministic identities are listed above and await
 the cluster reproduction gate before an audit archive is accepted.
+
+The first Genoa policy archive is
+`scifact-policy-tune-373780-audit.tar.gz`, SHA-256
+`a74ce1d5ad1a13f4c7851deccac9314bfbec378c5c085194d134eeac1fd3bb13`.
+It is retained as the authoritative protocol-v1 cross-platform diagnostic: its
+two Genoa runs are internally byte-identical and its scientific decisions match
+the Mac, but its result fingerprint is not accepted because platform-bound LID
+tail noise and compiled boundaries contaminated that identity. A fresh Genoa
+protocol-v2 run is required before accepting the final frozen policy archive.
 
 `runs/synthetic_mvp/` contains:
 
@@ -319,16 +346,18 @@ The separately frozen `M_max=1984` FAISS 1M comparison also passes every exact s
 
 ## Next task
 
-Reproduce the tune-only policy result twice on Genoa and require result
-fingerprint
-`f5464cf16d5a3f64d7f6414cae293f51443601fb64e42ea49d483a417ceed289`
+Run protocol v2 once on Genoa and require scientific result fingerprint
+`2c31279a8f8038eebb049b0630548b2edd533ee5e1e01adb6cbd0a41e7e9bcb8`
 and selection fingerprint
-`819383c07d4d923b8f74ac66cf3f3f3243d75d8a65abae519055ac622efdf47b`.
-Archive the full query-level results and separate timings. Only after that gate,
-implement the certification-only runner, load the already frozen fixed,
-monotone-binned, and compiled Tri-Predict artifacts, and evaluate untouched
-`query_cert` exactly once. A failure is terminal and must not trigger retuning
-on those queries.
+`2eaed81134b1621e9f2fd2f072a3c800cb6eaa8610bcaeb02f0a8465c34509f1`.
+The Genoa compiled deployment fingerprint may differ from the local value, but
+must reference analytic policy
+`7838e1be673932f38c5b4db9d1cea06e168565b0b7feba3014bef618f89d4423`
+and report zero validation mismatches. Archive the full query-level result and
+separate timings. Only after that gate, implement the certification-only runner,
+load the frozen fixed, monotone-binned, and Genoa compiled Tri-Predict artifacts,
+and evaluate untouched `query_cert` exactly once. A failure is terminal and
+must not trigger retuning on those queries.
 
 ## Known deviations and risks
 
@@ -343,8 +372,8 @@ on those queries.
 - The new global sweep avoids that old split and enforces tune-only selection in code. Its positive `11.23%` result is candidate-count efficiency, not a latency claim; `m_prime=24` increases projected-search arithmetic relative to `m_prime=16`.
 - The extended sweep shows that maximizing relative saving against a dimension-specific certified fixed baseline is unstable across dimensions and seeds. Its selected `m_prime=8` policy passes independently, but the `31.42%` saving is amplified by a coarse-grid certification cliff and is not a global cost optimum.
 - On Genoa, scalar Tri-Predict root solving dominates measured retrieval latency (`5.9988` of `6.0325 ms/query`) on the 160-item synthetic corpus. Candidate-count saving must not be presented as latency saving; vectorization, lookup-table caching, or a validated approximation is required before serving claims.
-- The compiled policy preserves only decision fields. Analytic predicted-retention values remain diagnostics produced by the reference policy; they are not reconstructed or interpolated online.
-- Policy compilation is deterministic for the tested Mac/Genoa 100k environment, but the frozen artifact rather than platform-local recompilation is the deployment identity.
+- The compiled policy preserves only decision fields. Analytic predicted-retention values remain diagnostics produced by the reference policy; they are not reconstructed or interpolated online. Adjacent-float64 transition locations depend on the SciPy/platform special-function implementation, so the compiled lookup is a deployment artifact bound to—but intentionally excluded from—the analytic scientific policy identity.
+- A deployment must load the archived compiled artifact rather than silently recompiling it. The certification manifest must bind both the cross-platform analytic policy fingerprint and the exact platform deployment fingerprint used for lookup.
 - The retrieval latency fixture uses normalized Gaussian vectors with realistic shapes and memory traffic, not embeddings from a text model. It is a systems benchmark only; semantic retrieval conclusions require the real external-query adapter.
 - FAISS is optional and intentionally absent from the base NumPy/SciPy dependency set. The isolated A100 environment has compatible real CPU/GPU FAISS and PyTorch interop, but its packages and exact versions must remain part of every run manifest/log because they are not installed by the base project metadata.
 - FAISS `IndexFlatL2` is exact in float32 but does not guarantee stable candidate identity at an exact top-k boundary tie. The adapter deterministically refines a bounded one-scan overfetch pool and aborts if that guard does not close the raw tie band; refinement therefore adds host work and latency even when the GPU scan is fast.

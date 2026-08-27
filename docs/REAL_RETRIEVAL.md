@@ -166,8 +166,10 @@ archive SHA-256 is
 `m_prime=192` projection. It permits only `query_tune`, binds every dataset,
 embedding, baseline, dimension-selection, and projection fingerprint, and uses
 the same complete budget grid and coordinate objective as dimension selection.
-Evidence labels are excluded. The config fingerprint is
-`f8edc3662369980b9b54d7988f40683ae32275e5e58349306b6d7f4c44add5eb`.
+Evidence labels are excluded. Protocol v2 additionally freezes nine-decimal
+LID canonicalization and separates scientific policy identity from the
+platform-bound compiled lookup. Its config fingerprint is
+`47d37917974869641951a0155e71ffbb76f676d8229ff606fef56fabc83ba812`.
 
 The runner reconstructs and verifies every projected ranking and retention from
 the frozen dimension run. Pilot LID uses original-space reranking of the first
@@ -179,6 +181,10 @@ fingerprint-bound adjacent-float64 LID intervals and checked against the
 reference on every tune query. Tri-Predict policy schema version 2 also makes
 the complete-corpus target-1 semantics part of the fingerprint rather than
 allowing a finite-budget probability rounded to one to masquerade as exact.
+The analytic policy is the portable scientific object. The compiled interval
+table remains fingerprinted and must reference that analytic policy, but its
+adjacent-float boundaries and file hash are deployment metadata rather than
+inputs to tune selection or scientific result identity.
 
 Two independent local runs produced byte-identical deterministic artifacts.
 Independent reduction of `per_query.jsonl` reproduced both selected-policy
@@ -203,13 +209,41 @@ does not yet prove that pilot error rather than the rank model or mean-field
 stack causes the analytic inefficiency. Oracle-LID and actual-distance modes
 remain diagnostics and were not allowed to choose the deployable policy.
 
-The result/selection fingerprints are
-`f5464cf16d5a3f64d7f6414cae293f51443601fb64e42ea49d483a417ceed289`
-and `819383c07d4d923b8f74ac66cf3f3f3243d75d8a65abae519055ac622efdf47b`.
-The monotone, analytic, and compiled-policy fingerprints are
-`0e6bbe66f5cab32974f3f98672680ee09afcba075fba6e61638e7fcc71efb5d9`,
-`db945a97d82288828b75db0d263f771e453a791a03c12863b4400703878548a1`,
-and `113f9ac6bb38bb9fa74a9c3b547c99083c146eee0eaf618910f9c843c99e6160`.
+The protocol-v2 result/selection fingerprints are
+`2c31279a8f8038eebb049b0630548b2edd533ee5e1e01adb6cbd0a41e7e9bcb8`
+and `2eaed81134b1621e9f2fd2f072a3c800cb6eaa8610bcaeb02f0a8465c34509f1`.
+The monotone and analytic policy fingerprints are
+`7734ac4efb84a66af837028a289422ff21ce77d1e9cfae68f484d52d10286f38`
+and `7838e1be673932f38c5b4db9d1cea06e168565b0b7feba3014bef618f89d4423`.
+The local compiled deployment fingerprint is
+`4530a8a5bc9ef8d3c9858da8774490f98ffdf722fae943356205abd185dadd7b`;
+it is not expected to equal a Genoa-local compilation fingerprint.
+
+### Cross-platform audit and protocol-v2 repair
+
+The first Genoa policy run at commit `516c1e4` completed twice on job `373780`.
+All nine deterministic artifacts were byte-identical between the two Genoa
+runs. Fixed, monotone, and analytic Tri-Predict policy identities, every chosen
+budget, every retention value, and every tune lower bound also matched the Mac.
+Only the asserted aggregate identities differed.
+
+Independent comparison of archive
+`scifact-policy-tune-373780-audit.tar.gz` (SHA-256
+`a74ce1d5ad1a13f4c7851deccac9314bfbec378c5c085194d134eeac1fd3bb13`)
+located 447 differing LID fields in 222 of 403 records. All were numerical tail
+noise: the maximum absolute difference was `8.01e-12`, and every Mac/Genoa LID
+pair becomes identical at nine decimals. Thirteen of fifteen compiled interval
+boundaries also differed, with maximum absolute displacement `7.82e-14`; both
+compiled artifacts referenced the same analytic policy, had the same 16 states,
+and passed all 158 validation points with zero mismatches.
+
+Replaying the selected monotone and analytic policies on every nine-decimal LID
+changed zero of 403 decisions for either Mac or Genoa records. Protocol v2 thus
+repairs identity without changing the selected operating point or its outcome:
+the LID precision is explicit in the config and feature version, while compiled
+lookup identity moves under a separate deployment section of the manifest.
+Two fresh local v2 runs are byte-identical for every deterministic artifact,
+and independent reduction reproduced the new result identity above.
 
 Run policy fitting with:
 
@@ -226,9 +260,11 @@ python3 -m tri_rag_harness.real_policy_tune \
 
 ## Next gate
 
-Reproduce policy fitting twice on Genoa and require the result and selection
-fingerprints above. After accepting that archive, implement a certification-only
-runner that loads these frozen artifacts before accessing `query_cert`. Evaluate
-the fixed reference and both adaptive policies exactly once on that untouched
-split. A failed certificate remains terminal and must not trigger retuning on
-the same certification queries.
+Run protocol v2 once on Genoa and require the portable result and selection
+fingerprints above. The compiled deployment fingerprint may be machine-specific
+but must bind the analytic fingerprint and pass zero-mismatch validation. After
+accepting that archive, implement a certification-only runner that loads the
+frozen analytic and Genoa deployment artifacts before accessing `query_cert`.
+Evaluate the fixed reference and both adaptive policies exactly once on that
+untouched split. A failed certificate remains terminal and must not trigger
+retuning on the same certification queries.

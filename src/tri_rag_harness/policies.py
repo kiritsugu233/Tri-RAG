@@ -85,6 +85,7 @@ class MonotoneBinnedPolicy:
         target: float,
         safety_margin: float,
         fallback_budget: int,
+        feature_version: str = "pilot_rerank_lid_v1",
     ) -> "MonotoneBinnedPolicy":
         records = [record for record in tune_records if bool(record["lid_valid"])]
         if not records:
@@ -123,6 +124,7 @@ class MonotoneBinnedPolicy:
             grid=grid,
             fallback_budget=fallback_budget,
             target=required,
+            feature_version=feature_version,
         )
 
     def choose(self, lid_value: float, lid_valid: bool = True) -> PolicyDecision:

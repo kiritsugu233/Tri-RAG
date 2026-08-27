@@ -136,6 +136,7 @@ Acceptance:
 - [x] Run exact original/projected retrieval in memory-safe batches.
 - [x] Freeze one `m_prime` using tune queries only.
 - [x] Run required policies on tune, then freeze them.
+- [x] Freeze cross-platform LID precision and separate compiled deployment identity.
 - [ ] Certify on untouched certification queries.
 - [ ] Evaluate on test queries.
 
