@@ -93,3 +93,19 @@ The next gate is to validate a real prepared manifest and then implement a
 pluggable, revision-pinned text-embedding cache. No policy may inspect
 `query_cert` or `query_test` while choosing the embedding, projection,
 `m_prime`, budget grid, threshold, or safety correction.
+
+## Validated Stage-1 artifact
+
+The real archive was prepared on 2026-08-27 with Python `3.9.23` at commit
+`aff63e4`. The returned audit archive has local SHA-256
+`f6932dfe1a002c2c4f349a269f55fb56e85441106c9ead9b2e99e0192069b9f5`.
+Independent local checks verified every artifact hash, every qrel/query/document
+reference, split union/disjointness, corpus/query ID separation, pair
+uniqueness, and a byte-for-byte regeneration from the archived source ZIP.
+
+The frozen dataset manifest fingerprint is
+`6f54d75d95c40569f7382270e833c8602afd317042e2a791118e4a15992038df`.
+It contains 5,183 corpus documents, 1,109 external queries, and 1,258 positive
+qrels. The split sizes are 404 tune, 405 cert, and 300 official test queries;
+their qrel counts are 467, 452, and 339 respectively. This closes the real-data
+preparation gate. The next stage is specified in `docs/REAL_EMBEDDINGS.md`.

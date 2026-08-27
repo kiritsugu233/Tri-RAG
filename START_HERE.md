@@ -14,6 +14,8 @@ The immediate goal is a small, reproducible MVP. It is not a production RAG serv
 4. `docs/EXPERIMENT_PROTOCOL.md` - datasets, splits, baselines, metrics, and experiment matrix.
 5. `docs/CERTIFICATION.md` - valid statistical certification procedure.
 6. `docs/IMPLEMENTATION_PLAN.md` - milestones, tests, and acceptance criteria.
+7. `docs/REAL_DATA.md` - frozen SciFact source, splits, identities, and audit.
+8. `docs/REAL_EMBEDDINGS.md` - pinned E5 model and embedding-cache contract.
 
 ## Research question
 
