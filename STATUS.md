@@ -46,6 +46,48 @@ A real tune-only fixed-dimension sweep is now implemented with a strict schema t
 
 Two local runs over the accepted real arrays matched byte for byte for every deterministic artifact, and an independent audit recomputed all 192 dimension/budget empirical-Bernstein statistics from 4,836 query-level records. The frozen tune choice is `m_prime=192`, fixed reference `M=768`, mean retention `0.985360`, lower bound `0.958051`, and theoretical coordinate-work reduction `56.48%` versus an original full scan. The selection/result/frozen-projection fingerprints are `093588a27e0d588b9407d02fe5c5ed7e46f6a5fdc02a1881738abbde4eda01fb`, `5dcb0a5f17cc1f2f1684a38c71ede5c8dfc1de709f98496156959e14fbea7558`, and `8a9a1148527db16c43bc3fedf6da1ac79ae00c0d76f2a31321cd6d9fe049809e`. This is a tune selection result, not a certificate, latency claim, evidence/test result, or answer-quality claim.
 
+Slurm job `373780` reproduced the dimension sweep twice on Genoa at commit
+`07c28e1`; all six deterministic artifacts are byte-identical across the two
+runs and match the local identities above. The returned archive SHA-256 is
+`99cf703cd384555305d8d526224ccc01208c76539cd79acb45b8ea600b737b21`.
+An independent local audit rehashed every artifact and recomputed all 192
+empirical-Bernstein bounds before accepting the archive.
+
+The required real policies have now been fit and frozen on `query_tune` only at
+`m_prime=192`. Config fingerprint
+`f8edc3662369980b9b54d7988f40683ae32275e5e58349306b6d7f4c44add5eb`
+freezes the pilot/LID contract, complete budget grid, common coordinate-work
+objective, monotone-bin target grid, dense near-one Tri-Predict threshold grid,
+and tune-only residual-correction grid. It rejects cert/test scope and evidence
+labels. Two independent local runs produced byte-identical deterministic
+artifacts for all 403 tune queries, and an independent reduction reproduced the
+selected-policy bounds and all result hashes.
+
+The fixed reference remains `M=768` with mean retention `0.985360` and tune
+lower bound `0.958051`. The selected monotone-binned policy uses budgets
+`[384, 512, 768, 1024]`, averages `M=672.397`, and has mean/lower-bound
+retention `0.983623/0.956282`; relative to the fixed tune reference this is
+`12.45%` fewer candidates and `4.24%` less common coordinate work. The selected
+Tri-Predict policy requires analytic target `0.99995`, averages `M=1092.548`,
+and has mean/lower-bound retention `0.979653/0.950276`; it uses `42.26%` more
+candidates and `14.39%` more coordinate work than fixed. This is a negative
+Tri-Predict tune-efficiency result, not an independent certificate. The pilot
+versus oracle clipped-LID mean absolute gap is `14.8902`, with both estimators
+valid on all 403 tune queries; oracle LID remains diagnostic only.
+
+The policy result/selection fingerprints are
+`f5464cf16d5a3f64d7f6414cae293f51443601fb64e42ea49d483a417ceed289`
+and `819383c07d4d923b8f74ac66cf3f3f3243d75d8a65abae519055ac622efdf47b`.
+The monotone/analytic/compiled policy fingerprints are
+`0e6bbe66f5cab32974f3f98672680ee09afcba075fba6e61638e7fcc71efb5d9`,
+`db945a97d82288828b75db0d263f771e453a791a03c12863b4400703878548a1`,
+and `113f9ac6bb38bb9fa74a9c3b547c99083c146eee0eaf618910f9c843c99e6160`.
+The exact target-1 boundary now requires retrieving the complete corpus instead
+of accepting a finite-budget special-function value rounded to one; a full
+corpus also retains exact unit retention regardless of a tune-fit correction.
+This decision-semantic change is explicitly serialized as Tri-Predict policy
+version 2, so old and new behavior cannot share a policy fingerprint.
+
 The local compiled-policy 100k/d768 structural run created seven states, loaded the artifact in `0.1093 ms`, and exactly matched all 64 prior local LID values, budgets, and retention values. Analytic validation averaged `38.4606 ms/decision`; lookup averaged `0.0021 ms/decision`. Reuse-path latency fell from `44.7511` to `4.2712 ms/query` across the old and new local runs. Compilation cost `17.9965 s` once at setup. These are not Genoa serving claims.
 
 Slurm job `373123` reproduced the compiled policy on `genoa00` at commit `0407c831c263e7505543b3701b84e7cd4a4b4bd0`; all 43 tests passed. At 100k, lookup averaged `0.002544 ms` versus `55.8130 ms` for the analytic reference (21,939x), and reuse fell from `61.0718` to `5.2163 ms/query` with p95 `5.4572 ms`. At 1M, lookup averaged `0.002587 ms` versus `58.3822 ms` (22,564x), and reuse fell from `146.7481` to `87.5176 ms/query` with p95 `90.2264 ms`. Artifact loading took `0.149/0.142 ms`; offline compilation took `26.106/27.898 s`. Every old/new query-level LID, budget, saturation flag, retention value, and work counter is identical, and both reference policies are unchanged. The exact CPU and compiled-policy systems gates pass.
@@ -159,12 +201,25 @@ python3 -m tri_rag_harness.real_dimension_sweep \
   --output runs/scifact-fixed-dimension-tune
 ```
 
+Tune-only SciFact policy fitting at the frozen projection:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src \
+python3 -m tri_rag_harness.real_policy_tune \
+  --config configs/real_scifact_policy_tune.json \
+  --dataset data/prepared/scifact-dedup-v2 \
+  --embedding-config configs/real_scifact_e5_base_v2_embeddings.json \
+  --embedding-cache data/embeddings/scifact-e5-base-v2-dedup-v2 \
+  --dimension-selection runs/scifact-fixed-dimension-tune \
+  --output runs/scifact-policy-tune
+```
+
 ## Tests passed/failed
 
-- Passed locally: 75
+- Passed locally: 83
 - Skipped locally: 1 conditional real-FAISS CPU conformance test because FAISS is not installed on the Mac environment
 - Failed: 0
-- Runtime in the current environment: approximately 7.4 seconds
+- Runtime in the current environment: approximately 7.8 seconds
 - FAISS coverage checks the exact CPU adapter contract, row-aligned distances, semantic-cutoff candidate sets, accepted internal permutations, rejected cross-cutoff permutations, bounded tie resolution, unclosed tie-band refusal, missing GPU support, shared GPU resource-pool ownership, refinement accounting, full benchmark integration, NumPy decision/rerank/retention equivalence, and GPU-memory artifact creation. The conditional real-FAISS test must execute rather than skip on the cluster before the CPU/GPU milestone passes.
 - Added coverage includes cross-platform policy-float canonicalization, exact `h_j(y)` term-by-term agreement with the orthogonal conditional law, geometric rank-strata population conservation and approximation error, root residuals, the infinite-root/unit-retention boundary, budget monotonicity, LID-to-budget monotonicity, saturation, analytic/empirical interface compatibility, and tune-only scalar safety correction.
 - Compiled-policy coverage checks dense linear/geometric LID values, both sides of every adjacent-float64 transition, invalid/out-of-domain fallback, deterministic serialization, artifact round-trip loading, and tamper rejection.
@@ -177,7 +232,8 @@ python3 -m tri_rag_harness.real_dimension_sweep \
 - The BEIR SciFact adapter suite has six tests covering byte reproducibility, pinned config/checksum refusal, missing-document qrels, development/test ID overlap, development/test text exclusion, normalized-text grouping, and cross-split text disjointness.
 - Six text-embedding tests cover the pinned dataset/model request, exact E5 prefix preservation, fake-provider normalization, cache reuse without model loading, source-artifact mutation refusal, request mutation refusal, array-tamper refusal, and partial-cache suppression on invalid provider output.
 - Five real-original-baseline tests cover tune-only enforcement, strict cache tamper refusal, graded nDCG, stable tie breaking, deterministic artifacts, pinned real identities, and exclusion of timings from result identity.
-- Five real-dimension-sweep tests cover protected-split refusal, immutable common-cost semantics, exact query-projection accounting, stable projected ranking conformance, terminal full-corpus behavior, query-level auditability, and deterministic tune-only artifacts. The full local suite now contains 76 tests: 75 pass and one real-FAISS test skips.
+- Five real-dimension-sweep tests cover protected-split refusal, immutable common-cost semantics, exact query-projection accounting, stable projected ranking conformance, terminal full-corpus behavior, query-level auditability, and deterministic tune-only artifacts.
+- Six real-policy tests cover immutable tune-only configuration, protected-split and common-cost refusal, terminal fallback, exact coordinate accounting, cached/analytic full-corpus boundary equivalence, and query-aligned decision reduction. Two additional Tri-Predict regressions prevent finite-budget floating-point saturation from satisfying an exact unit target and preserve deterministic unit retention at a complete-corpus budget. The full local suite now contains 84 tests: 83 pass and one optional real-FAISS test skips.
 
 ## Current artifacts
 
@@ -204,6 +260,15 @@ The accepted Genoa original-baseline archive is
 `c91a402eea55de127381f82f21f3a988ced679959b88eed868604292fda1af6d`.
 It contains both byte-identical deterministic baseline runs, their separate
 timings, input manifests, code/config, and the complete Slurm log.
+
+The accepted Genoa fixed-dimension archive is
+`scifact-dimension-tune-373780-audit.tar.gz`, SHA-256
+`99cf703cd384555305d8d526224ccc01208c76539cd79acb45b8ea600b737b21`.
+It contains both byte-identical dimension runs, the original baseline identity,
+frozen selection artifacts, source/config/test files, and the complete Slurm
+log. The real policy outputs are currently independently reproduced local
+artifacts in `/tmp`; their deterministic identities are listed above and await
+the cluster reproduction gate before an audit archive is accepted.
 
 `runs/synthetic_mvp/` contains:
 
@@ -254,12 +319,22 @@ The separately frozen `M_max=1984` FAISS 1M comparison also passes every exact s
 
 ## Next task
 
-Reproduce the tune-only fixed-dimension result fingerprint on Genoa and retain timings only as separate systems observations. Require selection fingerprint `093588a27e0d588b9407d02fe5c5ed7e46f6a5fdc02a1881738abbde4eda01fb` and result fingerprint `5dcb0a5f17cc1f2f1684a38c71ede5c8dfc1de709f98496156959e14fbea7558`. Then fit the required fixed-budget, monotone-binned, and Tri-Predict policies on `query_tune` at the frozen `m_prime=192`. Serialize all policy choices before the first untouched `query_cert` evaluation; a failed certificate must remain terminal and must not trigger retuning on that split.
+Reproduce the tune-only policy result twice on Genoa and require result
+fingerprint
+`f5464cf16d5a3f64d7f6414cae293f51443601fb64e42ea49d483a417ceed289`
+and selection fingerprint
+`819383c07d4d923b8f74ac66cf3f3f3243d75d8a65abae519055ac622efdf47b`.
+Archive the full query-level results and separate timings. Only after that gate,
+implement the certification-only runner, load the already frozen fixed,
+monotone-binned, and compiled Tri-Predict artifacts, and evaluate untouched
+`query_cert` exactly once. A failure is terminal and must not trigger retuning
+on those queries.
 
 ## Known deviations and risks
 
 - Configuration is JSON rather than YAML, and query-level output is JSONL rather than Parquet, to keep the first pass runnable with only the already available NumPy/SciPy stack. The artifacts remain machine-readable and auditable.
-- Real E5 inference and the repaired v2 cache passed independent audit. The first v1 cache remains quarantined because its dataset split allowed duplicate query text across tune/cert/test. The public E5 model card already reports SciFact performance, so the off-the-shelf model choice is not a fully blind model-family selection even though no local cert/test retrieval outcome was inspected. Tune-only evidence evaluation and fixed-dimension projection selection have begun, but no real adaptive policy has been fit and no certification/test retrieval outcome or answer generation has been performed.
+- Real E5 inference and the repaired v2 cache passed independent audit. The first v1 cache remains quarantined because its dataset split allowed duplicate query text across tune/cert/test. The public E5 model card already reports SciFact performance, so the off-the-shelf model choice is not a fully blind model-family selection even though no local cert/test retrieval outcome was inspected. Tune-only evidence evaluation, fixed-dimension selection, and policy fitting are complete, but no real certification/test retrieval outcome or answer generation has been performed.
+- The real tune pilot/oracle clipped-LID gap is large (`14.8902` MAE), but it does not by itself attribute the negative analytic-policy efficiency solely to pilot error. The selected uncorrected Tri-Predict threshold must rise to `0.99995`, and its mean budget already exceeds fixed; oracle-LID and actual-distance counterfactuals remain diagnostic work to separate LID error from rank-model/mean-field error without touching certification data.
 - The selected real-data `56.48%` coordinate-work reduction is an arithmetic proxy under one exact full projected scan and exact reranking. It is not measured latency saving and omits fixed overheads, memory hierarchy effects, batching, and backend-specific kernels. Genoa reproduction validates result portability, not serving performance.
 - E5 is English-only and truncates inputs above 512 tokens. The embedding manifest exposes separate corpus/query truncation counts, but any effect on SciFact retrieval remains unknown until the frozen cache exists.
 - GPU and CPU transformer kernels may differ slightly even under fixed packages, float32, deterministic algorithms, eager attention, disabled TF32, and a fixed cuBLAS workspace. The generated array hashes—not an assumption of cross-device bit identity—become the frozen downstream experiment identity.

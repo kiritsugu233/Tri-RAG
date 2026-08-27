@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "benchmark": "real_tune_only_policy_fit_v1",
+  "dataset_manifest_fingerprint": "4a73586d3a29a0567287e501ac3c06c998af661cdc74dbc589e7525a7924f903",
+  "embedding_config_fingerprint": "705153fdd5110981e1bb0f37c7007064b851c50af722a34f41e6c2050e077af7",
+  "embedding_request_fingerprint": "c0b7992d73434f0f421688f14f3a57ecfe92f3d16e44c90c43fe710f798102ca",
+  "embedding_manifest_fingerprint": "2ec53ce38e226129ba0feffcd28ba1da1081e0627ad8e54f4a60e430c341e914",
+  "original_baseline_result_fingerprint": "2921f39dc051bc3331da8bf9b0ddc6c584dcd1f043099d8dda353653a1926b1c",
+  "dimension_selection_result_fingerprint": "5dcb0a5f17cc1f2f1684a38c71ede5c8dfc1de709f98496156959e14fbea7558",
+  "dimension_selection_fingerprint": "093588a27e0d588b9407d02fe5c5ed7e46f6a5fdc02a1881738abbde4eda01fb",
+  "frozen_projection_fingerprint": "8a9a1148527db16c43bc3fedf6da1ac79ae00c0d76f2a31321cd6d9fe049809e",
+  "projection_fingerprint": "82ba6c549bdc01249883314972e233f7049027a204dc03fcd7e1e55e8eda357c",
+  "evaluation_split": "query_tune",
+  "projection": {
+    "family": "dense_gaussian_n0_variance_1_over_m_prime",
+    "seed": 27011,
+    "m_prime": 192,
+    "post_projection_normalize": false
+  },
+  "search": {
+    "normalized_inputs": true,
+    "distance": "squared_l2",
+    "arithmetic": "numpy_float64",
+    "stable_tie_break": "lexicographic_doc_id",
+    "query_batch_size": 32,
+    "k_ctx": 5,
+    "k_gt": 10,
+    "m_pilot": 32,
+    "s_lid": 20,
+    "min_lid_neighbors": 12,
+    "m_grid": [
+      32,
+      48,
+      64,
+      96,
+      128,
+      192,
+      256,
+      384,
+      512,
+      768,
+      1024,
+      1536,
+      2048,
+      3072,
+      4096,
+      5183
+    ]
+  },
+  "lid": {
+    "clip_min": 1.0,
+    "clip_max": 100.0,
+    "duplicate_tolerance": 1e-12,
+    "fallback": 100.0
+  },
+  "selection": {
+    "metric": "embedding_neighbor_retention_at_k_gt",
+    "alpha": 0.05,
+    "target": 0.95,
+    "statistic_role": "tune_selection_score_not_certificate",
+    "objective": "coordinate_multiply_adds_per_query",
+    "cost_formula": "(corpus_size + embedding_dimension) * m_prime + embedding_dimension * mean_budget",
+    "tie_break": [
+      "smaller_mean_budget",
+      "higher_lower_bound",
+      "smaller_policy_hyperparameter"
+    ],
+    "evidence_labels_used": false
+  },
+  "monotone_binned": {
+    "n_bins": 4,
+    "bin_mean_target_grid": [
+      0.90,
+      0.92,
+      0.94,
+      0.95,
+      0.96,
+      0.97,
+      0.98,
+      0.99,
+      1.0
+    ],
+    "fallback_budget": 5183
+  },
+  "tri_predict": {
+    "target_grid": [
+      0.95,
+      0.96,
+      0.97,
+      0.98,
+      0.99,
+      0.995,
+      0.999,
+      0.9992,
+      0.9994,
+      0.9996,
+      0.9998,
+      0.9999,
+      0.99995,
+      0.99999,
+      1.0
+    ],
+    "max_rank_samples": 256,
+    "safety_quantiles": [
+      null,
+      0.50,
+      0.75,
+      0.90,
+      0.95,
+      0.99,
+      1.0
+    ],
+    "compiled_lid_min": 1.0,
+    "compiled_lid_max": 100.0,
+    "compile_validation_samples": 65
+  }
+}

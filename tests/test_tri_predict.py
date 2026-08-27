@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 
@@ -202,6 +203,43 @@ class TriPredictTests(unittest.TestCase):
         fallback = policy.choose(100.0, False)
         self.assertTrue(fallback.used_fallback)
         self.assertEqual(fallback.budget, 80)
+
+    def test_exact_unit_target_requires_complete_corpus(self):
+        policy = TriPredictPolicy(
+            corpus_size=20,
+            m_prime=8,
+            k_gt=3,
+            grid=[5, 10, 20],
+            target=1.0,
+            max_rank_samples=16,
+        )
+        rounded_tail = {5: 1.0, 10: 1.0, 20: 1.0}
+        with patch.object(policy, "raw_predictions", return_value=rounded_tail):
+            decision = policy.choose(5.0)
+        self.assertEqual(policy.serialize()["version"], 2)
+        self.assertEqual(decision.budget, 20)
+        self.assertFalse(decision.saturated)
+        self.assertEqual(decision.predicted_retention, 1.0)
+
+    def test_complete_corpus_is_not_reduced_by_safety_correction(self):
+        policy = TriPredictPolicy(
+            corpus_size=20,
+            m_prime=8,
+            k_gt=3,
+            grid=[5, 10, 20],
+            target=0.95,
+            max_rank_samples=16,
+            safety_correction=0.2,
+            safety_quantile=0.9,
+            correction_fit_observations=10,
+        )
+        predictions = {5: 0.9, 10: 1.0, 20: 1.0}
+        with patch.object(policy, "raw_predictions", return_value=predictions):
+            decision = policy.choose(5.0)
+        self.assertEqual(decision.budget, 20)
+        self.assertFalse(decision.saturated)
+        self.assertEqual(decision.predicted_retention, 1.0)
+        self.assertEqual(decision.raw_predicted_retention, 1.0)
 
     def test_compiled_policy_matches_dense_reference_and_adjacent_boundaries(self):
         reference = TriPredictPolicy(

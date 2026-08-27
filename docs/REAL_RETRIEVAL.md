@@ -153,11 +153,82 @@ python3 -m tri_rag_harness.real_dimension_sweep \
   --output runs/scifact-fixed-dimension-tune
 ```
 
+Slurm job `373780` reproduced the sweep twice on Genoa at commit `07c28e1`.
+Every deterministic artifact is byte-identical across the two runs and has the
+same selection/result identities above. Independent local audit recomputed all
+192 empirical-Bernstein bounds from the returned 4,836 query-level rows. The
+archive SHA-256 is
+`99cf703cd384555305d8d526224ccc01208c76539cd79acb45b8ea600b737b21`.
+
+## Tune-only policy fitting
+
+`configs/real_scifact_policy_tune.json` freezes policy selection at the accepted
+`m_prime=192` projection. It permits only `query_tune`, binds every dataset,
+embedding, baseline, dimension-selection, and projection fingerprint, and uses
+the same complete budget grid and coordinate objective as dimension selection.
+Evidence labels are excluded. The config fingerprint is
+`f8edc3662369980b9b54d7988f40683ae32275e5e58349306b6d7f4c44add5eb`.
+
+The runner reconstructs and verifies every projected ranking and retention from
+the frozen dimension run. Pilot LID uses original-space reranking of the first
+32 projected candidates with `s_lid=20`; exact original-space LID is saved only
+as a tune diagnostic. It evaluates every fixed budget, crosses predeclared
+monotone-bin targets, and crosses dense analytic prediction targets with
+tune-only residual corrections. The selected analytic policy is compiled into
+fingerprint-bound adjacent-float64 LID intervals and checked against the
+reference on every tune query. Tri-Predict policy schema version 2 also makes
+the complete-corpus target-1 semantics part of the fingerprint rather than
+allowing a finite-budget probability rounded to one to masquerade as exact.
+
+Two independent local runs produced byte-identical deterministic artifacts.
+Independent reduction of `per_query.jsonl` reproduced both selected-policy
+bounds and all result-artifact hashes:
+
+| policy | mean M | mean retention | tune lower bound | candidate saving | coordinate saving |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| fixed `M=768` | 768.000 | 0.985360 | 0.958051 | 0.00% | 0.00% |
+| monotone binned | 672.397 | 0.983623 | 0.956282 | 12.45% | 4.24% |
+| Tri-Predict | 1092.548 | 0.979653 | 0.950276 | -42.26% | -14.39% |
+
+The monotone policy freezes bin budgets `[384, 512, 768, 1024]`. Tri-Predict
+needs target `0.99995` with no residual correction to reach the tune score. At
+target `0.9998` it already averages `M=850.256`, more than fixed, but its lower
+bound is only `0.938794`; therefore finer threshold interpolation cannot produce
+an eligible analytic policy cheaper than fixed. This is a negative tune-only
+Tri-Predict efficiency result, not a certificate. The binned improvement is
+also only a tune candidate until independent certification.
+
+The pilot/oracle clipped-LID MAE is `14.8902`, with all 403 pairs valid. This
+does not yet prove that pilot error rather than the rank model or mean-field
+stack causes the analytic inefficiency. Oracle-LID and actual-distance modes
+remain diagnostics and were not allowed to choose the deployable policy.
+
+The result/selection fingerprints are
+`f5464cf16d5a3f64d7f6414cae293f51443601fb64e42ea49d483a417ceed289`
+and `819383c07d4d923b8f74ac66cf3f3f3243d75d8a65abae519055ac622efdf47b`.
+The monotone, analytic, and compiled-policy fingerprints are
+`0e6bbe66f5cab32974f3f98672680ee09afcba075fba6e61638e7fcc71efb5d9`,
+`db945a97d82288828b75db0d263f771e453a791a03c12863b4400703878548a1`,
+and `113f9ac6bb38bb9fa74a9c3b547c99083c146eee0eaf618910f9c843c99e6160`.
+
+Run policy fitting with:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src \
+python3 -m tri_rag_harness.real_policy_tune \
+  --config configs/real_scifact_policy_tune.json \
+  --dataset data/prepared/scifact-dedup-v2 \
+  --embedding-config configs/real_scifact_e5_base_v2_embeddings.json \
+  --embedding-cache data/embeddings/scifact-e5-base-v2-dedup-v2 \
+  --dimension-selection runs/scifact-fixed-dimension-tune \
+  --output runs/scifact-policy-tune
+```
+
 ## Next gate
 
-Reproduce the fixed-dimension selection on Genoa and require the deterministic
-result and selection fingerprints above. After that reproduction, use only
-`query_tune` to fit the fixed-budget, monotone-binned, and Tri-Predict policies
-at the frozen projection. Write all policy artifacts before evaluating the
-untouched `query_cert` split. A failed certificate remains terminal and must
-not trigger retuning on the same certification queries.
+Reproduce policy fitting twice on Genoa and require the result and selection
+fingerprints above. After accepting that archive, implement a certification-only
+runner that loads these frozen artifacts before accessing `query_cert`. Evaluate
+the fixed reference and both adaptive policies exactly once on that untouched
+split. A failed certificate remains terminal and must not trigger retuning on
+the same certification queries.

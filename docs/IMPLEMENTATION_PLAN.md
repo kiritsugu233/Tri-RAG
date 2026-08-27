@@ -135,7 +135,7 @@ Acceptance:
 - [x] Run a fingerprint-bound exact original-space baseline on `query_tune` only.
 - [x] Run exact original/projected retrieval in memory-safe batches.
 - [x] Freeze one `m_prime` using tune queries only.
-- [ ] Run required policies on tune, then freeze them.
+- [x] Run required policies on tune, then freeze them.
 - [ ] Certify on untouched certification queries.
 - [ ] Evaluate on test queries.
 

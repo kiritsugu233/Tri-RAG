@@ -155,7 +155,7 @@ class MonotoneBinnedPolicy:
 class TriPredictPolicy:
     """Query-local analytic policy using only deployable LID at inference time."""
 
-    VERSION = 1
+    VERSION = 2
 
     def __init__(
         self,
@@ -272,7 +272,16 @@ class TriPredictPolicy:
             return PolicyDecision(self.grid[-1], -1, True, False, None, None)
         raw = self.raw_predictions(float(lid_value))
         for budget in self.grid:
-            corrected = max(0.0, raw[budget] - self.safety_correction)
+            if budget == self.corpus_size:
+                # Retrieving the complete corpus has deterministic unit retention.
+                # Do not subtract a tune-fit correction from this exact boundary.
+                corrected = 1.0
+            else:
+                corrected = max(0.0, raw[budget] - self.safety_correction)
+                # Special-function tails can round to exactly one at a finite
+                # budget.  That numerical saturation is not an exact guarantee.
+                if self.target == 1.0:
+                    continue
             if corrected >= self.target:
                 return PolicyDecision(
                     budget,
@@ -283,7 +292,11 @@ class TriPredictPolicy:
                     raw[budget],
                 )
         maximum = self.grid[-1]
-        corrected = max(0.0, raw[maximum] - self.safety_correction)
+        corrected = (
+            1.0
+            if maximum == self.corpus_size
+            else max(0.0, raw[maximum] - self.safety_correction)
+        )
         return PolicyDecision(
             maximum,
             -1,
