@@ -6,6 +6,7 @@ import argparse
 import hashlib
 import importlib.metadata
 import json
+import os
 import platform
 import re
 import shutil
@@ -53,6 +54,7 @@ class TextEncodingConfig:
     deterministic_algorithms: bool
     allow_tf32: bool
     attention_implementation: str
+    cublas_workspace_config: str
 
 
 @dataclass(frozen=True)
@@ -235,6 +237,7 @@ def load_text_embedding_config(
             "deterministic_algorithms",
             "allow_tf32",
             "attention_implementation",
+            "cublas_workspace_config",
         },
     )
     if encoding["model_dtype"] != "float32":
@@ -244,6 +247,10 @@ def load_text_embedding_config(
     if encoding["attention_implementation"] != "eager":
         raise TextEmbeddingError(
             "encoding.attention_implementation must be eager"
+        )
+    if encoding["cublas_workspace_config"] != ":4096:8":
+        raise TextEmbeddingError(
+            "encoding.cublas_workspace_config must be :4096:8"
         )
     l2_normalize = _boolean(encoding["l2_normalize"], "encoding.l2_normalize")
     if not l2_normalize:
@@ -307,6 +314,7 @@ def load_text_embedding_config(
             deterministic_algorithms=deterministic_algorithms,
             allow_tf32=allow_tf32,
             attention_implementation="eager",
+            cublas_workspace_config=":4096:8",
         ),
         required_packages=validated_packages,
         raw=raw,
@@ -590,6 +598,13 @@ class SentenceTransformerProvider:
         model_cache: Optional[Path] = None,
         local_files_only: bool = False,
     ) -> None:
+        actual_cublas_config = os.environ.get("CUBLAS_WORKSPACE_CONFIG")
+        if actual_cublas_config != config.encoding.cublas_workspace_config:
+            raise TextEmbeddingError(
+                "CUBLAS_WORKSPACE_CONFIG mismatch: expected "
+                f"{config.encoding.cublas_workspace_config!r}, got "
+                f"{actual_cublas_config!r}"
+            )
         actual_packages: Dict[str, str] = {}
         for package, expected in config.required_packages.items():
             try:
@@ -624,6 +639,8 @@ class SentenceTransformerProvider:
             torch.backends.cuda.matmul.allow_tf32 = config.encoding.allow_tf32
         if hasattr(torch.backends, "cudnn"):
             torch.backends.cudnn.allow_tf32 = config.encoding.allow_tf32
+            torch.backends.cudnn.deterministic = True
+            torch.backends.cudnn.benchmark = False
 
         snapshot = Path(
             snapshot_download(
@@ -709,6 +726,9 @@ class SentenceTransformerProvider:
                 "attention_implementation": (
                     config.encoding.attention_implementation
                 ),
+                "cublas_workspace_config": actual_cublas_config,
+                "cudnn_deterministic": True,
+                "cudnn_benchmark": False,
                 "input_token_lengths": self._input_statistics,
             },
         }

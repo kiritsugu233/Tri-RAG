@@ -18,10 +18,10 @@ Any source-text, qrel, split, ID, dataset-config, or manifest change invalidates
 the request before model inference begins.
 
 The checked-in embedding-config fingerprint is
-`e6cf0c6eb1ffb8fc053b102eab5d3fbaa32dd9c0e770c22df79ef85df216e6f7`.
+`913299eba341ee543b17ee806c11530fdc111ad73ada95b0b5148dcd8242bf6e`.
 Together with the validated dataset artifacts it produces the pre-inference
 request fingerprint
-`bc94e24580b6d0567232f071f1038f979f66cb1d5769e04828df978857928fe6`.
+`2ddafc813a0192e8125382a942262365d7f801293f2e7a22f2eeeae40e47087c`.
 Both can be checked before accepting a GPU artifact; the eventual cache
 fingerprint additionally commits to the actual model snapshot, runtime, token
 statistics, and output arrays.
@@ -39,7 +39,8 @@ statistics, and output arrays.
 - query input: `query: ` + stripped claim;
 - model computation and output: float32;
 - post-encoding operation: canonical row-wise L2 normalization, then float32;
-- deterministic PyTorch algorithms enabled, TF32 disabled, eager attention;
+- deterministic PyTorch algorithms enabled, TF32 disabled, eager attention,
+  cuDNN deterministic mode, and `CUBLAS_WORKSPACE_CONFIG=:4096:8`;
 - batch size: 128.
 
 The E5 model card explicitly requires the `query: ` and `passage: ` prefixes
@@ -87,6 +88,7 @@ export PYTHONPATH="$PWD/src"
 export PYTHONDONTWRITEBYTECODE=1
 export CUDA_VISIBLE_DEVICES=0
 export TOKENIZERS_PARALLELISM=false
+export CUBLAS_WORKSPACE_CONFIG=:4096:8
 
 python3 -m tri_rag_harness.text_embeddings \
   --config configs/real_scifact_e5_base_v2_embeddings.json \

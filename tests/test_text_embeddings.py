@@ -297,9 +297,10 @@ class TextEmbeddingTests(unittest.TestCase):
         self.assertEqual(config.formatting.query_prefix, "query: ")
         self.assertFalse(config.encoding.allow_tf32)
         self.assertEqual(config.encoding.attention_implementation, "eager")
+        self.assertEqual(config.encoding.cublas_workspace_config, ":4096:8")
         self.assertEqual(
             config.config_fingerprint,
-            "e6cf0c6eb1ffb8fc053b102eab5d3fbaa32dd9c0e770c22df79ef85df216e6f7",
+            "913299eba341ee543b17ee806c11530fdc111ad73ada95b0b5148dcd8242bf6e",
         )
         self.assertEqual(
             config.dataset_manifest_fingerprint,

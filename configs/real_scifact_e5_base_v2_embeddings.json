@@ -36,7 +36,8 @@
     "l2_normalize": true,
     "deterministic_algorithms": true,
     "allow_tf32": false,
-    "attention_implementation": "eager"
+    "attention_implementation": "eager",
+    "cublas_workspace_config": ":4096:8"
   },
   "runtime": {
     "required_packages": {
