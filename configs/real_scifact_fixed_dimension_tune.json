@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "benchmark": "real_fixed_dimension_tune_sweep_v1",
+  "dataset_manifest_fingerprint": "4a73586d3a29a0567287e501ac3c06c998af661cdc74dbc589e7525a7924f903",
+  "embedding_config_fingerprint": "705153fdd5110981e1bb0f37c7007064b851c50af722a34f41e6c2050e077af7",
+  "embedding_request_fingerprint": "c0b7992d73434f0f421688f14f3a57ecfe92f3d16e44c90c43fe710f798102ca",
+  "embedding_manifest_fingerprint": "2ec53ce38e226129ba0feffcd28ba1da1081e0627ad8e54f4a60e430c341e914",
+  "original_baseline_result_fingerprint": "2921f39dc051bc3331da8bf9b0ddc6c584dcd1f043099d8dda353653a1926b1c",
+  "evaluation_split": "query_tune",
+  "projection": {
+    "family": "dense_gaussian_n0_variance_1_over_m_prime",
+    "seed": 27011,
+    "candidates": [
+      16,
+      24,
+      32,
+      48,
+      64,
+      96,
+      128,
+      192,
+      256,
+      384,
+      512,
+      768
+    ],
+    "candidate_coupling": "same_seed_nested_prefix_rescaled",
+    "post_projection_normalize": false
+  },
+  "search": {
+    "normalized_inputs": true,
+    "distance": "squared_l2",
+    "arithmetic": "numpy_float64",
+    "stable_tie_break": "lexicographic_doc_id",
+    "query_batch_size": 32,
+    "k_ctx": 5,
+    "k_gt": 10,
+    "m_pilot": 32,
+    "m_grid": [
+      32,
+      48,
+      64,
+      96,
+      128,
+      192,
+      256,
+      384,
+      512,
+      768,
+      1024,
+      1536,
+      2048,
+      3072,
+      4096,
+      5183
+    ]
+  },
+  "selection": {
+    "metric": "embedding_neighbor_retention_at_k_gt",
+    "alpha": 0.05,
+    "target": 0.95,
+    "statistic_role": "tune_selection_score_not_certificate",
+    "objective": "coordinate_multiply_adds_per_query",
+    "cost_formula": "(corpus_size + embedding_dimension) * m_prime + embedding_dimension * fixed_budget",
+    "include_query_projection": true,
+    "tie_break": [
+      "higher_lower_bound",
+      "smaller_m_prime",
+      "smaller_fixed_budget"
+    ]
+  }
+}

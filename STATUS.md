@@ -40,6 +40,12 @@ A pluggable text-embedding cache is implemented and bound to the repaired datase
 
 The first real retrieval runner now provides a strict exact original-space baseline on `query_tune` only and rejects cert/test scope at config load. It binds the complete dataset/config/request/cache identities, uses normalized squared L2 with NumPy float64 and stable document-ID ties, writes 403 query-level evidence records, separates timing from deterministic result identity, and revalidates every input before search. Two local runs over the accepted arrays matched byte for byte with result fingerprint `2921f39dc051bc3331da8bf9b0ddc6c584dcd1f043099d8dda353653a1926b1c`. Tune evidence hit/recall/nDCG are `0.803970/0.786849/0.713828` at context cutoff 5 and `0.866005/0.850124/0.735501` at neighbor-reference cutoff 10. No cert/test retrieval outcome was computed.
 
+Slurm job `373780` reproduced that exact original-space result twice on Genoa at commit `37f68fc`; both deterministic runs are byte-identical and all 71 then-current tests passed with one expected optional real-FAISS skip. Search timings were `0.5372` and `0.5336 ms/query` and are correctly excluded from result identity. Independent local reduction of the returned query-level records reproduced every evidence aggregate and artifact hash. The accepted baseline audit archive SHA-256 is `c91a402eea55de127381f82f21f3a988ced679959b88eed868604292fda1af6d`.
+
+A real tune-only fixed-dimension sweep is now implemented with a strict schema that rejects protected splits and mutations of the common cost objective. Config fingerprint `3265e303c5249a6b90868f5234d333eca3f1fc4bc28c12cdb710382e2b71eabd` freezes dense Gaussian seed `27011`, 12 dimensions from 16 through 768, no projected renormalization, `M_pilot=32`, one shared 16-value budget grid ending at the full 5,183-document corpus, and a tune retention-score target of `0.95`. Selection minimizes absolute coordinate work `(N+d)*m_prime+d*M`; it does not use dimension-specific candidate-saving denominators or evidence labels.
+
+Two local runs over the accepted real arrays matched byte for byte for every deterministic artifact, and an independent audit recomputed all 192 dimension/budget empirical-Bernstein statistics from 4,836 query-level records. The frozen tune choice is `m_prime=192`, fixed reference `M=768`, mean retention `0.985360`, lower bound `0.958051`, and theoretical coordinate-work reduction `56.48%` versus an original full scan. The selection/result/frozen-projection fingerprints are `093588a27e0d588b9407d02fe5c5ed7e46f6a5fdc02a1881738abbde4eda01fb`, `5dcb0a5f17cc1f2f1684a38c71ede5c8dfc1de709f98496156959e14fbea7558`, and `8a9a1148527db16c43bc3fedf6da1ac79ae00c0d76f2a31321cd6d9fe049809e`. This is a tune selection result, not a certificate, latency claim, evidence/test result, or answer-quality claim.
+
 The local compiled-policy 100k/d768 structural run created seven states, loaded the artifact in `0.1093 ms`, and exactly matched all 64 prior local LID values, budgets, and retention values. Analytic validation averaged `38.4606 ms/decision`; lookup averaged `0.0021 ms/decision`. Reuse-path latency fell from `44.7511` to `4.2712 ms/query` across the old and new local runs. Compilation cost `17.9965 s` once at setup. These are not Genoa serving claims.
 
 Slurm job `373123` reproduced the compiled policy on `genoa00` at commit `0407c831c263e7505543b3701b84e7cd4a4b4bd0`; all 43 tests passed. At 100k, lookup averaged `0.002544 ms` versus `55.8130 ms` for the analytic reference (21,939x), and reuse fell from `61.0718` to `5.2163 ms/query` with p95 `5.4572 ms`. At 1M, lookup averaged `0.002587 ms` versus `58.3822 ms` (22,564x), and reuse fell from `146.7481` to `87.5176 ms/query` with p95 `90.2264 ms`. Artifact loading took `0.149/0.142 ms`; offline compilation took `26.106/27.898 s`. Every old/new query-level LID, budget, saturation flag, retention value, and work counter is identical, and both reference policies are unchanged. The exact CPU and compiled-policy systems gates pass.
@@ -140,12 +146,25 @@ python3 -m tri_rag_harness.real_original_baseline \
   --output runs/scifact-original-exact-tune
 ```
 
+Tune-only fixed SciFact projection-dimension selection:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src \
+python3 -m tri_rag_harness.real_dimension_sweep \
+  --config configs/real_scifact_fixed_dimension_tune.json \
+  --dataset data/prepared/scifact-dedup-v2 \
+  --embedding-config configs/real_scifact_e5_base_v2_embeddings.json \
+  --embedding-cache data/embeddings/scifact-e5-base-v2-dedup-v2 \
+  --original-baseline runs/scifact-original-exact-tune \
+  --output runs/scifact-fixed-dimension-tune
+```
+
 ## Tests passed/failed
 
-- Passed locally: 70
+- Passed locally: 75
 - Skipped locally: 1 conditional real-FAISS CPU conformance test because FAISS is not installed on the Mac environment
 - Failed: 0
-- Runtime in the current environment: approximately 7.0 seconds
+- Runtime in the current environment: approximately 7.4 seconds
 - FAISS coverage checks the exact CPU adapter contract, row-aligned distances, semantic-cutoff candidate sets, accepted internal permutations, rejected cross-cutoff permutations, bounded tie resolution, unclosed tie-band refusal, missing GPU support, shared GPU resource-pool ownership, refinement accounting, full benchmark integration, NumPy decision/rerank/retention equivalence, and GPU-memory artifact creation. The conditional real-FAISS test must execute rather than skip on the cluster before the CPU/GPU milestone passes.
 - Added coverage includes cross-platform policy-float canonicalization, exact `h_j(y)` term-by-term agreement with the orthogonal conditional law, geometric rank-strata population conservation and approximation error, root residuals, the infinite-root/unit-retention boundary, budget monotonicity, LID-to-budget monotonicity, saturation, analytic/empirical interface compatibility, and tune-only scalar safety correction.
 - Compiled-policy coverage checks dense linear/geometric LID values, both sides of every adjacent-float64 transition, invalid/out-of-domain fallback, deterministic serialization, artifact round-trip loading, and tamper rejection.
@@ -156,8 +175,9 @@ python3 -m tri_rag_harness.real_original_baseline \
 - The corrected 1M FAISS milestone passed all 54 tests on the same job and node at commit `0d387a1`; the real-FAISS CPU conformance test executed rather than skipping.
 - The repaired SciFact v2 A100 gate passed all 66 then-current tests on job `373564`, node `a100-1`, commit `d776404`; the real-FAISS test executed rather than skipping.
 - The BEIR SciFact adapter suite has six tests covering byte reproducibility, pinned config/checksum refusal, missing-document qrels, development/test ID overlap, development/test text exclusion, normalized-text grouping, and cross-split text disjointness.
-- Six text-embedding tests cover the pinned dataset/model request, exact E5 prefix preservation, fake-provider normalization, cache reuse without model loading, source-artifact mutation refusal, request mutation refusal, array-tamper refusal, and partial-cache suppression on invalid provider output. The full local suite now contains 71 tests: 70 pass and one real-FAISS test skips.
+- Six text-embedding tests cover the pinned dataset/model request, exact E5 prefix preservation, fake-provider normalization, cache reuse without model loading, source-artifact mutation refusal, request mutation refusal, array-tamper refusal, and partial-cache suppression on invalid provider output.
 - Five real-original-baseline tests cover tune-only enforcement, strict cache tamper refusal, graded nDCG, stable tie breaking, deterministic artifacts, pinned real identities, and exclusion of timings from result identity.
+- Five real-dimension-sweep tests cover protected-split refusal, immutable common-cost semantics, exact query-projection accounting, stable projected ranking conformance, terminal full-corpus behavior, query-level auditability, and deterministic tune-only artifacts. The full local suite now contains 76 tests: 75 pass and one real-FAISS test skips.
 
 ## Current artifacts
 
@@ -178,6 +198,12 @@ It contains the repaired canonical dataset, accepted embedding arrays and
 manifest, source ZIP, configs, documentation, and full Slurm log. It remains
 ignored rather than committed; downstream real runs bind its dataset and
 embedding fingerprints.
+
+The accepted Genoa original-baseline archive is
+`scifact-original-tune-373780-audit.tar.gz`, SHA-256
+`c91a402eea55de127381f82f21f3a988ced679959b88eed868604292fda1af6d`.
+It contains both byte-identical deterministic baseline runs, their separate
+timings, input manifests, code/config, and the complete Slurm log.
 
 `runs/synthetic_mvp/` contains:
 
@@ -228,12 +254,13 @@ The separately frozen `M_max=1984` FAISS 1M comparison also passes every exact s
 
 ## Next task
 
-Reproduce the tune-only exact original-space result fingerprint on Genoa and retain timing as a separate systems observation. Then freeze a cross-dimension projected-search compute objective, projection seed, candidate `m_prime` values, pilot parameters, and budget grid before running any projected tune outcomes. Do not inspect cert/test retrieval outcomes or carry the Gaussian policy and its saturation result into the real-data experiment.
+Reproduce the tune-only fixed-dimension result fingerprint on Genoa and retain timings only as separate systems observations. Require selection fingerprint `093588a27e0d588b9407d02fe5c5ed7e46f6a5fdc02a1881738abbde4eda01fb` and result fingerprint `5dcb0a5f17cc1f2f1684a38c71ede5c8dfc1de709f98496156959e14fbea7558`. Then fit the required fixed-budget, monotone-binned, and Tri-Predict policies on `query_tune` at the frozen `m_prime=192`. Serialize all policy choices before the first untouched `query_cert` evaluation; a failed certificate must remain terminal and must not trigger retuning on that split.
 
 ## Known deviations and risks
 
 - Configuration is JSON rather than YAML, and query-level output is JSONL rather than Parquet, to keep the first pass runnable with only the already available NumPy/SciPy stack. The artifacts remain machine-readable and auditable.
-- Real E5 inference and the repaired v2 cache passed independent audit. The first v1 cache remains quarantined because its dataset split allowed duplicate query text across tune/cert/test. The public E5 model card already reports SciFact performance, so the off-the-shelf model choice is not a fully blind model-family selection even though no local cert/test retrieval outcome was inspected. Tune-only evidence evaluation has begun, but no projection/policy tuning, certification/test evaluation, or answer generation has been performed on real embeddings.
+- Real E5 inference and the repaired v2 cache passed independent audit. The first v1 cache remains quarantined because its dataset split allowed duplicate query text across tune/cert/test. The public E5 model card already reports SciFact performance, so the off-the-shelf model choice is not a fully blind model-family selection even though no local cert/test retrieval outcome was inspected. Tune-only evidence evaluation and fixed-dimension projection selection have begun, but no real adaptive policy has been fit and no certification/test retrieval outcome or answer generation has been performed.
+- The selected real-data `56.48%` coordinate-work reduction is an arithmetic proxy under one exact full projected scan and exact reranking. It is not measured latency saving and omits fixed overheads, memory hierarchy effects, batching, and backend-specific kernels. Genoa reproduction validates result portability, not serving performance.
 - E5 is English-only and truncates inputs above 512 tokens. The embedding manifest exposes separate corpus/query truncation counts, but any effect on SciFact retrieval remains unknown until the frozen cache exists.
 - GPU and CPU transformer kernels may differ slightly even under fixed packages, float32, deterministic algorithms, eager attention, disabled TF32, and a fixed cuBLAS workspace. The generated array hashes—not an assumption of cross-device bit identity—become the frozen downstream experiment identity.
 - The current synthetic pilot LID differentiates the hardest fitted bin, but the allocation is not efficient relative to the certified fixed baseline. The negative result is a dataset/policy outcome, not hidden by retuning certification data.

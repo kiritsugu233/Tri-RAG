@@ -133,8 +133,8 @@ Acceptance:
 - [x] Pin dataset revision/hash and store license/source metadata.
 - [x] Implement pluggable text embedding with caching and explicit model revision.
 - [x] Run a fingerprint-bound exact original-space baseline on `query_tune` only.
-- [ ] Run exact original/projected retrieval in memory-safe batches.
-- [ ] Freeze one `m_prime` using tune queries only.
+- [x] Run exact original/projected retrieval in memory-safe batches.
+- [x] Freeze one `m_prime` using tune queries only.
 - [ ] Run required policies on tune, then freeze them.
 - [ ] Certify on untouched certification queries.
 - [ ] Evaluate on test queries.
