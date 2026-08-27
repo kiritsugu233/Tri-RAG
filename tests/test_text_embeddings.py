@@ -300,11 +300,11 @@ class TextEmbeddingTests(unittest.TestCase):
         self.assertEqual(config.encoding.cublas_workspace_config, ":4096:8")
         self.assertEqual(
             config.config_fingerprint,
-            "913299eba341ee543b17ee806c11530fdc111ad73ada95b0b5148dcd8242bf6e",
+            "705153fdd5110981e1bb0f37c7007064b851c50af722a34f41e6c2050e077af7",
         )
         self.assertEqual(
             config.dataset_manifest_fingerprint,
-            "6f54d75d95c40569f7382270e833c8602afd317042e2a791118e4a15992038df",
+            "4a73586d3a29a0567287e501ac3c06c998af661cdc74dbc589e7525a7924f903",
         )
 
 

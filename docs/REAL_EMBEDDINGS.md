@@ -11,17 +11,17 @@ The embedding request is bound to the independently validated SciFact dataset
 manifest:
 
 ```text
-6f54d75d95c40569f7382270e833c8602afd317042e2a791118e4a15992038df
+4a73586d3a29a0567287e501ac3c06c998af661cdc74dbc589e7525a7924f903
 ```
 
 Any source-text, qrel, split, ID, dataset-config, or manifest change invalidates
 the request before model inference begins.
 
 The checked-in embedding-config fingerprint is
-`913299eba341ee543b17ee806c11530fdc111ad73ada95b0b5148dcd8242bf6e`.
+`705153fdd5110981e1bb0f37c7007064b851c50af722a34f41e6c2050e077af7`.
 Together with the validated dataset artifacts it produces the pre-inference
 request fingerprint
-`2ddafc813a0192e8125382a942262365d7f801293f2e7a22f2eeeae40e47087c`.
+`c0b7992d73434f0f421688f14f3a57ecfe92f3d16e44c90c43fe710f798102ca`.
 Both can be checked before accepting a GPU artifact; the eventual cache
 fingerprint additionally commits to the actual model snapshot, runtime, token
 statistics, and output arrays.
@@ -92,8 +92,8 @@ export CUBLAS_WORKSPACE_CONFIG=:4096:8
 
 python3 -m tri_rag_harness.text_embeddings \
   --config configs/real_scifact_e5_base_v2_embeddings.json \
-  --dataset data/prepared/scifact \
-  --output data/embeddings/scifact-e5-base-v2 \
+  --dataset data/prepared/scifact-dedup-v2 \
+  --output data/embeddings/scifact-e5-base-v2-dedup-v2 \
   --device cuda:0 \
   --model-cache data/model_cache
 ```
@@ -107,13 +107,35 @@ cache.
 
 - `corpus_embeddings.f32.npy`: `5183 x 768`, normalized float32;
 - `corpus_ids.json`: row-aligned stable corpus IDs;
-- `query_embeddings.f32.npy`: `1109 x 768`, normalized float32;
+- `query_embeddings.f32.npy`: `1107 x 768`, normalized float32;
 - `query_ids.json`: row-aligned stable external-query IDs;
 - `embedding_manifest.json`: request, dataset, model snapshot, runtime, input
   truncation, array, ID, and cache identities.
 
-The arrays should occupy approximately 15.18 MiB and 3.25 MiB before `.npy`
+The arrays should occupy approximately 15.18 MiB and 3.24 MiB before `.npy`
 headers. The model snapshot is larger and remains in ignored `data/model_cache`.
+
+## First A100 inference and quarantine
+
+Slurm job `373564` on `a100-1` successfully executed the strict runtime and
+real E5 inference gates against the earlier v1 split: all 65 then-current tests
+passed, the exact pinned model snapshot loaded on an A100-SXM4-80GB, and cache
+creation plus no-model-load reuse both completed. The returned archive SHA-256
+is `3d87f889cc5a5937ea3666b1f8f7657d02bb14467fb23151daa70dc7fcfa6941`.
+Its model-snapshot fingerprint is
+`000e13bbbec6825eb1c94ddd1f01e47071b45a1f6c8c749cc97306308ad0c874`;
+the 5,183 by 768 corpus and 1,109 by 768 query arrays are float32, normalized,
+and internally hash-valid. Corpus truncation was 466/5,183 (8.9909%); query
+truncation was 0/1,109.
+
+An independent audit then found that the v1 query array's 1,109 rows contain
+only 1,105 unique vectors, exactly explained by four duplicated query texts.
+Three duplicate groups crossed tune/cert/test. Consequently cache fingerprint
+`4c95bbabd03afb82493843bff9856864f0506b1714e7344a490c8f386369b470`
+validates the embedding implementation and frozen model runtime, but is
+quarantined from all downstream retrieval and certification claims. The v2
+command above must create a new cache bound to the repaired dataset; no old
+cache directory is overwritten or silently reused.
 
 ## Interpretation limit
 

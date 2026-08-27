@@ -2,6 +2,7 @@ import hashlib
 import json
 import tempfile
 import unittest
+import unicodedata
 import zipfile
 from pathlib import Path
 
@@ -22,14 +23,17 @@ class BEIRDatasetTests(unittest.TestCase):
         *,
         development_rows=None,
         test_rows=None,
+        query_texts=None,
     ) -> None:
         corpus = [
             {"_id": f"d{index}", "title": f"Title {index}", "text": f"Body {index}"}
             for index in range(4)
         ]
+        if query_texts is None:
+            query_texts = [f"Claim {index}" for index in range(6)]
         queries = [
-            {"_id": f"q{index}", "text": f"Claim {index}"}
-            for index in range(6)
+            {"_id": f"q{index}", "text": text}
+            for index, text in enumerate(query_texts)
         ]
         if development_rows is None:
             development_rows = [
@@ -62,7 +66,7 @@ class BEIRDatasetTests(unittest.TestCase):
             archive_md5 = hashlib.md5(archive.read_bytes()).hexdigest()
         raw = {
             "schema_version": 1,
-            "adapter": "beir_zip_v1",
+            "adapter": "beir_zip_v2",
             "dataset_name": "Fixture",
             "dataset_version": "fixture-v1",
             "id_namespace": "fixture",
@@ -119,7 +123,17 @@ class BEIRDatasetTests(unittest.TestCase):
             corpus = self._jsonl(first["corpus.jsonl"])
             qrels = self._jsonl(first["qrels.jsonl"])
             splits = json.loads(first["splits.json"].read_text())
-            self.assertEqual(manifest["counts"], {"corpus": 4, "qrels": 6, "queries": 6})
+            self.assertEqual(
+                manifest["counts"],
+                {
+                    "corpus": 4,
+                    "excluded_development_queries": 0,
+                    "qrels": 6,
+                    "queries": 6,
+                    "source_positive_qrels": 6,
+                    "source_queries": 6,
+                },
+            )
             self.assertEqual(
                 {name: len(ids) for name, ids in splits.items()},
                 {"query_cert": 2, "query_test": 2, "query_tune": 2},
@@ -141,6 +155,11 @@ class BEIRDatasetTests(unittest.TestCase):
             self.assertTrue(all(row["doc_id"] in corpus_ids for row in qrels))
             self.assertTrue(manifest["ids"]["queries_are_external"])
             self.assertTrue(manifest["ids"]["splits_are_disjoint"])
+            self.assertTrue(
+                manifest["ids"][
+                    "normalized_query_texts_are_disjoint_across_splits"
+                ]
+            )
             self.assertFalse(manifest["split_rule"]["uses_qrel_labels"])
             self.assertEqual(
                 manifest["source"]["archive"]["md5"],
@@ -194,11 +213,75 @@ class BEIRDatasetTests(unittest.TestCase):
                 prepare_beir_dataset(config, archive, output)
             self.assertFalse(output.exists())
 
+    def test_normalized_duplicate_text_cannot_cross_splits(self):
+        with tempfile.TemporaryDirectory() as directory_name:
+            directory = Path(directory_name)
+            archive = directory / "fixture.zip"
+            config_path = directory / "config.json"
+            self._write_archive(
+                archive,
+                query_texts=[
+                    "Same as official TEST",
+                    "Ｒｅｐｅａｔｅｄ development claim",
+                    "  repeated   DEVELOPMENT claim  ",
+                    "Unique development claim",
+                    "same as official test",
+                    "Unique test claim",
+                ],
+            )
+            self._write_config(config_path, archive)
+            config = load_beir_dataset_config(config_path)
+            artifacts = prepare_beir_dataset(
+                config, archive, directory / "prepared"
+            )
+
+            manifest = json.loads(artifacts["dataset_manifest.json"].read_text())
+            queries = self._jsonl(artifacts["queries.jsonl"])
+            by_source_id = {row["source_query_id"]: row for row in queries}
+            self.assertNotIn("q0", by_source_id)
+            self.assertEqual(by_source_id["q1"]["split"], by_source_id["q2"]["split"])
+            self.assertEqual(by_source_id["q4"]["split"], "query_test")
+            self.assertEqual(
+                manifest["counts"],
+                {
+                    "corpus": 4,
+                    "excluded_development_queries": 1,
+                    "qrels": 5,
+                    "queries": 5,
+                    "source_positive_qrels": 6,
+                    "source_queries": 6,
+                },
+            )
+            exclusion = manifest["exclusions"][
+                "development_query_text_matching_test"
+            ]
+            self.assertEqual(exclusion["source_query_ids"], ["q0"])
+            self.assertEqual(exclusion["removed_positive_qrels"], 1)
+            normalized_by_split = {}
+            for row in queries:
+                normalized = " ".join(
+                    unicodedata.normalize("NFKC", row["text"]).casefold().split()
+                )
+                normalized_by_split.setdefault(row["split"], set()).add(normalized)
+            split_sets = list(normalized_by_split.values())
+            self.assertFalse(
+                any(
+                    left.intersection(right)
+                    for index, left in enumerate(split_sets)
+                    for right in split_sets[index + 1 :]
+                )
+            )
+
     def test_checked_in_scifact_config_is_pinned(self):
         config = load_beir_dataset_config(
             ROOT / "configs" / "real_scifact_dataset.json"
         )
         self.assertEqual(config.dataset_name, "BEIR SciFact")
+        self.assertEqual(config.adapter, "beir_zip_v2")
+        self.assertEqual(
+            config.config_fingerprint,
+            "9a05e8e23d3a09b55916d429fe1f80385d0947e6467cd9b8061e19532272285f",
+        )
         self.assertEqual(
             config.source.archive_md5, "5f7d1de60b170fc8027bb7898e2efca1"
         )

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "adapter": "beir_zip_v1",
+  "adapter": "beir_zip_v2",
   "dataset_name": "BEIR SciFact",
   "dataset_version": "scifact.zip-md5-5f7d1de60b170fc8027bb7898e2efca1",
   "id_namespace": "beir-scifact",

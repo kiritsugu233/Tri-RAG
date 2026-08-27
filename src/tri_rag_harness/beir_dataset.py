@@ -11,6 +11,7 @@ import math
 import re
 import shutil
 import tempfile
+import unicodedata
 import zipfile
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
@@ -118,8 +119,8 @@ def load_beir_dataset_config(
         )
     if raw["schema_version"] != 1:
         raise BEIRDatasetError("schema_version must be 1")
-    if raw["adapter"] != "beir_zip_v1":
-        raise BEIRDatasetError("adapter must be beir_zip_v1")
+    if raw["adapter"] != "beir_zip_v2":
+        raise BEIRDatasetError("adapter must be beir_zip_v2")
     dataset_name = _nonempty_string(raw["dataset_name"], "dataset_name")
     dataset_version = _nonempty_string(raw["dataset_version"], "dataset_version")
     id_namespace = _nonempty_string(raw["id_namespace"], "id_namespace")
@@ -215,7 +216,7 @@ def load_beir_dataset_config(
 
     return BEIRDatasetConfig(
         schema_version=1,
-        adapter="beir_zip_v1",
+        adapter="beir_zip_v2",
         dataset_name=dataset_name,
         dataset_version=dataset_version,
         id_namespace=id_namespace,
@@ -416,9 +417,13 @@ def _load_qrels(
     return qrels
 
 
-def _split_rank(seed: int, query_id: str) -> tuple[str, str]:
-    digest = hashlib.sha256(f"{seed}\0{query_id}".encode("utf-8")).hexdigest()
-    return digest, query_id
+def _split_rank(seed: int, stable_key: str) -> tuple[str, str]:
+    digest = hashlib.sha256(f"{seed}\0{stable_key}".encode("utf-8")).hexdigest()
+    return digest, stable_key
+
+
+def _normalized_query_text(text: str) -> str:
+    return " ".join(unicodedata.normalize("NFKC", text).casefold().split())
 
 
 def _write_jsonl(path: Path, rows: Iterable[Mapping[str, Any]]) -> None:
@@ -517,18 +522,48 @@ def prepare_beir_dataset(
         raise BEIRDatasetError(
             f"development/test qrel query IDs overlap: {sorted(overlap)}"
         )
-    ordered_development = sorted(
-        development_ids,
-        key=lambda query_id: _split_rank(config.splits.seed, query_id),
+    normalized_text = {
+        query_id: _normalized_query_text(queries[query_id])
+        for query_id in development_ids.union(test_ids)
+    }
+    test_texts = {normalized_text[query_id] for query_id in test_ids}
+    excluded_development_ids = sorted(
+        query_id
+        for query_id in development_ids
+        if normalized_text[query_id] in test_texts
     )
-    tune_n = int(math.floor(len(ordered_development) * config.splits.tune_fraction))
-    if tune_n < 1 or tune_n >= len(ordered_development):
+    eligible_development_ids = development_ids - set(excluded_development_ids)
+    development_groups: Dict[str, list[str]] = {}
+    for query_id in eligible_development_ids:
+        development_groups.setdefault(normalized_text[query_id], []).append(query_id)
+    ordered_groups = sorted(
+        (
+            (text, sorted(group_ids))
+            for text, group_ids in development_groups.items()
+        ),
+        key=lambda item: _split_rank(config.splits.seed, item[0]),
+    )
+    tune_target = int(
+        math.floor(len(eligible_development_ids) * config.splits.tune_fraction)
+    )
+    if tune_target < 1 or tune_target >= len(eligible_development_ids):
         raise BEIRDatasetError(
             "development qrels are too small for nonempty tune/cert splits"
         )
+    tune_ids: list[str] = []
+    cert_ids: list[str] = []
+    for _, group_ids in ordered_groups:
+        if len(tune_ids) + len(group_ids) <= tune_target:
+            tune_ids.extend(group_ids)
+        else:
+            cert_ids.extend(group_ids)
+    if not tune_ids or not cert_ids:
+        raise BEIRDatasetError(
+            "normalized query-text groups cannot form nonempty tune/cert splits"
+        )
     source_ids_by_split = {
-        "query_tune": ordered_development[:tune_n],
-        "query_cert": ordered_development[tune_n:],
+        "query_tune": tune_ids,
+        "query_cert": cert_ids,
         "query_test": sorted(test_ids),
     }
     stable_ids_by_split = {
@@ -542,6 +577,22 @@ def prepare_beir_dataset(
         for right in stable_split_sets[index + 1 :]
     ):
         raise AssertionError("prepared query splits must be disjoint")
+    normalized_texts_by_split = {
+        split: {
+            _normalized_query_text(queries[source_id])
+            for source_id in source_ids_by_split[split]
+        }
+        for split in _SPLIT_ORDER
+    }
+    normalized_split_sets = [
+        normalized_texts_by_split[split] for split in _SPLIT_ORDER
+    ]
+    if any(
+        left.intersection(right)
+        for index, left in enumerate(normalized_split_sets)
+        for right in normalized_split_sets[index + 1 :]
+    ):
+        raise AssertionError("normalized query texts must not cross splits")
     corpus_ids = [row["doc_id"] for row in corpus.values()]
     query_ids = [
         query_id for split in _SPLIT_ORDER for query_id in stable_ids_by_split[split]
@@ -630,16 +681,30 @@ def prepare_beir_dataset(
                 "query_id_hash": stable_id_hash(query_ids),
                 "queries_are_external": True,
                 "splits_are_disjoint": True,
+                "normalized_query_texts_are_disjoint_across_splits": True,
             },
             "counts": {
                 "corpus": len(corpus),
                 "queries": len(query_ids),
                 "qrels": len(qrel_rows),
+                "source_queries": len(queries),
+                "source_positive_qrels": sum(
+                    len(query_qrels)
+                    for qrels in source_qrels.values()
+                    for query_qrels in qrels.values()
+                ),
+                "excluded_development_queries": len(excluded_development_ids),
             },
             "splits": {
                 split: {
                     "n": len(stable_ids_by_split[split]),
                     "id_hash": stable_id_hash(stable_ids_by_split[split]),
+                    "normalized_text_hash": stable_id_hash(
+                        [
+                            _normalized_query_text(queries[source_id])
+                            for source_id in source_ids_by_split[split]
+                        ]
+                    ),
                     "source_qrels": (
                         config.splits.test_qrels
                         if split == "query_test"
@@ -649,10 +714,42 @@ def prepare_beir_dataset(
                 for split in _SPLIT_ORDER
             },
             "split_rule": {
-                "method": "sha256(seed\\0source_query_id), prefix to tune",
+                "method": (
+                    "group normalized development query text; order groups by "
+                    "sha256(seed\\0normalized_text); fill tune without splitting groups"
+                ),
                 "seed": config.splits.seed,
                 "tune_fraction": config.splits.tune_fraction,
+                "query_text_normalization": "NFKC, casefold, collapse whitespace",
+                "duplicate_text_groups_stay_within_split": True,
+                "development_text_matching_test_is_excluded": True,
                 "uses_qrel_labels": False,
+            },
+            "exclusions": {
+                "development_query_text_matching_test": {
+                    "n": len(excluded_development_ids),
+                    "source_query_ids": excluded_development_ids,
+                    "stable_query_ids": [
+                        f"{config.id_namespace}:query:{source_id}"
+                        for source_id in excluded_development_ids
+                    ],
+                    "id_hash": stable_id_hash(
+                        [
+                            f"{config.id_namespace}:query:{source_id}"
+                            for source_id in excluded_development_ids
+                        ]
+                    ),
+                    "normalized_text_hash": stable_id_hash(
+                        [
+                            normalized_text[source_id]
+                            for source_id in excluded_development_ids
+                        ]
+                    ),
+                    "removed_positive_qrels": sum(
+                        len(development_qrels[source_id])
+                        for source_id in excluded_development_ids
+                    ),
+                }
             },
             "qrels": {
                 "minimum_relevance": config.minimum_relevance,
