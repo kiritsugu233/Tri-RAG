@@ -213,15 +213,31 @@ new report from its fresh data identities rather than amending the v1 result.
 
 ## Calibrated Tri-Predict v2: network-free foundation
 
-- [ ] Add a versioned pilot-distance feature specification and extractor.
-- [ ] Add a constrained log-linear pilot-LID calibrator.
-- [ ] Add a quantile analytic-budget residual calibrator.
-- [ ] Add LID-only, residual-only, and full PDCTP policy variants.
-- [ ] Preserve Raw Tri-Predict v1 decisions and artifact loading unchanged.
-- [ ] Add five-role cal/tune/cert/latency/test guards and synthetic fixtures.
-- [ ] Add paired evidence/budget bounds and family-wise-alpha fixtures.
-- [ ] Add a deterministic sample-size/power artifact.
-- [ ] Pass all existing and new CPU tests without network access.
+- [x] Add a versioned pilot-distance feature specification and extractor.
+- [x] Add a constrained log-linear pilot-LID calibrator.
+- [x] Add a quantile analytic-budget residual calibrator.
+- [x] Add LID-only, residual-only, and full PDCTP policy variants.
+- [x] Preserve Raw Tri-Predict v1 decisions and artifact loading unchanged.
+- [x] Add five-role cal/tune/cert/latency/test guards and synthetic fixtures.
+- [x] Add paired evidence/budget bounds and family-wise-alpha fixtures.
+- [x] Add a deterministic sample-size/power artifact.
+- [x] Pass all existing and new CPU tests without network access.
+
+The network-free gate is implemented by
+`configs/pdctp_network_free_foundation_v1.json` and
+`tri_rag_harness.pdctp_foundation`. It writes separate feature, candidate-fit,
+selected-calibrator, policy-suite, split, hypothesis, paired-bound, label-free
+latency-dry-run, protocol-state, and power-plan artifacts. The checked-in
+worst-case empirical-Bernstein power plan requires 1,567 fresh certification
+queries for the full paired family. The 16-query synthetic certification
+fixture therefore fails all primary bounds as expected; it validates terminal
+failure and reconstruction behavior and is not a scientific claim.
+
+The 123-test local suite reports 122 passes and one optional real-FAISS
+conformance skip because FAISS is absent from the offline Mac environment. The
+end-to-end v2 test runs the complete five-role skeleton twice and compares all
+20 output artifacts byte for byte. Every one of its 312 base/decision records
+uses one cached projected scan, and all `query_latency` records are label-free.
 
 Acceptance:
 

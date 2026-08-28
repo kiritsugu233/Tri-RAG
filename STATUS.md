@@ -15,10 +15,62 @@ Current work is on branch `codex/calibrated-tri-predict-v2`. The new method is
 Pilot-Distance Calibrated Tri-Predict (PDCTP), with two explicit layers: a
 deployable pilot-distance LID calibrator and a Raw-Tri-anchored budget-residual
 calibrator. `docs/CALIBRATED_TRI_PREDICT_PROTOCOL.md` freezes the intended
-five-role new-data protocol and statistical/latency gates. No v2 implementation
-or positive result exists yet.
+five-role new-data protocol and statistical/latency gates. The network-free v2
+foundation is implemented and passes locally. No fresh real data has been
+accessed and no positive v2 result exists.
 
 ## What runs
+
+The PDCTP network-free foundation is complete. New `pdctp_*` modules provide a
+versioned pilot-distance feature extractor, a constrained log-linear LID
+calibrator, a linear quantile budget-residual calibrator anchored to an
+unchanged Raw Tri-Predict policy, fixed/monotone/Raw/LID-only/residual-only/full
+policies behind one inference contract, five-role leakage guards, query-level
+paired empirical-Bernstein bounds, Bonferroni allocation, and deterministic
+worst-case sample-size planning. All v2 artifacts have new names, schemas,
+versions, and fingerprints; the v1 `lid.py`, `policies.py`, `tri_predict.py`,
+Tri-Law code, and accepted loaders were not modified.
+
+`tri_rag_harness.pdctp_foundation` runs a complete synthetic five-role walking
+skeleton without network access. Calibration fits use only `query_cal`, the
+complete policy suite freezes on `query_tune`, synthetic certification opens
+only after hypotheses freeze, `query_latency` is label-free and opens only
+after a terminal certificate, and `query_test` opens only after terminal
+certification and latency state. The runner performs exactly one projected
+full-corpus scan per query and reuses its pilot prefix for expansion. Two test
+runs reproduce all 20 artifacts byte for byte; all 312 saved base/decision
+records report one projected scan.
+
+The accepted local synthetic fixture has manifest fingerprint
+`58f9f6041ed9879440664205e3ea82e5a4e373bc103054def40336524376b3c6`,
+selection fingerprint
+`5db7e0acec7d30f7f97adabe0dbbf08e640738cbd50a0cb7bd2a740a8f18c6b3`,
+and selected full-PDCTP policy fingerprint
+`d96702f8cab271a498861da059b013a93218dd051073759170886090251500e0`.
+Its tune-only selected candidate uses Raw threshold `0.85`, has mean retention
+`0.946875`, tune lower bound `0.773468`, mean budget `35.5`, and is only a
+code-path fixture. The 16-query
+synthetic certification family terminally fails all six conservative paired
+bounds, with certification fingerprint
+`6c4397042cd5acb102ed5286cde378f7b08702bace62001fad4aaf1ed163f695`.
+That failure is retained and is not a real-data result.
+
+A seeded shuffled-pilot-profile diagnostic is restricted to `query_tune`, is
+explicitly excluded from fit, selection, and certification, and has fingerprint
+`d208e21475de8f3e519a902c6b40e136ac6d032ba7e1c02f5754db88fe693694`.
+On this synthetic fixture, observed-minus-shuffled retention, candidate
+evidence recall, and final evidence recall are `0.034375/0.044922/0.0`. These
+values only verify the diagnostic path and support no inferential claim.
+
+The checked-in power plan at
+`artifacts/pdctp_network_free/power_plan_v1.json` uses Bonferroni
+`alpha=0.05/6`, exact paired-difference ranges, and the finite-sample
+worst-case empirical-Bernstein variance ceiling. Its fingerprint is
+`f1bddbc072143ec13b23785775d7b7ebf97913146eb05022e7d43f0d12a644a2`;
+the largest required fresh certification size is 1,567. A future dataset audit
+must stop before method evaluation if duplicate-safe fresh roles cannot support
+this frozen plan. No FiQA data was downloaded, no real protected split was
+opened, no FAISS timing was claimed, and no LLM was run.
 
 Milestones 0 through 4 are implemented as a network-free harness with a CPU default, and the retrieval-only systems benchmark additionally supports optional exact FAISS CPU/GPU backends. The certification run generates external tune/cert/test queries, normalizes embeddings, builds one fixed dense-Gaussian projection, runs exact original/projected squared-L2 retrieval, fits and freezes both monotone-binned and query-adaptive Tri-Predict policies on tune queries, evaluates each policy independently, and writes auditable artifacts. A separate two-stage command performs a predeclared global `m_prime`/Tri-Predict-threshold sweep on tune only, writes frozen selection artifacts, and then evaluates one fresh certification split.
 
@@ -249,6 +301,22 @@ Empirical policy float boundaries are canonicalized to 12 decimal places before 
 
 ## Exact commands
 
+PDCTP network-free five-role foundation:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src \
+python3 -m tri_rag_harness.pdctp_foundation \
+  --config configs/pdctp_network_free_foundation_v1.json \
+  --output runs/pdctp_network_free_foundation_v1
+```
+
+Cluster reproduction after creating `slurm_logs/`:
+
+```bash
+mkdir -p slurm_logs
+sbatch scripts/slurm_pdctp_foundation.sh
+```
+
 Full synthetic run:
 
 ```bash
@@ -409,10 +477,18 @@ python3 -m tri_rag_harness.real_tune_diagnostics \
 
 ## Tests passed/failed
 
-- Passed locally: 98
+- Passed locally: 122
 - Skipped locally: 1 conditional real-FAISS CPU conformance test because FAISS is not installed on the Mac environment
 - Failed: 0
-- Runtime in the current environment: approximately 8.5 seconds
+- Runtime in the current environment: approximately 20.0 seconds
+- PDCTP v2 adds 24 tests covering hand-computed and scale-invariant features,
+  deterministic invalid handling, forbidden inference fields, constrained LID
+  fitting, exact pinball loss, positive/negative residual correction, grid
+  ties/clipping/fallback, artifact round trips and tamper refusal, unchanged v1
+  decisions/loaders, all policy ablations, five-role state transitions,
+  duplicate-group isolation, family-wise paired bounds, checked-in power-plan
+  reproduction, two-run deterministic artifacts, single projected scans, and
+  label-free latency records.
 - FAISS coverage checks the exact CPU adapter contract, row-aligned distances, semantic-cutoff candidate sets, accepted internal permutations, rejected cross-cutoff permutations, bounded tie resolution, unclosed tie-band refusal, missing GPU support, shared GPU resource-pool ownership, refinement accounting, full benchmark integration, NumPy decision/rerank/retention equivalence, and GPU-memory artifact creation. The conditional real-FAISS test must execute rather than skip on the cluster before the CPU/GPU milestone passes.
 - Added coverage includes cross-platform policy-float canonicalization, exact `h_j(y)` term-by-term agreement with the orthogonal conditional law, geometric rank-strata population conservation and approximation error, root residuals, the infinite-root/unit-retention boundary, budget monotonicity, LID-to-budget monotonicity, saturation, analytic/empirical interface compatibility, and tune-only scalar safety correction.
 - Compiled-policy coverage checks dense linear/geometric LID values, both sides of every adjacent-float64 transition, invalid/out-of-domain fallback, deterministic serialization, artifact round-trip loading, and tamper rejection.
@@ -426,7 +502,7 @@ python3 -m tri_rag_harness.real_tune_diagnostics \
 - Six text-embedding tests cover the pinned dataset/model request, exact E5 prefix preservation, fake-provider normalization, cache reuse without model loading, source-artifact mutation refusal, request mutation refusal, array-tamper refusal, and partial-cache suppression on invalid provider output.
 - Five real-original-baseline tests cover tune-only enforcement, strict cache tamper refusal, graded nDCG, stable tie breaking, deterministic artifacts, pinned real identities, and exclusion of timings from result identity.
 - Five real-dimension-sweep tests cover protected-split refusal, immutable common-cost semantics, exact query-projection accounting, stable projected ranking conformance, terminal full-corpus behavior, query-level auditability, and deterministic tune-only artifacts.
-- Eight tune-policy tests cover immutable tune-only/determinism configuration, the observed Mac/Genoa LID-tail fixture, compiled/scientific identity separation, protected-split and common-cost refusal, terminal fallback, exact coordinate accounting, cached/analytic full-corpus boundary equivalence, and query-aligned decision reduction. Four certification-only tests freeze the real cert/Genoa identities, reject protected-scope and post-cert selection mutations, reject deployment tampering before protected-data access, and reproduce complete synthetic query-level/certificate artifacts byte for byte. Four test-only regressions freeze the 300-query/terminal-cert identities, reject selection/recertification/retuning, reject cert tampering before test access, and reproduce query-level retention/evidence artifacts byte for byte. Three tune-diagnostics tests freeze the posthoc-only config, reject protected access/selection/recertification/retuning, and reproduce candidate evidence, all-grid exact reranking, matched comparisons, LID strata, and shuffled controls. Policy-loader regressions reject tampered monotone and analytic artifacts. The full local suite now contains 99 tests: 98 pass and one optional real-FAISS test skips.
+- Eight tune-policy tests cover immutable tune-only/determinism configuration, the observed Mac/Genoa LID-tail fixture, compiled/scientific identity separation, protected-split and common-cost refusal, terminal fallback, exact coordinate accounting, cached/analytic full-corpus boundary equivalence, and query-aligned decision reduction. Four certification-only tests freeze the real cert/Genoa identities, reject protected-scope and post-cert selection mutations, reject deployment tampering before protected-data access, and reproduce complete synthetic query-level/certificate artifacts byte for byte. Four test-only regressions freeze the 300-query/terminal-cert identities, reject selection/recertification/retuning, reject cert tampering before test access, and reproduce query-level retention/evidence artifacts byte for byte. Three tune-diagnostics tests freeze the posthoc-only config, reject protected access/selection/recertification/retuning, and reproduce candidate evidence, all-grid exact reranking, matched comparisons, LID strata, and shuffled controls. Policy-loader regressions reject tampered monotone and analytic artifacts. The closed v1 suite at that point contained 99 tests: 98 passed and one optional real-FAISS test skipped.
 - The accepted protocol-v2 Genoa policy gate ran the same 86-test suite on job `373780`, node `genoa02`, commit `5389745`: 85 passed, the optional real-FAISS test skipped, and the run reached its terminal portable-scientific-identity assertion.
 - The one-time certification gate ran the full 92-test suite on the same job and node at commit `1625f3b`: 91 passed, the optional real-FAISS test skipped, and all protected-split assertions completed before the terminal PASS/FAIL artifacts were published.
 - The one-time descriptive test gate ran the full 96-test suite on job `374032`, node `genoa02`, commit `8a945f9`: 95 passed, the optional real-FAISS test skipped, and the command completed without selection, recertification, or retuning.
@@ -434,6 +510,22 @@ python3 -m tri_rag_harness.real_tune_diagnostics \
 - The Calibrated Tri-Predict v2 protocol/version-boundary gate ran the full 99-test suite on the same job and node at commit `794f580`: 98 passed, the optional real-FAISS test skipped, and the command exited successfully after confirming the terminal v1 baseline, PDCTP protocol, new split roles, and provisional FiQA handoff. The retained log is `slurm_logs/calibrated-v2-protocol-374032.log` (11.661 seconds).
 
 ## Current artifacts
+
+`runs/pdctp_network_free_foundation_v1/` contains the 20 deterministic local
+foundation outputs: feature and five-role split specifications, all LID and
+residual candidate fits, three selected calibrators, immutable Raw/monotone
+references, the six-policy suite, tune selection, frozen hypotheses, the power
+plan, six fully reconstructable paired certification bounds, a label-free
+latency structural dry run, a tune-only shuffled-profile diagnostic, terminal
+protocol state, 312 query/decision rows, manifest, and report. The run directory
+is intentionally ignored; the
+source-controlled power artifact is
+`artifacts/pdctp_network_free/power_plan_v1.json`.
+
+The checked-in Slurm entry point is
+`scripts/slurm_pdctp_foundation.sh`. It runs the complete offline test suite
+before writing a job-ID-namespaced synthetic output. It does not download data,
+load a text model, run FAISS/GPU measurement, or invoke an LLM.
 
 The historical v1 Stage-1 audit archive is
 `scifact-stage1-20260827-091050-audit.tar.gz`, with local SHA-256
@@ -560,15 +652,31 @@ The separately frozen `M_max=1984` FAISS 1M comparison also passes every exact s
 
 ## Next task
 
-Begin the network-free PDCTP foundation described in
-`AGENT_CALIBRATED_TRI_PREDICT.md`: versioned pilot-distance features, separate
-LID and budget-residual calibrators, explicit ablations, five-role leakage
-guards, paired-bound fixtures, and a sample-size/power artifact. Preserve all v1
-behavior and do not download FiQA or inspect any new protected split until the
-synthetic gate passes. LLM answer generation remains deferred.
+The network-free foundation gate is complete locally. The next stop/go gate is
+an independently reproduced cluster run of the same offline tests and
+synthetic artifacts. After its full log and job-ID-namespaced artifacts are
+returned and audited, begin only the provisional FiQA source/license/archive
+and eligible-query-count audit. Do not evaluate a method, create protected role
+outcomes, or embed/download FiQA unless that audit proves duplicate-safe roles
+can support the frozen 1,567-query certification power requirement or a
+documented replacement protocol is approved. `m_prime=192` remains frozen for
+the first real v2 protocol. LLM answer generation remains deferred.
 
 ## Known deviations and risks
 
+- The checked-in power plan is deliberately worst-case and requires 1,567
+  fresh certification queries for the widest paired family. The 16-query
+  synthetic certification bounds clip to broad ranges and all fail. This is an
+  expected sample-size diagnostic, not evidence that PDCTP succeeds or fails
+  on a real query distribution.
+- The synthetic tune constraints (`0.75` retention lower bound and `0.10`
+  candidate-evidence tolerance) are walking-skeleton parameters selected to
+  exercise the complete eligible-candidate freeze path. They are not real-data
+  targets and cannot be copied into a fresh protocol without preregistration.
+- The latency role currently validates only label-free access, policy execution,
+  and shared-scan structure. It contains no measured latency and supports no
+  systems claim. The future frozen FAISS CPU/GPU paired-block gate remains
+  required after scientific certification.
 - Configuration is JSON rather than YAML, and query-level output is JSONL rather than Parquet, to keep the first pass runnable with only the already available NumPy/SciPy stack. The artifacts remain machine-readable and auditable.
 - Real E5 inference and the repaired v2 cache passed independent audit. The first v1 cache remains quarantined because its dataset split allowed duplicate query text across tune/cert/test. The public E5 model card already reports SciFact performance, so the off-the-shelf model choice is not a fully blind model-family selection. Tune-only selection, terminal certification, and the one-time descriptive test are complete. Test outcomes are now observed and may only support frozen-policy description, not model or policy selection. Answer generation remains untouched.
 - The Milestone 6 diagnostic protocol was designed after test outcomes were observed. It is deliberately restricted to tune data and can diagnose allocation/evidence relationships, but it is posthoc and cannot retroactively become a preregistered selection or certification claim.

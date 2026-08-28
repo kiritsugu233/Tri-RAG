@@ -1,0 +1,79 @@
+{
+  "availability_gate": "stop_before_method_evaluation_if_fresh_roles_are_too_small",
+  "family_wise_alpha": 0.05,
+  "family_wise_method": "bonferroni",
+  "fingerprint": "f1bddbc072143ec13b23785775d7b7ebf97913146eb05022e7d43f0d12a644a2",
+  "hypotheses": [
+    {
+      "alpha": 0.008333333333333333,
+      "comparison": "zero_anchor",
+      "desired_radius": 0.08,
+      "difference_bounds": [0.0, 1.0],
+      "margin": 0.95,
+      "metric": "embedding_retention",
+      "name": "pdctp_absolute_retention",
+      "planned_n_worst_case_empirical_bernstein": 713,
+      "side": "lower"
+    },
+    {
+      "alpha": 0.008333333333333333,
+      "comparison": "fixed_reference",
+      "desired_radius": 0.1,
+      "difference_bounds": [-1.0, 1.0],
+      "margin": -0.02,
+      "metric": "candidate_evidence_recall",
+      "name": "candidate_evidence_noninferiority_fixed",
+      "planned_n_worst_case_empirical_bernstein": 1567,
+      "side": "lower"
+    },
+    {
+      "alpha": 0.008333333333333333,
+      "comparison": "fixed_reference",
+      "desired_radius": 0.1,
+      "difference_bounds": [-1.0, 1.0],
+      "margin": -0.02,
+      "metric": "final_evidence_recall",
+      "name": "final_evidence_noninferiority_fixed",
+      "planned_n_worst_case_empirical_bernstein": 1567,
+      "side": "lower"
+    },
+    {
+      "alpha": 0.008333333333333333,
+      "comparison": "fixed_reference",
+      "desired_radius": 0.1,
+      "difference_bounds": [-1.0, 1.0],
+      "margin": 0.0,
+      "metric": "normalized_candidate_budget",
+      "name": "normalized_budget_superiority_fixed",
+      "planned_n_worst_case_empirical_bernstein": 1567,
+      "side": "upper"
+    },
+    {
+      "alpha": 0.008333333333333333,
+      "comparison": "monotone_binned",
+      "desired_radius": 0.1,
+      "difference_bounds": [-1.0, 1.0],
+      "margin": 0.0,
+      "metric": "normalized_candidate_budget",
+      "name": "normalized_budget_superiority_monotone",
+      "planned_n_worst_case_empirical_bernstein": 1567,
+      "side": "upper"
+    },
+    {
+      "alpha": 0.008333333333333333,
+      "comparison": "raw_tri_predict",
+      "desired_radius": 0.1,
+      "difference_bounds": [-1.0, 1.0],
+      "margin": 0.0,
+      "metric": "normalized_candidate_budget",
+      "name": "normalized_budget_superiority_raw_tri",
+      "planned_n_worst_case_empirical_bernstein": 1567,
+      "side": "upper"
+    }
+  ],
+  "name": "pdctp_sample_size_and_power_plan",
+  "planning_method": "worst_case_empirical_bernstein_paired_difference",
+  "required_role_size": 1567,
+  "schema_version": 1,
+  "variance_ceiling": "n/(4*(n-1))_after_range_normalization"
+}

@@ -1,0 +1,151 @@
+{
+  "schema": "pdctp_network_free_foundation_config_v1",
+  "version": 1,
+  "run_name": "pdctp_network_free_foundation_v1",
+  "seeds": {
+    "data": 41017,
+    "projection": 51031
+  },
+  "synthetic": {
+    "corpus_size": 64,
+    "dimension": 16,
+    "cluster_count": 4,
+    "corpus_noise": 0.16,
+    "query_noise_min": 0.08,
+    "query_noise_max": 0.30
+  },
+  "retrieval": {
+    "schema": "pdctp_exact_retrieval_v1",
+    "m_prime": 8,
+    "k_gt": 5,
+    "k_ctx": 3,
+    "m_pilot": 12,
+    "s_lid": 10,
+    "min_lid_neighbors": 6,
+    "m_grid": [12, 16, 24, 32, 48, 64],
+    "max_rank_samples": 32
+  },
+  "features": {
+    "schema": "pilot_distance_features_v1",
+    "lid_boundary": 10,
+    "minimum_count": 10,
+    "gap_quantiles": [0.25, 0.5, 0.75],
+    "epsilon": 0.0,
+    "duplicate_tolerance": 1e-12,
+    "invalid_fill": 0.0
+  },
+  "calibration_candidates": {
+    "schema": "pdctp_calibration_candidates_v1",
+    "raw_tri_threshold_grid": [0.8, 0.85],
+    "lid_regularization_grid": [0.0, 0.1],
+    "lid_output_domain": [1.0, 100.0],
+    "lid_fallback": 100.0,
+    "residual_training_levels": [0.8, 1.0],
+    "residual_quantiles": [0.5, 0.8],
+    "residual_regularization_grid": [0.1],
+    "safety_offsets": [0.0]
+  },
+  "roles": {
+    "schema": "pdctp_five_roles_v1",
+    "counts": {
+      "query_cal": 24,
+      "query_tune": 64,
+      "query_cert": 16,
+      "query_latency": 8,
+      "query_test": 8
+    }
+  },
+  "selection": {
+    "schema": "pdctp_selection_v1",
+    "retention_lower_bound_target": 0.75,
+    "candidate_evidence_noninferiority": 0.10,
+    "final_evidence_noninferiority": 0.05,
+    "objective": "common_coordinate_work",
+    "tie_breaks": ["lower_mean_budget", "canonical_fingerprint"],
+    "shuffled_profile_seed": 71059
+  },
+  "certification": {
+    "schema": "pdctp_certification_v1",
+    "family_wise_method": "bonferroni",
+    "family_wise_alpha": 0.05,
+    "retention_target": 0.95,
+    "hypotheses": [
+      {
+        "name": "pdctp_absolute_retention",
+        "metric": "embedding_retention",
+        "comparison": "zero_anchor",
+        "side": "lower",
+        "margin": 0.95,
+        "difference_bounds": [0.0, 1.0],
+        "desired_radius": 0.08
+      },
+      {
+        "name": "candidate_evidence_noninferiority_fixed",
+        "metric": "candidate_evidence_recall",
+        "comparison": "fixed_reference",
+        "side": "lower",
+        "margin": -0.02,
+        "difference_bounds": [-1.0, 1.0],
+        "desired_radius": 0.10
+      },
+      {
+        "name": "final_evidence_noninferiority_fixed",
+        "metric": "final_evidence_recall",
+        "comparison": "fixed_reference",
+        "side": "lower",
+        "margin": -0.02,
+        "difference_bounds": [-1.0, 1.0],
+        "desired_radius": 0.10
+      },
+      {
+        "name": "normalized_budget_superiority_fixed",
+        "metric": "normalized_candidate_budget",
+        "comparison": "fixed_reference",
+        "side": "upper",
+        "margin": 0.0,
+        "difference_bounds": [-1.0, 1.0],
+        "desired_radius": 0.10
+      },
+      {
+        "name": "normalized_budget_superiority_monotone",
+        "metric": "normalized_candidate_budget",
+        "comparison": "monotone_binned",
+        "side": "upper",
+        "margin": 0.0,
+        "difference_bounds": [-1.0, 1.0],
+        "desired_radius": 0.10
+      },
+      {
+        "name": "normalized_budget_superiority_raw_tri",
+        "metric": "normalized_candidate_budget",
+        "comparison": "raw_tri_predict",
+        "side": "upper",
+        "margin": 0.0,
+        "difference_bounds": [-1.0, 1.0],
+        "desired_radius": 0.10
+      }
+    ]
+  },
+  "latency": {
+    "schema": "pdctp_latency_v1",
+    "backends": ["faiss_cpu_exact", "faiss_gpu_exact"],
+    "hardware": {
+      "cpu_class": "genoa_single_node",
+      "gpu_class": "nvidia_a100_sxm4_80gb",
+      "gpu_device_count": 1
+    },
+    "required_packages": {
+      "numpy": "1.26.4",
+      "scipy": "1.13.0",
+      "faiss": "1.10.0"
+    },
+    "warmups": 10,
+    "repetitions": 30,
+    "method_order_seed": 61043,
+    "threads": 1,
+    "boundary_tie_overfetch": 64,
+    "paired_family_wise_alpha": 0.05,
+    "batching": "single_query",
+    "cache_state": "warm_index"
+  }
+}
