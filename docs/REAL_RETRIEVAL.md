@@ -317,8 +317,8 @@ Four synthetic-only end-to-end tests verify protected-scope refusal, rejection
 of policy tampering before protected data access, one projected scan, pilot
 distance reuse accounting, candidate/rerank overlap equivalence, complete
 query-level auditability, terminal failure semantics, and byte reproducibility.
-The full local suite has 92 tests: 91 pass and the optional real-FAISS test
-skips.
+At the certification-runner freeze, the local suite had 92 tests: 91 passed
+and the optional real-FAISS test skipped.
 
 The one-time command is:
 
@@ -367,10 +367,63 @@ three certificates, all 404 serving decisions, and all 1,212 overlap/retention
 identities from the saved records. Evidence qrels and `query_test` were not
 evaluated.
 
+## Frozen descriptive test-only runner
+
+`configs/real_scifact_policy_test.json` and
+`tri_rag_harness.real_policy_test` are implemented and frozen before any real
+test retrieval or qrel outcome is read. Test config fingerprint
+`149eac226a2e948b3a56d0eff09217f72e28e18f490efe44cfc690bf4b318bbc`
+binds certification config
+`e5545a4aa4c07a1bc188870538c7d346ff26faf38f135c03d4b32f4a18c7ce74`,
+the terminal cert result/manifest/certificate fingerprints, its fixed PASS,
+monotone PASS, and Tri-Predict FAIL decisions, and the 300-query test ID hash
+`d1e72b0e72d42e4753b016fb92d25ceac745db61439e470a2e79936d15dd260b`.
+
+Before selecting test embeddings or loading qrels, the runner verifies the
+complete frozen tune policy bundle and complete terminal certification bundle,
+including every result file hash, reconstructed result identity, policy and
+compiled-deployment binding, cert split identity, policy fingerprint, sample
+count, target, alpha, and decision. It then reconstructs the same fixed
+projection, performs one projected full-corpus ranking per query, reuses pilot
+original distances during expansion, requires compiled/analytic agreement, and
+uses exact original reranking.
+
+Every test record saves qrels, exact-original top-10, pilot/oracle LID, pilot
+candidates, ranking/prefix hashes, all three budgets and reranked IDs,
+embedding retention, and evidence hit/recall/nDCG at cutoffs 1/5/10. Aggregate
+output includes the same evidence metrics for each frozen policy and a
+diagnostic full-original-space reference. It deliberately writes no
+`certifications.json`, no test lower bound, and no selected policy. The terminal
+cert decisions are copied only as provenance; post-test selection, new
+certification, and retuning are serialized as forbidden.
+
+Four synthetic-only tests cover real-identity pinning, protocol mutation
+refusal, cert tamper rejection before test-data access, two-run byte
+reproducibility, one projected scan, compiled decision equality, retention/
+overlap equality, evidence auditability, and result-identity reconstruction.
+The complete local suite has 96 tests: 95 pass and the optional real-FAISS test
+skips. A read-only preflight against the returned real policy/cert archive
+verified both frozen input bundles; no real test vectors or qrels were accessed.
+
+The one-time command is:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src \
+python3 -m tri_rag_harness.real_policy_test \
+  --config configs/real_scifact_policy_test.json \
+  --certification-config configs/real_scifact_policy_certify.json \
+  --dataset data/prepared/scifact-dedup-v2 \
+  --embedding-config configs/real_scifact_e5_base_v2_embeddings.json \
+  --embedding-cache data/embeddings/scifact-e5-base-v2-dedup-v2 \
+  --policy-run runs/slurm-scifact-policy-v2-373780 \
+  --certification-run runs/slurm-scifact-policy-cert-373780 \
+  --output runs/scifact-policy-test
+```
+
 ## Next gate
 
-Implement a descriptive frozen-policy runner with synthetic fixtures, then
-evaluate the 300 untouched `query_test` IDs once. Report all three policies,
-embedding retention, cost proxies, and evidence metrics without policy
-selection, retuning, or a new certificate. LLM answer generation remains out
-of scope until this retrieval/evidence report is complete.
+Run the frozen command exactly once on Genoa and archive its output and complete
+log regardless of the descriptive outcome. Do not change the protocol after
+observing test. Independently reconstruct all identities and recompute
+retention, work, and evidence metrics from the returned query records. LLM
+answer generation remains out of scope until that audit is complete.

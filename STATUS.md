@@ -143,6 +143,19 @@ and `f738545f7871568925201182311a4f14b9036f8f2eb80a943b5ba76ea5e5a22f`.
 The accepted cert archive SHA-256 is
 `4fd19b3b205c92d42596700e845da99b732261531d6c222d73375d57fc7ef12b`.
 
+A descriptive `query_test` runner is now implemented and frozen without reading
+any real test retrieval or evidence outcome. Config fingerprint
+`149eac226a2e948b3a56d0eff09217f72e28e18f490efe44cfc690bf4b318bbc`
+binds the terminal cert config/result/decisions and all 300 test IDs. Before
+selecting test embeddings or qrels, the runner revalidates the complete tune
+policy bundle, every certification result artifact, the terminal certificates,
+and the compiled deployment. It evaluates all three policies with one shared
+projected scan and pilot-distance reuse, reports embedding retention and cost
+proxies, and computes evidence hit/recall/nDCG at cutoffs 1/5/10 for each policy
+and the diagnostic exact-original reference. The output cannot select a policy,
+retune, or create a new certificate. Real policy/cert bundle preflight passed;
+only synthetic fixtures have exercised the test evaluation path so far.
+
 The local compiled-policy 100k/d768 structural run created seven states, loaded the artifact in `0.1093 ms`, and exactly matched all 64 prior local LID values, budgets, and retention values. Analytic validation averaged `38.4606 ms/decision`; lookup averaged `0.0021 ms/decision`. Reuse-path latency fell from `44.7511` to `4.2712 ms/query` across the old and new local runs. Compilation cost `17.9965 s` once at setup. These are not Genoa serving claims.
 
 Slurm job `373123` reproduced the compiled policy on `genoa00` at commit `0407c831c263e7505543b3701b84e7cd4a4b4bd0`; all 43 tests passed. At 100k, lookup averaged `0.002544 ms` versus `55.8130 ms` for the analytic reference (21,939x), and reuse fell from `61.0718` to `5.2163 ms/query` with p95 `5.4572 ms`. At 1M, lookup averaged `0.002587 ms` versus `58.3822 ms` (22,564x), and reuse fell from `146.7481` to `87.5176 ms/query` with p95 `90.2264 ms`. Artifact loading took `0.149/0.142 ms`; offline compilation took `26.106/27.898 s`. Every old/new query-level LID, budget, saturation flag, retention value, and work counter is identical, and both reference policies are unchanged. The exact CPU and compiled-policy systems gates pass.
@@ -282,12 +295,27 @@ python3 -m tri_rag_harness.real_policy_certify \
   --output runs/scifact-policy-cert
 ```
 
+One-time descriptive SciFact policy test:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src \
+python3 -m tri_rag_harness.real_policy_test \
+  --config configs/real_scifact_policy_test.json \
+  --certification-config configs/real_scifact_policy_certify.json \
+  --dataset data/prepared/scifact-dedup-v2 \
+  --embedding-config configs/real_scifact_e5_base_v2_embeddings.json \
+  --embedding-cache data/embeddings/scifact-e5-base-v2-dedup-v2 \
+  --policy-run runs/slurm-scifact-policy-v2-373780 \
+  --certification-run runs/slurm-scifact-policy-cert-373780 \
+  --output runs/scifact-policy-test
+```
+
 ## Tests passed/failed
 
-- Passed locally: 91
+- Passed locally: 95
 - Skipped locally: 1 conditional real-FAISS CPU conformance test because FAISS is not installed on the Mac environment
 - Failed: 0
-- Runtime in the current environment: approximately 7.8 seconds
+- Runtime in the current environment: approximately 8.3 seconds
 - FAISS coverage checks the exact CPU adapter contract, row-aligned distances, semantic-cutoff candidate sets, accepted internal permutations, rejected cross-cutoff permutations, bounded tie resolution, unclosed tie-band refusal, missing GPU support, shared GPU resource-pool ownership, refinement accounting, full benchmark integration, NumPy decision/rerank/retention equivalence, and GPU-memory artifact creation. The conditional real-FAISS test must execute rather than skip on the cluster before the CPU/GPU milestone passes.
 - Added coverage includes cross-platform policy-float canonicalization, exact `h_j(y)` term-by-term agreement with the orthogonal conditional law, geometric rank-strata population conservation and approximation error, root residuals, the infinite-root/unit-retention boundary, budget monotonicity, LID-to-budget monotonicity, saturation, analytic/empirical interface compatibility, and tune-only scalar safety correction.
 - Compiled-policy coverage checks dense linear/geometric LID values, both sides of every adjacent-float64 transition, invalid/out-of-domain fallback, deterministic serialization, artifact round-trip loading, and tamper rejection.
@@ -301,7 +329,7 @@ python3 -m tri_rag_harness.real_policy_certify \
 - Six text-embedding tests cover the pinned dataset/model request, exact E5 prefix preservation, fake-provider normalization, cache reuse without model loading, source-artifact mutation refusal, request mutation refusal, array-tamper refusal, and partial-cache suppression on invalid provider output.
 - Five real-original-baseline tests cover tune-only enforcement, strict cache tamper refusal, graded nDCG, stable tie breaking, deterministic artifacts, pinned real identities, and exclusion of timings from result identity.
 - Five real-dimension-sweep tests cover protected-split refusal, immutable common-cost semantics, exact query-projection accounting, stable projected ranking conformance, terminal full-corpus behavior, query-level auditability, and deterministic tune-only artifacts.
-- Eight tune-policy tests cover immutable tune-only/determinism configuration, the observed Mac/Genoa LID-tail fixture, compiled/scientific identity separation, protected-split and common-cost refusal, terminal fallback, exact coordinate accounting, cached/analytic full-corpus boundary equivalence, and query-aligned decision reduction. Four certification-only tests freeze the real cert/Genoa identities, reject protected-scope and post-cert selection mutations, reject deployment tampering before protected-data access, and reproduce complete synthetic query-level/certificate artifacts byte for byte. Policy-loader regressions reject tampered monotone and analytic artifacts. The full local suite now contains 92 tests: 91 pass and one optional real-FAISS test skips.
+- Eight tune-policy tests cover immutable tune-only/determinism configuration, the observed Mac/Genoa LID-tail fixture, compiled/scientific identity separation, protected-split and common-cost refusal, terminal fallback, exact coordinate accounting, cached/analytic full-corpus boundary equivalence, and query-aligned decision reduction. Four certification-only tests freeze the real cert/Genoa identities, reject protected-scope and post-cert selection mutations, reject deployment tampering before protected-data access, and reproduce complete synthetic query-level/certificate artifacts byte for byte. Four test-only regressions freeze the 300-query/terminal-cert identities, reject selection/recertification/retuning, reject cert tampering before test access, and reproduce query-level retention/evidence artifacts byte for byte. Policy-loader regressions reject tampered monotone and analytic artifacts. The full local suite now contains 96 tests: 95 pass and one optional real-FAISS test skips.
 - The accepted protocol-v2 Genoa policy gate ran the same 86-test suite on job `373780`, node `genoa02`, commit `5389745`: 85 passed, the optional real-FAISS test skipped, and the run reached its terminal portable-scientific-identity assertion.
 - The one-time certification gate ran the full 92-test suite on the same job and node at commit `1625f3b`: 91 passed, the optional real-FAISS test skipped, and all protected-split assertions completed before the terminal PASS/FAIL artifacts were published.
 
@@ -415,17 +443,18 @@ The separately frozen `M_max=1984` FAISS 1M comparison also passes every exact s
 
 ## Next task
 
-Implement a descriptive, policy-frozen `query_test` runner without changing the
-projection, LID feature, budgets, or policies. Develop and test it only with
-synthetic fixtures, then run the 300 untouched test IDs once. The test report
-must present all three frozen policies, the already-terminal cert decisions,
-embedding retention, cost proxies, and evidence metrics without selecting a
-winner or creating a new certificate. Do not start LLM generation yet.
+Run the frozen descriptive command exactly once on Genoa after the 96-test gate
+passes apart from the expected optional real-FAISS skip. Archive the complete
+output and log regardless of the descriptive outcome. Do not change the
+projection, LID feature, policies, budgets, terminal cert decisions, or test
+protocol after inspecting the result. Return the archive for independent
+identity, retention, work, and evidence-metric recomputation. Do not start LLM
+generation yet.
 
 ## Known deviations and risks
 
 - Configuration is JSON rather than YAML, and query-level output is JSONL rather than Parquet, to keep the first pass runnable with only the already available NumPy/SciPy stack. The artifacts remain machine-readable and auditable.
-- Real E5 inference and the repaired v2 cache passed independent audit. The first v1 cache remains quarantined because its dataset split allowed duplicate query text across tune/cert/test. The public E5 model card already reports SciFact performance, so the off-the-shelf model choice is not a fully blind model-family selection. Tune-only selection and the terminal real certification are complete, but `query_test`, test evidence metrics, and answer generation remain untouched.
+- Real E5 inference and the repaired v2 cache passed independent audit. The first v1 cache remains quarantined because its dataset split allowed duplicate query text across tune/cert/test. The public E5 model card already reports SciFact performance, so the off-the-shelf model choice is not a fully blind model-family selection. Tune-only selection and the terminal real certification are complete. The test-only runner is frozen, but real `query_test` retrieval, test evidence metrics, and answer generation remain untouched.
 - Cert pilot/oracle clipped-LID MAE is `14.4541`; oracle LID is higher on average by `14.4534`. Feeding oracle LID to the frozen compiled budget map would raise mean `M` from `1119.5` to `3163.5` and changes the budget on 389 of 404 queries, so repairing pilot LID cannot rescue Tri-Predict's negative efficiency. The same pilot feature lets the empirical monotone policy pass while saving `12.25%`, showing that pilot error alone is not the main explanation for Tri-Predict's dominated cost allocation. It may still contribute to the low-budget queries that caused the quality failure.
 - Tri-Predict predicts mean retention `0.999979` on cert but realizes only `0.972525`; mean absolute prediction error is `0.027487` and prediction/realization correlation is `0.163`. Relative to fixed `M=768`, it saves 96,320 candidates on 192 low-budget queries but loses 89 top-10 neighbors, then spends 238,332 extra candidates on 170 high-budget queries to recover only 37. This net `+142,012` candidates and `-52` retained neighbors is direct evidence that the frozen analytic LID-to-budget/rank-aggregation approximation misallocates work.
 - The selected real-data `56.48%` coordinate-work reduction is an arithmetic proxy under one exact full projected scan and exact reranking. It is not measured latency saving and omits fixed overheads, memory hierarchy effects, batching, and backend-specific kernels. Genoa reproduction validates result portability, not serving performance.

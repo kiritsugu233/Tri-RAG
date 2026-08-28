@@ -140,6 +140,7 @@ Acceptance:
 - [x] Reproduce and independently audit the frozen scientific policy result on Genoa.
 - [x] Implement and freeze a certification-only runner using synthetic fixtures only.
 - [x] Certify on untouched certification queries.
+- [x] Implement and freeze a descriptive test-only runner using synthetic fixtures only.
 - [ ] Evaluate on test queries.
 
 Acceptance:

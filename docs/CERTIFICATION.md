@@ -191,3 +191,9 @@ These decisions are terminal for this split. In particular, Tri-Predict may
 not be retuned, corrected, or given a larger budget using these 404 outcomes.
 The test split remains available only for descriptive evaluation of the
 already frozen policies; it cannot create a replacement certificate.
+
+The frozen descriptive test runner enforces this distinction structurally. It
+binds this terminal result before test access, evaluates all three policies,
+and reports test retention, cost proxies, and evidence metrics without a test
+confidence bound or policy selection. Its output must not be called a new
+certificate, even if a descriptive test mean is above a certification target.

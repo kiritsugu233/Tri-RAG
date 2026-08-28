@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "benchmark": "real_frozen_policy_test_v1",
+  "certification_config_fingerprint": "e5545a4aa4c07a1bc188870538c7d346ff26faf38f135c03d4b32f4a18c7ce74",
+  "evaluation_split": "query_test",
+  "query_split": {
+    "n": 300,
+    "id_hash": "d1e72b0e72d42e4753b016fb92d25ceac745db61439e470a2e79936d15dd260b"
+  },
+  "certification_source": {
+    "manifest_fingerprint": "ddc1208ea17eed9b616a68141e9d03cb85c2c56c3b8ce4564c17681fafc99f61",
+    "result_fingerprint": "81e1e984a735215a9faa99a50991b51dd28c73b1a11e9fa24a0d6e8785088c4d",
+    "certificates_fingerprint": "f738545f7871568925201182311a4f14b9036f8f2eb80a943b5ba76ea5e5a22f",
+    "query_cert_n": 404,
+    "query_cert_id_hash": "9e5923b4c4a8a170a3d2774f98fccd3236a5f4179afe98de3c5af6774e038e4a",
+    "terminal": true,
+    "failure_behavior": "terminal_no_retuning_no_budget_expansion",
+    "decisions": {
+      "fixed_reference": "PASS",
+      "monotone_binned": "PASS",
+      "tri_predict": "FAIL"
+    }
+  },
+  "evidence": {
+    "source": "prepared_query_test_qrels",
+    "cutoffs": [
+      1,
+      5,
+      10
+    ],
+    "include_exact_original_reference": true
+  },
+  "reporting": {
+    "role": "descriptive_frozen_policy_test_no_selection_no_certificate",
+    "policies": [
+      "fixed_reference",
+      "monotone_binned",
+      "tri_predict"
+    ],
+    "post_test_selection": "forbidden",
+    "new_certification": "forbidden",
+    "retuning": "forbidden"
+  }
+}
