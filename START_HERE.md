@@ -1,5 +1,15 @@
 # Query-Adaptive Tri-RAG Harness
 
+## Current version boundary
+
+Raw Tri-Predict v1 is complete at tag
+`raw-tri-predict-v1-terminal-negative` (`fb09c00`) and is a terminal negative
+baseline. Current development on `codex/calibrated-tri-predict-v2` targets
+Pilot-Distance Calibrated Tri-Predict under a new dataset and a fresh
+cal/tune/cert/latency/test protocol. Read
+`docs/RAW_TRI_PREDICT_V1_BASELINE.md` and
+`docs/CALIBRATED_TRI_PREDICT_PROTOCOL.md` before changing the successor.
+
 This directory is the handoff package for implementing a research harness for:
 
 > Fixed projected dimension `m_prime` with a query-adaptive candidate budget `M(q)`, driven by query-local intrinsic dimensionality (LID), calibrated on held-out external queries, and evaluated from embedding-neighbor retention through evidence recall to answer quality.
@@ -16,6 +26,9 @@ The immediate goal is a small, reproducible MVP. It is not a production RAG serv
 6. `docs/IMPLEMENTATION_PLAN.md` - milestones, tests, and acceptance criteria.
 7. `docs/REAL_DATA.md` - frozen SciFact source, splits, identities, and audit.
 8. `docs/REAL_EMBEDDINGS.md` - pinned E5 model and embedding-cache contract.
+9. `docs/RAW_TRI_PREDICT_V1_BASELINE.md` - immutable v1 result and failure attribution.
+10. `docs/CALIBRATED_TRI_PREDICT_PROTOCOL.md` - v2 method and independent validation protocol.
+11. `AGENT_CALIBRATED_TRI_PREDICT.md` - ready-to-use successor-agent brief.
 
 ## Research question
 

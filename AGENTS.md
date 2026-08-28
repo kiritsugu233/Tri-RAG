@@ -47,6 +47,29 @@ Out of scope for the MVP:
 12. Report the pilot pass, expansion pass, and original-space reranking costs separately.
 13. Keep `tri_law_probability(beta, rho, m_prime)` separate from Tri-Predict. The former is the exact single-triplet law; the latter aggregates the orthogonal conditional specialization through additional LID, structural, independence, and mean-field approximations.
 
+## Calibrated Tri-Predict v2 addendum
+
+These additional rules apply only on the successor branch and do not alter the
+tagged Raw Tri-Predict v1 baseline:
+
+1. Add a separate `query_cal` role for fitting calibration parameters. Policy
+   candidate selection still uses `query_tune`; scientific certification uses
+   `query_cert`; label-free systems measurement uses `query_latency`; final
+   reporting uses `query_test`.
+2. `oracle_exact` LID may supervise the pilot-LID calibrator on `query_cal`
+   only. It remains forbidden at inference and in tune/cert/latency/test policy
+   decisions. Main deployment claims must use the frozen pilot-distance
+   calibrator and deployable pilot inputs.
+3. Realized retention and exact top-k identities may label `query_cal` budget-
+   residual fitting records, but may never enter a policy decision at inference.
+4. Preserve Raw Tri-Predict behavior and schemas. Calibrated methods require
+   new names, versions, fingerprints, and run namespaces.
+5. Do not use the observed SciFact cert/test records to fit or select v2. Use a
+   new dataset and fresh cal/tune/cert/latency/test identities.
+6. A positive v2 claim requires independent retention/evidence certification
+   and measured paired latency superiority. Candidate-count reduction alone is
+   not a latency result.
+
 ## Engineering rules
 
 - Start with NumPy/SciPy and an exact vector-search backend. Add FAISS only behind a small adapter.

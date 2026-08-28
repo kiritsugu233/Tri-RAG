@@ -2,6 +2,22 @@
 
 Updated: 2026-08-28
 
+## Version boundary
+
+Raw Tri-Predict v1 is closed at commit `fb09c00` and annotated tag
+`raw-tri-predict-v1-terminal-negative`. Its SciFact certificate, descriptive
+test, failure attribution, evidence diagnostics, and audit hashes are terminal.
+The immutable baseline is summarized in
+`docs/RAW_TRI_PREDICT_V1_BASELINE.md`; its protected splits must not be reused
+to develop a successor.
+
+Current work is on branch `codex/calibrated-tri-predict-v2`. The new method is
+Pilot-Distance Calibrated Tri-Predict (PDCTP), with two explicit layers: a
+deployable pilot-distance LID calibrator and a Raw-Tri-anchored budget-residual
+calibrator. `docs/CALIBRATED_TRI_PREDICT_PROTOCOL.md` freezes the intended
+five-role new-data protocol and statistical/latency gates. No v2 implementation
+or positive result exists yet.
+
 ## What runs
 
 Milestones 0 through 4 are implemented as a network-free harness with a CPU default, and the retrieval-only systems benchmark additionally supports optional exact FAISS CPU/GPU backends. The certification run generates external tune/cert/test queries, normalizes embeddings, builds one fixed dense-Gaussian projection, runs exact original/projected squared-L2 retrieval, fits and freezes both monotone-binned and query-adaptive Tri-Predict policies on tune queries, evaluates each policy independently, and writes auditable artifacts. A separate two-stage command performs a predeclared global `m_prime`/Tri-Predict-threshold sweep on tune only, writes frozen selection artifacts, and then evaluates one fresh certification split.
@@ -543,15 +559,12 @@ The separately frozen `M_max=1984` FAISS 1M comparison also passes every exact s
 
 ## Next task
 
-Consolidate the terminal retention certificate, one-time descriptive test, and
-posthoc tune diagnostics into the final negative-result report. The retrieval
-and evidence gate is now complete enough to permit Milestone 7, but answer
-generation is optional: it cannot rescue the failed Tri-Predict certificate or
-be reported as adaptive-efficiency evidence. If downstream answer behavior is
-still a research objective, freeze one generator/model revision, prompt,
-decoding configuration, context serialization, cache identity, and scoring
-protocol before any inference; do not rerun retrieval test or select a prompt
-from the already observed test outcomes.
+Begin the network-free PDCTP foundation described in
+`AGENT_CALIBRATED_TRI_PREDICT.md`: versioned pilot-distance features, separate
+LID and budget-residual calibrators, explicit ablations, five-role leakage
+guards, paired-bound fixtures, and a sample-size/power artifact. Preserve all v1
+behavior and do not download FiQA or inspect any new protected split until the
+synthetic gate passes. LLM answer generation remains deferred.
 
 ## Known deviations and risks
 

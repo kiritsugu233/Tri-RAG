@@ -188,15 +188,71 @@ Acceptance:
 
 ## Final report requirements
 
-- [ ] State corpus/query sizes and prove query IDs are external/disjoint.
-- [ ] State `d`, `m_prime`, projection seed, `M_pilot`, `M_grid`, `k_gt`, and `k_ctx`.
-- [ ] Report policy budget distributions.
-- [ ] Identify the smallest certified fixed-`M` baseline.
-- [ ] Report adaptive saving against that baseline.
-- [ ] Report overall and optional per-bin certificates.
-- [ ] Report pilot-versus-oracle LID gap.
-- [ ] Report embedding, evidence, and answer metrics separately.
-- [ ] Document all negative results, deviations, and remaining threats to validity.
+- [x] State corpus/query sizes and prove query IDs are external/disjoint.
+- [x] State `d`, `m_prime`, projection seed, `M_pilot`, `M_grid`, `k_gt`, and `k_ctx`.
+- [x] Report policy budget distributions.
+- [x] Identify the smallest certified fixed-`M` baseline.
+- [x] Report adaptive saving against that baseline.
+- [x] Report overall and optional per-bin certificates.
+- [x] Report pilot-versus-oracle LID gap.
+- [x] Report embedding and evidence metrics separately and state that answer
+  generation was not run.
+- [x] Document all negative results, deviations, and remaining threats to validity.
+
+These report requirements are closed for Raw Tri-Predict v1. v2 must produce a
+new report from its fresh data identities rather than amending the v1 result.
+
+## Raw Tri-Predict v1 closure
+
+- [x] Complete tune-only selection, independent certification, and one-time test.
+- [x] Preserve Raw Tri-Predict's terminal FAIL without post-cert retuning.
+- [x] Complete pilot-versus-model attribution and tune-only evidence diagnostics.
+- [x] Independently audit returned query-level artifacts and shuffled controls.
+- [x] Tag the closed implementation as `raw-tri-predict-v1-terminal-negative`.
+- [x] Record the immutable result in `docs/RAW_TRI_PREDICT_V1_BASELINE.md`.
+
+## Calibrated Tri-Predict v2: network-free foundation
+
+- [ ] Add a versioned pilot-distance feature specification and extractor.
+- [ ] Add a constrained log-linear pilot-LID calibrator.
+- [ ] Add a quantile analytic-budget residual calibrator.
+- [ ] Add LID-only, residual-only, and full PDCTP policy variants.
+- [ ] Preserve Raw Tri-Predict v1 decisions and artifact loading unchanged.
+- [ ] Add five-role cal/tune/cert/latency/test guards and synthetic fixtures.
+- [ ] Add paired evidence/budget bounds and family-wise-alpha fixtures.
+- [ ] Add a deterministic sample-size/power artifact.
+- [ ] Pass all existing and new CPU tests without network access.
+
+Acceptance:
+
+- calibration inference reads only deployable pilot quantities;
+- fit records contain `query_cal` only and selection records contain
+  `query_tune` only;
+- no protected runner can read its split before validating every upstream
+  fingerprint;
+- all policies share one exact projected ranking and original reranker;
+- v1 tests and frozen decisions remain unchanged.
+
+## Calibrated Tri-Predict v2: fresh real-data gates
+
+- [ ] Audit and pin a new external-query dataset; FiQA is provisional.
+- [ ] Freeze duplicate-safe five-role IDs and a power-supported protocol.
+- [ ] Build and independently audit a new E5 embedding cache.
+- [ ] Freeze `m_prime=192`, a fresh projection seed, and one budget grid.
+- [ ] Fit all calibration candidates on `query_cal` only.
+- [ ] Select one complete PDCTP policy on `query_tune` only.
+- [ ] Freeze fixed, monotone, Raw Tri, ablation, and PDCTP comparators.
+- [ ] Certify once on untouched `query_cert` with family-wise correction.
+- [ ] Run a frozen paired CPU/GPU latency protocol on `query_latency`.
+- [ ] Evaluate once on `query_test` only after all prior gates are terminal.
+
+Acceptance:
+
+- the strong claim is emitted only if PDCTP meets retention/evidence
+  constraints and passes paired budget and latency superiority against every
+  eligible comparator;
+- feasibility dominance is not mislabeled as matched-quality cost superiority;
+- a failed gate is terminal and does not trigger retuning.
 
 ## Suggested future code tree
 
