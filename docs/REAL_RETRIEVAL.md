@@ -543,11 +543,67 @@ access and forbidden mutations, and reproduce all five deterministic result
 artifacts byte for byte. The complete local suite now has 99 tests: 98 pass and
 the optional real-FAISS test skips.
 
+## Accepted tune-only diagnostic result
+
+Slurm job `374032` on `genoa02` ran the diagnostic twice at commit `4af95c3`
+using Python `3.9.23` and NumPy `1.26.4`. The full 99-test suite passed 98 tests
+with one expected optional real-FAISS skip. `per_query.jsonl`,
+`fixed_grid.json`, `shuffled_controls.jsonl`, `summary.json`, and `report.md`
+are byte-identical across the two runs.
+
+| policy | mean M | retention | candidate evidence recall | final evidence recall@5 |
+| :--- | ---: | ---: | ---: | ---: |
+| fixed `M=768` | 768.000 | 0.985360 | 0.971464 | 0.786849 |
+| monotone-binned | 672.397 | 0.983623 | 0.972705 | 0.786849 |
+| Tri-Predict | 1092.548 | 0.979653 | 0.972705 | 0.786849 |
+
+Monotone-binned uses `12.45%` fewer candidates and `4.24%` less common
+coordinate work than fixed, with retention lower by `0.001737`. Its mean budget
+is bracketed by fixed `M=512/768`; the smallest frozen fixed budgets matching
+its retention, candidate evidence recall, and final evidence recall@5 are
+`768/1024/64`. Tri-Predict is bracketed by fixed `M=1024/1536`; the same three
+quality matches are `768/1024/64`. In particular, fixed `M=1024` uses fewer
+candidates than Tri while having higher retention (`0.990819`) and candidate
+evidence recall (`0.981390`) with the same final recall@5. Tri is also strictly
+dominated by monotone on mean budget and retention, while their two evidence
+recalls are equal.
+
+The frozen monotone LID strata contain 101/100/101/101 queries. Mean pilot LID
+rises `13.747 -> 18.338 -> 22.069 -> 30.348`, while mean oracle LID rises
+`21.686 -> 29.388 -> 39.559 -> 53.388`. Monotone assigns fixed stratum budgets
+`384/512/768/1024`; Tri's mean stratum budgets are
+`169.0/439.0/993.6/2762.1`. The steep Tri response explains how high-LID
+overallocation coexists with low-LID underallocation.
+
+| policy/metric | observed minus shuffled mean | plus-one one-sided p |
+| :--- | ---: | ---: |
+| monotone retention | 0.007400 | 0.000999 |
+| monotone candidate evidence recall | 0.011926 | 0.004995 |
+| monotone final evidence recall@5 | -0.000573 | 1.000000 |
+| Tri retention | 0.025826 | 0.000999 |
+| Tri candidate evidence recall | 0.017023 | 0.004995 |
+| Tri final evidence recall@5 | -0.000758 | 0.750250 |
+
+Thus pilot LID is informative for allocating embedding-neighbor and candidate-
+evidence budget, but neither frozen adaptive policy improves final evidence
+recall@5 over its shuffled control. This is a posthoc tune conclusion; the p
+values are not certificates and do not alter the terminal cert/test results.
+
+An independent local audit checked all 403 queries and 16 grid points,
+recomputed evidence/nDCG and matched comparisons, reproduced every frozen
+policy decision and four LID strata, and regenerated all 1,000 permutations
+from seed `31013`. The accepted archive is
+`scifact-tune-diagnostics-374032-audit.tar.gz`, SHA-256
+`a376a1cb484e1e57a726cce23afcf34004f3e403bfa5bc7c1d257ce17aa30804`.
+Result, manifest, and summary fingerprints are
+`c1c0dd1c16be9d5193e60661cf1daab54b93f978ecf1522f93352cf6f9cc9684`,
+`b69063dcb9668e0d8245a8f3e4b159688e67976e0354384d9e1fbcc7272f82f7`,
+and `5498e2563a4762177608b9e612b927923ef5ec01c0f26072c05f2e6f2517ff98`.
+
 ## Next gate
 
-Run the tune-only diagnostic twice on Genoa and require byte equality for
-`per_query.jsonl`, `fixed_grid.json`, `shuffled_controls.jsonl`, `summary.json`,
-and `report.md`. Archive both outputs and the complete log for independent
-reduction. Do not rerun test, revise the frozen policies, or derive a new
-certificate from these posthoc tune outcomes. LLM answer generation remains
-deferred until this retrieval/evidence report is complete.
+The retrieval/evidence report is complete. Optional answer generation may now
+be implemented only under a newly frozen generator, prompt, decoding, context,
+cache, and scoring protocol. It remains a downstream descriptive experiment,
+not a repair of Tri-Predict's failed certificate or a reason to revisit the
+already observed retrieval test split.

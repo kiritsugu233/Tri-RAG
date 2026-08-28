@@ -151,18 +151,20 @@ Acceptance:
 
 ## Milestone 6: evidence evaluation
 
-- [ ] Compute candidate and final-context evidence hit/recall.
+- [x] Compute candidate and final-context evidence hit/recall.
 - [ ] Compute separate evidence empirical-Bernstein bounds when requested.
-- [ ] Add matched fixed-cost and fixed-quality comparisons.
-- [ ] Add LID/retention/evidence relationship tables or plots.
-- [ ] Add shuffled-LID control.
+- [x] Add matched fixed-cost and fixed-quality comparisons.
+- [x] Add LID/retention/evidence relationship tables or plots.
+- [x] Add shuffled-LID control.
 
-The frozen test run now reports auditable final-context evidence metrics at
-cutoffs 1/5/10. The first item remains open because candidate-set evidence has
-not yet been recorded separately from the exact original reranked context.
-The tune-only Milestone 6 runner and its protocol are now frozen after synthetic
-reproducibility tests; these boxes remain open until the real tune run is
-returned and independently audited.
+The frozen test run reports auditable final-context evidence metrics at cutoffs
+1/5/10. The posthoc tune-only run additionally records candidate-set evidence
+separately from the exact original reranked context for all 403 tune queries and
+all 16 frozen budgets. Slurm job `374032` reproduced the diagnostic twice, and
+an independent reduction replayed the full fixed grid, relationship strata,
+matched comparisons, and all 1,000 shuffled-LID controls. Separate evidence
+confidence bounds remain optional and were not requested; no new certificate
+was created from these posthoc outcomes.
 
 Acceptance:
 

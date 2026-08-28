@@ -194,8 +194,34 @@ before dataset/qrel access, reconstructs and hash-checks each projected ranking,
 computes candidate-set and exact-reranked-context evidence for every fixed grid
 budget, and replays both adaptive policies under the shuffled feature. It
 forbids protected-split access, policy selection, certification, and retuning.
-Only synthetic fixtures have exercised this new runner so far; no real
-diagnostic outcome is recorded yet.
+Slurm job `374032` on `genoa02` ran it twice at commit `4af95c3`; all five
+deterministic result artifacts are byte-identical across the two runs. The
+99-test gate passed 98 tests with the optional real-FAISS test skipped.
+
+Independent reduction of all 403 query records and 16 fixed budgets recomputed
+every retention and evidence aggregate, every frozen monotone/compiled-Tri
+decision, all four LID strata, and all 1,000 shuffled controls. Fixed `M=768`,
+monotone-binned, and Tri-Predict respectively have mean budgets
+`768.000/672.397/1092.548`, retention `0.985360/0.983623/0.979653`, candidate
+evidence recall `0.971464/0.972705/0.972705`, and identical final evidence
+recall@5 `0.786849`. Monotone therefore saves `12.45%` of candidates and
+`4.24%` of common coordinate work relative to fixed with a `0.001737`
+retention decrease. Tri uses `42.26%` more candidates and `14.39%` more
+coordinate work than fixed while realizing lower retention; it is also
+strictly dominated by monotone on these reported tune metrics.
+
+The shuffled-LID control confirms that pilot LID carries allocation signal for
+embedding retention and candidate evidence. Relative to 1,000 shuffled
+assignments, observed-minus-control mean retention is `0.007400` for monotone
+and `0.025826` for Tri (plus-one one-sided `p=0.000999` for both); candidate
+evidence-recall differences are `0.011926/0.017023` (`p=0.004995` for both).
+That signal does not reach final evidence recall@5: observed differences are
+`-0.000573/-0.000758` with `p=1.0/0.750250`. These are posthoc tune diagnostics,
+not certificates or family-wise confirmatory tests. Result, manifest, and
+summary fingerprints are
+`c1c0dd1c16be9d5193e60661cf1daab54b93f978ecf1522f93352cf6f9cc9684`,
+`b69063dcb9668e0d8245a8f3e4b159688e67976e0354384d9e1fbcc7272f82f7`,
+and `5498e2563a4762177608b9e612b927923ef5ec01c0f26072c05f2e6f2517ff98`.
 
 The local compiled-policy 100k/d768 structural run created seven states, loaded the artifact in `0.1093 ms`, and exactly matched all 64 prior local LID values, budgets, and retention values. Analytic validation averaged `38.4606 ms/decision`; lookup averaged `0.0021 ms/decision`. Reuse-path latency fell from `44.7511` to `4.2712 ms/query` across the old and new local runs. Compilation cost `17.9965 s` once at setup. These are not Genoa serving claims.
 
@@ -388,6 +414,7 @@ python3 -m tri_rag_harness.real_tune_diagnostics \
 - The accepted protocol-v2 Genoa policy gate ran the same 86-test suite on job `373780`, node `genoa02`, commit `5389745`: 85 passed, the optional real-FAISS test skipped, and the run reached its terminal portable-scientific-identity assertion.
 - The one-time certification gate ran the full 92-test suite on the same job and node at commit `1625f3b`: 91 passed, the optional real-FAISS test skipped, and all protected-split assertions completed before the terminal PASS/FAIL artifacts were published.
 - The one-time descriptive test gate ran the full 96-test suite on job `374032`, node `genoa02`, commit `8a945f9`: 95 passed, the optional real-FAISS test skipped, and the command completed without selection, recertification, or retuning.
+- The tune-only evidence/allocation gate ran the full 99-test suite on the same job and node at commit `4af95c3`: 98 passed, the optional real-FAISS test skipped, both real diagnostic runs completed, and all five deterministic artifacts compared byte for byte.
 
 ## Current artifacts
 
@@ -458,6 +485,15 @@ records and evidence metrics, source/config/test snapshots, separate timings,
 and the complete Slurm log. It is the accepted one-time test outcome and must
 not be rerun to choose a policy or create a replacement certificate.
 
+The accepted posthoc tune-diagnostics archive is
+`scifact-tune-diagnostics-374032-audit.tar.gz`, SHA-256
+`a376a1cb484e1e57a726cce23afcf34004f3e403bfa5bc7c1d257ce17aa30804`.
+It contains both byte-identical diagnostic outputs, the complete frozen policy
+input, prepared qrels/IDs, source/config/test snapshots, and the Slurm log. A
+local audit verified all artifact identities and independently replayed every
+query-level evidence score, policy decision, LID stratum, matched comparison,
+and shuffled repetition without rerunning retrieval.
+
 `runs/synthetic_mvp/` contains:
 
 - `manifest.json`
@@ -507,18 +543,22 @@ The separately frozen `M_max=1984` FAISS 1M comparison also passes every exact s
 
 ## Next task
 
-Run the frozen tune-only diagnostic twice on Genoa, compare its five
-deterministic result artifacts byte for byte, and archive both outputs plus the
-complete log. This run may use only `query_tune`; do not rerun `query_test`,
-alter any frozen policy, or create a certificate. LLM answer generation remains
-deferred until the returned diagnostics are independently reduced and the final
-negative-result report is complete.
+Consolidate the terminal retention certificate, one-time descriptive test, and
+posthoc tune diagnostics into the final negative-result report. The retrieval
+and evidence gate is now complete enough to permit Milestone 7, but answer
+generation is optional: it cannot rescue the failed Tri-Predict certificate or
+be reported as adaptive-efficiency evidence. If downstream answer behavior is
+still a research objective, freeze one generator/model revision, prompt,
+decoding configuration, context serialization, cache identity, and scoring
+protocol before any inference; do not rerun retrieval test or select a prompt
+from the already observed test outcomes.
 
 ## Known deviations and risks
 
 - Configuration is JSON rather than YAML, and query-level output is JSONL rather than Parquet, to keep the first pass runnable with only the already available NumPy/SciPy stack. The artifacts remain machine-readable and auditable.
 - Real E5 inference and the repaired v2 cache passed independent audit. The first v1 cache remains quarantined because its dataset split allowed duplicate query text across tune/cert/test. The public E5 model card already reports SciFact performance, so the off-the-shelf model choice is not a fully blind model-family selection. Tune-only selection, terminal certification, and the one-time descriptive test are complete. Test outcomes are now observed and may only support frozen-policy description, not model or policy selection. Answer generation remains untouched.
 - The Milestone 6 diagnostic protocol was designed after test outcomes were observed. It is deliberately restricted to tune data and can diagnose allocation/evidence relationships, but it is posthoc and cannot retroactively become a preregistered selection or certification claim.
+- Shuffled pilot LID significantly improves tune embedding retention and candidate evidence relative to random allocation at the same budget multiset, but it does not improve final evidence recall@5. This separates a real allocation signal from a downstream-quality claim: candidate and final-context evidence are not interchangeable, and the permutation statistics are descriptive because the diagnostic was designed posthoc.
 - The real runs separate the causes of Tri-Predict's failure. Pilot LID is systematically low: on test its mean is `21.91` versus oracle `36.68`, with clipped MAE `14.78`. On the tune records, where retention at every budget was saved, replacing pilot LID by oracle LID in the same frozen Tri map recovers 77 of 82 missing top-10 neighbors. Thus pilot error is the primary observed source of quality misses. It does not repair efficiency: oracle LID raises mean `M` from `1092.5` to `3198.3`, while the realized smallest grid budget reaching unit top-10 retention averages only `420.1`; the oracle-driven map overallocates 394 of 403 tune queries. The analytic rank/mean-field mapping is therefore the primary source of negative efficiency.
 - Tri-Predict predicts mean retention `0.999979` but realizes `0.972525` on cert and `0.974333` on test. On test its low-budget half (`M<768`, 136 queries) loses 50 retained neighbors relative to fixed, while its high-budget half (`M>768`, 136 queries) spends the surplus candidates to recover only 25; net cost is `+133,084` candidates and net retention is `-25` top-10 neighbors. This is a misallocation result: pilot underestimation causes low-end underbudgeting, while the steep analytic LID-to-budget response causes high-end overbudgeting.
 - The selected real-data `56.48%` coordinate-work reduction is an arithmetic proxy under one exact full projected scan and exact reranking. It is not measured latency saving and omits fixed overheads, memory hierarchy effects, batching, and backend-specific kernels. Genoa reproduction validates result portability, not serving performance.
