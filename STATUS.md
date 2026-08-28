@@ -120,20 +120,28 @@ analytic policy, has 16 states and 15 boundaries, and reports zero validation
 mismatches. The accepted audit archive SHA-256 is
 `b091a1ac57fdaca61bbb0d849cdadf9e91507fe779d5b5f95c7937076841246c`.
 
-A certification-only real runner is now implemented but has not yet been used
-on the real certification split. Config fingerprint
-`e5545a4aa4c07a1bc188870538c7d346ff26faf38f135c03d4b32f4a18c7ce74`
-freezes the 404-query cert ID hash, fixed `M=768`, both adaptive policy
-fingerprints, the exact Genoa compiled fingerprint and file SHA-256, projection,
-pilot/LID rules, one-scan reuse, target `0.95`, and per-policy `alpha=0.05`.
-There are three predeclared standalone certificates and no selection among them
-on cert. Policy files and their transitive result identity are validated before
-the protected split is selected. Query-level output contains exact top-k IDs,
-pilot/oracle LID, chosen budgets, prefix hashes, reranked top-k IDs, retention,
-fallback/saturation, and compiled/analytic agreement. A failed target is written
-as a terminal result and does not change the process exit status or trigger
-retuning. Development used only synthetic fixtures; no real cert outcome was
-read.
+The one-time real certification is complete and terminal. Slurm job `373780`
+on `genoa02` ran commit `1625f3b` after 91 of 92 tests passed and the optional
+real-FAISS test skipped. All three predeclared standalone certificates used the
+404 frozen `query_cert` IDs, target `0.95`, and per-policy `alpha=0.05` with no
+post-cert selection. Fixed `M=768` passed with mean retention `0.985396` and
+lower bound `0.958311`. Monotone-binned passed with mean `M=673.901`, mean
+retention `0.980446`, lower bound `0.952304`, `12.25%` candidate saving, and
+`4.17%` coordinate-work saving. Tri-Predict failed with mean `M=1119.515`, mean
+retention `0.972525`, lower bound `0.942480`, `-45.77%` candidate saving, and
+`-15.58%` coordinate-work saving. The failure is preserved without retuning or
+budget expansion; `query_test` and evidence qrels remain unevaluated.
+
+Independent audit of all 404 query records reproduced every empirical-
+Bernstein term, all result and embedded fingerprints, the cert ID hash, 1,212
+candidate/rerank overlap and retention identities, all monotone decisions, and
+all 404 compiled/analytic Tri-Predict decisions. The cert result, manifest, and
+certificate fingerprints are
+`81e1e984a735215a9faa99a50991b51dd28c73b1a11e9fa24a0d6e8785088c4d`,
+`ddc1208ea17eed9b616a68141e9d03cb85c2c56c3b8ce4564c17681fafc99f61`,
+and `f738545f7871568925201182311a4f14b9036f8f2eb80a943b5ba76ea5e5a22f`.
+The accepted cert archive SHA-256 is
+`4fd19b3b205c92d42596700e845da99b732261531d6c222d73375d57fc7ef12b`.
 
 The local compiled-policy 100k/d768 structural run created seven states, loaded the artifact in `0.1093 ms`, and exactly matched all 64 prior local LID values, budgets, and retention values. Analytic validation averaged `38.4606 ms/decision`; lookup averaged `0.0021 ms/decision`. Reuse-path latency fell from `44.7511` to `4.2712 ms/query` across the old and new local runs. Compilation cost `17.9965 s` once at setup. These are not Genoa serving claims.
 
@@ -295,6 +303,7 @@ python3 -m tri_rag_harness.real_policy_certify \
 - Five real-dimension-sweep tests cover protected-split refusal, immutable common-cost semantics, exact query-projection accounting, stable projected ranking conformance, terminal full-corpus behavior, query-level auditability, and deterministic tune-only artifacts.
 - Eight tune-policy tests cover immutable tune-only/determinism configuration, the observed Mac/Genoa LID-tail fixture, compiled/scientific identity separation, protected-split and common-cost refusal, terminal fallback, exact coordinate accounting, cached/analytic full-corpus boundary equivalence, and query-aligned decision reduction. Four certification-only tests freeze the real cert/Genoa identities, reject protected-scope and post-cert selection mutations, reject deployment tampering before protected-data access, and reproduce complete synthetic query-level/certificate artifacts byte for byte. Policy-loader regressions reject tampered monotone and analytic artifacts. The full local suite now contains 92 tests: 91 pass and one optional real-FAISS test skips.
 - The accepted protocol-v2 Genoa policy gate ran the same 86-test suite on job `373780`, node `genoa02`, commit `5389745`: 85 passed, the optional real-FAISS test skipped, and the run reached its terminal portable-scientific-identity assertion.
+- The one-time certification gate ran the full 92-test suite on the same job and node at commit `1625f3b`: 91 passed, the optional real-FAISS test skipped, and all protected-split assertions completed before the terminal PASS/FAIL artifacts were published.
 
 ## Current artifacts
 
@@ -349,6 +358,14 @@ test/documentation snapshot. The portable result and selection fingerprints
 match the Mac exactly; only the non-scientific manifest/deployment identities
 reflect the platform-specific compiled table and Python version.
 
+The terminal certification archive is
+`scifact-policy-cert-373780-audit.tar.gz`, SHA-256
+`4fd19b3b205c92d42596700e845da99b732261531d6c222d73375d57fc7ef12b`.
+It contains the complete frozen input policy bundle, 404 cert query records,
+three standalone certificates, separate systems timings, source/config/tests,
+and the Slurm log. Tri-Predict's FAIL is the accepted outcome and this cert
+split must never be used for retuning.
+
 `runs/synthetic_mvp/` contains:
 
 - `manifest.json`
@@ -398,19 +415,19 @@ The separately frozen `M_max=1984` FAISS 1M comparison also passes every exact s
 
 ## Next task
 
-Run the frozen certification command exactly once on Genoa using the accepted
-policy directory and untouched `query_cert`. Require all 92 tests to pass apart
-from the expected optional real-FAISS skip before starting the cert command.
-Archive the complete output and log regardless of PASS/FAIL; do not edit the
-config, replace a policy, enlarge a budget, or rerun with changed parameters
-after observing the result. Return the archive for independent fingerprint and
-empirical-Bernstein recomputation before any `query_test` work begins.
+Implement a descriptive, policy-frozen `query_test` runner without changing the
+projection, LID feature, budgets, or policies. Develop and test it only with
+synthetic fixtures, then run the 300 untouched test IDs once. The test report
+must present all three frozen policies, the already-terminal cert decisions,
+embedding retention, cost proxies, and evidence metrics without selecting a
+winner or creating a new certificate. Do not start LLM generation yet.
 
 ## Known deviations and risks
 
 - Configuration is JSON rather than YAML, and query-level output is JSONL rather than Parquet, to keep the first pass runnable with only the already available NumPy/SciPy stack. The artifacts remain machine-readable and auditable.
-- Real E5 inference and the repaired v2 cache passed independent audit. The first v1 cache remains quarantined because its dataset split allowed duplicate query text across tune/cert/test. The public E5 model card already reports SciFact performance, so the off-the-shelf model choice is not a fully blind model-family selection even though no local cert/test retrieval outcome was inspected. Tune-only evidence evaluation, fixed-dimension selection, and policy fitting are complete, but no real certification/test retrieval outcome or answer generation has been performed.
-- The real tune pilot/oracle clipped-LID gap is large (`14.8902` MAE), but it does not by itself attribute the negative analytic-policy efficiency solely to pilot error. The selected uncorrected Tri-Predict threshold must rise to `0.99995`, and its mean budget already exceeds fixed; oracle-LID and actual-distance counterfactuals remain diagnostic work to separate LID error from rank-model/mean-field error without touching certification data.
+- Real E5 inference and the repaired v2 cache passed independent audit. The first v1 cache remains quarantined because its dataset split allowed duplicate query text across tune/cert/test. The public E5 model card already reports SciFact performance, so the off-the-shelf model choice is not a fully blind model-family selection. Tune-only selection and the terminal real certification are complete, but `query_test`, test evidence metrics, and answer generation remain untouched.
+- Cert pilot/oracle clipped-LID MAE is `14.4541`; oracle LID is higher on average by `14.4534`. Feeding oracle LID to the frozen compiled budget map would raise mean `M` from `1119.5` to `3163.5` and changes the budget on 389 of 404 queries, so repairing pilot LID cannot rescue Tri-Predict's negative efficiency. The same pilot feature lets the empirical monotone policy pass while saving `12.25%`, showing that pilot error alone is not the main explanation for Tri-Predict's dominated cost allocation. It may still contribute to the low-budget queries that caused the quality failure.
+- Tri-Predict predicts mean retention `0.999979` on cert but realizes only `0.972525`; mean absolute prediction error is `0.027487` and prediction/realization correlation is `0.163`. Relative to fixed `M=768`, it saves 96,320 candidates on 192 low-budget queries but loses 89 top-10 neighbors, then spends 238,332 extra candidates on 170 high-budget queries to recover only 37. This net `+142,012` candidates and `-52` retained neighbors is direct evidence that the frozen analytic LID-to-budget/rank-aggregation approximation misallocates work.
 - The selected real-data `56.48%` coordinate-work reduction is an arithmetic proxy under one exact full projected scan and exact reranking. It is not measured latency saving and omits fixed overheads, memory hierarchy effects, batching, and backend-specific kernels. Genoa reproduction validates result portability, not serving performance.
 - E5 is English-only and truncates inputs above 512 tokens. The embedding manifest exposes separate corpus/query truncation counts, but any effect on SciFact retrieval remains unknown until the frozen cache exists.
 - GPU and CPU transformer kernels may differ slightly even under fixed packages, float32, deterministic algorithms, eager attention, disabled TF32, and a fixed cuBLAS workspace. The generated array hashes—not an assumption of cross-device bit identity—become the frozen downstream experiment identity.
@@ -421,7 +438,7 @@ empirical-Bernstein recomputation before any `query_test` work begins.
 - On Genoa, scalar Tri-Predict root solving dominates measured retrieval latency (`5.9988` of `6.0325 ms/query`) on the 160-item synthetic corpus. Candidate-count saving must not be presented as latency saving; vectorization, lookup-table caching, or a validated approximation is required before serving claims.
 - The compiled policy preserves only decision fields. Analytic predicted-retention values remain diagnostics produced by the reference policy; they are not reconstructed or interpolated online. Adjacent-float64 transition locations depend on the SciPy/platform special-function implementation, so the compiled lookup is a deployment artifact bound to—but intentionally excluded from—the analytic scientific policy identity.
 - A deployment must load the archived compiled artifact rather than silently recompiling it. The certification manifest must bind both the cross-platform analytic policy fingerprint and the exact platform deployment fingerprint used for lookup.
-- The real cert-only runner and config are frozen and tested, but the real 404-query certificate remains unobserved at this commit. Its three `alpha=0.05` bounds are standalone predeclared policy claims, not a family-wise procedure for selecting the best policy after certification.
+- The real 404-query certificate is terminal. Its three `alpha=0.05` bounds are standalone predeclared policy claims, not a family-wise procedure for selecting the best policy after certification. Fixed and monotone pass; Tri-Predict fails and must not be repaired on this cert split.
 - The retrieval latency fixture uses normalized Gaussian vectors with realistic shapes and memory traffic, not embeddings from a text model. It is a systems benchmark only; semantic retrieval conclusions require the real external-query adapter.
 - FAISS is optional and intentionally absent from the base NumPy/SciPy dependency set. The isolated A100 environment has compatible real CPU/GPU FAISS and PyTorch interop, but its packages and exact versions must remain part of every run manifest/log because they are not installed by the base project metadata.
 - FAISS `IndexFlatL2` is exact in float32 but does not guarantee stable candidate identity at an exact top-k boundary tie. The adapter deterministically refines a bounded one-scan overfetch pool and aborts if that guard does not close the raw tie band; refinement therefore adds host work and latency even when the GPU scan is fast.

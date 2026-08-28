@@ -157,5 +157,37 @@ freezes target `0.95`, all 404 certification IDs, the projection and LID
 contract, all policy identities, and terminal failure behavior. The runner
 validates the complete frozen policy bundle before selecting `query_cert` and
 writes all outcomes even when a lower bound fails. Development and regression
-testing use synthetic fixtures only; the real cert split remains untouched
-until the single frozen Genoa run.
+testing used synthetic fixtures only before the single frozen Genoa run.
+
+## 11. Terminal SciFact certification result
+
+Slurm job `373780` on `genoa02` evaluated all 404 frozen certification IDs once
+at commit `1625f3b`. The three standalone empirical-Bernstein results are:
+
+| policy | decision | mean M | mean retention | radius | lower bound | candidate saving | coordinate saving |
+| :--- | :---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| fixed `M=768` | PASS | 768.000 | 0.985396 | 0.027085 | 0.958311 | 0.00% | 0.00% |
+| monotone binned | PASS | 673.901 | 0.980446 | 0.028142 | 0.952304 | 12.25% | 4.17% |
+| Tri-Predict | FAIL | 1119.515 | 0.972525 | 0.030044 | 0.942480 | -45.77% | -15.58% |
+
+Tri-Predict's point estimate is above `0.95`, but certification concerns the
+lower bound. Its tune lower bound exceeded the target by only `0.000276`; on
+cert the mean fell by `0.007128` and the radius rose by `0.000668`, lowering the
+bound by `0.007796`. The mean shift is therefore the dominant immediate cause
+of failure, while increased variance also makes the bound slightly wider.
+
+The archive `scifact-policy-cert-373780-audit.tar.gz` has SHA-256
+`4fd19b3b205c92d42596700e845da99b732261531d6c222d73375d57fc7ef12b`.
+An independent reduction rehashed every input/output artifact, reconstructed
+the result identity, verified all 404 cert IDs, reproduced all empirical-
+Bernstein terms directly from query records, reproduced every monotone and
+compiled Tri-Predict decision, and checked 1,212 candidate/rerank overlap and
+retention identities. Result, manifest, and certificate fingerprints are
+`81e1e984a735215a9faa99a50991b51dd28c73b1a11e9fa24a0d6e8785088c4d`,
+`ddc1208ea17eed9b616a68141e9d03cb85c2c56c3b8ce4564c17681fafc99f61`,
+and `f738545f7871568925201182311a4f14b9036f8f2eb80a943b5ba76ea5e5a22f`.
+
+These decisions are terminal for this split. In particular, Tri-Predict may
+not be retuned, corrected, or given a larger budget using these 404 outcomes.
+The test split remains available only for descriptive evaluation of the
+already frozen policies; it cannot create a replacement certificate.

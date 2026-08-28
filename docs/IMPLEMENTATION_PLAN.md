@@ -139,7 +139,7 @@ Acceptance:
 - [x] Freeze cross-platform LID precision and separate compiled deployment identity.
 - [x] Reproduce and independently audit the frozen scientific policy result on Genoa.
 - [x] Implement and freeze a certification-only runner using synthetic fixtures only.
-- [ ] Certify on untouched certification queries.
+- [x] Certify on untouched certification queries.
 - [ ] Evaluate on test queries.
 
 Acceptance:

@@ -318,7 +318,7 @@ of policy tampering before protected data access, one projected scan, pilot
 distance reuse accounting, candidate/rerank overlap equivalence, complete
 query-level auditability, terminal failure semantics, and byte reproducibility.
 The full local suite has 92 tests: 91 pass and the optional real-FAISS test
-skips. No real certification output exists yet.
+skips.
 
 The one-time command is:
 
@@ -333,9 +333,44 @@ python3 -m tri_rag_harness.real_policy_certify \
   --output runs/scifact-policy-cert
 ```
 
+## Terminal certification and independent audit
+
+The command ran exactly once on Slurm job `373780`, node `genoa02`, at commit
+`1625f3b`. The preceding suite completed with 91 passes and the expected
+optional real-FAISS skip. All 404 records have split `query_cert`, the frozen ID
+hash, one projected scan, reused pilot distances, candidate/rerank overlap
+equality, and compiled/analytic Tri-Predict decision equality.
+
+Fixed `M=768` passes with mean retention/lower bound
+`0.985396/0.958311`. Monotone-binned passes with mean `M=673.901`, retention/
+lower bound `0.980446/0.952304`, `12.25%` candidate saving, and `4.17%`
+coordinate saving. Tri-Predict terminally fails with mean `M=1119.515`,
+retention/lower bound `0.972525/0.942480`, `-45.77%` candidate saving, and
+`-15.58%` coordinate saving. No fallback or saturation occurred.
+
+The cert pilot/oracle clipped-LID MAE is `14.4541`. Oracle LID is higher by
+`14.4534` on average, and a diagnostic replay through the frozen compiled map
+would increase mean `M` to `3163.5`; more accurate LID cannot make this policy
+efficient. The empirical monotone policy uses the same pilot feature yet passes
+while saving candidates, so pilot error alone does not explain Tri-Predict's
+negative efficiency. Tri-Predict's mean predicted retention is `0.999979`
+versus realized `0.972525`, with prediction/realization correlation `0.163`.
+Relative to fixed it spends a net 142,012 extra candidates while retaining a
+net 52 fewer top-10 neighbors. This directly exposes inefficient allocation in
+the frozen analytic LID-to-budget/rank-aggregation model, while pilot
+underestimation can still contribute to quality loss on low-budget queries.
+
+The returned archive SHA-256 is
+`4fd19b3b205c92d42596700e845da99b732261531d6c222d73375d57fc7ef12b`.
+Independent audit reconstructed every embedded and result fingerprint, all
+three certificates, all 404 serving decisions, and all 1,212 overlap/retention
+identities from the saved records. Evidence qrels and `query_test` were not
+evaluated.
+
 ## Next gate
 
-Run the frozen command exactly once on Genoa and archive the output and complete
-log regardless of PASS/FAIL. Do not change any policy/configuration after the
-result. Independently recompute artifact identities and all three bounds from
-the returned query-level records before beginning untouched `query_test` work.
+Implement a descriptive frozen-policy runner with synthetic fixtures, then
+evaluate the 300 untouched `query_test` IDs once. Report all three policies,
+embedding retention, cost proxies, and evidence metrics without policy
+selection, retuning, or a new certificate. LLM answer generation remains out
+of scope until this retrieval/evidence report is complete.
