@@ -420,10 +420,83 @@ python3 -m tri_rag_harness.real_policy_test \
   --output runs/scifact-policy-test
 ```
 
+## Terminal descriptive test result
+
+The frozen command ran exactly once on Slurm job `374032`, node `genoa02`, at
+commit `8a945f9`. The preceding suite had 95 passes and the expected optional
+real-FAISS skip. All 300 records have split `query_test`, the frozen ID hash,
+one projected scan, reused pilot distances, candidate/rerank overlap equality,
+and compiled/analytic Tri-Predict decision equality.
+
+| policy | cert provenance | mean M | mean retention | candidate saving | coordinate saving |
+| :--- | :---: | ---: | ---: | ---: | ---: |
+| fixed `M=768` | PASS | 768.000 | 0.982667 | 0.00% | 0.00% |
+| monotone binned | PASS | 698.453 | 0.982333 | 9.06% | 3.08% |
+| Tri-Predict | FAIL | 1211.613 | 0.974333 | -57.76% | -19.67% |
+
+No fallback or saturation occurred. These labels are copied terminal-cert
+provenance; test does not produce a confidence bound or another PASS/FAIL.
+
+The diagnostic exact-original and final-context evidence results are:
+
+| retrieval | cutoff | evidence hit | evidence recall | nDCG |
+| :--- | ---: | ---: | ---: | ---: |
+| exact original | 1 | 0.586667 | 0.559278 | 0.586667 |
+| exact original | 5 | 0.810000 | 0.794889 | 0.701028 |
+| exact original | 10 | 0.860000 | 0.846500 | 0.719429 |
+| fixed `M=768` | 10 | 0.856667 | 0.843167 | 0.718425 |
+| monotone binned | 10 | 0.853333 | 0.839833 | 0.717314 |
+| Tri-Predict | 10 | 0.856667 | 0.843167 | 0.718366 |
+
+All three policies equal exact original on the aggregate evidence metrics at
+cutoffs 1 and 5. At cutoff 10, fixed and Tri each lose one evidence-hit query
+relative to exact original; monotone loses two. The small evidence differences
+do not turn Tri-Predict into a useful adaptive policy: it gives essentially the
+same evidence result as fixed while reranking 57.76% more candidates.
+
+The test result, manifest, and summary fingerprints are
+`65f722f7eb01cd583ebbcc1df02b3c2fa3fb0e887b624778b1c2f7feffe0ba65`,
+`bffb51f0c0428d75d380a3d7ecef8a336e0ae2d587811f0bbfeb4aad1dff22a8`,
+and `bc58ebe2e8b571a2aab8ae3e1c1b1ae74729c0a243713200931df30b8fb15213`.
+The archive `scifact-policy-test-374032-audit.tar.gz` has SHA-256
+`39610254579876b77148d0045044aaa8bee1b950624dace646a8ae959ee22c76`.
+
+Independent read-only reduction from the returned artifacts reproduced every
+embedded and file hash, all 300 test IDs and their order, 900 overlap/retention
+identities, 600 adaptive decisions, 3,600 evidence metrics, all aggregate work
+and evidence values, and the complete result identity. It also verified that
+the output has no `certifications.json`, selected policy, test lower bound,
+retuning, or recertification path.
+
+## Pilot-versus-model attribution
+
+The negative outcome has two distinct causes. On test, pilot clipped LID has
+mean `21.908` while diagnostic oracle LID has mean `36.682`; the mean absolute
+gap is `14.780` and the signed pilot-minus-oracle gap is `-14.774`. The features
+remain correlated (`r=0.779`), but pilot is strongly biased downward.
+
+The tune records retain realized top-10 retention at every budget, so they
+support a protected-split-free counterfactual replay. With pilot LID, the
+frozen Tri policy uses mean `M=1092.55` and misses 82 top-10 neighbors. Replacing
+only the LID input by oracle LID raises mean `M` to `3198.29` and recovers 77 of
+those 82 misses. Pilot error is therefore the main observed contributor to
+quality loss.
+
+That replay simultaneously rules out a positive efficiency interpretation.
+The realized minimum grid budget reaching unit top-10 retention averages only
+`420.13`; the oracle-LID Tri map exceeds it on 394 of 403 tune queries. On test,
+Tri's 136 queries below fixed `M=768` lose 50 retained neighbors, while its 136
+queries above fixed spend enough extra work to recover only 25. The net result
+is 133,084 additional candidates and 25 fewer retained neighbors. The pilot's
+downward bias causes underallocation at the low end, while the analytic
+LID-to-budget/rank-aggregation response causes severe overallocation at the
+high end. Both are real, but the latter is what makes efficiency negative.
+
 ## Next gate
 
-Run the frozen command exactly once on Genoa and archive its output and complete
-log regardless of the descriptive outcome. Do not change the protocol after
-observing test. Independently reconstruct all identities and recompute
-retention, work, and evidence metrics from the returned query records. LLM
-answer generation remains out of scope until that audit is complete.
+Use `query_tune` and already saved immutable records to finish candidate-set
+evidence, matched fixed-cost/fixed-quality comparisons, relationship strata,
+and a predeclared shuffled-LID control. Do not rerun test, revise the frozen
+policies, or derive a new certificate from the observed test outcomes. LLM
+answer generation remains deferred until this retrieval/evidence report is
+complete.

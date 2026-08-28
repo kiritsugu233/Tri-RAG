@@ -197,3 +197,20 @@ binds this terminal result before test access, evaluates all three policies,
 and reports test retention, cost proxies, and evidence metrics without a test
 confidence bound or policy selection. Its output must not be called a new
 certificate, even if a descriptive test mean is above a certification target.
+
+## 12. Terminal descriptive SciFact test result
+
+Slurm job `374032` on `genoa02` evaluated the 300 frozen `query_test` IDs once
+at commit `8a945f9`. Fixed, monotone, and Tri-Predict respectively produced mean
+budgets `768.000/698.453/1211.613` and mean retention
+`0.982667/0.982333/0.974333`. Monotone retains its prior PASS provenance and
+saves `9.06%` of candidates; Tri retains its prior FAIL provenance and has
+`-57.76%` candidate saving. These are descriptive values only.
+
+The test archive SHA-256 is
+`39610254579876b77148d0045044aaa8bee1b950624dace646a8ae959ee22c76`.
+Independent reduction reproduced all result identities, policy decisions,
+retention values, work counters, and evidence metrics. The output intentionally
+contains no `certifications.json`, test lower bound, selected policy, or
+post-test tuning action. The earlier 404-query certificates remain the only
+formal retention certificates for these frozen policies.

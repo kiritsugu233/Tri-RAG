@@ -1,6 +1,6 @@
 # Status
 
-Updated: 2026-08-27
+Updated: 2026-08-28
 
 ## What runs
 
@@ -130,7 +130,8 @@ retention `0.980446`, lower bound `0.952304`, `12.25%` candidate saving, and
 `4.17%` coordinate-work saving. Tri-Predict failed with mean `M=1119.515`, mean
 retention `0.972525`, lower bound `0.942480`, `-45.77%` candidate saving, and
 `-15.58%` coordinate-work saving. The failure is preserved without retuning or
-budget expansion; `query_test` and evidence qrels remain unevaluated.
+budget expansion. At certification time, `query_test` and evidence qrels were
+still unevaluated.
 
 Independent audit of all 404 query records reproduced every empirical-
 Bernstein term, all result and embedded fingerprints, the cert ID hash, 1,212
@@ -143,7 +144,7 @@ and `f738545f7871568925201182311a4f14b9036f8f2eb80a943b5ba76ea5e5a22f`.
 The accepted cert archive SHA-256 is
 `4fd19b3b205c92d42596700e845da99b732261531d6c222d73375d57fc7ef12b`.
 
-A descriptive `query_test` runner is now implemented and frozen without reading
+A descriptive `query_test` runner was implemented and frozen without reading
 any real test retrieval or evidence outcome. Config fingerprint
 `149eac226a2e948b3a56d0eff09217f72e28e18f490efe44cfc690bf4b318bbc`
 binds the terminal cert config/result/decisions and all 300 test IDs. Before
@@ -153,8 +154,35 @@ and the compiled deployment. It evaluates all three policies with one shared
 projected scan and pilot-distance reuse, reports embedding retention and cost
 proxies, and computes evidence hit/recall/nDCG at cutoffs 1/5/10 for each policy
 and the diagnostic exact-original reference. The output cannot select a policy,
-retune, or create a new certificate. Real policy/cert bundle preflight passed;
-only synthetic fixtures have exercised the test evaluation path so far.
+retune, or create a new certificate.
+
+The runner was then executed exactly once on all 300 frozen `query_test` IDs by
+Slurm job `374032` on `genoa02` at commit `8a945f9`. Fixed `M=768` had mean
+retention `0.982667`. Monotone-binned used mean `M=698.453`, retained
+`0.982333`, saved `9.06%` of candidates and `3.08%` of coordinate work, and
+preserved its terminal PASS provenance. Tri-Predict used mean `M=1211.613`,
+retained only `0.974333`, incurred `-57.76%` candidate saving and `-19.67%`
+coordinate saving, and preserved its terminal FAIL provenance. No policy used
+fallback or saturation.
+
+At evidence cutoffs 1 and 5, all three policy aggregates equal the exact
+original reference: hit/recall/nDCG are `0.586667/0.559278/0.586667` at 1 and
+`0.810000/0.794889/0.701028` at 5. At 10, exact original has
+`0.860000/0.846500/0.719429`; fixed and Tri-Predict each have
+`0.856667/0.843167` hit/recall with nDCG `0.718425/0.718366`, while monotone has
+`0.853333/0.839833/0.717314`. These are descriptive test metrics, not new
+confidence bounds or grounds for post-test selection.
+
+Independent reduction from the returned query records reproduced 3,600
+per-query evidence metrics, 900 candidate/rerank retention identities, 600
+adaptive policy decisions, all work and budget aggregates, every embedded hash,
+and the complete result identity. The query-test, result, manifest, and summary
+fingerprints are
+`d1e72b0e72d42e4753b016fb92d25ceac745db61439e470a2e79936d15dd260b`,
+`65f722f7eb01cd583ebbcc1df02b3c2fa3fb0e887b624778b1c2f7feffe0ba65`,
+`bffb51f0c0428d75d380a3d7ecef8a336e0ae2d587811f0bbfeb4aad1dff22a8`,
+and `bc58ebe2e8b571a2aab8ae3e1c1b1ae74729c0a243713200931df30b8fb15213`.
+The output contains no certificate or selected-policy artifact.
 
 The local compiled-policy 100k/d768 structural run created seven states, loaded the artifact in `0.1093 ms`, and exactly matched all 64 prior local LID values, budgets, and retention values. Analytic validation averaged `38.4606 ms/decision`; lookup averaged `0.0021 ms/decision`. Reuse-path latency fell from `44.7511` to `4.2712 ms/query` across the old and new local runs. Compilation cost `17.9965 s` once at setup. These are not Genoa serving claims.
 
@@ -332,6 +360,7 @@ python3 -m tri_rag_harness.real_policy_test \
 - Eight tune-policy tests cover immutable tune-only/determinism configuration, the observed Mac/Genoa LID-tail fixture, compiled/scientific identity separation, protected-split and common-cost refusal, terminal fallback, exact coordinate accounting, cached/analytic full-corpus boundary equivalence, and query-aligned decision reduction. Four certification-only tests freeze the real cert/Genoa identities, reject protected-scope and post-cert selection mutations, reject deployment tampering before protected-data access, and reproduce complete synthetic query-level/certificate artifacts byte for byte. Four test-only regressions freeze the 300-query/terminal-cert identities, reject selection/recertification/retuning, reject cert tampering before test access, and reproduce query-level retention/evidence artifacts byte for byte. Policy-loader regressions reject tampered monotone and analytic artifacts. The full local suite now contains 96 tests: 95 pass and one optional real-FAISS test skips.
 - The accepted protocol-v2 Genoa policy gate ran the same 86-test suite on job `373780`, node `genoa02`, commit `5389745`: 85 passed, the optional real-FAISS test skipped, and the run reached its terminal portable-scientific-identity assertion.
 - The one-time certification gate ran the full 92-test suite on the same job and node at commit `1625f3b`: 91 passed, the optional real-FAISS test skipped, and all protected-split assertions completed before the terminal PASS/FAIL artifacts were published.
+- The one-time descriptive test gate ran the full 96-test suite on job `374032`, node `genoa02`, commit `8a945f9`: 95 passed, the optional real-FAISS test skipped, and the command completed without selection, recertification, or retuning.
 
 ## Current artifacts
 
@@ -394,6 +423,14 @@ three standalone certificates, separate systems timings, source/config/tests,
 and the Slurm log. Tri-Predict's FAIL is the accepted outcome and this cert
 split must never be used for retuning.
 
+The terminal descriptive-test archive is
+`scifact-policy-test-374032-audit.tar.gz`, SHA-256
+`39610254579876b77148d0045044aaa8bee1b950624dace646a8ae959ee22c76`.
+It contains the frozen policy and certification inputs, all 300 test query
+records and evidence metrics, source/config/test snapshots, separate timings,
+and the complete Slurm log. It is the accepted one-time test outcome and must
+not be rerun to choose a policy or create a replacement certificate.
+
 `runs/synthetic_mvp/` contains:
 
 - `manifest.json`
@@ -443,22 +480,22 @@ The separately frozen `M_max=1984` FAISS 1M comparison also passes every exact s
 
 ## Next task
 
-Run the frozen descriptive command exactly once on Genoa after the 96-test gate
-passes apart from the expected optional real-FAISS skip. Archive the complete
-output and log regardless of the descriptive outcome. Do not change the
-projection, LID feature, policies, budgets, terminal cert decisions, or test
-protocol after inspecting the result. Return the archive for independent
-identity, retention, work, and evidence-metric recomputation. Do not start LLM
-generation yet.
+Complete the remaining Milestone 6 diagnostics on `query_tune` or from already
+saved immutable records: candidate-set evidence, matched fixed-cost and
+fixed-quality comparisons, LID/retention/evidence strata, and a predeclared
+shuffled-LID control. Do not rerun `query_test`, alter any frozen policy, or
+create a test-derived certificate. LLM answer generation remains deferred until
+these retrieval/evidence diagnostics and the final negative-result report are
+complete.
 
 ## Known deviations and risks
 
 - Configuration is JSON rather than YAML, and query-level output is JSONL rather than Parquet, to keep the first pass runnable with only the already available NumPy/SciPy stack. The artifacts remain machine-readable and auditable.
-- Real E5 inference and the repaired v2 cache passed independent audit. The first v1 cache remains quarantined because its dataset split allowed duplicate query text across tune/cert/test. The public E5 model card already reports SciFact performance, so the off-the-shelf model choice is not a fully blind model-family selection. Tune-only selection and the terminal real certification are complete. The test-only runner is frozen, but real `query_test` retrieval, test evidence metrics, and answer generation remain untouched.
-- Cert pilot/oracle clipped-LID MAE is `14.4541`; oracle LID is higher on average by `14.4534`. Feeding oracle LID to the frozen compiled budget map would raise mean `M` from `1119.5` to `3163.5` and changes the budget on 389 of 404 queries, so repairing pilot LID cannot rescue Tri-Predict's negative efficiency. The same pilot feature lets the empirical monotone policy pass while saving `12.25%`, showing that pilot error alone is not the main explanation for Tri-Predict's dominated cost allocation. It may still contribute to the low-budget queries that caused the quality failure.
-- Tri-Predict predicts mean retention `0.999979` on cert but realizes only `0.972525`; mean absolute prediction error is `0.027487` and prediction/realization correlation is `0.163`. Relative to fixed `M=768`, it saves 96,320 candidates on 192 low-budget queries but loses 89 top-10 neighbors, then spends 238,332 extra candidates on 170 high-budget queries to recover only 37. This net `+142,012` candidates and `-52` retained neighbors is direct evidence that the frozen analytic LID-to-budget/rank-aggregation approximation misallocates work.
+- Real E5 inference and the repaired v2 cache passed independent audit. The first v1 cache remains quarantined because its dataset split allowed duplicate query text across tune/cert/test. The public E5 model card already reports SciFact performance, so the off-the-shelf model choice is not a fully blind model-family selection. Tune-only selection, terminal certification, and the one-time descriptive test are complete. Test outcomes are now observed and may only support frozen-policy description, not model or policy selection. Answer generation remains untouched.
+- The real runs separate the causes of Tri-Predict's failure. Pilot LID is systematically low: on test its mean is `21.91` versus oracle `36.68`, with clipped MAE `14.78`. On the tune records, where retention at every budget was saved, replacing pilot LID by oracle LID in the same frozen Tri map recovers 77 of 82 missing top-10 neighbors. Thus pilot error is the primary observed source of quality misses. It does not repair efficiency: oracle LID raises mean `M` from `1092.5` to `3198.3`, while the realized smallest grid budget reaching unit top-10 retention averages only `420.1`; the oracle-driven map overallocates 394 of 403 tune queries. The analytic rank/mean-field mapping is therefore the primary source of negative efficiency.
+- Tri-Predict predicts mean retention `0.999979` but realizes `0.972525` on cert and `0.974333` on test. On test its low-budget half (`M<768`, 136 queries) loses 50 retained neighbors relative to fixed, while its high-budget half (`M>768`, 136 queries) spends the surplus candidates to recover only 25; net cost is `+133,084` candidates and net retention is `-25` top-10 neighbors. This is a misallocation result: pilot underestimation causes low-end underbudgeting, while the steep analytic LID-to-budget response causes high-end overbudgeting.
 - The selected real-data `56.48%` coordinate-work reduction is an arithmetic proxy under one exact full projected scan and exact reranking. It is not measured latency saving and omits fixed overheads, memory hierarchy effects, batching, and backend-specific kernels. Genoa reproduction validates result portability, not serving performance.
-- E5 is English-only and truncates inputs above 512 tokens. The embedding manifest exposes separate corpus/query truncation counts, but any effect on SciFact retrieval remains unknown until the frozen cache exists.
+- E5 is English-only and truncates inputs above 512 tokens. The embedding manifest exposes separate corpus/query truncation counts, but the experiment does not isolate truncation's effect on the observed SciFact retrieval metrics.
 - GPU and CPU transformer kernels may differ slightly even under fixed packages, float32, deterministic algorithms, eager attention, disabled TF32, and a fixed cuBLAS workspace. The generated array hashes—not an assumption of cross-device bit identity—become the frozen downstream experiment identity.
 - The current synthetic pilot LID differentiates the hardest fitted bin, but the allocation is not efficient relative to the certified fixed baseline. The negative result is a dataset/policy outcome, not hidden by retuning certification data.
 - The current synthetic certification split has been inspected repeatedly during implementation. Its artifacts validate code paths but must not be presented as a fresh research claim or reused to choose new hyperparameters. Real-data policy selection and certification require newly frozen independent splits.

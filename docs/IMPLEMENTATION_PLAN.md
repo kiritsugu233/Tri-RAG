@@ -141,7 +141,7 @@ Acceptance:
 - [x] Implement and freeze a certification-only runner using synthetic fixtures only.
 - [x] Certify on untouched certification queries.
 - [x] Implement and freeze a descriptive test-only runner using synthetic fixtures only.
-- [ ] Evaluate on test queries.
+- [x] Evaluate the three frozen policies once on test queries without selection or recertification.
 
 Acceptance:
 
@@ -156,6 +156,10 @@ Acceptance:
 - [ ] Add matched fixed-cost and fixed-quality comparisons.
 - [ ] Add LID/retention/evidence relationship tables or plots.
 - [ ] Add shuffled-LID control.
+
+The frozen test run now reports auditable final-context evidence metrics at
+cutoffs 1/5/10. The first item remains open because candidate-set evidence has
+not yet been recorded separately from the exact original reranked context.
 
 Acceptance:
 
