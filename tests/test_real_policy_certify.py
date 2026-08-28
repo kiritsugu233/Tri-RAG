@@ -15,7 +15,15 @@ from tri_rag_harness.policies import (
     MonotoneBinnedPolicy,
     TriPredictPolicy,
 )
-from tri_rag_harness.projection import projection_metadata
+from tri_rag_harness.projection import (
+    dense_gaussian_projection,
+    project_rows,
+    projection_metadata,
+)
+from tri_rag_harness.real_dimension_sweep import (
+    _exact_projected_rankings,
+    _ranking_hash,
+)
 from tri_rag_harness.real_policy_certify import (
     RealPolicyCertificationError,
     load_real_policy_certification_config,
@@ -156,9 +164,93 @@ def _fixture(root):
             "data_scope": "query_tune_only",
         }
     )
+    matrix = dense_gaussian_projection(2, 4, 23)
+    projected_corpus = project_rows(corpus, matrix)
+    projected_query = project_rows(queries[:1], matrix)[0]
+    tie_rank = np.argsort(
+        np.argsort(np.asarray(corpus_ids, dtype=str), kind="stable"), kind="stable"
+    )
+    ranking = _exact_projected_rankings(
+        projected_corpus,
+        projected_query[None, :],
+        corpus_ids,
+        k=len(corpus),
+        batch_size=1,
+    )[0][0]
+    original_squared = np.einsum(
+        "ij,ij->i",
+        np.asarray(corpus, dtype=np.float64) - queries[0],
+        np.asarray(corpus, dtype=np.float64) - queries[0],
+    )
+    exact_rows = np.lexsort((tie_rank, original_squared))[:2]
+    exact_ids = [corpus_ids[row] for row in exact_rows]
+    retention_by_budget = {
+        str(budget): len(set(exact_rows.tolist()).intersection(ranking[:budget])) / 2
+        for budget in grid
+    }
+    fixture_lid = 2.5
+    monotone_decision = monotone.choose(fixture_lid, True)
+    analytic_decision = analytic.choose(fixture_lid, True)
+    compiled_decision = compiled.choose(fixture_lid, True)
+    assert (
+        analytic_decision.budget,
+        analytic_decision.saturated,
+    ) == (
+        compiled_decision.budget,
+        compiled_decision.saturated,
+    )
     _jsonl(
         policy_run / "per_query.jsonl",
-        [{"query_id": tune_ids[0], "split": "query_tune"}],
+        [
+            {
+                "query_index": 0,
+                "query_id": tune_ids[0],
+                "split": "query_tune",
+                "pilot_lid": {
+                    "valid": True,
+                    "raw": fixture_lid,
+                    "clipped": fixture_lid,
+                    "valid_distance_count": 3,
+                    "reason": None,
+                },
+                "oracle_lid": {
+                    "valid": True,
+                    "raw": 3.5,
+                    "clipped": 3.5,
+                    "valid_distance_count": 3,
+                    "reason": None,
+                },
+                "pilot_candidate_ids": [corpus_ids[row] for row in ranking[:4]],
+                "exact_top_k_ids": exact_ids,
+                "projected_ranking_rows_sha256": _ranking_hash(ranking),
+                "fixed_retention_by_budget": retention_by_budget,
+                "monotone_binned": {
+                    "chosen_m": monotone_decision.budget,
+                    "embedding_retention": retention_by_budget[
+                        str(monotone_decision.budget)
+                    ],
+                    "lid_bin": monotone_decision.bin_index,
+                    "used_lid_fallback": monotone_decision.used_fallback,
+                    "policy_saturated": monotone_decision.saturated,
+                    "predicted_retention": None,
+                    "raw_predicted_retention": None,
+                },
+                "tri_predict": {
+                    "chosen_m": analytic_decision.budget,
+                    "embedding_retention": retention_by_budget[
+                        str(analytic_decision.budget)
+                    ],
+                    "lid_bin": analytic_decision.bin_index,
+                    "used_lid_fallback": analytic_decision.used_fallback,
+                    "policy_saturated": analytic_decision.saturated,
+                    "predicted_retention": analytic_decision.predicted_retention,
+                    "raw_predicted_retention": (
+                        analytic_decision.raw_predicted_retention
+                    ),
+                    "compiled_decision_match": True,
+                },
+            }
+        ],
     )
     write_json(policy_run / "selection.json", selection)
     write_json(policy_run / "fixed_policies.json", fixed_artifact)

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "benchmark": "real_tune_only_evidence_diagnostics_v1",
+  "policy_binding_config_fingerprint": "e5545a4aa4c07a1bc188870538c7d346ff26faf38f135c03d4b32f4a18c7ce74",
+  "policy_source_result_fingerprint": "2c31279a8f8038eebb049b0630548b2edd533ee5e1e01adb6cbd0a41e7e9bcb8",
+  "evaluation_split": "query_tune",
+  "query_split": {
+    "n": 403,
+    "id_hash": "99afbd1bf5c401dafb0230e90a2dd779552021ec3b8be0ce4c1bd224e188e8e2"
+  },
+  "evidence": {
+    "source": "prepared_query_tune_qrels",
+    "cutoffs": [
+      1,
+      5,
+      10
+    ],
+    "candidate_metrics": [
+      "evidence_hit",
+      "evidence_recall"
+    ],
+    "final_context_metrics": [
+      "evidence_hit",
+      "evidence_recall",
+      "ndcg"
+    ],
+    "empty_qrel_behavior": "record_null_metrics_and_do_not_drop_query",
+    "include_exact_original_reference": true
+  },
+  "matched_comparisons": {
+    "fixed_cost_rule": "bracket_adaptive_mean_budget_on_frozen_grid",
+    "fixed_quality_metrics": [
+      "embedding_retention",
+      "candidate_evidence_recall",
+      "final_context_evidence_recall_at_k_ctx"
+    ],
+    "fixed_quality_rule": "smallest_frozen_fixed_budget_with_mean_metric_at_least_adaptive_mean",
+    "role": "posthoc_query_tune_diagnostic_not_policy_selection"
+  },
+  "shuffled_lid": {
+    "seed": 31013,
+    "repetitions": 1000,
+    "unit": "permute_pilot_lid_and_validity_pairs_across_query_tune_ids",
+    "policies": [
+      "monotone_binned",
+      "tri_predict"
+    ],
+    "metrics": [
+      "embedding_retention",
+      "candidate_evidence_recall",
+      "final_context_evidence_recall_at_k_ctx"
+    ],
+    "p_value": "one_plus_controls_at_least_observed_over_repetitions_plus_one"
+  },
+  "reporting": {
+    "role": "posthoc_tune_only_evidence_and_allocation_diagnostics",
+    "protected_split_access": "forbidden",
+    "policy_selection": "forbidden",
+    "new_certification": "forbidden",
+    "retuning": "forbidden"
+  }
+}

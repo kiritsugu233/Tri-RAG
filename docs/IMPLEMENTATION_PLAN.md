@@ -160,6 +160,9 @@ Acceptance:
 The frozen test run now reports auditable final-context evidence metrics at
 cutoffs 1/5/10. The first item remains open because candidate-set evidence has
 not yet been recorded separately from the exact original reranked context.
+The tune-only Milestone 6 runner and its protocol are now frozen after synthetic
+reproducibility tests; these boxes remain open until the real tune run is
+returned and independently audited.
 
 Acceptance:
 

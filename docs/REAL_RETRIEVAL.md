@@ -492,11 +492,62 @@ downward bias causes underallocation at the low end, while the analytic
 LID-to-budget/rank-aggregation response causes severe overallocation at the
 high end. Both are real, but the latter is what makes efficiency negative.
 
+## Frozen tune-only evidence and allocation diagnostics
+
+`configs/real_scifact_tune_diagnostics.json` and
+`tri_rag_harness.real_tune_diagnostics` are frozen with config fingerprint
+`1b5d8a47ebf64a42c0757cae1d460198a0b1a585044ed4c4d0e900f3972337c6`.
+The protocol binds the accepted policy result and 403 tune IDs, uses evidence
+cutoffs 1/5/10, and explicitly forbids protected-split access, policy selection,
+new certification, and retuning. Because it was designed after the terminal
+test result was observed, it is a posthoc diagnostic and cannot support a new
+preregistered claim.
+
+The runner validates the complete scientific and compiled policy bundle before
+loading the tune dataset or qrels. It then reconstructs the frozen projection
+and requires every full projected ranking hash to match the accepted tune run.
+For every query and every budget in the frozen grid, it records embedding
+retention, the candidate-prefix hash, relevant IDs present anywhere in the
+candidate set, candidate evidence hit/recall, exact original reranked top-10,
+and final-context evidence hit/recall/nDCG. Empty-qrel queries are retained with
+explicit null evidence metrics rather than silently dropped.
+
+Matched comparisons bracket each adaptive mean budget with fixed grid points
+and find the smallest fixed budget meeting each adaptive mean for embedding
+retention, candidate evidence recall, and final-context evidence recall at
+`k_ctx`. These matches are descriptive tune comparisons, not selected policies.
+Relationship output uses the already frozen monotone LID bins.
+
+The shuffled-LID control uses seed `31013` and 1,000 deterministic permutations
+of complete pilot-LID/validity pairs across tune query IDs. Both adaptive
+policies are replayed without refitting; realized retention and evidence are
+looked up from the just-reconstructed per-query fixed grid. The result reports
+the full control distribution and the plus-one one-sided permutation statistic.
+
+Run it with:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src \
+python3 -m tri_rag_harness.real_tune_diagnostics \
+  --config configs/real_scifact_tune_diagnostics.json \
+  --policy-binding-config configs/real_scifact_policy_certify.json \
+  --dataset data/prepared/scifact-dedup-v2 \
+  --embedding-config configs/real_scifact_e5_base_v2_embeddings.json \
+  --embedding-cache data/embeddings/scifact-e5-base-v2-dedup-v2 \
+  --policy-run runs/slurm-scifact-policy-v2-373780 \
+  --output runs/scifact-tune-diagnostics
+```
+
+Three synthetic regressions freeze the real config identity, reject protected
+access and forbidden mutations, and reproduce all five deterministic result
+artifacts byte for byte. The complete local suite now has 99 tests: 98 pass and
+the optional real-FAISS test skips.
+
 ## Next gate
 
-Use `query_tune` and already saved immutable records to finish candidate-set
-evidence, matched fixed-cost/fixed-quality comparisons, relationship strata,
-and a predeclared shuffled-LID control. Do not rerun test, revise the frozen
-policies, or derive a new certificate from the observed test outcomes. LLM
-answer generation remains deferred until this retrieval/evidence report is
-complete.
+Run the tune-only diagnostic twice on Genoa and require byte equality for
+`per_query.jsonl`, `fixed_grid.json`, `shuffled_controls.jsonl`, `summary.json`,
+and `report.md`. Archive both outputs and the complete log for independent
+reduction. Do not rerun test, revise the frozen policies, or derive a new
+certificate from these posthoc tune outcomes. LLM answer generation remains
+deferred until this retrieval/evidence report is complete.
