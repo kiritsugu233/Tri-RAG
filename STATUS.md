@@ -431,6 +431,7 @@ python3 -m tri_rag_harness.real_tune_diagnostics \
 - The one-time certification gate ran the full 92-test suite on the same job and node at commit `1625f3b`: 91 passed, the optional real-FAISS test skipped, and all protected-split assertions completed before the terminal PASS/FAIL artifacts were published.
 - The one-time descriptive test gate ran the full 96-test suite on job `374032`, node `genoa02`, commit `8a945f9`: 95 passed, the optional real-FAISS test skipped, and the command completed without selection, recertification, or retuning.
 - The tune-only evidence/allocation gate ran the full 99-test suite on the same job and node at commit `4af95c3`: 98 passed, the optional real-FAISS test skipped, both real diagnostic runs completed, and all five deterministic artifacts compared byte for byte.
+- The Calibrated Tri-Predict v2 protocol/version-boundary gate ran the full 99-test suite on the same job and node at commit `794f580`: 98 passed, the optional real-FAISS test skipped, and the command exited successfully after confirming the terminal v1 baseline, PDCTP protocol, new split roles, and provisional FiQA handoff. The retained log is `slurm_logs/calibrated-v2-protocol-374032.log` (11.661 seconds).
 
 ## Current artifacts
 
