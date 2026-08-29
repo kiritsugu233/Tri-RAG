@@ -781,6 +781,20 @@ generation matched all four artifacts byte for byte. No embedding, retrieval,
 method outcome, latency measurement, protected-role access, LLM, or approximate
 index was produced.
 
+Independent Genoa reproduction completed in the existing `genoa06` Slurm
+allocation `374320` at commit `2a5b44f`. The micromamba `tri-rag` environment
+ran the same 135-test suite in 30.706 seconds: 134 passed, one optional
+real-FAISS test skipped, and zero failed. All four generated artifacts matched
+the checked-in files byte for byte, including protocol-freeze/state/report/role
+SHA-256 values
+`a04a611b24da364dc294d65b857d017e84cab0802e4fc83dccb558858356ce8a`,
+`b82c00461fd8cb23add3ee4bead30c1dbd5fde6511cb8aac703b4fc02b3931dd`,
+`66937d8bd5539ad59cc037f6750d73b0a6263a7ef7ccd040f466fb876ca518bd`,
+and `9c1bb73a6a4e1ae31c6fd85c067d330e468203f13b0fa2eb0adec19c931b1a31`.
+The returned `pdctp-fiqa-protocol-freeze-374320.tar.gz` archive was transferred
+and independently verified locally at SHA-256
+`36e8698f01777abc2f6dde5ee5e69385f1f9ca8298ca59e3fff47c6a421d165e`.
+
 ## Next task
 
 Prepare the canonical FiQA dataset under the frozen empty-document rule and

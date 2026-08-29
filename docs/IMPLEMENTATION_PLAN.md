@@ -310,7 +310,11 @@ contract, pinned E5 revision, fresh projection seed `83047`, `m_prime=192`, a
 targets, and paired CPU/GPU latency rules. All roles remain closed and the GO
 decision permits only dataset preparation and independent embedding-cache
 audit. The 135-test offline suite reports 134 passes, one optional FAISS skip,
-and zero failures.
+and zero failures. Slurm allocation `374320` independently reproduced the gate
+on `genoa06` at commit `2a5b44f`: all four artifacts matched byte for byte and
+the same test result completed in 30.706 seconds. The returned archive passed
+local SHA-256 verification at
+`36e8698f01777abc2f6dde5ee5e69385f1f9ca8298ca59e3fff47c6a421d165e`.
 
 ## Suggested future code tree
 

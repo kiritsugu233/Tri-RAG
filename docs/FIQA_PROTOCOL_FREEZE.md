@@ -151,6 +151,14 @@ The four checked-in artifacts are `protocol_freeze.json`,
 generation is byte-identical. The complete network-free suite ran 135 tests:
 134 passed, one optional real-FAISS conformance test skipped, and zero failed.
 
+Independent reproduction ran in Slurm allocation `374320` on `genoa06` using
+the micromamba `tri-rag` environment at commit `2a5b44f`. The same 135 tests
+completed in 30.706 seconds with 134 passes, one optional FAISS skip, and zero
+failures. All four output artifacts matched the checked-in files byte for byte.
+The returned archive passed independent local transfer verification at
+SHA-256
+`36e8698f01777abc2f6dde5ee5e69385f1f9ca8298ca59e3fff47c6a421d165e`.
+
 The next gate may prepare the canonical dataset and build a new E5 cache bound
 to this freeze. It must independently verify source IDs, empty-document
 replacement count and identities, role hashes, formatted text hashes,
