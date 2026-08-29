@@ -697,19 +697,71 @@ The FAISS 100k CPU/GPU comparison from job `373268` uses the same 64 queries and
 
 The separately frozen `M_max=1984` FAISS 1M comparison also passes every exact systems gate. It establishes that one A100 can hold both 1M-vector flat indexes with a shared resource pool and execute all four paths without device-memory growth. It does not establish useful adaptation: every query saturates, retention remains low, and both fixed GPU paths are faster than Tri-Predict reuse. The complete analysis and interpretation limits are in `docs/RETRIEVAL_LATENCY.md`.
 
+## FiQA source and capacity gate
+
+The provisional FiQA source audit is complete. The new, v2-only
+`pdctp_beir_source_audit_v1` path leaves the existing SciFact `beir_zip_v2`
+adapter untouched. It independently verifies exact archive bytes, official
+MD5, an independently pinned SHA-256, ZIP CRC, required member hashes, all qrel
+query/document references, normalized query-text groups, and a constructive
+five-role capacity witness. The exact local command was:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 -m \
+  tri_rag_harness.pdctp_dataset_audit \
+  --config configs/pdctp_fiqa_source_audit_v1.json \
+  --archive data/fiqa.zip \
+  --output artifacts/pdctp_fiqa_source_audit_v1
+```
+
+The 17,948,027-byte archive matches MD5
+`17918ed23cd04fb15047f73e6c3bd9d9` and SHA-256
+`32c7df99ed21252fdfb2cf3f5673502a8d245ee0c44c4a133570d92ce2b3ad02`.
+It contains 57,638 corpus items and 6,648 source queries. Eligible
+train/dev/test query counts are 5,500/500/648 with 14,166/1,238/1,706 positive
+qrels. All native query-ID pools are disjoint, and NFKC/casefold/whitespace
+normalization finds no duplicate query text within or across them.
+
+The label-free group-hash witness assigns cal/tune/cert/latency/test counts of
+1,966/1,967/1,567/500/648 with disjoint IDs and normalized texts. It therefore
+passes the frozen 1,567-query power requirement. The audit report fingerprint
+is `99211145fdf7976fe58072d516c4f6c95c33ed880afe63189cb8e464aac15aa5`;
+the witness fingerprint is
+`dfccd57b074d8faa11a410f5d94a970133e29fcadac9b08e4972d747249fcaff`.
+Both artifacts reproduced byte for byte in a second local run.
+The complete offline suite ran 130 tests in 21.929 seconds: 129 passed, the
+optional real-FAISS conformance test skipped, and zero failed. Raw v1 behavior
+and the existing SciFact adapter tests remain unchanged and pass.
+
+This is `GO_TO_PROTOCOL_FREEZE`, not permission to evaluate a method. The
+artifacts contain no corpus/query text, qrel pairs, embeddings, retrieval
+results, policy outcomes, or latency measurements. FiQA Task 2 is recorded as
+non-commercial-use-only, and BEIR's disclaimer does not replace upstream
+permission. The complete evidence and procedure are in
+`docs/FIQA_SOURCE_AUDIT.md`.
+
 ## Next task
 
-The network-free foundation is complete locally and independently reproduced
-on Genoa with 20/20 byte-identical artifacts. Upon explicit continuation, begin
-only the provisional FiQA source/license/archive and eligible-query-count audit.
-Do not evaluate a method, create protected role outcomes, or embed/download
-FiQA unless that audit proves duplicate-safe roles can support the frozen
-1,567-query certification power requirement or a documented replacement
-protocol is approved. `m_prime=192` remains frozen for the first real v2
-protocol. LLM answer generation remains deferred.
+Freeze and review the complete real-data protocol and actual duplicate-safe
+five-role identities before embedding or opening any role. The freeze must
+include a deterministic representation for the 38 empty corpus items that are
+referenced by positive qrels (train/dev/test: 35/2/1), evidence/retention
+targets, candidate grids, fresh projection seed, `m_prime=192`, the geometric
+budget grid, tolerances, family-wise alpha allocation, CPU/GPU latency blocks,
+and every stochastic seed. Do not build the E5 cache, evaluate a policy, access
+protected-role outcomes, run an LLM, or add approximate indexing before that
+freeze is reviewed. LLM answer generation remains deferred.
 
 ## Known deviations and risks
 
+- FiQA-2018 Task 2 training and testing data are restricted by the upstream
+  page to non-commercial use. BEIR redistributes the prepared data but
+  explicitly disclaims responsibility for determining permission. This audit
+  records the restriction; it does not turn it into an open-source license.
+- FiQA contains 38 corpus items with empty title and text, and every one is
+  referenced by a positive qrel: 35 train, two dev, one test. Silent removal
+  would change the pinned corpus/qrels identity. The next protocol must freeze
+  an explicit representation and retain this as a source-quality limitation.
 - The checked-in power plan is deliberately worst-case and requires 1,567
   fresh certification queries for the widest paired family. The 16-query
   synthetic certification bounds clip to broad ranges and all fail. This is an

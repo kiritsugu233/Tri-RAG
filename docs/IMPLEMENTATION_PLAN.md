@@ -261,7 +261,7 @@ Acceptance:
 
 ## Calibrated Tri-Predict v2: fresh real-data gates
 
-- [ ] Audit and pin a new external-query dataset; FiQA is provisional.
+- [x] Audit and pin a new external-query dataset; FiQA passes the source gate.
 - [ ] Freeze duplicate-safe five-role IDs and a power-supported protocol.
 - [ ] Build and independently audit a new E5 embedding cache.
 - [ ] Freeze `m_prime=192`, a fresh projection seed, and one budget grid.
@@ -279,6 +279,20 @@ Acceptance:
   eligible comparator;
 - feasibility dominance is not mislabeled as matched-quality cost superiority;
 - a failed gate is terminal and does not trigger retuning.
+
+The FiQA source gate is documented in `docs/FIQA_SOURCE_AUDIT.md`. The pinned
+17,948,027-byte archive matches official MD5
+`17918ed23cd04fb15047f73e6c3bd9d9` and independently measured SHA-256
+`32c7df99ed21252fdfb2cf3f5673502a8d245ee0c44c4a133570d92ce2b3ad02`.
+All qrel references pass. The eligible native train/dev/test counts are
+5,500/500/648, normalized query text has no duplicates, and the constructive
+five-role witness assigns cal/tune/cert/latency/test counts of
+1,966/1,967/1,567/500/648. Its `GO_TO_PROTOCOL_FREEZE` decision is a capacity
+result only and does not authorize embeddings, method evaluation, or protected
+outcome access. The audit also exposes 38 empty corpus items referenced by
+positive qrels; the next protocol gate must freeze their representation rather
+than silently removing them. The complete offline regression reports 129
+passes, one optional real-FAISS skip, and zero failures across 130 tests.
 
 ## Suggested future code tree
 

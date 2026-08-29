@@ -1,0 +1,143 @@
+{
+  "artifacts": {
+    "role_feasibility_witness.json": {
+      "bytes": 239897,
+      "md5": "74ae3c9be232c17163edfe18e7e9c158",
+      "sha256": "afe83d33062b3c7afb0da68e76fd7b8a3db7aed96a58d1c1364f3302f3940099"
+    }
+  },
+  "audit_version": "pdctp_beir_source_audit_v1",
+  "config_fingerprint": "17b561b18b4c721f9bec843afe5351a5da038a4b928a97f5c41ad8c797b92487",
+  "counts": {
+    "corpus": 57638,
+    "empty_corpus_items": 38,
+    "qrels": {
+      "dev": {
+        "eligible_queries": 500,
+        "positive_rows": 1238,
+        "positive_rows_to_empty_corpus": 2,
+        "rows": 1238
+      },
+      "test": {
+        "eligible_queries": 648,
+        "positive_rows": 1706,
+        "positive_rows_to_empty_corpus": 1,
+        "rows": 1706
+      },
+      "train": {
+        "eligible_queries": 5500,
+        "positive_rows": 14166,
+        "positive_rows_to_empty_corpus": 35,
+        "rows": 14166
+      }
+    },
+    "source_queries": 6648
+  },
+  "dataset": {
+    "name": "BEIR FiQA-2018",
+    "namespace": "pdctp-beir-fiqa",
+    "version": "fiqa.zip-md5-17918ed23cd04fb15047f73e6c3bd9d9-sha256-32c7df99ed21252fdfb2cf3f5673502a8d245ee0c44c4a133570d92ce2b3ad02"
+  },
+  "decision": "GO_TO_PROTOCOL_FREEZE",
+  "eligibility": {
+    "five_role_capacity": {
+      "cross_native_normalized_text_groups": 0,
+      "duplicate_normalized_text_groups": 0,
+      "excluded_non_test_queries_matching_test_text": 0,
+      "ids_disjoint": true,
+      "latency_source_counts": {
+        "dev": 500,
+        "train": 0
+      },
+      "minimum_role_sizes": {
+        "query_cal": 1,
+        "query_cert": 1567,
+        "query_latency": 1,
+        "query_test": 1,
+        "query_tune": 1
+      },
+      "normalized_texts_disjoint": true,
+      "ordered_id_hashes": {
+        "query_cal": "1446b11d27d183f22f531137823581938ef03fa51f696e4b9a7d0d563b2da262",
+        "query_cert": "1c26bec55386a647979e998b6ef7d7cc64cb67a3a046aa1bd7e2149fb0e5462e",
+        "query_latency": "07e529dcbba454f75baf5a63e420e11c3566aa8897403e6ef4fa5db2476b8cb7",
+        "query_test": "c026ed245056eaae0f3592d416a32bcbb536b556d4e3bf1bb85013673e54b1cc",
+        "query_tune": "d55652c3d04cefc4054b5e970225ffebcf1f6b0531c1774c1133c692f76362e3"
+      },
+      "passed": true,
+      "query_cert_required": 1567,
+      "role_counts": {
+        "query_cal": 1966,
+        "query_cert": 1567,
+        "query_latency": 500,
+        "query_test": 648,
+        "query_tune": 1967
+      },
+      "witness_fingerprint": "dfccd57b074d8faa11a410f5d94a970133e29fcadac9b08e4972d747249fcaff"
+    },
+    "minimum_relevance": 1,
+    "requires_at_least_one_positive_qrel": true,
+    "subdivision_uses_relevance_magnitudes": false
+  },
+  "fingerprint": "99211145fdf7976fe58072d516c4f6c95c33ed880afe63189cb8e464aac15aa5",
+  "integrity": {
+    "archive_identity_verified": true,
+    "native_qrel_query_ids_disjoint": true,
+    "qrel_documents_exist": true,
+    "qrel_queries_exist": true,
+    "required_members_present": true,
+    "zip_crc_verified": true
+  },
+  "license": {
+    "commercial_use_permitted": false,
+    "redistributor_disclaimer_url": "https://github.com/beir-cellar/beir#disclaimer",
+    "upstream_component": "FiQA-2018 Task 2 training and testing data",
+    "upstream_identifier": "non-commercial-use-only",
+    "upstream_url": "https://sites.google.com/view/fiqa/home"
+  },
+  "name": "pdctp_beir_source_audit",
+  "schema_version": 1,
+  "scope_guards": {
+    "authorizes_method_evaluation": false,
+    "contains_embeddings": false,
+    "contains_qrel_pairs_or_relevance_values": false,
+    "contains_query_or_corpus_text": false,
+    "contains_retrieval_or_policy_outcomes": false
+  },
+  "source": {
+    "archive": {
+      "bytes": 17948027,
+      "md5": "17918ed23cd04fb15047f73e6c3bd9d9",
+      "sha256": "32c7df99ed21252fdfb2cf3f5673502a8d245ee0c44c4a133570d92ce2b3ad02"
+    },
+    "members": {
+      "corpus": {
+        "bytes": 47949497,
+        "path": "fiqa/corpus.jsonl",
+        "sha256": "ff593e4df9933955dc3af83be0c3fa28ac7465f627e08c2e53593e734d506517"
+      },
+      "qrels_dev": {
+        "bytes": 18327,
+        "path": "fiqa/qrels/dev.tsv",
+        "sha256": "03b27e547cd29dc721c3b93ce8ddd70df6b2d0ce954d8ef3659d386e8cd72c11"
+      },
+      "qrels_test": {
+        "bytes": 25256,
+        "path": "fiqa/qrels/test.tsv",
+        "sha256": "6adc2a640dcdd22bb8b3858f89107adef2a7c3db20a63550dfa7a0f71e379e44"
+      },
+      "qrels_train": {
+        "bytes": 209842,
+        "path": "fiqa/qrels/train.tsv",
+        "sha256": "e46a99529aa61b12e086a5c057e4e0ecaeda9502e53d5fe855efce778f1ec59a"
+      },
+      "queries": {
+        "bytes": 706247,
+        "path": "fiqa/queries.jsonl",
+        "sha256": "eede1e61d4a0188940239b53ebc2da91f577a6a34679c812d1eb9090c29877bc"
+      }
+    },
+    "metadata_url": "https://github.com/beir-cellar/beir#available-datasets",
+    "url": "https://public.ukp.informatik.tu-darmstadt.de/thakur/BEIR/datasets/fiqa.zip"
+  }
+}
