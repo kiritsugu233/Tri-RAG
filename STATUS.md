@@ -753,17 +753,45 @@ non-commercial-use-only, and BEIR's disclaimer does not replace upstream
 permission. The complete evidence and procedure are in
 `docs/FIQA_SOURCE_AUDIT.md`.
 
+## FiQA real-data protocol freeze
+
+The FiQA real-data protocol is now frozen. The v2-only
+`pdctp_fiqa_real_protocol_freeze_v1` config binds the accepted source audit,
+role witness, and 1,567-query power plan; validates every input file hash and
+fingerprint; serializes all 6,648 final ordered role IDs; and emits an all-closed
+five-role guard state. Config/protocol fingerprints are
+`47c602c777e9e4589597ae996a7d1459407ae916b376854699569c115ebdfc41`
+and `cb3ef70f3ffc801c248f3269e0807480f0ee5a51cde41a52573a03f228a42368`.
+The assignment and initial state fingerprints are
+`ae884e0001d92ad11ddc1e420ece5412846454864331843a25a7e5cccf445dfe`
+and `6f1eb5a4ecef7cf4a0413c13de82cd31dc2024b1593ebd86c57c153c276f45b9`.
+
+The freeze predeclares `[EMPTY_DOCUMENT]` for all 38 empty source items, the
+pinned E5 revision, fresh projection seed `83047`, `m_prime=192`, one 21-value
+geometric grid from `M=64` through the full corpus, 1,620 full-PDCTP tuples,
+0.95 retention and 0.02 evidence tolerances, the six-hypothesis Bonferroni
+certificate, and the paired exact CPU/A100 latency protocol. GPU selections
+above `M=1984` fail the latency gate rather than receiving a smaller substitute.
+The exact command, numerical choices, and interpretation boundary are in
+`docs/FIQA_PROTOCOL_FREEZE.md`.
+
+The complete offline suite ran 135 tests in 21.997 seconds: 134 passed, one
+optional real-FAISS conformance test skipped, and zero failed. Repeated protocol
+generation matched all four artifacts byte for byte. No embedding, retrieval,
+method outcome, latency measurement, protected-role access, LLM, or approximate
+index was produced.
+
 ## Next task
 
-Freeze and review the complete real-data protocol and actual duplicate-safe
-five-role identities before embedding or opening any role. The freeze must
-include a deterministic representation for the 38 empty corpus items that are
-referenced by positive qrels (train/dev/test: 35/2/1), evidence/retention
-targets, candidate grids, fresh projection seed, `m_prime=192`, the geometric
-budget grid, tolerances, family-wise alpha allocation, CPU/GPU latency blocks,
-and every stochastic seed. Do not build the E5 cache, evaluate a policy, access
-protected-role outcomes, run an LLM, or add approximate indexing before that
-freeze is reviewed. LLM answer generation remains deferred.
+Prepare the canonical FiQA dataset under the frozen empty-document rule and
+build a new, independently audited E5 cache bound to the protocol freeze. This
+next gate may read source text and encode all role queries label-free, but it
+must not fit a calibrator, run policy selection, inspect retrieval/evidence
+outcomes, or open `query_cal` in the protocol guard. Validate source/member
+identities, exact empty-document replacements, ordered role hashes, formatted
+text hashes, model snapshot, array shapes/dtypes/norms, truncation counts, and
+cache fingerprints before permitting calibration fitting. LLM generation and
+approximate indexing remain deferred.
 
 ## Known deviations and risks
 
@@ -775,6 +803,16 @@ freeze is reviewed. LLM answer generation remains deferred.
   referenced by a positive qrel: 35 train, two dev, one test. Silent removal
   would change the pinned corpus/qrels identity. The next protocol must freeze
   an explicit representation and retain this as a source-quality limitation.
+- The frozen `[EMPTY_DOCUMENT]` marker makes the empty-item embedding path
+  executable and deterministic, but it cannot recover missing financial
+  content. Evidence metrics continue to treat those qrels as relevant, so the
+  35/2/1 train/dev/test references remain a source-quality limitation rather
+  than being hidden by deletion or relabeling.
+- The exact FAISS GPU latency contract has a 2,048 selection limit and a
+  64-item stable-boundary guard. Any selected policy above `M=1984` makes the
+  GPU latency gate terminally incompatible; the protocol forbids silently
+  shrinking its budget. A CPU result alone cannot support the required paired
+  CPU/GPU latency claim.
 - The checked-in power plan is deliberately worst-case and requires 1,567
   fresh certification queries for the widest paired family. The 16-query
   synthetic certification bounds clip to broad ranges and all fail. This is an

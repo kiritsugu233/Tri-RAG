@@ -1,0 +1,242 @@
+{
+  "schema": "pdctp_fiqa_real_protocol_freeze_v1",
+  "version": 1,
+  "run_name": "pdctp_fiqa_real_protocol_v1",
+  "source_gate": {
+    "audit_config_fingerprint": "17b561b18b4c721f9bec843afe5351a5da038a4b928a97f5c41ad8c797b92487",
+    "source_audit_fingerprint": "99211145fdf7976fe58072d516c4f6c95c33ed880afe63189cb8e464aac15aa5",
+    "source_audit_sha256": "dd65862cf8c87b0a40c3dcc2fae3971ec26bc7ad44b0db00803e063dfedc72d9",
+    "role_witness_fingerprint": "dfccd57b074d8faa11a410f5d94a970133e29fcadac9b08e4972d747249fcaff",
+    "role_witness_sha256": "afe83d33062b3c7afb0da68e76fd7b8a3db7aed96a58d1c1364f3302f3940099",
+    "power_plan_fingerprint": "f1bddbc072143ec13b23785775d7b7ebf97913146eb05022e7d43f0d12a644a2",
+    "power_plan_sha256": "84a58893ea958dde62283a38efbe29a6afd16fdff3610a4b04e8e2d4bd29c537"
+  },
+  "dataset": {
+    "schema": "pdctp_fiqa_dataset_contract_v1",
+    "name": "BEIR FiQA-2018",
+    "version": "fiqa.zip-md5-17918ed23cd04fb15047f73e6c3bd9d9-sha256-32c7df99ed21252fdfb2cf3f5673502a8d245ee0c44c4a133570d92ce2b3ad02",
+    "id_namespace": "pdctp-beir-fiqa",
+    "archive_sha256": "32c7df99ed21252fdfb2cf3f5673502a8d245ee0c44c4a133570d92ce2b3ad02",
+    "corpus_size": 57638,
+    "source_query_count": 6648,
+    "minimum_relevance": 1,
+    "external_query_ids": true,
+    "empty_documents": {
+      "source_count": 38,
+      "positive_qrel_references_by_native_split": {
+        "train": 35,
+        "dev": 2,
+        "test": 1
+      },
+      "policy": "replace_empty_title_and_text_with_marker_v1",
+      "replacement_text": "[EMPTY_DOCUMENT]",
+      "formatted_embedding_text": "passage: [EMPTY_DOCUMENT]",
+      "silent_deletion_allowed": false
+    }
+  },
+  "roles": {
+    "schema": "pdctp_fiqa_five_roles_freeze_v1",
+    "assignment_seed": 62419,
+    "source_witness_fingerprint": "dfccd57b074d8faa11a410f5d94a970133e29fcadac9b08e4972d747249fcaff",
+    "counts": {
+      "query_cal": 1966,
+      "query_tune": 1967,
+      "query_cert": 1567,
+      "query_latency": 500,
+      "query_test": 648
+    },
+    "ordered_id_hashes": {
+      "query_cal": "1446b11d27d183f22f531137823581938ef03fa51f696e4b9a7d0d563b2da262",
+      "query_tune": "d55652c3d04cefc4054b5e970225ffebcf1f6b0531c1774c1133c692f76362e3",
+      "query_cert": "1c26bec55386a647979e998b6ef7d7cc64cb67a3a046aa1bd7e2149fb0e5462e",
+      "query_latency": "07e529dcbba454f75baf5a63e420e11c3566aa8897403e6ef4fa5db2476b8cb7",
+      "query_test": "c026ed245056eaae0f3592d416a32bcbb536b556d4e3bf1bb85013673e54b1cc"
+    },
+    "normalized_text_groups_disjoint": true,
+    "initial_state": "all_roles_closed"
+  },
+  "embedding": {
+    "schema": "pdctp_fiqa_e5_embedding_request_v1",
+    "continuity_source_config_sha256": "cc18a2ebfe02a38ddfc859cc2398349e59fbdaca2b38b9880fc41e284981aedd",
+    "model": {
+      "name": "intfloat/e5-base-v2",
+      "revision": "f52bf8ec8c7124536f0efb74aca902b2995e5bcd",
+      "embedding_dimension": 768,
+      "max_sequence_length": 512,
+      "trust_remote_code": false
+    },
+    "formatting": {
+      "corpus_prefix": "passage: ",
+      "query_prefix": "query: ",
+      "title_text_separator": "\n",
+      "strip_fields": true
+    },
+    "encoding": {
+      "model_dtype": "float32",
+      "output_dtype": "float32",
+      "l2_normalize": true,
+      "deterministic_algorithms": true,
+      "allow_tf32": false,
+      "attention_implementation": "eager",
+      "cublas_workspace_config": ":4096:8"
+    },
+    "runtime_packages": {
+      "huggingface-hub": "0.28.1",
+      "numpy": "1.26.4",
+      "safetensors": "0.5.2",
+      "sentence-transformers": "3.4.1",
+      "scipy": "1.13.0",
+      "tokenizers": "0.21.0",
+      "torch": "2.5.1",
+      "transformers": "4.48.2"
+    }
+  },
+  "seeds": {
+    "projection": 83047,
+    "shuffled_profile": 83059,
+    "latency_method_order": 83071
+  },
+  "retrieval": {
+    "schema": "pdctp_fiqa_exact_retrieval_v1",
+    "corpus_size": 57638,
+    "embedding_dimension": 768,
+    "input_normalization": "l2_before_projection",
+    "projection": {
+      "family": "dense_gaussian",
+      "variance": "1/m_prime",
+      "seed": 83047,
+      "m_prime": 192,
+      "post_projection_normalize": false
+    },
+    "distance": {
+      "original": "squared_l2",
+      "projected": "squared_l2"
+    },
+    "stable_tie_break": "lexicographic_doc_id",
+    "query_batch_size": 32,
+    "k_gt": 10,
+    "k_ctx": 5,
+    "m_pilot": 64,
+    "s_lid": 32,
+    "min_lid_neighbors": 16,
+    "budget_grid_rule": {
+      "name": "binary_interleaved_geometric_v1",
+      "minimum_budget": 64,
+      "per_octave_multipliers": [1.0, 1.5],
+      "terminal_full_corpus": true
+    },
+    "m_grid": [64, 96, 128, 192, 256, 384, 512, 768, 1024, 1536, 2048, 3072, 4096, 6144, 8192, 12288, 16384, 24576, 32768, 49152, 57638],
+    "max_rank_samples": 256,
+    "pilot_expansion_reuse": "one_projected_scan",
+    "cost_objective": {
+      "name": "common_coordinate_work",
+      "formula": "(corpus_size + embedding_dimension) * m_prime + embedding_dimension * M"
+    }
+  },
+  "features": {
+    "schema": "pilot_distance_features_v1",
+    "lid_boundary": 32,
+    "minimum_count": 32,
+    "gap_quantiles": [0.25, 0.5, 0.75],
+    "epsilon": 0.0,
+    "duplicate_tolerance": 1e-12,
+    "invalid_fill": 0.0,
+    "output_decimals": 10
+  },
+  "candidate_suite": {
+    "schema": "pdctp_fiqa_candidate_suite_v1",
+    "methods": ["fixed", "monotone_binned", "raw_tri_predict", "lid_calibration_only", "budget_residual_only", "pdctp"],
+    "fixed_budgets": [64, 96, 128, 192, 256, 384, 512, 768, 1024, 1536, 2048, 3072, 4096, 6144, 8192, 12288, 16384, 24576, 32768, 49152, 57638],
+    "monotone_binned": {
+      "n_bins_grid": [4, 6, 8],
+      "bin_target_grid": [0.95, 0.97, 0.98, 0.99, 1.0],
+      "fallback_budget": 57638
+    },
+    "raw_tri_threshold_grid": [0.95, 0.98, 0.99, 0.995, 0.999],
+    "lid_regularization_grid": [0.0, 0.01, 0.1, 1.0],
+    "lid_output_domain": [1.0, 100.0],
+    "lid_fallback": 100.0,
+    "residual_training_levels": [0.95, 0.98, 1.0],
+    "residual_quantiles": [0.5, 0.75, 0.9],
+    "residual_regularization_grid": [0.0, 0.01, 0.1],
+    "safety_offsets": [0.0, 0.0487901642, 0.0953101798],
+    "expected_full_pdctp_tuples": 1620
+  },
+  "selection": {
+    "schema": "pdctp_fiqa_selection_v1",
+    "role": "query_tune",
+    "retention_lower_bound_target": 0.95,
+    "candidate_evidence_noninferiority": 0.02,
+    "final_evidence_noninferiority": 0.02,
+    "tune_bound_alpha": 0.05,
+    "objective": "common_coordinate_work",
+    "tie_breaks": ["lower_mean_budget", "canonical_fingerprint"],
+    "comparator_eligibility": "must_meet_same_retention_and_evidence_constraints",
+    "shuffled_profile_scope": "query_tune_diagnostic_only"
+  },
+  "certification": {
+    "schema": "pdctp_fiqa_certification_v1",
+    "role": "query_cert",
+    "required_query_count": 1567,
+    "family_wise_method": "bonferroni",
+    "family_wise_alpha": 0.05,
+    "hypotheses": [
+      {"name": "pdctp_absolute_retention", "metric": "embedding_retention", "comparison": "zero_anchor", "side": "lower", "margin": 0.95, "difference_bounds": [0.0, 1.0], "desired_radius": 0.08},
+      {"name": "candidate_evidence_noninferiority_fixed", "metric": "candidate_evidence_recall", "comparison": "fixed_reference", "side": "lower", "margin": -0.02, "difference_bounds": [-1.0, 1.0], "desired_radius": 0.1},
+      {"name": "final_evidence_noninferiority_fixed", "metric": "final_evidence_recall", "comparison": "fixed_reference", "side": "lower", "margin": -0.02, "difference_bounds": [-1.0, 1.0], "desired_radius": 0.1},
+      {"name": "normalized_budget_superiority_fixed", "metric": "normalized_candidate_budget", "comparison": "fixed_reference", "side": "upper", "margin": 0.0, "difference_bounds": [-1.0, 1.0], "desired_radius": 0.1},
+      {"name": "normalized_budget_superiority_monotone", "metric": "normalized_candidate_budget", "comparison": "monotone_binned", "side": "upper", "margin": 0.0, "difference_bounds": [-1.0, 1.0], "desired_radius": 0.1},
+      {"name": "normalized_budget_superiority_raw_tri", "metric": "normalized_candidate_budget", "comparison": "raw_tri_predict", "side": "upper", "margin": 0.0, "difference_bounds": [-1.0, 1.0], "desired_radius": 0.1}
+    ],
+    "evidence": {
+      "minimum_relevance": 1,
+      "candidate_metric": "macro_qrel_recall_in_projected_candidates",
+      "final_metric": "macro_qrel_recall_after_exact_rerank_at_k_ctx",
+      "empty_documents_remain_relevant": true
+    },
+    "failure_behavior": "terminal_no_retuning_no_budget_expansion"
+  },
+  "latency": {
+    "schema": "pdctp_fiqa_paired_latency_v1",
+    "role": "query_latency",
+    "labels_allowed": false,
+    "backends": ["faiss_cpu_exact", "faiss_gpu_exact"],
+    "hardware": {
+      "cpu_class": "genoa_single_node_exclusive",
+      "gpu_class": "nvidia_a100_sxm4_80gb_exclusive",
+      "gpu_device_count": 1
+    },
+    "required_packages": {
+      "numpy": "1.26.4",
+      "scipy": "1.13.0",
+      "faiss": "1.10.0",
+      "torch": "2.5.1"
+    },
+    "warmups": 10,
+    "repetitions": 30,
+    "randomized_paired_blocks": true,
+    "method_order_seed": 83071,
+    "threads": 1,
+    "boundary_tie_overfetch": 64,
+    "gpu_k_selection_limit": 2048,
+    "gpu_max_compatible_budget": 1984,
+    "gpu_incompatibility_behavior": "terminal_no_smaller_budget_substitution",
+    "batching": "single_query",
+    "cache_state": "warm_index",
+    "measured_methods": ["fixed", "monotone_binned", "raw_tri_predict", "lid_calibration_only", "budget_residual_only", "pdctp"],
+    "primary_statistic": "paired_student_t_upper_bound_on_query_mean_seconds_v1",
+    "family_wise_method": "bonferroni",
+    "family_wise_alpha": 0.05,
+    "primary_comparisons": ["pdctp_vs_fixed_reference", "pdctp_vs_monotone_binned", "pdctp_vs_raw_tri_predict"],
+    "tail_statistics_role": "descriptive_only",
+    "required_stage_metrics": ["project_query", "projected_scan", "pilot_rerank", "feature_extract", "lid_calibration", "raw_tri", "residual_calibration", "expansion_rerank", "total", "distance_counts", "bytes", "cpu_rss", "gpu_memory", "index_build", "setup"]
+  },
+  "stop_gates": {
+    "all_roles_initially_closed": true,
+    "next_allowed_action": "prepare_dataset_and_build_independently_audited_embedding_cache",
+    "method_evaluation_authorized": false,
+    "protected_outcome_access_authorized": false,
+    "llm_authorized": false,
+    "approximate_index_authorized": false
+  }
+}

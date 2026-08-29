@@ -1,0 +1,489 @@
+{
+  "authorizes_method_evaluation": false,
+  "authorizes_protected_outcome_access": false,
+  "config_fingerprint": "47c602c777e9e4589597ae996a7d1459407ae916b376854699569c115ebdfc41",
+  "decision": "READY_FOR_DATASET_AND_EMBEDDING_AUDIT_ONLY",
+  "fingerprint": "cb3ef70f3ffc801c248f3269e0807480f0ee5a51cde41a52573a03f228a42368",
+  "initial_guard_state_fingerprint": "6f1eb5a4ecef7cf4a0413c13de82cd31dc2024b1593ebd86c57c153c276f45b9",
+  "power_gate": {
+    "actual_query_cert": 1567,
+    "passed": true,
+    "required_query_cert": 1567
+  },
+  "protocol": {
+    "candidate_suite": {
+      "expected_full_pdctp_tuples": 1620,
+      "fixed_budgets": [
+        64,
+        96,
+        128,
+        192,
+        256,
+        384,
+        512,
+        768,
+        1024,
+        1536,
+        2048,
+        3072,
+        4096,
+        6144,
+        8192,
+        12288,
+        16384,
+        24576,
+        32768,
+        49152,
+        57638
+      ],
+      "lid_fallback": 100.0,
+      "lid_output_domain": [
+        1.0,
+        100.0
+      ],
+      "lid_regularization_grid": [
+        0.0,
+        0.01,
+        0.1,
+        1.0
+      ],
+      "methods": [
+        "fixed",
+        "monotone_binned",
+        "raw_tri_predict",
+        "lid_calibration_only",
+        "budget_residual_only",
+        "pdctp"
+      ],
+      "monotone_binned": {
+        "bin_target_grid": [
+          0.95,
+          0.97,
+          0.98,
+          0.99,
+          1.0
+        ],
+        "fallback_budget": 57638,
+        "n_bins_grid": [
+          4,
+          6,
+          8
+        ]
+      },
+      "raw_tri_threshold_grid": [
+        0.95,
+        0.98,
+        0.99,
+        0.995,
+        0.999
+      ],
+      "residual_quantiles": [
+        0.5,
+        0.75,
+        0.9
+      ],
+      "residual_regularization_grid": [
+        0.0,
+        0.01,
+        0.1
+      ],
+      "residual_training_levels": [
+        0.95,
+        0.98,
+        1.0
+      ],
+      "safety_offsets": [
+        0.0,
+        0.0487901642,
+        0.0953101798
+      ],
+      "schema": "pdctp_fiqa_candidate_suite_v1"
+    },
+    "certification": {
+      "evidence": {
+        "candidate_metric": "macro_qrel_recall_in_projected_candidates",
+        "empty_documents_remain_relevant": true,
+        "final_metric": "macro_qrel_recall_after_exact_rerank_at_k_ctx",
+        "minimum_relevance": 1
+      },
+      "failure_behavior": "terminal_no_retuning_no_budget_expansion",
+      "family_wise_alpha": 0.05,
+      "family_wise_method": "bonferroni",
+      "hypotheses": [
+        {
+          "comparison": "zero_anchor",
+          "desired_radius": 0.08,
+          "difference_bounds": [
+            0.0,
+            1.0
+          ],
+          "margin": 0.95,
+          "metric": "embedding_retention",
+          "name": "pdctp_absolute_retention",
+          "side": "lower"
+        },
+        {
+          "comparison": "fixed_reference",
+          "desired_radius": 0.1,
+          "difference_bounds": [
+            -1.0,
+            1.0
+          ],
+          "margin": -0.02,
+          "metric": "candidate_evidence_recall",
+          "name": "candidate_evidence_noninferiority_fixed",
+          "side": "lower"
+        },
+        {
+          "comparison": "fixed_reference",
+          "desired_radius": 0.1,
+          "difference_bounds": [
+            -1.0,
+            1.0
+          ],
+          "margin": -0.02,
+          "metric": "final_evidence_recall",
+          "name": "final_evidence_noninferiority_fixed",
+          "side": "lower"
+        },
+        {
+          "comparison": "fixed_reference",
+          "desired_radius": 0.1,
+          "difference_bounds": [
+            -1.0,
+            1.0
+          ],
+          "margin": 0.0,
+          "metric": "normalized_candidate_budget",
+          "name": "normalized_budget_superiority_fixed",
+          "side": "upper"
+        },
+        {
+          "comparison": "monotone_binned",
+          "desired_radius": 0.1,
+          "difference_bounds": [
+            -1.0,
+            1.0
+          ],
+          "margin": 0.0,
+          "metric": "normalized_candidate_budget",
+          "name": "normalized_budget_superiority_monotone",
+          "side": "upper"
+        },
+        {
+          "comparison": "raw_tri_predict",
+          "desired_radius": 0.1,
+          "difference_bounds": [
+            -1.0,
+            1.0
+          ],
+          "margin": 0.0,
+          "metric": "normalized_candidate_budget",
+          "name": "normalized_budget_superiority_raw_tri",
+          "side": "upper"
+        }
+      ],
+      "required_query_count": 1567,
+      "role": "query_cert",
+      "schema": "pdctp_fiqa_certification_v1"
+    },
+    "dataset": {
+      "archive_sha256": "32c7df99ed21252fdfb2cf3f5673502a8d245ee0c44c4a133570d92ce2b3ad02",
+      "corpus_size": 57638,
+      "empty_documents": {
+        "formatted_embedding_text": "passage: [EMPTY_DOCUMENT]",
+        "policy": "replace_empty_title_and_text_with_marker_v1",
+        "positive_qrel_references_by_native_split": {
+          "dev": 2,
+          "test": 1,
+          "train": 35
+        },
+        "replacement_text": "[EMPTY_DOCUMENT]",
+        "silent_deletion_allowed": false,
+        "source_count": 38
+      },
+      "external_query_ids": true,
+      "id_namespace": "pdctp-beir-fiqa",
+      "minimum_relevance": 1,
+      "name": "BEIR FiQA-2018",
+      "schema": "pdctp_fiqa_dataset_contract_v1",
+      "source_query_count": 6648,
+      "version": "fiqa.zip-md5-17918ed23cd04fb15047f73e6c3bd9d9-sha256-32c7df99ed21252fdfb2cf3f5673502a8d245ee0c44c4a133570d92ce2b3ad02"
+    },
+    "embedding": {
+      "continuity_source_config_sha256": "cc18a2ebfe02a38ddfc859cc2398349e59fbdaca2b38b9880fc41e284981aedd",
+      "encoding": {
+        "allow_tf32": false,
+        "attention_implementation": "eager",
+        "cublas_workspace_config": ":4096:8",
+        "deterministic_algorithms": true,
+        "l2_normalize": true,
+        "model_dtype": "float32",
+        "output_dtype": "float32"
+      },
+      "formatting": {
+        "corpus_prefix": "passage: ",
+        "query_prefix": "query: ",
+        "strip_fields": true,
+        "title_text_separator": "\n"
+      },
+      "model": {
+        "embedding_dimension": 768,
+        "max_sequence_length": 512,
+        "name": "intfloat/e5-base-v2",
+        "revision": "f52bf8ec8c7124536f0efb74aca902b2995e5bcd",
+        "trust_remote_code": false
+      },
+      "runtime_packages": {
+        "huggingface-hub": "0.28.1",
+        "numpy": "1.26.4",
+        "safetensors": "0.5.2",
+        "scipy": "1.13.0",
+        "sentence-transformers": "3.4.1",
+        "tokenizers": "0.21.0",
+        "torch": "2.5.1",
+        "transformers": "4.48.2"
+      },
+      "schema": "pdctp_fiqa_e5_embedding_request_v1"
+    },
+    "features": {
+      "duplicate_tolerance": 1e-12,
+      "epsilon": 0.0,
+      "gap_quantiles": [
+        0.25,
+        0.5,
+        0.75
+      ],
+      "invalid_fill": 0.0,
+      "lid_boundary": 32,
+      "minimum_count": 32,
+      "output_decimals": 10,
+      "schema": "pilot_distance_features_v1"
+    },
+    "latency": {
+      "backends": [
+        "faiss_cpu_exact",
+        "faiss_gpu_exact"
+      ],
+      "batching": "single_query",
+      "boundary_tie_overfetch": 64,
+      "cache_state": "warm_index",
+      "family_wise_alpha": 0.05,
+      "family_wise_method": "bonferroni",
+      "gpu_incompatibility_behavior": "terminal_no_smaller_budget_substitution",
+      "gpu_k_selection_limit": 2048,
+      "gpu_max_compatible_budget": 1984,
+      "hardware": {
+        "cpu_class": "genoa_single_node_exclusive",
+        "gpu_class": "nvidia_a100_sxm4_80gb_exclusive",
+        "gpu_device_count": 1
+      },
+      "labels_allowed": false,
+      "measured_methods": [
+        "fixed",
+        "monotone_binned",
+        "raw_tri_predict",
+        "lid_calibration_only",
+        "budget_residual_only",
+        "pdctp"
+      ],
+      "method_order_seed": 83071,
+      "primary_comparisons": [
+        "pdctp_vs_fixed_reference",
+        "pdctp_vs_monotone_binned",
+        "pdctp_vs_raw_tri_predict"
+      ],
+      "primary_statistic": "paired_student_t_upper_bound_on_query_mean_seconds_v1",
+      "randomized_paired_blocks": true,
+      "repetitions": 30,
+      "required_packages": {
+        "faiss": "1.10.0",
+        "numpy": "1.26.4",
+        "scipy": "1.13.0",
+        "torch": "2.5.1"
+      },
+      "required_stage_metrics": [
+        "project_query",
+        "projected_scan",
+        "pilot_rerank",
+        "feature_extract",
+        "lid_calibration",
+        "raw_tri",
+        "residual_calibration",
+        "expansion_rerank",
+        "total",
+        "distance_counts",
+        "bytes",
+        "cpu_rss",
+        "gpu_memory",
+        "index_build",
+        "setup"
+      ],
+      "role": "query_latency",
+      "schema": "pdctp_fiqa_paired_latency_v1",
+      "tail_statistics_role": "descriptive_only",
+      "threads": 1,
+      "warmups": 10
+    },
+    "retrieval": {
+      "budget_grid_rule": {
+        "minimum_budget": 64,
+        "name": "binary_interleaved_geometric_v1",
+        "per_octave_multipliers": [
+          1.0,
+          1.5
+        ],
+        "terminal_full_corpus": true
+      },
+      "corpus_size": 57638,
+      "cost_objective": {
+        "formula": "(corpus_size + embedding_dimension) * m_prime + embedding_dimension * M",
+        "name": "common_coordinate_work"
+      },
+      "distance": {
+        "original": "squared_l2",
+        "projected": "squared_l2"
+      },
+      "embedding_dimension": 768,
+      "input_normalization": "l2_before_projection",
+      "k_ctx": 5,
+      "k_gt": 10,
+      "m_grid": [
+        64,
+        96,
+        128,
+        192,
+        256,
+        384,
+        512,
+        768,
+        1024,
+        1536,
+        2048,
+        3072,
+        4096,
+        6144,
+        8192,
+        12288,
+        16384,
+        24576,
+        32768,
+        49152,
+        57638
+      ],
+      "m_pilot": 64,
+      "max_rank_samples": 256,
+      "min_lid_neighbors": 16,
+      "pilot_expansion_reuse": "one_projected_scan",
+      "projection": {
+        "family": "dense_gaussian",
+        "m_prime": 192,
+        "post_projection_normalize": false,
+        "seed": 83047,
+        "variance": "1/m_prime"
+      },
+      "query_batch_size": 32,
+      "s_lid": 32,
+      "schema": "pdctp_fiqa_exact_retrieval_v1",
+      "stable_tie_break": "lexicographic_doc_id"
+    },
+    "roles": {
+      "assignment_seed": 62419,
+      "counts": {
+        "query_cal": 1966,
+        "query_cert": 1567,
+        "query_latency": 500,
+        "query_test": 648,
+        "query_tune": 1967
+      },
+      "initial_state": "all_roles_closed",
+      "normalized_text_groups_disjoint": true,
+      "ordered_id_hashes": {
+        "query_cal": "1446b11d27d183f22f531137823581938ef03fa51f696e4b9a7d0d563b2da262",
+        "query_cert": "1c26bec55386a647979e998b6ef7d7cc64cb67a3a046aa1bd7e2149fb0e5462e",
+        "query_latency": "07e529dcbba454f75baf5a63e420e11c3566aa8897403e6ef4fa5db2476b8cb7",
+        "query_test": "c026ed245056eaae0f3592d416a32bcbb536b556d4e3bf1bb85013673e54b1cc",
+        "query_tune": "d55652c3d04cefc4054b5e970225ffebcf1f6b0531c1774c1133c692f76362e3"
+      },
+      "schema": "pdctp_fiqa_five_roles_freeze_v1",
+      "source_witness_fingerprint": "dfccd57b074d8faa11a410f5d94a970133e29fcadac9b08e4972d747249fcaff"
+    },
+    "run_name": "pdctp_fiqa_real_protocol_v1",
+    "schema": "pdctp_fiqa_real_protocol_freeze_v1",
+    "seeds": {
+      "latency_method_order": 83071,
+      "projection": 83047,
+      "shuffled_profile": 83059
+    },
+    "selection": {
+      "candidate_evidence_noninferiority": 0.02,
+      "comparator_eligibility": "must_meet_same_retention_and_evidence_constraints",
+      "final_evidence_noninferiority": 0.02,
+      "objective": "common_coordinate_work",
+      "retention_lower_bound_target": 0.95,
+      "role": "query_tune",
+      "schema": "pdctp_fiqa_selection_v1",
+      "shuffled_profile_scope": "query_tune_diagnostic_only",
+      "tie_breaks": [
+        "lower_mean_budget",
+        "canonical_fingerprint"
+      ],
+      "tune_bound_alpha": 0.05
+    },
+    "source_gate": {
+      "audit_config_fingerprint": "17b561b18b4c721f9bec843afe5351a5da038a4b928a97f5c41ad8c797b92487",
+      "power_plan_fingerprint": "f1bddbc072143ec13b23785775d7b7ebf97913146eb05022e7d43f0d12a644a2",
+      "power_plan_sha256": "84a58893ea958dde62283a38efbe29a6afd16fdff3610a4b04e8e2d4bd29c537",
+      "role_witness_fingerprint": "dfccd57b074d8faa11a410f5d94a970133e29fcadac9b08e4972d747249fcaff",
+      "role_witness_sha256": "afe83d33062b3c7afb0da68e76fd7b8a3db7aed96a58d1c1364f3302f3940099",
+      "source_audit_fingerprint": "99211145fdf7976fe58072d516c4f6c95c33ed880afe63189cb8e464aac15aa5",
+      "source_audit_sha256": "dd65862cf8c87b0a40c3dcc2fae3971ec26bc7ad44b0db00803e063dfedc72d9"
+    },
+    "stop_gates": {
+      "all_roles_initially_closed": true,
+      "approximate_index_authorized": false,
+      "llm_authorized": false,
+      "method_evaluation_authorized": false,
+      "next_allowed_action": "prepare_dataset_and_build_independently_audited_embedding_cache",
+      "protected_outcome_access_authorized": false
+    },
+    "version": 1
+  },
+  "resolved_inputs": {
+    "power_plan": {
+      "bytes": 2621,
+      "fingerprint": "f1bddbc072143ec13b23785775d7b7ebf97913146eb05022e7d43f0d12a644a2",
+      "sha256": "84a58893ea958dde62283a38efbe29a6afd16fdff3610a4b04e8e2d4bd29c537"
+    },
+    "role_witness": {
+      "bytes": 239897,
+      "fingerprint": "dfccd57b074d8faa11a410f5d94a970133e29fcadac9b08e4972d747249fcaff",
+      "sha256": "afe83d33062b3c7afb0da68e76fd7b8a3db7aed96a58d1c1364f3302f3940099"
+    },
+    "source_audit": {
+      "bytes": 4925,
+      "fingerprint": "99211145fdf7976fe58072d516c4f6c95c33ed880afe63189cb8e464aac15aa5",
+      "sha256": "dd65862cf8c87b0a40c3dcc2fae3971ec26bc7ad44b0db00803e063dfedc72d9"
+    }
+  },
+  "resolved_roles": {
+    "all_roles_closed": true,
+    "assignment_fingerprint": "ae884e0001d92ad11ddc1e420ece5412846454864331843a25a7e5cccf445dfe",
+    "counts": {
+      "query_cal": 1966,
+      "query_cert": 1567,
+      "query_latency": 500,
+      "query_test": 648,
+      "query_tune": 1967
+    },
+    "ordered_id_hashes": {
+      "query_cal": "1446b11d27d183f22f531137823581938ef03fa51f696e4b9a7d0d563b2da262",
+      "query_cert": "1c26bec55386a647979e998b6ef7d7cc64cb67a3a046aa1bd7e2149fb0e5462e",
+      "query_latency": "07e529dcbba454f75baf5a63e420e11c3566aa8897403e6ef4fa5db2476b8cb7",
+      "query_test": "c026ed245056eaae0f3592d416a32bcbb536b556d4e3bf1bb85013673e54b1cc",
+      "query_tune": "d55652c3d04cefc4054b5e970225ffebcf1f6b0531c1774c1133c692f76362e3"
+    }
+  },
+  "schema": "pdctp_fiqa_real_protocol_freeze_v1",
+  "version": 1
+}

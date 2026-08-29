@@ -1,0 +1,18 @@
+{
+  "assignments_fingerprint": "7a53bd4bb3c690544767399dcf3f76f37f10a2f4db76a71aef1ab1d4b94b1f42",
+  "calibration_opened": false,
+  "certification_opened": false,
+  "certification_result_fingerprint": null,
+  "config_fingerprint": "47c602c777e9e4589597ae996a7d1459407ae916b376854699569c115ebdfc41",
+  "fingerprint": "6f1eb5a4ecef7cf4a0413c13de82cd31dc2024b1593ebd86c57c153c276f45b9",
+  "fit_artifacts": {},
+  "hypotheses_fingerprint": null,
+  "latency_opened": false,
+  "latency_result_fingerprint": null,
+  "mutation_after_certification_allowed": false,
+  "mutation_after_selection_allowed": false,
+  "name": "pdctp_five_role_protocol_guard",
+  "selection_fingerprint": null,
+  "test_opened": false,
+  "version": 1
+}

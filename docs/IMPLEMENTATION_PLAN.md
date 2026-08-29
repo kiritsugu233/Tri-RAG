@@ -262,9 +262,9 @@ Acceptance:
 ## Calibrated Tri-Predict v2: fresh real-data gates
 
 - [x] Audit and pin a new external-query dataset; FiQA passes the source gate.
-- [ ] Freeze duplicate-safe five-role IDs and a power-supported protocol.
+- [x] Freeze duplicate-safe five-role IDs and a power-supported protocol.
 - [ ] Build and independently audit a new E5 embedding cache.
-- [ ] Freeze `m_prime=192`, a fresh projection seed, and one budget grid.
+- [x] Freeze `m_prime=192`, a fresh projection seed, and one budget grid.
 - [ ] Fit all calibration candidates on `query_cal` only.
 - [ ] Select one complete PDCTP policy on `query_tune` only.
 - [ ] Freeze fixed, monotone, Raw Tri, ablation, and PDCTP comparators.
@@ -290,14 +290,27 @@ five-role witness assigns cal/tune/cert/latency/test counts of
 1,966/1,967/1,567/500/648. Its `GO_TO_PROTOCOL_FREEZE` decision is a capacity
 result only and does not authorize embeddings, method evaluation, or protected
 outcome access. The audit also exposes 38 empty corpus items referenced by
-positive qrels; the next protocol gate must freeze their representation rather
-than silently removing them. The complete offline regression reports 129
+positive qrels; the subsequent protocol gate freezes their `[EMPTY_DOCUMENT]`
+representation rather than silently removing them. The complete offline regression reports 129
 passes, one optional real-FAISS skip, and zero failures across 130 tests.
 Slurm allocation `374320` independently reproduced this gate on `genoa06` at
 commit `d5c31a3`: the same 130-test result passed in 30.641 seconds, and both
 audit artifacts matched byte for byte. The returned archive passed local
 SHA-256 verification at
 `098910e034dfb1790913699a3c3ad9e4c13106852722821dde8218539e31f46e`.
+
+The complete real-data preregistration is documented in
+`docs/FIQA_PROTOCOL_FREEZE.md` and emitted by
+`tri_rag_harness.pdctp_real_protocol`. Config/protocol fingerprints are
+`47c602c777e9e4589597ae996a7d1459407ae916b376854699569c115ebdfc41`
+and `cb3ef70f3ffc801c248f3269e0807480f0ee5a51cde41a52573a03f228a42368`.
+It freezes the exact 6,648 ordered role IDs, the 38-item empty-document marker
+contract, pinned E5 revision, fresh projection seed `83047`, `m_prime=192`, a
+21-value full-corpus-terminal budget grid, 1,620 PDCTP tuples, tune/certification
+targets, and paired CPU/GPU latency rules. All roles remain closed and the GO
+decision permits only dataset preparation and independent embedding-cache
+audit. The 135-test offline suite reports 134 passes, one optional FAISS skip,
+and zero failures.
 
 ## Suggested future code tree
 
