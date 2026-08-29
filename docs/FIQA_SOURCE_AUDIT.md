@@ -48,6 +48,14 @@ second local run matched both output files byte for byte. The complete offline
 suite then ran 130 tests: 129 passed, one optional real-FAISS conformance test
 skipped because FAISS is not installed, and zero failed.
 
+The independent cluster audit ran in Slurm allocation `374320` on `genoa06`
+using the micromamba `tri-rag` environment at commit `d5c31a3`. It ran the same
+130 tests in 30.641 seconds with 129 passes, one optional FAISS skip, and zero
+failures. Both generated JSON files matched the checked-in artifacts byte for
+byte. The returned audit archive has SHA-256
+`098910e034dfb1790913699a3c3ad9e4c13106852722821dde8218539e31f46e`
+and passed independent local transfer verification.
+
 ## Findings
 
 The archive identity, ZIP CRC, required members, and all qrel query/document

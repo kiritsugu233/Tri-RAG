@@ -733,6 +733,19 @@ The complete offline suite ran 130 tests in 21.929 seconds: 129 passed, the
 optional real-FAISS conformance test skipped, and zero failed. Raw v1 behavior
 and the existing SciFact adapter tests remain unchanged and pass.
 
+Independent Genoa reproduction completed on `genoa06` in Slurm allocation
+`374320` at commit `d5c31a3`. The micromamba `tri-rag` environment ran the same
+130-test suite in 30.641 seconds: 129 passed, one optional real-FAISS test
+skipped, and zero failed. Both generated audit artifacts matched the checked-in
+files byte for byte. Their SHA-256 values are
+`dd65862cf8c87b0a40c3dcc2fae3971ec26bc7ad44b0db00803e063dfedc72d9`
+for `source_audit.json` and
+`afe83d33062b3c7afb0da68e76fd7b8a3db7aed96a58d1c1364f3302f3940099`
+for `role_feasibility_witness.json`. The returned archive
+`pdctp-fiqa-source-audit-374320.tar.gz` was independently transferred and
+verified locally at SHA-256
+`098910e034dfb1790913699a3c3ad9e4c13106852722821dde8218539e31f46e`.
+
 This is `GO_TO_PROTOCOL_FREEZE`, not permission to evaluate a method. The
 artifacts contain no corpus/query text, qrel pairs, embeddings, retrieval
 results, policy outcomes, or latency measurements. FiQA Task 2 is recorded as

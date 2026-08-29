@@ -293,6 +293,11 @@ outcome access. The audit also exposes 38 empty corpus items referenced by
 positive qrels; the next protocol gate must freeze their representation rather
 than silently removing them. The complete offline regression reports 129
 passes, one optional real-FAISS skip, and zero failures across 130 tests.
+Slurm allocation `374320` independently reproduced this gate on `genoa06` at
+commit `d5c31a3`: the same 130-test result passed in 30.641 seconds, and both
+audit artifacts matched byte for byte. The returned archive passed local
+SHA-256 verification at
+`098910e034dfb1790913699a3c3ad9e4c13106852722821dde8218539e31f46e`.
 
 ## Suggested future code tree
 
