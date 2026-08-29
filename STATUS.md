@@ -1,6 +1,6 @@
 # Status
 
-Updated: 2026-08-28
+Updated: 2026-08-29
 
 ## Version boundary
 
@@ -71,6 +71,16 @@ the largest required fresh certification size is 1,567. A future dataset audit
 must stop before method evaluation if duplicate-safe fresh roles cannot support
 this frozen plan. No FiQA data was downloaded, no real protected split was
 opened, no FAISS timing was claimed, and no LLM was run.
+
+The first interactive Genoa reproduction used allocation `374284` on
+`genoa02` at commit `9e4c49a`. It stopped during the offline test suite before
+the foundation runner executed: Genoa's libm returned
+`exp(log(12.0)) = 12.000000000000002`, exposing a one-ULP violation of the
+calibrator's configured upper output bound. The v2 LID calibrator now enforces
+its public domain again after exponentiation, and the regression requires exact
+upper- and lower-bound outputs. The corrected local suite again reports 122
+passes, one optional real-FAISS skip, and zero failures. The Genoa reproduction
+must be rerun from the correction commit before the cluster gate is accepted.
 
 Milestones 0 through 4 are implemented as a network-free harness with a CPU default, and the retrieval-only systems benchmark additionally supports optional exact FAISS CPU/GPU backends. The certification run generates external tune/cert/test queries, normalizes embeddings, builds one fixed dense-Gaussian projection, runs exact original/projected squared-L2 retrieval, fits and freezes both monotone-binned and query-adaptive Tri-Predict policies on tune queries, evaluates each policy independently, and writes auditable artifacts. A separate two-stage command performs a predeclared global `m_prime`/Tri-Predict-threshold sweep on tune only, writes frozen selection artifacts, and then evaluates one fresh certification split.
 

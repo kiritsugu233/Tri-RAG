@@ -93,7 +93,11 @@ class PDCTPCalibrationTests(unittest.TestCase):
         restored = PilotLIDCalibrator.from_serialized(artifact)
         self.assertEqual(restored.serialize(), artifact)
         prediction = restored.predict(self._features(log_lid=math.log(1000.0)))
-        self.assertLessEqual(prediction.value, 12.0)
+        self.assertEqual(prediction.value, 12.0)
+        lower_prediction = restored.predict(
+            self._features(log_lid=math.log(1.0e-12))
+        )
+        self.assertEqual(lower_prediction.value, 1.0)
         invalid = restored.predict(self._features(valid=False))
         self.assertEqual(invalid.value, 12.0)
         self.assertTrue(invalid.used_fallback)

@@ -257,6 +257,11 @@ class PilotLIDCalibrator:
             return CalibratedLID(
                 self.fallback, False, True, "nonfinite_lid_prediction"
             )
+        # ``exp(log(bound))`` may land one ULP outside the configured domain on
+        # a different libm/CPU (observed on Genoa for an upper bound of 12).
+        # Enforce the public output contract in the original domain as well as
+        # in log space.
+        value = min(max(value, self.output_min), self.output_max)
         return CalibratedLID(value, True, False, None)
 
     def serialize(self) -> Dict[str, Any]:
