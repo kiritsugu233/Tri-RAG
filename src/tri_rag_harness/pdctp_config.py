@@ -248,6 +248,7 @@ def load_pdctp_foundation_config(path: Path) -> PDCTPFoundationConfig:
             "epsilon",
             "duplicate_tolerance",
             "invalid_fill",
+            "output_decimals",
         },
         "features",
     )
@@ -260,6 +261,7 @@ def load_pdctp_foundation_config(path: Path) -> PDCTPFoundationConfig:
             epsilon=feature_raw["epsilon"],
             duplicate_tolerance=feature_raw["duplicate_tolerance"],
             invalid_fill=feature_raw["invalid_fill"],
+            output_decimals=feature_raw["output_decimals"],
         )
     except ValueError as exc:
         raise PDCTPConfigError(str(exc)) from exc

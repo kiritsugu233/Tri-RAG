@@ -42,22 +42,22 @@ runs reproduce all 20 artifacts byte for byte; all 312 saved base/decision
 records report one projected scan.
 
 The accepted local synthetic fixture has manifest fingerprint
-`58f9f6041ed9879440664205e3ea82e5a4e373bc103054def40336524376b3c6`,
+`318f6e5cea422f904a7d4ec4dbfa7021b99ee82674d6666f476dbf76e4d27f2e`,
 selection fingerprint
-`5db7e0acec7d30f7f97adabe0dbbf08e640738cbd50a0cb7bd2a740a8f18c6b3`,
+`ad48340eecf27baaa2497e773e84d067c6263f6d3657ba9697076c9764e83be9`,
 and selected full-PDCTP policy fingerprint
-`d96702f8cab271a498861da059b013a93218dd051073759170886090251500e0`.
+`4bc69d11837109f04fc991fb26af3d3e74573e79721f689ece3940a0c42d92ce`.
 Its tune-only selected candidate uses Raw threshold `0.85`, has mean retention
 `0.946875`, tune lower bound `0.773468`, mean budget `35.5`, and is only a
 code-path fixture. The 16-query
 synthetic certification family terminally fails all six conservative paired
 bounds, with certification fingerprint
-`6c4397042cd5acb102ed5286cde378f7b08702bace62001fad4aaf1ed163f695`.
+`ec3541211d8bc60e9996b812a3712a39bc79ef614c7e3048fc15a2fb59be8a17`.
 That failure is retained and is not a real-data result.
 
 A seeded shuffled-pilot-profile diagnostic is restricted to `query_tune`, is
 explicitly excluded from fit, selection, and certification, and has fingerprint
-`d208e21475de8f3e519a902c6b40e136ac6d032ba7e1c02f5754db88fe693694`.
+`ff5b389c3b1642cd8edd416a3de8e637c47fcbf7a7d8631983928b75e7a44280`.
 On this synthetic fixture, observed-minus-shuffled retention, candidate
 evidence recall, and final evidence recall are `0.034375/0.044922/0.0`. These
 values only verify the diagnostic path and support no inferential claim.
@@ -72,15 +72,25 @@ must stop before method evaluation if duplicate-safe fresh roles cannot support
 this frozen plan. No FiQA data was downloaded, no real protected split was
 opened, no FAISS timing was claimed, and no LLM was run.
 
-The first interactive Genoa reproduction used allocation `374284` on
-`genoa02` at commit `9e4c49a`. It stopped during the offline test suite before
-the foundation runner executed: Genoa's libm returned
-`exp(log(12.0)) = 12.000000000000002`, exposing a one-ULP violation of the
-calibrator's configured upper output bound. The v2 LID calibrator now enforces
-its public domain again after exponentiation, and the regression requires exact
-upper- and lower-bound outputs. The corrected local suite again reports 122
-passes, one optional real-FAISS skip, and zero failures. The Genoa reproduction
-must be rerun from the correction commit before the cluster gate is accepted.
+The first interactive Genoa attempt in allocation `374284` on `genoa02` at
+commit `9e4c49a` stopped before the runner: Genoa's libm returned
+`exp(log(12.0)) = 12.000000000000002`, exposing a one-ULP output-domain bug.
+Commit `08445eb` fixed that boundary; the same allocation then passed 122 of
+123 tests with one optional real-FAISS skip and wrote 20 artifacts. The returned
+archive SHA-256 is
+`d2b840022f5627dc20ffc2b66ce16d6d99739388e8e87dcfea8f7f37b3e8a62c`.
+
+Independent audit did not accept those artifacts byte for byte. Eight of 20
+files matched the Mac reproduction; pilot feature/LID log fields differed by
+at most `4.44e-14`, and SLSQP residual parameters differed by at most
+`5.99e-8`, propagating fingerprint-only differences through 12 files. All
+candidate eligibility, the selected tuple, 192 decision budgets, retention and
+evidence values, fallback/saturation states, paired differences, and terminal
+FAIL decisions were identical. The foundation now freezes 10-decimal feature
+and LID outputs plus a 6-decimal residual-parameter/prediction lattice with an
+explicit `1e-6` grid-boundary snap. The updated local suite reports 124 passes,
+one optional real-FAISS skip, and zero failures. A final Genoa rerun is required
+before the cross-platform artifact gate is accepted.
 
 Milestones 0 through 4 are implemented as a network-free harness with a CPU default, and the retrieval-only systems benchmark additionally supports optional exact FAISS CPU/GPU backends. The certification run generates external tune/cert/test queries, normalizes embeddings, builds one fixed dense-Gaussian projection, runs exact original/projected squared-L2 retrieval, fits and freezes both monotone-binned and query-adaptive Tri-Predict policies on tune queries, evaluates each policy independently, and writes auditable artifacts. A separate two-stage command performs a predeclared global `m_prime`/Tri-Predict-threshold sweep on tune only, writes frozen selection artifacts, and then evaluates one fresh certification split.
 
@@ -487,11 +497,12 @@ python3 -m tri_rag_harness.real_tune_diagnostics \
 
 ## Tests passed/failed
 
-- Passed locally: 122
+- Passed locally: 124
 - Skipped locally: 1 conditional real-FAISS CPU conformance test because FAISS is not installed on the Mac environment
 - Failed: 0
 - Runtime in the current environment: approximately 20.0 seconds
-- PDCTP v2 adds 24 tests covering hand-computed and scale-invariant features,
+- PDCTP v2 adds 26 tests covering hand-computed and scale-invariant features,
+  frozen feature/LID and residual-parameter lattices, solver-noise snapping,
   deterministic invalid handling, forbidden inference fields, constrained LID
   fitting, exact pinball loss, positive/negative residual correction, grid
   ties/clipping/fallback, artifact round trips and tamper refusal, unchanged v1

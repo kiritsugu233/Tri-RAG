@@ -233,11 +233,16 @@ queries for the full paired family. The 16-query synthetic certification
 fixture therefore fails all primary bounds as expected; it validates terminal
 failure and reconstruction behavior and is not a scientific claim.
 
-The 123-test local suite reports 122 passes and one optional real-FAISS
+The 125-test local suite reports 124 passes and one optional real-FAISS
 conformance skip because FAISS is absent from the offline Mac environment. The
 end-to-end v2 test runs the complete five-role skeleton twice and compares all
 20 output artifacts byte for byte. Every one of its 312 base/decision records
 uses one cached projected scan, and all `query_latency` records are label-free.
+The first Genoa artifact audit preserved every selected tuple, budget, metric,
+and terminal decision but exposed cross-platform float/fingerprint drift. The
+feature/LID and residual lattices are now explicit and locally tested; a fresh
+Genoa byte-for-byte reproduction remains the final network-free acceptance
+gate.
 
 Acceptance:
 

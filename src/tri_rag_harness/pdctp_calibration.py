@@ -14,14 +14,23 @@ class CalibrationError(ValueError):
     """Raised when calibration fit, input, or artifact validation fails."""
 
 
-CALIBRATION_FLOAT_DECIMALS = 12
+CALIBRATION_FLOAT_DECIMALS = 10
+RESIDUAL_PARAMETER_DECIMALS = 6
+RESIDUAL_BOUNDARY_RELATIVE_TOLERANCE = 10.0 ** (-RESIDUAL_PARAMETER_DECIMALS)
 
 
 def _canonical_float(value: float) -> float:
     result = float(np.round(float(value), decimals=CALIBRATION_FLOAT_DECIMALS))
     if not np.isfinite(result):
         raise CalibrationError("calibration values must be finite")
-    return result
+    return 0.0 if result == 0.0 else result
+
+
+def _canonical_residual_parameter(value: float) -> float:
+    result = float(np.round(float(value), decimals=RESIDUAL_PARAMETER_DECIMALS))
+    if not np.isfinite(result):
+        raise CalibrationError("residual calibration values must be finite")
+    return 0.0 if result == 0.0 else result
 
 
 def _ordered_id_hash(ids: Sequence[str]) -> str:
@@ -261,6 +270,7 @@ class PilotLIDCalibrator:
         # a different libm/CPU (observed on Genoa for an upper bound of 12).
         # Enforce the public output contract in the original domain as well as
         # in log space.
+        value = _canonical_float(value)
         value = min(max(value, self.output_min), self.output_max)
         return CalibratedLID(value, True, False, None)
 
@@ -432,9 +442,10 @@ class TriBudgetResidualCalibrator:
         self.means = np.asarray(means, dtype=np.float64)
         self.scales = np.asarray(scales, dtype=np.float64)
         self.constant_features = tuple(bool(value) for value in constant_features)
-        self.intercept = _canonical_float(intercept)
+        self.intercept = _canonical_residual_parameter(intercept)
         self.coefficients = np.asarray(
-            [_canonical_float(value) for value in coefficients], dtype=np.float64
+            [_canonical_residual_parameter(value) for value in coefficients],
+            dtype=np.float64,
         )
         self.quantile = _canonical_float(quantile)
         self.regularization = _canonical_float(regularization)
@@ -446,7 +457,7 @@ class TriBudgetResidualCalibrator:
         self.raw_policy_fingerprint = str(raw_policy_fingerprint)
         self.anchor_lid_source = str(anchor_lid_source)
         self.fit_ids = _validate_fit_ids(fit_ids)
-        self.objective_value = _canonical_float(objective_value)
+        self.objective_value = _canonical_residual_parameter(objective_value)
         count = len(self.feature_names)
         if count == 0 or len(set(self.feature_names)) != count:
             raise CalibrationError("residual feature names must be nonempty and unique")
@@ -565,9 +576,10 @@ class TriBudgetResidualCalibrator:
                 f"quantile residual optimization failed: {result.message}"
             )
         beta = result.x[:beta_count]
-        canonical_intercept = _canonical_float(beta[0])
+        canonical_intercept = _canonical_residual_parameter(beta[0])
         canonical_coefficients = np.asarray(
-            [_canonical_float(value) for value in beta[1:]], dtype=np.float64
+            [_canonical_residual_parameter(value) for value in beta[1:]],
+            dtype=np.float64,
         )
         fitted_residuals = targets - (
             canonical_intercept + standardized @ canonical_coefficients
@@ -605,7 +617,7 @@ class TriBudgetResidualCalibrator:
             return None
         standardized = (features.as_array() - self.means) / self.scales
         result = self.intercept + float(np.dot(standardized, self.coefficients))
-        return result if np.isfinite(result) else None
+        return _canonical_residual_parameter(result) if np.isfinite(result) else None
 
     def choose_budget(
         self, raw_budget: int, features: PilotFeatureVector
@@ -634,11 +646,13 @@ class TriBudgetResidualCalibrator:
         exponent = float(np.clip(residual + self.safety_offset, -700.0, 700.0))
         desired = float(raw_budget * np.exp(exponent))
         desired = max(float(self.minimum_budget), desired)
-        # Serialized coefficients are canonicalized to twelve decimals.  Snap
-        # only roundoff-sized deviations back to an exact configured boundary
-        # so a mathematical grid tie is deterministic across round trips.
+        # Serialized coefficients and predictions use the frozen residual
+        # parameter lattice. Snap lattice-sized deviations back to an exact
+        # configured boundary so a mathematical grid tie is deterministic.
         for grid_value in self.grid:
-            tolerance = 1e-12 * max(1.0, abs(desired), abs(grid_value))
+            tolerance = RESIDUAL_BOUNDARY_RELATIVE_TOLERANCE * max(
+                1.0, abs(desired), abs(grid_value)
+            )
             if abs(desired - grid_value) <= tolerance:
                 desired = float(grid_value)
                 break
@@ -684,6 +698,7 @@ class TriBudgetResidualCalibrator:
                 "intercept": self.intercept,
                 "coefficients": self.coefficients.tolist(),
                 "solver": "linear_quantile_slsqp_exact_pinball",
+                "parameter_decimals": RESIDUAL_PARAMETER_DECIMALS,
                 "quantile": self.quantile,
                 "safety_offset": self.safety_offset,
             },
@@ -701,7 +716,10 @@ class TriBudgetResidualCalibrator:
             },
             "budget_contract": {
                 "grid": list(self.grid),
-                "rounding": "grid_ceiling_left_inclusive_with_1e-12_boundary_snap",
+                "rounding": "grid_ceiling_left_inclusive_with_parameter_lattice_snap",
+                "boundary_snap_relative_tolerance": (
+                    RESIDUAL_BOUNDARY_RELATIVE_TOLERANCE
+                ),
                 "minimum_budget": self.minimum_budget,
                 "fallback_budget": self.fallback_budget,
                 "fallback_is_terminal": True,
@@ -745,13 +763,16 @@ class TriBudgetResidualCalibrator:
             normalization.get("source_role") != "query_cal"
             or model.get("link") != "log_budget_ratio"
             or model.get("solver") != "linear_quantile_slsqp_exact_pinball"
+            or model.get("parameter_decimals") != RESIDUAL_PARAMETER_DECIMALS
             or objective.get("name") != "mean_pinball_plus_l2"
             or anchor.get("name") != "raw_tri_predict"
             or anchor.get("target") != "log(M_required/M_raw)"
             or anchor.get("lid_source")
             not in {"raw_pilot_lid", "calibrated_pilot_lid"}
             or budget.get("rounding")
-            != "grid_ceiling_left_inclusive_with_1e-12_boundary_snap"
+            != "grid_ceiling_left_inclusive_with_parameter_lattice_snap"
+            or budget.get("boundary_snap_relative_tolerance")
+            != RESIDUAL_BOUNDARY_RELATIVE_TOLERANCE
             or budget.get("fallback_is_terminal") is not True
             or fit.get("role") != "query_cal"
         ):

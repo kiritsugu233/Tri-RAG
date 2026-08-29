@@ -141,7 +141,7 @@ class PDCTPCalibrationTests(unittest.TestCase):
             raw_policy_fingerprint="raw-policy",
         )
         self.assertAlmostEqual(calibrator.intercept, 0.0, places=7)
-        self.assertAlmostEqual(calibrator.objective_value, math.log(2.0) / 3.0)
+        self.assertEqual(calibrator.objective_value, 0.231049)
 
     def _manual_residual(self, intercept=0.0, radius_coefficient=0.0):
         coefficients = [0.0] * len(self.names)
@@ -205,6 +205,10 @@ class PDCTPCalibrationTests(unittest.TestCase):
         tampered["budget_contract"]["grid"] = [10, 20, 30, 40]
         with self.assertRaises(CalibrationError):
             TriBudgetResidualCalibrator.from_serialized(tampered)
+        tampered_precision = copy.deepcopy(artifact)
+        tampered_precision["model"]["parameter_decimals"] = 12
+        with self.assertRaises(CalibrationError):
+            TriBudgetResidualCalibrator.from_serialized(tampered_precision)
         forbidden = BudgetResidualRecord(
             "cert-0", "query_cert", self._features(), 20, 20, 1.0
         )
@@ -219,6 +223,24 @@ class PDCTPCalibrationTests(unittest.TestCase):
                 fallback_budget=40,
                 raw_policy_fingerprint="raw-policy",
             )
+
+    def test_residual_parameters_snap_platform_solver_noise(self):
+        first = self._manual_residual(
+            intercept=0.041852219052,
+            radius_coefficient=-0.009422850832,
+        )
+        second = self._manual_residual(
+            intercept=0.041852166090,
+            radius_coefficient=-0.009422799402,
+        )
+        self.assertEqual(first.serialize(), second.serialize())
+        self.assertEqual(first.serialize()["model"]["parameter_decimals"], 6)
+        self.assertTrue(
+            all(
+                value != 0.0 or math.copysign(1.0, value) > 0.0
+                for value in first.serialize()["model"]["coefficients"]
+            )
+        )
 
 
 if __name__ == "__main__":

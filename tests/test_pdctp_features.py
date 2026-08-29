@@ -77,6 +77,23 @@ class PDCTPFeatureTests(unittest.TestCase):
             scaled_values["log_radius"] - base_values["log_radius"], math.log(7.0)
         )
 
+    def test_feature_values_use_the_frozen_cross_platform_lattice(self):
+        baseline = self.extractor.extract(self._observation())
+        observation = self._observation()
+        perturbed = PilotDistanceObservation.from_arrays(
+            np.asarray(observation.original_squared_distances) * (1.0 + 1.0e-15),
+            np.asarray(observation.projected_squared_distances) * (1.0 + 1.0e-15),
+            pilot_lid=observation.pilot_lid * (1.0 + 1.0e-15),
+            pilot_lid_valid=True,
+            pilot_lid_failure_reason=None,
+            valid_distance_count=observation.valid_distance_count,
+        )
+        self.assertEqual(self.extractor.extract(perturbed), baseline)
+        self.assertTrue(
+            all(value == round(value, self.spec.output_decimals) for value in baseline.values)
+        )
+        self.assertEqual(self.spec.serialize()["output_decimals"], 10)
+
     def test_squared_l2_is_converted_after_stable_original_sort(self):
         ids, original, projected = stable_sort_pilot_distances(
             ["b", "a", "c"],

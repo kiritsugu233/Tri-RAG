@@ -53,6 +53,16 @@ class PDCTPFoundationError(RuntimeError):
     pass
 
 
+FOUNDATION_FLOAT_DECIMALS = 10
+
+
+def _canonical_foundation_float(value: float) -> float:
+    result = float(np.round(float(value), decimals=FOUNDATION_FLOAT_DECIMALS))
+    if not np.isfinite(result):
+        raise PDCTPFoundationError("foundation values must be finite")
+    return 0.0 if result == 0.0 else result
+
+
 def _generate_synthetic(config: PDCTPFoundationConfig) -> Dict[str, Any]:
     synthetic = config.synthetic
     rng = np.random.default_rng(config.data_seed)
@@ -175,10 +185,11 @@ def _scan_role(
             duplicate_tolerance=config.feature_spec.duplicate_tolerance,
             fallback=config.calibration.lid_fallback,
         )
+        pilot_lid = _canonical_foundation_float(lid.clipped)
         observation = PilotDistanceObservation.from_arrays(
             sorted_original_sq,
             sorted_projected_sq,
-            pilot_lid=lid.clipped,
+            pilot_lid=pilot_lid,
             pilot_lid_valid=lid.valid,
             pilot_lid_failure_reason=lid.reason,
             valid_distance_count=lid.valid_distance_count,
@@ -188,7 +199,7 @@ def _scan_role(
             "query_id": str(dataset["query_ids"][query_row]),
             "role": role,
             "labels_accessed": bool(label_access),
-            "pilot_lid": lid.clipped,
+            "pilot_lid": pilot_lid,
             "pilot_lid_valid": lid.valid,
             "pilot_lid_failure_reason": lid.reason,
             "features": features.serialize(),
@@ -217,6 +228,7 @@ def _scan_role(
                 duplicate_tolerance=config.feature_spec.duplicate_tolerance,
                 fallback=config.calibration.lid_fallback,
             )
+            oracle_lid_value = _canonical_foundation_float(oracle_lid.clipped)
             gt_rows = oracle.rows[0, : retrieval.k_gt]
             relevant_rows = np.flatnonzero(
                 dataset["corpus_clusters"] == dataset["query_clusters"][query_row]
@@ -243,7 +255,7 @@ def _scan_role(
                 ) / len(relevant_rows)
             base.update(
                 {
-                    "oracle_lid": oracle_lid.clipped,
+                    "oracle_lid": oracle_lid_value,
                     "oracle_lid_valid": oracle_lid.valid,
                     "retention_by_budget": retention_by_budget,
                     "candidate_evidence_by_budget": candidate_evidence_by_budget,

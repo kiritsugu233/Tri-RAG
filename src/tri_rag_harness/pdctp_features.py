@@ -15,6 +15,13 @@ class PilotFeatureError(ValueError):
 FEATURE_SCHEMA = "pilot_distance_features_v1"
 
 
+def _canonical_feature_float(value: float, decimals: int) -> float:
+    result = float(np.round(float(value), decimals=decimals))
+    if not np.isfinite(result):
+        raise PilotFeatureError("pilot feature values must be finite")
+    return 0.0 if result == 0.0 else result
+
+
 @dataclass(frozen=True)
 class PilotDistanceFeatureSpec:
     """Frozen deployable pilot-distance feature contract.
@@ -31,6 +38,7 @@ class PilotDistanceFeatureSpec:
     epsilon: float = 0.0
     duplicate_tolerance: float = 1e-12
     invalid_fill: float = 0.0
+    output_decimals: int = 10
     schema: str = FEATURE_SCHEMA
 
     def __post_init__(self) -> None:
@@ -62,6 +70,12 @@ class PilotDistanceFeatureSpec:
                 raise PilotFeatureError(f"{name} must be finite")
         if self.epsilon < 0.0 or self.duplicate_tolerance < 0.0:
             raise PilotFeatureError("epsilon and duplicate_tolerance must be nonnegative")
+        if (
+            isinstance(self.output_decimals, bool)
+            or not isinstance(self.output_decimals, int)
+            or not 6 <= self.output_decimals <= 15
+        ):
+            raise PilotFeatureError("output_decimals must be an integer from 6 to 15")
         object.__setattr__(self, "gap_quantiles", quantiles)
 
     @property
@@ -98,6 +112,7 @@ class PilotDistanceFeatureSpec:
             "epsilon": float(self.epsilon),
             "duplicate_tolerance": float(self.duplicate_tolerance),
             "invalid_fill": float(self.invalid_fill),
+            "output_decimals": self.output_decimals,
             "slope_rank_coordinate": "linear_zero_to_one_with_disjoint_halves",
             "normalized_gap_denominator": "lid_boundary_radius_plus_epsilon",
             "invalid_behavior": "fixed_fill_with_validity_and_count_indicators",
@@ -139,6 +154,7 @@ class PilotDistanceFeatureSpec:
                 epsilon=raw["epsilon"],
                 duplicate_tolerance=raw["duplicate_tolerance"],
                 invalid_fill=raw["invalid_fill"],
+                output_decimals=raw["output_decimals"],
                 schema=raw["schema"],
             )
         except (KeyError, TypeError) as exc:
@@ -259,6 +275,13 @@ class PilotDistanceFeatureExtractor:
         values[count_index] = float(
             np.clip(valid_distance_count / self.spec.minimum_count, 0.0, 1.0)
         )
+        values = np.asarray(
+            [
+                _canonical_feature_float(value, self.spec.output_decimals)
+                for value in values
+            ],
+            dtype=np.float64,
+        )
         return PilotFeatureVector(
             FEATURE_SCHEMA,
             self.spec.fingerprint,
@@ -343,11 +366,15 @@ class PilotDistanceFeatureExtractor:
         )
         if not np.all(np.isfinite(np.asarray(values, dtype=np.float64))):
             return self._invalid("nonfinite_derived_feature", valid_distance_count=count)
+        canonical_values = tuple(
+            _canonical_feature_float(value, self.spec.output_decimals)
+            for value in values
+        )
         return PilotFeatureVector(
             FEATURE_SCHEMA,
             self.spec.fingerprint,
             self.spec.feature_names,
-            tuple(values),
+            canonical_values,
             True,
             None,
         )
