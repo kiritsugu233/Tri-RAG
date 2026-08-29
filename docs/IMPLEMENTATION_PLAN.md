@@ -242,7 +242,9 @@ The first Genoa artifact audit preserved every selected tuple, budget, metric,
 and terminal decision but exposed cross-platform float/fingerprint drift. The
 feature/LID and residual lattices are now explicit and locally tested; a fresh
 Genoa byte-for-byte reproduction remains the final network-free acceptance
-gate.
+gate. The first canonical rerun improved exact agreement from 8/20 to 16/20;
+the remaining four files trace only to three unselected-candidate coefficients,
+now covered by the frozen five-decimal residual lattice.
 
 Acceptance:
 

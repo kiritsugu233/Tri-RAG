@@ -141,7 +141,7 @@ class PDCTPCalibrationTests(unittest.TestCase):
             raw_policy_fingerprint="raw-policy",
         )
         self.assertAlmostEqual(calibrator.intercept, 0.0, places=7)
-        self.assertEqual(calibrator.objective_value, 0.231049)
+        self.assertEqual(calibrator.objective_value, 0.23105)
 
     def _manual_residual(self, intercept=0.0, radius_coefficient=0.0):
         coefficients = [0.0] * len(self.names)
@@ -226,15 +226,21 @@ class PDCTPCalibrationTests(unittest.TestCase):
 
     def test_residual_parameters_snap_platform_solver_noise(self):
         first = self._manual_residual(
-            intercept=0.041852219052,
-            radius_coefficient=-0.009422850832,
+            intercept=0.157894,
+            radius_coefficient=0.026373,
         )
         second = self._manual_residual(
-            intercept=0.041852166090,
-            radius_coefficient=-0.009422799402,
+            intercept=0.157893,
+            radius_coefficient=0.026372,
         )
         self.assertEqual(first.serialize(), second.serialize())
-        self.assertEqual(first.serialize()["model"]["parameter_decimals"], 6)
+        self.assertEqual(first.serialize()["model"]["parameter_decimals"], 5)
+        self.assertEqual(
+            first.serialize()["budget_contract"][
+                "boundary_snap_relative_tolerance"
+            ],
+            1.0e-5,
+        )
         self.assertTrue(
             all(
                 value != 0.0 or math.copysign(1.0, value) > 0.0

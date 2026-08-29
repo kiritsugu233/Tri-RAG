@@ -42,22 +42,22 @@ runs reproduce all 20 artifacts byte for byte; all 312 saved base/decision
 records report one projected scan.
 
 The accepted local synthetic fixture has manifest fingerprint
-`318f6e5cea422f904a7d4ec4dbfa7021b99ee82674d6666f476dbf76e4d27f2e`,
+`b0ef08234fb20eabe061642a1052b29626818a02ebc6278d6264cf6a6e75f64d`,
 selection fingerprint
-`ad48340eecf27baaa2497e773e84d067c6263f6d3657ba9697076c9764e83be9`,
+`ef5abb78f640e85a93f57586aff0a0a9e20e550c7e4810058fe0eb0f3f27dfa7`,
 and selected full-PDCTP policy fingerprint
-`4bc69d11837109f04fc991fb26af3d3e74573e79721f689ece3940a0c42d92ce`.
+`d24e2a381d8fec77fdcba915324291bb2f9ef70f292a57121fdd630e91fa05e1`.
 Its tune-only selected candidate uses Raw threshold `0.85`, has mean retention
 `0.946875`, tune lower bound `0.773468`, mean budget `35.5`, and is only a
 code-path fixture. The 16-query
 synthetic certification family terminally fails all six conservative paired
 bounds, with certification fingerprint
-`ec3541211d8bc60e9996b812a3712a39bc79ef614c7e3048fc15a2fb59be8a17`.
+`de1b83818dce6071ba69f526431f5f31b8295eed4d044d0b1d1393b4d9fb5a3d`.
 That failure is retained and is not a real-data result.
 
 A seeded shuffled-pilot-profile diagnostic is restricted to `query_tune`, is
 explicitly excluded from fit, selection, and certification, and has fingerprint
-`ff5b389c3b1642cd8edd416a3de8e637c47fcbf7a7d8631983928b75e7a44280`.
+`5be6e9e7ae654eca0bb5985e71aff1caa1f4da1f4277cf7852e26f6e8b63bc3f`.
 On this synthetic fixture, observed-minus-shuffled retention, candidate
 evidence recall, and final evidence recall are `0.034375/0.044922/0.0`. These
 values only verify the diagnostic path and support no inferential claim.
@@ -87,10 +87,24 @@ at most `4.44e-14`, and SLSQP residual parameters differed by at most
 candidate eligibility, the selected tuple, 192 decision budgets, retention and
 evidence values, fallback/saturation states, paired differences, and terminal
 FAIL decisions were identical. The foundation now freezes 10-decimal feature
-and LID outputs plus a 6-decimal residual-parameter/prediction lattice with an
-explicit `1e-6` grid-boundary snap. The updated local suite reports 124 passes,
+and LID outputs plus a 5-decimal residual-parameter/prediction lattice with an
+explicit `1e-5` grid-boundary snap. The updated local suite reports 124 passes,
 one optional real-FAISS skip, and zero failures. A final Genoa rerun is required
 before the cross-platform artifact gate is accepted.
+
+The second run in allocation `374284` at commit `5876928` passed 124 of 125
+tests with the same optional skip and wrote 20 artifacts. Its returned archive
+SHA-256 is
+`c92dccba5ffaa99271bff052db145e7f1ce0109af2b42ae57a9ced721577342b`.
+Independent audit improved exact agreement from eight to 16 files, including
+both selected calibrators, all six frozen policies, all 312 query records,
+paired bounds, the latency dry run, and the report. Only three values in
+unselected residual candidates remained on opposite sides of the six-decimal
+lattice (`0.157894/0.157893` twice and `0.026373/0.026372` once), propagating
+through the candidate bundle, selection fingerprint, protocol state, and
+manifest. The five-decimal residual lattice collapses every observed candidate
+fit difference while preserving the complete tune selection, every decision,
+and every paired statistic. One more Genoa run is required for 20/20 closure.
 
 Milestones 0 through 4 are implemented as a network-free harness with a CPU default, and the retrieval-only systems benchmark additionally supports optional exact FAISS CPU/GPU backends. The certification run generates external tune/cert/test queries, normalizes embeddings, builds one fixed dense-Gaussian projection, runs exact original/projected squared-L2 retrieval, fits and freezes both monotone-binned and query-adaptive Tri-Predict policies on tune queries, evaluates each policy independently, and writes auditable artifacts. A separate two-stage command performs a predeclared global `m_prime`/Tri-Predict-threshold sweep on tune only, writes frozen selection artifacts, and then evaluates one fresh certification split.
 
