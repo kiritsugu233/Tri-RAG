@@ -222,6 +222,7 @@ new report from its fresh data identities rather than amending the v1 result.
 - [x] Add paired evidence/budget bounds and family-wise-alpha fixtures.
 - [x] Add a deterministic sample-size/power artifact.
 - [x] Pass all existing and new CPU tests without network access.
+- [x] Reproduce and independently audit all 20 artifacts byte for byte on Genoa.
 
 The network-free gate is implemented by
 `configs/pdctp_network_free_foundation_v1.json` and
@@ -240,11 +241,13 @@ end-to-end v2 test runs the complete five-role skeleton twice and compares all
 uses one cached projected scan, and all `query_latency` records are label-free.
 The first Genoa artifact audit preserved every selected tuple, budget, metric,
 and terminal decision but exposed cross-platform float/fingerprint drift. The
-feature/LID and residual lattices are now explicit and locally tested; a fresh
-Genoa byte-for-byte reproduction remains the final network-free acceptance
-gate. The first canonical rerun improved exact agreement from 8/20 to 16/20;
-the remaining four files trace only to three unselected-candidate coefficients,
-now covered by the frozen five-decimal residual lattice.
+feature/LID and residual lattices are now explicit and tested. The first
+canonical rerun improved exact agreement from 8/20 to 16/20; the remaining four
+files traced only to three unselected-candidate coefficients. The final
+five-decimal rerun at commit `64348b0` passed 124 of 125 tests with one optional
+FAISS skip and matched all 20 Mac artifacts byte for byte. Its returned archive
+SHA-256 is
+`5d2fb7adf248819c4adfb5493328ed3db8fb64ad6deb39d9a78d32b36c045012`.
 
 Acceptance:
 

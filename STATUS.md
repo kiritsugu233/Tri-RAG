@@ -89,8 +89,8 @@ evidence values, fallback/saturation states, paired differences, and terminal
 FAIL decisions were identical. The foundation now freezes 10-decimal feature
 and LID outputs plus a 5-decimal residual-parameter/prediction lattice with an
 explicit `1e-5` grid-boundary snap. The updated local suite reports 124 passes,
-one optional real-FAISS skip, and zero failures. A final Genoa rerun is required
-before the cross-platform artifact gate is accepted.
+one optional real-FAISS skip, and zero failures. This motivated the canonical
+Genoa reruns below.
 
 The second run in allocation `374284` at commit `5876928` passed 124 of 125
 tests with the same optional skip and wrote 20 artifacts. Its returned archive
@@ -104,7 +104,19 @@ lattice (`0.157894/0.157893` twice and `0.026373/0.026372` once), propagating
 through the candidate bundle, selection fingerprint, protocol state, and
 manifest. The five-decimal residual lattice collapses every observed candidate
 fit difference while preserving the complete tune selection, every decision,
-and every paired statistic. One more Genoa run is required for 20/20 closure.
+and every paired statistic. This motivated the final five-decimal rerun.
+
+The final run in allocation `374284` on `genoa02` at commit `64348b0` passed
+124 of 125 tests in `30.352 s`, with only the expected optional real-FAISS skip,
+and wrote 20 artifacts. Its archive SHA-256 is
+`5d2fb7adf248819c4adfb5493328ed3db8fb64ad6deb39d9a78d32b36c045012`.
+Independent local regeneration matched all 20 files byte for byte. The audit
+also reloaded the feature specification and all three selected calibrators,
+recomputed the manifest fingerprint, validated all six paired bounds, confirmed
+the 1,567-query power requirement, and checked all 312 records for one cached
+projected scan. All 56 `query_latency` base/decision records are label-free and
+the five-role protocol is terminal with post-certification mutation disabled.
+The network-free foundation and cross-platform artifact gates are closed.
 
 Milestones 0 through 4 are implemented as a network-free harness with a CPU default, and the retrieval-only systems benchmark additionally supports optional exact FAISS CPU/GPU backends. The certification run generates external tune/cert/test queries, normalizes embeddings, builds one fixed dense-Gaussian projection, runs exact original/projected squared-L2 retrieval, fits and freezes both monotone-binned and query-adaptive Tri-Predict policies on tune queries, evaluates each policy independently, and writes auditable artifacts. A separate two-stage command performs a predeclared global `m_prime`/Tri-Predict-threshold sweep on tune only, writes frozen selection artifacts, and then evaluates one fresh certification split.
 
@@ -687,15 +699,14 @@ The separately frozen `M_max=1984` FAISS 1M comparison also passes every exact s
 
 ## Next task
 
-The network-free foundation gate is complete locally. The next stop/go gate is
-an independently reproduced cluster run of the same offline tests and
-synthetic artifacts. After its full log and job-ID-namespaced artifacts are
-returned and audited, begin only the provisional FiQA source/license/archive
-and eligible-query-count audit. Do not evaluate a method, create protected role
-outcomes, or embed/download FiQA unless that audit proves duplicate-safe roles
-can support the frozen 1,567-query certification power requirement or a
-documented replacement protocol is approved. `m_prime=192` remains frozen for
-the first real v2 protocol. LLM answer generation remains deferred.
+The network-free foundation is complete locally and independently reproduced
+on Genoa with 20/20 byte-identical artifacts. Upon explicit continuation, begin
+only the provisional FiQA source/license/archive and eligible-query-count audit.
+Do not evaluate a method, create protected role outcomes, or embed/download
+FiQA unless that audit proves duplicate-safe roles can support the frozen
+1,567-query certification power requirement or a documented replacement
+protocol is approved. `m_prime=192` remains frozen for the first real v2
+protocol. LLM answer generation remains deferred.
 
 ## Known deviations and risks
 
