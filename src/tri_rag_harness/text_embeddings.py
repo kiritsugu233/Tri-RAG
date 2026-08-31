@@ -377,7 +377,34 @@ def _validate_dataset_manifest(
             "sha256": expected.get("sha256"),
         }:
             raise TextEmbeddingError(f"dataset artifact identity mismatch: {name}")
-    for required in ("corpus.jsonl", "queries.jsonl", "qrels.jsonl", "splits.json"):
+    if manifest.get("adapter") == "pdctp_fiqa_text_only_v1":
+        guards = manifest.get("scope_guards")
+        if not isinstance(guards, dict) or guards != {
+            "contains_qrels": False,
+            "contains_relevance_values": False,
+            "contains_embeddings": False,
+            "contains_retrieval_or_policy_outcomes": False,
+            "opens_any_protocol_role": False,
+            "authorizes_calibrator_fit": False,
+        }:
+            raise TextEmbeddingError("PDCTP text-only scope guards are invalid")
+        required_artifacts = (
+            "corpus.jsonl",
+            "queries.jsonl",
+            "splits.json",
+            "empty_documents.json",
+            "formatted_text_hashes.json",
+        )
+        if "qrels.jsonl" in artifacts:
+            raise TextEmbeddingError("PDCTP text-only manifest must not contain qrels")
+    else:
+        required_artifacts = (
+            "corpus.jsonl",
+            "queries.jsonl",
+            "qrels.jsonl",
+            "splits.json",
+        )
+    for required in required_artifacts:
         if required not in artifacts:
             raise TextEmbeddingError(f"dataset manifest is missing {required}")
     return manifest

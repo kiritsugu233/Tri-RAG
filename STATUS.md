@@ -1,6 +1,6 @@
 # Status
 
-Updated: 2026-08-29
+Updated: 2026-08-31
 
 ## Version boundary
 
@@ -16,8 +16,9 @@ Pilot-Distance Calibrated Tri-Predict (PDCTP), with two explicit layers: a
 deployable pilot-distance LID calibrator and a Raw-Tri-anchored budget-residual
 calibrator. `docs/CALIBRATED_TRI_PREDICT_PROTOCOL.md` freezes the intended
 five-role new-data protocol and statistical/latency gates. The network-free v2
-foundation is implemented and passes locally. No fresh real data has been
-accessed and no positive v2 result exists.
+foundation, FiQA source/protocol freezes, and qrel-free text preparation are
+implemented and pass locally. No fresh method outcome has been accessed and no
+positive v2 result exists.
 
 ## What runs
 
@@ -795,17 +796,44 @@ The returned `pdctp-fiqa-protocol-freeze-374320.tar.gz` archive was transferred
 and independently verified locally at SHA-256
 `36e8698f01777abc2f6dde5ee5e69385f1f9ca8298ca59e3fff47c6a421d165e`.
 
+## FiQA text preparation and E5 audit implementation
+
+The v2-only `pdctp_fiqa_text_only_v1` preparation is implemented. It validates
+the frozen protocol/source/role identities, reads only corpus and query ZIP
+members, retains all 57,638 corpus rows, replaces exactly 38 empty rows with
+`[EMPTY_DOCUMENT]`, and emits all 6,648 external queries in the frozen
+cal/tune/cert/latency/test order. It exports no qrels or relevance values and
+does not open a protocol role. Two complete real local preparations matched
+all six artifacts byte for byte.
+
+The dataset-manifest fingerprint is
+`bfc25daad8d2d382390a0a42c3aa03b96e965965ba17c2065aaf8bef00903240`;
+empty-document ordered-ID hash
+`a8a32f58fc05b4a5edb7a83e78e56458a6c3455c64eb820771beb35be33fcca7`;
+formatted corpus/query hashes
+`4cfdc2995dc2e6a96f933e8e4ffd99a10641b74aa928facf2711fd722be428ef`
+and
+`e1f63c6dcf61293f3a734aef0f3c7aef35953f00bd630d91fe946268d3c3bc25`.
+The frozen FiQA E5 request has config fingerprint
+`dce9c5f590c0348672dc3ab6f90a8e07e5b170c2174a5c2aab5b9eaeabc8bc78`.
+
+The independent cache auditor separately reconstructs input hashes and row
+alignment, recomputes array/file identities and norm error, and validates the
+pinned model snapshot, deterministic CUDA runtime, and token-length/truncation
+statistics. Synthetic/tamper tests pass, but no real E5 model was run locally
+and no real cache fingerprint is claimed. The full CPU suite ran 140 tests in
+19.856 seconds: 139 passed, one optional real-FAISS test skipped, and zero
+failed. `docs/FIQA_EMBEDDING_GATE.md` records the exact boundary and commands.
+
 ## Next task
 
-Prepare the canonical FiQA dataset under the frozen empty-document rule and
-build a new, independently audited E5 cache bound to the protocol freeze. This
-next gate may read source text and encode all role queries label-free, but it
-must not fit a calibrator, run policy selection, inspect retrieval/evidence
-outcomes, or open `query_cal` in the protocol guard. Validate source/member
-identities, exact empty-document replacements, ordered role hashes, formatted
-text hashes, model snapshot, array shapes/dtypes/norms, truncation counts, and
-cache fingerprints before permitting calibration fitting. LLM generation and
-approximate indexing remain deferred.
+Run the frozen FiQA E5 request once on an A100, prove cache reuse, run the
+independent cache audit twice, and return the complete logs/cache/audit bundle
+for local reduction. The cluster preparation must match the local dataset and
+formatted-text fingerprints before encoding. Do not fit a calibrator, run
+policy selection, inspect retrieval/evidence outcomes, or open `query_cal`
+until this gate is independently accepted. LLM generation and approximate
+indexing remain deferred.
 
 ## Known deviations and risks
 
@@ -815,8 +843,9 @@ approximate indexing remain deferred.
   records the restriction; it does not turn it into an open-source license.
 - FiQA contains 38 corpus items with empty title and text, and every one is
   referenced by a positive qrel: 35 train, two dev, one test. Silent removal
-  would change the pinned corpus/qrels identity. The next protocol must freeze
-  an explicit representation and retain this as a source-quality limitation.
+  would change the pinned corpus/qrels identity. The frozen protocol and
+  canonical preparation retain an explicit representation and preserve this
+  as a source-quality limitation.
 - The frozen `[EMPTY_DOCUMENT]` marker makes the empty-item embedding path
   executable and deterministic, but it cannot recover missing financial
   content. Evidence metrics continue to treat those qrels as relevant, so the

@@ -263,6 +263,8 @@ Acceptance:
 
 - [x] Audit and pin a new external-query dataset; FiQA passes the source gate.
 - [x] Freeze duplicate-safe five-role IDs and a power-supported protocol.
+- [x] Implement canonical qrel-free FiQA text preparation and an independent
+  E5 cache audit runner without opening a protocol role.
 - [ ] Build and independently audit a new E5 embedding cache.
 - [x] Freeze `m_prime=192`, a fresh projection seed, and one budget grid.
 - [ ] Fit all calibration candidates on `query_cal` only.
@@ -315,6 +317,21 @@ on `genoa06` at commit `2a5b44f`: all four artifacts matched byte for byte and
 the same test result completed in 30.706 seconds. The returned archive passed
 local SHA-256 verification at
 `36e8698f01777abc2f6dde5ee5e69385f1f9ca8298ca59e3fff47c6a421d165e`.
+
+The next gate implementation is documented in `docs/FIQA_EMBEDDING_GATE.md`.
+The qrel-free `pdctp_fiqa_text_only_v1` preparation opens only corpus/query ZIP
+members, retains all 38 frozen `[EMPTY_DOCUMENT]` rows, orders all 6,648 query
+texts by the exact closed five-role assignments, and fingerprints both IDs and
+formatted E5 text. Two real local preparations matched all six artifacts byte
+for byte; the dataset-manifest fingerprint is
+`bfc25daad8d2d382390a0a42c3aa03b96e965965ba17c2065aaf8bef00903240`.
+The E5 request config fingerprint is
+`dce9c5f590c0348672dc3ab6f90a8e07e5b170c2174a5c2aab5b9eaeabc8bc78`.
+An independent audit runner now rehashes formatted inputs, row IDs, arrays,
+normalization, model snapshot, runtime, token lengths, and complete cache
+identities. The real A100 cache/audit run remains pending, so `query_cal` is
+still closed. The 140-test local suite reports 139 passes, one expected
+optional FAISS skip, and zero failures.
 
 ## Suggested future code tree
 

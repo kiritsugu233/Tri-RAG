@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "adapter": "sentence_transformers_v1",
+  "dataset_manifest_fingerprint": "bfc25daad8d2d382390a0a42c3aa03b96e965965ba17c2065aaf8bef00903240",
+  "model": {
+    "name": "intfloat/e5-base-v2",
+    "revision": "f52bf8ec8c7124536f0efb74aca902b2995e5bcd",
+    "homepage": "https://huggingface.co/intfloat/e5-base-v2/tree/f52bf8ec8c7124536f0efb74aca902b2995e5bcd",
+    "license": "MIT",
+    "embedding_dimension": 768,
+    "max_sequence_length": 512,
+    "snapshot_allow_patterns": [
+      "1_Pooling/config.json",
+      "README.md",
+      "config.json",
+      "model.safetensors",
+      "modules.json",
+      "sentence_bert_config.json",
+      "special_tokens_map.json",
+      "tokenizer.json",
+      "tokenizer_config.json",
+      "vocab.txt"
+    ],
+    "trust_remote_code": false
+  },
+  "formatting": {
+    "corpus_prefix": "passage: ",
+    "query_prefix": "query: ",
+    "title_text_separator": "\n",
+    "strip_fields": true
+  },
+  "encoding": {
+    "batch_size": 128,
+    "model_dtype": "float32",
+    "output_dtype": "float32",
+    "l2_normalize": true,
+    "deterministic_algorithms": true,
+    "allow_tf32": false,
+    "attention_implementation": "eager",
+    "cublas_workspace_config": ":4096:8"
+  },
+  "runtime": {
+    "required_packages": {
+      "huggingface-hub": "0.28.1",
+      "numpy": "1.26.4",
+      "Pillow": "11.1.0",
+      "safetensors": "0.5.2",
+      "scikit-learn": "1.6.1",
+      "sentence-transformers": "3.4.1",
+      "scipy": "1.13.0",
+      "tokenizers": "0.21.0",
+      "torch": "2.5.1",
+      "tqdm": "4.67.1",
+      "transformers": "4.48.2"
+    }
+  }
+}
