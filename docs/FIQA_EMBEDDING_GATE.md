@@ -74,16 +74,51 @@ A successful audit emits `embedding_audit.json` and `report.md` with decision
 `READY_TO_OPEN_QUERY_CAL`. It does not mutate the protocol state. Any mismatch
 fails before output publication.
 
-The real cache has not yet been built or accepted. The next action is one
-manual A100 Slurm run that reproduces the text artifacts, builds and reuses the
-cache from the existing pinned local model snapshot, runs the audit twice, and
-compares the two audit outputs byte for byte. Calibration remains forbidden
-until those artifacts are returned and independently reduced.
+The real cache is accepted. Slurm allocation `375414` on `a100-0` at commit
+`1671b2b` reproduced all six preparation artifacts byte for byte against the
+Mac result, built the cache once, reused it once without loading the model, and
+produced two byte-identical audits. The embedding-request, model-snapshot,
+embedding-manifest, and audit fingerprints are respectively
+`1ee3e2333a27b993e632f76274b05edc04bbde587ecf80045dda457ae387b903`,
+`000e13bbbec6825eb1c94ddd1f01e47071b45a1f6c8c749cc97306308ad0c874`,
+`079545ef7c6af8ab27a5c8382dbd8174905f1bb537df59e94d572b6c2f2b04c1`,
+and
+`54af315d5b94b43a81be71ea29ab860635f0748a97108e0cda120a510947dd71`.
+
+The corpus/query arrays have shapes `57638 x 768` and `6648 x 768`, SHA-256
+values
+`07dc56f7c458de152f52fe2e890e2e3606a6dca5a8f048c0b8afdfcb3fcf676e`
+and
+`27d452a96664fd92ccd54a1a91c0cf234859671b13fe3a5c445e3371a6b7fb13`,
+and maximum absolute L2-norm errors `2.9996434e-08` and `2.9913058e-08`.
+The raw 512-token audit records 2,446 truncated corpus inputs out of 57,638
+(`0.0424373`) and zero truncated queries out of 6,648. The long-token warning
+comes from the deliberate untruncated length pass; the embedding pass applies
+the frozen 512-token limit.
+
+The first attempt in the general `tri-rag` micromamba environment stopped
+before cache publication because its inference stack was absent and its Torch
+version was `2.8.0`, not the frozen `2.5.1`. The accepted run used the existing
+`tri-rag-faiss` micromamba environment and passed every strict package/runtime
+check. The protocol and config were not relaxed.
+
+The returned 192 MB archive has SHA-256
+`87288fd7e913930474c9f764017780b729ab00404e93d88e2fb9ffc0359c1133`.
+Its size is expected: the two float32 arrays alone occupy 197,486,592 bytes
+before small NPY headers and do not compress materially. Local transfer
+verification passed; extraction occupied approximately 240 MB. A fresh local
+audit rescanned all files and arrays and matched both A100 audit artifacts byte
+for byte. The accepted small audit artifacts are checked in under
+`artifacts/pdctp_fiqa_e5_v1`.
+
+This closes only the embedding gate. The next gate may open `query_cal` to fit
+the preregistered calibrator candidates; tune/cert/latency/test remain closed.
 
 ## Tests
 
-The complete local CPU suite reports 139 passes, one expected optional
-real-FAISS skip, and zero failures across 140 tests. New tests cover real
+The complete local CPU suite reports 140 passes, one expected optional
+real-FAISS skip, and zero failures across 141 tests. New tests cover real
 request identities, deterministic qrel-free preparation, empty-marker
 retention, changed-archive refusal before publication, text-only cache build,
-deterministic audit output, and independent array-tamper refusal.
+deterministic audit output, independent array-tamper refusal, and the accepted
+real audit identity.

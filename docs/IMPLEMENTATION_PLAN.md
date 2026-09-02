@@ -265,7 +265,7 @@ Acceptance:
 - [x] Freeze duplicate-safe five-role IDs and a power-supported protocol.
 - [x] Implement canonical qrel-free FiQA text preparation and an independent
   E5 cache audit runner without opening a protocol role.
-- [ ] Build and independently audit a new E5 embedding cache.
+- [x] Build and independently audit a new E5 embedding cache.
 - [x] Freeze `m_prime=192`, a fresh projection seed, and one budget grid.
 - [ ] Fit all calibration candidates on `query_cal` only.
 - [ ] Select one complete PDCTP policy on `query_tune` only.
@@ -327,11 +327,21 @@ for byte; the dataset-manifest fingerprint is
 `bfc25daad8d2d382390a0a42c3aa03b96e965965ba17c2065aaf8bef00903240`.
 The E5 request config fingerprint is
 `dce9c5f590c0348672dc3ab6f90a8e07e5b170c2174a5c2aab5b9eaeabc8bc78`.
-An independent audit runner now rehashes formatted inputs, row IDs, arrays,
+An independent audit runner rehashes formatted inputs, row IDs, arrays,
 normalization, model snapshot, runtime, token lengths, and complete cache
-identities. The real A100 cache/audit run remains pending, so `query_cal` is
-still closed. The 140-test local suite reports 139 passes, one expected
-optional FAISS skip, and zero failures.
+identities. Slurm allocation `375414` on `a100-0` at commit `1671b2b` built the
+cache once, safely reused it once, and emitted two byte-identical audits. The
+embedding and audit fingerprints are
+`079545ef7c6af8ab27a5c8382dbd8174905f1bb537df59e94d572b6c2f2b04c1`
+and
+`54af315d5b94b43a81be71ea29ab860635f0748a97108e0cda120a510947dd71`.
+The returned archive SHA-256 is
+`87288fd7e913930474c9f764017780b729ab00404e93d88e2fb9ffc0359c1133`.
+Local transfer verification, 6/6 cross-platform preparation comparison, full
+array rehash/norm audit, and byte comparison against both cluster audits all
+passed. The 141-test local suite reports 140 passes, one expected optional
+FAISS skip, and zero failures. The embedding gate is closed; `query_cal` is
+ready but has not yet been opened.
 
 ## Suggested future code tree
 

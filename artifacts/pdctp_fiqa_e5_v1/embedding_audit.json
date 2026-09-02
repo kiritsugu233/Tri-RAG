@@ -1,0 +1,131 @@
+{
+  "arrays": {
+    "corpus": {
+      "array_fingerprint": "aaade2187bb377284909de49b7e01299c8e9a2dac55026f66bfc367819179cb8",
+      "bytes": 177064064,
+      "dtype": "float32",
+      "file": "corpus_embeddings.f32.npy",
+      "id_artifact": {
+        "bytes": 1833667,
+        "sha256": "2f1dd05c2df776ee1599c254df5d8adb95ab7c1f0ebe578631cf0a988cc8715c"
+      },
+      "id_file": "corpus_ids.json",
+      "id_hash": "eacf84e582a9b5d7e2a70f5f3c4e6c2d11969019b96255dc089221f98ef0530a",
+      "l2_normalized": true,
+      "max_abs_norm_error": 2.999643433643229e-08,
+      "sha256": "07dc56f7c458de152f52fe2e890e2e3606a6dca5a8f048c0b8afdfcb3fcf676e",
+      "shape": [
+        57638,
+        768
+      ]
+    },
+    "queries": {
+      "array_fingerprint": "443da2cbc2d88135a245e763beb32941381a0ae3114e115a7095422720e4acf8",
+      "bytes": 20422784,
+      "dtype": "float32",
+      "file": "query_embeddings.f32.npy",
+      "id_artifact": {
+        "bytes": 212513,
+        "sha256": "32ede642c4ced1f289d278612ed90e0dec2170e70604a64e343cb3ab7f9bc29d"
+      },
+      "id_file": "query_ids.json",
+      "id_hash": "e378ac0b18a94484e7fd1acfd0d1f7cfb6e0afa3481e79434ccdb0179fed79cd",
+      "l2_normalized": true,
+      "max_abs_norm_error": 2.9913058252617475e-08,
+      "sha256": "27d452a96664fd92ccd54a1a91c0cf234859671b13fe3a5c445e3371a6b7fb13",
+      "shape": [
+        6648,
+        768
+      ]
+    }
+  },
+  "audit_version": "pdctp_fiqa_e5_embedding_cache_audit_v1",
+  "checks": {
+    "all_roles_remained_closed": true,
+    "arrays_float32_l2_normalized": true,
+    "cache_fingerprint_valid": true,
+    "deterministic_runtime_matches": true,
+    "formatted_texts_match": true,
+    "model_snapshot_matches": true,
+    "qrels_or_relevance_opened": false,
+    "row_ids_match": true
+  },
+  "counts": {
+    "corpus": 57638,
+    "empty_corpus_items": 38,
+    "queries": 6648
+  },
+  "dataset_manifest_fingerprint": "bfc25daad8d2d382390a0a42c3aa03b96e965965ba17c2065aaf8bef00903240",
+  "decision": "READY_TO_OPEN_QUERY_CAL",
+  "embedding_config_fingerprint": "dce9c5f590c0348672dc3ab6f90a8e07e5b170c2174a5c2aab5b9eaeabc8bc78",
+  "embedding_manifest_fingerprint": "079545ef7c6af8ab27a5c8382dbd8174905f1bb537df59e94d572b6c2f2b04c1",
+  "embedding_request_fingerprint": "1ee3e2333a27b993e632f76274b05edc04bbde587ecf80045dda457ae387b903",
+  "fingerprint": "54af315d5b94b43a81be71ea29ab860635f0748a97108e0cda120a510947dd71",
+  "formatted_text_hashes": {
+    "corpus": {
+      "n": 57638,
+      "ordered_pair_hash": "4cfdc2995dc2e6a96f933e8e4ffd99a10641b74aa928facf2711fd722be428ef"
+    },
+    "queries": {
+      "n": 6648,
+      "ordered_pair_hash": "e1f63c6dcf61293f3a734aef0f3c7aef35953f00bd630d91fe946268d3c3bc25"
+    },
+    "roles": {
+      "query_cal": {
+        "n": 1966,
+        "ordered_pair_hash": "f3bf37ee58c2d8ae7828974843456e83776baa301b3d3d7502c35a7192bb41cb"
+      },
+      "query_cert": {
+        "n": 1567,
+        "ordered_pair_hash": "95fec1ae7a6fdca67bf8c62ebbd362a6c657d72856411a597a66c8f27179fe46"
+      },
+      "query_latency": {
+        "n": 500,
+        "ordered_pair_hash": "4b96d120fe892ba73b33700fd02da8d8e93cb06644cee1334e50660e738447b6"
+      },
+      "query_test": {
+        "n": 648,
+        "ordered_pair_hash": "88dea0458a6048e2acf111e4f074cc4ca6cc8186f88aac5760f8cf037f4f7a0f"
+      },
+      "query_tune": {
+        "n": 1967,
+        "ordered_pair_hash": "fb0034aa1399f103992c67bafb96989783d4156ee5ac98555ccfe9be66178f7d"
+      }
+    }
+  },
+  "input_token_lengths": {
+    "corpus": {
+      "max_sequence_length": 512,
+      "maximum": 3601,
+      "mean": 179.12051077414205,
+      "minimum": 5,
+      "n": 57638,
+      "p95": 483.0,
+      "truncated": 2446,
+      "truncated_fraction": 0.04243728096047746
+    },
+    "queries": {
+      "max_sequence_length": 512,
+      "maximum": 44,
+      "mean": 17.41230445246691,
+      "minimum": 6,
+      "n": 6648,
+      "p95": 27.0,
+      "truncated": 0,
+      "truncated_fraction": 0.0
+    }
+  },
+  "model_snapshot_fingerprint": "000e13bbbec6825eb1c94ddd1f01e47071b45a1f6c8c749cc97306308ad0c874",
+  "name": "pdctp_fiqa_e5_embedding_cache_audit",
+  "protocol_freeze_fingerprint": "cb3ef70f3ffc801c248f3269e0807480f0ee5a51cde41a52573a03f228a42368",
+  "protocol_state_fingerprint": "6f1eb5a4ecef7cf4a0413c13de82cd31dc2024b1593ebd86c57c153c276f45b9",
+  "role_assignments_fingerprint": "ae884e0001d92ad11ddc1e420ece5412846454864331843a25a7e5cccf445dfe",
+  "schema_version": 1,
+  "scope_guards": {
+    "contains_qrels_or_relevance": false,
+    "contains_retrieval_or_policy_outcomes": false,
+    "fits_or_selects_a_method": false,
+    "runs_an_llm": false,
+    "uses_an_approximate_index": false
+  }
+}

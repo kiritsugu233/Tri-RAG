@@ -256,6 +256,31 @@ class _Provider:
 
 
 class PDCTPFiQAEmbeddingGateTests(unittest.TestCase):
+    def test_checked_in_real_embedding_audit_is_self_consistent(self):
+        audit_path = (
+            ROOT / "artifacts" / "pdctp_fiqa_e5_v1" / "embedding_audit.json"
+        )
+        audit = json.loads(audit_path.read_text())
+        claimed = audit.pop("fingerprint")
+        self.assertEqual(
+            claimed,
+            "54af315d5b94b43a81be71ea29ab860635f0748a97108e0cda120a510947dd71",
+        )
+        self.assertEqual(fingerprint(audit), claimed)
+        self.assertEqual(audit["decision"], "READY_TO_OPEN_QUERY_CAL")
+        self.assertEqual(
+            audit["embedding_manifest_fingerprint"],
+            "079545ef7c6af8ab27a5c8382dbd8174905f1bb537df59e94d572b6c2f2b04c1",
+        )
+        self.assertEqual(audit["input_token_lengths"]["corpus"]["truncated"], 2446)
+        self.assertEqual(audit["input_token_lengths"]["queries"]["truncated"], 0)
+        self.assertTrue(audit["checks"]["all_roles_remained_closed"])
+        self.assertFalse(audit["scope_guards"]["contains_qrels_or_relevance"])
+        self.assertEqual(
+            hashlib.sha256(audit_path.read_bytes()).hexdigest(),
+            "c0a98c945c2efc70ac376a684b575127a0184086524b246c59e06ead834e811f",
+        )
+
     def test_checked_in_embedding_request_pins_real_text_manifest_and_e5(self):
         config = load_text_embedding_config(
             ROOT / "configs" / "pdctp_fiqa_e5_base_v2_embeddings.json"

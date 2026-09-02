@@ -1,6 +1,6 @@
 # Status
 
-Updated: 2026-08-31
+Updated: 2026-09-02
 
 ## Version boundary
 
@@ -820,20 +820,41 @@ The frozen FiQA E5 request has config fingerprint
 The independent cache auditor separately reconstructs input hashes and row
 alignment, recomputes array/file identities and norm error, and validates the
 pinned model snapshot, deterministic CUDA runtime, and token-length/truncation
-statistics. Synthetic/tamper tests pass, but no real E5 model was run locally
-and no real cache fingerprint is claimed. The full CPU suite ran 140 tests in
-19.856 seconds: 139 passed, one optional real-FAISS test skipped, and zero
-failed. `docs/FIQA_EMBEDDING_GATE.md` records the exact boundary and commands.
+statistics. Slurm allocation `375414` on `a100-0` at commit `1671b2b` built
+the cache once, reused it once, and produced two byte-identical audit outputs.
+The request/model-snapshot/embedding/audit fingerprints are
+`1ee3e2333a27b993e632f76274b05edc04bbde587ecf80045dda457ae387b903`,
+`000e13bbbec6825eb1c94ddd1f01e47071b45a1f6c8c749cc97306308ad0c874`,
+`079545ef7c6af8ab27a5c8382dbd8174905f1bb537df59e94d572b6c2f2b04c1`,
+and
+`54af315d5b94b43a81be71ea29ab860635f0748a97108e0cda120a510947dd71`.
+
+The normalized float32 corpus/query arrays are `57638 x 768` and `6648 x
+768`, with maximum norm errors below `3.0e-08`. The tokenizer audit records
+2,446/57,638 truncated corpus inputs (`4.2437%`) and zero truncated queries.
+The first general `tri-rag` environment attempt stopped before publication on
+its Torch `2.8.0` mismatch; the accepted `tri-rag-faiss` micromamba run kept
+the frozen Torch `2.5.1` contract.
+
+The returned archive passed transfer verification at SHA-256
+`87288fd7e913930474c9f764017780b729ab00404e93d88e2fb9ffc0359c1133`.
+Its 192 MB size is explained by 197,486,592 raw float32 embedding bytes plus
+text/IDs/metadata; random float arrays compress poorly. Local reduction
+matched all six preparation files against the prior Mac generation, matched
+the repeated cluster audits, rescanned every array/file and norm, and produced
+audit/report files byte-identical to the cluster. The full CPU suite ran 141
+tests in 21.848 seconds: 140 passed, one optional real-FAISS test skipped, and
+zero failed.
+`docs/FIQA_EMBEDDING_GATE.md` records the complete gate.
 
 ## Next task
 
-Run the frozen FiQA E5 request once on an A100, prove cache reuse, run the
-independent cache audit twice, and return the complete logs/cache/audit bundle
-for local reduction. The cluster preparation must match the local dataset and
-formatted-text fingerprints before encoding. Do not fit a calibrator, run
-policy selection, inspect retrieval/evidence outcomes, or open `query_cal`
-until this gate is independently accepted. LLM generation and approximate
-indexing remain deferred.
+Implement the one-time `query_cal` fitting runner against the accepted FiQA E5
+cache, with all preregistered LID and budget-residual candidates and explicit
+fit-only outcome access. The runner must validate every upstream fingerprint
+before opening `query_cal`, emit frozen candidate artifacts, and leave
+query_tune/query_cert/query_latency/query_test closed. No policy selection,
+certification, latency measurement, LLM, or approximate index is authorized.
 
 ## Known deviations and risks
 
