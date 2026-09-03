@@ -269,7 +269,7 @@ Acceptance:
 - [x] Freeze `m_prime=192`, a fresh projection seed, and one budget grid.
 - [x] Implement and test the fingerprint-gated `query_cal` runner and compact,
   reconstructable all-candidate artifact format.
-- [ ] Execute and independently audit all calibration fits on `query_cal` only.
+- [x] Execute and independently audit all calibration fits on `query_cal` only.
 - [ ] Select one complete PDCTP policy on `query_tune` only.
 - [ ] Freeze fixed, monotone, Raw Tri, ablation, and PDCTP comparators.
 - [ ] Certify once on untouched `query_cert` with family-wise correction.
@@ -345,7 +345,7 @@ passed. The 141-test local suite reports 140 passes, one expected optional
 FAISS skip, and zero failures. The embedding gate is closed; `query_cal` is
 ready but has not yet been opened.
 
-The `query_cal` implementation is documented in
+The `query_cal` implementation and accepted run are documented in
 `docs/FIQA_QUERY_CAL_GATE.md`. Its config fingerprint
 `7ff0bdf656ebc22026702622e933975ffe56b3814bb384b1db99effde51df36b`
 binds every accepted upstream identity and the complete frozen calibration ID
@@ -353,10 +353,27 @@ order. Synthetic tests cover exact one-scan retrieval, deterministic records,
 fit-only role scope, compact exact-pinball equivalence, complete 1,620/405
 operating-point enumeration, reconstruction, and tamper refusal. The new
 compact solver is opt-in and preserves the network-free foundation's legacy
-solver serialization and behavior. The full offline suite reports 145 passes,
-one optional FAISS skip, and zero failures across 146 tests. The real
-`query_cal` role remains unopened until the committed runner executes on the
-cluster.
+solver serialization and behavior.
+
+Slurm allocation `375414` executed all 1,966 `query_cal` records and returned
+archive SHA-256
+`686781b787c5a64a00b81996547594abfd5ffcd60107927844a40a552872089c`.
+Independent reconstruction and a complete local refit reproduced the frozen
+LID and residual bundles exactly. Their fingerprints are
+`4526c8b752325e3cae040d8b450c76cd0df77571b9e6d6080bd1a53ba4a56a1e`
+and
+`ed6cf0f7056fc1b7345b5303a7ad71815a2b8df6677c6c1c2c0e231bbf9c9f31`.
+The audit preserves, rather than hides, 33 duplicate-distance feature
+failures, 15 pilot-LID failures, and seven oracle-LID failures. It also records
+cross-platform last-decimal drift in 60 diagnostic oracle-LID values and one
+saved projected distance, all bounded by approximately `1.01e-10`; every
+deployable feature, ranking, target, candidate, and operating point remains
+identical. Audit fingerprint
+`1e2e09d9bbc794682190ec0228ab4ce01f41aedf9a399d08a00aca80a84594a0`
+accepts only the fit gate. `query_tune` is ready for runner implementation but
+remains unopened; all later roles remain closed. The post-audit offline suite
+reports 146 passes, one optional real-FAISS skip, and zero failures across 147
+tests.
 
 ## Suggested future code tree
 

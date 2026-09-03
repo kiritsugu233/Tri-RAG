@@ -1,0 +1,103 @@
+{
+  "archive": {
+    "bytes": 3161188,
+    "name": "pdctp-fiqa-query-cal-375414.tar.gz",
+    "sha256": "686781b787c5a64a00b81996547594abfd5ffcd60107927844a40a552872089c"
+  },
+  "candidate_audit": {
+    "base_models": 675,
+    "full_pdctp_operating_points": 1620,
+    "lid_candidate_bundle_fingerprint": "4526c8b752325e3cae040d8b450c76cd0df77571b9e6d6080bd1a53ba4a56a1e",
+    "lid_candidate_fingerprints": [
+      "b751ed12ef2e8e4497aed2e90b39b1fca8b6f349f077ac16cd087ac461b14a21",
+      "a5910a1449cda679a841d62653918e8b1778be89862e6565775a48f9a9cb7ca6",
+      "51eb6f93ca1fcf4724915e9b2f485884ef2eaff2207586ae532e0d7a67a69478",
+      "163ebf2f9521a6603f316ab44db9c6ed0ae1df0d0699cbb171273c832c0a7182"
+    ],
+    "lid_fit_ordered_id_hash": "e2e3390e824a00d4922df2f656cc74614e66fca21ab0ef189ecb897b80fa5caa",
+    "lid_fit_records": 1933,
+    "local_full_refit_seconds": 1464.426,
+    "local_lid_bundle_value_identical": true,
+    "local_residual_bundle_value_identical": true,
+    "operating_points_reconstructed": 2025,
+    "residual_candidate_bundle_fingerprint": "ed6cf0f7056fc1b7345b5303a7ad71815a2b8df6677c6c1c2c0e231bbf9c9f31",
+    "residual_fit_records": 1933,
+    "residual_only_operating_points": 405
+  },
+  "checks": {
+    "all_candidate_fingerprints_valid": true,
+    "all_candidates_reconstructed": true,
+    "all_file_hashes_match_manifest": true,
+    "all_query_cal_record_fingerprints_valid": true,
+    "all_query_cal_records_in_frozen_order": true,
+    "all_retention_and_required_budgets_recomputed": true,
+    "candidate_refit_from_records_exact": true,
+    "no_policy_selected": true,
+    "only_query_cal_opened": true,
+    "projection_matrix_regenerated_exact": true,
+    "protocol_state_reconstructed_exact": true,
+    "qrels_or_relevance_accessed": false,
+    "query_cert_accessed": false,
+    "query_latency_accessed": false,
+    "query_test_accessed": false,
+    "query_tune_accessed": false,
+    "raw_tri_predict_v1_behavior_modified": false
+  },
+  "decision": "ACCEPT_QUERY_CAL_FITS_READY_TO_IMPLEMENT_QUERY_TUNE",
+  "file_identities": {
+    "lid_calibrator_candidates.json": "bc516876c1da3b4fc00646d1dc410f7f1fd66280253f0ac29364891ac8339ad5",
+    "manifest.json": "d03b7ba58a82fc9cbca965b81fe9db51a4266c5c3fb92d7e016e9096dc814681",
+    "projection.json": "c17f800f6db860a6aadf49b430b5204d7ab68de4eb92535b80798e797f2467be",
+    "protocol_state_after_query_cal.json": "65de1a1508f262a7d3fff8bb3b3fb33ce81c1023a759036d7519ce9e2eeec4cb",
+    "query_cal_access.json": "506a00673b139e7f5297f57ad884f2080ab73e8da5d7c3452ed47d178b4a90de",
+    "query_cal_records.jsonl": "ecc244b05846df73ed2f1ba6f7e9765d745d03a223f6a66fd6b5b9f98b35d9",
+    "report.md": "45743c95c02c8fe5cc26d6297c02495aabc5a99d4a3e13537010ecd27a686a4f",
+    "residual_calibrator_candidates.json": "cf134eb4608a95bf2bc20ec70b5e321cb3eca2c4aa4aabc71cc74f938f092210"
+  },
+  "fingerprint": "1e2e09d9bbc794682190ec0228ab4ce01f41aedf9a399d08a00aca80a84594a0",
+  "invalidity_diagnostics": {
+    "feature_invalid": {
+      "duplicate_original_distances": 33
+    },
+    "oracle_lid_invalid": {
+      "duplicate_distances": 7
+    },
+    "pilot_lid_invalid": {
+      "duplicate_distances": 15
+    },
+    "valid_oracle_lid": 1959,
+    "valid_pilot_features": 1933
+  },
+  "manifest_fingerprint": "140c3a5f9ac168e222f9ff7e7cd3edb7f75879a40aa358158a1cfac4b77b2be6",
+  "name": "pdctp_fiqa_query_cal_independent_audit",
+  "portability_audit": {
+    "candidate_bundles_portable_value_identical": true,
+    "deployable_feature_vectors_identical": 1966,
+    "oracle_lid_last_decimal_mismatch_max_abs": 1.000017846308765e-10,
+    "oracle_lid_last_decimal_mismatch_records": 60,
+    "pilot_candidate_id_lists_identical": 1966,
+    "projected_distance_last_decimal_mismatch_max_abs": 1.000000082740371e-10,
+    "projected_distance_last_decimal_mismatch_values": 1,
+    "projected_rank_lists_identical": 1966,
+    "projection_artifact_identical": true,
+    "query_records_byte_identical": false,
+    "required_budget_maps_identical": 1966,
+    "retention_maps_identical": 1966,
+    "top_k_identity_lists_identical": 1966
+  },
+  "protocol_state_fingerprint": "2fe1eeb55180198165b6d1b46f35bf4214b8711cda554e7a2ca211f5b193f481",
+  "query_cal_records": 1966,
+  "schema": "pdctp_fiqa_query_cal_independent_audit_v1",
+  "source_run": {
+    "implementation_commit": "3fda253b3a09bf41fbd37da4080b70e52ab69e5f",
+    "node": "a100-0",
+    "slurm_allocation": "375414",
+    "test_result": {
+      "failed": 0,
+      "passed": 146,
+      "skipped": 0,
+      "total": 146
+    }
+  },
+  "version": 1
+}

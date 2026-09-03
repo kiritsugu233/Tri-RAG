@@ -34,6 +34,12 @@ from tri_rag_harness.utils import fingerprint
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "configs" / "pdctp_fiqa_query_cal_v1.json"
+ACCEPTED_AUDIT = (
+    ROOT
+    / "artifacts"
+    / "pdctp_fiqa_query_cal_v1"
+    / "query_cal_audit.json"
+)
 
 
 def _fingerprinted(value):
@@ -94,6 +100,41 @@ def _normalized_random(seed, rows, dimension):
 
 
 class PDCTPFiQAQueryCalTests(unittest.TestCase):
+    def test_checked_in_query_cal_audit_is_self_consistent_and_fit_only(self):
+        audit = json.loads(ACCEPTED_AUDIT.read_text())
+        body = dict(audit)
+        claimed = body.pop("fingerprint")
+        self.assertEqual(fingerprint(body), claimed)
+        self.assertEqual(
+            claimed,
+            "1e2e09d9bbc794682190ec0228ab4ce01f41aedf9a399d08a00aca80a84594a0",
+        )
+        self.assertEqual(
+            audit["decision"],
+            "ACCEPT_QUERY_CAL_FITS_READY_TO_IMPLEMENT_QUERY_TUNE",
+        )
+        self.assertEqual(audit["query_cal_records"], 1966)
+        self.assertEqual(audit["candidate_audit"]["base_models"], 675)
+        self.assertEqual(
+            audit["candidate_audit"]["full_pdctp_operating_points"], 1620
+        )
+        self.assertEqual(
+            audit["candidate_audit"]["residual_only_operating_points"], 405
+        )
+        self.assertTrue(audit["checks"]["candidate_refit_from_records_exact"])
+        self.assertTrue(
+            audit["portability_audit"][
+                "candidate_bundles_portable_value_identical"
+            ]
+        )
+        self.assertFalse(
+            audit["portability_audit"]["query_records_byte_identical"]
+        )
+        for role in ("query_tune", "query_cert", "query_latency", "query_test"):
+            self.assertFalse(audit["checks"][f"{role}_accessed"])
+        self.assertFalse(audit["checks"]["qrels_or_relevance_accessed"])
+        self.assertTrue(audit["checks"]["no_policy_selected"])
+
     def test_checked_config_binds_accepted_embedding_gate(self):
         config = load_pdctp_query_cal_config(CONFIG)
         self.assertEqual(

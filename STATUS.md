@@ -847,10 +847,10 @@ tests in 21.848 seconds: 140 passed, one optional real-FAISS test skipped, and
 zero failed.
 `docs/FIQA_EMBEDDING_GATE.md` records the complete gate.
 
-## FiQA query_cal gate implementation
+## FiQA query_cal gate accepted
 
-The first protected runner is implemented but has not been executed on real
-`query_cal` outcomes. The versioned config fingerprint is
+The first protected runner is implemented and its one-time real `query_cal`
+fit has passed independent audit. The versioned config fingerprint is
 `7ff0bdf656ebc22026702622e933975ffe56b3814bb384b1db99effde51df36b`.
 It binds the accepted protocol, closed initial state, role assignments,
 qrel-free dataset, E5 request/cache, embedding audit, audit file SHA-256, and
@@ -870,18 +870,51 @@ PDCTP plus 405 residual-only operating points without selection. A new compact
 exact-pinball solver avoids the synthetic solver's per-query slack variables;
 the accepted foundation's legacy solver identity and default behavior are
 unchanged. Residual artifacts use one shared ordered fit-ID list and remain
-fully reconstructable and tamper-evident. The local offline suite now reports
-145 passes, one optional real-FAISS skip, and zero failures across 146 tests.
-`docs/FIQA_QUERY_CAL_GATE.md` records the gate contract and command.
+fully reconstructable and tamper-evident.
+
+Slurm allocation `375414` on `a100-0` at implementation commit `3fda253`
+ran 146 tests with zero failures or skips and completed all 1,966 records. The
+returned 3,161,188-byte archive passed transfer verification at SHA-256
+`686781b787c5a64a00b81996547594abfd5ffcd60107927844a40a552872089c`.
+Its run manifest, post-calibration state, LID bundle, and residual bundle
+fingerprints are
+`140c3a5f9ac168e222f9ff7e7cd3edb7f75879a40aa358158a1cfac4b77b2be6`,
+`2fe1eeb55180198165b6d1b46f35bf4214b8711cda554e7a2ca211f5b193f481`,
+`4526c8b752325e3cae040d8b450c76cd0df77571b9e6d6080bd1a53ba4a56a1e`,
+and
+`ed6cf0f7056fc1b7345b5303a7ad71815a2b8df6677c6c1c2c0e231bbf9c9f31`.
+
+The independent audit rehashed every output, replayed all role and leakage
+guards, regenerated the projection, and reconstructed every ranking,
+retention value, required budget, calibrator, operating point, and protocol
+transition. A complete local refit from the returned records took 1,464.426
+seconds and reproduced both candidate bundles exactly. The shared fit set has
+1,933 records. Thirty-three feature profiles are invalid because of duplicate
+original distances, 15 pilot LID estimates and seven oracle LID estimates are
+invalid because of duplicate distances, and all retain the frozen fallback
+path.
+
+The embedding-to-record replay reproduced all candidate identities, top-10
+identities, projected ranks, retention maps, required-budget maps, deployable
+features, and fitted candidates. The record file itself is deliberately not
+claimed byte-identical across platforms: 60 diagnostic oracle-LID values
+differ by at most `1.000017846308765e-10`, and one saved projected-distance
+value differs by `1.000000082740371e-10`. These last-decimal differences alter
+no deployable feature, fit, ranking, label, budget target, or operating point.
+The accepted audit fingerprint is
+`1e2e09d9bbc794682190ec0228ab4ce01f41aedf9a399d08a00aca80a84594a0`.
+The post-audit offline suite reports 146 passes, one optional real-FAISS skip,
+and zero failures across 147 tests.
+`docs/FIQA_QUERY_CAL_GATE.md` records the gate contract and accepted result.
 
 ## Next task
 
-Run the one-time `query_cal` fitting gate on an exclusive Genoa allocation at
-the committed implementation, return its archive, and independently verify the
-manifest, per-query records, candidate reconstruction, state transition, and
-checksums. Do not open `query_tune` until that audit accepts every fit artifact.
-No policy selection, certification, latency measurement, LLM, or approximate
-index is authorized yet.
+Implement and test a fingerprint-gated `query_tune` selection runner against
+the accepted `query_cal` audit. Freeze its selection and comparator contract
+before executing it. `query_tune` remains closed until that implementation is
+committed; `query_cert`, `query_latency`, and `query_test` remain closed. No
+certification, latency measurement, LLM, or approximate index is authorized
+yet.
 
 ## Known deviations and risks
 

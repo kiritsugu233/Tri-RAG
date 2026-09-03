@@ -110,5 +110,43 @@ python3 -m tri_rag_harness.pdctp_fiqa_query_cal \
   --output runs/pdctp-fiqa-query-cal-<job-id>
 ```
 
-The real protected run has not yet been executed. Until its returned artifacts
-are independently checked, every downstream role remains closed.
+## Accepted execution
+
+Slurm allocation `375414` on `a100-0` executed the committed implementation
+over the complete frozen role. The cluster ran 146 tests with zero failures or
+skips and wrote 1,966 query records. The returned 3,161,188-byte archive has
+SHA-256
+`686781b787c5a64a00b81996547594abfd5ffcd60107927844a40a552872089c`.
+The manifest and post-calibration state fingerprints are
+`140c3a5f9ac168e222f9ff7e7cd3edb7f75879a40aa358158a1cfac4b77b2be6`
+and
+`2fe1eeb55180198165b6d1b46f35bf4214b8711cda554e7a2ca211f5b193f481`.
+
+Independent audit rehashed every file; replayed the projection, exact
+retrieval, retention targets, role guards, and state transition; reconstructed
+all 2,025 operating points; and performed a complete refit from the returned
+records. The four-candidate LID bundle and 675-base-model residual bundle were
+value-identical to the returned artifacts, with fingerprints
+`4526c8b752325e3cae040d8b450c76cd0df77571b9e6d6080bd1a53ba4a56a1e`
+and
+`ed6cf0f7056fc1b7345b5303a7ad71815a2b8df6677c6c1c2c0e231bbf9c9f31`.
+The fit set contains 1,933 valid feature/target records. The audit records 33
+duplicate-original-distance feature failures, 15 duplicate-distance pilot-LID
+failures, and seven duplicate-distance oracle-LID failures; the frozen fallback
+handles them without changing role membership.
+
+The projection, every retrieved identity and rank, retention/required-budget
+map, deployable feature, target, and fitted artifact reproduced exactly. The
+full record file is not byte-identical across the cluster and Mac: 60
+diagnostic oracle-LID values and one saved projected-distance value differ only
+in the last decimal, with maximum absolute differences approximately
+`1.01e-10`. This does not affect a policy input or fit, and the deviation is
+explicitly retained in the checked-in audit instead of being mislabeled as
+byte identity.
+
+The accepted independent-audit fingerprint is
+`1e2e09d9bbc794682190ec0228ab4ce01f41aedf9a399d08a00aca80a84594a0`.
+This authorizes implementation of the `query_tune` runner only. `query_tune`
+has not been opened, selection remains unset, and every later role remains
+closed. The post-audit offline suite reports 146 passes, one optional
+real-FAISS skip, and zero failures across 147 tests.
