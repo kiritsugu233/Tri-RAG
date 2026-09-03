@@ -1,0 +1,45 @@
+{
+  "schema": "pdctp_fiqa_query_cal_gate_v1",
+  "version": 1,
+  "run_name": "pdctp_fiqa_query_cal_v1",
+  "bindings": {
+    "protocol_freeze_fingerprint": "cb3ef70f3ffc801c248f3269e0807480f0ee5a51cde41a52573a03f228a42368",
+    "protocol_state_fingerprint": "6f1eb5a4ecef7cf4a0413c13de82cd31dc2024b1593ebd86c57c153c276f45b9",
+    "role_assignments_fingerprint": "ae884e0001d92ad11ddc1e420ece5412846454864331843a25a7e5cccf445dfe",
+    "dataset_manifest_fingerprint": "bfc25daad8d2d382390a0a42c3aa03b96e965965ba17c2065aaf8bef00903240",
+    "embedding_config_fingerprint": "dce9c5f590c0348672dc3ab6f90a8e07e5b170c2174a5c2aab5b9eaeabc8bc78",
+    "embedding_manifest_fingerprint": "079545ef7c6af8ab27a5c8382dbd8174905f1bb537df59e94d572b6c2f2b04c1",
+    "embedding_audit_fingerprint": "54af315d5b94b43a81be71ea29ab860635f0748a97108e0cda120a510947dd71",
+    "embedding_audit_sha256": "c0a98c945c2efc70ac376a684b575127a0184086524b246c59e06ead834e811f",
+    "query_cal_ordered_id_hash": "1446b11d27d183f22f531137823581938ef03fa51f696e4b9a7d0d563b2da262"
+  },
+  "access": {
+    "role": "query_cal",
+    "require_complete_frozen_order": true,
+    "allowed_supervision": [
+      "oracle_exact_lid",
+      "exact_original_top_k_identities",
+      "realized_embedding_retention"
+    ],
+    "qrels_or_relevance_allowed": false,
+    "blocked_roles": [
+      "query_tune",
+      "query_cert",
+      "query_latency",
+      "query_test"
+    ],
+    "selection_allowed": false
+  },
+  "execution": {
+    "backend": "numpy_exact_float64_batched_v1",
+    "query_batch_size": 32,
+    "projection_dtype": "float64",
+    "post_projection_normalize": false,
+    "distance": "squared_l2",
+    "stable_tie_break": "lexicographic_doc_id",
+    "pilot_expansion_reuse": "one_projected_scan",
+    "record_distance_decimals": 10,
+    "residual_solver": "linear_quantile_compact_exact_pinball_v1",
+    "candidate_storage": "shared_fit_ids_reconstructable_v1"
+  }
+}

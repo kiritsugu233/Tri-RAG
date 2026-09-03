@@ -267,7 +267,9 @@ Acceptance:
   E5 cache audit runner without opening a protocol role.
 - [x] Build and independently audit a new E5 embedding cache.
 - [x] Freeze `m_prime=192`, a fresh projection seed, and one budget grid.
-- [ ] Fit all calibration candidates on `query_cal` only.
+- [x] Implement and test the fingerprint-gated `query_cal` runner and compact,
+  reconstructable all-candidate artifact format.
+- [ ] Execute and independently audit all calibration fits on `query_cal` only.
 - [ ] Select one complete PDCTP policy on `query_tune` only.
 - [ ] Freeze fixed, monotone, Raw Tri, ablation, and PDCTP comparators.
 - [ ] Certify once on untouched `query_cert` with family-wise correction.
@@ -342,6 +344,19 @@ array rehash/norm audit, and byte comparison against both cluster audits all
 passed. The 141-test local suite reports 140 passes, one expected optional
 FAISS skip, and zero failures. The embedding gate is closed; `query_cal` is
 ready but has not yet been opened.
+
+The `query_cal` implementation is documented in
+`docs/FIQA_QUERY_CAL_GATE.md`. Its config fingerprint
+`7ff0bdf656ebc22026702622e933975ffe56b3814bb384b1db99effde51df36b`
+binds every accepted upstream identity and the complete frozen calibration ID
+order. Synthetic tests cover exact one-scan retrieval, deterministic records,
+fit-only role scope, compact exact-pinball equivalence, complete 1,620/405
+operating-point enumeration, reconstruction, and tamper refusal. The new
+compact solver is opt-in and preserves the network-free foundation's legacy
+solver serialization and behavior. The full offline suite reports 145 passes,
+one optional FAISS skip, and zero failures across 146 tests. The real
+`query_cal` role remains unopened until the committed runner executes on the
+cluster.
 
 ## Suggested future code tree
 

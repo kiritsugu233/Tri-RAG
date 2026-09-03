@@ -1,6 +1,6 @@
 # Status
 
-Updated: 2026-09-02
+Updated: 2026-09-03
 
 ## Version boundary
 
@@ -847,14 +847,41 @@ tests in 21.848 seconds: 140 passed, one optional real-FAISS test skipped, and
 zero failed.
 `docs/FIQA_EMBEDDING_GATE.md` records the complete gate.
 
+## FiQA query_cal gate implementation
+
+The first protected runner is implemented but has not been executed on real
+`query_cal` outcomes. The versioned config fingerprint is
+`7ff0bdf656ebc22026702622e933975ffe56b3814bb384b1db99effde51df36b`.
+It binds the accepted protocol, closed initial state, role assignments,
+qrel-free dataset, E5 request/cache, embedding audit, audit file SHA-256, and
+ordered 1,966-ID `query_cal` identity. A real-cache metadata dry check passed
+without computing any retrieval outcome.
+
+After those checks, the runner opens only the complete `query_cal` role. It
+uses exact float64 original/projected squared L2, the frozen dense Gaussian
+projection (`m_prime=192`, seed `83047`, variance `1/192`), lexicographic
+document ties, and no projected renormalization. One projected distance block
+serves both the top-64 pilot and the projected ranks of the exact original
+top-10. No qrel is opened. Query records contain only the allowed oracle-LID,
+exact-top-k, and realized-retention supervision.
+
+The implementation fits all four LID candidates and enumerates all 1,620 full
+PDCTP plus 405 residual-only operating points without selection. A new compact
+exact-pinball solver avoids the synthetic solver's per-query slack variables;
+the accepted foundation's legacy solver identity and default behavior are
+unchanged. Residual artifacts use one shared ordered fit-ID list and remain
+fully reconstructable and tamper-evident. The local offline suite now reports
+145 passes, one optional real-FAISS skip, and zero failures across 146 tests.
+`docs/FIQA_QUERY_CAL_GATE.md` records the gate contract and command.
+
 ## Next task
 
-Implement the one-time `query_cal` fitting runner against the accepted FiQA E5
-cache, with all preregistered LID and budget-residual candidates and explicit
-fit-only outcome access. The runner must validate every upstream fingerprint
-before opening `query_cal`, emit frozen candidate artifacts, and leave
-query_tune/query_cert/query_latency/query_test closed. No policy selection,
-certification, latency measurement, LLM, or approximate index is authorized.
+Run the one-time `query_cal` fitting gate on an exclusive Genoa allocation at
+the committed implementation, return its archive, and independently verify the
+manifest, per-query records, candidate reconstruction, state transition, and
+checksums. Do not open `query_tune` until that audit accepts every fit artifact.
+No policy selection, certification, latency measurement, LLM, or approximate
+index is authorized yet.
 
 ## Known deviations and risks
 

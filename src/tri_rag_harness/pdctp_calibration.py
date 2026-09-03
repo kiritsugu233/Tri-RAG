@@ -4,7 +4,8 @@ from dataclasses import dataclass
 from typing import Any, Dict, Iterable, Mapping, Optional, Sequence, Tuple
 
 import numpy as np
-from scipy.optimize import minimize
+from scipy.optimize import linprog, minimize
+from scipy.sparse import csr_matrix, hstack, identity
 
 from .pdctp_features import PilotFeatureVector
 from .utils import fingerprint
@@ -414,6 +415,8 @@ class TriBudgetResidualCalibrator:
     NAME = "tri_budget_log_residual_quantile_calibrator"
     SCHEMA = "pdctp_budget_residual_calibrator_v1"
     VERSION = 1
+    LEGACY_SOLVER = "linear_quantile_slsqp_exact_pinball"
+    COMPACT_SOLVER = "linear_quantile_compact_exact_pinball_v1"
 
     def __init__(
         self,
@@ -436,6 +439,7 @@ class TriBudgetResidualCalibrator:
         fit_ids: Sequence[str],
         objective_value: float,
         anchor_lid_source: str = "calibrated_pilot_lid",
+        solver: str = LEGACY_SOLVER,
     ):
         self.feature_names = tuple(str(value) for value in feature_names)
         self.feature_spec_fingerprint = str(feature_spec_fingerprint)
@@ -456,6 +460,7 @@ class TriBudgetResidualCalibrator:
         self.fallback_budget = int(fallback_budget)
         self.raw_policy_fingerprint = str(raw_policy_fingerprint)
         self.anchor_lid_source = str(anchor_lid_source)
+        self.solver = str(solver)
         self.fit_ids = _validate_fit_ids(fit_ids)
         self.objective_value = _canonical_residual_parameter(objective_value)
         count = len(self.feature_names)
@@ -477,6 +482,8 @@ class TriBudgetResidualCalibrator:
             "calibrated_pilot_lid",
         }:
             raise CalibrationError("unsupported residual Raw Tri LID source")
+        if self.solver not in {self.LEGACY_SOLVER, self.COMPACT_SOLVER}:
+            raise CalibrationError("unsupported residual calibration solver")
         if not 0.0 < self.quantile < 1.0 or self.regularization < 0.0:
             raise CalibrationError("invalid residual quantile or regularization")
         if not 0.0 < self.training_level <= 1.0:
@@ -606,6 +613,187 @@ class TriBudgetResidualCalibrator:
             fit_ids=fit_ids,
             objective_value=canonical_objective,
             anchor_lid_source=anchor_lid_source,
+            solver=cls.LEGACY_SOLVER,
+        )
+
+    @classmethod
+    def fit_compact(
+        cls,
+        records: Iterable[BudgetResidualRecord],
+        *,
+        quantile: float,
+        regularization: float,
+        safety_offset: float,
+        grid: Sequence[int],
+        minimum_budget: int,
+        fallback_budget: int,
+        raw_policy_fingerprint: str,
+        anchor_lid_source: str = "calibrated_pilot_lid",
+    ) -> "TriBudgetResidualCalibrator":
+        """Fit the same convex pinball objective without O(n) optimizer variables.
+
+        The unregularized problem is solved exactly as a sparse linear program.
+        Positive-L2 candidates use a deterministic coefficient-only SLSQP
+        formulation with an analytic pinball subgradient.  This path exists for
+        the real FiQA calibration gate; :meth:`fit` and its serialized solver
+        identity remain unchanged for the accepted network-free foundation.
+        """
+        rows = list(records)
+        if not rows:
+            raise CalibrationError("cannot fit residual calibrator without records")
+        if any(row.role != "query_cal" for row in rows):
+            raise CalibrationError("residual calibrator may fit query_cal records only")
+        levels = {float(row.training_level) for row in rows}
+        if len(levels) != 1:
+            raise CalibrationError("one residual calibrator requires one training level")
+        fit_ids = _validate_fit_ids([row.query_id for row in rows])
+        if any(row.raw_budget not in grid or row.required_budget not in grid for row in rows):
+            raise CalibrationError("residual fit budgets must come from the frozen grid")
+        matrix, names, spec_fingerprint = _feature_matrix(
+            [row.features for row in rows]
+        )
+        targets = np.asarray([row.residual for row in rows], dtype=np.float64)
+        if not np.all(np.isfinite(targets)):
+            raise CalibrationError("residual targets must be finite")
+        if not 0.0 < quantile < 1.0:
+            raise CalibrationError("quantile must lie strictly inside (0,1)")
+        if not np.isfinite(regularization) or regularization < 0.0:
+            raise CalibrationError("regularization must be finite and nonnegative")
+        means, scales, constant = _normalization(matrix)
+        standardized = (matrix - means) / scales
+        n, feature_count = standardized.shape
+        design = np.column_stack([np.ones(n, dtype=np.float64), standardized])
+        beta_count = feature_count + 1
+
+        try:
+            initial_intercept = float(np.quantile(targets, quantile, method="linear"))
+        except TypeError:
+            initial_intercept = float(
+                np.quantile(targets, quantile, interpolation="linear")
+            )
+        beta0 = np.concatenate([[initial_intercept], np.zeros(feature_count)])
+
+        if float(regularization) == 0.0:
+            # design @ beta + positive - negative = targets
+            equality = hstack(
+                [
+                    csr_matrix(design),
+                    identity(n, format="csr"),
+                    -identity(n, format="csr"),
+                ],
+                format="csr",
+            )
+            objective = np.concatenate(
+                [
+                    np.zeros(beta_count, dtype=np.float64),
+                    np.full(n, quantile / n, dtype=np.float64),
+                    np.full(n, (1.0 - quantile) / n, dtype=np.float64),
+                ]
+            )
+            result = linprog(
+                objective,
+                A_eq=equality,
+                b_eq=targets,
+                bounds=[(None, None)] * beta_count + [(0.0, None)] * (2 * n),
+                method="highs",
+            )
+            if not result.success:
+                raise CalibrationError(
+                    f"compact quantile residual optimization failed: {result.message}"
+                )
+            beta = np.asarray(result.x[:beta_count], dtype=np.float64)
+        else:
+            def compact_objective(parameters: np.ndarray) -> float:
+                residuals = targets - design @ parameters
+                return quantile_pinball_loss(residuals, quantile) + float(
+                    0.5
+                    * regularization
+                    * np.dot(parameters[1:], parameters[1:])
+                )
+
+            def compact_jac(parameters: np.ndarray) -> np.ndarray:
+                residuals = targets - design @ parameters
+                weights = np.where(
+                    residuals > 0.0,
+                    -quantile,
+                    np.where(residuals < 0.0, 1.0 - quantile, 0.0),
+                ) / n
+                gradient = design.T @ weights
+                gradient[1:] += regularization * parameters[1:]
+                return np.asarray(gradient, dtype=np.float64)
+
+            result = minimize(
+                compact_objective,
+                beta0,
+                jac=compact_jac,
+                method="SLSQP",
+                options={"ftol": 1e-12, "maxiter": 5000, "disp": False},
+            )
+            if not result.success:
+                raise CalibrationError(
+                    f"compact quantile residual optimization failed: {result.message}"
+                )
+            beta = np.asarray(result.x, dtype=np.float64)
+
+        canonical_intercept = _canonical_residual_parameter(beta[0])
+        canonical_coefficients = np.asarray(
+            [_canonical_residual_parameter(value) for value in beta[1:]],
+            dtype=np.float64,
+        )
+        fitted_residuals = targets - (
+            canonical_intercept + standardized @ canonical_coefficients
+        )
+        canonical_objective = quantile_pinball_loss(fitted_residuals, quantile) + float(
+            0.5 * regularization * np.dot(canonical_coefficients, canonical_coefficients)
+        )
+        return cls(
+            feature_names=names,
+            feature_spec_fingerprint=spec_fingerprint,
+            means=[_canonical_float(value) for value in means],
+            scales=[_canonical_float(value) for value in scales],
+            constant_features=constant.tolist(),
+            intercept=canonical_intercept,
+            coefficients=canonical_coefficients,
+            quantile=quantile,
+            regularization=regularization,
+            safety_offset=safety_offset,
+            training_level=next(iter(levels)),
+            grid=grid,
+            minimum_budget=minimum_budget,
+            fallback_budget=fallback_budget,
+            raw_policy_fingerprint=raw_policy_fingerprint,
+            fit_ids=fit_ids,
+            objective_value=canonical_objective,
+            anchor_lid_source=anchor_lid_source,
+            solver=cls.COMPACT_SOLVER,
+        )
+
+    def with_operating_point(
+        self, *, safety_offset: float, training_level: Optional[float] = None
+    ) -> "TriBudgetResidualCalibrator":
+        """Clone a fitted model while changing only preregistered operating metadata."""
+        return type(self)(
+            feature_names=self.feature_names,
+            feature_spec_fingerprint=self.feature_spec_fingerprint,
+            means=self.means,
+            scales=self.scales,
+            constant_features=self.constant_features,
+            intercept=self.intercept,
+            coefficients=self.coefficients,
+            quantile=self.quantile,
+            regularization=self.regularization,
+            safety_offset=safety_offset,
+            training_level=(
+                self.training_level if training_level is None else training_level
+            ),
+            grid=self.grid,
+            minimum_budget=self.minimum_budget,
+            fallback_budget=self.fallback_budget,
+            raw_policy_fingerprint=self.raw_policy_fingerprint,
+            fit_ids=self.fit_ids,
+            objective_value=self.objective_value,
+            anchor_lid_source=self.anchor_lid_source,
+            solver=self.solver,
         )
 
     def predict_residual(self, features: PilotFeatureVector) -> Optional[float]:
@@ -697,7 +885,7 @@ class TriBudgetResidualCalibrator:
                 "link": "log_budget_ratio",
                 "intercept": self.intercept,
                 "coefficients": self.coefficients.tolist(),
-                "solver": "linear_quantile_slsqp_exact_pinball",
+                "solver": self.solver,
                 "parameter_decimals": RESIDUAL_PARAMETER_DECIMALS,
                 "quantile": self.quantile,
                 "safety_offset": self.safety_offset,
@@ -762,7 +950,8 @@ class TriBudgetResidualCalibrator:
         if (
             normalization.get("source_role") != "query_cal"
             or model.get("link") != "log_budget_ratio"
-            or model.get("solver") != "linear_quantile_slsqp_exact_pinball"
+            or model.get("solver")
+            not in {cls.LEGACY_SOLVER, cls.COMPACT_SOLVER}
             or model.get("parameter_decimals") != RESIDUAL_PARAMETER_DECIMALS
             or objective.get("name") != "mean_pinball_plus_l2"
             or anchor.get("name") != "raw_tri_predict"
@@ -797,6 +986,7 @@ class TriBudgetResidualCalibrator:
                 fit_ids=fit["ordered_ids"],
                 objective_value=objective["value"],
                 anchor_lid_source=anchor["lid_source"],
+                solver=model["solver"],
             )
         except (KeyError, TypeError) as exc:
             raise CalibrationError("invalid residual calibrator artifact") from exc
