@@ -19,8 +19,9 @@ five-role new-data protocol and statistical/latency gates. The network-free v2
 foundation, FiQA source/protocol freezes, qrel-free text preparation, E5 cache,
 query_cal fitting, and query_tune selection gates are implemented and
 independently audited. The fresh query_tune outcome is now observed and frozen;
-query_cert, query_latency, and query_test remain unopened. No positive v2
-result exists.
+the fingerprint-gated query_cert runner is implemented and tested without
+opening the real certification role. query_cert, query_latency, and query_test
+remain unopened. No positive v2 result exists.
 
 ## What runs
 
@@ -997,15 +998,50 @@ performance-only change leaves every candidate budget and scientific artifact
 exactly unchanged; Raw Tri-Predict v1 code, behavior, and identity remain
 unchanged.
 
+## FiQA query_cert runner ready
+
+The one-time certification runner and frozen config are implemented in
+`tri_rag_harness.pdctp_fiqa_query_cert` and
+`configs/pdctp_fiqa_query_cert_v1.json`; the config fingerprint is
+`c6357a748f7f3262f481c1f597d3f25acb76892a9dbfc621735effe6b0bd8143`.
+Before a cert token can be issued, the runner validates every source, role,
+embedding, tune-audit, tune-file, selection, policy, hypothesis, power-plan,
+projection, and post-tune guard identity. A metadata-only replay of the
+returned real tune artifacts reconstructed all six frozen policies and the
+exact post-tune state fingerprint
+`55ecdf8e3cc53d554d6476569d34cd309e4e0f182a5a86e634741ef1a9dd97b5`;
+certification remained closed. This replay did not read the 192 MB embedding
+arrays or any cert embedding, qrel outcome, retrieval result, or metric.
+
+After validation, the runner may open only the complete 1,567-ID query_cert
+role. It filters the combined train qrel member by first-column role before
+parsing outcome fields, computes all six frozen decisions from deployable
+pilot inputs before reducing exact-top-k or qrel supervision, and reuses one
+projected ranking per query. It retains the complete query-level inputs,
+decisions, ranks, evidence, budgets, reranked contexts, and separate work
+counts. All six preregistered Bonferroni paired empirical-Bernstein bounds are
+immediately reconstructed from their saved per-query values. PASS and FAIL are
+both terminal and prohibit refitting, selection, budget expansion, or a repeat
+certification. A `--preflight-only` mode runs the complete upstream/cache/source
+validation and exits with the post-tune state still closed before the single
+protected execution.
+
+Six new cert tests cover the accepted tune/config identities, first-column
+qrel isolation, deterministic one-scan evaluation, deployable-only policy
+decisions, complete paired-bound reconstruction, and terminal guard behavior.
+The exact offline command
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 -m unittest discover -s tests -v`
+reports 160 passes, one expected optional real-FAISS skip, and zero failures
+across 161 tests. The implementation contract and cluster command are recorded
+in `docs/FIQA_QUERY_CERT_GATE.md`.
+
 ## Next task
 
-Implement and test the fingerprint-gated `query_cert` runner against synthetic
-fixtures and returned-artifact metadata, then commit that implementation before
-opening the complete 1,567-ID certification role exactly once. It must consume
-the accepted frozen six-method suite and Bonferroni hypotheses without any
-selection or refit, write paired query-level records, and close certification
-terminally whether the hypotheses pass or fail. No latency measurement, test
-evaluation, LLM, approximate index, policy clipping, or retuning is authorized.
+Push and pull the committed certification runner, then execute it exactly once
+on the complete 1,567-ID query_cert role and return the checksum-verified run
+archive for independent audit. Do not rerun certification after either PASS or
+FAIL. No latency measurement, test evaluation, LLM, approximate index, policy
+clipping, or retuning is authorized before that audit is accepted.
 
 ## Known deviations and risks
 

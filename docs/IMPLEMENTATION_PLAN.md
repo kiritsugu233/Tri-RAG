@@ -275,7 +275,7 @@ Acceptance:
 - [x] Freeze fixed, monotone, Raw Tri, ablation, and PDCTP comparators.
 - [x] Independently replay all 2,086 tune candidates, selected policies, and
   hypotheses from returned query-level artifacts.
-- [ ] Implement and freeze the fingerprint-gated `query_cert` runner without
+- [x] Implement and freeze the fingerprint-gated `query_cert` runner without
   opening certification outcomes.
 - [ ] Certify once on untouched `query_cert` with family-wise correction.
 - [ ] Run a frozen paired CPU/GPU latency protocol on `query_latency`.
@@ -429,6 +429,20 @@ Tri-Predict computation. Exact profile reuse plus progress logging now reduces
 the profile-input path from 49,175 threshold requests to 9,835 shared inputs.
 A full real-record replay proves value-identical candidate outputs and does not
 change Raw Tri-Predict v1.
+
+The one-time certification runner is now implemented and documented in
+`docs/FIQA_QUERY_CERT_GATE.md`. Config fingerprint
+`c6357a748f7f3262f481c1f597d3f25acb76892a9dbfc621735effe6b0bd8143`
+binds the accepted tune audit and all 16 returned tune files, selected suite,
+hypotheses, power plan, projection, embedding cache, source archive, and full
+1,567-ID cert order. Six synthetic tests cover role-scoped qrel parsing,
+deployable-only decisions made before supervision reduction, deterministic
+one-scan records, complete paired-bound reconstruction, and terminal PASS/FAIL
+behavior. The 161-test offline suite reports 160 passes, one expected optional
+FAISS skip, and zero failures. A metadata-only replay reconstructed all six
+real frozen policies, the hypotheses, and the exact post-tune guard state while
+leaving query_cert closed. The remaining unchecked cert item is the one-time
+real execution; no cert outcome has been read locally.
 
 ## Suggested future code tree
 
