@@ -107,7 +107,7 @@ class PDCTPFiQAQueryCalTests(unittest.TestCase):
         self.assertEqual(fingerprint(body), claimed)
         self.assertEqual(
             claimed,
-            "1e2e09d9bbc794682190ec0228ab4ce01f41aedf9a399d08a00aca80a84594a0",
+            "e3cd09d125a868b685df02b23f0706926fa5786752d863f17bf13d6293de7884",
         )
         self.assertEqual(
             audit["decision"],
@@ -134,6 +134,9 @@ class PDCTPFiQAQueryCalTests(unittest.TestCase):
             self.assertFalse(audit["checks"][f"{role}_accessed"])
         self.assertFalse(audit["checks"]["qrels_or_relevance_accessed"])
         self.assertTrue(audit["checks"]["no_policy_selected"])
+        for identity in audit["file_identities"].values():
+            self.assertEqual(len(identity), 64)
+            self.assertTrue(all(character in "0123456789abcdef" for character in identity))
 
     def test_checked_config_binds_accepted_embedding_gate(self):
         config = load_pdctp_query_cal_config(CONFIG)

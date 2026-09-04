@@ -902,19 +902,65 @@ differ by at most `1.000017846308765e-10`, and one saved projected-distance
 value differs by `1.000000082740371e-10`. These last-decimal differences alter
 no deployable feature, fit, ranking, label, budget target, or operating point.
 The accepted audit fingerprint is
-`1e2e09d9bbc794682190ec0228ab4ce01f41aedf9a399d08a00aca80a84594a0`.
+`e3cd09d125a868b685df02b23f0706926fa5786752d863f17bf13d6293de7884`.
+It supersedes the initially checked-in `1e2e09d9...` identity: a dry validation
+found that the manually transcribed `query_cal_records.jsonl` SHA-256 had
+dropped two hexadecimal characters. The corrected 64-character value matches
+both the returned file and its original run manifest; no run artifact,
+calibrator, record, or scientific result changed.
 The post-audit offline suite reports 146 passes, one optional real-FAISS skip,
 and zero failures across 147 tests.
 `docs/FIQA_QUERY_CAL_GATE.md` records the gate contract and accepted result.
 
+## FiQA query_tune gate implementation
+
+The fingerprint-gated `query_tune` runner is implemented but has not opened
+the real tune role. Its config fingerprint is
+`06c647625bb01192b54ae0698e9e4150fe4fec0d2b4407858de74c763573d7d0`.
+Before issuing a tune token, it validates every frozen protocol/source/
+embedding identity, all eight returned query_cal files, the corrected accepted
+query_cal audit, all 2,025 residual operating points, and the exact
+post-calibration guard state. A dry validation against the real returned
+query_cal directory passed and reproduced state fingerprint
+`2fe1eeb55180198165b6d1b46f35bf4214b8711cda554e7a2ca211f5b193f481`
+with selection still unset. It did not read a query_tune vector or qrel.
+
+The runner opens only all 1,967 frozen tune IDs. Because FiQA's native train
+qrel member combines cal/tune/cert queries, it filters each row by its first
+column before parsing the document ID or relevance; non-tune outcome fields
+remain unparsed and uninterpreted. Exact float64 squared-L2 retrieval uses the
+frozen Gaussian matrix, no projected renormalization, stable ID ties, and one
+projected scan per query. Per-query artifacts retain exact-top-10 retention,
+candidate qrel recall, and exact-reranked top-5 qrel recall for every budget.
+
+All 2,086 preregistered candidates are evaluated, with the complete
+`2086 x 1967` int32 budget matrix retained. The fixed reference is the smallest
+budget meeting the tune retention LCB. Fixed, monotone, Raw Tri, LID-only,
+residual-only, and full PDCTP are then independently optimized within family
+under the same retention and two evidence constraints. This prevents choosing
+an artificially weak comparator. On success the six-method suite and
+Bonferroni hypotheses freeze without opening query_cert; if any family has no
+eligible candidate, the gate records a terminal failure without retuning.
+
+Six new synthetic tests cover the exact config, first-column qrel filtering,
+deterministic one-scan retrieval/evidence reconstruction, all-family candidate
+enumeration and selection, terminal no-substitution failure, compact suite
+reconstruction, Raw v1 immutability, and upstream tamper refusal. The current
+offline suite reports 152 passes, one optional real-FAISS skip, and zero
+failures across 153 tests.
+`docs/FIQA_QUERY_TUNE_GATE.md` records the full contract and cluster command.
+The exact local regression command was
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 -m unittest discover -s tests -v`.
+
 ## Next task
 
-Implement and test a fingerprint-gated `query_tune` selection runner against
-the accepted `query_cal` audit. Freeze its selection and comparator contract
-before executing it. `query_tune` remains closed until that implementation is
-committed; `query_cert`, `query_latency`, and `query_test` remain closed. No
-certification, latency measurement, LLM, or approximate index is authorized
-yet.
+Commit the query_tune runner, then execute it once on an exclusive Genoa
+allocation and return its complete archive for independent selection audit.
+The audit must reconstruct all 2,086 candidate rows and per-query budgets,
+verify the selected six-method suite and hypotheses, and replay the post-tune
+state. Do not implement or open `query_cert` until that audit is accepted.
+No latency measurement, test evaluation, LLM, or approximate index is
+authorized yet.
 
 ## Known deviations and risks
 

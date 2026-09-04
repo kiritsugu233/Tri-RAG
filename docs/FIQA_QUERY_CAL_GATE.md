@@ -145,7 +145,12 @@ explicitly retained in the checked-in audit instead of being mislabeled as
 byte identity.
 
 The accepted independent-audit fingerprint is
-`1e2e09d9bbc794682190ec0228ab4ce01f41aedf9a399d08a00aca80a84594a0`.
+`e3cd09d125a868b685df02b23f0706926fa5786752d863f17bf13d6293de7884`.
+It supersedes the initially recorded `1e2e09d9...` fingerprint. A downstream
+dry validation found that the manually transcribed `query_cal_records.jsonl`
+SHA-256 was 62 rather than 64 hexadecimal characters; the corrected value
+matches both the returned file and the original run manifest, so no run output
+or fitted candidate changed.
 This authorizes implementation of the `query_tune` runner only. `query_tune`
 has not been opened, selection remains unset, and every later role remains
 closed. The post-audit offline suite reports 146 passes, one optional

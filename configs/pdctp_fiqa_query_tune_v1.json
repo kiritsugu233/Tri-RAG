@@ -1,0 +1,93 @@
+{
+  "schema": "pdctp_fiqa_query_tune_gate_v1",
+  "version": 1,
+  "run_name": "pdctp_fiqa_query_tune_v1",
+  "bindings": {
+    "protocol_freeze_fingerprint": "cb3ef70f3ffc801c248f3269e0807480f0ee5a51cde41a52573a03f228a42368",
+    "role_assignments_fingerprint": "ae884e0001d92ad11ddc1e420ece5412846454864331843a25a7e5cccf445dfe",
+    "source_audit_fingerprint": "99211145fdf7976fe58072d516c4f6c95c33ed880afe63189cb8e464aac15aa5",
+    "source_audit_sha256": "dd65862cf8c87b0a40c3dcc2fae3971ec26bc7ad44b0db00803e063dfedc72d9",
+    "source_archive_sha256": "32c7df99ed21252fdfb2cf3f5673502a8d245ee0c44c4a133570d92ce2b3ad02",
+    "qrels_train_member_sha256": "e46a99529aa61b12e086a5c057e4e0ecaeda9502e53d5fe855efce778f1ec59a",
+    "dataset_manifest_fingerprint": "bfc25daad8d2d382390a0a42c3aa03b96e965965ba17c2065aaf8bef00903240",
+    "embedding_config_fingerprint": "dce9c5f590c0348672dc3ab6f90a8e07e5b170c2174a5c2aab5b9eaeabc8bc78",
+    "embedding_manifest_fingerprint": "079545ef7c6af8ab27a5c8382dbd8174905f1bb537df59e94d572b6c2f2b04c1",
+    "embedding_audit_fingerprint": "54af315d5b94b43a81be71ea29ab860635f0748a97108e0cda120a510947dd71",
+    "query_cal_audit_fingerprint": "e3cd09d125a868b685df02b23f0706926fa5786752d863f17bf13d6293de7884",
+    "query_cal_audit_sha256": "db6883155e509ec30a8dd9ca75202b98fbbfa7b0e46769ba22e743c83056a590",
+    "query_cal_manifest_fingerprint": "140c3a5f9ac168e222f9ff7e7cd3edb7f75879a40aa358158a1cfac4b77b2be6",
+    "query_cal_protocol_state_fingerprint": "2fe1eeb55180198165b6d1b46f35bf4214b8711cda554e7a2ca211f5b193f481",
+    "lid_candidate_bundle_fingerprint": "4526c8b752325e3cae040d8b450c76cd0df77571b9e6d6080bd1a53ba4a56a1e",
+    "residual_candidate_bundle_fingerprint": "ed6cf0f7056fc1b7345b5303a7ad71815a2b8df6677c6c1c2c0e231bbf9c9f31",
+    "query_tune_ordered_id_hash": "d55652c3d04cefc4054b5e970225ffebcf1f6b0531c1774c1133c692f76362e3",
+    "power_plan_fingerprint": "f1bddbc072143ec13b23785775d7b7ebf97913146eb05022e7d43f0d12a644a2"
+  },
+  "access": {
+    "role": "query_tune",
+    "require_complete_frozen_order": true,
+    "allowed_supervision": [
+      "exact_original_top_k_identities",
+      "realized_embedding_retention",
+      "query_tune_positive_qrels",
+      "candidate_evidence_recall",
+      "final_reranked_evidence_recall"
+    ],
+    "qrel_member": "qrels_train",
+    "non_tune_qrel_outcomes_must_not_be_parsed": true,
+    "calibrator_fit_allowed": false,
+    "selection_allowed": true,
+    "blocked_roles": [
+      "query_cert",
+      "query_latency",
+      "query_test"
+    ]
+  },
+  "selection_contract": {
+    "fixed_reference": "smallest_budget_meeting_retention_lcb",
+    "family_selection": "independent_minimum_work_eligible_candidate_per_method",
+    "eligibility": [
+      "retention_lower_bound_at_least_target",
+      "candidate_evidence_noninferior_to_fixed",
+      "final_evidence_noninferior_to_fixed"
+    ],
+    "objective": "common_coordinate_work",
+    "tie_breaks": [
+      "lower_mean_budget",
+      "canonical_candidate_fingerprint"
+    ],
+    "method_order": [
+      "fixed",
+      "monotone_binned",
+      "raw_tri_predict",
+      "lid_calibration_only",
+      "budget_residual_only",
+      "pdctp"
+    ],
+    "expected_candidate_counts": {
+      "fixed": 21,
+      "monotone_binned": 15,
+      "raw_tri_predict": 5,
+      "lid_calibration_only": 20,
+      "budget_residual_only": 405,
+      "pdctp": 1620
+    },
+    "failure_behavior": "terminal_no_retuning_no_budget_expansion",
+    "freeze_certification_hypotheses_after_success": true,
+    "shuffled_profile_used_for_selection": false
+  },
+  "execution": {
+    "backend": "numpy_exact_float64_batched_v1",
+    "query_batch_size": 32,
+    "projection_dtype": "float64",
+    "post_projection_normalize": false,
+    "distance": "squared_l2",
+    "stable_tie_break": "lexicographic_doc_id",
+    "pilot_expansion_reuse": "one_projected_scan",
+    "record_distance_decimals": 10,
+    "selection_float_decimals": 12,
+    "candidate_budget_matrix_dtype": "int32",
+    "qrel_filter": "first_column_role_filter_before_outcome_parse_v1",
+    "approximate_index": false,
+    "llm": false
+  }
+}

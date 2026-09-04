@@ -34,3 +34,11 @@ Only `query_cal` is open. Both calibration fit bundles are frozen; selection is
 unset, and `query_tune`, `query_cert`, `query_latency`, and `query_test` remain
 closed. No qrel, LLM, approximate index, certification, or latency measurement
 was used.
+
+Downstream dry validation corrected one audit-metadata transcription: the
+returned `query_cal_records.jsonl` SHA-256 is
+`ecc244b05846df73ed2f1ba6f7e9765d745d03a223f6a66fd6b5b5b9f98b35d9`.
+The initially recorded value omitted two hexadecimal characters. This
+correction matches the original run manifest and changes no returned artifact
+or scientific result; the superseding audit fingerprint is
+`e3cd09d125a868b685df02b23f0706926fa5786752d863f17bf13d6293de7884`.

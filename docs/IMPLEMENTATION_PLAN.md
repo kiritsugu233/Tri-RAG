@@ -270,6 +270,7 @@ Acceptance:
 - [x] Implement and test the fingerprint-gated `query_cal` runner and compact,
   reconstructable all-candidate artifact format.
 - [x] Execute and independently audit all calibration fits on `query_cal` only.
+- [x] Implement and test the fingerprint-gated all-family `query_tune` runner.
 - [ ] Select one complete PDCTP policy on `query_tune` only.
 - [ ] Freeze fixed, monotone, Raw Tri, ablation, and PDCTP comparators.
 - [ ] Certify once on untouched `query_cert` with family-wise correction.
@@ -369,11 +370,39 @@ cross-platform last-decimal drift in 60 diagnostic oracle-LID values and one
 saved projected distance, all bounded by approximately `1.01e-10`; every
 deployable feature, ranking, target, candidate, and operating point remains
 identical. Audit fingerprint
-`1e2e09d9bbc794682190ec0228ab4ce01f41aedf9a399d08a00aca80a84594a0`
+`e3cd09d125a868b685df02b23f0706926fa5786752d863f17bf13d6293de7884`
 accepts only the fit gate. `query_tune` is ready for runner implementation but
 remains unopened; all later roles remain closed. The post-audit offline suite
 reports 146 passes, one optional real-FAISS skip, and zero failures across 147
-tests.
+tests. This corrected audit identity supersedes `1e2e09d9...`, whose sole
+error was a manually transcribed 62-character query-record file hash; the
+returned file already matched the original run manifest's 64-character hash.
+
+The next protected runner is documented in `docs/FIQA_QUERY_TUNE_GATE.md`.
+Config fingerprint
+`06c647625bb01192b54ae0698e9e4150fe4fec0d2b4407858de74c763573d7d0`
+binds the corrected accepted query_cal audit and every prior source, role,
+embedding, calibration, and power-plan identity. A real-returned-artifact dry
+validation reconstructed all 2,025 residual operating points and exactly
+replayed the closed post-calibration state without reading tune outcomes.
+
+After validation, the runner may open only all 1,967 query_tune IDs. It parses
+document/relevance fields from the combined native train qrel file only after
+the first-column query ID passes the tune-role filter. One frozen projected
+scan provides pilot and expansion order; exact original reranking produces
+retention plus candidate/final evidence curves for all 21 budgets. The full
+`2086 x 1967` per-query candidate budget matrix prevents aggregate-only
+selection records.
+
+Six method families are optimized independently under the same quality
+constraints, then stored as a deduplicated, fully reconstructable component
+registry. A success freezes selection and the already preregistered hypotheses
+without opening query_cert; a missing eligible family is terminal. Six new
+tests cover filtering, deterministic retrieval/evidence, complete family
+enumeration, terminal failure, selection/suite reconstruction, Raw v1
+immutability, and tamper refusal. The 153-test offline suite reports 152
+passes, one expected optional FAISS skip, and zero failures. The real
+query_tune role remains unopened.
 
 ## Suggested future code tree
 
