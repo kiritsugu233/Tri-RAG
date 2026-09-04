@@ -5,6 +5,7 @@ import tempfile
 import unittest
 import zipfile
 from pathlib import Path
+from unittest.mock import patch
 
 import numpy as np
 
@@ -22,6 +23,7 @@ from tri_rag_harness.pdctp_fiqa_query_tune import (
     select_query_tune_policies,
     validate_query_tune_documents,
 )
+import tri_rag_harness.pdctp_fiqa_query_tune as query_tune_module
 from tri_rag_harness.pdctp_protocol import (
     FIVE_ROLES,
     FiveRoleAssignments,
@@ -32,6 +34,12 @@ from tri_rag_harness.utils import fingerprint
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "configs" / "pdctp_fiqa_query_tune_v1.json"
+ACCEPTED_AUDIT = (
+    ROOT
+    / "artifacts"
+    / "pdctp_fiqa_query_tune_v1"
+    / "query_tune_audit.json"
+)
 
 
 def _fingerprinted(value):
@@ -164,6 +172,48 @@ class PDCTPFiQAQueryTuneTests(unittest.TestCase):
             path.write_text(json.dumps(tampered))
             with self.assertRaisesRegex(PDCTPQueryTuneError, "selection contract"):
                 load_pdctp_query_tune_config(path)
+
+    def test_checked_in_query_tune_audit_accepts_only_the_frozen_selection(self):
+        audit = json.loads(ACCEPTED_AUDIT.read_text())
+        body = dict(audit)
+        claimed = body.pop("fingerprint")
+        self.assertEqual(fingerprint(body), claimed)
+        self.assertEqual(
+            claimed,
+            "f9a375115ed2c7f461bbd16add72735a6b9da44c309dd91f4782ecb01f0e5924",
+        )
+        self.assertEqual(
+            audit["decision"],
+            "ACCEPT_QUERY_TUNE_SELECTION_READY_TO_IMPLEMENT_QUERY_CERT",
+        )
+        self.assertEqual(audit["query_tune_records"], 1967)
+        self.assertEqual(
+            sum(audit["candidate_audit"]["candidates"].values()), 2086
+        )
+        self.assertTrue(audit["checks"]["full_candidate_selection_replayed_exact"])
+        self.assertTrue(
+            audit["checks"]["selected_policy_suite_reconstructed_exact"]
+        )
+        self.assertFalse(audit["checks"]["query_cert_accessed"])
+        self.assertFalse(audit["checks"]["query_latency_accessed"])
+        self.assertFalse(audit["checks"]["query_test_accessed"])
+        self.assertFalse(audit["checks"]["calibrator_refit"])
+        self.assertFalse(audit["checks"]["raw_tri_predict_v1_behavior_modified"])
+        self.assertGreater(
+            audit["selected_methods"]["pdctp"]["mean_budget"],
+            audit["selected_methods"]["fixed"]["mean_budget"],
+        )
+        self.assertEqual(
+            audit["selected_methods"]["pdctp"][
+                "queries_above_gpu_stable_selection_limit"
+            ],
+            262,
+        )
+        for identity in audit["file_identities"].values():
+            self.assertEqual(len(identity), 64)
+            self.assertTrue(
+                all(character in "0123456789abcdef" for character in identity)
+            )
 
     def test_qrel_parser_skips_non_tune_outcomes_before_parsing(self):
         tune_id = "pdctp-beir-fiqa:query:tune-1"
@@ -325,6 +375,44 @@ class PDCTPFiQAQueryTuneTests(unittest.TestCase):
             reconstruct_frozen_policy_suite(
                 first["policies"], tampered, first["policy_suite"]
             )
+
+    def test_tri_predict_profiles_are_reused_across_threshold_candidates(self):
+        records = self._perfect_tune_records()
+        expected = {
+            "fixed": 5,
+            "monotone_binned": 4,
+            "raw_tri_predict": 2,
+            "lid_calibration_only": 4,
+            "budget_residual_only": 16,
+            "pdctp": 32,
+        }
+        original = query_tune_module.tri_predict_retention_grid
+        with patch.object(
+            query_tune_module,
+            "tri_predict_retention_grid",
+            wraps=original,
+        ) as compute:
+            result = select_query_tune_policies(
+                self.protocol,
+                records,
+                self.lid_bundle,
+                self.residual_bundle,
+                selection_float_decimals=12,
+                expected_candidate_counts=expected,
+            )
+        self.assertTrue(result["success"])
+        self.assertLessEqual(
+            compute.call_count,
+            len(records) * (1 + len(self.lid_bundle["candidates"])),
+        )
+        self.assertLess(
+            compute.call_count,
+            len(records)
+            * (
+                expected["raw_tri_predict"]
+                + expected["lid_calibration_only"]
+            ),
+        )
 
     def test_missing_eligible_family_is_terminal_without_policy_substitution(self):
         records = self._perfect_tune_records()

@@ -123,6 +123,38 @@ python3 -m tri_rag_harness.pdctp_fiqa_query_tune \
   --output runs/pdctp-fiqa-query-tune-<job-id>
 ```
 
-The real query_tune role has not been opened. It remains closed until this
-implementation, tests, configuration, and documentation are committed and the
-user starts the one-time cluster run.
+## Accepted real run
+
+Slurm allocation `376924` on `a100-0` ran implementation commit `6101363`,
+passed all 153 then-current tests, and completed the one-time 1,967-query tune
+selection. The returned archive SHA-256 is
+`3cfbeb6abd65b4e01991bc79065c2c244c8bc356f86deddae88a9ae4b7084969`.
+Manifest, selection, policy-suite, and post-tune state fingerprints are
+`7cf01ee872a59ee28e6dd0a0c5ffa10ab556b9c0746e3b0a96b8454bdb31836e`,
+`8db86a98eab28deaf6ba173ab78e8336a5bc23b2fc2916653cfbe6b2696cb9ee`,
+`ae0b21e565810853ca97add88fa593b686e6afee451b49ea7e3ee9fd4eb5aefd`,
+and
+`55ecdf8e3cc53d554d6476569d34cd309e4e0f182a5a86e634741ef1a9dd97b5`.
+
+The independent audit in
+`artifacts/pdctp_fiqa_query_tune_v1/query_tune_audit.json` has fingerprint
+`f9a375115ed2c7f461bbd16add72735a6b9da44c309dd91f4782ecb01f0e5924`.
+Its file SHA-256 is
+`2fcb974179bd6d0f7299c9cb410655c5989bdb99eb58d73455b2a45f47f686a0`.
+It validates all returned identities and records, reloads only tune qrels,
+recomputes every curve and candidate statistic, exactly replays the full
+candidate matrix and six-family selection, reconstructs the policies and
+hypotheses, and keeps cert/latency/test closed.
+
+The selected fixed reference is `M=768`. Selected full PDCTP averages
+`M=1892.763599389934` and has 7.318% higher common coordinate work than fixed,
+although its tune retention LCB is `0.973430513216` and it satisfies the frozen
+quality constraints. It emits `M>1984` on 262 tune queries and terminal
+`M=57638` on 31; these outcomes are frozen and may not be clipped or retuned.
+
+The returned implementation redundantly recomputed each query/LID retention
+curve for all five thresholds. The post-run optimization shares that exact
+curve and adds progress output. A complete replay reproduced the returned
+`2086 x 1967` budget matrix and every selection artifact exactly, without
+modifying Raw Tri-Predict v1. `query_cert` remains unopened pending a committed,
+fingerprint-gated certification runner.

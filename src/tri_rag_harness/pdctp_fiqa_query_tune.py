@@ -55,6 +55,7 @@ from .pdctp_statistics import bonferroni_allocation, make_power_plan
 from .policies import MonotoneBinnedPolicy, TriPredictPolicy
 from .projection import dense_gaussian_projection, projection_metadata
 from .text_embeddings import load_text_embedding_config, validate_text_embedding_cache
+from .tri_predict import tri_predict_retention_grid
 from .utils import array_fingerprint, fingerprint, write_json
 
 
@@ -1071,6 +1072,24 @@ def _policy_budgets(
     )
 
 
+def _budget_from_predictions(
+    policy: TriPredictPolicy, predictions: Mapping[int, float]
+) -> int:
+    """Apply an immutable Raw Tri-Predict threshold to one shared curve."""
+    for budget in policy.grid:
+        if budget == policy.corpus_size:
+            corrected = 1.0
+        else:
+            corrected = max(
+                0.0, float(predictions[budget]) - policy.safety_correction
+            )
+            if policy.target == 1.0:
+                continue
+        if corrected >= policy.target:
+            return int(budget)
+    return int(policy.grid[-1])
+
+
 def _validate_candidate_inputs(
     protocol: Mapping[str, Any],
     lid_bundle: Mapping[str, Any],
@@ -1188,23 +1207,67 @@ def select_query_tune_policies(
                 components={"monotone_reference": reference_artifact},
             )
 
+    observations = [_observation(row) for row in records]
+    prediction_cache: Dict[float, Dict[int, float]] = {}
+    prediction_inputs_completed = 0
+    prediction_inputs_total = len(records) * (1 + len(lid_by_fp))
+    prediction_reference = next(iter(raw_by_fp.values()))
+
+    def cached_predictions(lid: float, valid: bool) -> Optional[Dict[int, float]]:
+        nonlocal prediction_inputs_completed
+        result: Optional[Dict[int, float]] = None
+        if valid:
+            key = float(lid)
+            result = prediction_cache.get(key)
+            if result is None:
+                result = tri_predict_retention_grid(
+                    lid=key,
+                    m_prime=prediction_reference.m_prime,
+                    k_gt=prediction_reference.k_gt,
+                    budgets=prediction_reference.grid,
+                    corpus_size=prediction_reference.corpus_size,
+                    max_rank_samples=prediction_reference.max_rank_samples,
+                )
+                prediction_cache[key] = result
+        prediction_inputs_completed += 1
+        if progress and (
+            prediction_inputs_completed == prediction_inputs_total
+            or prediction_inputs_completed % 256 == 0
+        ):
+            print(
+                "query_tune Tri-Predict profiles: "
+                f"{prediction_inputs_completed}/{prediction_inputs_total}",
+                flush=True,
+            )
+        return result
+
+    raw_prediction_rows = [
+        cached_predictions(observation.pilot_lid, observation.pilot_lid_valid)
+        for observation in observations
+    ]
     raw_baseline_budgets: Dict[str, np.ndarray] = {}
     raw_residual_budgets: Dict[str, np.ndarray] = {}
+    terminal = retrieval["m_grid"][-1]
     for raw_fp, reference in raw_by_fp.items():
         raw_policy = RawTriPredictPDCTPPolicy(reference, minimum_budget=minimum_budget)
-        raw_vector = _policy_budgets(records, raw_policy)
-        raw_baseline_budgets[raw_fp] = raw_vector
-        residual_vector = np.asarray(
+        raw_vector = np.asarray(
             [
-                reference.choose(
-                    observation.pilot_lid,
-                    observation.pilot_lid_valid and observation.features.valid,
-                ).budget
-                for observation in (_observation(row) for row in records)
+                terminal
+                if predictions is None
+                else _budget_from_predictions(reference, predictions)
+                for predictions in raw_prediction_rows
             ],
             dtype=np.int32,
         )
-        raw_residual_budgets[raw_fp] = residual_vector
+        raw_baseline_budgets[raw_fp] = raw_vector
+        raw_residual_budgets[raw_fp] = np.where(
+            np.asarray(
+                [observation.features.valid for observation in observations],
+                dtype=bool,
+            ),
+            raw_vector,
+            terminal,
+        ).astype(np.int32, copy=False)
         add_candidate(
             "raw_tri_predict",
             raw_policy,
@@ -1212,6 +1275,16 @@ def select_query_tune_policies(
             budgets=raw_vector,
             components={"raw_reference": reference.serialize()},
         )
+
+    calibrated_prediction_rows: Dict[
+        str, List[Optional[Dict[int, float]]]
+    ] = {}
+    for lid_fp, lid_calibrator in lid_by_fp.items():
+        rows: List[Optional[Dict[int, float]]] = []
+        for observation in observations:
+            calibrated = lid_calibrator.predict(observation.features)
+            rows.append(cached_predictions(calibrated.value, calibrated.valid))
+        calibrated_prediction_rows[lid_fp] = rows
 
     calibrated_anchor_budgets: Dict[Tuple[str, str], np.ndarray] = {}
     for raw_fp, reference in raw_by_fp.items():
@@ -1222,7 +1295,15 @@ def select_query_tune_policies(
                 minimum_budget=minimum_budget,
                 lid_calibrator=lid_calibrator,
             )
-            vector = _policy_budgets(records, policy)
+            vector = np.asarray(
+                [
+                    terminal
+                    if predictions is None
+                    else _budget_from_predictions(reference, predictions)
+                    for predictions in calibrated_prediction_rows[lid_fp]
+                ],
+                dtype=np.int32,
+            )
             calibrated_anchor_budgets[(lid_fp, raw_fp)] = vector
             add_candidate(
                 "lid_calibration_only",

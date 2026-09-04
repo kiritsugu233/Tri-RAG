@@ -151,7 +151,9 @@ dry validation found that the manually transcribed `query_cal_records.jsonl`
 SHA-256 was 62 rather than 64 hexadecimal characters; the corrected value
 matches both the returned file and the original run manifest, so no run output
 or fitted candidate changed.
-This authorizes implementation of the `query_tune` runner only. `query_tune`
-has not been opened, selection remains unset, and every later role remains
-closed. The post-audit offline suite reports 146 passes, one optional
-real-FAISS skip, and zero failures across 147 tests.
+At acceptance this authorized implementation of the `query_tune` runner only;
+selection was still unset and every later role was closed. That authorization
+has since been consumed by the separately audited tune gate in
+`docs/FIQA_QUERY_TUNE_GATE.md`. It does not independently authorize cert,
+latency, or test access. The post-query-cal audit suite reported 146 passes,
+one optional real-FAISS skip, and zero failures across 147 tests.

@@ -1,6 +1,6 @@
 # Status
 
-Updated: 2026-09-03
+Updated: 2026-09-04
 
 ## Version boundary
 
@@ -16,9 +16,11 @@ Pilot-Distance Calibrated Tri-Predict (PDCTP), with two explicit layers: a
 deployable pilot-distance LID calibrator and a Raw-Tri-anchored budget-residual
 calibrator. `docs/CALIBRATED_TRI_PREDICT_PROTOCOL.md` freezes the intended
 five-role new-data protocol and statistical/latency gates. The network-free v2
-foundation, FiQA source/protocol freezes, and qrel-free text preparation are
-implemented and pass locally. No fresh method outcome has been accessed and no
-positive v2 result exists.
+foundation, FiQA source/protocol freezes, qrel-free text preparation, E5 cache,
+query_cal fitting, and query_tune selection gates are implemented and
+independently audited. The fresh query_tune outcome is now observed and frozen;
+query_cert, query_latency, and query_test remain unopened. No positive v2
+result exists.
 
 ## What runs
 
@@ -912,10 +914,10 @@ The post-audit offline suite reports 146 passes, one optional real-FAISS skip,
 and zero failures across 147 tests.
 `docs/FIQA_QUERY_CAL_GATE.md` records the gate contract and accepted result.
 
-## FiQA query_tune gate implementation
+## FiQA query_tune gate accepted
 
-The fingerprint-gated `query_tune` runner is implemented but has not opened
-the real tune role. Its config fingerprint is
+The fingerprint-gated `query_tune` runner has completed its one-time real tune
+selection. Its config fingerprint is
 `06c647625bb01192b54ae0698e9e4150fe4fec0d2b4407858de74c763573d7d0`.
 Before issuing a tune token, it validates every frozen protocol/source/
 embedding identity, all eight returned query_cal files, the corrected accepted
@@ -942,25 +944,68 @@ an artificially weak comparator. On success the six-method suite and
 Bonferroni hypotheses freeze without opening query_cert; if any family has no
 eligible candidate, the gate records a terminal failure without retuning.
 
-Six new synthetic tests cover the exact config, first-column qrel filtering,
-deterministic one-scan retrieval/evidence reconstruction, all-family candidate
-enumeration and selection, terminal no-substitution failure, compact suite
-reconstruction, Raw v1 immutability, and upstream tamper refusal. The current
-offline suite reports 152 passes, one optional real-FAISS skip, and zero
-failures across 153 tests.
+Eight query-tune tests cover the accepted audit, exact config, first-column
+qrel filtering, deterministic one-scan retrieval/evidence reconstruction,
+all-family candidate enumeration and selection, terminal no-substitution
+failure, compact suite reconstruction, shared Tri-Predict profile reuse, Raw
+v1 immutability, and upstream tamper refusal.
 `docs/FIQA_QUERY_TUNE_GATE.md` records the full contract and cluster command.
 The exact local regression command was
 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 -m unittest discover -s tests -v`.
+The post-audit suite reports 154 passes, one expected optional FAISS skip, and
+zero failures across 155 tests.
+
+Slurm allocation `376924` on `a100-0` at implementation commit `6101363`
+passed all 153 then-current tests in 53.818 seconds and wrote all 16 artifacts.
+The 6,997,522-byte returned archive passed local SHA-256 verification at
+`3cfbeb6abd65b4e01991bc79065c2c244c8bc356f86deddae88a9ae4b7084969`.
+Its manifest, selection, frozen policy suite, and post-tune state fingerprints
+are
+`7cf01ee872a59ee28e6dd0a0c5ffa10ab556b9c0746e3b0a96b8454bdb31836e`,
+`8db86a98eab28deaf6ba173ab78e8336a5bc23b2fc2916653cfbe6b2696cb9ee`,
+`ae0b21e565810853ca97add88fa593b686e6afee451b49ea7e3ee9fd4eb5aefd`,
+and
+`55ecdf8e3cc53d554d6476569d34cd309e4e0f182a5a86e634741ef1a9dd97b5`.
+
+Independent audit reloaded the original FiQA qrels through the first-column
+role filter, checked all 1,967 record fingerprints and curves, recomputed every
+aggregate for all 2,086 candidates, reproduced all 11,802 selected-policy
+records, regenerated the Gaussian matrix, reconstructed the six-method suite
+and hypotheses, and replayed the five-role state. A complete optimized local
+candidate replay reproduced the full `2086 x 1967` budget matrix, outcomes,
+selection, policies, component registry, and suite exactly. Accepted audit
+fingerprint is
+`f9a375115ed2c7f461bbd16add72735a6b9da44c309dd91f4782ecb01f0e5924`.
+The audit file SHA-256 is
+`2fcb974179bd6d0f7299c9cb410655c5989bdb99eb58d73455b2a45f47f686a0`.
+
+The tune result is quality-eligible but negative on the frozen cost objective.
+Fixed selects `M=768` with common work `11,803,776`; full PDCTP averages
+`M=1892.763599389934` and work `12,667,594.444331469`, which is `7.318%`
+higher than fixed. PDCTP's tune retention mean is `0.009811896289` higher and
+its retention LCB is `0.973430513216`, but this does not establish efficiency.
+PDCTP emits `M>1984` on 262 tune queries, including 31 full-corpus fallbacks,
+so it is incompatible with the frozen FAISS GPU stable-boundary contract unless
+the preregistered latency gate records a terminal incompatibility. No budget
+may be clipped or retuned.
+
+The cluster's long silent post-retrieval interval was traced to recomputing the
+same Tri-Predict retention curve once per threshold. The runner now computes
+one deterministic curve per exact LID value, shares it across all five frozen
+thresholds, and reports progress. Full real-record replay proves that this
+performance-only change leaves every candidate budget and scientific artifact
+exactly unchanged; Raw Tri-Predict v1 code, behavior, and identity remain
+unchanged.
 
 ## Next task
 
-Commit the query_tune runner, then execute it once on an exclusive Genoa
-allocation and return its complete archive for independent selection audit.
-The audit must reconstruct all 2,086 candidate rows and per-query budgets,
-verify the selected six-method suite and hypotheses, and replay the post-tune
-state. Do not implement or open `query_cert` until that audit is accepted.
-No latency measurement, test evaluation, LLM, or approximate index is
-authorized yet.
+Implement and test the fingerprint-gated `query_cert` runner against synthetic
+fixtures and returned-artifact metadata, then commit that implementation before
+opening the complete 1,567-ID certification role exactly once. It must consume
+the accepted frozen six-method suite and Bonferroni hypotheses without any
+selection or refit, write paired query-level records, and close certification
+terminally whether the hypotheses pass or fail. No latency measurement, test
+evaluation, LLM, approximate index, policy clipping, or retuning is authorized.
 
 ## Known deviations and risks
 
@@ -983,6 +1028,10 @@ authorized yet.
   GPU latency gate terminally incompatible; the protocol forbids silently
   shrinking its budget. A CPU result alone cannot support the required paired
   CPU/GPU latency claim.
+- The frozen real PDCTP policy already exceeds `M=1984` on 262 tune queries and
+  reaches the full corpus on 31. This does not use latency outcomes, but it
+  establishes a policy/backend feasibility conflict that later gates must
+  preserve rather than repair.
 - The checked-in power plan is deliberately worst-case and requires 1,567
   fresh certification queries for the widest paired family. The 16-query
   synthetic certification bounds clip to broad ranges and all fail. This is an

@@ -1,0 +1,167 @@
+{
+  "archive": {
+    "bytes": 6997522,
+    "name": "pdctp-fiqa-query-tune-376924.tar.gz",
+    "sha256": "3cfbeb6abd65b4e01991bc79065c2c244c8bc356f86deddae88a9ae4b7084969"
+  },
+  "candidate_audit": {
+    "budget_matrix_dtype": "int32",
+    "budget_matrix_fingerprint": "81b32a67afdea36d7af189977aba6e89e89feba5f13a4b70fd69ab1cbc590e91",
+    "budget_matrix_shape": [
+      2086,
+      1967
+    ],
+    "candidate_outcomes_fingerprint": "9de11b9a8926072041287a0cd9ffbdcf724b977e5da448849582349acca8fb6f",
+    "candidates": {
+      "budget_residual_only": 405,
+      "fixed": 21,
+      "lid_calibration_only": 20,
+      "monotone_binned": 15,
+      "pdctp": 1620,
+      "raw_tri_predict": 5
+    },
+    "frozen_policies_fingerprint": "ac32177b2b169856c712e45cb3f08dbec36c75ddaf8f215f2a6fd75b52efccef",
+    "frozen_policy_suite_fingerprint": "ae0b21e565810853ca97add88fa593b686e6afee451b49ea7e3ee9fd4eb5aefd",
+    "hypotheses_fingerprint": "d06e5a04ced82456f12e5f4bcc1a92cc1f599c5e6a1f1e61eab04acdd9056700",
+    "selected_component_registry_fingerprint": "0748ba3daca5d639ac7e0a14e0b055b10f98c7d606a7c03a029b12bcc44f27dc",
+    "selected_policy_records": 11802,
+    "selection_fingerprint": "8db86a98eab28deaf6ba173ab78e8336a5bc23b2fc2916653cfbe6b2696cb9ee"
+  },
+  "checks": {
+    "all_16_run_artifact_hashes_valid": true,
+    "all_candidate_budget_vectors_recomputed_exact": true,
+    "all_candidate_evaluations_recomputed_exact": true,
+    "all_candidate_fingerprints_valid": true,
+    "all_query_tune_record_fingerprints_valid": true,
+    "all_query_tune_records_in_frozen_order": true,
+    "all_retention_and_evidence_curves_recomputed": true,
+    "all_selected_policy_records_recomputed_exact": true,
+    "approximate_index_used": false,
+    "calibrator_refit": false,
+    "certification_hypotheses_reconstructed_exact": true,
+    "full_candidate_selection_replayed_exact": true,
+    "llm_run": false,
+    "non_tune_qrel_outcomes_parsed": false,
+    "only_query_tune_newly_opened": true,
+    "projection_matrix_regenerated_exact": true,
+    "protocol_state_reconstructed_exact": true,
+    "query_cert_accessed": false,
+    "query_latency_accessed": false,
+    "query_test_accessed": false,
+    "query_tune_qrels_reloaded_exact": true,
+    "raw_tri_predict_v1_behavior_modified": false,
+    "selected_policy_suite_reconstructed_exact": true
+  },
+  "decision": "ACCEPT_QUERY_TUNE_SELECTION_READY_TO_IMPLEMENT_QUERY_CERT",
+  "file_identities": {
+    "candidate_budgets.npy": "10dce7bb5187f0f95771d8e2e1d825157c99fec2fd9f9241e0b4d729010405c5",
+    "candidate_outcomes.json": "f8d1dc3ef511eb685cdf1ac4d733c4c1e5f846a203ac99df2a77f7cfd184aa73",
+    "frozen_policy_suite.json": "d0e18c18900e410b1b68b25625bf88a250d58071c7f9fb81bfe19aa34aa10b73",
+    "hypotheses.json": "8c0710a76ea55b719f54872fcfff9adea15af95672927550398e56b1aaacf6a2",
+    "manifest.json": "609930f2832665b1c206d98841329f83fef6d7431c04913a73864c41663832c8",
+    "policies.json": "7a906d8faa2d2c5bbca99fe5d3428ef5ad176939c66b8ad2ff4130dcdb94df99",
+    "projection.json": "783a41da840c14782698d819da73a5522ea8a7e80feeb95500235399c847b876",
+    "protocol_state_after_query_tune.json": "2b94d4ddc46ddc0043fe4559970a24bc9f4de3229e491dbb0df217e9fba03f60",
+    "query_tune_access.json": "c49ce6145e175ea09c465e77106cf275a1d2feb27b1287c2e49122f678dafa94",
+    "query_tune_qrel_access.json": "9308dc80fcfa674b536cb5e71c9f6a53681e0478dcde17c1a79c215a937a20ce",
+    "query_tune_records.jsonl": "64563757719093a9274bba263ee61c43e6fd457135094931cf94c60df1c83dbb",
+    "report.md": "c96307ec2585f32e9d2ed3afb0be7da98398ce0daea8b3076df13528858fb7bd",
+    "selected_policy_components.json": "7ab4f1bb4db5e84303d6e3e995382ce9cbd199ed6711fd64a0e5acd253e93e21",
+    "selected_policy_records.jsonl": "070c1c4e7d159aad6aa6d1a59d8bc02f065514cd56a85b38790ae228ae9944c4",
+    "selection.json": "3f11e74d7bafb859c9852f217f110f45434314b8a9784d3057a8f1e9e26857ee",
+    "shuffled_tune_diagnostic.json": "8894b30d3d6f29fe2987813256ed7a0074aa4b56adf6321592e45b77e52d4cb7"
+  },
+  "fingerprint": "f9a375115ed2c7f461bbd16add72735a6b9da44c309dd91f4782ecb01f0e5924",
+  "manifest_fingerprint": "7cf01ee872a59ee28e6dd0a0c5ffa10ab556b9c0746e3b0a96b8454bdb31836e",
+  "performance_audit": {
+    "cached_profile_inputs": 9835,
+    "candidate_artifacts_value_identical_after_reuse": true,
+    "original_threshold_profile_requests": 49175,
+    "raw_v1_algorithm_changed": false,
+    "reuse_rule": "one_Tri-Predict_retention_curve_per_exact_LID_value_shared_across_five_thresholds"
+  },
+  "qrel_audit": {
+    "non_tune_rows_skipped_before_outcome_parse": 9208,
+    "positive_rows": 4958,
+    "qrel_access_fingerprint": "aaa3f8e9d943e200a43fbbbe91b6d9d12e403ced6a277390fc9f8e5dd79dc013",
+    "queries": 1967,
+    "query_order_hash": "d55652c3d04cefc4054b5e970225ffebcf1f6b0531c1774c1133c692f76362e3"
+  },
+  "query_tune_records": 1967,
+  "schema": "pdctp_fiqa_query_tune_independent_audit_v1",
+  "selected_methods": {
+    "budget_residual_only": {
+      "candidate_fingerprint": "4283ddb5857485933f8a5a3a5805c4c1b62e3701d74e18e93905071a0b4e5b12",
+      "common_coordinate_work": 12710886.686324352,
+      "mean_budget": 1949.1337061515,
+      "policy_fingerprint": "cbc5f1efd2c22ab712b61f26f70a23402f7976e6e467cc67cdc7dcd22cc7b2db",
+      "retention_lower_bound": 0.973213962993
+    },
+    "fixed": {
+      "candidate_fingerprint": "2784ec375a67e08e78bb93e56b88965f1bb3b4381ba4399a80d7c480e39bf444",
+      "common_coordinate_work": 11803776.0,
+      "mean_budget": 768.0,
+      "policy_fingerprint": "900a52b4c71cb79879480a14f33fdb8e6e4cd3a75a600bcb5e6a00970d1327d8",
+      "retention_lower_bound": 0.962549203072
+    },
+    "lid_calibration_only": {
+      "candidate_fingerprint": "87fb979855a0917721e999db885823860c064e5cf89fc1cd0d44b1ebb91a50ae",
+      "common_coordinate_work": 13568847.715302492,
+      "mean_budget": 3066.270462633452,
+      "policy_fingerprint": "0d1f5e30ec7b2e95564b21bb3ba00476e975a01b5faaf7e18d080403206c2cd9",
+      "retention_lower_bound": 0.967763456189
+    },
+    "monotone_binned": {
+      "candidate_fingerprint": "17f90cb188b4826ff8ce3185727be8384a82a830d0b9ccad0f1a0de507773040",
+      "common_coordinate_work": 11911873.854600916,
+      "mean_budget": 908.752414844942,
+      "policy_fingerprint": "8079af065c047fedc26c06a707227fcb2959b127f97c1d3a0476239c1de9ac9b",
+      "retention_lower_bound": 0.952470576343
+    },
+    "pdctp": {
+      "candidate_evidence_difference_vs_fixed": 0.009925344018,
+      "candidate_fingerprint": "63ea21a7d5e70412a4874c3a48ea11d937bc188145d7659dd6dca003762d622f",
+      "common_coordinate_work": 12667594.444331469,
+      "final_evidence_difference_vs_fixed": 0.002558888324,
+      "maximum_budget": 57638,
+      "mean_budget": 1892.763599389934,
+      "policy_fingerprint": "70be543d68bfdcb369b0eab7e4dd9e038a16bf61c876bd4963993605c782ac55",
+      "queries_above_gpu_stable_selection_limit": 262,
+      "retention_lower_bound": 0.973430513216,
+      "terminal_budget_queries": 31
+    },
+    "raw_tri_predict": {
+      "candidate_fingerprint": "edb44e523720c090958ffec8dd21c2779c90bd8569cd6a68a711c0805d00af04",
+      "common_coordinate_work": 12497787.184544992,
+      "mean_budget": 1671.660396542959,
+      "policy_fingerprint": "3e00dbdc09e9aff8b1d3dc2a4643df4ff2314b901b54d27a3dad627b7ea048a6",
+      "retention_lower_bound": 0.954032869173
+    }
+  },
+  "source_run": {
+    "implementation_commit": "61013634d3f5642ea35e5084430777151f138267",
+    "node": "a100-0",
+    "slurm_allocation": "376924",
+    "test_result": {
+      "failed": 0,
+      "passed": 153,
+      "skipped": 0,
+      "total": 153
+    }
+  },
+  "tune_findings": {
+    "certification_interpretation": "all_six_families_frozen_but_no_positive_claim_before_query_cert",
+    "gpu_latency_contract": "selected_PDCTP_is_incompatible_with_M_plus_64_at_most_2048_for_262_tune_queries",
+    "pdctp_common_work_difference_vs_fixed": 863818.444331469,
+    "pdctp_common_work_percent_vs_fixed": 7.31815348183,
+    "pdctp_mean_budget_difference_vs_fixed": 1124.763599389934,
+    "pdctp_retention_mean_difference_vs_fixed": 0.009811896289,
+    "shuffled_minus_observed_direction": "observed_minus_shuffled",
+    "shuffled_profile_deltas": {
+      "candidate_evidence_recall": 0.014494324138,
+      "embedding_retention": 0.024809354347,
+      "final_evidence_recall": 0.002664802576
+    }
+  },
+  "version": 1
+}

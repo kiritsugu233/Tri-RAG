@@ -271,8 +271,12 @@ Acceptance:
   reconstructable all-candidate artifact format.
 - [x] Execute and independently audit all calibration fits on `query_cal` only.
 - [x] Implement and test the fingerprint-gated all-family `query_tune` runner.
-- [ ] Select one complete PDCTP policy on `query_tune` only.
-- [ ] Freeze fixed, monotone, Raw Tri, ablation, and PDCTP comparators.
+- [x] Select one complete PDCTP policy on `query_tune` only.
+- [x] Freeze fixed, monotone, Raw Tri, ablation, and PDCTP comparators.
+- [x] Independently replay all 2,086 tune candidates, selected policies, and
+  hypotheses from returned query-level artifacts.
+- [ ] Implement and freeze the fingerprint-gated `query_cert` runner without
+  opening certification outcomes.
 - [ ] Certify once on untouched `query_cert` with family-wise correction.
 - [ ] Run a frozen paired CPU/GPU latency protocol on `query_latency`.
 - [ ] Evaluate once on `query_test` only after all prior gates are terminal.
@@ -371,12 +375,13 @@ saved projected distance, all bounded by approximately `1.01e-10`; every
 deployable feature, ranking, target, candidate, and operating point remains
 identical. Audit fingerprint
 `e3cd09d125a868b685df02b23f0706926fa5786752d863f17bf13d6293de7884`
-accepts only the fit gate. `query_tune` is ready for runner implementation but
-remains unopened; all later roles remain closed. The post-audit offline suite
-reports 146 passes, one optional real-FAISS skip, and zero failures across 147
-tests. This corrected audit identity supersedes `1e2e09d9...`, whose sole
-error was a manually transcribed 62-character query-record file hash; the
-returned file already matched the original run manifest's 64-character hash.
+accepted only the fit gate and authorized the subsequent query_tune runner.
+That authorization has now been consumed by the accepted tune run documented
+below; cert/latency/test remain closed. The post-query-cal audit suite reported
+146 passes, one optional real-FAISS skip, and zero failures across 147 tests.
+This corrected audit identity supersedes `1e2e09d9...`, whose sole error was a
+manually transcribed 62-character query-record file hash; the returned file
+already matched the original run manifest's 64-character hash.
 
 The next protected runner is documented in `docs/FIQA_QUERY_TUNE_GATE.md`.
 Config fingerprint
@@ -397,12 +402,33 @@ selection records.
 Six method families are optimized independently under the same quality
 constraints, then stored as a deduplicated, fully reconstructable component
 registry. A success freezes selection and the already preregistered hypotheses
-without opening query_cert; a missing eligible family is terminal. Six new
-tests cover filtering, deterministic retrieval/evidence, complete family
-enumeration, terminal failure, selection/suite reconstruction, Raw v1
-immutability, and tamper refusal. The 153-test offline suite reports 152
-passes, one expected optional FAISS skip, and zero failures. The real
-query_tune role remains unopened.
+without opening query_cert; a missing eligible family is terminal. Eight
+query-tune tests cover the accepted audit, profile reuse, filtering,
+deterministic retrieval/evidence, complete family enumeration, terminal
+failure, selection/suite reconstruction, Raw v1 immutability, and tamper
+refusal. The post-audit 155-test offline suite reports 154 passes, one expected
+optional FAISS skip, and zero failures. The real
+query_tune run on allocation `376924` passed all 153 then-current cluster tests
+and froze all six families. Its returned archive SHA-256 is
+`3cfbeb6abd65b4e01991bc79065c2c244c8bc356f86deddae88a9ae4b7084969`.
+
+Independent audit fingerprint
+`f9a375115ed2c7f461bbd16add72735a6b9da44c309dd91f4782ecb01f0e5924`
+and file SHA-256
+`2fcb974179bd6d0f7299c9cb410655c5989bdb99eb58d73455b2a45f47f686a0`
+reloaded 4,958 tune-positive qrel rows, recomputed every query curve and all
+2,086 candidate evaluations, reproduced 11,802 selected-policy records, and
+exactly replayed the complete candidate budget matrix, selection, component
+registry, policy suite, hypotheses, projection, and post-tune state. The
+selected PDCTP is quality-eligible but uses 7.318% more common coordinate work
+than fixed on tune and exceeds the GPU stable-selection limit on 262 queries.
+These are frozen negative/feasibility signals, not grounds for retuning.
+
+The observed multi-hour silent interval came from threshold-duplicated
+Tri-Predict computation. Exact profile reuse plus progress logging now reduces
+the profile-input path from 49,175 threshold requests to 9,835 shared inputs.
+A full real-record replay proves value-identical candidate outputs and does not
+change Raw Tri-Predict v1.
 
 ## Suggested future code tree
 
