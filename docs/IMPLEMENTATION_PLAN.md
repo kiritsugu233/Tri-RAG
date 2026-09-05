@@ -606,21 +606,21 @@ Acceptance state:
 
 ## TLS-RAG successor: Step 3 synthetic controller
 
-- [ ] Preserve exact Step 2 retrieval, action, context, supervision, artifact,
+- [x] Preserve exact Step 2 retrieval, action, context, supervision, artifact,
   and fingerprint compatibility.
-- [ ] Add the observed-pair context-boundary/core-frontier Tri-Law profile with
+- [x] Add the observed-pair context-boundary/core-frontier Tri-Law profile with
   exact invalid/tie/collinear accounting, quantiles, distortion, and deltas.
-- [ ] Add deterministic synthetic fit/bound/evaluation partitions and
+- [x] Add deterministic synthetic fit/bound/evaluation partitions and
   transparent remaining-gain/current-sufficiency score models.
-- [ ] Add candidate/stage/bin/reachability-specific one-sided
+- [x] Add candidate/stage/bin/reachability-specific one-sided
   Clopper-Pearson tables with family-wise alpha and vacuous-cell fallback.
-- [ ] Add the conservative dual-bound STOP controller with next-grid-only
+- [x] Add the conservative dual-bound STOP controller with next-grid-only
   expansion and explicit terminal reasons.
-- [ ] Implement Rows 1--4 of the frozen one-factor synthetic ablation ladder
+- [x] Implement Rows 1--4 of the frozen one-factor synthetic ablation ladder
   and prove exact feature-set differences.
-- [ ] Add two-phase query-level records, complete work/timing separation,
+- [x] Add two-phase query-level records, complete work/timing separation,
   reconstructable aggregates, and deterministic portable artifacts.
-- [ ] Pass focused tests and the complete CPU/network-free suite, document and
+- [x] Pass focused tests and the complete CPU/network-free suite, document and
   commit Step 3, then stop for review without beginning Step 4.
 
 Acceptance boundary:

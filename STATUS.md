@@ -169,6 +169,47 @@ passed, one optional real-FAISS test skipped, and zero failed. An explicit diff
 check confirmed the Step 2 module/config/test and exact Tri-Law module/test are
 unchanged from `f46ce73`.
 
+## TLS-RAG Step 3 synthetic controller
+
+What runs: `tri_rag_harness.tls_rag_step3` now provides the CPU-only,
+network-free synthetic observed-pair risk profile, transparent remaining-event
+and current-sufficiency scores, disjoint synthetic model-fit/bound-fit/
+evaluation partitions, candidate/stage/bin/reachability Clopper--Pearson
+tables, conservative dual-bound two-action control, and Rows 1--4 diagnostics.
+It reuses the frozen Step 2 exact retrieval and context path and verifies the
+Step 2 Phase A/B fingerprints at every Step 3 run.
+
+Exact command:
+
+```bash
+PYTHONPATH=src python -m tri_rag_harness.tls_rag_step3 \
+  --config configs/tls_rag_step3_synthetic_v1.json \
+  --output /tmp/tls-rag-step3-run
+```
+
+Tests: the focused Step 3 suite passed 20/20 in 2.804 seconds. The full
+`./scripts/run_tests.sh` CPU suite ran 200 tests in 27.644 seconds: 199 passed,
+one expected optional real-FAISS test skipped, and zero failed. The exact
+Tri-Law implementation/test and all historical v1/v2/v3 files were unchanged.
+
+Current artifacts: two fresh runs at
+`/tmp/tls-rag-step3-final-a.53pJPm/run` and
+`/tmp/tls-rag-step3-final-b.W6tpKt/run` have all 19 portable artifacts
+byte-identical. Manifest, Phase A, and Phase B fingerprints are respectively
+`f445fb1179cf42674c5a6c46873a558ea3916f4fce53691562d8702f2b3cae52`,
+`5272b52bc008e52d8d6cc132fcb19b91166258a3dd27b064f219297052e94e52`,
+and `1754cf5e325fa8c0c950ab42ec3db26b560d96c6e52f2eb229d4cd3567a6d0a2`.
+Timings are nonportable and excluded.
+
+Next task: stop for user review. Step 4 requires separate authorization.
+
+Known deviations and risks: this is a small synthetic code-path diagnostic,
+not a selected policy, real-data result, certificate, latency measurement,
+posterior estimate, evidence guarantee, or answer claim. Underpowered cells
+correctly return `[0,1]` and force expansion; terminal contexts can remain
+insufficient. No real/protected data or role, archive, network/download,
+approximate index, GPU, LLM, answer path, or Step 4 runner was accessed.
+
 ## Calibrated Tri-Predict v3 Step 3
 
 The full causal matrix and deterministic evidence boundary are recorded in

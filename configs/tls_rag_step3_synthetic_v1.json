@@ -1,0 +1,80 @@
+{
+  "schema_version": "tls_rag_step3_config_v1",
+  "run_name": "tls_rag_step3_synthetic_observed_pair_v1",
+  "upstream_step2": {
+    "config_path": "configs/tls_rag_step2_synthetic_v1.json",
+    "config_fingerprint": "d0506bbfe06c5a1bbb737cbfca8ccc2daacf7eef4a1ba7779df148e8713803af",
+    "fixture_fingerprint": "60739ff51de1027a21a56cdf734a6d47cc55a320edc90c8e645dcc9e92b317d8",
+    "phase_a_fingerprint": "78c4e4869ffca61a7a82ab014b9a3bd9c1513824c6d7d83ad6c2180f4428c2f3",
+    "phase_b_fingerprint": "a3d3620538c76bcc8a64b17c8dac619ac4b279be13abd43308758b43efda56e4"
+  },
+  "seeds": {
+    "synthetic_query": 33103,
+    "partition_hash_salt": "tls-rag-step3-synthetic-partition-v1"
+  },
+  "synthetic_fixture": {
+    "queries_per_partition": 24,
+    "partition_modulus": 3,
+    "partition_buckets": {
+      "synthetic_model_fit": 0,
+      "synthetic_bound_fit": 1,
+      "synthetic_evaluation": 2
+    },
+    "invalid_variants_per_partition": 3,
+    "label_modes": ["pilot", "middle", "terminal", "never"]
+  },
+  "risk_profile": {
+    "version": "tls_rag_observed_pair_profile_v1",
+    "shell_size": 3,
+    "quantiles": [0.5, 0.9, 0.99],
+    "quantile_method": "linear",
+    "equal_distance_tolerance": 0.0,
+    "collinear_tolerance": 0.0,
+    "minimum_valid_pairs_per_family": 1,
+    "collinear_invalidates_required_profile": true,
+    "first_state_delta_value": 0.0,
+    "first_state_delta_valid": false
+  },
+  "score_model": {
+    "version": "tls_rag_transparent_ridge_score_v1",
+    "regularization": 0.01,
+    "scale_floor": 1e-12,
+    "score_clip": [0.0, 1.0],
+    "missing_behavior": "invalid_no_imputation",
+    "fit_partition": "synthetic_model_fit"
+  },
+  "calibration": {
+    "version": "tls_rag_reachable_clopper_pearson_v1",
+    "bound_partition": "synthetic_bound_fit",
+    "score_bin_count": 2,
+    "score_bin_quantiles": [0.5],
+    "score_bin_method": "linear",
+    "minimum_cell_query_count": 8,
+    "family_wise_alpha": 0.2,
+    "allocation": "bonferroni_candidates_x_stages_x_bins_x_outcomes",
+    "independent_unit": "query_id",
+    "underpowered_interval": [0.0, 1.0]
+  },
+  "controller": {
+    "version": "tri_law_sequential_rag_step3_controller_v1",
+    "delta_gain": 0.65,
+    "tau_sufficient": 0.15,
+    "invalid_action": "EXPAND_TO_NEXT_GRID_VALUE",
+    "terminal_grid_behavior": "explicit_stop_without_grid_growth",
+    "candidates": [
+      {"candidate_id": "tls-rag-row2-sequential-v1", "row": 2},
+      {"candidate_id": "tls-rag-row3-observed-pair-v1", "row": 3},
+      {"candidate_id": "tls-rag-row4-plan-facet-v1", "row": 4}
+    ],
+    "fixed_reference_budgets": [3, 6, 12]
+  },
+  "scope": {
+    "cpu_only": true,
+    "network_free": true,
+    "synthetic_only": true,
+    "exact_search_only": true,
+    "llm_free": true,
+    "answer_free": true,
+    "step4_forbidden": true
+  }
+}
