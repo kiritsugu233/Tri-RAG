@@ -574,6 +574,63 @@ Acceptance state:
   artifacts, exact commands, results, and limitations; and
 - Step 3 remains unauthorized pending separate user review and instruction.
 
+## TLS-RAG successor: Step 2 to Step 3 archive and handoff
+
+- [x] Preserve the complete Step 1/2 Git lineage and record the frozen commit,
+  file hashes, runner fingerprints, and local/Genoa regression results in a
+  human audit index.
+- [x] Use a logical archive without moving or deleting historical files, so
+  existing paths, tests, links, Git objects, and research provenance remain
+  intact.
+- [x] Add a compressed Step 3 entry with an exact ordered read allowlist and an
+  explicit prohibition on preloading historical status, plans, old methods,
+  real-data docs, artifacts, runs, protected roles, or archives.
+- [x] Add a Step 2-to-Step 3 transition document that freezes reusable
+  interfaces, scientific boundaries, implementation targets, artifacts,
+  acceptance tests, and the Step 4 stop gate.
+- [x] Add a separate Step 3 agent brief limited to CPU/network-free synthetic
+  risk features, calibration, conservative control, and Rows 1--4 ablations.
+- [x] Run the full local regression and commit the archive/handoff before
+  starting the fresh Step 3 task.
+
+Acceptance state:
+
+- audit index: `docs/archive/TLS_RAG_PRE_STEP3_AUDIT_INDEX.md`;
+- minimal entry: `docs/TLS_RAG_STEP3_START_HERE.md`;
+- transition: `docs/TLS_RAG_STEP2_TO_STEP3.md`;
+- assignment: `AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md`;
+- the original Step 1/2 documents remain available and content-addressed but
+  inactive for the Step 3 agent; and
+- Step 3 is user-authorized, while Step 4 and every real/protected/LLM gate
+  remain unauthorized.
+
+## TLS-RAG successor: Step 3 synthetic controller
+
+- [ ] Preserve exact Step 2 retrieval, action, context, supervision, artifact,
+  and fingerprint compatibility.
+- [ ] Add the observed-pair context-boundary/core-frontier Tri-Law profile with
+  exact invalid/tie/collinear accounting, quantiles, distortion, and deltas.
+- [ ] Add deterministic synthetic fit/bound/evaluation partitions and
+  transparent remaining-gain/current-sufficiency score models.
+- [ ] Add candidate/stage/bin/reachability-specific one-sided
+  Clopper-Pearson tables with family-wise alpha and vacuous-cell fallback.
+- [ ] Add the conservative dual-bound STOP controller with next-grid-only
+  expansion and explicit terminal reasons.
+- [ ] Implement Rows 1--4 of the frozen one-factor synthetic ablation ladder
+  and prove exact feature-set differences.
+- [ ] Add two-phase query-level records, complete work/timing separation,
+  reconstructable aggregates, and deterministic portable artifacts.
+- [ ] Pass focused tests and the complete CPU/network-free suite, document and
+  commit Step 3, then stop for review without beginning Step 4.
+
+Acceptance boundary:
+
+- synthetic code-path diagnostics only—no winner selection, certificate,
+  latency, posterior, evidence-guarantee, or answer claim;
+- no network/download/new dependency, real or protected role/archive,
+  approximate index, GPU, LLM, answer generation, or Step 4 runner; and
+- exact Tri-Law and all historical v1/v2/v3 behavior remain unchanged.
+
 ## Suggested future code tree
 
 ```text

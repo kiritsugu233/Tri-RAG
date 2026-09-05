@@ -23,10 +23,12 @@ retains a network-free low/high effective-Tri-LID repair only as a historical
 reference. No v3 real-data policy or positive v3 result exists.
 
 Current work is the completed Step 2 synthetic skeleton of the new TLS-RAG
-family on branch `codex/tri-law-sequential-rag-step2`. Its history contains the
-Step 1 freeze `cac654e`, Step 2 handoff `d9be55f`, and restored Step 1 brief
-commit `a11d983`. Raw Tri-Predict v1, PDCTP v2/v3, exact Tri-Law, numerical
-tolerances, and protected role state remain unchanged.
+family plus its pre-Step 3 documentation handoff. The handoff is prepared on
+branch `codex/tri-law-sequential-rag-step2-to-step3`; Step 2 remains frozen at
+`f46ce73beccf5fddbf05fd87fdb0911318020add`. Its history contains the Step 1
+freeze `cac654e`, Step 2 handoff `d9be55f`, and restored Step 1 brief commit
+`a11d983`. Raw Tri-Predict v1, PDCTP v2/v3, exact Tri-Law, numerical tolerances,
+and protected role state remain unchanged.
 
 ## TLS-RAG Step 1 design freeze
 
@@ -120,6 +122,13 @@ suite compares all ten portable artifacts byte for byte across two fresh
 temporary run directories and reconstructs aggregates from the query-level
 JSONL records.
 
+The exact Step 2 commit was also fetched and replayed on Genoa. It resolved to
+`f46ce73beccf5fddbf05fd87fdb0911318020add` and completed the same 180-test
+suite in 315.264 seconds: 179 passed, the same optional real-FAISS test skipped,
+and zero failed. This was a direct Genoa shell replay rather than a retained
+Slurm allocation, so it validates cross-host CPU behavior but is not a Slurm
+latency or scheduling result.
+
 Portable artifacts are `manifest.json`, `projection.json`, `id_maps.json`,
 `evidence_plan_schema.json`, `evidence_label_store.json`,
 `phase_a_decisions.jsonl`, `phase_b_supervision.jsonl`, `work_counters.json`,
@@ -132,6 +141,33 @@ approximate index, GPU, LLM, answer generation, production risk aggregation,
 learned controller, or calibration was accessed or implemented. This is an
 engineered interface fixture, not a calibrated controller result, real-data
 claim, certificate, latency claim, or answer-quality result.
+
+## TLS-RAG pre-Step 3 documentation archive and handoff
+
+The complete Step 1/2 chain remains immutable in Git and at its original file
+paths. `docs/archive/TLS_RAG_PRE_STEP3_AUDIT_INDEX.md` records the frozen
+commits, SHA-256 values, Step 2 fingerprints, and local/Genoa tests. No
+historical file was moved, deleted, rewritten, or copied into a competing
+source of truth.
+
+The fresh Step 3 task starts at `docs/TLS_RAG_STEP3_START_HERE.md`, then reads
+`docs/TLS_RAG_STEP2_TO_STEP3.md` and only the allowlisted TLS-RAG/Tri-Law
+technical files. It must not preload this large status, the large implementation
+plan, Step 1/2 prompts, old v1/v2/v3 material, real-data documentation,
+artifacts, runs, protected roles, or archives. At final documentation time it
+may locate and update only the bounded TLS-RAG sections here and in the plan.
+
+`AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md` authorizes only a CPU/network-free
+synthetic observed-pair Tri-Law profile, transparent gain/sufficiency scoring,
+disjoint fit/bound calibration, conservative dual-bound stopping, and Rows
+1--4 one-factor ablations. Step 4, real/protected roles, downloads, approximate
+search, GPUs, LLMs, answers, policy selection, certification, and latency claims
+remain prohibited.
+
+The post-archive full CPU regression ran 180 tests in 24.204 seconds: 179
+passed, one optional real-FAISS test skipped, and zero failed. An explicit diff
+check confirmed the Step 2 module/config/test and exact Tri-Law module/test are
+unchanged from `f46ce73`.
 
 ## Calibrated Tri-Predict v3 Step 3
 
@@ -1192,10 +1228,11 @@ in `docs/FIQA_QUERY_CERT_GATE.md`.
 
 ## Next task
 
-Stop for user review of the committed Step 2 synthetic skeleton. Do not begin
-Step 3 unless the user separately authorizes it; that later gate would cover
-production observed-pair risk aggregation, supervised gain/sufficiency models,
-and calibrated stopping, none of which is present here.
+Start a fresh isolated Step 3 Codex task from the committed documentation
+handoff. That task must follow `AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md` and the
+minimal read allowlist, implement only the synthetic risk/scoring/calibration/
+controller/ablation gate, commit, and stop for review. Passing Step 3 must not
+start Step 4.
 
 ## Known deviations and risks
 
