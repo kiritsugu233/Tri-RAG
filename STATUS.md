@@ -68,6 +68,14 @@ The final rerun completed 167 tests in 22.695 seconds: 166 passed, one optional 
 CPU conformance test skipped because FAISS is not installed in the offline Mac
 environment, and zero failed. No frozen implementation or test was changed.
 
+The user authorized Step 2 on 2026-09-05 and requested a fresh agent. The full
+program is now explicitly capped at six steps. The new assignment is
+`AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md`; it authorizes only the tiny
+CPU/network-free exact retrieval/evidence skeleton and fixed sequential
+interface. Production Tri-Law risk aggregation, learned/calibrated stopping,
+real data, protected roles, approximate indexes, GPUs, LLMs, and answer
+generation remain outside Step 2.
+
 ## Calibrated Tri-Predict v3 Step 3
 
 The full causal matrix and deterministic evidence boundary are recorded in
@@ -1127,11 +1135,10 @@ in `docs/FIQA_QUERY_CERT_GATE.md`.
 
 ## Next task
 
-Stop after the committed TLS-RAG Step 1 design and wait for user review. Step 2
-may begin only under a separate instruction after the user accepts the frozen
-design. The next proposed milestone is a tiny CPU/network-free synthetic
-retrieval/evidence skeleton with a fixed sequential interface; it must not run
-an LLM or real dataset.
+Execute `AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md` in the newly created Codex task,
+commit the complete tiny synthetic skeleton on its isolated task branch, and
+stop for user review. Step 3 remains unauthorized even if every Step 2 test
+passes.
 
 ## Known deviations and risks
 

@@ -528,6 +528,40 @@ Acceptance state:
 - the local regression reports 166 passes, one expected optional real-FAISS
   skip, and zero failures across 167 tests.
 
+## TLS-RAG successor: Step 2 synthetic skeleton
+
+Authorization state: user-authorized on 2026-09-05. Implementation is assigned
+to a fresh Codex task under `AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md`.
+
+- [ ] Add a tiny deterministic external-query corpus, evidence plans, and a
+  structurally separate evidence-label store.
+- [ ] Add one exact projected ranking, pilot-prefix exposure, next-grid prefix
+  reuse, cached original-distance evaluation, and exact stable reranking.
+- [ ] Add a versioned label-free state and exactly two actions: STOP and
+  EXPAND_TO_NEXT_GRID_VALUE.
+- [ ] Add a fixed schedule controller that exercises the interface without
+  fitting evidence models, calibrated bounds, or policy thresholds.
+- [ ] Add fixed exact top-`k_ctx` context construction and two-phase immutable
+  decision/supervision records.
+- [ ] Reconstruct candidate gain, context gain, remaining gain, coverage,
+  sufficiency, and embedding retention only after supervision is joined.
+- [ ] Cover Step 1 counterexamples, invalid inputs, maximum expansion,
+  exhaustion, and nonattainment with hand-computed fixtures.
+- [ ] Prove exact projected scan reuse, separate cost accounting, query-level
+  auditability, and deterministic portable artifacts.
+- [ ] Use the unchanged Tri-Law API only for test-side observed-pair checks;
+  leave production risk aggregation and the learned controller for Step 3.
+- [ ] Pass the complete CPU/network-free regression suite and update
+  `docs/TLS_RAG_STEP2_SYNTHETIC.md` plus `STATUS.md`.
+- [ ] Commit Step 2 on the isolated task branch and stop for user review.
+
+Acceptance boundary:
+
+- no real dataset/model/dependency download, protected-role/archive access,
+  approximate index, GPU benchmark, LLM, or answer generation;
+- no Step 3 risk-profile/controller/calibration implementation;
+- no modification of frozen v1/v2/v3 or exact Tri-Law behavior.
+
 ## Suggested future code tree
 
 ```text
