@@ -22,10 +22,11 @@ localized the earliest failure to the scalar LID rank-distance power law and
 retains a network-free low/high effective-Tri-LID repair only as a historical
 reference. No v3 real-data policy or positive v3 result exists.
 
-Current work is Step 1 of the new TLS-RAG family on branch
-`codex/tri-law-sequential-rag-v1`. Step 1 is a design freeze only. Raw
-Tri-Predict v1, PDCTP v2/v3, exact Tri-Law, numerical tolerances, and protected
-role state remain unchanged.
+Current work is the completed Step 2 synthetic skeleton of the new TLS-RAG
+family on branch `codex/tri-law-sequential-rag-step2`. Its history contains the
+Step 1 freeze `cac654e`, Step 2 handoff `d9be55f`, and restored Step 1 brief
+commit `a11d983`. Raw Tri-Predict v1, PDCTP v2/v3, exact Tri-Law, numerical
+tolerances, and protected role state remain unchanged.
 
 ## TLS-RAG Step 1 design freeze
 
@@ -75,6 +76,62 @@ CPU/network-free exact retrieval/evidence skeleton and fixed sequential
 interface. Production Tri-Law risk aggregation, learned/calibrated stopping,
 real data, protected roles, approximate indexes, GPUs, LLMs, and answer
 generation remain outside Step 2.
+
+## TLS-RAG Step 2 synthetic skeleton
+
+The CPU/network-free runner is implemented in
+`tri_rag_harness.tls_rag_step2` with frozen config
+`configs/tls_rag_step2_synthetic_v1.json`. Seven external queries exercise one
+fixed Gaussian projection, one exact projected full scan per query, pilot and
+next-grid prefix exposure over `[3, 6, 12]`, cached original squared-L2
+distances, stable exact accumulated reranking, and fixed exact top-2 context.
+The immutable controller input is recursively guarded against supervision and
+the only actions are `STOP` and `EXPAND_TO_NEXT_GRID_VALUE`.
+
+Phase A serializes and fingerprints all 18 label-free state/action records
+before the distinct evidence-label store is constructed. Phase B preserves
+that decision fingerprint and reconstructs candidate gain, final-context gain,
+remaining useful evidence, candidate/context coverage, current sufficiency,
+and exact top-2 retention. The fixture records 11 expansions, 7 stops, 7 full
+projected scans, 84 projected distance evaluations, and 69 unique original
+distance evaluations. It includes every required counterexample and records 3
+terminal evidence-nonattainment queries.
+
+The exact runner command is:
+
+```bash
+cd /Users/guanghongxu/Query-Adaptive-Tri-RAG
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 -m tri_rag_harness.tls_rag_step2 \
+  --config configs/tls_rag_step2_synthetic_v1.json \
+  --output runs/tls_rag_step2_synthetic_v1
+```
+
+The exact full regression command is:
+
+```bash
+cd /Users/guanghongxu/Query-Adaptive-Tri-RAG
+./scripts/run_tests.sh
+```
+
+The focused Step 2 suite passes all 13 tests. The complete suite ran 180 tests:
+179 passed, one optional real-FAISS CPU conformance test was skipped because
+FAISS is absent in the offline Mac environment, and zero failed. The focused
+suite compares all ten portable artifacts byte for byte across two fresh
+temporary run directories and reconstructs aggregates from the query-level
+JSONL records.
+
+Portable artifacts are `manifest.json`, `projection.json`, `id_maps.json`,
+`evidence_plan_schema.json`, `evidence_label_store.json`,
+`phase_a_decisions.jsonl`, `phase_b_supervision.jsonl`, `work_counters.json`,
+`aggregates.json`, and `report.md`. `timings.json` is separate and explicitly
+excluded from portable fingerprints. Full definitions and the audit contract
+are in `docs/TLS_RAG_STEP2_SYNTHETIC.md`.
+
+No protected role/archive, real data/model, download, new dependency,
+approximate index, GPU, LLM, answer generation, production risk aggregation,
+learned controller, or calibration was accessed or implemented. This is an
+engineered interface fixture, not a calibrated controller result, real-data
+claim, certificate, latency claim, or answer-quality result.
 
 ## Calibrated Tri-Predict v3 Step 3
 
@@ -1135,13 +1192,22 @@ in `docs/FIQA_QUERY_CERT_GATE.md`.
 
 ## Next task
 
-Execute `AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md` in the newly created Codex task,
-commit the complete tiny synthetic skeleton on its isolated task branch, and
-stop for user review. Step 3 remains unauthorized even if every Step 2 test
-passes.
+Stop for user review of the committed Step 2 synthetic skeleton. Do not begin
+Step 3 unless the user separately authorizes it; that later gate would cover
+production observed-pair risk aggregation, supervised gain/sufficiency models,
+and calibrated stopping, none of which is present here.
 
 ## Known deviations and risks
 
+- Step 2 is an engineered 12-passage fixture with a fixed action schedule. Its
+  gain, sufficiency, and nonattainment counts do not estimate real-data rates
+  and do not establish calibration, certification, or generalization.
+- The correctness-oriented NumPy backend performs a complete exact projected
+  scan. Its local timings are nonportable and support no latency or serving
+  claim; `timings.json` is deliberately outside portable fingerprints.
+- Real-data evidence-target identifiability remains blocked pending a fresh
+  source with facet completeness, independent-support groups, and explicit
+  contradiction/invalid-evidence semantics. Ordinary qrels are insufficient.
 - FiQA-2018 Task 2 training and testing data are restricted by the upstream
   page to non-commercial use. BEIR redistributes the prepared data but
   explicitly disclaims responsibility for determining permission. This audit
