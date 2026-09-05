@@ -1,0 +1,109 @@
+{
+  "schema": "pdctp_effective_curve_shape_foundation_v3",
+  "version": 3,
+  "run_name": "pdctp_v3_network_free_foundation_v1",
+  "run_namespace": "pdctp_v3_network_free",
+  "status": "diagnostic_only_requires_fresh_five_role_protocol",
+  "access": {
+    "fit_role": "query_cal",
+    "selection_allowed": false,
+    "blocked_roles": [
+      "query_cert",
+      "query_latency",
+      "query_test"
+    ]
+  },
+  "numerical_problem": {
+    "dtype": "float64",
+    "m_prime": 192,
+    "k_gt": 10,
+    "corpus_size": 57638,
+    "budget_grid": [
+      64,
+      96,
+      128,
+      192,
+      256,
+      384,
+      512,
+      768,
+      1024,
+      1536,
+      2048,
+      3072,
+      4096,
+      6144,
+      8192,
+      12288,
+      16384,
+      24576,
+      32768,
+      49152,
+      57638
+    ],
+    "max_rank_samples": 256,
+    "numerical_implementation": "tri_predict_retention_grid_float64_v1",
+    "tri_law_or_raw_tri_predict_change": false
+  },
+  "repair": {
+    "name": "effective_curve_shape_calibrated_tri_predict",
+    "method_version": 3,
+    "calibration_target": "query_cal_realized_retention_curve",
+    "modes": [
+      "scalar_effective_lid",
+      "two_regime_effective_lid"
+    ],
+    "single_factor_ablation": "two_regime_mode_differs_only_in_effective_lid_curve_shape",
+    "low_budget_max": 768,
+    "high_budget_min": 1024,
+    "target_lid_grid": {
+      "rule": "float64_linspace_inclusive",
+      "minimum": 1.0,
+      "maximum": 100.0,
+      "count": 401,
+      "tie_break": "lowest_effective_lid_grid_value"
+    },
+    "log_ridge_regularization": 1.0,
+    "output_domain": {
+      "minimum": 1.0,
+      "maximum": 100.0,
+      "fallback": 100.0
+    }
+  },
+  "diagnostic_cross_validation": {
+    "role": "query_cal",
+    "fold_count": 5,
+    "fold_assignment": "sha256_query_id_modulo_fold_count",
+    "selection_or_claim_allowed": false
+  },
+  "inference_contract": {
+    "allowed": [
+      "pilot_distances",
+      "pilot_derived_features",
+      "explicit_validity_fields"
+    ],
+    "forbidden": [
+      "oracle_lid",
+      "exact_top_k_identities",
+      "qrels",
+      "realized_retention",
+      "answer_labels",
+      "protected_outcomes",
+      "split_role"
+    ]
+  },
+  "cache_contract": {
+    "scope": "in_memory_only",
+    "serialized_into_scientific_artifacts": false,
+    "identity": [
+      "float64_lid_bit_pattern",
+      "m_prime",
+      "k_gt",
+      "corpus_size",
+      "ordered_budget_grid",
+      "max_rank_samples",
+      "numerical_implementation_version"
+    ]
+  },
+  "artifact_directory": "artifacts/pdctp_v3_network_free"
+}

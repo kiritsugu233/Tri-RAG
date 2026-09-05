@@ -1,6 +1,6 @@
 # Status
 
-Updated: 2026-09-04
+Updated: 2026-09-05
 
 ## Version boundary
 
@@ -11,17 +11,64 @@ The immutable baseline is summarized in
 `docs/RAW_TRI_PREDICT_V1_BASELINE.md`; its protected splits must not be reused
 to develop a successor.
 
-Current work is on branch `codex/calibrated-tri-predict-v2`. The new method is
-Pilot-Distance Calibrated Tri-Predict (PDCTP), with two explicit layers: a
-deployable pilot-distance LID calibrator and a Raw-Tri-anchored budget-residual
-calibrator. `docs/CALIBRATED_TRI_PREDICT_PROTOCOL.md` freezes the intended
-five-role new-data protocol and statistical/latency gates. The network-free v2
-foundation, FiQA source/protocol freezes, qrel-free text preparation, E5 cache,
-query_cal fitting, and query_tune selection gates are implemented and
-independently audited. The fresh query_tune outcome is now observed and frozen;
-the fingerprint-gated query_cert runner is implemented and tested without
-opening the real certification role. query_cert, query_latency, and query_test
-remain unopened. No positive v2 result exists.
+Calibrated Tri-Predict v2 is frozen through commit `26079ce`; its opened FiQA
+`query_cal` and `query_tune` results are retained as negative diagnostic
+evidence. The fingerprint-gated query_cert runner remains an unexecuted frozen
+baseline, and query_cert, query_latency, and query_test remain unopened. No
+positive v2 result exists.
+
+Current work is on branch `codex/calibrated-tri-predict-v3`. Step 3 independently
+audited all allowed upstream and query-level inputs, localized the earliest
+failure to the scalar LID rank-distance power law, and implemented only the
+smallest supported successor: query-cal-only effective Tri-LID curve targets
+with low/high budget heads. A scalar-effective-LID mode is retained as the
+one-factor ablation. Raw Tri-Predict v1, Calibrated Tri-Predict v2, exact
+Tri-Law, numerical tolerances, and protected role state were not changed.
+
+## Calibrated Tri-Predict v3 Step 3
+
+The full causal matrix and deterministic evidence boundary are recorded in
+`docs/CALIBRATED_TRI_PREDICT_V3_DIAGNOSIS.md`. Exact Tri-Law and finite-rank
+quadrature pass; the rank-distance model, real shared-projection geometry,
+pilot construction, oracle-LID calibration target, scalar curve shape,
+budget-residual interpretation, and fallback/selection behavior fail at
+distinct later layers. The selected v2 method's 31 full-corpus fallbacks
+explain 79.6855% of its mean-budget excess over fixed, but fallback is not the
+first failure.
+
+`tri_rag_harness.pdctp_v3` is an isolated network-free module with new v3
+class names, schemas, versions, fingerprints, and serialization contracts. It
+fits only `query_cal` realized retention curves, and policy decisions accept
+only the existing narrow `PDCTPDecisionInput`. Its two-regime mode changes only
+the effective-LID curve shape relative to the scalar mode; it does not add the
+v2 budget residual, alter fallback policy, or change selection rules.
+
+The immutable runtime cache uses the exact float64 LID bit pattern,
+`m_prime`, `k_gt`, corpus size, ordered budget grid, rank-sample cap, and
+numerical implementation version. Cache state has no serialization method and
+is absent from scientific artifact fingerprints. A complete tiny six-candidate
+suite proves cached and uncached budget vectors, selection objects, artifact
+values, and fingerprints are identical.
+
+The exact local regression command was:
+
+```bash
+./scripts/run_tests.sh
+```
+
+It reports 166 passes, one expected optional real-FAISS skip, and zero failures
+across 167 tests. The v3-specific six-test suite passes query-cal-only fitting,
+tamper-evident cache-free round trips, narrow inference and terminal fallback,
+the scalar/two-regime one-factor ablation, exact cache identity, and complete
+candidate-suite equivalence.
+
+The current v3 result is deliberately limited to query-cal diagnosis and a
+network-free implementation. Its deterministic five-fold query-cal precheck
+improves curve RMSE from `0.128081` for v2 to `0.104557` for scalar-effective
+LID and `0.100478` for two regimes, but effective targets remain weakly
+predictable. A real v3 fit/selection/claim requires a new dataset and a fresh
+cal/tune/cert/latency/test protocol. No v2 tune outcome is reused to fit or
+select v3, and no positive v3 result is claimed.
 
 ## What runs
 

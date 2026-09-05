@@ -444,6 +444,46 @@ real frozen policies, the hypotheses, and the exact post-tune guard state while
 leaving query_cert closed. The remaining unchecked cert item is the one-time
 real execution; no cert outcome has been read locally.
 
+## Calibrated Tri-Predict v3: Step 3 causal repair
+
+- [x] Independently validate every allowed returned-archive SHA, run-file hash,
+  record/candidate fingerprint, upstream binding, query-tune selection, and
+  protocol-state replay in fresh temporary directories.
+- [x] Keep query-cert, query-latency, and query-test identities and outcomes
+  closed; perform no download, LLM call, answer generation, or v2 mutation.
+- [x] Reconfirm exact dense-Gaussian Tri-Law conformance and projection scale.
+- [x] Compare deterministic geometric-rank quadrature with exact finite-rank
+  aggregation over the prescribed layer grid.
+- [x] Diagnose rank-distance, mean-field geometry, LID input, calibration
+  target, budget residual, fallback, and selection layers separately.
+- [x] Write the nine-part causal conclusion and identify the scalar
+  rank-distance power law as the earliest failing layer.
+- [x] Add an isolated v3 effective-curve-shape calibrator fitted on query-cal
+  only, with scalar and low/high effective-Tri-LID modes.
+- [x] Preserve a one-factor ablation: both modes share features, fit records,
+  numerical problem, Raw Tri-Predict curve implementation, and decision input.
+- [x] Add an exact in-memory float64 prediction-grid cache whose complete key
+  includes the numerical implementation version and whose state is never
+  serialized into scientific artifacts.
+- [x] Prove on a complete tiny candidate suite that cached and uncached budgets,
+  selection objects, artifact values, and fingerprints are identical.
+- [x] Pass the full CPU/network-free suite without changing Raw Tri-Predict v1,
+  frozen v2, exact Tri-Law, or numerical tolerances.
+- [ ] Freeze and execute a new real-data five-role v3 protocol on a new dataset.
+
+Acceptance state:
+
+- Step 3 diagnosis and network-free implementation are complete on
+  `codex/calibrated-tri-predict-v3`;
+- the exact test command is `./scripts/run_tests.sh` and reports 166 passes,
+  one expected optional real-FAISS skip, and zero failures across 167 tests;
+- `docs/CALIBRATED_TRI_PREDICT_V3_DIAGNOSIS.md` contains the layer matrix,
+  directions and magnitudes, deterministic derivations, and causal answers;
+- the checked-in v3 configuration is
+  `configs/pdctp_v3_network_free_foundation_v1.json` with a new run namespace;
+- a real v3 policy remains intentionally unevaluated until a fresh dataset and
+  independent cal/tune/cert/latency/test identities are frozen.
+
 ## Suggested future code tree
 
 ```text
