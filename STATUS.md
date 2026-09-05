@@ -17,13 +17,56 @@ evidence. The fingerprint-gated query_cert runner remains an unexecuted frozen
 baseline, and query_cert, query_latency, and query_test remain unopened. No
 positive v2 result exists.
 
-Current work is on branch `codex/calibrated-tri-predict-v3`. Step 3 independently
-audited all allowed upstream and query-level inputs, localized the earliest
-failure to the scalar LID rank-distance power law, and implemented only the
-smallest supported successor: query-cal-only effective Tri-LID curve targets
-with low/high budget heads. A scalar-effective-LID mode is retained as the
-one-factor ablation. Raw Tri-Predict v1, Calibrated Tri-Predict v2, exact
-Tri-Law, numerical tolerances, and protected role state were not changed.
+Calibrated Tri-Predict v3 is frozen at commit `f94c1aa`. Its Step 3 diagnosis
+localized the earliest failure to the scalar LID rank-distance power law and
+retains a network-free low/high effective-Tri-LID repair only as a historical
+reference. No v3 real-data policy or positive v3 result exists.
+
+Current work is Step 1 of the new TLS-RAG family on branch
+`codex/tri-law-sequential-rag-v1`. Step 1 is a design freeze only. Raw
+Tri-Predict v1, PDCTP v2/v3, exact Tri-Law, numerical tolerances, and protected
+role state remain unchanged.
+
+## TLS-RAG Step 1 design freeze
+
+The proposed method identity is **Tri-Law Guided Sequential RAG Controller
+(TLS-RAG)**. It exposes one frozen projected-ranking prefix, reranks exposed
+candidates exactly in normalized original space, and takes only `STOP` or
+`EXPAND_TO_NEXT_GRID_VALUE`. STOP requires both a query-cal-calibrated upper
+confidence limit on remaining useful evidence below `delta_gain` and a
+query-cal-calibrated lower confidence limit on current context sufficiency
+above `tau_sufficient`; the complete operating point is selected once on
+`query_tune`.
+
+`docs/TRI_LAW_SEQUENTIAL_RAG_SPEC.md` freezes state, action, transition,
+evidence targets, observed-pair risk features, uncertainty semantics,
+fallbacks, counterexamples, pseudocode, and Step 2 CPU tests.
+`docs/TRI_LAW_SEQUENTIAL_RAG_PROTOCOL.md` freezes fresh-data requirements,
+five-role supervision, matched-fixed selection, certification and latency
+hypotheses, fingerprints, records, no-retuning rules, and the later LLM gate.
+
+Exact Tri-Law remains the ex-ante single-triplet inversion probability over a
+new Gaussian projection. Once the fixed deployment projection is observed,
+TLS-RAG uses aggregates only as geometric features; they are not posterior
+missing-evidence probabilities or evidence/answer guarantees. The sequential
+gain and sufficiency quantities are separately supervised and calibrated.
+
+Real-data target identifiability is currently blocked pending a fresh-data
+audit: ordinary qrels do not establish facet completeness, independent
+support, contradiction handling, or context sufficiency. Step 2 is not yet
+authorized. No real data, protected role, returned protected archive, download,
+LLM, answer generation, or new dependency was used in Step 1.
+
+The exact Step 1 local regression command was:
+
+```bash
+cd /Users/guanghongxu/Query-Adaptive-Tri-RAG
+./scripts/run_tests.sh
+```
+
+The final rerun completed 167 tests in 22.695 seconds: 166 passed, one optional real-FAISS
+CPU conformance test skipped because FAISS is not installed in the offline Mac
+environment, and zero failed. No frozen implementation or test was changed.
 
 ## Calibrated Tri-Predict v3 Step 3
 
@@ -1084,11 +1127,11 @@ in `docs/FIQA_QUERY_CERT_GATE.md`.
 
 ## Next task
 
-Push and pull the committed certification runner, then execute it exactly once
-on the complete 1,567-ID query_cert role and return the checksum-verified run
-archive for independent audit. Do not rerun certification after either PASS or
-FAIL. No latency measurement, test evaluation, LLM, approximate index, policy
-clipping, or retuning is authorized before that audit is accepted.
+Stop after the committed TLS-RAG Step 1 design and wait for user review. Step 2
+may begin only under a separate instruction after the user accepts the frozen
+design. The next proposed milestone is a tiny CPU/network-free synthetic
+retrieval/evidence skeleton with a fixed sequential interface; it must not run
+an LLM or real dataset.
 
 ## Known deviations and risks
 

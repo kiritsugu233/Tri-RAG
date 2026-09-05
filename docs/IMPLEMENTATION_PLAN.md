@@ -484,6 +484,50 @@ Acceptance state:
 - a real v3 policy remains intentionally unevaluated until a fresh dataset and
   independent cal/tune/cert/latency/test identities are frozen.
 
+## TLS-RAG successor: Step 1 design freeze
+
+- [x] Verify the frozen v3 starting point at commit `f94c1aa` and create the
+  separate `codex/tri-law-sequential-rag-v1` branch.
+- [x] Preserve Raw Tri-Predict v1, PDCTP v2/v3, exact Tri-Law, protected roles,
+  and returned certification archives without modification or access.
+- [x] Define the TLS-RAG sequential problem, state, next-grid-only actions,
+  transitions, stopping rule, terminal states, and conservative fallback.
+- [x] Restrict inference state to exposed pilot/expansion observations and
+  explicitly forbid roles, qrels, evidence/answer labels, oracle LID, exact
+  full-corpus top-k identities, and realized outcomes.
+- [x] Restrict exact Tri-Law to an ex-ante single-observed-pair law and define
+  all frontier aggregation as a feature or calibrated risk score.
+- [x] Define distinct candidate gain, final-context gain, remaining gain, and
+  current evidence-sufficiency targets under a frozen evidence plan.
+- [x] Freeze a query-cal fit/bounds split and bin-level one-sided uncertainty
+  calibration path; do not treat a point score as a posterior or bound.
+- [x] Freeze the fixed top-`k_ctx` context builder and the complete one-factor
+  ablation ladder through the later conditional LLM row.
+- [x] Define fresh-data cal/tune/cert/latency/test roles, label permissions,
+  leakage guards, matched-fixed selection, independent hypotheses, and
+  terminal no-retuning rules.
+- [x] Require strict tune-side paired common-work superiority over the matched
+  fixed reference before an adaptive candidate is eligible.
+- [x] Define a small CPU/network-free Step 2 acceptance plan with synthetic
+  counterexamples and no controller framework, real data, model download,
+  approximate index, or LLM.
+- [x] Pass the complete existing CPU/network-free regression suite without
+  changing frozen behavior.
+- [x] Commit all Step 1 documentation on the successor branch and stop for user
+  review before Step 2.
+
+Acceptance state:
+
+- the algorithm specification is `docs/TRI_LAW_SEQUENTIAL_RAG_SPEC.md`;
+- the fresh-data/evaluation protocol is
+  `docs/TRI_LAW_SEQUENTIAL_RAG_PROTOCOL.md`;
+- Step 2 is not authorized until the user explicitly accepts this design;
+- real-data evidence sufficiency remains blocked pending a fresh source with
+  facet/support/completeness annotations adequate to identify the frozen
+  targets.
+- the local regression reports 166 passes, one expected optional real-FAISS
+  skip, and zero failures across 167 tests.
+
 ## Suggested future code tree
 
 ```text
