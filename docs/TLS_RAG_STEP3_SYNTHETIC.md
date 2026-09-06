@@ -57,13 +57,17 @@ nonempty directory.
 
 ## Artifacts and reproducibility
 
-Two final fresh runs were written to:
+Two final fresh compatibility-audit runs were written to:
 
-- `/tmp/tls-rag-step3-fix2-a.JiQpJT/run`
-- `/tmp/tls-rag-step3-fix2-b.nDmtZG/run`
+- `/tmp/tls-rag-step3-audit-a.FbkMwf/run`
+- `/tmp/tls-rag-step3-audit-b.Jmkdnf/run`
 
 All 19 portable artifacts compared byte-for-byte equal. `timings.json` is
-nonportable and excluded from portable fingerprints.
+nonportable and excluded from portable fingerprints. This byte-equality result
+is a same-host reproducibility check. The manifest deliberately retains each
+host's observed raw Step 2 identities as audit evidence, so its bytes and
+fingerprint may differ across hosts whose BLAS roundoff changes those raw
+identities; cross-host acceptance uses the frozen semantic identities instead.
 
 - manifest: `864031f5a3a160db09b1b637b68529677d56f12b7ebbb04bf0f3e42d2c1c671e`
 - config: `3901dd0c742944ebd8bb23893488a8ab4950e28e4c48ac7c4fa143873f8d0101`
@@ -90,7 +94,10 @@ PYTHONPATH=src python -m unittest discover -s tests \
   -p 'test_tls_rag_step3.py' -v
 ```
 
-Result: 22 passed, 0 failed, 0 skipped in 2.746 seconds.
+Result: 23 passed, 0 failed, 0 skipped in 2.749 seconds. This includes a
+full compatibility-path regression that substitutes different raw Phase A and
+Phase B hashes while preserving every semantic record, then proves that an
+action change and a supervision-label change are still rejected.
 
 Full CPU command:
 
@@ -98,14 +105,17 @@ Full CPU command:
 ./scripts/run_tests.sh
 ```
 
-Result: 202 tests run, 201 passed, 0 failed, and 1 expected optional real-FAISS
-skip in 27.721 seconds. The frozen Step 2 Phase A and Phase B fingerprints remain
+Result: 203 tests run, 202 passed, 0 failed, and 1 expected optional real-FAISS
+skip in 27.578 seconds. The frozen Step 2 Phase A and Phase B reference
+fingerprints remain
 `78c4e4869ffca61a7a82ab014b9a3bd9c1513824c6d7d83ad6c2180f4428c2f3`
 and `a3d3620538c76bcc8a64b17c8dac619ac4b279be13abd43308758b43efda56e4`.
-The exact local Phase A fingerprint still matches; a platform that differs only
-below the frozen 12-decimal lattice must instead match the complete semantic
-trajectory fingerprint above. Larger numerical or any structural change is
-rejected with observed and expected hashes.
+Tests do not require a platform's observed raw hashes to equal those local
+references. Runner and tests call the same compatibility validator: each phase
+may use its exact identity or must match its complete frozen semantic identity.
+Larger numerical, structural, action, or supervision-label changes are rejected
+with observed and expected hashes. A cross-host replay must not compare its raw
+manifest fingerprint to the local value above as an acceptance gate.
 
 ## Scope and residual risks
 

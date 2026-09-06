@@ -45,6 +45,7 @@ from tri_rag_harness.tls_rag_step3 import (
     stable_synthetic_partition,
     step2_semantic_supervision_fingerprint,
     step2_semantic_trajectory_fingerprint,
+    validate_step2_compatibility,
 )
 from tri_rag_harness.tri_law import tri_law_probability
 
@@ -128,38 +129,93 @@ class TlsRagStep3Tests(unittest.TestCase):
         cls.temp_one.cleanup()
         cls.temp_two.cleanup()
 
-    def test_step2_frozen_schedule_and_fingerprints_are_unchanged(self):
+    def test_step2_frozen_schedule_and_semantic_compatibility_are_unchanged(self):
         upstream = self.environment.upstream
+        frozen = self.config.section("upstream_step2")
         self.assertEqual(
             upstream.config.config_fingerprint,
             "d0506bbfe06c5a1bbb737cbfca8ccc2daacf7eef4a1ba7779df148e8713803af",
         )
-        phase_a = run_step2_phase_a(upstream, FixedScheduleController(upstream.config))
-        phase_b = join_phase_b(phase_a, upstream, build_evidence_label_store(upstream))
         self.assertEqual(
-            phase_a.decision_fingerprint,
+            frozen["phase_a_fingerprint"],
             "78c4e4869ffca61a7a82ab014b9a3bd9c1513824c6d7d83ad6c2180f4428c2f3",
         )
         self.assertEqual(
-            phase_b.supervision_fingerprint,
+            frozen["phase_b_fingerprint"],
             "a3d3620538c76bcc8a64b17c8dac619ac4b279be13abd43308758b43efda56e4",
         )
+        phase_a = run_step2_phase_a(upstream, FixedScheduleController(upstream.config))
+        phase_b = join_phase_b(phase_a, upstream, build_evidence_label_store(upstream))
+        compatibility = validate_step2_compatibility(phase_a, phase_b, frozen)
+        self.assertTrue(compatibility["phase_a_semantic_reference_match"])
+        self.assertTrue(compatibility["phase_b_semantic_reference_match"])
         self.assertEqual(
             step2_semantic_trajectory_fingerprint(
                 phase_a, float_canonical_decimals=12
             ),
-            self.config.section("upstream_step2")["phase_a_semantic_fingerprint"],
+            frozen["phase_a_semantic_fingerprint"],
         )
         self.assertEqual(
             step2_semantic_supervision_fingerprint(
                 phase_b,
-                phase_a_semantic_fingerprint=self.config.section(
-                    "upstream_step2"
-                )["phase_a_semantic_fingerprint"],
+                phase_a_semantic_fingerprint=frozen["phase_a_semantic_fingerprint"],
                 float_canonical_decimals=12,
             ),
-            self.config.section("upstream_step2")["phase_b_semantic_fingerprint"],
+            frozen["phase_b_semantic_fingerprint"],
         )
+
+    def test_step2_compatibility_fallback_covers_both_phases_and_rejects_drift(self):
+        upstream = self.environment.upstream
+        frozen = self.config.section("upstream_step2")
+        phase_a = run_step2_phase_a(upstream, FixedScheduleController(upstream.config))
+        phase_b = join_phase_b(phase_a, upstream, build_evidence_label_store(upstream))
+
+        alternate_phase_a_hash = "0" * 64
+        alternate_phase_b_hash = "1" * 64
+        phase_a_records = phase_a.portable_records()
+        phase_a_proxy = mock.Mock(
+            config_fingerprint=phase_a.config_fingerprint,
+            fixture_fingerprint=phase_a.fixture_fingerprint,
+            decision_fingerprint=alternate_phase_a_hash,
+        )
+        phase_a_proxy.portable_records.return_value = phase_a_records
+        phase_b_records = json.loads(json.dumps(list(phase_b.supervision_records)))
+        for record in phase_b_records:
+            record["phase_a_decision_fingerprint"] = alternate_phase_a_hash
+        phase_b_proxy = mock.Mock(
+            supervision_fingerprint=alternate_phase_b_hash,
+            supervision_records=tuple(phase_b_records),
+        )
+
+        compatibility = validate_step2_compatibility(
+            phase_a_proxy, phase_b_proxy, frozen
+        )
+        self.assertFalse(compatibility["phase_a_exact_reference_match"])
+        self.assertTrue(compatibility["phase_a_semantic_reference_match"])
+        self.assertFalse(compatibility["phase_b_exact_reference_match"])
+        self.assertTrue(compatibility["phase_b_semantic_reference_match"])
+
+        changed_phase_a_records = json.loads(json.dumps(phase_a_records))
+        changed_phase_a_records[0]["action"] = Action.STOP.value
+        changed_phase_a = mock.Mock(
+            config_fingerprint=phase_a.config_fingerprint,
+            fixture_fingerprint=phase_a.fixture_fingerprint,
+            decision_fingerprint=alternate_phase_a_hash,
+        )
+        changed_phase_a.portable_records.return_value = changed_phase_a_records
+        with self.assertRaisesRegex(ValueError, "Phase A trajectory changed"):
+            validate_step2_compatibility(changed_phase_a, phase_b_proxy, frozen)
+
+        changed_phase_b_records = json.loads(json.dumps(phase_b_records))
+        changed_phase_b_records[0]["current_final_context_sufficiency"] = not (
+            changed_phase_b_records[0]["current_final_context_sufficiency"]
+        )
+        changed_phase_b = mock.Mock(
+            supervision_fingerprint=alternate_phase_b_hash,
+            supervision_records=tuple(changed_phase_b_records),
+        )
+        with self.assertRaisesRegex(ValueError, "Phase B supervision changed"):
+            validate_step2_compatibility(phase_a_proxy, changed_phase_b, frozen)
 
     def test_step2_semantic_fingerprint_tolerates_only_frozen_float_lattice(self):
         upstream = self.environment.upstream

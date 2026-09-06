@@ -638,6 +638,11 @@ all actions, IDs, budgets, contexts, validity flags, work records, and larger
 numeric changes remain fingerprint-protected. Step 2 Phase B supervision is
 separately hashed after rebinding its embedded Phase A identity to the semantic
 trajectory hash; all supervision labels and diagnostics remain protected.
+Runner and tests share one compatibility validator. A dedicated regression
+forces different raw identities for both phases, verifies the semantic fallback,
+and separately proves that Phase A action drift and Phase B label drift fail.
+Observed raw hashes are never asserted against the local reference in Step 3
+tests.
 
 ## Suggested future code tree
 

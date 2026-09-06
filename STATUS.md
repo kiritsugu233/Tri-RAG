@@ -185,6 +185,11 @@ budgets, contexts, validity flags, and work records in the compatibility hash.
 Phase B replaces only its embedded platform-specific raw Phase A identity with
 that verified semantic identity, then hashes every supervision field against
 `ef498b9ed0a10f76c6af753471b9935f3586eabd0cc1992dadb4c492472bf97b`.
+Runner and tests now use one compatibility validator. The regression suite
+explicitly simulates distinct raw Phase A and Phase B identities, accepts them
+only when both complete semantic records match, and rejects independent action
+and supervision-label mutations. No test compares a platform-observed raw
+Step 2 trajectory or supervision hash with the local reference.
 
 Exact command:
 
@@ -194,19 +199,23 @@ PYTHONPATH=src python -m tri_rag_harness.tls_rag_step3 \
   --output /tmp/tls-rag-step3-run
 ```
 
-Tests: the focused Step 3 suite passed 22/22 in 2.746 seconds. The full
-`./scripts/run_tests.sh` CPU suite ran 202 tests in 27.721 seconds: 201 passed,
+Tests: the focused Step 3 suite passed 23/23 in 2.749 seconds. The full
+`./scripts/run_tests.sh` CPU suite ran 203 tests in 27.578 seconds: 202 passed,
 one expected optional real-FAISS test skipped, and zero failed. The exact
 Tri-Law implementation/test and all historical v1/v2/v3 files were unchanged.
 
 Current artifacts: two fresh runs at
-`/tmp/tls-rag-step3-fix2-a.JiQpJT/run` and
-`/tmp/tls-rag-step3-fix2-b.nDmtZG/run` have all 19 portable artifacts
+`/tmp/tls-rag-step3-audit-a.FbkMwf/run` and
+`/tmp/tls-rag-step3-audit-b.Jmkdnf/run` have all 19 portable artifacts
 byte-identical. Manifest, Phase A, and Phase B fingerprints are respectively
 `864031f5a3a160db09b1b637b68529677d56f12b7ebbb04bf0f3e42d2c1c671e`,
 `5272b52bc008e52d8d6cc132fcb19b91166258a3dd27b064f219297052e94e52`,
 and `1754cf5e325fa8c0c950ab42ec3db26b560d96c6e52f2eb229d4cd3567a6d0a2`.
-Timings are nonportable and excluded.
+Timings are nonportable and excluded. Byte identity is a same-host replay gate:
+the manifest intentionally records host-observed raw Step 2 identities, so its
+bytes and fingerprint may differ across BLAS implementations even when both
+frozen semantic identities pass. A local manifest hash is not a cross-host
+acceptance gate.
 
 Next task: stop for user review. Step 4 requires separate authorization.
 
