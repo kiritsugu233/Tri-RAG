@@ -2301,6 +2301,46 @@ def _artifact_with_fingerprint(payload: Mapping[str, Any]) -> dict[str, Any]:
     return result
 
 
+def _canonicalize_floats(value: Any, decimals: int) -> Any:
+    """Canonicalize only finite floating leaves for cross-platform audit hashes."""
+    if isinstance(value, Mapping):
+        return {
+            str(key): _canonicalize_floats(child, decimals)
+            for key, child in value.items()
+        }
+    if isinstance(value, (tuple, list)):
+        return [_canonicalize_floats(child, decimals) for child in value]
+    if isinstance(value, (float, np.floating)):
+        numeric = float(value)
+        if not np.isfinite(numeric):
+            raise ValueError("cannot canonicalize a nonfinite Step 2 trajectory value")
+        rounded = round(numeric, decimals)
+        return 0.0 if rounded == 0.0 else rounded
+    return value
+
+
+def step2_semantic_trajectory_fingerprint(
+    phase_a: Any, *, float_canonical_decimals: int
+) -> str:
+    """Hash all Step 2 decision fields after a frozen decimal float lattice."""
+    if (
+        isinstance(float_canonical_decimals, bool)
+        or not isinstance(float_canonical_decimals, int)
+        or not 0 <= float_canonical_decimals <= 15
+    ):
+        raise ValueError("float_canonical_decimals must be an integer in [0,15]")
+    payload = {
+        "schema_version": "tls_rag_step2_semantic_trajectory_v1",
+        "config_fingerprint": phase_a.config_fingerprint,
+        "fixture_fingerprint": phase_a.fixture_fingerprint,
+        "float_canonical_decimals": float_canonical_decimals,
+        "records": _canonicalize_floats(
+            phase_a.portable_records(), float_canonical_decimals
+        ),
+    }
+    return fingerprint(payload)
+
+
 def _work_artifact(phase_a: PhaseAResult) -> dict[str, Any]:
     records = [
         {
@@ -2417,8 +2457,28 @@ def run_step3(config: Step3Config, output_dir: Path) -> dict[str, Path]:
         build_evidence_label_store(environment.upstream),
     )
     upstream_frozen = config.section("upstream_step2")
-    if step2_phase_a.decision_fingerprint != upstream_frozen["phase_a_fingerprint"]:
-        raise ValueError("frozen Step 2 Phase A fingerprint changed")
+    step2_phase_a_exact_match = (
+        step2_phase_a.decision_fingerprint == upstream_frozen["phase_a_fingerprint"]
+    )
+    step2_phase_a_semantic_fingerprint = step2_semantic_trajectory_fingerprint(
+        step2_phase_a,
+        float_canonical_decimals=int(
+            upstream_frozen["phase_a_float_canonical_decimals"]
+        ),
+    )
+    step2_phase_a_semantic_match = (
+        step2_phase_a_semantic_fingerprint
+        == upstream_frozen["phase_a_semantic_fingerprint"]
+    )
+    if not step2_phase_a_exact_match and not step2_phase_a_semantic_match:
+        raise ValueError(
+            "frozen Step 2 Phase A trajectory changed beyond the allowed "
+            "cross-platform float lattice; "
+            f"observed_exact={step2_phase_a.decision_fingerprint}, "
+            f"expected_exact={upstream_frozen['phase_a_fingerprint']}, "
+            f"observed_semantic={step2_phase_a_semantic_fingerprint}, "
+            f"expected_semantic={upstream_frozen['phase_a_semantic_fingerprint']}"
+        )
     if step2_phase_b.supervision_fingerprint != upstream_frozen["phase_b_fingerprint"]:
         raise ValueError("frozen Step 2 Phase B fingerprint changed")
 
@@ -2655,7 +2715,17 @@ def run_step3(config: Step3Config, output_dir: Path) -> dict[str, Path]:
         "phase_a_serialized_before_evaluation_label_store_opened": True,
         "phase_a_fingerprint_unchanged_by_join": phase_b.before_fingerprint == phase_b.after_fingerprint,
         "step2_compatibility": {
-            "phase_a_fingerprint": step2_phase_a.decision_fingerprint,
+            "phase_a_observed_fingerprint": step2_phase_a.decision_fingerprint,
+            "phase_a_reference_fingerprint": upstream_frozen["phase_a_fingerprint"],
+            "phase_a_exact_reference_match": step2_phase_a_exact_match,
+            "phase_a_semantic_fingerprint": step2_phase_a_semantic_fingerprint,
+            "phase_a_semantic_reference_fingerprint": upstream_frozen[
+                "phase_a_semantic_fingerprint"
+            ],
+            "phase_a_semantic_reference_match": step2_phase_a_semantic_match,
+            "phase_a_float_canonical_decimals": upstream_frozen[
+                "phase_a_float_canonical_decimals"
+            ],
             "phase_b_fingerprint": step2_phase_b.supervision_fingerprint,
         },
         "portable_artifacts": list(PORTABLE_ARTIFACTS),

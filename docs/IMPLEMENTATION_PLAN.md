@@ -631,6 +631,12 @@ Acceptance boundary:
   approximate index, GPU, LLM, answer generation, or Step 4 runner; and
 - exact Tri-Law and all historical v1/v2/v3 behavior remain unchanged.
 
+Cross-platform replay note: Step 3 records the original Step 2 exact Phase A
+fingerprint and additionally requires a frozen 12-decimal full-trajectory
+semantic fingerprint. This permits only numerical roundoff below that lattice;
+all actions, IDs, budgets, contexts, validity flags, work records, and larger
+numeric changes remain fingerprint-protected.
+
 ## Suggested future code tree
 
 ```text

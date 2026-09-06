@@ -1,6 +1,6 @@
 # TLS-RAG Step 3 synthetic observed-pair harness
 
-Status: implemented and locally verified on 2026-09-05. This document covers
+Status: implemented and locally verified on 2026-09-06. This document covers
 only the CPU-only, network-free, synthetic Step 3 harness. It does not authorize
 Step 4.
 
@@ -10,7 +10,10 @@ The isolated `tri_rag_harness.tls_rag_step3` runner reuses the frozen Step 2
 corpus, normalization, dense Gaussian projection, exact projected search,
 stable string-ID ties, prefix reuse, newly exposed original-distance cache,
 exact original reranking, two-action enum, context builder, evidence definition,
-and Phase A/Phase B separation.
+and Phase A/Phase B separation. Step 2 Phase A compatibility first checks the
+original exact fingerprint and also verifies a frozen 12-decimal semantic
+trajectory fingerprint so harmless cross-platform BLAS roundoff does not mask
+unchanged actions, IDs, budgets, contexts, validity flags, or work records.
 
 Step 3 adds:
 
@@ -53,15 +56,17 @@ nonempty directory.
 
 Two final fresh runs were written to:
 
-- `/tmp/tls-rag-step3-final-a.53pJPm/run`
-- `/tmp/tls-rag-step3-final-b.W6tpKt/run`
+- `/tmp/tls-rag-step3-fix-a.9K5S9c/run`
+- `/tmp/tls-rag-step3-fix-b.fbLpEu/run`
 
 All 19 portable artifacts compared byte-for-byte equal. `timings.json` is
 nonportable and excluded from portable fingerprints.
 
-- manifest: `f445fb1179cf42674c5a6c46873a558ea3916f4fce53691562d8702f2b3cae52`
+- manifest: `2ed83d5b705a5fe003d295308e1c3a465c199eb901d6c1e8c3004877f80b8d8b`
+- config: `314d660a996d6cf9511f99e34b7e5a1ad77f832eefac39f9d7c0cdc3de68f4d6`
 - Phase A: `5272b52bc008e52d8d6cc132fcb19b91166258a3dd27b064f219297052e94e52`
 - Phase B: `1754cf5e325fa8c0c950ab42ec3db26b560d96c6e52f2eb229d4cd3567a6d0a2`
+- Step 2 Phase A semantic trajectory: `119e46b2670c8830a4de7da57a94cc990e6316d990f6c8a8bd8417385be8b5ec`
 - Row 2 calibration table: `98253edff39d75ef2509a199d700716f5c6456b004dc473acd0063c74f43fd1f`
 - Row 3 calibration table: `d0684bc2d89da8cd8729a05359c867259bd9629af44c7b20357ee10c10365a6e`
 - Row 4 calibration table: `f107d49d6c327671a5f66e9b7446315ba8de2d76308c0815e2ecc633436763b2`
@@ -81,7 +86,7 @@ PYTHONPATH=src python -m unittest discover -s tests \
   -p 'test_tls_rag_step3.py' -v
 ```
 
-Result: 20 passed, 0 failed, 0 skipped in 2.804 seconds.
+Result: 21 passed, 0 failed, 0 skipped in 2.769 seconds.
 
 Full CPU command:
 
@@ -89,10 +94,14 @@ Full CPU command:
 ./scripts/run_tests.sh
 ```
 
-Result: 200 tests run, 199 passed, 0 failed, and 1 expected optional real-FAISS
-skip in 27.644 seconds. The frozen Step 2 Phase A and Phase B fingerprints remain
+Result: 201 tests run, 200 passed, 0 failed, and 1 expected optional real-FAISS
+skip in 27.337 seconds. The frozen Step 2 Phase A and Phase B fingerprints remain
 `78c4e4869ffca61a7a82ab014b9a3bd9c1513824c6d7d83ad6c2180f4428c2f3`
 and `a3d3620538c76bcc8a64b17c8dac619ac4b279be13abd43308758b43efda56e4`.
+The exact local Phase A fingerprint still matches; a platform that differs only
+below the frozen 12-decimal lattice must instead match the complete semantic
+trajectory fingerprint above. Larger numerical or any structural change is
+rejected with observed and expected hashes.
 
 ## Scope and residual risks
 

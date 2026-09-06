@@ -43,6 +43,7 @@ from tri_rag_harness.tls_rag_step3 import (
     run_evaluation_phase_a,
     run_step3,
     stable_synthetic_partition,
+    step2_semantic_trajectory_fingerprint,
 )
 from tri_rag_harness.tri_law import tri_law_probability
 
@@ -141,6 +142,40 @@ class TlsRagStep3Tests(unittest.TestCase):
         self.assertEqual(
             phase_b.supervision_fingerprint,
             "a3d3620538c76bcc8a64b17c8dac619ac4b279be13abd43308758b43efda56e4",
+        )
+        self.assertEqual(
+            step2_semantic_trajectory_fingerprint(
+                phase_a, float_canonical_decimals=12
+            ),
+            self.config.section("upstream_step2")["phase_a_semantic_fingerprint"],
+        )
+
+    def test_step2_semantic_fingerprint_tolerates_only_frozen_float_lattice(self):
+        upstream = self.environment.upstream
+        phase_a = run_step2_phase_a(upstream, FixedScheduleController(upstream.config))
+        baseline = step2_semantic_trajectory_fingerprint(
+            phase_a, float_canonical_decimals=12
+        )
+        records = phase_a.portable_records()
+        original = records[0]["decision_input"]["projected_squared_distances"][0]
+        records[0]["decision_input"]["projected_squared_distances"][0] = original + 1e-14
+        proxy = mock.Mock(
+            config_fingerprint=phase_a.config_fingerprint,
+            fixture_fingerprint=phase_a.fixture_fingerprint,
+        )
+        proxy.portable_records.return_value = records
+        self.assertEqual(
+            step2_semantic_trajectory_fingerprint(
+                proxy, float_canonical_decimals=12
+            ),
+            baseline,
+        )
+        records[0]["decision_input"]["projected_squared_distances"][0] = original + 1e-6
+        self.assertNotEqual(
+            step2_semantic_trajectory_fingerprint(
+                proxy, float_canonical_decimals=12
+            ),
+            baseline,
         )
 
     def test_hand_computed_beta_rho_and_unchanged_tri_law_value(self):

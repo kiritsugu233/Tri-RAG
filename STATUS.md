@@ -176,8 +176,12 @@ network-free synthetic observed-pair risk profile, transparent remaining-event
 and current-sufficiency scores, disjoint synthetic model-fit/bound-fit/
 evaluation partitions, candidate/stage/bin/reachability Clopper--Pearson
 tables, conservative dual-bound two-action control, and Rows 1--4 diagnostics.
-It reuses the frozen Step 2 exact retrieval and context path and verifies the
-Step 2 Phase A/B fingerprints at every Step 3 run.
+It reuses the frozen Step 2 exact retrieval and context path. Every Step 3 run
+records the original exact Step 2 Phase A hash and requires either that exact
+match or the frozen 12-decimal full-trajectory semantic hash
+`119e46b2670c8830a4de7da57a94cc990e6316d990f6c8a8bd8417385be8b5ec`.
+This admits only harmless platform roundoff while retaining all actions, IDs,
+budgets, contexts, validity flags, and work records in the compatibility hash.
 
 Exact command:
 
@@ -187,16 +191,16 @@ PYTHONPATH=src python -m tri_rag_harness.tls_rag_step3 \
   --output /tmp/tls-rag-step3-run
 ```
 
-Tests: the focused Step 3 suite passed 20/20 in 2.804 seconds. The full
-`./scripts/run_tests.sh` CPU suite ran 200 tests in 27.644 seconds: 199 passed,
+Tests: the focused Step 3 suite passed 21/21 in 2.769 seconds. The full
+`./scripts/run_tests.sh` CPU suite ran 201 tests in 27.337 seconds: 200 passed,
 one expected optional real-FAISS test skipped, and zero failed. The exact
 Tri-Law implementation/test and all historical v1/v2/v3 files were unchanged.
 
 Current artifacts: two fresh runs at
-`/tmp/tls-rag-step3-final-a.53pJPm/run` and
-`/tmp/tls-rag-step3-final-b.W6tpKt/run` have all 19 portable artifacts
+`/tmp/tls-rag-step3-fix-a.9K5S9c/run` and
+`/tmp/tls-rag-step3-fix-b.fbLpEu/run` have all 19 portable artifacts
 byte-identical. Manifest, Phase A, and Phase B fingerprints are respectively
-`f445fb1179cf42674c5a6c46873a558ea3916f4fce53691562d8702f2b3cae52`,
+`2ed83d5b705a5fe003d295308e1c3a465c199eb901d6c1e8c3004877f80b8d8b`,
 `5272b52bc008e52d8d6cc132fcb19b91166258a3dd27b064f219297052e94e52`,
 and `1754cf5e325fa8c0c950ab42ec3db26b560d96c6e52f2eb229d4cd3567a6d0a2`.
 Timings are nonportable and excluded.
