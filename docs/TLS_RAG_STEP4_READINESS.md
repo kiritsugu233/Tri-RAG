@@ -1,6 +1,6 @@
 # TLS-RAG Step 4 readiness closeout
 
-Status: protocol and synthetic readiness complete; real-data gate closed.
+Status: local and user-reported cluster readiness passed; real-data gate closed.
 Branch: `codex/tls-rag-step4-readiness`. Base/handoff:
 `0e4df85df3cd6bc9427476702a3b90339576636e`.
 
@@ -24,6 +24,37 @@ artifact files in the new `a`/`b` directories matched each other and retained
 the initial readiness fingerprints listed below. The protocol, Step 4 Python
 implementation, Step 2/3 and exact Tri-Law were unchanged. Existing untracked
 files in the canonical checkout were preserved and excluded from the commit.
+
+## User-reported cluster replay
+
+After entering a compute node with `srun`, the user reported successful manual
+replay using the previously established micromamba `tri-rag` environment. The
+supplied instructions targeted commit
+`8846554c49d2a1b3f73b7b62c20fe0292c896623` and used:
+
+```bash
+eval "$(micromamba shell hook --shell bash)"
+micromamba activate tri-rag
+cd /home/users/u0001611/Tri-RAG-step4-8846554
+export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
+sh scripts/run_tls_rag_step4_readiness.sh "$PWD/step4-manual-$(date +%Y%m%d-%H%M%S)"
+```
+
+The pasted final output reports **229 tests in 52.466 seconds, OK (skipped=1)**:
+228 passed and one skipped. It also reports all six artifact fingerprints and
+`Step 4 synthetic artifacts are byte-identical; real-data gate remains closed.`
+Every supplied fingerprint matches the local identities in the table below,
+including manifest `e70dc296e46443efcff2f7885540ea9c54238a246a8f9fcba84a956551daab62`.
+The script's final success line indicates that its two-round pipeline finished;
+only the final full-suite timing was included in the user's excerpt.
+
+This is a user-reported cluster confirmation, not an independently executed
+agent replay. The excerpt does not echo HEAD, hostname, Slurm job ID, exact
+Python/NumPy/SciPy versions or the expanded output-directory timestamp. Those
+details remain unverified; in particular, do not associate the earlier visible
+job 377850 or node a100-0 with this test without additional evidence. The result
+does not measure GPU performance or establish latency/quality guarantees.
+No remote logs or protected data were opened to record this confirmation.
 
 ## Provenance and reading boundary
 
@@ -180,7 +211,8 @@ sbatch --job-name=tls-rag-step4-readiness --cpus-per-task=1 --mem=4G --time=00:1
 ```
 
 Record the actual job ID, exact commit/environment and new synthetic output
-identities after replay. There is no Step 4 cluster result to report yet.
+identities after replay. The later user-reported result is recorded above;
+the agent has not logged into the cluster or independently collected job metadata.
 
 ## Remaining risks and next task
 

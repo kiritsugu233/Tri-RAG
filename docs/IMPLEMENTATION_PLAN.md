@@ -714,4 +714,7 @@ query-adaptive-tri-rag-harness/
       `/Users/guanghongxu/Query-Adaptive-Tri-RAG`, preserve untracked files, enforce
       the local directory in the Mac launcher, and repeat both complete test rounds.
 - [x] Record standing canonical-directory and GitHub synchronization instructions in root AGENTS.
+- [x] Record the user's micromamba `tri-rag` cluster replay confirmation:
+      229 tests, 228 passes and 1 skip; byte-identical synthetic replay outputs
+      with all six fingerprints matching local readiness. Keep the real-data gate closed.
 <!-- TLS-RAG STEP4 END -->

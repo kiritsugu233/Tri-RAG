@@ -1386,7 +1386,8 @@ start Step 4.
 - Protocol fingerprint: `35a3ae863249d1f1d7aec7f0b2fbaae877871093216523177b67e5c40b0a802e`.
 - Manifest fingerprint: `e70dc296e46443efcff2f7885540ea9c54238a246a8f9fcba84a956551daab62`.
 - Branch: `codex/tls-rag-step4-readiness`; base `0e4df85df3cd6bc9427476702a3b90339576636e`.
-- Frozen Step 2/3 and exact Tri-Law diff: empty; no push or cluster/Slurm command executed.
+- Frozen Step 2/3 and exact Tri-Law diff: empty. The initial milestone did not
+  push or submit jobs; the later canonical-checkout branch was synchronized to GitHub.
 - Next: separately authorize exact real-data/adapter paths and review a complete
   pre-data binding; no real role opening or Step 5 work is authorized here.
 - Risks: synthetic checks cannot establish iid real sampling or annotation
@@ -1400,4 +1401,9 @@ start Step 4.
 - Canonical-local command: `sh scripts/run_tls_rag_step4_readiness.sh /private/tmp/tls-rag-step4-canonical-local-audit-01`.
   Both rounds passed (26 focused; 228 full passes plus 1 expected skip each).
   All six artifact fingerprints and bytes match the initial readiness outputs.
+- User-reported cluster replay via micromamba `tri-rag`: final full suite ran
+  229 tests in 52.466s, 228 passed and 1 skipped. The script reported byte-identical
+  synthetic artifacts; all six reported fingerprints match local readiness.
+  Host/job/environment details and the expanded output directory were not
+  independently verified. Real-data gate stays closed; no performance claim.
 <!-- TLS-RAG STEP4 END -->
