@@ -1,5 +1,11 @@
 # TLS-RAG Step 4 start here
 
+All local work now uses `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
+Read the canonical-checkout section in root `AGENTS.md` and
+`docs/TLS_RAG_LOCAL_WORKFLOW.md` for the user's standing directory and GitHub
+synchronization instructions. Existing Codex worktrees are historical checkouts;
+they are not the working directory for subsequent local steps.
+
 Entry provenance: `0e4df85df3cd6bc9427476702a3b90339576636e` must be an ancestor.
 The original Step 3-to-Step 4 handoff remains authoritative for startup access.
 

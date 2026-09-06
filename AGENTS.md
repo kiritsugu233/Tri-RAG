@@ -1,5 +1,27 @@
 # Agent Instructions
 
+## Canonical local checkout and GitHub synchronization
+
+User instruction effective after the Step 4 readiness milestone:
+
+- All subsequent local TLS-RAG steps must use
+  `/Users/guanghongxu/Query-Adaptive-Tri-RAG` as the working directory.
+  Inspect its branch, HEAD and tracked/untracked status before changing it.
+- Do not create or continue local step implementation in a Codex-managed
+  worktree unless the user explicitly authorizes an exception. If a task starts
+  in another directory, execute repository work in the canonical checkout;
+  never assume the main checkout contains another worktree's commits.
+- Preserve user modifications and untracked files. Do not reset, clean, delete
+  archives, or overwrite a divergent branch to synchronize the checkout.
+- After an authorized step passes its required checks, commit from the canonical
+  checkout, push its explicit step branch to GitHub, and verify the remote HEAD.
+  This is the user's standing synchronization instruction; it supersedes older
+  TLS-RAG handoffs that said not to push automatically. Never force-push or merge
+  the GitHub default branch without separate authorization.
+- Cluster work uses a separate Linux checkout synchronized through GitHub at
+  the reviewed commit. Provide exact replay commands and record actual results;
+  do not infer a cluster result from a local run.
+
 These instructions apply to the entire `query-adaptive-tri-rag-harness` directory.
 
 ## Mission

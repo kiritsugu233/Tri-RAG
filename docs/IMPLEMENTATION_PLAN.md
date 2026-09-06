@@ -710,4 +710,8 @@ query-adaptive-tri-rag-harness/
       stop at the real-data gate without push or cluster submission.
 - [ ] Future separately authorized milestone: exact-path authorization and full
       real-transfer binding review before any real role opens. Step 5 excluded.
+- [x] Move the Step 4 branch to canonical local checkout
+      `/Users/guanghongxu/Query-Adaptive-Tri-RAG`, preserve untracked files, enforce
+      the local directory in the Mac launcher, and repeat both complete test rounds.
+- [x] Record standing canonical-directory and GitHub synchronization instructions in root AGENTS.
 <!-- TLS-RAG STEP4 END -->

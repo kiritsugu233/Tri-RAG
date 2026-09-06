@@ -1394,4 +1394,10 @@ start Step 4.
   no selection, certification, latency, quality or production result is claimed.
 - Full commands, identities, limitations and manual replay templates:
   `docs/TLS_RAG_STEP4_READINESS.md`; entry: `docs/TLS_RAG_STEP4_START_HERE.md`.
+- Canonical-local followup: `/Users/guanghongxu/Query-Adaptive-Tri-RAG` now owns
+  the Step 4 branch. Root AGENTS requires this directory and GitHub branch
+  synchronization for subsequent local steps; no existing untracked file was removed.
+- Canonical-local command: `sh scripts/run_tls_rag_step4_readiness.sh /private/tmp/tls-rag-step4-canonical-local-audit-01`.
+  Both rounds passed (26 focused; 228 full passes plus 1 expected skip each).
+  All six artifact fingerprints and bytes match the initial readiness outputs.
 <!-- TLS-RAG STEP4 END -->

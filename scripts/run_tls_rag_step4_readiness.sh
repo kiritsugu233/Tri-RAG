@@ -1,6 +1,18 @@
 #!/bin/sh
 # Existing CPU NumPy/SciPy environment only. No install, push or submission.
 set -eu
+case "$(uname -s)" in
+    Darwin)
+        if [ "$(pwd -P)" != /Users/guanghongxu/Query-Adaptive-Tri-RAG ]; then
+            echo 'Run local tests from /Users/guanghongxu/Query-Adaptive-Tri-RAG.' >&2
+            exit 2
+        fi
+        ;;
+esac
+if [ ! -f configs/tls_rag_step4_protocol_v1.json ] || [ ! -f src/tri_rag_harness/tls_rag_step4.py ]; then
+    echo 'Run this script from the reviewed TLS-RAG repository root.' >&2
+    exit 2
+fi
 if [ "$#" -ne 1 ]; then
     echo 'usage: sh scripts/run_tls_rag_step4_readiness.sh NEW_OUTPUT_PARENT' >&2
     exit 2

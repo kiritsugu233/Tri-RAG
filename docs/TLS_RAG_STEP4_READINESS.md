@@ -4,6 +4,27 @@ Status: protocol and synthetic readiness complete; real-data gate closed.
 Branch: `codex/tls-rag-step4-readiness`. Base/handoff:
 `0e4df85df3cd6bc9427476702a3b90339576636e`.
 
+The initial readiness implementation was committed as
+`155070d8df96a773d83a650db84e6ec69d12c51e` in a Codex worktree. The user subsequently
+designated `/Users/guanghongxu/Query-Adaptive-Tri-RAG` as the canonical local
+checkout for every following step and authorized GitHub synchronization. That
+checkout now owns this Step 4 branch; root AGENTS and
+`docs/TLS_RAG_LOCAL_WORKFLOW.md` define the continuing workflow.
+
+Canonical-checkout replay used:
+
+```bash
+cd /Users/guanghongxu/Query-Adaptive-Tri-RAG
+sh scripts/run_tls_rag_step4_readiness.sh /private/tmp/tls-rag-step4-canonical-local-audit-01
+```
+
+Both focused rounds passed all 26 tests. Both full rounds ran 229 tests with
+228 passes and the expected optional FAISS skip (28.195s and 27.613s). All six
+artifact files in the new `a`/`b` directories matched each other and retained
+the initial readiness fingerprints listed below. The protocol, Step 4 Python
+implementation, Step 2/3 and exact Tri-Law were unchanged. Existing untracked
+files in the canonical checkout were preserved and excluded from the commit.
+
 ## Provenance and reading boundary
 
 The initial worktree was clean and detached at the handoff commit. Read-only
@@ -128,9 +149,10 @@ changes use new Step 4 paths. `git diff --check` passed.
 
 ## Manual push and cluster replay
 
-No push, remote fetch, cluster login or Slurm submission was executed. On the
-local checkout, inspect the final commit using `git rev-parse HEAD`. To push
-manually after reviewing it:
+No push, remote fetch, cluster login or Slurm submission was executed during the
+initial readiness milestone. The later canonical-checkout update is authorized
+to synchronize this branch to GitHub. From the canonical local checkout,
+`git rev-parse HEAD` identifies the commit; the synchronization command is:
 
 ```bash
 git push -u origin codex/tls-rag-step4-readiness
