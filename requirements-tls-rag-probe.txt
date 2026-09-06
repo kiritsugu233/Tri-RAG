@@ -1,0 +1,5 @@
+# Optional real-data preparation only; keep the existing CUDA-enabled PyTorch.
+# The established CPU-only test suite does not import these dependencies.
+sentence-transformers==3.4.1
+transformers==4.48.3
+pyarrow==19.0.1

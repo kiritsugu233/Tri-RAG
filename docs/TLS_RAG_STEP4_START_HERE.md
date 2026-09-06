@@ -1,5 +1,10 @@
 # TLS-RAG Step 4 start here
 
+Successor requested after the readiness replay: the first real retrieval probe
+is documented in `docs/TLS_RAG_STEP4_REAL_PROBE.md`, on branch
+`codex/tls-rag-step4-real-probe`. Its new v2 experiment does not unlock or modify
+the v1 protocol below. Use its explicit source paths and manual cluster commands.
+
 All local work now uses `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 Read the canonical-checkout section in root `AGENTS.md` and
 `docs/TLS_RAG_LOCAL_WORKFLOW.md` for the user's standing directory and GitHub

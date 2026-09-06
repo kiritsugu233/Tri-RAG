@@ -1,0 +1,61 @@
+{
+  "schema": "tls_rag_nfcorpus_retrieval_probe_protocol_v2",
+  "run_name": "tls_rag_step4_nfcorpus_probe_v2",
+  "dataset": "BeIR/nfcorpus",
+  "dataset_revision": "b5026a0e96e8a7ac4f95f482a596389289d46269",
+  "qrels_revision": "a451b3b26d3ae1358f259c1a3a4dd61fcea35a65",
+  "source_split": "train_only",
+  "embedding": {
+    "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "c9745ed1d9f207416be6d2e6f8de32d1f16199bf",
+    "dimension": 384,
+    "max_seq_length": 256,
+    "normalized_before_projection": true,
+    "document_text": "title_newline_text",
+    "query_text": "unmodified_query",
+    "precision": "float32_encoder_then_float64_normalization"
+  },
+  "embedding_seed": 54101,
+  "split_seed": 54109,
+  "role_counts": {
+    "query_cal_model_fit": 256,
+    "query_cal_bound_fit": 512,
+    "query_tune": 256,
+    "query_probe": 256
+  },
+  "retrieval": {
+    "m_prime": 128,
+    "projection_seed": 24103,
+    "post_projection_normalized": false,
+    "distance": "exact_squared_l2_with_string_id_ties",
+    "k_gt": 10,
+    "k_ctx": 5,
+    "budget_grid": [32, 128, 512]
+  },
+  "selection": {
+    "minimum_retention": 0.9,
+    "maximum_hit_drop": 0.02,
+    "objective": "minimum_mean_original_distances_strictly_below_512",
+    "tie_break": "ascending_candidate_id",
+    "no_eligible_candidate": "terminal_failure_keep_probe_closed"
+  },
+  "component_config_fingerprint": "3901dd0c742944ebd8bb23893488a8ab4950e28e4c48ac7c4fa143873f8d0101",
+  "labels": {
+    "positive_relevance": "qrel_score_gt_zero",
+    "current_proxy": "at_least_one_judged_relevant_document_in_context",
+    "remaining_proxy": "current_has_no_hit_and_any_later_grid_context_has_a_hit",
+    "plan": "single_proxy_slot_match_longest_query_token_lexicographic_tie",
+    "unjudged": "zero_for_judged_metrics_not_asserted_irrelevant"
+  },
+  "interpretation": {
+    "descriptive_only": true,
+    "no_formal_certification": true,
+    "no_latency_claim": true,
+    "no_evidence_sufficiency_claim": true,
+    "no_answer_evaluation": true,
+    "iid_question_families_not_established": true,
+    "official_dev_test_labels_closed": true,
+    "no_retuning_after_probe": true,
+    "all_prefix_preparation_is_offline_audit_work": true
+  }
+}

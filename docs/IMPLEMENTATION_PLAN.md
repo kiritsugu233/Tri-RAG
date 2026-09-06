@@ -717,4 +717,20 @@ query-adaptive-tri-rag-harness/
 - [x] Record the user's micromamba `tri-rag` cluster replay confirmation:
       229 tests, 228 passes and 1 skip; byte-identical synthetic replay outputs
       with all six fingerprints matching local readiness. Keep the real-data gate closed.
+
+### Step 4 successor: first real retrieval probe v2
+
+- [x] Implement only in canonical local checkout on a separate successor branch.
+- [x] Freeze a new NFCorpus/model revision, projection, grid, training-only roles,
+      retrieval-proxy semantics and no-retuning descriptive experiment.
+- [x] Add optional CUDA preparation and independent offline evaluation commands,
+      with explicit new source/destination paths and content/code-bound inputs.
+- [x] Preserve Step 2/3, exact Tri-Law and v1 readiness source/config/tests.
+- [x] Add model-fit/bound-fit/tune/probe separation, query-level evidence of label
+      isolation, failure without probe opening, exact references and ablation deltas.
+- [x] Pass 14 new focused tests and two full 243-test CPU regressions; preserve
+      all six v1 synthetic artifact fingerprints and bytes.
+- [ ] Execute and inspect the first real A100 run from the synchronized GitHub commit.
+- [ ] Establish algorithm effectiveness from the actual metrics; implementation tests
+      do not establish a real-data benefit. Formal certification/latency remain separate.
 <!-- TLS-RAG STEP4 END -->

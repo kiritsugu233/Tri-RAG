@@ -1406,4 +1406,31 @@ start Step 4.
   synthetic artifacts; all six reported fingerprints match local readiness.
   Host/job/environment details and the expanded output directory were not
   independently verified. Real-data gate stays closed; no performance claim.
+
+### Step 4 successor: real retrieval probe v2 implementation
+
+- User requested beginning real algorithm validation after the cluster readiness replay.
+- New entry: `docs/TLS_RAG_STEP4_REAL_PROBE.md`; branch `codex/tls-rag-step4-real-probe`.
+  Work performed only in `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
+- Implemented pinned NFCorpus training-only preparation, optional CUDA embedding,
+  four disjoint roles, unchanged Step 3 component reuse, serialized label-opening
+  receipts, tune selection, held-out descriptive probe and Rows 1–4 comparisons.
+  Exact-original and fixed 32/128/512 references are reported alongside adaptive rows.
+- New protocol fingerprint: `9f31fc87ec1c0d38716474c951eefb456d3bda8e3637557390e3e577e5833952`.
+  Parameters and retrieval-proxy labels are separately versioned; v1 is unchanged.
+- Focused: `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 -m unittest discover -s tests -p test_tls_rag_step4_probe.py -v`;
+  14 passed, including pipeline reproduction, data isolation and tamper rejection.
+- Full: `sh scripts/run_tls_rag_step4_readiness.sh /private/tmp/tls-rag-step4-real-probe-regression-01`;
+  two rounds, 243 tests each (242 passed, one optional FAISS skip), 29.352/29.138 s.
+  Original focused 26 passed each; six v1 artifact bytes and fingerprints preserved.
+- New validation artifacts: `/private/tmp/tls-rag-step4-real-probe-regression-01/{a,b}`
+  and `/private/tmp/tls-rag-step4-real-probe-regression-01.log`. Probe fixtures use
+  temporary directories; their two complete artifact manifests compare equal.
+- Next: use the documented GitHub checkout and micromamba `tri-rag` commands on
+  the A100 node, prepare the exact fresh data/model paths, then evaluate and retain
+  `evaluation/result.json`, `report.md`, per-query records and binding.
+- No real data/model weights downloaded or real evaluation executed here. Optional
+  preparation dependencies/CUDA remain unvalidated locally. Official dev/test labels
+  remain unopened. Qrels are retrieval proxies; iid families are unaudited; all-prefix
+  audit runtime is not serving latency. No certification or evidence guarantee.
 <!-- TLS-RAG STEP4 END -->
