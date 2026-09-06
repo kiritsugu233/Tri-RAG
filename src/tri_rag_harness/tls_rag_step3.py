@@ -2341,6 +2341,36 @@ def step2_semantic_trajectory_fingerprint(
     return fingerprint(payload)
 
 
+def step2_semantic_supervision_fingerprint(
+    phase_b: Any,
+    *,
+    phase_a_semantic_fingerprint: str,
+    float_canonical_decimals: int,
+) -> str:
+    """Hash Step 2 supervision against the semantic, not raw, Phase A identity."""
+    if (
+        not isinstance(phase_a_semantic_fingerprint, str)
+        or len(phase_a_semantic_fingerprint) != 64
+    ):
+        raise ValueError("phase_a_semantic_fingerprint must be a SHA-256 hex string")
+    normalized_records = []
+    for raw_record in phase_b.supervision_records:
+        record = dict(raw_record)
+        if "phase_a_decision_fingerprint" not in record:
+            raise ValueError("Step 2 supervision record lacks its Phase A identity")
+        record["phase_a_decision_fingerprint"] = phase_a_semantic_fingerprint
+        normalized_records.append(record)
+    payload = {
+        "schema_version": "tls_rag_step2_semantic_supervision_v1",
+        "phase_a_semantic_trajectory_fingerprint": phase_a_semantic_fingerprint,
+        "float_canonical_decimals": float_canonical_decimals,
+        "records": _canonicalize_floats(
+            normalized_records, float_canonical_decimals
+        ),
+    }
+    return fingerprint(payload)
+
+
 def _work_artifact(phase_a: PhaseAResult) -> dict[str, Any]:
     records = [
         {
@@ -2479,8 +2509,29 @@ def run_step3(config: Step3Config, output_dir: Path) -> dict[str, Path]:
             f"observed_semantic={step2_phase_a_semantic_fingerprint}, "
             f"expected_semantic={upstream_frozen['phase_a_semantic_fingerprint']}"
         )
-    if step2_phase_b.supervision_fingerprint != upstream_frozen["phase_b_fingerprint"]:
-        raise ValueError("frozen Step 2 Phase B fingerprint changed")
+    step2_phase_b_exact_match = (
+        step2_phase_b.supervision_fingerprint == upstream_frozen["phase_b_fingerprint"]
+    )
+    step2_phase_b_semantic_fingerprint = step2_semantic_supervision_fingerprint(
+        step2_phase_b,
+        phase_a_semantic_fingerprint=step2_phase_a_semantic_fingerprint,
+        float_canonical_decimals=int(
+            upstream_frozen["phase_a_float_canonical_decimals"]
+        ),
+    )
+    step2_phase_b_semantic_match = (
+        step2_phase_b_semantic_fingerprint
+        == upstream_frozen["phase_b_semantic_fingerprint"]
+    )
+    if not step2_phase_b_exact_match and not step2_phase_b_semantic_match:
+        raise ValueError(
+            "frozen Step 2 Phase B supervision changed beyond the allowed "
+            "cross-platform float lattice; "
+            f"observed_exact={step2_phase_b.supervision_fingerprint}, "
+            f"expected_exact={upstream_frozen['phase_b_fingerprint']}, "
+            f"observed_semantic={step2_phase_b_semantic_fingerprint}, "
+            f"expected_semantic={upstream_frozen['phase_b_semantic_fingerprint']}"
+        )
 
     prepared_tuple = prepare_queries(environment, config)
     prepared = {item.query_id: item for item in prepared_tuple}
@@ -2726,7 +2777,14 @@ def run_step3(config: Step3Config, output_dir: Path) -> dict[str, Path]:
             "phase_a_float_canonical_decimals": upstream_frozen[
                 "phase_a_float_canonical_decimals"
             ],
-            "phase_b_fingerprint": step2_phase_b.supervision_fingerprint,
+            "phase_b_observed_fingerprint": step2_phase_b.supervision_fingerprint,
+            "phase_b_reference_fingerprint": upstream_frozen["phase_b_fingerprint"],
+            "phase_b_exact_reference_match": step2_phase_b_exact_match,
+            "phase_b_semantic_fingerprint": step2_phase_b_semantic_fingerprint,
+            "phase_b_semantic_reference_fingerprint": upstream_frozen[
+                "phase_b_semantic_fingerprint"
+            ],
+            "phase_b_semantic_reference_match": step2_phase_b_semantic_match,
         },
         "portable_artifacts": list(PORTABLE_ARTIFACTS),
         "timings_portable": False,

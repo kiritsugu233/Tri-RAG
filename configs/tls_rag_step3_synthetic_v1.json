@@ -8,7 +8,8 @@
     "phase_a_fingerprint": "78c4e4869ffca61a7a82ab014b9a3bd9c1513824c6d7d83ad6c2180f4428c2f3",
     "phase_a_semantic_fingerprint": "119e46b2670c8830a4de7da57a94cc990e6316d990f6c8a8bd8417385be8b5ec",
     "phase_a_float_canonical_decimals": 12,
-    "phase_b_fingerprint": "a3d3620538c76bcc8a64b17c8dac619ac4b279be13abd43308758b43efda56e4"
+    "phase_b_fingerprint": "a3d3620538c76bcc8a64b17c8dac619ac4b279be13abd43308758b43efda56e4",
+    "phase_b_semantic_fingerprint": "ef498b9ed0a10f76c6af753471b9935f3586eabd0cc1992dadb4c492472bf97b"
   },
   "seeds": {
     "synthetic_query": 33103,

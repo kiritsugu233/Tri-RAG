@@ -14,6 +14,9 @@ and Phase A/Phase B separation. Step 2 Phase A compatibility first checks the
 original exact fingerprint and also verifies a frozen 12-decimal semantic
 trajectory fingerprint so harmless cross-platform BLAS roundoff does not mask
 unchanged actions, IDs, budgets, contexts, validity flags, or work records.
+Phase B is independently rebound to that semantic Phase A identity and hashes
+every supervision field, so a platform-specific raw Phase A hash cannot cause a
+false Phase B rejection while any label or material numeric change still fails.
 
 Step 3 adds:
 
@@ -56,17 +59,18 @@ nonempty directory.
 
 Two final fresh runs were written to:
 
-- `/tmp/tls-rag-step3-fix-a.9K5S9c/run`
-- `/tmp/tls-rag-step3-fix-b.fbLpEu/run`
+- `/tmp/tls-rag-step3-fix2-a.JiQpJT/run`
+- `/tmp/tls-rag-step3-fix2-b.nDmtZG/run`
 
 All 19 portable artifacts compared byte-for-byte equal. `timings.json` is
 nonportable and excluded from portable fingerprints.
 
-- manifest: `2ed83d5b705a5fe003d295308e1c3a465c199eb901d6c1e8c3004877f80b8d8b`
-- config: `314d660a996d6cf9511f99e34b7e5a1ad77f832eefac39f9d7c0cdc3de68f4d6`
+- manifest: `864031f5a3a160db09b1b637b68529677d56f12b7ebbb04bf0f3e42d2c1c671e`
+- config: `3901dd0c742944ebd8bb23893488a8ab4950e28e4c48ac7c4fa143873f8d0101`
 - Phase A: `5272b52bc008e52d8d6cc132fcb19b91166258a3dd27b064f219297052e94e52`
 - Phase B: `1754cf5e325fa8c0c950ab42ec3db26b560d96c6e52f2eb229d4cd3567a6d0a2`
 - Step 2 Phase A semantic trajectory: `119e46b2670c8830a4de7da57a94cc990e6316d990f6c8a8bd8417385be8b5ec`
+- Step 2 Phase B semantic supervision: `ef498b9ed0a10f76c6af753471b9935f3586eabd0cc1992dadb4c492472bf97b`
 - Row 2 calibration table: `98253edff39d75ef2509a199d700716f5c6456b004dc473acd0063c74f43fd1f`
 - Row 3 calibration table: `d0684bc2d89da8cd8729a05359c867259bd9629af44c7b20357ee10c10365a6e`
 - Row 4 calibration table: `f107d49d6c327671a5f66e9b7446315ba8de2d76308c0815e2ecc633436763b2`
@@ -86,7 +90,7 @@ PYTHONPATH=src python -m unittest discover -s tests \
   -p 'test_tls_rag_step3.py' -v
 ```
 
-Result: 21 passed, 0 failed, 0 skipped in 2.769 seconds.
+Result: 22 passed, 0 failed, 0 skipped in 2.746 seconds.
 
 Full CPU command:
 
@@ -94,8 +98,8 @@ Full CPU command:
 ./scripts/run_tests.sh
 ```
 
-Result: 201 tests run, 200 passed, 0 failed, and 1 expected optional real-FAISS
-skip in 27.337 seconds. The frozen Step 2 Phase A and Phase B fingerprints remain
+Result: 202 tests run, 201 passed, 0 failed, and 1 expected optional real-FAISS
+skip in 27.721 seconds. The frozen Step 2 Phase A and Phase B fingerprints remain
 `78c4e4869ffca61a7a82ab014b9a3bd9c1513824c6d7d83ad6c2180f4428c2f3`
 and `a3d3620538c76bcc8a64b17c8dac619ac4b279be13abd43308758b43efda56e4`.
 The exact local Phase A fingerprint still matches; a platform that differs only

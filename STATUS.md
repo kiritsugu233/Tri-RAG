@@ -182,6 +182,9 @@ match or the frozen 12-decimal full-trajectory semantic hash
 `119e46b2670c8830a4de7da57a94cc990e6316d990f6c8a8bd8417385be8b5ec`.
 This admits only harmless platform roundoff while retaining all actions, IDs,
 budgets, contexts, validity flags, and work records in the compatibility hash.
+Phase B replaces only its embedded platform-specific raw Phase A identity with
+that verified semantic identity, then hashes every supervision field against
+`ef498b9ed0a10f76c6af753471b9935f3586eabd0cc1992dadb4c492472bf97b`.
 
 Exact command:
 
@@ -191,16 +194,16 @@ PYTHONPATH=src python -m tri_rag_harness.tls_rag_step3 \
   --output /tmp/tls-rag-step3-run
 ```
 
-Tests: the focused Step 3 suite passed 21/21 in 2.769 seconds. The full
-`./scripts/run_tests.sh` CPU suite ran 201 tests in 27.337 seconds: 200 passed,
+Tests: the focused Step 3 suite passed 22/22 in 2.746 seconds. The full
+`./scripts/run_tests.sh` CPU suite ran 202 tests in 27.721 seconds: 201 passed,
 one expected optional real-FAISS test skipped, and zero failed. The exact
 Tri-Law implementation/test and all historical v1/v2/v3 files were unchanged.
 
 Current artifacts: two fresh runs at
-`/tmp/tls-rag-step3-fix-a.9K5S9c/run` and
-`/tmp/tls-rag-step3-fix-b.fbLpEu/run` have all 19 portable artifacts
+`/tmp/tls-rag-step3-fix2-a.JiQpJT/run` and
+`/tmp/tls-rag-step3-fix2-b.nDmtZG/run` have all 19 portable artifacts
 byte-identical. Manifest, Phase A, and Phase B fingerprints are respectively
-`2ed83d5b705a5fe003d295308e1c3a465c199eb901d6c1e8c3004877f80b8d8b`,
+`864031f5a3a160db09b1b637b68529677d56f12b7ebbb04bf0f3e42d2c1c671e`,
 `5272b52bc008e52d8d6cc132fcb19b91166258a3dd27b064f219297052e94e52`,
 and `1754cf5e325fa8c0c950ab42ec3db26b560d96c6e52f2eb229d4cd3567a6d0a2`.
 Timings are nonportable and excluded.

@@ -635,7 +635,9 @@ Cross-platform replay note: Step 3 records the original Step 2 exact Phase A
 fingerprint and additionally requires a frozen 12-decimal full-trajectory
 semantic fingerprint. This permits only numerical roundoff below that lattice;
 all actions, IDs, budgets, contexts, validity flags, work records, and larger
-numeric changes remain fingerprint-protected.
+numeric changes remain fingerprint-protected. Step 2 Phase B supervision is
+separately hashed after rebinding its embedded Phase A identity to the semantic
+trajectory hash; all supervision labels and diagnostics remain protected.
 
 ## Suggested future code tree
 

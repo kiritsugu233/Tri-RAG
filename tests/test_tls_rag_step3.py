@@ -43,6 +43,7 @@ from tri_rag_harness.tls_rag_step3 import (
     run_evaluation_phase_a,
     run_step3,
     stable_synthetic_partition,
+    step2_semantic_supervision_fingerprint,
     step2_semantic_trajectory_fingerprint,
 )
 from tri_rag_harness.tri_law import tri_law_probability
@@ -149,6 +150,16 @@ class TlsRagStep3Tests(unittest.TestCase):
             ),
             self.config.section("upstream_step2")["phase_a_semantic_fingerprint"],
         )
+        self.assertEqual(
+            step2_semantic_supervision_fingerprint(
+                phase_b,
+                phase_a_semantic_fingerprint=self.config.section(
+                    "upstream_step2"
+                )["phase_a_semantic_fingerprint"],
+                float_canonical_decimals=12,
+            ),
+            self.config.section("upstream_step2")["phase_b_semantic_fingerprint"],
+        )
 
     def test_step2_semantic_fingerprint_tolerates_only_frozen_float_lattice(self):
         upstream = self.environment.upstream
@@ -174,6 +185,42 @@ class TlsRagStep3Tests(unittest.TestCase):
         self.assertNotEqual(
             step2_semantic_trajectory_fingerprint(
                 proxy, float_canonical_decimals=12
+            ),
+            baseline,
+        )
+
+    def test_step2_semantic_supervision_rebinds_phase_a_and_rejects_label_change(self):
+        upstream = self.environment.upstream
+        phase_a = run_step2_phase_a(upstream, FixedScheduleController(upstream.config))
+        phase_b = join_phase_b(phase_a, upstream, build_evidence_label_store(upstream))
+        phase_a_semantic = step2_semantic_trajectory_fingerprint(
+            phase_a, float_canonical_decimals=12
+        )
+        baseline = step2_semantic_supervision_fingerprint(
+            phase_b,
+            phase_a_semantic_fingerprint=phase_a_semantic,
+            float_canonical_decimals=12,
+        )
+        records = json.loads(json.dumps(list(phase_b.supervision_records)))
+        records[0]["phase_a_decision_fingerprint"] = "different-platform-raw-hash"
+        records[0]["context_coverage"] += 1e-14
+        proxy = mock.Mock(supervision_records=tuple(records))
+        self.assertEqual(
+            step2_semantic_supervision_fingerprint(
+                proxy,
+                phase_a_semantic_fingerprint=phase_a_semantic,
+                float_canonical_decimals=12,
+            ),
+            baseline,
+        )
+        records[0]["current_final_context_sufficiency"] = not records[0][
+            "current_final_context_sufficiency"
+        ]
+        self.assertNotEqual(
+            step2_semantic_supervision_fingerprint(
+                proxy,
+                phase_a_semantic_fingerprint=phase_a_semantic,
+                float_canonical_decimals=12,
             ),
             baseline,
         )
