@@ -644,6 +644,12 @@ and separately proves that Phase A action drift and Phase B label drift fail.
 Observed raw hashes are never asserted against the local reference in Step 3
 tests.
 
+Step 3 closeout: the user reported a fully passing final cluster replay on
+2026-09-06. The milestone is closed at the audited Step 3 tip; the next agent
+must enter Step 4 only through the dedicated Step 3-to-Step 4 handoff and may
+not reconstruct context by reading older status, prompt, handoff, or archived
+materials.
+
 ## Suggested future code tree
 
 ```text

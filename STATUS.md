@@ -217,7 +217,10 @@ bytes and fingerprint may differ across BLAS implementations even when both
 frozen semantic identities pass. A local manifest hash is not a cross-host
 acceptance gate.
 
-Next task: stop for user review. Step 4 requires separate authorization.
+Closeout: the user reported that the final cluster replay passed completely on
+2026-09-06. No job ID, node, environment versions, or cluster timings were
+provided and none are inferred. Step 3 is closed. Step 4 is now authorized only
+through the dedicated Step 3-to-Step 4 handoff and its restricted reading list.
 
 Known deviations and risks: this is a small synthetic code-path diagnostic,
 not a selected policy, real-data result, certificate, latency measurement,

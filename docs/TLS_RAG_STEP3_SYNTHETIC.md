@@ -1,8 +1,9 @@
 # TLS-RAG Step 3 synthetic observed-pair harness
 
-Status: implemented and locally verified on 2026-09-06. This document covers
-only the CPU-only, network-free, synthetic Step 3 harness. It does not authorize
-Step 4.
+Status: closed on 2026-09-06 after local verification and a user-confirmed
+cluster replay with all gates passing. This document covers only the CPU-only,
+network-free, synthetic Step 3 harness. Step 4 is authorized only through the
+new Step 3-to-Step 4 handoff and remains a separate milestone.
 
 ## What runs
 
@@ -117,6 +118,11 @@ Larger numerical, structural, action, or supervision-label changes are rejected
 with observed and expected hashes. A cross-host replay must not compare its raw
 manifest fingerprint to the local value above as an acceptance gate.
 
+The user reported that the final cluster replay also passed completely on
+2026-09-06. No Slurm job ID, node, environment versions, or cluster timings were
+provided, so none are inferred here. That replay closes Step 3; its logs should
+be retained with the cluster checkout's exact commit and environment record.
+
 ## Scope and residual risks
 
 This is a small synthetic code-path exercise. The thresholds and intervals are
@@ -128,4 +134,5 @@ GPU, network, dependency download, LLM, answer generation, answer evaluation,
 selection, certification, latency claim, evidence guarantee, answer-quality
 claim, or Step 4 runner was used.
 
-Step 4 remains blocked pending separate user review and authorization.
+Step 3 is closed. Step 4 may begin only from the dedicated Step 3-to-Step 4
+handoff and its restricted reading list.
