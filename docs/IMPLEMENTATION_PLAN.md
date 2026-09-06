@@ -687,3 +687,27 @@ query-adaptive-tri-rag-harness/
 3. Do not implement answer generation until retrieval certification works.
 4. Do not optimize approximate indexes until the exact-search results establish a benefit.
 5. Do not claim a positive result unless the adaptive policy beats the properly matched certified fixed baseline.
+
+
+<!-- TLS-RAG STEP4 BEGIN -->
+## TLS-RAG Step 4 — initial protocol/readiness milestone
+
+- [x] Verify all five required ancestors and clean initial worktree.
+- [x] Follow the closed Step 3-to-Step 4 reading order; resolve the statistical
+      interpretation with the user before implementation.
+- [x] Freeze scientific question, roles/order/counts, independent units,
+      candidates, score/bin/reachability semantics, alpha allocations,
+      acceptance/failure gates, identity chain and no-retuning rule.
+- [x] Add separate Step 4 brief, start-here, protocol, source/tests and namespace;
+      leave Step 2, Step 3 and exact Tri-Law unchanged.
+- [x] Test synthetic role disjointness, label isolation, pre-data fingerprint
+      checks, terminal failure and deterministic artifact reconstruction.
+- [x] Run focused 26-test and full 229-test CPU suites twice; final full results
+      are 228 passes plus one expected optional FAISS skip per round.
+- [x] Compare two fresh six-file synthetic outputs byte-for-byte and record all
+      fingerprints in `docs/TLS_RAG_STEP4_READINESS.md`.
+- [x] Complete readiness closeout for commit on `codex/tls-rag-step4-readiness`;
+      stop at the real-data gate without push or cluster submission.
+- [ ] Future separately authorized milestone: exact-path authorization and full
+      real-transfer binding review before any real role opens. Step 5 excluded.
+<!-- TLS-RAG STEP4 END -->

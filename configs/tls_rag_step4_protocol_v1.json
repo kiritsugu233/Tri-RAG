@@ -1,0 +1,130 @@
+{
+  "schema_version": "tls_rag_step4_protocol_v1",
+  "protocol_id": "tls-rag-step4-frozen-transfer-v1",
+  "question": "Does the frozen two-action controller meet preregistered query-level evidence and retention targets on fresh external queries, and what exact retrieval work does it require?",
+  "scope": {
+    "milestone": "protocol_and_synthetic_readiness_only",
+    "cpu_only": true,
+    "network_free": true,
+    "synthetic_only": true,
+    "real_data_gate": "closed_requires_separate_exact_path_authorization",
+    "step5_allowed": false
+  },
+  "upstream": {
+    "handoff_commit": "0e4df85df3cd6bc9427476702a3b90339576636e",
+    "step3_config_fingerprint": "3901dd0c742944ebd8bb23893488a8ab4950e28e4c48ac7c4fa143873f8d0101",
+    "step2_phase_a_semantic_fingerprint": "119e46b2670c8830a4de7da57a94cc990e6316d990f6c8a8bd8417385be8b5ec",
+    "step2_phase_b_semantic_fingerprint": "ef498b9ed0a10f76c6af753471b9935f3586eabd0cc1992dadb4c492472bf97b"
+  },
+  "retrieval": {
+    "backend": "numpy_exact_squared_l2",
+    "normalize_before_projection": true,
+    "projection_distribution": "dense_gaussian_variance_1_over_m_prime",
+    "projection_seed": 24103,
+    "m_prime": 2,
+    "post_projection_normalized": false,
+    "k_gt": 2,
+    "k_ctx": 2,
+    "m_pilot": 3,
+    "budget_grid": [3, 6, 12],
+    "maximum_expansions": 2,
+    "ties": "stable_string_id",
+    "expansion": "next_grid_only_reuse_prefix_and_original_distance_cache",
+    "context": "first_k_ctx_after_exact_original_reranking",
+    "terminal": "explicit_stop_preserve_failure_never_grow_grid"
+  },
+  "candidates": {
+    "fixed_reference_budgets": [3, 6, 12],
+    "adaptive": [
+      {"id": "tls-rag-step4-row2-v1", "upstream_id": "tls-rag-row2-sequential-v1", "row": 2},
+      {"id": "tls-rag-step4-row3-v1", "upstream_id": "tls-rag-row3-observed-pair-v1", "row": 3},
+      {"id": "tls-rag-step4-row4-v1", "upstream_id": "tls-rag-row4-plan-facet-v1", "row": 4}
+    ],
+    "feature_semantics": "exact_step3_row2_then_tri_law_then_plan_facet_one_factor_additions",
+    "delta_gain": 0.65,
+    "tau_sufficient": 0.15
+  },
+  "calibration": {
+    "model": "unchanged_step3_standardized_ridge_0.01_clip_0_1_invalid_no_imputation",
+    "bins": "unchanged_step3_reached_valid_scores_linear_median_right_assignment",
+    "reachability": "candidate_specific_previous_stage_expand_on_same_bound_fit_queries",
+    "outcomes": ["remaining_useful_evidence_event", "current_context_sufficiency_event"],
+    "score_bin_count": 2,
+    "minimum_cell_query_count": 8,
+    "underpowered_interval": [0.0, 1.0],
+    "internal_alpha": 0.2,
+    "internal_allocation": "3_candidates_x_3_stages_x_2_bins_x_2_outcomes",
+    "internal_family_size": 36,
+    "interpretation": "controller_calibration_only_joint_coverage_unproved_not_per_query_posterior",
+    "certification_error_budget_shared": false
+  },
+  "roles": {
+    "opening_order": ["query_cal_model_fit", "query_cal_bound_fit", "query_tune", "query_cert", "query_latency", "query_test"],
+    "query_cal_subroles": ["query_cal_model_fit", "query_cal_bound_fit"],
+    "future_query_counts": {
+      "query_cal_model_fit": 256,
+      "query_cal_bound_fit": 512,
+      "query_tune": 256,
+      "query_cert": 1024,
+      "query_latency": 256,
+      "query_test": 1024
+    },
+    "independent_unit": "one_query_per_independently_sampled_question_family",
+    "stable_id_boundary": "nonempty_string",
+    "split_seed": 44109,
+    "assignment": "sha256_seed_and_independent_unit_id_sort_then_fixed_counts",
+    "disjointness": "query_ids_and_question_family_ids_global_unique_queries_disjoint_from_corpus_ids",
+    "phase_order": "role_inputs_then_close_all_phase_a_decisions_then_open_role_labels",
+    "latency_labels": "never",
+    "calibration_reuse_in_other_roles": "forbidden"
+  },
+  "selection": {
+    "role": "query_tune",
+    "candidate_set": "three_frozen_adaptive_candidates_only",
+    "eligibility": "empirical_primary_targets_met_on_all_tune_queries",
+    "objective": "minimum_mean_new_original_distance_evaluations",
+    "tie_break": "ascending_step4_candidate_id",
+    "none_eligible": "terminal_failure_no_cert_open",
+    "after_selection": "freeze_controller_models_tables_and_selection_receipt_before_cert_inputs",
+    "rows_1_to_4": "report_all_as_descriptive_diagnostics_no_cert_driven_reselection"
+  },
+  "certification": {
+    "role": "query_cert",
+    "performed_in_readiness": false,
+    "family_wise_alpha": 0.05,
+    "allocation": "equal_over_three_primary_one_sided_endpoints_for_one_tune_selected_controller",
+    "independent_sampling_assumption": "iid_question_families_from_frozen_target_population_conditional_on_frozen_training_and_tune",
+    "endpoints": [
+      {"name": "early_stop_with_later_useful_evidence", "unit": "binary_per_query_unconditional", "bound": "clopper_pearson_upper", "target": 0.05, "direction": "at_most"},
+      {"name": "terminal_context_insufficient", "unit": "binary_per_query", "bound": "clopper_pearson_upper", "target": 0.1, "direction": "at_most"},
+      {"name": "exact_top_k_retention", "unit": "bounded_0_1_per_query", "bound": "hoeffding_lower", "target": 0.9, "direction": "at_least"}
+    ],
+    "success": "all_three_bounds_pass_on_complete_1024_query_role",
+    "failure": "terminal_failed_or_inconclusive_no_reselection_no_budget_growth_no_sample_top_up",
+    "no_retuning": "any_change_after_cert_inspection_requires_new_version_and_fresh_independent_roles"
+  },
+  "reporting": {
+    "early_stop_denominator": "all_queries_not_only_stopped_queries",
+    "always_expand": "zero_early_stop_event_does_not_imply_efficiency",
+    "invalid_query": "never_drop_account_as_insufficient_and_zero_retention_for_gate",
+    "stages_independent": false,
+    "work": "separate_pilot_expansion_original_distance_rerank_and_feature_work",
+    "latency": "future_label_free_paired_measurement_separate_protocol_required_no_count_to_latency_inference",
+    "answer_quality": "not_evaluated",
+    "test": "descriptive_final_reporting_no_new_guarantee_or_retuning"
+  },
+  "future_binding": {
+    "state": "unbound_real_gate_closed",
+    "required_before_any_role_open": ["exact_authorized_paths", "target_population_and_iid_sampling_audit", "dataset_and_corpus_identity", "embedding_model_revision_and_dimension", "normalization_and_projection_identity", "external_query_and_independent_unit_id_manifest", "label_definition_and_annotation_provenance", "label_free_plan_facet_generator_identity", "code_environment_and_all_seed_identities", "protocol_fingerprint", "complete_role_assignment_fingerprint"],
+    "minimum_corpus_size": 12,
+    "partial_or_placeholder_binding": "reject",
+    "new_binding": "separate_reviewable_preregistration_before_data_open_no_implicit_authorization"
+  },
+  "synthetic_fixture": {
+    "schema_version": "tls_rag_step4_synthetic_fixture_v1",
+    "seed": 44103,
+    "query_count_per_role": 4,
+    "corpus_size": 12,
+    "purpose": "input_guards_and_protocol_transition_simulation_only"
+  }
+}

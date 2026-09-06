@@ -1370,3 +1370,28 @@ start Step 4.
 - Tri-Predict's exact rank summation is intentionally correctness-oriented and currently costs several milliseconds per synthetic query. Large real corpora should use and validate the deterministic rank approximation before performance claims.
 - Runtime timestamps and timing measurements are intentionally nondeterministic. Policy, metric, certificate, candidate, and reranked-ID values reproduce under the same manifest and seeds.
 - The repository is now connected to GitHub; Slurm runs remain user-executed and their logs should be retained alongside commit IDs and environment versions.
+
+
+<!-- TLS-RAG STEP4 BEGIN -->
+## TLS-RAG Step 4 — protocol and synthetic readiness
+
+- Completed: frozen transfer protocol, separate internal calibration/independent
+  certification interpretation, strict synthetic input/role guards and terminal
+  failure simulation; real-data gate remains closed.
+- Exact command: `sh scripts/run_tls_rag_step4_readiness.sh /private/tmp/tls-rag-step4-readiness-3608-audit-01`.
+- Two replay rounds: focused 26/26 passed each; full CPU 229 tests each,
+  228 passed and 1 expected optional real-FAISS skip; zero final failures.
+- Artifacts: newly generated `/private/tmp/tls-rag-step4-readiness-3608-audit-01/a`
+  and `/private/tmp/tls-rag-step4-readiness-3608-audit-01/b`; all six files byte-identical.
+- Protocol fingerprint: `35a3ae863249d1f1d7aec7f0b2fbaae877871093216523177b67e5c40b0a802e`.
+- Manifest fingerprint: `e70dc296e46443efcff2f7885540ea9c54238a246a8f9fcba84a956551daab62`.
+- Branch: `codex/tls-rag-step4-readiness`; base `0e4df85df3cd6bc9427476702a3b90339576636e`.
+- Frozen Step 2/3 and exact Tri-Law diff: empty; no push or cluster/Slurm command executed.
+- Next: separately authorize exact real-data/adapter paths and review a complete
+  pre-data binding; no real role opening or Step 5 work is authorized here.
+- Risks: synthetic checks cannot establish iid real sampling or annotation
+  validity; small frozen budgets may fail; internal joint coverage is unproved;
+  no selection, certification, latency, quality or production result is claimed.
+- Full commands, identities, limitations and manual replay templates:
+  `docs/TLS_RAG_STEP4_READINESS.md`; entry: `docs/TLS_RAG_STEP4_START_HERE.md`.
+<!-- TLS-RAG STEP4 END -->
