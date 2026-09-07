@@ -1,5 +1,14 @@
 # TLS-RAG Step 4 retention v3: next effectiveness acceptance
 
+> **After the approved Tri-Law repair:** this is the historical v3 experiment
+> brief and replay command for the old source-bound v2 bundle. Current development
+> uses `codex/repo-review-code-protection` HEAD. Its repaired `tri_law.py` has a new
+> hash, so the unchanged loader correctly refuses the old bundle. Do not use the
+> clone/run instructions below as the current development startup, or rewrite
+> old hashes. Use the original reviewed commit for historical replay; new runs
+> need reviewed bindings and appropriate independent roles from the corrected
+> code. See [the repair record](TRI_LAW_NUMERICAL_FIX.md).
+
 Canonical local checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 Branch: `codex/tls-rag-step4-retention-v3`, successor of `c08cd3b6800888c8d2a5a5f8c58a77d883a84ede`.
 The user requested implementing the retention-aligned successor and providing the

@@ -8,15 +8,17 @@ The user fixed the local working directory for every subsequent step to:
 
 Run local implementation, tests, Git commits and GitHub synchronization there.
 Do not use `.codex/worktrees/...` for new local steps without a new explicit
-exception. Preserve existing untracked files and user changes. Latest scientific Step 4
-branch: `codex/tls-rag-step4-retention-v3` (baseline `248c29e`). The current
-review branch is `codex/repo-review-code-protection`; inspect actual HEAD.
+exception. Preserve existing untracked files and user changes. The single continuing
+branch is `codex/repo-review-code-protection`, including the reviewed code and
+approved Tri-Law numerical v2 repair; inspect actual HEAD. Do not create a new
+branch for every step. `codex/tls-rag-step4-retention-v3` (`248c29e`) is the
+historical experimental baseline, not the current implementation starting point.
 Historical initial readiness commit:
 `155070d8df96a773d83a650db84e6ec69d12c51e`. The remote is
 `https://github.com/kiritsugu233/Tri-RAG.git`.
 
 For every authorized milestone, validate the exact checkout, complete tests,
-commit and push the explicit step branch without force, then compare the local
+commit and push the continuing branch without force, then compare the local
 commit with the GitHub branch HEAD. The standing user instruction authorizes
 this GitHub synchronization. The default branch is not implicitly changed.
 

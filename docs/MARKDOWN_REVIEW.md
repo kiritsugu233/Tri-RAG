@@ -75,3 +75,14 @@
 指令。历史数据/报告保持独立；未验证的集群结果必须注明来源。修正文字不得
 改变冻结科学含义；涉及 L0 数学/统计/协议变更时，先按根规则获得 scoped consent。
 相对 Markdown 链接需从所在文档目录解析，命令中的路径从指定仓库根解析。
+
+## Authorized repair follow-up — 2026-09-07
+
+The current total is 52 registered Markdown files. The original inventory above
+remains the historical audit. Startup files, root rules, workflow, Tri-Law spec,
+Step 4 entry/retention instructions, status and plan now route to the repaired
+continuing branch; source-bound historical commands are explicitly scoped.
+
+| New file | Review disposition |
+| --- | --- |
+| [TRI_LAW_NUMERICAL_FIX.md](TRI_LAW_NUMERICAL_FIX.md) | Actual user consent, repair derivation, exact validation results and historical bundle compatibility; no new real-role authorization or scientific effectiveness claim |

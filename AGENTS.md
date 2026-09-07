@@ -29,8 +29,9 @@ the human-readable per-file register is `docs/CODE_PROTECTION.md`.
 
 Protection level is change risk, **not a correctness grade**. Known defects,
 review evidence and limitations are in `docs/REPOSITORY_REVIEW.md`. In particular,
-Tri-Law has reproducible floating-point boundary defects at the reviewed baseline;
-neither passing existing tests nor L0 registration means it is defect-free.
+Tri-Law boundary defects R1/R2 at the original review baseline were subsequently
+repaired with the user's scoped authorization; see `docs/TRI_LAW_NUMERICAL_FIX.md`.
+Neither passing tests nor L0 registration is a proof of complete correctness.
 
 For an L0 request, first do read-only analysis and prepare a concrete proposal:
 
@@ -68,7 +69,19 @@ consent in a local file. Repo tooling is a review guard, not OS access control.
 
 ## Canonical local checkout and GitHub synchronization
 
-User instruction effective after the Step 4 readiness milestone:
+User instruction updated after the repository review and Tri-Law repair:
+
+- Continue subsequent authorized work on `codex/repo-review-code-protection`,
+  using its reviewed-and-repaired HEAD as the shared starting point. Do not
+  automatically create a new branch for every step. This supersedes the older
+  per-step-branch workflow; use another branch only when explicitly requested.
+- The latest maintained code is the HEAD of that continuing branch. The old
+  `248c29e` experiment baseline and `c40b7b0` review-only commit are historical
+  references, not starting points for new implementation. Read `START_HERE.md`.
+- Historical branches/tags remain for provenance. This instruction does not
+  authorize deleting them, force-pushing, or merging/changing the default branch.
+
+Standing canonical-checkout instruction:
 
 - All subsequent local TLS-RAG steps must use
   `/Users/guanghongxu/Query-Adaptive-Tri-RAG` as the working directory.
@@ -80,7 +93,7 @@ User instruction effective after the Step 4 readiness milestone:
 - Preserve user modifications and untracked files. Do not reset, clean, delete
   archives, or overwrite a divergent branch to synchronize the checkout.
 - After an authorized step passes its required checks, commit from the canonical
-  checkout, push its explicit step branch to GitHub, and verify the remote HEAD.
+  checkout, push the continuing branch to GitHub, and verify the remote HEAD.
   This is the user's standing synchronization instruction; it supersedes older
   TLS-RAG handoffs that said not to push automatically. Never force-push or merge
   the GitHub default branch without separate authorization.

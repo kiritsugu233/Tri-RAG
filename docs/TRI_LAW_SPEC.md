@@ -1,10 +1,11 @@
 # Exact Dense-Gaussian Tri-Law Specification
 
-> **2026-09-07 numerical review:** the mathematical identities below remain
-> the contract, but the frozen implementation does not satisfy them on every
-> accepted float64 boundary input. See R1/R2 in [the review](REPOSITORY_REVIEW.md)
-> and the reproducible audit script. This is not a tolerance change or a fixed
-> implementation. Formula, tolerance and test changes require prior L0 approval.
+> **Numerical implementation v2:** the user's approved repair addresses the
+> R1/R2 failures recorded in [the review](REPOSITORY_REVIEW.md). See the
+> [repair and validation record](TRI_LAW_NUMERICAL_FIX.md). The mathematical
+> law, input clipping tolerance and existing test tolerances are unchanged;
+> additional boundary tests exercise the stable evaluation below. Further
+> changes still require L0 approval.
 
 
 This document is the implementation contract for the exact single-triplet law in *Predict Before You Project*. It separates the paper's exact theorem from Tri-Predict and from this project's query-adaptive extension.
@@ -85,18 +86,35 @@ probability = scipy.stats.f.sf(r, dfn=m_prime, dfd=m_prime)
 
 ### Stable threshold evaluation
 
-The direct denominator suffers cancellation as `abs(rho)` approaches one. For non-collinear inputs, the equivalent expression is:
+The direct expression is algebraically correct but numerically unstable near
+joint equal-distance/collinear limits and at very large beta. Numerical v2 uses:
 
 ```text
-r = (s + beta - 1)^2 / (4 * beta * (1 - rho^2))
+u = abs(rho)
+w = (1-u)*(1+u)
+t = ((beta-1)/sqrt(beta))/2/sqrt(w)
+sqrt(r) = hypot(1,t) + t
+r = sqrt(r)*sqrt(r)
 ```
 
-Use this expression near collinearity, but note that rationalizing the
-denominator alone does not stabilize the discriminant at joint near-tie and
-near-collinear inputs. The identity `D = (beta - 1)^2 + 4*beta*(1-rho^2)`
-helps explain the cancellation; evaluating all finite magnitudes also needs
-scaling/overflow analysis. The current implementation has not yet been repaired.
-Do not certify its complete numerical domain from the formula alone. Clip a floating-point `rho` only to `[-1,1]`; do not silently replace a genuinely non-collinear input by the collinear branch. Record and test the chosen numerical tolerance.
+This is the same rationalized threshold obtained from
+`D=(beta-1)^2+4*beta*(1-rho^2)`. It avoids subtracting large nearly equal terms,
+preserves the near-collinear gap, and does not square beta. The operation order
+keeps sqrt(r) finite for every finite beta>1 and non-collinear float64 rho.
+At rho=0 return beta exactly. At exact collinearity return infinity.
+If the true non-collinear r exceeds float64 range, the threshold API can also
+return infinity; **that alone does not justify dropping a representable tail**.
+
+For m_prime=1, evaluate the exact tail as
+`(2/pi)*atan(1/sqrt(r))`; for m_prime=2 use
+`v/(1+v)`, where `v=(1/sqrt(r))^2`. These forms retain representable very small
+tails even when r overflows. For m_prime>=3 use F.sf; at overflowed r that tail
+is below float64 range. Probabilities below representable float64 range may
+round to zero. Scalars return Python floats; arrays broadcast as before.
+
+Only input roundoff at most `8*float64.eps` beyond [-1,1] is clipped to the
+boundary; genuinely invalid rho is rejected. No near-collinear finite value is
+silently treated as collinear. See the Decimal-grid, tail and broadcast tests.
 
 ### Boundary cases
 
@@ -132,7 +150,11 @@ def tri_law_conditional_orthogonal(
     ...
 ```
 
-Require `y >= 0` and `beta > 1`. Use `scipy.stats.chi2.cdf`.
+Require finite `y >= 0` and finite `beta > 1`. Use `scipy.stats.chi2.cdf`.
+Preserve ordinary `m_prime*y/beta` evaluation, but when its multiplication
+overflows, compute `(y/beta)*m_prime` instead. A genuinely unrepresentable
+positive argument has CDF 1; avoid turning an intermediate overflow into that
+conclusion. The zero and subnormal-input cases remain valid.
 
 This conditional formula is the branch used by Tri-Predict after it replaces actual `beta` with an LID rank-distance model.
 

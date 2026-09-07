@@ -1,7 +1,9 @@
 # Code protection register — 2026-09-07
 
 权威规则：[AGENTS.md](../AGENTS.md)。机器清单：[code_protection.json](code_protection.json)。
-科学代码基线：`248c29e2243c60b3793458c8ee723eefba5a5855`。
+原审查基线：`248c29e2243c60b3793458c8ee723eefba5a5855`。
+当前受维护版本：`codex/repo-review-code-protection` 的 HEAD，包含经用户批准的
+[Tri-Law 数值 v2 修复](TRI_LAW_NUMERICAL_FIX.md)。机器清单逐项记录批准后的哈希。
 
 | 等级 | 含义 | 变更要求 |
 | --- | --- | --- |
@@ -9,7 +11,7 @@
 | L1 | 实验编排、配置解析、工具与工作文档 | 当前任务授权内可修改；检查依赖并验证，不能改变 L0 语义或历史结果 |
 | L2 | 展示/包标记等低风险内容 | 当前任务授权内处理；科学结论或指标定义变更仍按 L0 |
 
-等级反映改动风险，**不是正确性评级**。Tri-Law 已知 R1/R2 数值缺陷尚未修复；
+等级反映改动风险，**不是正确性评级**。Tri-Law 的 R1/R2 已按用户授权修复，原始反例证据保留；
 详见[审查报告](REPOSITORY_REVIEW.md)。测试通过仅覆盖已有测试条件。
 源码注册项给出直接导入该模块的测试，间接覆盖仍以完整回归为准。
 全部模块做了结构/依赖/边界检查；重点模块追加人工契约核对，不宣称逐行形式证明。
@@ -73,7 +75,7 @@ L0 变更检测到后不得自动重置文件或刷新哈希。批准信息必�
 | [`src/tri_rag_harness/tls_rag_step4_nfcorpus.py`](../src/tri_rag_harness/tls_rag_step4_nfcorpus.py) | **L0** | Source-bound v2 dataset/model preparation and staged label boundary |
 | [`src/tri_rag_harness/tls_rag_step4_probe.py`](../src/tri_rag_harness/tls_rag_step4_probe.py) | **L0** | Source-bound v2 parent pipeline, fixed gate and label-closure semantics |
 | [`src/tri_rag_harness/tls_rag_step4_retention_v3.py`](../src/tri_rag_harness/tls_rag_step4_retention_v3.py) | **L0** | Frozen v3 retention targets, margins, 27-policy selection and parent reuse |
-| [`src/tri_rag_harness/tri_law.py`](../src/tri_rag_harness/tri_law.py) | **L0** | Exact triplet law; confirmed boundary defects R1/R2 await approved repair |
+| [`src/tri_rag_harness/tri_law.py`](../src/tri_rag_harness/tri_law.py) | **L0** | Exact triplet law; numerical v2 repairs R1/R2 under recorded user approval |
 | [`src/tri_rag_harness/tri_predict.py`](../src/tri_rag_harness/tri_predict.py) | **L0** | Frozen Raw Tri-Predict approximation and orthogonal conditional aggregation |
 | [`src/tri_rag_harness/utils.py`](../src/tri_rag_harness/utils.py) | **L0** | Canonical JSON/array hashing used in scientific artifact identities |
 
@@ -225,3 +227,10 @@ L0 变更检测到后不得自动重置文件或刷新哈希。批准信息必�
 | [`docs/archive/TLS_RAG_PRE_STEP3_AUDIT_INDEX.md`](../docs/archive/TLS_RAG_PRE_STEP3_AUDIT_INDEX.md) | **L1** | Task/reference/review documentation; scientific/approval changes inherit L0 |
 | [`docs/code_protection.json`](../docs/code_protection.json) | **L0** | Scientific/protocol or governance contract; change requires prior scoped user consent |
 | [`docs/review_numerical_evidence.json`](../docs/review_numerical_evidence.json) | **L1** | Task/reference/review documentation; scientific/approval changes inherit L0 |
+
+## Approved numerical repair records
+
+| File | Level | Reason |
+| --- | --- | --- |
+| [docs/TRI_LAW_NUMERICAL_FIX.md](TRI_LAW_NUMERICAL_FIX.md) | **L1** | Repair evidence and handoff; scientific/approval changes inherit L0 |
+| [docs/tri_law_numerical_fix_evidence.json](tri_law_numerical_fix_evidence.json) | **L1** | Post-repair audit output; preserve original failure evidence |

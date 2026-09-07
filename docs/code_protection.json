@@ -9,7 +9,7 @@
       "path": "AGENTS.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "d24fd8d1cc90612327f777e64b186e6a442ac426c026135ecaac15e40d9e3134"
+      "sha256": "f90b75683df7ef19f97cacc9067f93995a76430d87f796d9e7b627a67e720f99"
     },
     {
       "path": "AGENT_CALIBRATED_TRI_PREDICT.md",
@@ -286,7 +286,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "047984147eb028d017d670e5dd6602e239e19d518a81b9afdec771e7546eee68"
+      "sha256": "70d2bcda84c38c12c28aab778fd5ad9607078f7b95dd0e2cf759f88f07fe00cc"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -419,12 +419,17 @@
       "path": "docs/TLS_RAG_STEP4_RETENTION_V3.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "bcf5942790f869e24d780ebfdc10c4fd48ea1fb8289d15e9d4a01869ed65fa18"
+      "sha256": "f0b44a666bcda66284cc4c4b94bc1070fce7b6938f201728432a296f4e676f0c"
     },
     {
       "path": "docs/TLS_RAG_STEP4_START_HERE.md",
       "level": "L1",
       "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/TRI_LAW_NUMERICAL_FIX.md",
+      "level": "L1",
+      "reason": "Repair evidence and handoff; scientific/approval changes inherit L0"
     },
     {
       "path": "docs/TRI_LAW_SEQUENTIAL_RAG_PROTOCOL.md",
@@ -442,7 +447,7 @@
       "path": "docs/TRI_LAW_SPEC.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "0b5c4fec1187040803652a3c0b4ab9053822cb9e913991f7c095d7fec4278b64"
+      "sha256": "426b865ef35f4633028de9e0a63c0256026d616974fa94b6ff4d4b46b7fc5f3c"
     },
     {
       "path": "docs/archive/TLS_RAG_PRE_STEP3_AUDIT_INDEX.md",
@@ -459,6 +464,11 @@
       "path": "docs/review_numerical_evidence.json",
       "level": "L1",
       "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/tri_law_numerical_fix_evidence.json",
+      "level": "L1",
+      "reason": "Repair evidence and handoff; scientific/approval changes inherit L0"
     },
     {
       "path": "pyproject.toml",
@@ -982,13 +992,13 @@
         "tests/test_tri_predict.py"
       ],
       "review": "critical review + regression",
-      "known_findings": [
+      "level": "L0",
+      "reason": "Exact single-triplet law; approved numerical v2 R1/R2 repair, future edits require scoped consent",
+      "sha256": "461a78542e22f4d0cc324f5b3769348292fc53d111520cc00bc550508deed23b",
+      "resolved_findings": [
         "R1",
         "R2"
-      ],
-      "level": "L0",
-      "reason": "Exact triplet law; confirmed boundary defects R1/R2 await approved repair",
-      "sha256": "27f8cb31c9625d9bcc54316d5618f18f35fc5882486f877fe425e44d6a162d19"
+      ]
     },
     {
       "path": "src/tri_rag_harness/tri_predict.py",
@@ -1237,7 +1247,7 @@
       "path": "tests/test_tri_law.py",
       "level": "L0",
       "reason": "Regression/conformance expectations protect frozen scientific behavior",
-      "sha256": "7557fd2e4768e115afeded238a51e07a729a0c4260e887173bcc31c2f8e9d889"
+      "sha256": "a6f5286fcc8a8712f0a69ba7db0bd6547c64387a3c07a8916f95787770ddda13"
     },
     {
       "path": "tests/test_tri_predict.py",
@@ -1245,5 +1255,49 @@
       "reason": "Regression/conformance expectations protect frozen scientific behavior",
       "sha256": "f182c5f39808479dd1cdf247c9db44d1497858727f7fbae134e4461bddcbf929"
     }
-  ]
+  ],
+  "approved_change_history": [
+    {
+      "date": "2026-09-07",
+      "parent_commit": "c40b7b0132b77a70e11fa2e5425fad3dc77b1116",
+      "user_consent": "修复你发现的Tri-law问题，然后告诉我修改后的最新版本代码repo在哪，我感觉github上的branch过多了，之后的工作推进从你审查并改完的版本开始。",
+      "scope": "R1/R2 numerical v2 repair, regression/specification, corresponding protection baseline and continuing reviewed branch; no weakening of controls",
+      "record": "docs/TRI_LAW_NUMERICAL_FIX.md",
+      "protected_changes": [
+        {
+          "path": "AGENTS.md",
+          "before_sha256": "d24fd8d1cc90612327f777e64b186e6a442ac426c026135ecaac15e40d9e3134",
+          "after_sha256": "f90b75683df7ef19f97cacc9067f93995a76430d87f796d9e7b627a67e720f99"
+        },
+        {
+          "path": "docs/CODE_PROTECTION.md",
+          "before_sha256": "047984147eb028d017d670e5dd6602e239e19d518a81b9afdec771e7546eee68",
+          "after_sha256": "70d2bcda84c38c12c28aab778fd5ad9607078f7b95dd0e2cf759f88f07fe00cc"
+        },
+        {
+          "path": "docs/TLS_RAG_STEP4_RETENTION_V3.md",
+          "before_sha256": "bcf5942790f869e24d780ebfdc10c4fd48ea1fb8289d15e9d4a01869ed65fa18",
+          "after_sha256": "f0b44a666bcda66284cc4c4b94bc1070fce7b6938f201728432a296f4e676f0c"
+        },
+        {
+          "path": "docs/TRI_LAW_SPEC.md",
+          "before_sha256": "0b5c4fec1187040803652a3c0b4ab9053822cb9e913991f7c095d7fec4278b64",
+          "after_sha256": "426b865ef35f4633028de9e0a63c0256026d616974fa94b6ff4d4b46b7fc5f3c"
+        },
+        {
+          "path": "src/tri_rag_harness/tri_law.py",
+          "before_sha256": "27f8cb31c9625d9bcc54316d5618f18f35fc5882486f877fe425e44d6a162d19",
+          "after_sha256": "461a78542e22f4d0cc324f5b3769348292fc53d111520cc00bc550508deed23b"
+        },
+        {
+          "path": "tests/test_tri_law.py",
+          "before_sha256": "7557fd2e4768e115afeded238a51e07a729a0c4260e887173bcc31c2f8e9d889",
+          "after_sha256": "a6f5286fcc8a8712f0a69ba7db0bd6547c64387a3c07a8916f95787770ddda13"
+        }
+      ],
+      "registry_change": "This approval history and corresponding approved hashes; two new L1 evidence rows; no existing level downgraded."
+    }
+  ],
+  "maintained_branch": "codex/repo-review-code-protection",
+  "tri_law_numerical_version": 2
 }

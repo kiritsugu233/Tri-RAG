@@ -2,6 +2,23 @@
 
 Updated: 2026-09-07
 
+## Current: approved Tri-Law numerical v2 repair (2026-09-07)
+
+- Maintained code: latest HEAD of `codex/repo-review-code-protection`, in the
+  canonical checkout. Continue future authorized steps on this same branch.
+- R1/R2 fixed with scoped user approval; [repair record](docs/TRI_LAW_NUMERICAL_FIX.md)
+  records necessity, paths, version/bundle consequences and exact replay commands.
+- Independent four-case audit passes; Tri-Law 10/10 tests pass. Final command:
+  `sh scripts/run_tls_rag_step4_readiness.sh /private/tmp/tri-law-numerical-v2-final-20260907`.
+  Two rounds each: 270 tests, 269 pass, 1 optional real-FAISS skip; focused 26/26
+  each; six synthetic outputs byte-identical. No real-data/cluster result claimed.
+- Durable new artifact: `docs/tri_law_numerical_fix_evidence.json`; original failed
+  evidence remains unchanged. Current register: 178 files (119 L0, 56 L1, 3 L2),
+  including 52 Markdown files.
+- Next task: user's next authorized step from this repaired branch. Old real
+  source-bound bundles require explicit compatibility planning before a new run.
+  Historical review status below describes its earlier, pre-repair snapshot.
+
 <!-- REPOSITORY REVIEW BEGIN -->
 ## Repository review and code protection (2026-09-07)
 

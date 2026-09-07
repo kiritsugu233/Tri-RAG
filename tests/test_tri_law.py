@@ -1,4 +1,6 @@
 import unittest
+from decimal import Decimal, localcontext
+import math
 
 import numpy as np
 from scipy.integrate import quad
@@ -12,6 +14,90 @@ from tri_rag_harness.tri_law import (
 
 
 class TriLawTests(unittest.TestCase):
+    @staticmethod
+    def decimal_threshold(beta, rho):
+        """Independent high-precision evaluation of the original eigenvalue law."""
+        with localcontext() as context:
+            context.prec = 100
+            b = Decimal.from_float(float(beta))
+            r = Decimal.from_float(float(rho))
+            gap = b - 1
+            transverse = 1 - r * r
+            root = (gap * gap + 4 * b * transverse).sqrt()
+            return (root + gap) ** 2 / (4 * b * transverse)
+
+    def test_joint_near_tie_collinearity_regression(self):
+        beta = np.nextafter(1.0, 2.0)
+        rho = np.nextafter(1.0, 0.0)
+        threshold = float(self.decimal_threshold(beta, rho))
+        for signed_rho in (rho, -rho):
+            self.assertAlmostEqual(tri_law_threshold(beta, signed_rho), threshold, places=14)
+            self.assertGreater(tri_law_threshold(beta, signed_rho), 1.0)
+            self.assertAlmostEqual(tri_law_probability(beta, signed_rho, 1),
+                                   0.4999999976284066, places=14)
+
+    def test_threshold_matches_decimal_across_float64_domain(self):
+        betas = [np.nextafter(1., 2.), 1. + 1e-12, 1.0001, 1.1, 2.,
+                 1e8, 1e16, 1e150, 1e200, np.finfo(np.float64).max]
+        rhos = [0., 0.25, 0.9, 0.999, 1. - 1e-8, np.nextafter(1., 0.)]
+        for beta in betas:
+            for rho in rhos:
+                expected = float(self.decimal_threshold(beta, rho))
+                with self.subTest(beta=beta, rho=rho), np.errstate(all="raise"):
+                    actual = tri_law_threshold(beta, rho)
+                    self.assertGreaterEqual(actual, 1.)
+                    if np.isinf(expected):
+                        self.assertTrue(np.isposinf(actual))
+                    else:
+                        self.assertTrue(math.isclose(actual, expected, rel_tol=3e-15))
+                    self.assertEqual(actual, tri_law_threshold(beta, -rho))
+        values = np.asarray(betas)
+        np.testing.assert_array_equal(tri_law_threshold(values, 0.), values)
+
+    def test_representable_tails_survive_threshold_overflow(self):
+        for beta, rho in [(1e200, 0.), (np.finfo(np.float64).max, 0.5),
+                          (np.finfo(np.float64).max, np.nextafter(1., 0.))]:
+            threshold = self.decimal_threshold(beta, rho)
+            with localcontext() as context:
+                context.prec = 100
+                expected_one = 2. / math.pi * math.atan(float(1 / threshold.sqrt()))
+                expected_two = float(1 / (1 + threshold))
+            with self.subTest(beta=beta, rho=rho), np.errstate(all="raise"):
+                p1 = tri_law_probability(beta, rho, 1)
+                p2 = tri_law_probability(beta, rho, 2)
+                self.assertGreater(p1, 0.)
+                self.assertTrue(math.isclose(p1, expected_one, rel_tol=3e-15))
+                self.assertLessEqual(abs(p2 - expected_two),
+                                     max(3e-15 * expected_two, float.fromhex('0x0.0000000000001p-1022')))
+                for m_prime in (1, 2, 3, 128):
+                    self.assertEqual(tri_law_probability(beta, 1., m_prime), 0.)
+
+    def test_conditional_overflow_and_subnormal_regression(self):
+        tiny = float.fromhex('0x0.0000000000001p-1022')
+        y = np.asarray([1e308, np.finfo(float).max, 0., tiny])
+        beta = np.asarray([1e308, np.finfo(float).max, 2., 2.])
+        for m_prime in (1, 2, 4, 128):
+            with localcontext() as context:
+                context.prec = 100
+                arguments = [float(Decimal(m_prime) * Decimal.from_float(a)
+                                   / Decimal.from_float(b)) for a, b in zip(y, beta)]
+            with np.errstate(all="raise"):
+                actual = tri_law_conditional_orthogonal(y, beta, m_prime)
+            np.testing.assert_allclose(actual, chi2.cdf(arguments, m_prime), rtol=3e-15, atol=0.)
+        self.assertEqual(tri_law_conditional_orthogonal(1e308, 2., 128), 1.)
+
+    def test_boundary_broadcasting_and_probability_order(self):
+        beta = np.asarray([np.nextafter(1., 2.), 2., 1e16, 1e200])[:, None]
+        rho = np.asarray([-1., -np.nextafter(1., 0.), 0., np.nextafter(1., 0.), 1.])
+        self.assertEqual(tri_law_threshold(beta, rho).shape, (4, 5))
+        for m_prime in (1, 2, 4, 128):
+            probabilities = tri_law_probability(beta, rho, m_prime)
+            self.assertEqual(probabilities.shape, (4, 5))
+            self.assertTrue(np.all(np.isfinite(probabilities)))
+            self.assertTrue(np.all((probabilities >= 0.) & (probabilities <= 0.5 + 1e-14)))
+            self.assertTrue(np.all(np.diff(probabilities, axis=0) <= 0.))
+            np.testing.assert_array_equal(probabilities, probabilities[:, ::-1])
+
     def test_algebraic_identities_and_boundaries(self):
         beta = np.asarray([1.1, 2.0, 5.0])
         np.testing.assert_allclose(tri_law_threshold(beta, 0.0), beta, rtol=1e-14)

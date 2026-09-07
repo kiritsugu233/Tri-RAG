@@ -773,11 +773,22 @@ query-adaptive-tri-rag-harness/
       focused 26/26 each, six-file synthetic outputs byte-identical; guard/link/diff checks pass.
 - [x] Prepare review closeout on `codex/repo-review-code-protection` for the
       standing explicit-branch commit/push and remote-HEAD verification.
-- [ ] Separate future task, only after scoped user approval: repair R1/R2 with
-      boundary regression tests and a reviewed source-binding/version strategy.
+- [x] Subsequent scoped user approval received: R1/R2 repaired with boundary
+      regressions and source-binding/version consequences recorded in
+      [Tri-Law numerical v2 repair](TRI_LAW_NUMERICAL_FIX.md).
 
 The source/Markdown review is complete within the scope stated in
 `docs/REPOSITORY_REVIEW.md`. Open numerical findings are not relabeled as passes.
 No real v3 acceptance, protected-role access, formal certification or Step 5
 was performed or newly authorized by this governance milestone.
 <!-- REPOSITORY REVIEW END -->
+
+## Approved Tri-Law numerical v2 milestone — 2026-09-07
+
+- [x] Repair R1/R2 in the authoritative implementation without weakening tests.
+- [x] Preserve original failure evidence and add successful four-case evidence.
+- [x] Pass two 270-test regressions (269 pass, one optional skip each), 10 Tri-Law
+      tests and repeated 26-test v1 checks with byte-identical synthetic artifacts.
+- [x] Update startup routing, specification and approved protection baseline.
+- [x] Use the existing review branch as the continuing development branch;
+      historical branches/default branch remain unchanged.

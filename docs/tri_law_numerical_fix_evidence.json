@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "case": "R1_joint_near_tie_collinearity",
+      "beta": 1.0000000000000002,
+      "rho": 0.9999999999999999,
+      "reference_threshold": 1.0000000149011612,
+      "reference_probability_m1": 0.4999999976284066,
+      "actual_threshold": 1.0000000149011612,
+      "actual_probability_m1": 0.4999999976284065,
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "case": "R2_large_orthogonal_gap",
+      "beta": 1e+16,
+      "rho": 0.0,
+      "reference_threshold": 1e+16,
+      "reference_probability_m1": 6.366197723675815e-09,
+      "actual_threshold": 1e+16,
+      "actual_probability_m1": 6.366197723675814e-09,
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "case": "R2_discriminant_overflow",
+      "beta": 1e+200,
+      "rho": 0.0,
+      "reference_threshold": 1e+200,
+      "reference_probability_m1": 6.366197723675815e-101,
+      "actual_threshold": 1e+200,
+      "actual_probability_m1": 6.366197723675814e-101,
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "case": "R2_conditional_intermediate_overflow",
+      "y": 1e+308,
+      "beta": 1e+308,
+      "m_prime": 4,
+      "actual": 0.5939941502901616,
+      "reference": 0.5939941502901616,
+      "passed": true,
+      "warnings": []
+    }
+  ],
+  "all_passed": true
+}

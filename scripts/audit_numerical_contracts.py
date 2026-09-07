@@ -2,7 +2,8 @@
 """Reproduce review R1/R2 without modifying frozen code or expected unit tests.
 
 Exit 1 means a numerical contract is violated. This is deliberately separate
-from the historical regression suite, which does not cover these boundaries.
+from the historical regression suite. The approved repair also adds these
+boundaries to the maintained conformance tests.
 """
 from __future__ import annotations
 

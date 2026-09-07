@@ -1,5 +1,10 @@
 # Repository review — 2026-09-07
 
+> 后续更新：用户已明确批准修复 R1/R2。当前分支已实施 Tri-Law 数值 v2；
+> 见 [修复记录](TRI_LAW_NUMERICAL_FIX.md)。本文下方保留 `c40b7b0` 审查时的
+> 原始发现、失败输出和“待批准”历史状态，不代表当前代码仍未修复。
+> 后续开发统一使用 `codex/repo-review-code-protection` 的最新 HEAD。
+
 审查基线：`248c29e2243c60b3793458c8ee723eefba5a5855`。
 工作目录：`/Users/guanghongxu/Query-Adaptive-Tri-RAG`。
 审查分支：`codex/repo-review-code-protection`。

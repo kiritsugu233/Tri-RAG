@@ -3,12 +3,19 @@
 Updated 2026-09-07. Local checkout:
 `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 
-The latest scientific implementation is **TLS-RAG Step 4 retention v3**,
-branch `codex/tls-rag-step4-retention-v3`, commit
-`248c29e2243c60b3793458c8ee723eefba5a5855`. The repository review is on
-`codex/repo-review-code-protection`, based on that commit. Inspect the actual
-branch and HEAD; do not switch to an old branch just because a historical
-document names it.
+The maintained code is **the reviewed repository with Tri-Law numerical v2**
+on the single continuing branch `codex/repo-review-code-protection`.
+[GitHub current code](https://github.com/kiritsugu233/Tri-RAG/tree/codex/repo-review-code-protection).
+All subsequent authorized implementation starts from that branch's latest HEAD;
+do not automatically create another branch for each step. Local directory stays
+`/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
+
+The experimental family remains TLS-RAG Step 4 retention v3. Commit `248c29e`
+is its historical pre-review baseline; `c40b7b0` is the review-only snapshot.
+Neither is the new development starting point. The approved numerical changes,
+checks and source-binding consequences are in
+[Tri-Law repair](docs/TRI_LAW_NUMERICAL_FIX.md). Inspect actual branch/HEAD before
+working; do not switch to an old branch based on a historical document.
 
 V3 implementation tests passed. Its actual cluster acceptance result has not
 been independently verified in this checkout. The v2 NFCorpus tune failure
@@ -23,8 +30,9 @@ certificate, serving latency improvement, or authorization for Step 5.
 3. The brief named in the user's task. For the current experiment, read
    [TLS-RAG Step 4 start here](docs/TLS_RAG_STEP4_START_HERE.md).
 
-The [review report](docs/REPOSITORY_REVIEW.md) records known numerical defects;
-consult it before changing or making stronger claims about the scientific core.
+The [review report](docs/REPOSITORY_REVIEW.md) retains original defect evidence;
+[the repair record](docs/TRI_LAW_NUMERICAL_FIX.md) closes R1/R2 for the tested
+numerical scope. Consult both before changing the scientific core.
 [Markdown review](docs/MARKDOWN_REVIEW.md) identifies every tracked Markdown
 file's role. It is an index, not a request to preload historical documents.
 
@@ -64,9 +72,12 @@ For a fresh synthetic v1 reproducibility check, use an absent output parent:
 sh scripts/run_tls_rag_step4_readiness.sh /private/tmp/tls-rag-readiness-NEW
 ```
 
-These commands do not run the real v3 experiment. Its exact cluster command
-and existing parent bundle are in the v3 acceptance brief. Preserve all
-existing bundles; actual cluster success requires an actual result.
+These commands do not run the real v3 experiment. Old source-bound v2 bundles
+must still be replayed at their original commit: the repaired Tri-Law changes
+the code hash and the current loader correctly rejects those old bindings.
+Do not rehash an old bundle to bypass this check. New experiments start from
+this repaired branch with reviewed fresh bindings and the appropriate independent
+roles; see the repair record. Actual cluster success requires an actual result.
 
 The original walking skeleton already exists. Its runnable config is
 `configs/synthetic_mvp.json`; the old proposed `configs/mvp_scifact.yaml`
