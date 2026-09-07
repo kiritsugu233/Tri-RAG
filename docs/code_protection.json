@@ -1,0 +1,1249 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-09-07",
+  "scientific_base_commit": "248c29e2243c60b3793458c8ee723eefba5a5855",
+  "initial_authorization": "User requested repository-wide code grading, highest-level prior approval, and Markdown corrections; this is initial registry creation, not algorithm-fix consent.",
+  "scope": "Every package source, test, script, config, dependency file and tracked Markdown at the review baseline, plus new review files. Experiment payloads/archives are excluded.",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "level": "L0",
+      "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
+      "sha256": "d24fd8d1cc90612327f777e64b186e6a442ac426c026135ecaac15e40d9e3134"
+    },
+    {
+      "path": "AGENT_CALIBRATED_TRI_PREDICT.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "AGENT_CALIBRATED_TRI_PREDICT_STEP3.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP1.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "NEXT_AGENT_PROMPT.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "START_HERE.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "STATUS.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "agent.md",
+      "level": "L0",
+      "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
+      "sha256": "5d5c7fb7c75bc3c3442dae582f7d5c2dce707d35bd144cd1e717aa4e84c06116"
+    },
+    {
+      "path": "artifacts/pdctp_fiqa_e5_v1/report.md",
+      "level": "L0",
+      "reason": "Historical generated report: immutable evidence, not current task authorization",
+      "sha256": "167b7f9bc2699edbffd446587e05b246db249d69356794cb3680868902ebb0b6"
+    },
+    {
+      "path": "artifacts/pdctp_fiqa_query_cal_v1/report.md",
+      "level": "L0",
+      "reason": "Historical generated report: immutable evidence, not current task authorization",
+      "sha256": "3eb3012b671015cf0fc29e06718302345bc245ad25df40ee392ba1065888a9ee"
+    },
+    {
+      "path": "artifacts/pdctp_fiqa_query_tune_v1/report.md",
+      "level": "L0",
+      "reason": "Historical generated report: immutable evidence, not current task authorization",
+      "sha256": "e2cb805fd312be1766c56de33f32ef383b6f7902410c125159d6873f0707ae5d"
+    },
+    {
+      "path": "artifacts/pdctp_fiqa_real_protocol_v1/report.md",
+      "level": "L0",
+      "reason": "Historical generated report: immutable evidence, not current task authorization",
+      "sha256": "66937d8bd5539ad59cc037f6750d73b0a6263a7ef7ccd040f466fb876ca518bd"
+    },
+    {
+      "path": "configs/pdctp_fiqa_e5_base_v2_embeddings.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "23bf055f5723fde8cd6bc0f03a480d717090e3a9a8949536254b2ad066fa3e00"
+    },
+    {
+      "path": "configs/pdctp_fiqa_query_cal_v1.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "5966c522af1da6f64f5c842a0c844aa93836bb546d0d0fc4368884c6335281c5"
+    },
+    {
+      "path": "configs/pdctp_fiqa_query_cert_v1.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "ce4ae6f45109d761010c45ee3a57a46675121fae59ffd5b078b57e9a3c85af72"
+    },
+    {
+      "path": "configs/pdctp_fiqa_query_tune_v1.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "dabdbf86e701c3575329176ea4fe3244cb75fcbbc95cee6ed11cee9c2f5529d2"
+    },
+    {
+      "path": "configs/pdctp_fiqa_real_protocol_freeze_v1.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "1899bd2ee855ada655398d9f552fcab9ae9052d3a20dc803d38c8a343695f08f"
+    },
+    {
+      "path": "configs/pdctp_fiqa_source_audit_v1.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "686707ea5d114e2715ae19716502b943e5d1ff7919a6beb1e2b8bb8fdbc34295"
+    },
+    {
+      "path": "configs/pdctp_network_free_foundation_v1.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "dbb8878ffd87466fc056add8f0c35cc4eb1cf750bda3e7fdcda5fb6192a3a770"
+    },
+    {
+      "path": "configs/pdctp_v3_network_free_foundation_v1.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "c79909643a835f45815a8992781bb692a1964199f513e9a8bfad4dbb689f05bc"
+    },
+    {
+      "path": "configs/real_scifact_dataset.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "6a20f84c05bbe861650f9a51527c5231f1998e688edd537655812673846972f8"
+    },
+    {
+      "path": "configs/real_scifact_e5_base_v2_embeddings.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "cc18a2ebfe02a38ddfc859cc2398349e59fbdaca2b38b9880fc41e284981aedd"
+    },
+    {
+      "path": "configs/real_scifact_fixed_dimension_tune.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "0e5df9a1cc2c5f4eac27b255084492f9862aaa217a60880e10cecbb398ad8577"
+    },
+    {
+      "path": "configs/real_scifact_original_exact_tune.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "9724d17d6cc533b2e207747ef9f68dd7ed8f097a1427e01f49f1c7c26ae6ab90"
+    },
+    {
+      "path": "configs/real_scifact_policy_certify.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "a1180f4cc2d332173b5f69e37df54df1a95df75e6bd4bcfd2013ad83ef7110c7"
+    },
+    {
+      "path": "configs/real_scifact_policy_test.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "98b0ecad2aeb1991cd001b0fd6edba9f8ef07cd82f04946ea5066c1b19ca8dfb"
+    },
+    {
+      "path": "configs/real_scifact_policy_tune.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "eba4428b2c4f16a1f4d24e24af47becf4447516808f5b3b6ae2cc15689d0f002"
+    },
+    {
+      "path": "configs/real_scifact_tune_diagnostics.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "3b1d4c4fda4fcfda44103767ff7eb1be420fb16db3d07919dfacfb571afbebb5"
+    },
+    {
+      "path": "configs/retrieval_latency_100k_d768.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "ba0cd8d8279c0be6a93bbb007792d87d96f7017dbb568b527125f7df6368f3fb"
+    },
+    {
+      "path": "configs/retrieval_latency_1m_d1024.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "2c3759a0c2ebc152502105313afcbe3260fc76b29caafdbe4f6e1a7be7554711"
+    },
+    {
+      "path": "configs/retrieval_latency_1m_d1024_faiss_k1984.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "d309b2088ca35394f6cf96654adaab3d0cd3b9c8d0887c7d9005f7b17b7a5237"
+    },
+    {
+      "path": "configs/retrieval_latency_smoke.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "d070f692755424737f60e110cffef5761b2b834f1c4a620151f1f0bab7051438"
+    },
+    {
+      "path": "configs/synthetic_attribution_fresh.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "5cfbe16f407861eb8aa81160dbdd36edbf9647d469bb9b1a7a69c4b4c62f7695"
+    },
+    {
+      "path": "configs/synthetic_mprime_sweep_extended_fresh.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "deac15f781f804a746243d7bdcc49d8c5e3260f1355e43501987b9db744834fb"
+    },
+    {
+      "path": "configs/synthetic_mprime_sweep_fresh.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "cffb3a3b0fbe98edc8d25e8de931a10abdbae05d710107f6d6b579b15bc8e857"
+    },
+    {
+      "path": "configs/synthetic_mvp.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "06ada488647626b81ab88efcb6e678258072c86d98300746f3e6d6742f2f1631"
+    },
+    {
+      "path": "configs/tls_rag_step2_synthetic_v1.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "257c032be82e945ab757b3c1342d1d87f6cd399667b786008122c358f62ac5aa"
+    },
+    {
+      "path": "configs/tls_rag_step3_synthetic_v1.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "c98b417b825953a889f929183ca454c819ef530c00ab676a06bd7c278e90c0b8"
+    },
+    {
+      "path": "configs/tls_rag_step4_nfcorpus_probe_v2.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "c8378c1e0ce86aca31af9adea0c939b15cab748c0d872d643e599d7af9b0dec9"
+    },
+    {
+      "path": "configs/tls_rag_step4_protocol_v1.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "0dace8c1df60700b70b95a1cb02072b64a62cfc662f51790cc4b8d3df74f8850"
+    },
+    {
+      "path": "configs/tls_rag_step4_retention_v3.json",
+      "level": "L0",
+      "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
+      "sha256": "cc001c18f5cd9c09988adc2ae84a4b7ba0a67d28fd6fde8b1d0110410f415597"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/ATTRIBUTION.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/CALIBRATED_TRI_PREDICT_PROTOCOL.md",
+      "level": "L0",
+      "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
+      "sha256": "0a2ee816697fe8e72d6faa864729a2af432807b5c2754e1a1c833e8e1fd4c583"
+    },
+    {
+      "path": "docs/CALIBRATED_TRI_PREDICT_V3_DIAGNOSIS.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/CERTIFICATION.md",
+      "level": "L0",
+      "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
+      "sha256": "7811fde73fa2656a99048c44574668bffdc98a6328ad3ea6223601bde105d71b"
+    },
+    {
+      "path": "docs/CODE_PROTECTION.md",
+      "level": "L0",
+      "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
+      "sha256": "047984147eb028d017d670e5dd6602e239e19d518a81b9afdec771e7546eee68"
+    },
+    {
+      "path": "docs/EXPERIMENT_PROTOCOL.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/FIQA_EMBEDDING_GATE.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/FIQA_PROTOCOL_FREEZE.md",
+      "level": "L0",
+      "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
+      "sha256": "bae5d58730a39b1b2eb6718b63ad26b44009f6f6ad9d59eed94f78e8d57f7e4d"
+    },
+    {
+      "path": "docs/FIQA_QUERY_CAL_GATE.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/FIQA_QUERY_CERT_GATE.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/FIQA_QUERY_TUNE_GATE.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/FIQA_SOURCE_AUDIT.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_PLAN.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/MARKDOWN_REVIEW.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/MPRIME_SWEEP.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/RAW_TRI_PREDICT_V1_BASELINE.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/REAL_DATA.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/REAL_EMBEDDINGS.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/REAL_RETRIEVAL.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/REPOSITORY_REVIEW.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/RETRIEVAL_LATENCY.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/TLS_RAG_LOCAL_WORKFLOW.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP2_SYNTHETIC.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP2_TO_STEP3.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP3_START_HERE.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP3_SYNTHETIC.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP3_TO_STEP4_HANDOFF.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP4_BRIEF.md",
+      "level": "L0",
+      "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
+      "sha256": "6b21c842df436350da39bf0a46e8ea5e227e732b0a2e1ab80beb802923515330"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP4_READINESS.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP4_REAL_PROBE.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP4_RETENTION_V3.md",
+      "level": "L0",
+      "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
+      "sha256": "bcf5942790f869e24d780ebfdc10c4fd48ea1fb8289d15e9d4a01869ed65fa18"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP4_START_HERE.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/TRI_LAW_SEQUENTIAL_RAG_PROTOCOL.md",
+      "level": "L0",
+      "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
+      "sha256": "3ea119016bcf318dbed402c5c558b4a1e58fe5987cf8a2d44288b852bdcc27c0"
+    },
+    {
+      "path": "docs/TRI_LAW_SEQUENTIAL_RAG_SPEC.md",
+      "level": "L0",
+      "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
+      "sha256": "cea726bcbd0078b978e9b82e49a560894ee0411a4d877ea696e69b81f2154fb6"
+    },
+    {
+      "path": "docs/TRI_LAW_SPEC.md",
+      "level": "L0",
+      "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
+      "sha256": "0b5c4fec1187040803652a3c0b4ab9053822cb9e913991f7c095d7fec4278b64"
+    },
+    {
+      "path": "docs/archive/TLS_RAG_PRE_STEP3_AUDIT_INDEX.md",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/code_protection.json",
+      "level": "L0",
+      "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
+      "integrity": "git_review_no_self_hash"
+    },
+    {
+      "path": "docs/review_numerical_evidence.json",
+      "level": "L1",
+      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "pyproject.toml",
+      "level": "L0",
+      "reason": "Pinned execution/dependency identity affects numerical and model reproducibility",
+      "sha256": "f9e0ad2647edc4abf81827b0f2aa514b83e3f40ab5352381ce9e7f743baa1939"
+    },
+    {
+      "path": "requirements-embedding-e5.txt",
+      "level": "L0",
+      "reason": "Pinned execution/dependency identity affects numerical and model reproducibility",
+      "sha256": "86ad228d7394779e8dab1d4becf4d0dc2c4124ba9c503e4a394e43150839534a"
+    },
+    {
+      "path": "requirements-tls-rag-probe.txt",
+      "level": "L0",
+      "reason": "Pinned execution/dependency identity affects numerical and model reproducibility",
+      "sha256": "20270706720121a087b8fed3e762e0cca700a19810fcd5a5db16017aa84de2cf"
+    },
+    {
+      "path": "scripts/audit_numerical_contracts.py",
+      "level": "L1",
+      "reason": "Verification/launcher orchestration; changing scientific gates or expected evidence inherits L0"
+    },
+    {
+      "path": "scripts/check_code_protection.py",
+      "level": "L0",
+      "reason": "Read-only governance guard; disabling or weakening requires scoped consent",
+      "sha256": "cbacdf02c241be8a2969fbe0305289dae1604861a86ec0374ffc39edde43d2f0"
+    },
+    {
+      "path": "scripts/run_tests.sh",
+      "level": "L1",
+      "reason": "Verification/launcher orchestration; changing scientific gates or expected evidence inherits L0"
+    },
+    {
+      "path": "scripts/run_tls_rag_step4_probe.sh",
+      "level": "L1",
+      "reason": "Verification/launcher orchestration; changing scientific gates or expected evidence inherits L0"
+    },
+    {
+      "path": "scripts/run_tls_rag_step4_readiness.sh",
+      "level": "L1",
+      "reason": "Verification/launcher orchestration; changing scientific gates or expected evidence inherits L0"
+    },
+    {
+      "path": "scripts/run_tls_rag_step4_retention_v3.sh",
+      "level": "L1",
+      "reason": "Verification/launcher orchestration; changing scientific gates or expected evidence inherits L0"
+    },
+    {
+      "path": "scripts/slurm_pdctp_foundation.sh",
+      "level": "L1",
+      "reason": "Verification/launcher orchestration; changing scientific gates or expected evidence inherits L0"
+    },
+    {
+      "path": "src/tri_rag_harness/__init__.py",
+      "direct_test_imports": [],
+      "review": "static boundaries + regression; no formal completeness claim",
+      "level": "L2",
+      "reason": "Package identity only"
+    },
+    {
+      "path": "src/tri_rag_harness/attribution.py",
+      "direct_test_imports": [
+        "tests/test_attribution.py"
+      ],
+      "review": "static boundaries + regression; no formal completeness claim",
+      "level": "L1",
+      "reason": "Historical oracle attribution runner; never deploy oracle inputs"
+    },
+    {
+      "path": "src/tri_rag_harness/beir_dataset.py",
+      "direct_test_imports": [
+        "tests/test_beir_dataset.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Stable source IDs, duplicate-safe external-query split construction",
+      "sha256": "6476bda081bad0f75c3fa80e15ad8c0eb1d3d47f27b42262d1068ed8badb9aa5"
+    },
+    {
+      "path": "src/tri_rag_harness/certification.py",
+      "direct_test_imports": [
+        "tests/test_certification.py",
+        "tests/test_real_policy_certify.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Empirical-Bernstein formula, sample-size and certificate identity",
+      "sha256": "ba0816eb20f38b846cd265c61b5e6608f50c521d85539285ab4de82ba242ad32"
+    },
+    {
+      "path": "src/tri_rag_harness/config.py",
+      "direct_test_imports": [
+        "tests/test_attribution.py",
+        "tests/test_config_projection.py",
+        "tests/test_end_to_end.py",
+        "tests/test_mprime_sweep.py"
+      ],
+      "review": "static boundaries + regression; no formal completeness claim",
+      "level": "L1",
+      "reason": "Walking-skeleton configuration parsing; numerical contract changes inherit L0"
+    },
+    {
+      "path": "src/tri_rag_harness/embeddings.py",
+      "direct_test_imports": [
+        "tests/test_config_projection.py",
+        "tests/test_index_retrieval.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Input normalization and stable row/ID boundary",
+      "sha256": "8a73aa75d0803c84b81618608a0ac689846aa57db0e4fa8c3c4967fa573840fe"
+    },
+    {
+      "path": "src/tri_rag_harness/indexes.py",
+      "direct_test_imports": [
+        "tests/test_index_retrieval.py",
+        "tests/test_real_dimension_sweep.py",
+        "tests/test_retrieval_benchmark.py",
+        "tests/test_tls_rag_step2.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Exact squared-L2 ranking, tie contract and FAISS adapter semantics",
+      "sha256": "32a5d1988ecc604ea54f99fb4c784f9bb90a617c624c022bda12bf45b38efe15"
+    },
+    {
+      "path": "src/tri_rag_harness/lid.py",
+      "direct_test_imports": [
+        "tests/test_lid_policy.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Euclidean Hill/MLE LID, invalid-distance and fallback contract",
+      "sha256": "1a875a8a1de1cf45a923d0f78a888539b096e38fa8fed803498d0f77d8ff5f66"
+    },
+    {
+      "path": "src/tri_rag_harness/manifest.py",
+      "direct_test_imports": [],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Frozen run identity, split hashes and seeds",
+      "sha256": "3023a93903f6cef0b6a707e72a026b0e02c5c59c9fadcd6b8ac480ca989a8832"
+    },
+    {
+      "path": "src/tri_rag_harness/mprime_sweep.py",
+      "direct_test_imports": [
+        "tests/test_mprime_sweep.py"
+      ],
+      "review": "static boundaries + regression; no formal completeness claim",
+      "level": "L1",
+      "reason": "Historical tune-only global dimension diagnostic orchestration"
+    },
+    {
+      "path": "src/tri_rag_harness/pdctp_calibration.py",
+      "direct_test_imports": [
+        "tests/test_pdctp_calibration.py",
+        "tests/test_pdctp_fiqa_query_cal.py",
+        "tests/test_pdctp_policies.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Frozen pilot-LID/residual fitting and serialization mathematics",
+      "sha256": "c79be4ce371579da848e9e2ba0a3ca9835aa1b48d22432455e173d0eea1ba20b"
+    },
+    {
+      "path": "src/tri_rag_harness/pdctp_config.py",
+      "direct_test_imports": [
+        "tests/test_pdctp_foundation.py",
+        "tests/test_pdctp_protocol_statistics.py"
+      ],
+      "review": "static boundaries + regression; no formal completeness claim",
+      "level": "L1",
+      "reason": "PDCTP configuration boundary; scientific parameter changes inherit L0"
+    },
+    {
+      "path": "src/tri_rag_harness/pdctp_dataset_audit.py",
+      "direct_test_imports": [
+        "tests/test_pdctp_dataset_audit.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Dataset eligibility, duplicate grouping and role witness",
+      "sha256": "6db361c9701d369c357b5ba860d6bffc54bd02a46749b5989775582d38d6fd33"
+    },
+    {
+      "path": "src/tri_rag_harness/pdctp_embedding_audit.py",
+      "direct_test_imports": [
+        "tests/test_pdctp_fiqa_embedding_gate.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Frozen embedding/cache integrity and role-opening preconditions",
+      "sha256": "7854c7e03701f6c1b26b50af843a8e6832d90c640a91a1da853d64897f424a71"
+    },
+    {
+      "path": "src/tri_rag_harness/pdctp_features.py",
+      "direct_test_imports": [
+        "tests/test_pdctp_calibration.py",
+        "tests/test_pdctp_features.py",
+        "tests/test_pdctp_fiqa_query_cal.py",
+        "tests/test_pdctp_policies.py",
+        "tests/test_pdctp_v3.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Deployable feature definition, numerical canonicalization and forbidden inputs",
+      "sha256": "a77e0b5394e6bd2562eb8143a85e9943deab3719a244638ed9a9997f1cfc775b"
+    },
+    {
+      "path": "src/tri_rag_harness/pdctp_fiqa_dataset.py",
+      "direct_test_imports": [
+        "tests/test_pdctp_fiqa_embedding_gate.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "FiQA text-only boundary, stable identity and corpus preparation",
+      "sha256": "f997a3c6b206bbd7e3dd4360709bd9340ba765893ebf912b2cda3c92b658c603"
+    },
+    {
+      "path": "src/tri_rag_harness/pdctp_fiqa_query_cal.py",
+      "direct_test_imports": [
+        "tests/test_pdctp_fiqa_query_cal.py",
+        "tests/test_pdctp_fiqa_query_tune.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Cal-only oracle supervision, fitted candidate identities and retention targets",
+      "sha256": "9e7754f81e4bbfc5932c11482238f6ca773d2f2f6f854ebd6be4fc363cd6d11a"
+    },
+    {
+      "path": "src/tri_rag_harness/pdctp_fiqa_query_cert.py",
+      "direct_test_imports": [
+        "tests/test_pdctp_fiqa_query_cert.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Protected cert access, frozen six-hypothesis family and reconstruction",
+      "sha256": "d91dd52619d231d9f2818ce531bec6817f8d6c407f5e132e05d84d0bc568487f"
+    },
+    {
+      "path": "src/tri_rag_harness/pdctp_fiqa_query_tune.py",
+      "direct_test_imports": [
+        "tests/test_pdctp_fiqa_query_tune.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Frozen selection, comparator eligibility and downstream policy reconstruction",
+      "sha256": "aacb856e891ee6efaeaa76102eafcf4a04bfb87df36c4fe1fb441b9a3c127d37"
+    },
+    {
+      "path": "src/tri_rag_harness/pdctp_foundation.py",
+      "direct_test_imports": [
+        "tests/test_pdctp_foundation.py"
+      ],
+      "review": "static boundaries + regression; no formal completeness claim",
+      "level": "L1",
+      "reason": "Historical synthetic PDCTP orchestration; scientific behavior remains frozen"
+    },
+    {
+      "path": "src/tri_rag_harness/pdctp_policies.py",
+      "direct_test_imports": [
+        "tests/test_pdctp_fiqa_query_cert.py",
+        "tests/test_pdctp_policies.py",
+        "tests/test_pdctp_v3.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Inference input isolation and calibrated budget/fallback decision",
+      "sha256": "3bb55ba9483b1cd423fc0e23888ff77acfc0a3ceced028c66e3ad7942ee2fdc4"
+    },
+    {
+      "path": "src/tri_rag_harness/pdctp_protocol.py",
+      "direct_test_imports": [
+        "tests/test_pdctp_fiqa_query_cal.py",
+        "tests/test_pdctp_fiqa_query_cert.py",
+        "tests/test_pdctp_fiqa_query_tune.py",
+        "tests/test_pdctp_foundation.py",
+        "tests/test_pdctp_protocol_statistics.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Five-role leakage guard and terminal transition semantics",
+      "sha256": "c008eae18ea3a17f44e216b6fc4d2b8935a52ea5108f085f5a5d87f1c1659e07"
+    },
+    {
+      "path": "src/tri_rag_harness/pdctp_real_protocol.py",
+      "direct_test_imports": [
+        "tests/test_pdctp_real_protocol.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Pre-data protocol, role, alpha, power and parameter freeze",
+      "sha256": "8e2979df685dc92805c0658ba49b2e3e4c6054d3cdcf6fed5740053c9cd15ae7"
+    },
+    {
+      "path": "src/tri_rag_harness/pdctp_statistics.py",
+      "direct_test_imports": [
+        "tests/test_pdctp_fiqa_query_cert.py",
+        "tests/test_pdctp_foundation.py",
+        "tests/test_pdctp_protocol_statistics.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Paired bounded-mean confidence calculations and Bonferroni allocation",
+      "sha256": "d279a1076c60525f21e52ee2f136066dc53618a93f3dbdd0483fbda7c2760276"
+    },
+    {
+      "path": "src/tri_rag_harness/pdctp_v3.py",
+      "direct_test_imports": [
+        "tests/test_pdctp_v3.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Frozen effective-Tri-LID model/curve repair and policy identities",
+      "sha256": "24685068410ee8fb373cdedb7bca40d6897cd070f2d401709a3d0b375c4a0761"
+    },
+    {
+      "path": "src/tri_rag_harness/policies.py",
+      "direct_test_imports": [
+        "tests/test_lid_policy.py",
+        "tests/test_pdctp_policies.py",
+        "tests/test_real_policy_certify.py",
+        "tests/test_real_policy_tune.py",
+        "tests/test_tri_predict.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Raw/compiled Tri-Predict and monotone policy scientific contract",
+      "sha256": "e774ff9bd525e7bf3a03811e9cdd7f9cabb251116d7000472289344eaa03fe17"
+    },
+    {
+      "path": "src/tri_rag_harness/projection.py",
+      "direct_test_imports": [
+        "tests/test_config_projection.py",
+        "tests/test_real_policy_certify.py",
+        "tests/test_tls_rag_step2.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Dense Gaussian variance, no post-normalization and cache fingerprint",
+      "sha256": "91f0cd3d0493200a068b057a5637bc6d7999e351c198c5af8305332ec8fef1a3"
+    },
+    {
+      "path": "src/tri_rag_harness/real_dimension_sweep.py",
+      "direct_test_imports": [
+        "tests/test_real_dimension_sweep.py",
+        "tests/test_real_policy_certify.py"
+      ],
+      "review": "static boundaries + regression; no formal completeness claim",
+      "level": "L1",
+      "reason": "Historical tune-only dimension selection runner; preserve protocol/results"
+    },
+    {
+      "path": "src/tri_rag_harness/real_original_baseline.py",
+      "direct_test_imports": [
+        "tests/test_real_original_baseline.py"
+      ],
+      "review": "static boundaries + regression; no formal completeness claim",
+      "level": "L1",
+      "reason": "Historical exact-original reference and evidence metric orchestration"
+    },
+    {
+      "path": "src/tri_rag_harness/real_policy_certify.py",
+      "direct_test_imports": [
+        "tests/test_real_policy_certify.py",
+        "tests/test_real_policy_test.py",
+        "tests/test_real_tune_diagnostics.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Frozen SciFact cert gate, identities, metric and failure semantics",
+      "sha256": "e46d8fceb3b63a20ab3e60983d750f17bec300247f9ce912a51f36ee9ed6e0da"
+    },
+    {
+      "path": "src/tri_rag_harness/real_policy_test.py",
+      "direct_test_imports": [
+        "tests/test_real_policy_test.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Terminal-cert binding and descriptive-only test gate",
+      "sha256": "857a654700e73858011d3dda853928479084fcd1cbd5e5d99b22d66341d2f753"
+    },
+    {
+      "path": "src/tri_rag_harness/real_policy_tune.py",
+      "direct_test_imports": [
+        "tests/test_real_policy_tune.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Tune-only candidate selection and frozen raw/compiled policy identities",
+      "sha256": "3b09b1639a73001a6161ebbfdb16b1778edddf0167b7d67707466a3aff19aacc"
+    },
+    {
+      "path": "src/tri_rag_harness/real_tune_diagnostics.py",
+      "direct_test_imports": [
+        "tests/test_real_tune_diagnostics.py"
+      ],
+      "review": "static boundaries + regression; no formal completeness claim",
+      "level": "L1",
+      "reason": "Historical tune-only evidence/shuffle diagnostics; no protected outcome tuning"
+    },
+    {
+      "path": "src/tri_rag_harness/reporting.py",
+      "direct_test_imports": [],
+      "review": "static boundaries + regression; no formal completeness claim",
+      "level": "L2",
+      "reason": "Render saved statistics; metric definitions and claims inherit L0"
+    },
+    {
+      "path": "src/tri_rag_harness/retrieval_benchmark.py",
+      "direct_test_imports": [
+        "tests/test_retrieval_benchmark.py"
+      ],
+      "review": "static boundaries + regression; no formal completeness claim",
+      "level": "L1",
+      "reason": "Systems runner and separated work/timing accounting; backend contract is L0"
+    },
+    {
+      "path": "src/tri_rag_harness/run.py",
+      "direct_test_imports": [
+        "tests/test_end_to_end.py"
+      ],
+      "review": "static boundaries + regression; no formal completeness claim",
+      "level": "L1",
+      "reason": "Historical synthetic walking skeleton; cert-selected fixed comparisons are diagnostic"
+    },
+    {
+      "path": "src/tri_rag_harness/synthetic.py",
+      "direct_test_imports": [
+        "tests/test_attribution.py"
+      ],
+      "review": "static boundaries + regression; no formal completeness claim",
+      "level": "L1",
+      "reason": "Deterministic synthetic fixture distribution; frozen fixture changes inherit L0"
+    },
+    {
+      "path": "src/tri_rag_harness/text_embeddings.py",
+      "direct_test_imports": [
+        "tests/test_pdctp_fiqa_embedding_gate.py",
+        "tests/test_real_original_baseline.py",
+        "tests/test_text_embeddings.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Pinned model, preprocessing/normalization and content-derived cache validation",
+      "sha256": "db0e20d961a6ac2f9811ace55fd8a7ffd28e64ee5241145b621f2bd438838cb1"
+    },
+    {
+      "path": "src/tri_rag_harness/tls_rag_step2.py",
+      "direct_test_imports": [
+        "tests/test_tls_rag_step2.py",
+        "tests/test_tls_rag_step3.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Frozen exact prefix/retrieval state, two actions, labels and compatibility",
+      "sha256": "a6be67c944237ea8f7649f18eb6c6e84f71c94b1546f62cdbb037da7540ed3dd"
+    },
+    {
+      "path": "src/tri_rag_harness/tls_rag_step3.py",
+      "direct_test_imports": [
+        "tests/test_tls_rag_step3.py",
+        "tests/test_tls_rag_step4.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Frozen observed-pair features, score fitting, CP controller and semantics",
+      "sha256": "4fc53c4d98537315f25d8a531da7a53731881bb8d1638ac6696e07307fdf2b62"
+    },
+    {
+      "path": "src/tri_rag_harness/tls_rag_step4.py",
+      "direct_test_imports": [
+        "tests/test_tls_rag_step4.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Frozen v1 readiness protocol and protected-role guards",
+      "sha256": "199ab95f9ee5f04456837b628d7c9e5f06b511191e8e9d781738c5b336340f33"
+    },
+    {
+      "path": "src/tri_rag_harness/tls_rag_step4_nfcorpus.py",
+      "direct_test_imports": [
+        "tests/test_tls_rag_step4_probe.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Source-bound v2 dataset/model preparation and staged label boundary",
+      "sha256": "edc95097f118a3f613a198f5868266af958d456be6beb6545d060a23e836490b"
+    },
+    {
+      "path": "src/tri_rag_harness/tls_rag_step4_probe.py",
+      "direct_test_imports": [
+        "tests/test_tls_rag_step4_probe.py",
+        "tests/test_tls_rag_step4_retention_v3.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Source-bound v2 parent pipeline, fixed gate and label-closure semantics",
+      "sha256": "836d57790687e5748596ab11f038563c7b7e6f45d6a2cd2e9b4c3c2bc52d6636"
+    },
+    {
+      "path": "src/tri_rag_harness/tls_rag_step4_retention_v3.py",
+      "direct_test_imports": [
+        "tests/test_tls_rag_step4_retention_v3.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Frozen v3 retention targets, margins, 27-policy selection and parent reuse",
+      "sha256": "55dd89a571494b07af7e4922aa8204beecc0c6c11863687dc5b07a7319117907"
+    },
+    {
+      "path": "src/tri_rag_harness/tri_law.py",
+      "direct_test_imports": [
+        "tests/test_tls_rag_step2.py",
+        "tests/test_tls_rag_step3.py",
+        "tests/test_tri_law.py",
+        "tests/test_tri_predict.py"
+      ],
+      "review": "critical review + regression",
+      "known_findings": [
+        "R1",
+        "R2"
+      ],
+      "level": "L0",
+      "reason": "Exact triplet law; confirmed boundary defects R1/R2 await approved repair",
+      "sha256": "27f8cb31c9625d9bcc54316d5618f18f35fc5882486f877fe425e44d6a162d19"
+    },
+    {
+      "path": "src/tri_rag_harness/tri_predict.py",
+      "direct_test_imports": [
+        "tests/test_pdctp_v3.py",
+        "tests/test_tri_predict.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Frozen Raw Tri-Predict approximation and orthogonal conditional aggregation",
+      "sha256": "1f3abafa6b9c258b50101503d750cf63b474ac7d4241b08457ad0da7ba6c766d"
+    },
+    {
+      "path": "src/tri_rag_harness/utils.py",
+      "direct_test_imports": [
+        "tests/test_mprime_sweep.py",
+        "tests/test_pdctp_dataset_audit.py",
+        "tests/test_pdctp_fiqa_embedding_gate.py",
+        "tests/test_pdctp_fiqa_query_cal.py",
+        "tests/test_pdctp_fiqa_query_cert.py",
+        "tests/test_pdctp_fiqa_query_tune.py",
+        "tests/test_pdctp_real_protocol.py",
+        "tests/test_pdctp_v3.py",
+        "tests/test_real_dimension_sweep.py",
+        "tests/test_real_original_baseline.py",
+        "tests/test_real_policy_certify.py",
+        "tests/test_real_policy_test.py",
+        "tests/test_real_tune_diagnostics.py",
+        "tests/test_text_embeddings.py"
+      ],
+      "review": "critical review + regression",
+      "level": "L0",
+      "reason": "Canonical JSON/array hashing used in scientific artifact identities",
+      "sha256": "044be5bbf946bf042387c3632d7c40c018c5291d3cc1132b5c7d5bd69a41562b"
+    },
+    {
+      "path": "tests/__init__.py",
+      "level": "L2",
+      "reason": "Test package marker"
+    },
+    {
+      "path": "tests/test_attribution.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "95206c187b626b4f1e093350ebfdadb4f602c80f2220a112cf952661b9454ad4"
+    },
+    {
+      "path": "tests/test_beir_dataset.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "15d3e9c6d75f20712d4c2aca05c1751cc23b11ce6c9d193f8d1300e34cf5c93e"
+    },
+    {
+      "path": "tests/test_certification.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "1c1d09947e91727edd52e0d65cc23c2579e46a415565d65633d3ee91d318fe60"
+    },
+    {
+      "path": "tests/test_code_protection.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "6092a32b73e02f96070cb4d55cba01416b05205b0c2c92b5137d2433457aa76b"
+    },
+    {
+      "path": "tests/test_config_projection.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "5be6e9bb3e540e27d52388bc1ab9e9847fb4d9e311b33926922599ecebd135fa"
+    },
+    {
+      "path": "tests/test_end_to_end.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "440b3ed073dec770b9287502f13d9cbc624b419a672e38a2d1283ef559461514"
+    },
+    {
+      "path": "tests/test_index_retrieval.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "4d871f9eb9a7a6fbd50308bf596a9124eda35011958b59dec23a1967c67d09c6"
+    },
+    {
+      "path": "tests/test_lid_policy.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "1eb2e28e4f89d831807f2000100c414393b07b3bb8c789d9ff7e1653f59fc88a"
+    },
+    {
+      "path": "tests/test_mprime_sweep.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "5484ff02c91543a40f8f02ada5160804a9242f98d1c111a8ff666c4901a8f3dd"
+    },
+    {
+      "path": "tests/test_pdctp_calibration.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "4e05e28de8f322d266b31bcb7692d3965f3ab4a18522172d49feb4e9e74179d8"
+    },
+    {
+      "path": "tests/test_pdctp_dataset_audit.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "4dd3adf0323275e17da57859ff50c82471b31fc3d083b0117ac5c2e5e92ca213"
+    },
+    {
+      "path": "tests/test_pdctp_features.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "000c357a1cdf8b14d8034d398e64f076c447b1ce09dd8b5f432848dd85b7e6a8"
+    },
+    {
+      "path": "tests/test_pdctp_fiqa_embedding_gate.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "2b1a8542a5a4bcd5cdf37c53ced490b24e8bb7ded358fbc696b8793139fd4b40"
+    },
+    {
+      "path": "tests/test_pdctp_fiqa_query_cal.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "a8c1b9cb19545054efcc06d22f37256143e03e80f0f10311790a8f6d827edf21"
+    },
+    {
+      "path": "tests/test_pdctp_fiqa_query_cert.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "bd1b4f16cd200ab443634ecd0b317f0ce1e0edf00f60d3f751112f18dcb52136"
+    },
+    {
+      "path": "tests/test_pdctp_fiqa_query_tune.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "00ba80cb10e974d92b2e65e20a64d3fc4416cf143bee16af211e209697714255"
+    },
+    {
+      "path": "tests/test_pdctp_foundation.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "fb3513f5ef06c501b6edbee18aaab850108a611587c4ebbfb16e6fffcf666867"
+    },
+    {
+      "path": "tests/test_pdctp_policies.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "62d97e80d9fb3f041824fcf1027561ebfcfbf1518348c96a54ac22d4991292e8"
+    },
+    {
+      "path": "tests/test_pdctp_protocol_statistics.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "c052096b4e4c9d7af32405d85ed070bfa0baeb0e63087fb74379525cdde908e7"
+    },
+    {
+      "path": "tests/test_pdctp_real_protocol.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "332f028b9a62b1fa1ca64f23df0663d70ab401b3d615df5c4a051475b96573e0"
+    },
+    {
+      "path": "tests/test_pdctp_v3.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "0ce967801b8dec353fa7ef8133cdc29cf8ea349b2dadb21f0431be9a235a47db"
+    },
+    {
+      "path": "tests/test_real_dimension_sweep.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "7a68042b255db8efa5f02e38f2094c1eb10d9c80615bedab1f0987202ce1b06c"
+    },
+    {
+      "path": "tests/test_real_original_baseline.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "0e228429ce47e667d4b8e50dc8afb12b84a762811182be2498686ab286f33ab3"
+    },
+    {
+      "path": "tests/test_real_policy_certify.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "4a658cf4342d32130eaa10bc284bb58a7ab66f8b3f404fe123a4563283518ed2"
+    },
+    {
+      "path": "tests/test_real_policy_test.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "dc3d5629ca85efae01050bd916822093221150fdb97f0baa6f9f96b84ef35d43"
+    },
+    {
+      "path": "tests/test_real_policy_tune.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "c27b7406562361789f901585393f3dc1ca61559a4c98a6459b5f637c72018f35"
+    },
+    {
+      "path": "tests/test_real_tune_diagnostics.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "25243b5f7b993a2faa476f61da0493aa102f9db6b4100fc649d518f6fdc45912"
+    },
+    {
+      "path": "tests/test_retrieval_benchmark.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "f04af34385e9d0e527394224ee4b3033fe7e96e0738862ac270440758e089a59"
+    },
+    {
+      "path": "tests/test_text_embeddings.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "b0cf342c476c1b26d7fa45bb882d30b875d728e1be3b2e22b5c706c301a63045"
+    },
+    {
+      "path": "tests/test_tls_rag_step2.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "c97033e59789b698e126bdd69094bb93e4493466d41742aa7fe8138ac24f13ee"
+    },
+    {
+      "path": "tests/test_tls_rag_step3.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "00c7d5f7374cae4637f0b1e1df879f05bfd9e343f2db37ce1f9fb496c91345fd"
+    },
+    {
+      "path": "tests/test_tls_rag_step4.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "ad12572de43d94908b4c4e2c085ad5a5597e40f36c4a78b9a352bf8960b6d632"
+    },
+    {
+      "path": "tests/test_tls_rag_step4_probe.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "a00f7b20ea0540535d3a308baba4602c4f82f6000bfdcda6ec5e5d5a3777f23e"
+    },
+    {
+      "path": "tests/test_tls_rag_step4_retention_v3.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "6e5b1863d85ae415f478c811a67ff69b8c3051e6c68e4dc1fd2a50a89d83e288"
+    },
+    {
+      "path": "tests/test_tri_law.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "7557fd2e4768e115afeded238a51e07a729a0c4260e887173bcc31c2f8e9d889"
+    },
+    {
+      "path": "tests/test_tri_predict.py",
+      "level": "L0",
+      "reason": "Regression/conformance expectations protect frozen scientific behavior",
+      "sha256": "f182c5f39808479dd1cdf247c9db44d1497858727f7fbae134e4461bddcbf929"
+    }
+  ]
+}

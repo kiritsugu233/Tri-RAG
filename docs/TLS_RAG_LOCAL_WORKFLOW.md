@@ -8,8 +8,10 @@ The user fixed the local working directory for every subsequent step to:
 
 Run local implementation, tests, Git commits and GitHub synchronization there.
 Do not use `.codex/worktrees/...` for new local steps without a new explicit
-exception. Preserve existing untracked files and user changes. Current Step 4
-branch: `codex/tls-rag-step4-readiness`; initial readiness commit:
+exception. Preserve existing untracked files and user changes. Latest scientific Step 4
+branch: `codex/tls-rag-step4-retention-v3` (baseline `248c29e`). The current
+review branch is `codex/repo-review-code-protection`; inspect actual HEAD.
+Historical initial readiness commit:
 `155070d8df96a773d83a650db84e6ec69d12c51e`. The remote is
 `https://github.com/kiritsugu233/Tri-RAG.git`.
 
@@ -39,4 +41,7 @@ and account. No cluster path, partition or account is inferred from this file.
 The test job runs focused/full CPU suites twice and compares its two fresh
 synthetic output directories. Keep the reviewed commit, environment, Slurm job
 ID, output and exit code. Cluster success requires the actual job result.
-Real-data gate remains closed; this workflow does not authorize Step 5.
+The v1 readiness real-data gate remains closed. Separately authorized v2/v3
+probe work follows its versioned brief and exact paths; this workflow does not
+authorize additional data access or Step 5. Read root AGENTS and run
+`python3 scripts/check_code_protection.py` before edits and at handoff.

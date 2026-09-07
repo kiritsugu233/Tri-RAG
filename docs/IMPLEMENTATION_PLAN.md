@@ -1,5 +1,11 @@
 # Implementation Plan
 
+> **Historical milestone ledger.** Start at [the current entry](../START_HERE.md).
+> Earlier unchecked items and stop/go instructions belong to their named version;
+> they do not authorize work or supersede root governance. Current work is recorded
+> in bounded review/Step 4 sections. Do not reread this entire history at startup.
+
+
 This checklist is the working plan for the implementation agent. Check items only after tests and artifacts exist.
 
 ## Milestone 0: repository skeleton
@@ -650,7 +656,7 @@ must enter Step 4 only through the dedicated Step 3-to-Step 4 handoff and may
 not reconstruct context by reading older status, prompt, handoff, or archived
 materials.
 
-## Suggested future code tree
+## Historical proposed code tree (not the current layout)
 
 ```text
 query-adaptive-tri-rag-harness/
@@ -707,7 +713,8 @@ query-adaptive-tri-rag-harness/
 - [x] Compare two fresh six-file synthetic outputs byte-for-byte and record all
       fingerprints in `docs/TLS_RAG_STEP4_READINESS.md`.
 - [x] Complete readiness closeout for commit on `codex/tls-rag-step4-readiness`;
-      stop at the real-data gate without push or cluster submission.
+      stop at the v1 real-data gate without cluster submission. Initial no-push
+      instructions were superseded by the standing GitHub synchronization rule.
 - [ ] Future separately authorized milestone: exact-path authorization and full
       real-transfer binding review before any real role opens. Step 5 excluded.
 - [x] Move the Step 4 branch to canonical local checkout
@@ -749,3 +756,28 @@ query-adaptive-tri-rag-harness/
 - [ ] Run v3 on the actual cluster bundle and inspect held-out acceptance results.
 - [ ] Formal statistical certification and measured latency remain future milestones.
 <!-- TLS-RAG STEP4 END -->
+
+<!-- REPOSITORY REVIEW BEGIN -->
+## Repository review and protected-code governance — 2026-09-07
+
+- [x] Inspect canonical branch/HEAD/status; preserve untracked experiment archives.
+- [x] Inventory and grade every source, test, script, config and dependency file.
+- [x] Audit all 47 tracked Markdown documents; repair current startup, historical
+      permissions, Git workflow and overclaimed statistical interpretation.
+- [x] Put highest-level prior approval in root AGENTS and add `agent.md` alias.
+- [x] Add per-file L0 hashes, read-only coverage/integrity guard and 10 meaningful
+      disposable-fixture tests; retain explicit human-consent/Git-review boundary.
+- [x] Record independently reproducible R1/R2 numerical failures without changing
+      frozen scientific code, tests, parameters or historical artifacts.
+- [x] Run final two-round verification: 265 tests each (264 pass, 1 optional skip),
+      focused 26/26 each, six-file synthetic outputs byte-identical; guard/link/diff checks pass.
+- [x] Prepare review closeout on `codex/repo-review-code-protection` for the
+      standing explicit-branch commit/push and remote-HEAD verification.
+- [ ] Separate future task, only after scoped user approval: repair R1/R2 with
+      boundary regression tests and a reviewed source-binding/version strategy.
+
+The source/Markdown review is complete within the scope stated in
+`docs/REPOSITORY_REVIEW.md`. Open numerical findings are not relabeled as passes.
+No real v3 acceptance, protected-role access, formal certification or Step 5
+was performed or newly authorized by this governance milestone.
+<!-- REPOSITORY REVIEW END -->

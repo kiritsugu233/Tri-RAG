@@ -1,19 +1,26 @@
-# Prompt for the next implementation agent
+# Next agent startup
 
-Work in this repository on branch `codex/calibrated-tri-predict-v2`.
+Use `/Users/guanghongxu/Query-Adaptive-Tri-RAG` for local repository work.
+Inspect branch, HEAD and tracked/untracked changes; preserve user files.
 
-Raw Tri-Predict v1 is complete and immutable at tag
-`raw-tri-predict-v1-terminal-negative` (`fb09c00`). Its real SciFact result is a
-terminal negative baseline: pilot LID is biased low, while the analytic
-LID-to-budget map remains severely overconservative even under oracle LID.
+Read in order:
 
-Your task is to implement Pilot-Distance Calibrated Tri-Predict v2 without
-editing v1 behavior or reusing SciFact cert/test for selection.
+1. [AGENTS.md](AGENTS.md), including the L0 approval rule.
+2. [START_HERE.md](START_HERE.md), for current status and task routing.
+3. [Code protection registry](docs/CODE_PROTECTION.md), for the exact files
+   relevant to the user's task; run `python3 scripts/check_code_protection.py`.
+4. The current task's explicitly named brief. For TLS-RAG Step 4 retention v3,
+   use [the Step 4 entry](docs/TLS_RAG_STEP4_START_HERE.md).
 
-Before editing, read `AGENT_CALIBRATED_TRI_PREDICT.md` completely and follow it.
-Then read every file listed in its “Read before editing” section. Start with the
-network-free first implementation pass only. Do not download data, run an LLM,
-or open any protected real split in the first pass.
+The latest implemented experiment is TLS-RAG Step 4 retention v3 at scientific
+baseline `248c29e2243c60b3793458c8ee723eefba5a5855`. This audit does not execute
+its real acceptance run or authorize Step 5. Do not restart calibrated v2,
+TLS-RAG Step 2, or Step 3 from old prompts. Historical reading allowlists apply
+to their original tasks; they do not override root governance or the user's
+explicit current task, including a repository-wide review.
 
-The desired positive result is a hypothesis, not a required outcome. Preserve
-all failures and maintain strict cal/tune/cert/latency/test separation.
+Known numerical defects and the exact review scope are recorded in
+[the repository review](docs/REPOSITORY_REVIEW.md). L0 protection means
+change control, not a claim that the code is defect-free. Before proposing
+an L0 fix, explain its necessity, exact affected paths, compatibility and
+validation plan, then wait for explicit user approval before editing.

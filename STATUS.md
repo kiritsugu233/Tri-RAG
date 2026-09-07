@@ -1,6 +1,50 @@
 # Status
 
-Updated: 2026-09-05
+Updated: 2026-09-07
+
+<!-- REPOSITORY REVIEW BEGIN -->
+## Repository review and code protection (2026-09-07)
+
+- Scientific baseline: `248c29e2243c60b3793458c8ee723eefba5a5855`; canonical
+  checkout only. Audit branch: `codex/repo-review-code-protection`.
+- Registered 176 files: L0=119, L1=54, L2=3. All 47 package sources, every
+  test/script/config/dependency and all 47 original Markdown files are covered,
+  together with the new governance/review files. Current Markdown total: 51.
+- What runs: `python3 scripts/check_code_protection.py` checks inventory and
+  L0 hashes without writes; 10 new disposable-fixture tests cover mutation,
+  deletion, unknown/ignored additions, unsafe paths, duplicates and symlinks.
+- Full final command:
+  `sh scripts/run_tls_rag_step4_readiness.sh /private/tmp/tri-rag-repository-review-20260907`.
+  Each of two rounds: 265 tests, 264 passed, 1 optional real-FAISS skip, 0 failures;
+  32.696 s / 34.332 s. V1 focused checks: 26/26 each (0.152 s / 0.184 s).
+  Both six-file synthetic artifact sets are byte-identical.
+- Other checks: protection passed; all 51 registered Markdown files have valid
+  relative links and balanced fences; `git diff --check` passed. All original
+  source/config/test/launcher/dependency and tracked experiment artifacts have
+  zero diff against the scientific baseline. New guard tests are additional.
+- Counterexample command:
+  `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 scripts/audit_numerical_contracts.py`.
+  Exit 1: four reproducible contract failures in two Tri-Law numerical classes
+  R1/R2, deliberately retained as unresolved review findings. Existing regression
+  success does not establish complete numerical correctness.
+- Durable review artifacts: `docs/REPOSITORY_REVIEW.md`, `docs/CODE_PROTECTION.md`,
+  `docs/code_protection.json`, `docs/MARKDOWN_REVIEW.md`,
+  `docs/review_numerical_evidence.json`. Temporary full log:
+  `/tmp/tri-rag-repository-review-final.log`; synthetic outputs:
+  `/private/tmp/tri-rag-repository-review-20260907/{a,b}`.
+- Document repairs: current startup/version routing, old worktree/no-push
+  conflicts, historical result/access-state scope, and adaptive CP interpretation.
+  Prior hashes remain attributed to their original Git objects.
+- Next task: obtain scoped approval if R1/R2 production repair is desired, with
+  source-binding/version consequences reviewed first. Otherwise use the current
+  authorized Step 4 v3 brief; no real acceptance result was produced here.
+- Limits: no GPU/real-FAISS/model-download/real-role/cluster validation, no archive
+  access, no formal per-line proof, no OS/GitHub access-control enforcement.
+  Protection is risk classification plus mandatory human review, not correctness
+  certification. User's original audit/Markdown instruction authorized initial
+  governance setup; it did not authorize numerical algorithm changes.
+
+<!-- REPOSITORY REVIEW END -->
 
 ## Version boundary
 
@@ -13,22 +57,26 @@ to develop a successor.
 
 Calibrated Tri-Predict v2 is frozen through commit `26079ce`; its opened FiQA
 `query_cal` and `query_tune` results are retained as negative diagnostic
-evidence. The fingerprint-gated query_cert runner remains an unexecuted frozen
-baseline, and query_cert, query_latency, and query_test remain unopened. No
-positive v2 result exists.
+evidence. At the recorded freeze, the fingerprint-gated query_cert runner was an
+unexecuted baseline and query_cert/query_latency/query_test were recorded closed.
+This source/Markdown review does not establish their subsequent access history;
+no returned protected archive was inspected. Do not assume those identities are
+fresh without a separate authorized provenance check. No positive v2 result is
+established by the reviewed documentation.
 
 Calibrated Tri-Predict v3 is frozen at commit `f94c1aa`. Its Step 3 diagnosis
 localized the earliest failure to the scalar LID rank-distance power law and
 retains a network-free low/high effective-Tri-LID repair only as a historical
 reference. No v3 real-data policy or positive v3 result exists.
 
-Current work is the completed Step 2 synthetic skeleton of the new TLS-RAG
-family plus its pre-Step 3 documentation handoff. The handoff is prepared on
-branch `codex/tri-law-sequential-rag-step2-to-step3`; Step 2 remains frozen at
-`f46ce73beccf5fddbf05fd87fdb0911318020add`. Its history contains the Step 1
-freeze `cac654e`, Step 2 handoff `d9be55f`, and restored Step 1 brief commit
-`a11d983`. Raw Tri-Predict v1, PDCTP v2/v3, exact Tri-Law, numerical tolerances,
-and protected role state remain unchanged.
+Current scientific implementation is TLS-RAG Step 4 retention v3 at
+`248c29e2243c60b3793458c8ee723eefba5a5855`; actual cluster acceptance remains
+unverified locally. The current repository audit is on
+`codex/repo-review-code-protection`. Start at `START_HERE.md`, then root
+protection rules and the current task brief. The sections below retain their
+historical chronology; their old "next" tasks and authorization statements are
+not current work orders. In particular, Step 3 is complete and Step 5 is not
+authorized by this review. See the bounded current review and Step 4 sections.
 
 ## TLS-RAG Step 1 design freeze
 
@@ -1288,11 +1336,11 @@ in `docs/FIQA_QUERY_CERT_GATE.md`.
 
 ## Next task
 
-Start a fresh isolated Step 3 Codex task from the committed documentation
-handoff. That task must follow `AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md` and the
-minimal read allowlist, implement only the synthetic risk/scoring/calibration/
-controller/ablation gate, commit, and stop for review. Passing Step 3 must not
-start Step 4.
+Follow `START_HERE.md` and the current user task. Step 3 is already complete.
+The latest implemented experiment is Step 4 retention v3; its real acceptance
+result remains pending independent verification. Known L0 numerical fixes need
+explicit scoped approval before implementation. Do not revive an old phase,
+retune an opened probe or begin Step 5 from this historical log.
 
 ## Known deviations and risks
 

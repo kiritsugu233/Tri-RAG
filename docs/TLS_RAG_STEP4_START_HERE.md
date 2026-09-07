@@ -1,42 +1,53 @@
-# TLS-RAG Step 4 start here
+# TLS-RAG Step 4 current entry
 
-Latest authorized successor: `docs/TLS_RAG_STEP4_RETENTION_V3.md`, branch
-`codex/tls-rag-step4-retention-v3`. This implements retention-aligned stopping
-after the user-reported v2 tune failure and provides the next real acceptance command.
+Updated 2026-09-07. Begin with [root AGENTS](../AGENTS.md) and
+[START_HERE](../START_HERE.md). Use the canonical checkout and inspect actual
+branch, HEAD and changes. Latest scientific baseline:
+`248c29e2243c60b3793458c8ee723eefba5a5855` on
+`codex/tls-rag-step4-retention-v3`. The review branch descends from that baseline.
 
-Successor requested after the readiness replay: the first real retrieval probe
-is documented in `docs/TLS_RAG_STEP4_REAL_PROBE.md`, on branch
-`codex/tls-rag-step4-real-probe`. Its new v2 experiment does not unlock or modify
-the v1 protocol below. Use its explicit source paths and manual cluster commands.
+## Current retention-v3 task
 
-All local work now uses `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
-Read the canonical-checkout section in root `AGENTS.md` and
-`docs/TLS_RAG_LOCAL_WORKFLOW.md` for the user's standing directory and GitHub
-synchronization instructions. Existing Codex worktrees are historical checkouts;
-they are not the working directory for subsequent local steps.
+Read in this order when the task concerns the latest experiment:
 
-Entry provenance: `0e4df85df3cd6bc9427476702a3b90339576636e` must be an ancestor.
-The original Step 3-to-Step 4 handoff remains authoritative for startup access.
+1. [Code protection registry](CODE_PROTECTION.md), relevant file entries only.
+2. [Canonical workflow](TLS_RAG_LOCAL_WORKFLOW.md).
+3. [Retention-v3 brief](TLS_RAG_STEP4_RETENTION_V3.md).
+4. `configs/tls_rag_step4_retention_v3.json`.
+5. `src/tri_rag_harness/tls_rag_step4_retention_v3.py` and
+   `tests/test_tls_rag_step4_retention_v3.py`.
+6. `scripts/run_tls_rag_step4_retention_v3.sh`.
 
-For this new milestone, read the following new files in order:
+For precise parent-interface questions, read
+[TLS-RAG v2 probe](TLS_RAG_STEP4_REAL_PROBE.md), its source/config/tests,
+`tls_rag_step4_nfcorpus.py`, and the exact Step 2/3/shared definitions those
+files import. For a numerical-core change, also read the relevant review
+finding and obtain L0 approval before editing. This list explicitly allows
+root governance; older narrower startup allowlists do not override it.
 
-1. `docs/TLS_RAG_STEP4_BRIEF.md`
-2. `configs/tls_rag_step4_protocol_v1.json`
-3. `src/tri_rag_harness/tls_rag_step4.py`
-4. `tests/test_tls_rag_step4.py`
-5. `scripts/run_tls_rag_step4_readiness.sh`
-6. `docs/TLS_RAG_STEP4_READINESS.md`
+V3 reuses the specified v2 development roles and requires the same actually
+unopened probe. The prior implementation authorization and documented exact
+cluster command persist; this review neither executes that command nor records
+a new real result. No automatic probe retuning, new protected-data access,
+formal certificate, latency claim or Step 5 follows from a passing unit test.
 
-Use only the already allowed Step 3 files and the established offline test
-launcher for upstream interfaces/regressions. Do not read historical documents,
-data, logs, archives or prior artifacts. Shared STATUS/plan access is limited
-to the marked TLS-RAG Step 4 local sections.
+## V1 readiness and historical provenance
 
-Run `sh scripts/run_tls_rag_step4_readiness.sh /tmp/<new-empty-parent>` from the
-repository root using the existing NumPy/SciPy environment. The script performs
-focused and full CPU tests twice and compares two freshly generated synthetic
-artifact sets. It never downloads dependencies, submits jobs or pushes.
+The initial readiness protocol is a separate, completed milestone. Its literal
+`m_prime=2`, `[3,6,12]` budgets and closed real-data gate remain unchanged.
+For a requested v1 replay, read its [brief](TLS_RAG_STEP4_BRIEF.md),
+[readiness report](TLS_RAG_STEP4_READINESS.md), frozen config/source/test, and
+`scripts/run_tls_rag_step4_readiness.sh`. The read-only replay command is:
 
-Stop after protocol/readiness verification and commit. The real-data gate is
-closed. A future task must obtain exact-path authorization and complete a
-pre-data binding before implementing any real adapter. Step 5 is not authorized.
+```bash
+sh scripts/run_tls_rag_step4_readiness.sh /private/tmp/tls-rag-readiness-NEW
+```
+
+Use an absent output parent. This script checks synthetic reproducibility; its
+"real-data gate remains closed" message refers to v1. The separate v2/v3
+experiment permissions do not open v1's gate or authorize Step 5.
+
+[The original Step 3-to-Step 4 handoff](TLS_RAG_STEP3_TO_STEP4_HANDOFF.md)
+records ancestry and the original v1 startup boundary; it is not the current
+successor assignment. Historical STATUS/plan access remains bounded to the
+marked Step 4 sections unless the user's current task explicitly requires more.

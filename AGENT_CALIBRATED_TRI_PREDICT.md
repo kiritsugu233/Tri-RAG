@@ -1,5 +1,12 @@
 # Agent brief: Pilot-Distance Calibrated Tri-Predict v2
 
+> **Historical task brief — not the current assignment.** Its permissions,
+> next-step commands and reading restrictions describe its original milestone.
+> Start at [AGENTS.md](AGENTS.md) and [START_HERE.md](START_HERE.md); current
+> canonical-checkout, GitHub synchronization and L0 approval rules take precedence.
+> Do not restart this task or reopen data merely because this brief says to do so.
+
+
 You are the implementation agent for the successor to a completed negative
 baseline. Work only on branch `codex/calibrated-tri-predict-v2` unless the user
 explicitly directs otherwise.

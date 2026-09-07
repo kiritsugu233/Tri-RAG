@@ -1,122 +1,74 @@
-# Query-Adaptive Tri-RAG Harness
+# Query-Adaptive Tri-RAG: current entry
 
-## Current version boundary
+Updated 2026-09-07. Local checkout:
+`/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 
-Raw Tri-Predict v1 is complete at tag
-`raw-tri-predict-v1-terminal-negative` (`fb09c00`) and is a terminal negative
-baseline. Current development on `codex/calibrated-tri-predict-v2` targets
-Pilot-Distance Calibrated Tri-Predict under a new dataset and a fresh
-cal/tune/cert/latency/test protocol. Read
-`docs/RAW_TRI_PREDICT_V1_BASELINE.md` and
-`docs/CALIBRATED_TRI_PREDICT_PROTOCOL.md` before changing the successor.
+The latest scientific implementation is **TLS-RAG Step 4 retention v3**,
+branch `codex/tls-rag-step4-retention-v3`, commit
+`248c29e2243c60b3793458c8ee723eefba5a5855`. The repository review is on
+`codex/repo-review-code-protection`, based on that commit. Inspect the actual
+branch and HEAD; do not switch to an old branch just because a historical
+document names it.
 
-This directory is the handoff package for implementing a research harness for:
+V3 implementation tests passed. Its actual cluster acceptance result has not
+been independently verified in this checkout. The v2 NFCorpus tune failure
+is user-reported. Neither implies a positive v3 scientific result, formal
+certificate, serving latency improvement, or authorization for Step 5.
 
-> Fixed projected dimension `m_prime` with a query-adaptive candidate budget `M(q)`, driven by query-local intrinsic dimensionality (LID), calibrated on held-out external queries, and evaluated from embedding-neighbor retention through evidence recall to answer quality.
+## Read before working
 
-The immediate goal is a small, reproducible MVP. It is not a production RAG service and it does not attempt to reproduce every experiment from *Predict Before You Project*.
+1. [AGENTS.md](AGENTS.md): scope, preservation and prior approval for L0 changes.
+2. [Code protection](docs/CODE_PROTECTION.md): per-file levels and review limits.
+   Run `python3 scripts/check_code_protection.py` before editing and at handoff.
+3. The brief named in the user's task. For the current experiment, read
+   [TLS-RAG Step 4 start here](docs/TLS_RAG_STEP4_START_HERE.md).
 
-## Read in this order
+The [review report](docs/REPOSITORY_REVIEW.md) records known numerical defects;
+consult it before changing or making stronger claims about the scientific core.
+[Markdown review](docs/MARKDOWN_REVIEW.md) identifies every tracked Markdown
+file's role. It is an index, not a request to preload historical documents.
 
-1. `AGENTS.md` - non-negotiable implementation rules and scope.
-2. `docs/ARCHITECTURE.md` - pipeline, modules, interfaces, and artifact contracts.
-3. `docs/TRI_LAW_SPEC.md` - exact paper-conformant Tri-Law formulas, API, numerical rules, and tests.
-4. `docs/EXPERIMENT_PROTOCOL.md` - datasets, splits, baselines, metrics, and experiment matrix.
-5. `docs/CERTIFICATION.md` - valid statistical certification procedure.
-6. `docs/IMPLEMENTATION_PLAN.md` - milestones, tests, and acceptance criteria.
-7. `docs/REAL_DATA.md` - frozen SciFact source, splits, identities, and audit.
-8. `docs/REAL_EMBEDDINGS.md` - pinned E5 model and embedding-cache contract.
-9. `docs/RAW_TRI_PREDICT_V1_BASELINE.md` - immutable v1 result and failure attribution.
-10. `docs/CALIBRATED_TRI_PREDICT_PROTOCOL.md` - v2 method and independent validation protocol.
-11. `AGENT_CALIBRATED_TRI_PREDICT.md` - ready-to-use successor-agent brief.
+Do not preload the large historical status, implementation plan, artifacts,
+runs, or archives for an ordinary next-step task. Use the bounded current
+sections when recording a milestone. The user's explicit repository-wide
+review authorizes reviewing repository source and Markdown; it does not turn
+untracked experiment archives into fresh evaluation data.
 
-## Research question
+## Version boundaries
 
-For a fixed corpus, fixed embedding model, fixed Gaussian projection matrix, and fixed projected dimension `m_prime`, can a deployable estimate of query-local LID choose a smaller candidate budget `M(q)` for easy queries and a larger one for hard queries while:
+| Family | Recorded state | Appropriate entry |
+| --- | --- | --- |
+| Raw Tri-Predict v1 | Terminal negative baseline, tag `raw-tri-predict-v1-terminal-negative` (`fb09c00`) | [Historical baseline](docs/RAW_TRI_PREDICT_V1_BASELINE.md) |
+| Calibrated Tri-Predict v2/v3 | Frozen historical calibration/diagnosis work; no positive successor claim | [Historical v2 protocol](docs/CALIBRATED_TRI_PREDICT_PROTOCOL.md), [v3 diagnosis](docs/CALIBRATED_TRI_PREDICT_V3_DIAGNOSIS.md) |
+| TLS-RAG Steps 1–3 | Completed design and synthetic implementation | Historical briefs only when specifically needed |
+| TLS-RAG Step 4 v1 | Completed synthetic protocol/readiness; its real gate remains closed | [V1 readiness](docs/TLS_RAG_STEP4_READINESS.md) |
+| TLS-RAG Step 4 v2 | Real retrieval-proxy probe; user reported no qualifying tune candidate | [V2 probe](docs/TLS_RAG_STEP4_REAL_PROBE.md) |
+| TLS-RAG Step 4 retention v3 | Latest implemented successor; real acceptance pending verification | [V3 acceptance](docs/TLS_RAG_STEP4_RETENTION_V3.md) |
 
-- meeting a target embedding-neighbor retention rate;
-- preserving evidence recall and downstream answer quality;
-- reducing mean original-space reranking work relative to a fixed-`M` policy;
-- retaining an empirical-Bernstein lower-confidence certificate on an independent query set?
+Calibrated Tri-Predict v3 and TLS-RAG retention v3 are different methods.
+An old prompt, unchecked historical plan item, or reported past gate does not
+authorize rerunning protected roles or implementing another step.
 
-## MVP decision
+## Offline validation
 
-Use one fixed `m_prime` and one fixed projection/index. Do not maintain multiple indexes or choose `m_prime` per query.
-
-For each external query:
-
-1. Embed and L2-normalize it.
-2. Project it with the fixed dense Gaussian matrix.
-3. Retrieve a small pilot shortlist `M_pilot` in projected squared-L2 space.
-4. Compute original-space distances only for the pilot candidates.
-5. Estimate query LID from those original-space pilot distances.
-6. Choose `M(q)` from a discrete budget grid.
-7. Expand projected retrieval to `M(q)`, cache/reuse pilot work, and exactly rerank in the original embedding space.
-8. Return the top `k_ctx` passages to the RAG generator.
-
-The exact backend caches top-`M_max` from one projected scan, so step 7 slices the cached ranking rather than scanning the corpus again. The retrieval-only latency benchmark retains an explicit legacy double-scan control and reports both paths separately.
-
-## Required theoretical primitive
-
-Before implementing analytic Tri-Predict, implement the paper's exact single-triplet Tri-Law as an independent module described in `docs/TRI_LAW_SPEC.md`. Tri-Law itself does not choose `M(q)`; it supplies the exact inversion probability that motivates the orthogonal conditional branch aggregated by Tri-Predict.
-
-The harness must preserve the distinction:
-
-```text
-exact Tri-Law for one triplet
-  -> orthogonal conditional specialization
-  -> LID rank-distance model
-  -> structural and mean-field approximations
-  -> Tri-Predict expected-retention estimate
-  -> query-adaptive M(q) extension
-```
-
-## Two policies are required
-
-Implement both so the harness remains useful even before the paper's analytic predictor is fully reproduced.
-
-### Policy A: monotone binned empirical policy
-
-- Fit LID quantile bins on `query_tune` only.
-- Within each bin, choose the smallest budget that reaches the target mean embedding retention plus a configurable safety margin.
-- Enforce nondecreasing `M` with increasing LID, using a cumulative maximum or isotonic procedure.
-- Treat this as the walking-skeleton adaptive baseline, not the main theoretical contribution.
-
-### Policy B: query-adaptive Tri-Predict policy
-
-- Implement and test `docs/TRI_LAW_SPEC.md` first.
-- Implement the Tri-Predict equations described in `docs/ARCHITECTURE.md` using query-local `lambda_q` in place of the paper's global median LID.
-- Choose the smallest budget in the grid whose predicted recall reaches `tau_predict`.
-- Optionally learn one scalar safety correction on `query_tune`; never tune it on `query_cert` or `query_test`.
-- Record whether LID came from `pilot_rerank` or `oracle_exact`. Only `pilot_rerank` is deployable.
-
-## Initial success criterion
-
-On at least one external-query retrieval dataset:
-
-- the adaptive policy's empirical-Bernstein lower bound on query-level embedding retention is at least the configured target;
-- evidence recall is no worse than the matched fixed-`M` baseline by more than the declared tolerance;
-- mean `M(q)` is at least 20% lower than the smallest fixed budget that passes the same certificate;
-- all policies are evaluated on the same frozen projection, corpus, embeddings, and query splits;
-- the complete run can be reproduced from a single manifest and seed set.
-
-If the 20% efficiency target fails, report the negative result rather than altering the evaluation split or target after seeing certification/test outcomes.
-
-## Expected top-level command
-
-The future implementation should converge on a command similar to:
+From the canonical checkout, using the existing NumPy/SciPy environment:
 
 ```bash
-python -m tri_rag_harness.run --config configs/mvp_scifact.yaml
+python3 scripts/check_code_protection.py
+sh scripts/run_tests.sh
 ```
 
-The exact CLI framework is an implementation choice. One command must be able to run or resume the complete MVP and write a self-contained run directory.
+For a fresh synthetic v1 reproducibility check, use an absent output parent:
 
-## Deliverables from the implementation agent
+```bash
+sh scripts/run_tls_rag_step4_readiness.sh /private/tmp/tls-rag-readiness-NEW
+```
 
-- Python package and CLI.
-- Unit and integration tests.
-- One small default configuration.
-- Machine-readable run artifacts.
-- A Markdown summary generated from those artifacts.
-- Explicit documentation of any deviation from this design.
+These commands do not run the real v3 experiment. Its exact cluster command
+and existing parent bundle are in the v3 acceptance brief. Preserve all
+existing bundles; actual cluster success requires an actual result.
+
+The original walking skeleton already exists. Its runnable config is
+`configs/synthetic_mvp.json`; the old proposed `configs/mvp_scifact.yaml`
+was never the implementation CLI. Historical architecture and experiment
+documents describe their respective method families, not the current task list.

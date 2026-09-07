@@ -1,5 +1,12 @@
 # Statistical Certification
 
+> **Scope:** the general bounded-mean formulas below are shared statistical
+> references. Sections 10–12 are historical SciFact records, not instructions to
+> reopen cert/test. Current TLS-RAG v2/v3 probes are descriptive and do not
+> inherit those certificates. Follow [root AGENTS](../AGENTS.md) and the
+> [current entry](../START_HERE.md).
+
+
 ## 1. What is certified
 
 The primary certificate covers the realized end-to-end retrieval policy after all of the following are frozen:

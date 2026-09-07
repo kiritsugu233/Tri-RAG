@@ -1,6 +1,14 @@
 # TLS-RAG Step 3 to Step 4 handoff
 
-Status: Step 3 is closed. This file is the sole Step 4 handoff entry point.
+> **Version-scoped reference.** This document describes its named method and
+> milestone, including historical results and commands. It is not a current
+> assignment or permission to reopen data. Start at [root AGENTS](../AGENTS.md)
+> and [the current entry](../START_HERE.md). Current L0 protection and standing
+> checkout/push instructions apply; later versioned briefs define successor work.
+
+
+Status: Step 3 is closed. This file records the original v1 readiness handoff; the current
+entry is [TLS_RAG_STEP4_START_HERE.md](TLS_RAG_STEP4_START_HERE.md).
 
 ## Required provenance
 
@@ -154,4 +162,5 @@ or if preservation requires changing a frozen Step 2/3 or exact Tri-Law file.
 
 At handoff, report the exact tests, branch, commit, new artifact fingerprints,
 same-host reproducibility result, untouched frozen-file diff, remaining risks,
-and any push/cluster/Slurm commands. Never push automatically.
+and any push/cluster/Slurm commands. For current work, root AGENTS supersedes the original no-push instruction:
+commit and push the explicit reviewed task branch after checks, without force.

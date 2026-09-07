@@ -1,5 +1,12 @@
 # Step 3: Diagnose and Repair Tri-Predict Failure
 
+> **Historical task brief — not the current assignment.** Its permissions,
+> next-step commands and reading restrictions describe its original milestone.
+> Start at [AGENTS.md](AGENTS.md) and [START_HERE.md](START_HERE.md); current
+> canonical-checkout, GitHub synchronization and L0 approval rules take precedence.
+> Do not restart this task or reopen data merely because this brief says to do so.
+
+
 ## Status and authority
 
 This file defines the next independent milestone after Calibrated Tri-Predict

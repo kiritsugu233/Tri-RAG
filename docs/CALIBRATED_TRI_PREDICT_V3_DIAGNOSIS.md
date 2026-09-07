@@ -1,5 +1,12 @@
 # Calibrated Tri-Predict v3: Step 3 causal diagnosis
 
+> **Version-scoped reference.** This document describes its named method and
+> milestone, including historical results and commands. It is not a current
+> assignment or permission to reopen data. Start at [root AGENTS](../AGENTS.md)
+> and [the current entry](../START_HERE.md). Current L0 protection and standing
+> checkout/push instructions apply; later versioned briefs define successor work.
+
+
 Date: 2026-09-05
 
 This is a diagnosis and a network-free repair boundary, not a certificate or a
@@ -66,7 +73,11 @@ Signed errors below are prediction minus the stated reference.
 
 ## Causal conclusion
 
-1. The exact Tri-Law implementation is not wrong.
+1. The exact Tri-Law implementation matched the tested conformance cases in
+   this historical diagnosis; that did not validate its entire float64 domain.
+   The 2026-09-07 repository review subsequently reproduced boundary defects
+   R1/R2 (see `docs/REPOSITORY_REVIEW.md`). Their effect on this historical
+   dataset has not been established; the historical measurements are retained.
 2. Finite-rank quadrature is accurate enough and is not the failure source.
 3. The scalar LID rank-distance model fails even when supplied oracle LID; this
    is the first failing approximation layer.
@@ -84,7 +95,9 @@ Signed errors below are prediction minus the stated reference.
    each family, but does not require tune-side cost superiority over fixed; it
    can therefore accept an inefficient method by design.
 
-These are scientific model failures, not implementation conformance failures.
+These historical experiments identified scientific model failures within their
+checked numerical settings. This is not a blanket absence-of-implementation-bugs
+claim; the later R1/R2 boundary findings remain separately open.
 
 ## Smallest v3 repair and ablation
 

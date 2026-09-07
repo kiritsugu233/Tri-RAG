@@ -1,7 +1,15 @@
 # TLS-RAG Step 3 minimal entry
 
+> **Version-scoped reference.** This document describes its named method and
+> milestone, including historical results and commands. It is not a current
+> assignment or permission to reopen data. Start at [root AGENTS](../AGENTS.md)
+> and [the current entry](../START_HERE.md). Current L0 protection and standing
+> checkout/push instructions apply; later versioned briefs define successor work.
+
+
 Status: authorized by the user after successful local and Genoa Step 2
-verification. This is the active entry point for the fresh Step 3 agent.
+verification. This was the entry for the now-completed Step 3 task.
+The current entry is [START_HERE.md](../START_HERE.md).
 
 ## Baseline
 

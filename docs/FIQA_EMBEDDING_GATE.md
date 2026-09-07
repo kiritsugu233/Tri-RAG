@@ -1,5 +1,12 @@
 # FiQA PDCTP text preparation and E5 cache gate
 
+> **Version-scoped reference.** This document describes its named method and
+> milestone, including historical results and commands. It is not a current
+> assignment or permission to reopen data. Start at [root AGENTS](../AGENTS.md)
+> and [the current entry](../START_HERE.md). Current L0 protection and standing
+> checkout/push instructions apply; later versioned briefs define successor work.
+
+
 ## Scope
 
 This gate prepares only the corpus and external-query text needed for the new

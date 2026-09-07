@@ -1,5 +1,12 @@
 # Frozen SciFact text embeddings
 
+> **Version-scoped reference.** This document describes its named method and
+> milestone, including historical results and commands. It is not a current
+> assignment or permission to reopen data. Start at [root AGENTS](../AGENTS.md)
+> and [the current entry](../START_HERE.md). Current L0 protection and standing
+> checkout/push instructions apply; later versioned briefs define successor work.
+
+
 ## Gate and scope
 
 This stage creates normalized original-space embeddings only. It does not

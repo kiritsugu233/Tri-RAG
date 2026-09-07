@@ -1,5 +1,18 @@
 # TLS-RAG Step 3 synthetic observed-pair harness
 
+> **Calibration interpretation:** exact CP formula evaluation and nominal
+> Bonferroni allocation do not prove coverage for data-adaptive binning and
+> reachability on the same sample. These are internal controller calibration
+> values; see [the review](REPOSITORY_REVIEW.md). Historical numbers are retained.
+
+
+> **Version-scoped reference.** This document describes its named method and
+> milestone, including historical results and commands. It is not a current
+> assignment or permission to reopen data. Start at [root AGENTS](../AGENTS.md)
+> and [the current entry](../START_HERE.md). Current L0 protection and standing
+> checkout/push instructions apply; later versioned briefs define successor work.
+
+
 Status: closed on 2026-09-06 after local verification and a user-confirmed
 cluster replay with all gates passing. This document covers only the CPU-only,
 network-free, synthetic Step 3 harness. Step 4 is authorized only through the

@@ -1,5 +1,12 @@
 # TLS-RAG Step 4 frozen transfer protocol
 
+> **Version-scoped reference.** This document describes its named method and
+> milestone, including historical results and commands. It is not a current
+> assignment or permission to reopen data. Start at [root AGENTS](../AGENTS.md)
+> and [the current entry](../START_HERE.md). Current L0 protection and standing
+> checkout/push instructions apply; later versioned briefs define successor work.
+
+
 This milestone freezes a protocol and tests its guards using generated synthetic
 inputs only. It does not run real transfer, select a method, certify performance,
 measure latency, or start Step 5. The machine-readable specification is

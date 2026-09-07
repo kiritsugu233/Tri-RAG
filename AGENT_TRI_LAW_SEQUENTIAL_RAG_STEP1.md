@@ -1,5 +1,12 @@
 # Agent Task: Tri-Law Sequential RAG, Step 1
 
+> **Historical task brief — not the current assignment.** Its permissions,
+> next-step commands and reading restrictions describe its original milestone.
+> Start at [AGENTS.md](AGENTS.md) and [START_HERE.md](START_HERE.md); current
+> canonical-checkout, GitHub synchronization and L0 approval rules take precedence.
+> Do not restart this task or reopen data merely because this brief says to do so.
+
+
 ## 0. Authority and interpretation
 
 This file is an implementation assignment for a new agent. The user's current
@@ -69,7 +76,8 @@ or if the working tree contains overlapping modifications that cannot be
 preserved safely. Unrelated user files and untracked archives must not be
 staged, deleted, renamed, inspected, or modified.
 
-Do not push automatically unless the user explicitly asks. At handoff, provide
+For current work, the standing synchronization instruction in root AGENTS
+authorizes pushing the explicit reviewed task branch after checks; never force-push. At handoff, provide
 the exact local push command:
 
 ```bash

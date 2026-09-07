@@ -1,5 +1,12 @@
 # Agent Task: Tri-Law Guided Sequential RAG, Step 2
 
+> **Historical task brief — not the current assignment.** Its permissions,
+> next-step commands and reading restrictions describe its original milestone.
+> Start at [AGENTS.md](AGENTS.md) and [START_HERE.md](START_HERE.md); current
+> canonical-checkout, GitHub synchronization and L0 approval rules take precedence.
+> Do not restart this task or reopen data merely because this brief says to do so.
+
+
 ## 0. Authority and interpretation
 
 This file is the implementation assignment for Step 2 of the TLS-RAG
@@ -79,11 +86,11 @@ This Step 2 brief is added by a handoff commit on top of that base. At startup,
 verify that `cac654e` is an ancestor of `HEAD`, this file exists, and the Step 1
 specification and protocol are unchanged.
 
-When operating in a normal checkout, create the successor implementation
-branch `codex/tri-law-sequential-rag-step2` before editing. When the Codex app
-has already created a dedicated worktree/task branch, remain on that isolated
-task branch, record its exact name, and do not switch or mutate the frozen
-Step 1 branch. Never amend, rewrite, force-update, or continue development on
+The original implementation used successor branch
+`codex/tri-law-sequential-rag-step2`. Current work must use the canonical local
+checkout and the explicit current task branch under root AGENTS; do not continue
+in a Codex-managed worktree without a user-authorized exception. Do not switch
+or mutate the frozen Step 1 branch. Never amend, rewrite, force-update, or continue development on
 Raw Tri-Predict v1, PDCTP v2/v3, or their tags/branches.
 
 Stop if the Step 1 base is absent, the two Step 1 design documents differ from
@@ -93,7 +100,8 @@ unrelated untracked archives. In particular, do not access any returned
 query-cert archive or any query-cert/query-latency/query-test identity or
 outcome.
 
-Do not push automatically. At handoff, provide the exact push command for the
+For current work, follow root AGENTS: commit and push the explicit reviewed
+task branch after checks, without force. At handoff, provide the exact push command for the
 actual Step 2 task branch and exact cluster synchronization commands without
 force or reset.
 

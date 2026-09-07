@@ -1,5 +1,12 @@
 # TLS-RAG Step 4 readiness closeout
 
+> **Version-scoped reference.** This document describes its named method and
+> milestone, including historical results and commands. It is not a current
+> assignment or permission to reopen data. Start at [root AGENTS](../AGENTS.md)
+> and [the current entry](../START_HERE.md). Current L0 protection and standing
+> checkout/push instructions apply; later versioned briefs define successor work.
+
+
 Status: local and user-reported cluster readiness passed; real-data gate closed.
 Branch: `codex/tls-rag-step4-readiness`. Base/handoff:
 `0e4df85df3cd6bc9427476702a3b90339576636e`.

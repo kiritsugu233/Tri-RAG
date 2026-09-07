@@ -39,6 +39,12 @@ TLS-RAG docs, Step 1/2 briefs, Step 2 module/config/test, and all files below
 | `docs/IMPLEMENTATION_PLAN.md` | `a8f8d95bd73d4de35c4749dd05e28bb260b26195eaf84e3b01dc37c43f1f3633` |
 | `STATUS.md` | `0597e7bc5ff9b839191e34d65b56033ed06bce4b82f49f625f4e3dddcc3ff213` |
 
+Every hash above describes the file at `f46ce73`, not necessarily current HEAD.
+The 2026-09-07 authorized Markdown review added scope notices and corrected
+current instructions/statistical interpretation in some working documents.
+Use `git show f46ce73:PATH` to recover the exact historical bytes; do not update
+these historical hashes to match corrected prose.
+
 The plan and status hashes describe their Step 2 versions. Later append-only
 handoff updates are expected to change those two working documents; the
 `f46ce73` Git objects remain the immutable originals.

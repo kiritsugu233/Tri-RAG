@@ -1,5 +1,12 @@
 # Tri-Law Guided Sequential RAG Controller (TLS-RAG) v1 specification
 
+> **Method boundary:** this is the original TLS-RAG dual-bound design.
+> Step 4 retention v3 uses a separately versioned residual-adjusted retention
+> score, not this stopping rule. The 2026-09-07 review corrects the interpretation
+> of adaptive CP calibration without changing code, thresholds or old artifacts.
+> Follow [root AGENTS](../AGENTS.md) and [the current entry](../START_HERE.md).
+
+
 Status: Step 1 design freeze. This document defines a successor algorithm
 family. It is not a Tri-Predict, PDCTP, or Calibrated Tri-Predict version, and
 it does not authorize Step 2 implementation or any real-data run.
@@ -151,12 +158,13 @@ annotations before TLS-RAG can make its primary evidence claim.
 ### 3.5 Calibrated stopping rule
 
 The provisional formula is revised to avoid presenting point predictions as
-posterior probabilities. The frozen calibration procedure produces:
+posterior probabilities. The frozen implementation computes the following internal calibration values
+using one-sided Clopper-Pearson formulas:
 
-- `U_gain(S_t)`: a simultaneous one-sided upper confidence limit for the
+- `U_gain(S_t)`: a nominal one-sided upper limit for the
   remaining-useful-evidence event rate among independent calibration queries
   at the same stage and frozen calibrated-score bin; and
-- `L_suff(S_t)`: a simultaneous one-sided lower confidence limit for the
+- `L_suff(S_t)`: a nominal one-sided lower limit for the
   current-sufficiency event rate in the corresponding stage/bin.
 
 Score models are fit on a stable-hash `query_cal_fit` subset. Score mappings and
@@ -168,8 +176,14 @@ already frozen earlier actions. Each candidate/stage/bin/outcome cell uses an
 exact one-sided Clopper-Pearson limit with the predeclared family-wise alpha
 allocation. An empty or underpowered cell returns the vacuous interval
 `[0, 1]`. Query IDs, rather than correlated states from the same query, are the
-independent units. These are reachable-bin event-rate bounds under the frozen
-exchangeability assumption; they are not exact individual posteriors.
+independent units. These are internal reachable-bin calibration values, not individual posteriors.
+In the implemented Step 3 procedure, bin edges and subsequent reachability are
+constructed using the same bound-fit sample. Independent query IDs and nominal
+Bonferroni allocation alone do not establish simultaneous population coverage
+for that adaptive procedure. Its CP formula is exact for a fixed binomial
+experiment; no full-controller coverage theorem has been established here.
+Independent held-out certification of the completely frozen policy is separate,
+as clarified in the Step 4 v1 brief. V2/v3 probes make descriptive claims only.
 
 `delta_gain`, `tau_sufficient`, the candidate score model, and all controller
 hyperparameters form a preregistered candidate grid. Models and candidate-

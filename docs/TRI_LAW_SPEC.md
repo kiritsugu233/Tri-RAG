@@ -1,5 +1,12 @@
 # Exact Dense-Gaussian Tri-Law Specification
 
+> **2026-09-07 numerical review:** the mathematical identities below remain
+> the contract, but the frozen implementation does not satisfy them on every
+> accepted float64 boundary input. See R1/R2 in [the review](REPOSITORY_REVIEW.md)
+> and the reproducible audit script. This is not a tolerance change or a fixed
+> implementation. Formula, tolerance and test changes require prior L0 approval.
+
+
 This document is the implementation contract for the exact single-triplet law in *Predict Before You Project*. It separates the paper's exact theorem from Tri-Predict and from this project's query-adaptive extension.
 
 ## 1. Scope
@@ -84,7 +91,12 @@ The direct denominator suffers cancellation as `abs(rho)` approaches one. For no
 r = (s + beta - 1)^2 / (4 * beta * (1 - rho^2))
 ```
 
-Use this stable expression near collinearity. Clip a floating-point `rho` only to `[-1,1]`; do not silently replace a genuinely non-collinear input by the collinear branch. Record and test the chosen numerical tolerance.
+Use this expression near collinearity, but note that rationalizing the
+denominator alone does not stabilize the discriminant at joint near-tie and
+near-collinear inputs. The identity `D = (beta - 1)^2 + 4*beta*(1-rho^2)`
+helps explain the cancellation; evaluating all finite magnitudes also needs
+scaling/overflow analysis. The current implementation has not yet been repaired.
+Do not certify its complete numerical domain from the formula alone. Clip a floating-point `rho` only to `[-1,1]`; do not silently replace a genuinely non-collinear input by the collinear branch. Record and test the chosen numerical tolerance.
 
 ### Boundary cases
 

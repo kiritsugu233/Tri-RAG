@@ -1,5 +1,12 @@
 # Tri-Predict Error Attribution and Fresh Synthetic Repair
 
+> **Version-scoped reference.** This document describes its named method and
+> milestone, including historical results and commands. It is not a current
+> assignment or permission to reopen data. Start at [root AGENTS](../AGENTS.md)
+> and [the current entry](../START_HERE.md). Current L0 protection and standing
+> checkout/push instructions apply; later versioned briefs define successor work.
+
+
 ## Question
 
 The Milestone 4 development run at `m_prime=16` passed its retention certificate but used more candidates than the smallest certified fixed budget. This experiment asks whether the main cause is pilot-LID estimation or later Tri-Predict approximations.

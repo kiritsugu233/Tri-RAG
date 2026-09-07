@@ -1,5 +1,71 @@
 # Agent Instructions
 
+## Repository-wide code protection and approval (2026-09-07)
+
+These rules apply to this entire repository, including source, tests, configs,
+scripts and documentation. `AGENTS.md` is canonical; `agent.md` is only an alias.
+The user explicitly requested this protection policy. Start with
+`START_HERE.md`, then the relevant entries in `docs/CODE_PROTECTION.md` and the
+current task brief. Historical briefs do not override these rules, the standing
+checkout/push instruction, or the user's explicit current authorization.
+Old read allowlists constrain their original implementation tasks; they do not
+block a user-authorized repository-wide source/Markdown review.
+
+Every implementation file has an explicit level in `docs/code_protection.json`;
+the human-readable per-file register is `docs/CODE_PROTECTION.md`.
+
+- **L0 — protected scientific core or frozen contract. Before any edit, obtain
+  explicit user approval for the exact affected paths and intended change.**
+  This includes formulas, numeric tolerances, conformance tests, retrieval
+  geometry/ties, calibration/stopping semantics, split/certification guards,
+  frozen protocol settings, cache/fingerprint behavior and bound source files.
+- **L1 — controlled implementation.** Changes within the user's task may proceed
+  with impact analysis and relevant tests, provided all L0 contracts and frozen
+  results remain unchanged. A semantic change to an L0 contract through a caller,
+  wrapper, new implementation, dependency, or config is itself an L0 change.
+- **L2 — presentation or maintenance.** Routine authorized changes may proceed;
+  do not change scientific claims, recorded results or authorization boundaries
+  under the guise of wording or formatting.
+
+Protection level is change risk, **not a correctness grade**. Known defects,
+review evidence and limitations are in `docs/REPOSITORY_REVIEW.md`. In particular,
+Tri-Law has reproducible floating-point boundary defects at the reviewed baseline;
+neither passing existing tests nor L0 registration means it is defect-free.
+
+For an L0 request, first do read-only analysis and prepare a concrete proposal:
+
+1. Give exact file/function names and the reproducible defect or requirement.
+2. Explain why modification is necessary and why an L1-only solution cannot
+   preserve the intended contract. Describe the proposed change precisely.
+3. List affected APIs, tests, fingerprints, historical artifacts, data roles,
+   scientific claims and compatibility consequences; give the validation plan.
+4. Ask the user to approve that scope and **wait before editing protected files**.
+   A general next-step/fix/refactor instruction is not scoped L0 consent unless
+   it explicitly authorizes that protected change. Do not ask again when such
+   consent already exists in the current task; record its scope at handoff.
+5. After approval, make only the approved changes, retain failure evidence,
+   use a new scientific version/namespace when needed, run required checks and
+   update the protection baseline with the approval reference. Changed policy
+   after cert/probe inspection requires fresh independent evaluation as applicable.
+
+Do not evade L0 by copying/replacing a protected implementation, monkeypatching,
+changing imports, loosening/skipping tests, changing dependency versions, changing
+hashes/expected results, deleting/renaming files, or downgrading the registry.
+Approval/protection rules in this file, `agent.md`, `docs/CODE_PROTECTION.md`,
+`docs/code_protection.json`, and `scripts/check_code_protection.py` are themselves
+L0 governance. Weakening these controls requires the same prior approval.
+Adding a new file's L1/L2 registry row within an authorized task is routine;
+it cannot alter existing entries or exempt inherited L0 semantics.
+
+Run `python3 scripts/check_code_protection.py` before editing and before handoff.
+It checks inventory and L0 SHA-256 values without modifying files; it cannot
+verify that a human approved a change. A mismatch is evidence to investigate,
+not permission to reset user changes or automatically refresh hashes. Unlisted
+code must be classified before editing; use L0 for scientific core/contracts,
+L1 for other implementation, L2 only for presentation/maintenance.
+The approval record must quote or reference actual user consent; never fabricate
+consent in a local file. Repo tooling is a review guard, not OS access control.
+
 ## Canonical local checkout and GitHub synchronization
 
 User instruction effective after the Step 4 readiness milestone:
@@ -22,7 +88,7 @@ User instruction effective after the Step 4 readiness milestone:
   the reviewed commit. Provide exact replay commands and record actual results;
   do not infer a cluster result from a local run.
 
-These instructions apply to the entire `query-adaptive-tri-rag-harness` directory.
+These instructions apply to the entire canonical repository above.
 
 ## Mission
 
@@ -71,8 +137,10 @@ Out of scope for the MVP:
 
 ## Calibrated Tri-Predict v2 addendum
 
-These additional rules apply only on the successor branch and do not alter the
-tagged Raw Tri-Predict v1 baseline:
+These additional rules apply to the Calibrated Tri-Predict family wherever its
+code is checked out; branch names do not disable them. They do not alter the
+tagged Raw Tri-Predict v1 baseline. TLS-RAG uses its separately versioned protocol;
+never confuse Calibrated Tri-Predict v3 with TLS-RAG Step 4 retention v3:
 
 1. Add a separate `query_cal` role for fitting calibration parameters. Policy
    candidate selection still uses `query_tune`; scientific certification uses

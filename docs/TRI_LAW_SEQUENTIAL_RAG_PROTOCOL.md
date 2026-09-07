@@ -1,5 +1,12 @@
 # TLS-RAG v1 fresh-data and evaluation protocol
 
+> **Method boundary:** this is the original TLS-RAG dual-bound design.
+> Step 4 retention v3 uses a separately versioned residual-adjusted retention
+> score, not this stopping rule. The 2026-09-07 review corrects the interpretation
+> of adaptive CP calibration without changing code, thresholds or old artifacts.
+> Follow [root AGENTS](../AGENTS.md) and [the current entry](../START_HERE.md).
+
+
 Status: Step 1 design freeze. This protocol defines future gates. It authorizes
 no real-data access, download, embedding run, protected-role run, or LLM call.
 
@@ -111,11 +118,14 @@ Correlated states from one query are never counted as independent calibration
 samples. Limits are computed separately at each stage over independent query
 IDs and separately for every preregistered candidate. Candidate-specific tables
 are built sequentially: only calibration queries whose earlier frozen actions
-reach stage `t` enter its cells. The family-wise allocation covers candidates,
-stages, bins, and both outcomes. Empty or underpowered cells return `[0, 1]`,
-which prevents STOP. The artifact must call these values reachable-bin event-
-rate confidence limits, not per-query posterior probabilities or exact Tri-Law
-bounds.
+reach stage `t` enter its cells. The nominal alpha is allocated across candidates,
+stages, bins, and both outcomes. This bookkeeping does not prove simultaneous
+coverage after adaptive binning and reachability on the same bound-fit queries. Empty or underpowered cells return `[0, 1]`,
+which prevents STOP. Interpret artifact fields as internal reachable-bin calibration values,
+not established simultaneous population confidence limits, per-query posterior
+probabilities, or exact Tri-Law bounds. Historical field names remain unchanged.
+A new coverage claim requires a justified sampling/calibration procedure and
+independent final certification; the existing synthetic tests do not provide it.
 
 ## 6. Fixed reference and tune selection
 

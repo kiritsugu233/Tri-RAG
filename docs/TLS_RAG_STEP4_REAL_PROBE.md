@@ -1,5 +1,12 @@
 # TLS-RAG Step 4: first real retrieval probe (v2)
 
+> **Version-scoped reference.** This document describes its named method and
+> milestone, including historical results and commands. It is not a current
+> assignment or permission to reopen data. Start at [root AGENTS](../AGENTS.md)
+> and [the current entry](../START_HERE.md). Current L0 protection and standing
+> checkout/push instructions apply; later versioned briefs define successor work.
+
+
 Implementation entry: `docs/TLS_RAG_STEP4_REAL_PROBE.md`.
 Local checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 Branch: `codex/tls-rag-step4-real-probe`, based on `fc38d928e428dc8c10a3ea16e5ec5db5ccfbf72a`.

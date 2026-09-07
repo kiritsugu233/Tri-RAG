@@ -1,5 +1,12 @@
 # TLS-RAG Step 3 implementation brief
 
+> **Historical task brief — not the current assignment.** Its permissions,
+> next-step commands and reading restrictions describe its original milestone.
+> Start at [AGENTS.md](AGENTS.md) and [START_HERE.md](START_HERE.md); current
+> canonical-checkout, GitHub synchronization and L0 approval rules take precedence.
+> Do not restart this task or reopen data merely because this brief says to do so.
+
+
 ## 1. Mission
 
 Complete only TLS-RAG Step 3: the CPU/network-free synthetic observed-pair
@@ -260,5 +267,6 @@ micromamba activate tri-rag
 
 At the end, update `docs/TLS_RAG_STEP3_SYNTHETIC.md` plus only the bounded
 TLS-RAG sections of `docs/IMPLEMENTATION_PLAN.md` and `STATUS.md`. Commit every
-Step 3 change on the isolated task branch. Do not push automatically. Stop and
+Step 3 change on the isolated task branch. For current work, follow root AGENTS for the authorized explicit-branch push;
+never force-push. Stop and
 wait for user review; passing Step 3 tests does not authorize Step 4.
