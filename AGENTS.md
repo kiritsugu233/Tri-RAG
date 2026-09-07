@@ -71,10 +71,14 @@ consent in a local file. Repo tooling is a review guard, not OS access control.
 
 User instruction updated after the repository review and Tri-Law repair:
 
-- Continue subsequent authorized work on `codex/repo-review-code-protection`,
-  using its reviewed-and-repaired HEAD as the shared starting point. Do not
-  automatically create a new branch for every step. This supersedes the older
-  per-step-branch workflow; use another branch only when explicitly requested.
+- Continue subsequent authorized Step 4 work on the existing `codex/tls-rag-step4-retention-v3`.
+  It includes reviewed-and-repaired baseline `62377d854ddd183925c4b62ca81653e9c14d9c34`.
+  Preserve `codex/repo-review-code-protection` at that commit as the review backup;
+  do not commit or push subsequent implementation to the backup branch.
+  The user explicitly clarified this branch arrangement on 2026-09-07. It
+  supersedes the earlier instruction to develop on the review branch itself.
+  Keep using this Step 4 branch across future version updates, despite its v3
+  name. Create another branch only when explicitly requested.
 - The latest maintained code is the HEAD of that continuing branch. The old
   `248c29e` experiment baseline and `c40b7b0` review-only commit are historical
   references, not starting points for new implementation. Read `START_HERE.md`.

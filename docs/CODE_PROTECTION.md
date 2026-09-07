@@ -2,7 +2,9 @@
 
 权威规则：[AGENTS.md](../AGENTS.md)。机器清单：[code_protection.json](code_protection.json)。
 原审查基线：`248c29e2243c60b3793458c8ee723eefba5a5855`。
-当前受维护版本：`codex/repo-review-code-protection` 的 HEAD，包含经用户批准的
+当前受维护版本：`codex/tls-rag-step4-retention-v3` 的 HEAD，已纳入审查修复提交
+`62377d854ddd183925c4b62ca81653e9c14d9c34`。`codex/repo-review-code-protection` 保留在该提交作备份。
+用户于 2026-09-07 明确要求此分支安排；仅更新工作流登记，不改变保护等级或审批规则。包含经用户批准的
 [Tri-Law 数值 v2 修复](TRI_LAW_NUMERICAL_FIX.md)。机器清单逐项记录批准后的哈希。
 
 | 等级 | 含义 | 变更要求 |

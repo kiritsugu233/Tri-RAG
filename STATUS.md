@@ -2,7 +2,25 @@
 
 Updated: 2026-09-07
 
-## Current: approved Tri-Law numerical v2 repair (2026-09-07)
+## Current: reviewed baseline adopted by the continuing Step 4 branch (2026-09-07)
+
+- Local checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
+- Continuing Step 4 branch: `codex/tls-rag-step4-retention-v3`; fast-forwarded from
+  `248c29e` to reviewed-and-repaired `62377d854ddd183925c4b62ca81653e9c14d9c34`.
+- Review backup: `codex/repo-review-code-protection`, retained at that exact reviewed commit.
+  Future Step 4 versions use the existing continuing branch, without a new branch.
+- This milestone updates branch routing and its protection record only. Scientific
+  source, tests, configs, dependencies and recorded experiment artifacts match the
+  review baseline. L0 approval rules and all protection levels remain in force.
+- Validation: `python3 scripts/check_code_protection.py`, `git diff --check`,
+  `sh scripts/run_tests.sh`: 270 tests in 31.547 s, 269 passed, 1 optional FAISS
+  skip. Protection (178 files), branch ancestry, unchanged implementation and
+  modified-document links/fences passed. Log: `/private/tmp/step4-branch-alignment-tests.log`.
+- User confirmed that the real v3 acceptance code has not been run. Next task:
+  prepare the corrected-source experiment's compatibility plan before real acceptance;
+  old v2 bundles are still rejected, and old hashes must not be rewritten.
+
+## Historical: approved Tri-Law numerical v2 repair (2026-09-07)
 
 - Maintained code: latest HEAD of `codex/repo-review-code-protection`, in the
   canonical checkout. Continue future authorized steps on this same branch.
@@ -86,10 +104,11 @@ localized the earliest failure to the scalar LID rank-distance power law and
 retains a network-free low/high effective-Tri-LID repair only as a historical
 reference. No v3 real-data policy or positive v3 result exists.
 
-Current scientific implementation is TLS-RAG Step 4 retention v3 at
-`248c29e2243c60b3793458c8ee723eefba5a5855`; actual cluster acceptance remains
-unverified locally. The current repository audit is on
-`codex/repo-review-code-protection`. Start at `START_HERE.md`, then root
+TLS-RAG Step 4 retention v3 was introduced at historical commit
+`248c29e2243c60b3793458c8ee723eefba5a5855`. Its continuing branch is now
+`codex/tls-rag-step4-retention-v3`, based on reviewed-and-repaired `62377d8`; the user
+confirmed real v3 acceptance has not run. The review backup is
+`codex/repo-review-code-protection` at `62377d8`. Start at `START_HERE.md`, then root
 protection rules and the current task brief. The sections below retain their
 historical chronology; their old "next" tasks and authorization statements are
 not current work orders. In particular, Step 3 is complete and Step 5 is not

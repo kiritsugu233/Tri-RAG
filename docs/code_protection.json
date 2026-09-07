@@ -9,7 +9,7 @@
       "path": "AGENTS.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "f90b75683df7ef19f97cacc9067f93995a76430d87f796d9e7b627a67e720f99"
+      "sha256": "53dca5fce4982c80c011b5a4747dd9cf267371381425f37731265274f82b0b3f"
     },
     {
       "path": "AGENT_CALIBRATED_TRI_PREDICT.md",
@@ -286,7 +286,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "70d2bcda84c38c12c28aab778fd5ad9607078f7b95dd0e2cf759f88f07fe00cc"
+      "sha256": "c410f85e19bea4bb3eb07b5cd83ce91eeb013e2d91495c6065a61eb57a80c6ec"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -419,7 +419,7 @@
       "path": "docs/TLS_RAG_STEP4_RETENTION_V3.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "f0b44a666bcda66284cc4c4b94bc1070fce7b6938f201728432a296f4e676f0c"
+      "sha256": "e4fc0b6b7d381849ac7c69228b770451ca8f364944048eaada911645c62dfc72"
     },
     {
       "path": "docs/TLS_RAG_STEP4_START_HERE.md",
@@ -1296,8 +1296,37 @@
         }
       ],
       "registry_change": "This approval history and corresponding approved hashes; two new L1 evidence rows; no existing level downgraded."
+    },
+    {
+      "date": "2026-09-07",
+      "parent_commit": "62377d854ddd183925c4b62ca81653e9c14d9c34",
+      "user_consent": "我希望之后的step4的branch里面是在此审查版本之上更新的。而这个审查的branch作为一个备份放在那里。最后之后更新的step4的内容不需要再新建一个branch了，branch太多了。",
+      "scope": "Adopt reviewed baseline in the existing Step 4 branch, preserve review branch as backup, and update branch-routing documentation/registry only. Scientific semantics and approval controls unchanged.",
+      "record": "docs/TLS_RAG_LOCAL_WORKFLOW.md",
+      "protected_changes": [
+        {
+          "path": "AGENTS.md",
+          "before_sha256": "f90b75683df7ef19f97cacc9067f93995a76430d87f796d9e7b627a67e720f99",
+          "after_sha256": "53dca5fce4982c80c011b5a4747dd9cf267371381425f37731265274f82b0b3f"
+        },
+        {
+          "path": "docs/CODE_PROTECTION.md",
+          "before_sha256": "70d2bcda84c38c12c28aab778fd5ad9607078f7b95dd0e2cf759f88f07fe00cc",
+          "after_sha256": "c410f85e19bea4bb3eb07b5cd83ce91eeb013e2d91495c6065a61eb57a80c6ec"
+        },
+        {
+          "path": "docs/TLS_RAG_STEP4_RETENTION_V3.md",
+          "before_sha256": "f0b44a666bcda66284cc4c4b94bc1070fce7b6938f201728432a296f4e676f0c",
+          "after_sha256": "e4fc0b6b7d381849ac7c69228b770451ca8f364944048eaada911645c62dfc72"
+        }
+      ],
+      "registry_change": "Maintained branch, backup identity and this approval record; existing protection levels unchanged."
     }
   ],
-  "maintained_branch": "codex/repo-review-code-protection",
-  "tri_law_numerical_version": 2
+  "maintained_branch": "codex/tls-rag-step4-retention-v3",
+  "tri_law_numerical_version": 2,
+  "review_backup": {
+    "branch": "codex/repo-review-code-protection",
+    "commit": "62377d854ddd183925c4b62ca81653e9c14d9c34"
+  }
 }

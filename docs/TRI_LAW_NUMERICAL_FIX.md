@@ -12,7 +12,9 @@ from the repaired review branch. It does not authorize deleting historical branc
 force-pushing or changing the GitHub default branch.
 
 Repair parent: `c40b7b0132b77a70e11fa2e5425fad3dc77b1116`.
-Current maintained branch: `codex/repo-review-code-protection` at its latest HEAD.
+Repair backup: `codex/repo-review-code-protection` at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
+The user subsequently reserved this branch as a backup. Current Step 4 development
+continues on the existing `codex/tls-rag-step4-retention-v3`; see [current entry](../START_HERE.md).
 [GitHub code](https://github.com/kiritsugu233/Tri-RAG/tree/codex/repo-review-code-protection).
 Local checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 Future authorized steps continue there; no automatic new branch per step.

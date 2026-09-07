@@ -8,6 +8,19 @@
 
 This checklist is the working plan for the implementation agent. Check items only after tests and artifacts exist.
 
+## Step 4 continuing branch alignment (2026-09-07)
+
+- [x] Fast-forward existing `codex/tls-rag-step4-retention-v3` to include reviewed baseline
+  `62377d854ddd183925c4b62ca81653e9c14d9c34`; retain `codex/repo-review-code-protection` at that commit.
+- [x] Persist canonical local checkout, one continuing Step 4 branch across versions,
+  and GitHub synchronization; preserve scientific contracts and review protection.
+- [x] Complete maintenance validation: protection check, diff/link checks and
+  full offline suite (270 tests: 269 passed, 1 optional FAISS skip).
+- Publish this milestone on the continuing branch and verify its remote HEAD;
+  the review backup must remain at the reviewed commit.
+- Real v3 acceptance remains unrun, as explicitly confirmed by the user. Old v2
+  source-bound bundles need compatibility planning; this milestone does not run them.
+
 ## Milestone 0: repository skeleton
 
 - [x] Add `pyproject.toml` with a minimal supported Python version and pinned/locked dependencies.

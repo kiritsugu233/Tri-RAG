@@ -9,10 +9,12 @@ The user fixed the local working directory for every subsequent step to:
 Run local implementation, tests, Git commits and GitHub synchronization there.
 Do not use `.codex/worktrees/...` for new local steps without a new explicit
 exception. Preserve existing untracked files and user changes. The single continuing
-branch is `codex/repo-review-code-protection`, including the reviewed code and
-approved Tri-Law numerical v2 repair; inspect actual HEAD. Do not create a new
-branch for every step. `codex/tls-rag-step4-retention-v3` (`248c29e`) is the
-historical experimental baseline, not the current implementation starting point.
+Step 4 branch is `codex/tls-rag-step4-retention-v3`, fast-forwarded to include
+reviewed baseline `62377d854ddd183925c4b62ca81653e9c14d9c34` and the approved Tri-Law
+numerical v2 repair. Inspect actual HEAD. Preserve `codex/repo-review-code-protection`
+at that baseline as a backup. Do not push ongoing work to it or create another
+branch for each Step 4 update; the continuing branch name stays the same across
+versions. `248c29e` is only the historical pre-review experiment commit.
 Historical initial readiness commit:
 `155070d8df96a773d83a650db84e6ec69d12c51e`. The remote is
 `https://github.com/kiritsugu233/Tri-RAG.git`.

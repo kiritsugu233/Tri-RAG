@@ -2,7 +2,8 @@
 
 > **After the approved Tri-Law repair:** this is the historical v3 experiment
 > brief and replay command for the old source-bound v2 bundle. Current development
-> uses `codex/repo-review-code-protection` HEAD. Its repaired `tri_law.py` has a new
+> uses `codex/tls-rag-step4-retention-v3` HEAD, which includes the reviewed
+> baseline `62377d8`; `codex/repo-review-code-protection` stays as its backup. Its repaired `tri_law.py` has a new
 > hash, so the unchanged loader correctly refuses the old bundle. Do not use the
 > clone/run instructions below as the current development startup, or rewrite
 > old hashes. Use the original reviewed commit for historical replay; new runs

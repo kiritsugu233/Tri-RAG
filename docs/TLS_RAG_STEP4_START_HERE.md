@@ -3,8 +3,10 @@
 Updated 2026-09-07. Begin with [root AGENTS](../AGENTS.md) and
 [START_HERE](../START_HERE.md). Use the canonical checkout and inspect actual
 branch, HEAD and changes. The current implementation
-starts from the HEAD of `codex/repo-review-code-protection`, now including the
-approved Tri-Law numerical v2 repair. `248c29e` is only the historical experiment
+starts from the HEAD of `codex/tls-rag-step4-retention-v3`, including reviewed baseline
+`62377d854ddd183925c4b62ca81653e9c14d9c34` and the approved Tri-Law numerical v2 repair.
+Keep `codex/repo-review-code-protection` at that baseline as a backup; use the same
+Step 4 branch for subsequent updates without creating new branches. `248c29e` is only the historical experiment
 baseline. Read [the repair record](TRI_LAW_NUMERICAL_FIX.md): old v2 source-bound
 bundles are rejected by the new code and must be replayed at the original commit;
 do not change their hashes. Continue new development on the current branch.

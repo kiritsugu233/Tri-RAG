@@ -4,8 +4,12 @@ Updated 2026-09-07. Local checkout:
 `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 
 The maintained code is **the reviewed repository with Tri-Law numerical v2**
-on the single continuing branch `codex/repo-review-code-protection`.
-[GitHub current code](https://github.com/kiritsugu233/Tri-RAG/tree/codex/repo-review-code-protection).
+on the single continuing Step 4 branch `codex/tls-rag-step4-retention-v3`.
+[GitHub current code](https://github.com/kiritsugu233/Tri-RAG/tree/codex/tls-rag-step4-retention-v3).
+The review backup `codex/repo-review-code-protection` remains at
+`62377d854ddd183925c4b62ca81653e9c14d9c34`; subsequent implementation does not update it.
+The existing Step 4 branch includes that reviewed baseline and keeps its name
+across future versions. This supersedes the earlier review-branch workflow.
 All subsequent authorized implementation starts from that branch's latest HEAD;
 do not automatically create another branch for each step. Local directory stays
 `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
@@ -17,8 +21,8 @@ checks and source-binding consequences are in
 [Tri-Law repair](docs/TRI_LAW_NUMERICAL_FIX.md). Inspect actual branch/HEAD before
 working; do not switch to an old branch based on a historical document.
 
-V3 implementation tests passed. Its actual cluster acceptance result has not
-been independently verified in this checkout. The v2 NFCorpus tune failure
+V3 implementation tests passed. The user explicitly confirmed on 2026-09-07
+that the v3 real acceptance code has not been run. The v2 NFCorpus tune failure
 is user-reported. Neither implies a positive v3 scientific result, formal
 certificate, serving latency improvement, or authorization for Step 5.
 

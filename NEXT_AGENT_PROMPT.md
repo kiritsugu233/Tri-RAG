@@ -12,8 +12,10 @@ Read in order:
 4. The current task's explicitly named brief. For TLS-RAG Step 4 retention v3,
    use [the Step 4 entry](docs/TLS_RAG_STEP4_START_HERE.md).
 
-Continue on `codex/repo-review-code-protection` at its latest reviewed-and-repaired
-HEAD, including Tri-Law numerical v2. Do not create a new branch for every step.
+Continue on the existing `codex/tls-rag-step4-retention-v3` at its latest HEAD,
+including reviewed baseline `62377d854ddd183925c4b62ca81653e9c14d9c34` and Tri-Law numerical v2.
+Keep `codex/repo-review-code-protection` at that baseline as an untouched backup.
+Do not create a new branch for each Step 4 update, even when its version changes.
 `248c29e` and `c40b7b0` are historical experiment/review-only snapshots.
 Read `docs/TRI_LAW_NUMERICAL_FIX.md` before reusing old source-bound bundles.
 No real acceptance run or Step 5 is authorized by this numerical repair. Do not restart calibrated v2,
