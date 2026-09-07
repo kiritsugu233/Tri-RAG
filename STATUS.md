@@ -1433,4 +1433,32 @@ start Step 4.
   preparation dependencies/CUDA remain unvalidated locally. Official dev/test labels
   remain unopened. Qrels are retrieval proxies; iid families are unaudited; all-prefix
   audit runtime is not serving latency. No certification or evidence guarantee.
+
+### Step 4 retention v3 implementation (2026-09-07)
+
+- User-reported v2 real result: `no_tune_candidate`; all adaptive rows mean budget
+  32, retention 0.6453, hit 0.6211; fixed-512 retention 0.9551. No independent local
+  access to the cluster bundle. V3 preflight will verify its on-disk provenance.
+- User authorized the retention-aligned successor and direct next acceptance commands.
+  Canonical checkout retained; branch `codex/tls-rag-step4-retention-v3`.
+- Implemented continuous stagewise retention models, independent calibration residual
+  margins and a frozen 27-policy tune grid. Acceptance remains retention >=0.90,
+  hit drop <=0.02 and mean original distance work <512. No inference-time labels.
+- Reuse verified v2 model-fit/bound-fit/tune features and embeddings; retain the
+  same unopened probe identities. V2 files and all frozen numerical code stay unchanged.
+  Matched Rows 2–4 probe diagnostics use the selected threshold and quantile.
+- Protocol fingerprint: `1d730efc412851c45b5ae2a600387ed4aca6c749aceaff87c30f40eebf55e026`.
+- New tests: 12 passed. Complete command:
+  `sh scripts/run_tls_rag_step4_readiness.sh /private/tmp/tls-rag-retention-v3-regression-01`.
+  Each of two rounds: 255 tests, 254 passed and one optional FAISS skip; 31.693/31.435 s.
+  Frozen focused tests 26/26 each; six v1 artifact bytes/fingerprints unchanged.
+- New artifacts: `/private/tmp/tls-rag-retention-v3-regression-01/{a,b}` and matching
+  `.log`; complete v3 fixture manifests also reproduce. No real v3 result yet.
+- Next actual acceptance: `sh scripts/run_tls_rag_step4_retention_v3.sh PREVIOUS_V2_RUN ABSENT_V3_OUTPUT`.
+  Complete GitHub/micromamba commands and exact prior data paths:
+  `docs/TLS_RAG_STEP4_RETENTION_V3.md`.
+- Risks/limits: empirical residual margins are not confidence bounds; held-out targets
+  are descriptive, not certification. Shared cal/tune roles are development data.
+  No automatic probe retuning, formal evidence guarantee or latency claim. No new
+  model/data download or GPU computation is needed for this successor acceptance.
 <!-- TLS-RAG STEP4 END -->

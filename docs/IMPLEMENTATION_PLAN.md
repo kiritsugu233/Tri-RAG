@@ -730,7 +730,22 @@ query-adaptive-tri-rag-harness/
       isolation, failure without probe opening, exact references and ablation deltas.
 - [x] Pass 14 new focused tests and two full 243-test CPU regressions; preserve
       all six v1 synthetic artifact fingerprints and bytes.
-- [ ] Execute and inspect the first real A100 run from the synchronized GitHub commit.
+- [x] Receive the user-reported v2 A100 aggregate result: no qualifying tune candidate.
+      The cluster bundle has not been independently inspected locally.
 - [ ] Establish algorithm effectiveness from the actual metrics; implementation tests
       do not establish a real-data benefit. Formal certification/latency remain separate.
+
+### Step 4 retention-aligned successor v3
+
+- [x] Record the user's negative v2 tune result without overwriting its artifacts.
+- [x] Replace hit-proxy stopping in a new module with stagewise continuous retention
+      fitting, calibrated residual margins and a predeclared 27-policy tune grid.
+- [x] Keep original acceptance gates, retrieval geometry/model and independent probe
+      identities; explicitly reuse cal/tune as development data only.
+- [x] Add verified old feature/vector reuse, strict parent failure/probe-unopened
+      checks, new closure receipts, stop-budget diagnostics and matched feature rows.
+- [x] Provide one complete next real acceptance command using micromamba `tri-rag`.
+- [x] Pass 12 new tests and two full 255-test regressions with preserved v1 artifacts.
+- [ ] Run v3 on the actual cluster bundle and inspect held-out acceptance results.
+- [ ] Formal statistical certification and measured latency remain future milestones.
 <!-- TLS-RAG STEP4 END -->

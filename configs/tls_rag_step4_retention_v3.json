@@ -1,0 +1,31 @@
+{
+  "schema": "tls_rag_retention_protocol_v3",
+  "parent_protocol_fingerprint": "9f31fc87ec1c0d38716474c951eefb456d3bda8e3637557390e3e577e5833952",
+  "target": "exact_original_top10_retention_fraction",
+  "model": "separate_standardized_ridge_per_stage_and_feature_family",
+  "ridge_regularization": 0.01,
+  "minimum_calibration_queries": 8,
+  "residual": "predicted_retention_minus_actual_retention",
+  "margin": "max_zero_empirical_residual_quantile_higher",
+  "residual_quantiles": [0.5, 0.8, 0.9],
+  "stop_thresholds": [0.9, 0.925, 0.95],
+  "stop_rule": "valid_prediction_minus_margin_at_least_threshold_otherwise_expand",
+  "terminal_rule": "stop_at_512_without_asserting_retention_success",
+  "acceptance": {
+    "minimum_retention": 0.9,
+    "maximum_hit_drop": 0.02,
+    "maximum_mean_original_distances_exclusive": 512
+  },
+  "tune_selection": "minimum_mean_original_distances_among_all_27_qualifying_policies_then_lexicographic_id",
+  "probe_comparison": "selected_policy_plus_rows2_3_4_at_the_same_selected_threshold_and_quantile",
+  "role_reuse": "v2_model_fit_bound_fit_tune_are_development_data_probe_stays_unopened_until_v3_selection",
+  "required_parent_status": "no_tune_candidate",
+  "retrieval_embedding_and_split": "unchanged_from_pinned_v2_bundle",
+  "no_qrels_or_exact_topk_at_inference": true,
+  "official_dev_test_closed": true,
+  "no_retuning_after_probe": true,
+  "descriptive_acceptance_only": true,
+  "residual_margins_are_not_confidence_bounds": true,
+  "iid_question_families_not_established": true,
+  "latency_claim": false
+}

@@ -1,5 +1,9 @@
 # TLS-RAG Step 4 start here
 
+Latest authorized successor: `docs/TLS_RAG_STEP4_RETENTION_V3.md`, branch
+`codex/tls-rag-step4-retention-v3`. This implements retention-aligned stopping
+after the user-reported v2 tune failure and provides the next real acceptance command.
+
 Successor requested after the readiness replay: the first real retrieval probe
 is documented in `docs/TLS_RAG_STEP4_REAL_PROBE.md`, on branch
 `codex/tls-rag-step4-real-probe`. Its new v2 experiment does not unlock or modify
