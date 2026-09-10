@@ -286,7 +286,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "38051f74b8cd355319e9193034ac0f5f1574cd0b41beac02dd25ddb868e26cf1"
+      "sha256": "0cff3bb2d7d8aecdbf645579f34b976b45b14fa1daae9a70ebc0695874a72ef5"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -1252,7 +1252,7 @@
       "path": "tests/test_tls_rag_step4_probe.py",
       "level": "L0",
       "reason": "Regression/conformance expectations protect frozen scientific behavior",
-      "sha256": "a00f7b20ea0540535d3a308baba4602c4f82f6000bfdcda6ec5e5d5a3777f23e"
+      "sha256": "ff17d5fd392fa4ec52cfc5b0f4638193a4fd850ba7c9020929cc8dcd0990a3df"
     },
     {
       "path": "tests/test_tls_rag_step4_repaired_acceptance.py",
@@ -1374,6 +1374,26 @@
         }
       ],
       "registry_change": "Four approved new entries and corresponding hashes/consent; no existing level downgraded."
+    },
+    {
+      "date": "2026-09-10",
+      "parent_commit": "b93f7b74a0fe30c308ae59817f16adc1abc4350d",
+      "user_consent": "批准",
+      "scope": "Explicit approval of preceding proposal: isolated larger calibration set for the successful v2 pipeline test, deterministic 4+4 underpowered-bin regression, protection register and STATUS/implementation-plan handoff. No production or real-acceptance changes. User retains commit/push responsibility.",
+      "record": "STATUS.md",
+      "protected_changes": [
+        {
+          "path": "tests/test_tls_rag_step4_probe.py",
+          "before_sha256": "a00f7b20ea0540535d3a308baba4602c4f82f6000bfdcda6ec5e5d5a3777f23e",
+          "after_sha256": "ff17d5fd392fa4ec52cfc5b0f4638193a4fd850ba7c9020929cc8dcd0990a3df"
+        },
+        {
+          "path": "docs/CODE_PROTECTION.md",
+          "before_sha256": "38051f74b8cd355319e9193034ac0f5f1574cd0b41beac02dd25ddb868e26cf1",
+          "after_sha256": "0cff3bb2d7d8aecdbf645579f34b976b45b14fa1daae9a70ebc0695874a72ef5"
+        }
+      ],
+      "registry_change": "Approved test and documentation hashes with actual scoped consent; no levels downgraded."
     }
   ],
   "maintained_branch": "codex/tls-rag-step4-retention-v3",

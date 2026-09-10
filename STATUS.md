@@ -2,7 +2,38 @@
 
 Updated: 2026-09-07
 
-## Current: reviewed-source Step 4 acceptance compatibility (2026-09-10)
+## Current: synthetic calibration test repair after Genoa failure (2026-09-10)
+
+- User reported Genoa regression: 289 tests in 431.025 s, one failure and one skip.
+  `test_pipeline_closes_every_role_before_labels_and_reproduces` expected probe access,
+  but v2 tune selected no candidate. NumPy 1.26.4 / SciPy 1.13.0 on x86_64 Linux.
+- User's synthetic diagnostic: all Rows 2/3/4 mean budget 12; stage-0 sufficiency
+  bins each have 4 queries, below minimum 8, invalid with bounds [0,1]. Gain upper
+  bound is 0.4774944150816123 (8 queries). Local Mac previously had a powered Row 2.
+  Exact BLAS-level cause is not independently established. User's diagnostic artifacts:
+  `/tmp/job-380959/tmp/tls-v2-synthetic-diagnostic-esif1dqi/run` (not accessed locally).
+- Scoped user approval: “批准”, responding to the preceding proposal limiting changes
+  to the existing v2 test, CODE_PROTECTION/json, STATUS and IMPLEMENTATION_PLAN.
+- Only the success-path test replaces its bound role with 32 independent seeded
+  vectors (seed 1001). It checks sample support without lowering the minimum and
+  retains label closure, successful selection, cost, retention and repeatability checks.
+  The shared fixture remains byte-for-byte unchanged for all other tests.
+- Added deterministic 4+4 case: test-local score injection exercises actual production
+  binning, confidence bounds, conservative controller and no-candidate selection;
+  all stages remain underpowered and no probe artifact is created.
+- Validation: focused v2 suite 15/15 in 2.122 s; full regression 290 tests in
+  38.022 s, 289 pass and one optional real-FAISS skip. Protection and diff checks pass.
+  Focused command: `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 -m unittest discover -s tests -p test_tls_rag_step4_probe.py -v`.
+  Log `/private/tmp/tls-probe-powered-tests.log`. Full command `sh scripts/run_tests.sh`,
+  log `/private/tmp/tls-probe-powered-full.log`.
+- No production source/config/dependency, real-data role, threshold, source binding or
+  existing experimental artifact changed. Real acceptance still has not run.
+- Canonical checkout and continuing branch unchanged. Leave edits unstaged/uncommitted;
+  user commits/pushes and pulls on the login node. Next: Genoa focused/full regression
+  before the already-documented repaired acceptance command. Local success is not a
+  claim of Genoa success. Keep the activated `tri-rag` environment; do not recreate it.
+
+## Historical: reviewed-source Step 4 acceptance compatibility (2026-09-10)
 
 - User approved the Chinese compatibility scope and requested manual local commit/push.
   Changes remain in `/Users/guanghongxu/Query-Adaptive-Tri-RAG`, on the existing

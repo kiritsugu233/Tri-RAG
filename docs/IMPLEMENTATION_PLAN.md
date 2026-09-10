@@ -8,6 +8,17 @@
 
 This checklist is the working plan for the implementation agent. Check items only after tests and artifacts exist.
 
+## Step 4 synthetic calibration regression repair (2026-09-10)
+
+- [x] Preserve the user-reported Genoa 4+4 underpowered-bin failure in STATUS.
+- [x] Increase only the success-path test calibration role to 32 independent queries;
+  assert sample support and retain original assertions and all production thresholds.
+- [x] Add deterministic 4+4 regression requiring conservative expansion and closed probe.
+- [x] Focused v2 suite passes 15/15; protection levels remain unchanged.
+- [x] Complete full local regression (290 tests: 289 pass, one optional FAISS skip)
+  and protection/diff checks; hand off uncommitted changes for user commit/push.
+- [ ] User replays on Genoa before real acceptance; no cluster success inferred locally.
+
 ## Step 4 reviewed-source acceptance compatibility (2026-09-10)
 
 - [x] Add scoped historical provenance validation and feature recomputation without

@@ -106,6 +106,21 @@ class ProbeTests(unittest.TestCase):
 
     def test_pipeline_closes_every_role_before_labels_and_reproduces(self):
         protocol, env, roles = fixture()
+        # Only this success-path integration test gets a larger independent
+        # bound-calibration set. Eight queries can split 4+4 across two bins,
+        # below the unchanged minimum of eight per cell on another BLAS backend.
+        rng = np.random.default_rng(1001)
+        bound_ids = [f'pipeline-bound-{i:03d}' for i in range(32)]
+        vectors = rng.normal(size=(32, protocol['embedding']['dimension']))
+        vectors /= np.linalg.norm(vectors, axis=1, keepdims=True)
+        retained = [q for q in env.queries if q.query_id not in roles[p.ROLES[1]]]
+        queries = {q.query_id: q.text for q in retained}
+        queries.update({qid: f'independent calibration subject{i}' for i, qid in enumerate(bound_ids)})
+        roles[p.ROLES[1]] = bound_ids
+        protocol['role_counts'][p.ROLES[1]] = len(bound_ids)
+        env = p.make_environment(env.upstream.corpus_ids, env.upstream.corpus_texts,
+            env.upstream.corpus_embeddings, queries,
+            np.vstack([*[q.embedding for q in retained], *vectors]), roles, protocol)
         results = []
         with tempfile.TemporaryDirectory() as root:
             for name in ('a', 'b'):
@@ -120,6 +135,15 @@ class ProbeTests(unittest.TestCase):
                     opened.append(role)
                     return {qid: list(env.upstream.corpus_ids) for qid in ids}
                 result = p.run_probe(env, roles, protocol, loader, output)
+                tables = json.loads((output / 'calibration_tables.json').read_text())
+                minimum = p.component_config(protocol).raw['calibration']['minimum_cell_query_count']
+                self.assertEqual(minimum, 8)
+                for table in tables:
+                    for outcome in ('remaining_useful_evidence_event', 'current_context_sufficiency_event'):
+                        cells = [c for c in table['cells'] if c['stage'] == 0 and c['outcome'] == outcome]
+                        self.assertEqual(sum(c['trials'] for c in cells), 32)
+                        self.assertTrue(all(c['trials'] >= minimum and c['valid']
+                                            for c in cells if c['trials']), cells)
                 self.assertEqual(opened, list(p.ROLES))
                 self.assertEqual(result['status'], 'descriptive_probe_targets_met')
                 self.assertFalse(result['certified'])
@@ -133,6 +157,38 @@ class ProbeTests(unittest.TestCase):
                     self.assertEqual([r['retention'] for r in fixed], sorted(r['retention'] for r in fixed))
                     self.assertEqual(fixed[-1]['retention'], 1.)
             self.assertEqual(results[0], results[1])
+
+    def test_four_plus_four_underpowered_bins_keep_probe_closed(self):
+        protocol, env, roles = fixture()
+        opened = []
+        # Deliberately separated test scores reproduce the observed 4+4 bins
+        # without depending on platform-specific rounding near a score of one.
+        # Real fitting, binning, bounds, controller and selection still execute.
+        halves = {qid: index % 2 for ids in roles.values() for index, qid in enumerate(ids)}
+        original_predict = p.s3.LinearScoreModel.predict
+        def predict(model, state):
+            if model.outcome == 'current_context_sufficiency_event':
+                return p.s3.ScorePrediction(.25 + .5 * halves[state.query_id], True, 'valid')
+            return original_predict(model, state)
+        with tempfile.TemporaryDirectory() as root:
+            output = Path(root) / 'run'
+            def loader(role, ids):
+                opened.append(role)
+                return {qid: list(env.upstream.corpus_ids) for qid in ids}
+            with patch.object(p.s3.LinearScoreModel, 'predict', predict):
+                result = p.run_probe(env, roles, protocol, loader, output)
+            self.assertEqual(opened, list(p.ROLES[:3]))
+            self.assertEqual(result['status'], 'no_tune_candidate')
+            self.assertIsNone(result['selected_candidate'])
+            self.assertFalse(any(output.glob('query_probe.*')))
+            for table in json.loads((output / 'calibration_tables.json').read_text()):
+                for stage in range(3):
+                    cells = [c for c in table['cells'] if c['stage'] == stage
+                             and c['outcome'] == 'current_context_sufficiency_event']
+                    self.assertEqual([c['trials'] for c in cells], [4, 4])
+                    self.assertTrue(all(not c['valid'] and c['lower_limit'] == 0.
+                                        and c['upper_limit'] == 1. for c in cells))
+                self.assertEqual(result['summaries']['query_tune'][table['candidate_id']]['mean_original_distances'], 12.)
 
     def test_no_eligible_tune_candidate_keeps_probe_unopened(self):
         protocol, env, roles = fixture()
