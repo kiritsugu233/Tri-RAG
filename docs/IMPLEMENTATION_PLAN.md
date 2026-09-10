@@ -8,6 +8,17 @@
 
 This checklist is the working plan for the implementation agent. Check items only after tests and artifacts exist.
 
+## Step 4 reviewed-source acceptance compatibility (2026-09-10)
+
+- [x] Add scoped historical provenance validation and feature recomputation without
+  modifying the frozen v2/v3 loaders, policy or Tri-Law implementation.
+- [x] Add a separate binding/result namespace, unopened-probe guards and persistent
+  atomic reservation beside the old run; preserve old payloads and results.
+- [x] Document user-run local commit/push, login-node pull and Genoa acceptance commands.
+- [x] Complete focused tests (19/19), full offline regression (289 tests: 288 pass,
+  one optional FAISS skip), protection checks and two matching v1 artifact replays.
+- [ ] User executes the real cluster acceptance; no positive result inferred locally.
+
 ## Step 4 continuing branch alignment (2026-09-07)
 
 - [x] Fast-forward existing `codex/tls-rag-step4-retention-v3` to include reviewed baseline

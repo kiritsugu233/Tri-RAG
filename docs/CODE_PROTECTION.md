@@ -29,6 +29,20 @@ L0 变更检测到后不得自动重置文件或刷新哈希。批准信息必�
 不能顺便删除/降级已有项。整个已有源码兼容性仍受历史冻结规则约束。
 
 
+## Approved repaired acceptance entry (2026-09-10)
+
+用户明确批准中文兼容方案并要求亲自提交推送。新入口属于 L0 历史数据兼容：
+校验固定旧来源、重算特征、保留原策略和未开启 probe；不放宽既有校验器。
+实际批准原文、数据影响和运行命令见 [兼容验收记录](TLS_RAG_STEP4_REPAIRED_ACCEPTANCE.md)。
+登记新增文件及本文的说明哈希；既有保护等级、科学源码和审批规则均不改变。
+
+| File | Level | Reason |
+| --- | --- | --- |
+| [`src/tri_rag_harness/tls_rag_step4_repaired_acceptance.py`](../src/tri_rag_harness/tls_rag_step4_repaired_acceptance.py) | **L0** | Approved historical provenance, recomputation and held-out access contract |
+| [`tests/test_tls_rag_step4_repaired_acceptance.py`](../tests/test_tls_rag_step4_repaired_acceptance.py) | **L0** | Historical integrity, recomputation, selection/closure and reuse regressions |
+| [`scripts/run_tls_rag_step4_repaired_acceptance.sh`](../scripts/run_tls_rag_step4_repaired_acceptance.sh) | **L1** | CPU command wrapper; inherited scientific contracts remain L0 |
+| [`docs/TLS_RAG_STEP4_REPAIRED_ACCEPTANCE.md`](TLS_RAG_STEP4_REPAIRED_ACCEPTANCE.md) | **L0** | Approved compatibility, role and acceptance contract |
+
 ## Package source
 
 | File | Level | Reason |

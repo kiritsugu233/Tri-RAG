@@ -26,6 +26,16 @@ that the v3 real acceptance code has not been run. The v2 NFCorpus tune failure
 is user-reported. Neither implies a positive v3 scientific result, formal
 certificate, serving latency improvement, or authorization for Step 5.
 
+## Current acceptance entry (2026-09-10)
+
+Use [reviewed-source acceptance](docs/TLS_RAG_STEP4_REPAIRED_ACCEPTANCE.md).
+The approved compatibility entry validates the pinned historical v2 bundle and
+rebuilds every numerical feature using reviewed Tri-Law. Old loaders still reject
+old/current source mismatches; never rewrite historical hashes. The retention-v3
+policy and thresholds remain frozen. Real acceptance has not run locally.
+For this milestone the user will commit and push; leave implementation changes
+in the canonical checkout for that handoff, without creating another branch.
+
 ## Read before working
 
 1. [AGENTS.md](AGENTS.md): scope, preservation and prior approval for L0 changes.
@@ -55,7 +65,7 @@ untracked experiment archives into fresh evaluation data.
 | TLS-RAG Steps 1–3 | Completed design and synthetic implementation | Historical briefs only when specifically needed |
 | TLS-RAG Step 4 v1 | Completed synthetic protocol/readiness; its real gate remains closed | [V1 readiness](docs/TLS_RAG_STEP4_READINESS.md) |
 | TLS-RAG Step 4 v2 | Real retrieval-proxy probe; user reported no qualifying tune candidate | [V2 probe](docs/TLS_RAG_STEP4_REAL_PROBE.md) |
-| TLS-RAG Step 4 retention v3 | Latest implemented successor; real acceptance pending verification | [V3 acceptance](docs/TLS_RAG_STEP4_RETENTION_V3.md) |
+| TLS-RAG Step 4 retention v3 with reviewed Tri-Law | Compatibility entry tested; real acceptance pending | [Reviewed-source acceptance](docs/TLS_RAG_STEP4_REPAIRED_ACCEPTANCE.md) |
 
 Calibrated Tri-Predict v3 and TLS-RAG retention v3 are different methods.
 An old prompt, unchecked historical plan item, or reported past gate does not
@@ -76,12 +86,12 @@ For a fresh synthetic v1 reproducibility check, use an absent output parent:
 sh scripts/run_tls_rag_step4_readiness.sh /private/tmp/tls-rag-readiness-NEW
 ```
 
-These commands do not run the real v3 experiment. Old source-bound v2 bundles
-must still be replayed at their original commit: the repaired Tri-Law changes
-the code hash and the current loader correctly rejects those old bindings.
-Do not rehash an old bundle to bypass this check. New experiments start from
-this repaired branch with reviewed fresh bindings and the appropriate independent
-roles; see the repair record. Actual cluster success requires an actual result.
+These commands do not run the real experiment. The unchanged old loaders still
+reject pre-repair source-bound bundles. Historical direct replay requires its
+original commit. The explicitly approved repaired-acceptance entry instead
+validates the pinned historical provenance, reuses verified vectors, recomputes
+features and creates a separate reviewed-source binding without rewriting old
+hashes. Follow the new acceptance brief; actual cluster success requires an actual result.
 
 The original walking skeleton already exists. Its runnable config is
 `configs/synthetic_mvp.json`; the old proposed `configs/mvp_scifact.yaml`

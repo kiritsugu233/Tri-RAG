@@ -2,7 +2,33 @@
 
 Updated: 2026-09-07
 
-## Current: reviewed baseline adopted by the continuing Step 4 branch (2026-09-07)
+## Current: reviewed-source Step 4 acceptance compatibility (2026-09-10)
+
+- User approved the Chinese compatibility scope and requested manual local commit/push.
+  Changes remain in `/Users/guanghongxu/Query-Adaptive-Tri-RAG`, on the existing
+  `codex/tls-rag-step4-retention-v3`; review backup stays unchanged. No agent commit/push.
+- New `run_tls_rag_step4_repaired_acceptance.sh PREVIOUS_V2_RUN ABSENT_OUTPUT`
+  validates pinned historical provenance and recomputes all numerical features with
+  reviewed Tri-Law, then calls the unchanged retention-v3 engine. Separate binding,
+  result schema and persistent probe reservation prevent accidental output-name retries.
+- Source, tests, configs and results from previous milestones remain unchanged.
+  Instructions and actual user consent: [new acceptance brief](docs/TLS_RAG_STEP4_REPAIRED_ACCEPTANCE.md).
+- Validation: `python3 scripts/check_code_protection.py` passes (182 files);
+  `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 -m unittest discover -s tests -p test_tls_rag_step4_repaired_acceptance.py -v`
+  passes 19/19 in 5.806 s; `sh scripts/run_tests.sh` runs 289 tests in 36.368 s,
+  288 pass and one optional real-FAISS test skips. Logs:
+  `/private/tmp/tls-rag-repaired-focused-final.log`, `/private/tmp/tls-rag-repaired-full.log`.
+- Two standalone v1 CLI replays at `/private/tmp/tls-rag-repaired-v1-replay-20260910-a`
+  and `...-b` match all six historical fingerprints exactly. `git diff --check`,
+  modified Markdown links/fences, shell syntax and CLI help passed. All pre-existing
+  scientific files and their registry rows remain unchanged; Git index remains empty.
+- No real NFCorpus, cluster, GPU or archive access. Actual effectiveness is pending.
+- Next: user commits/pushes, pulls on the Slurm login node, and runs offline tests
+  plus acceptance in the existing micromamba environment on a Genoa compute node.
+- Limits: empirical held-out acceptance only, no certification/serving-latency claim;
+  historical integrity cannot detect unrecorded human inspection or deleted reservations.
+
+## Historical: reviewed baseline adopted by the continuing Step 4 branch (2026-09-07)
 
 - Local checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 - Continuing Step 4 branch: `codex/tls-rag-step4-retention-v3`; fast-forwarded from

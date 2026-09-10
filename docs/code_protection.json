@@ -286,7 +286,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "c410f85e19bea4bb3eb07b5cd83ce91eeb013e2d91495c6065a61eb57a80c6ec"
+      "sha256": "38051f74b8cd355319e9193034ac0f5f1574cd0b41beac02dd25ddb868e26cf1"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -416,6 +416,12 @@
       "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
     },
     {
+      "path": "docs/TLS_RAG_STEP4_REPAIRED_ACCEPTANCE.md",
+      "level": "L0",
+      "reason": "Approved compatibility, roles and acceptance contract",
+      "sha256": "da220369793f3df7afaa35d791bf428075a0912788bdf8ee6ea40c04a55ef3db"
+    },
+    {
       "path": "docs/TLS_RAG_STEP4_RETENTION_V3.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
@@ -513,6 +519,11 @@
       "path": "scripts/run_tls_rag_step4_readiness.sh",
       "level": "L1",
       "reason": "Verification/launcher orchestration; changing scientific gates or expected evidence inherits L0"
+    },
+    {
+      "path": "scripts/run_tls_rag_step4_repaired_acceptance.sh",
+      "level": "L1",
+      "reason": "CPU command wrapper; inherited scientific contracts remain L0"
     },
     {
       "path": "scripts/run_tls_rag_step4_retention_v3.sh",
@@ -974,6 +985,12 @@
       "sha256": "836d57790687e5748596ab11f038563c7b7e6f45d6a2cd2e9b4c3c2bc52d6636"
     },
     {
+      "path": "src/tri_rag_harness/tls_rag_step4_repaired_acceptance.py",
+      "level": "L0",
+      "reason": "Approved historical provenance, recomputation and held-out access contract",
+      "sha256": "69aac34b8da13c86bce2e1e759918643e3b49b02e08a257f22e656d7a3a469b0"
+    },
+    {
       "path": "src/tri_rag_harness/tls_rag_step4_retention_v3.py",
       "direct_test_imports": [
         "tests/test_tls_rag_step4_retention_v3.py"
@@ -1238,6 +1255,12 @@
       "sha256": "a00f7b20ea0540535d3a308baba4602c4f82f6000bfdcda6ec5e5d5a3777f23e"
     },
     {
+      "path": "tests/test_tls_rag_step4_repaired_acceptance.py",
+      "level": "L0",
+      "reason": "Historical integrity, recomputation and probe isolation regressions",
+      "sha256": "e087e2d4eb024449a6acd5bef69a54b7286e6fb2a0a7e97f115ab5f86dceb89f"
+    },
+    {
       "path": "tests/test_tls_rag_step4_retention_v3.py",
       "level": "L0",
       "reason": "Regression/conformance expectations protect frozen scientific behavior",
@@ -1321,6 +1344,36 @@
         }
       ],
       "registry_change": "Maintained branch, backup identity and this approval record; existing protection levels unchanged."
+    },
+    {
+      "date": "2026-09-10",
+      "parent_commit": "74d257fee6b435dc125e223b56f84ed14bce0d01",
+      "user_consent": "批准，你先修改吧，修干完后给我指令由我本地提交到github上去，然后在slurm的登陆节点git pull同步，等salloc到genoa节点后给我运行测试指令",
+      "scope": "Approval of preceding Chinese repaired-acceptance proposal: new provenance validation, recomputation, tests, launcher, contract and registration; no old scientific source or policy changes; user performs commit/push.",
+      "record": "docs/TLS_RAG_STEP4_REPAIRED_ACCEPTANCE.md",
+      "protected_changes": [
+        {
+          "path": "docs/CODE_PROTECTION.md",
+          "before_sha256": "c410f85e19bea4bb3eb07b5cd83ce91eeb013e2d91495c6065a61eb57a80c6ec",
+          "after_sha256": "38051f74b8cd355319e9193034ac0f5f1574cd0b41beac02dd25ddb868e26cf1"
+        },
+        {
+          "path": "src/tri_rag_harness/tls_rag_step4_repaired_acceptance.py",
+          "before_sha256": null,
+          "after_sha256": "69aac34b8da13c86bce2e1e759918643e3b49b02e08a257f22e656d7a3a469b0"
+        },
+        {
+          "path": "tests/test_tls_rag_step4_repaired_acceptance.py",
+          "before_sha256": null,
+          "after_sha256": "e087e2d4eb024449a6acd5bef69a54b7286e6fb2a0a7e97f115ab5f86dceb89f"
+        },
+        {
+          "path": "docs/TLS_RAG_STEP4_REPAIRED_ACCEPTANCE.md",
+          "before_sha256": null,
+          "after_sha256": "da220369793f3df7afaa35d791bf428075a0912788bdf8ee6ea40c04a55ef3db"
+        }
+      ],
+      "registry_change": "Four approved new entries and corresponding hashes/consent; no existing level downgraded."
     }
   ],
   "maintained_branch": "codex/tls-rag-step4-retention-v3",

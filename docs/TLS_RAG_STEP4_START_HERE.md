@@ -8,10 +8,22 @@ starts from the HEAD of `codex/tls-rag-step4-retention-v3`, including reviewed b
 Keep `codex/repo-review-code-protection` at that baseline as a backup; use the same
 Step 4 branch for subsequent updates without creating new branches. `248c29e` is only the historical experiment
 baseline. Read [the repair record](TRI_LAW_NUMERICAL_FIX.md): old v2 source-bound
-bundles are rejected by the new code and must be replayed at the original commit;
-do not change their hashes. Continue new development on the current branch.
+bundles remain rejected by the unchanged old loaders; historical direct replay
+requires the original commit. The approved compatibility entry below supports
+reviewed-source recomputation with explicit historical validation, not rehashing.
+Continue new development on the current branch.
 
-## Current retention-v3 task
+## Current repaired-source acceptance (2026-09-10)
+
+The user approved the separate [compatibility entry](TLS_RAG_STEP4_REPAIRED_ACCEPTANCE.md).
+Read that document, `src/tri_rag_harness/tls_rag_step4_repaired_acceptance.py`,
+its matching test and `scripts/run_tls_rag_step4_repaired_acceptance.sh` for the
+current runnable command. It checks historical provenance and recomputes features;
+it does not modify old loaders, caches or retention-v3 policy semantics.
+The older direct v3 command below is historical and cannot accept old bindings
+on this repaired checkout. The user will commit/push this milestone manually.
+
+## Frozen retention-v3 engine reference
 
 Read in this order when the task concerns the latest experiment:
 
