@@ -121,6 +121,17 @@ class ProbeTests(unittest.TestCase):
         env = p.make_environment(env.upstream.corpus_ids, env.upstream.corpus_texts,
             env.upstream.corpus_embeddings, queries,
             np.vstack([*[q.embedding for q in retained], *vectors]), roles, protocol)
+        # Keep this success-path fixture away from the clipping boundary.  Some
+        # BLAS implementations produce one score immediately below 1.0 while
+        # the other 31 clip to exactly 1.0, creating a platform-specific 1+31
+        # split.  The balanced scores still exercise the production binning,
+        # bounds, controller, selection and role-closure paths.
+        original_predict = p.s3.LinearScoreModel.predict
+        def predict(model, state):
+            if state.query_id in bound_ids:
+                index = int(state.query_id.rsplit('-', 1)[1])
+                return p.s3.ScorePrediction(.25 if index < 16 else .75, True, 'valid')
+            return original_predict(model, state)
         results = []
         with tempfile.TemporaryDirectory() as root:
             for name in ('a', 'b'):
@@ -134,7 +145,8 @@ class ProbeTests(unittest.TestCase):
                         self.assertIsNotNone(json.loads((output / 'selection.json').read_text())['selected_candidate'])
                     opened.append(role)
                     return {qid: list(env.upstream.corpus_ids) for qid in ids}
-                result = p.run_probe(env, roles, protocol, loader, output)
+                with patch.object(p.s3.LinearScoreModel, 'predict', predict):
+                    result = p.run_probe(env, roles, protocol, loader, output)
                 tables = json.loads((output / 'calibration_tables.json').read_text())
                 minimum = p.component_config(protocol).raw['calibration']['minimum_cell_query_count']
                 self.assertEqual(minimum, 8)

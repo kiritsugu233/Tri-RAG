@@ -1,8 +1,28 @@
 # Status
 
-Updated: 2026-09-07
+Updated: 2026-09-28
 
-## Current: synthetic calibration test repair after Genoa failure (2026-09-10)
+## Current: A800 boundary test-fixture repair (2026-09-28)
+
+- AutoDL A800 x86_64 Linux, NumPy 1.26.4 and SciPy 1.13.0 reproduced the same
+  `test_pipeline_closes_every_role_before_labels_and_reproduces` failure twice.
+  The 32 stage-0 sufficiency predictions split 1+31 at the clipped score 1.0;
+  `pipeline-bound-010` alone occupied an invalid cell below the frozen minimum 8.
+- User explicitly approved the proposed L0 scope: “同意，修复完后给我github同步的指令，
+  上传到github上更新repo”. Only `tests/test_tls_rag_step4_probe.py`, its protection
+  hash/approval record and this status entry changed.
+- The success-path fixture now gives the 32 independent bound queries deterministic
+  non-boundary scores split 16+16. Production binning, Clopper-Pearson bounds,
+  controller, selection, role closure and two-run reproduction still execute.
+  No assertion, minimum count, source/config/dependency or production code changed.
+- Focused validation passed locally in 0.975 s. Full regression command with one
+  BLAS thread per library ran 290 tests in 33.435 s: 289 passed, one optional
+  real-FAISS test skipped, zero failures. The A800 rerun remains required after
+  synchronizing this new commit; local success is not a reported cluster result.
+- Real Step 4 acceptance, protected roles and LLM inference remain unopened. This
+  repair creates no effectiveness, certification or latency result.
+
+## Historical: synthetic calibration test repair after Genoa failure (2026-09-10)
 
 - User reported Genoa regression: 289 tests in 431.025 s, one failure and one skip.
   `test_pipeline_closes_every_role_before_labels_and_reproduces` expected probe access,

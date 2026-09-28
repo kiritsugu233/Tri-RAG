@@ -286,7 +286,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "0cff3bb2d7d8aecdbf645579f34b976b45b14fa1daae9a70ebc0695874a72ef5"
+      "sha256": "361dc4f93005b699d74a3fde19bb328ed9d22e8d954f321783d91120d5f68d52"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -1252,7 +1252,7 @@
       "path": "tests/test_tls_rag_step4_probe.py",
       "level": "L0",
       "reason": "Regression/conformance expectations protect frozen scientific behavior",
-      "sha256": "ff17d5fd392fa4ec52cfc5b0f4638193a4fd850ba7c9020929cc8dcd0990a3df"
+      "sha256": "a272b1ab74c8fb935b6fd52871349f5fde907ec0b3313675deb4105df73bad7e"
     },
     {
       "path": "tests/test_tls_rag_step4_repaired_acceptance.py",
