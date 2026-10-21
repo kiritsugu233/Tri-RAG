@@ -1,0 +1,14 @@
+{
+  "schema": "tls_rag_a800_replay_protocol_v1",
+  "base_commit": "41697efcff924139a775de11e673caf4a2d68662",
+  "data_protocol_fingerprint": "9f31fc87ec1c0d38716474c951eefb456d3bda8e3637557390e3e577e5833952",
+  "retention_protocol_fingerprint": "1d730efc412851c45b5ae2a600387ed4aca6c749aceaff87c30f40eebf55e026",
+  "embedding_device": "cpu",
+  "historical_probe_observed": true,
+  "independent_validation": false,
+  "refit_and_reselect_on_reconstructed_tune": true,
+  "historical_selected_candidate": "row4-retention-v3-t0.900-q0.50",
+  "official_dev_test_opened": false,
+  "certified": false,
+  "latency_claim": false
+}

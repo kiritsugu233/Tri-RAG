@@ -1,5 +1,14 @@
 # Implementation Plan
 
+## A800 Step 4 reconstructed-data replay (2026-10-22)
+
+- [x] Record observed-probe, non-independent replay contract and preserve frozen math.
+- [x] Add new source binding, fresh preparation, replay and explicit-exit launcher mode.
+- [x] Complete offline tests (302, one skip) and protection checks (186 files).
+- [ ] Verify remote Conda environment and exact deployed code before any real run.
+- [ ] Run and archive A800 replay after gates pass; no independent validation claim.
+
+
 > **Historical milestone ledger.** Start at [the current entry](../START_HERE.md).
 > Earlier unchecked items and stop/go instructions belong to their named version;
 > they do not authorize work or supersede root governance. Current work is recorded

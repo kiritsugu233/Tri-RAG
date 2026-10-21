@@ -49,3 +49,12 @@ The v1 readiness real-data gate remains closed. Separately authorized v2/v3
 probe work follows its versioned brief and exact paths; this workflow does not
 authorize additional data access or Step 5. Read root AGENTS and run
 `python3 scripts/check_code_protection.py` before edits and at handoff.
+
+## A800 execution update (2026-10-22)
+
+User moved subsequent remote experiments to AutoDL A800. Local checkout/branch remain fixed.
+Use the existing Miniconda and an isolated tri-rag-step4 environment; preserve base.
+No set -e/-eu in the active workflow; print and inspect each exit code before proceeding.
+For this milestone the user retains commit/push responsibility. Follow
+[TLS_RAG_STEP4_A800_REPLAY.md](TLS_RAG_STEP4_A800_REPLAY.md); historical Genoa commands above
+are provenance, not current instructions.

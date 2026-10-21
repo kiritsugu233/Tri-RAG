@@ -1,5 +1,7 @@
 # TLS-RAG Step 4 current entry
 
+
+> 2026-10-22: 当前授权工作为 [A800 重建复现](TLS_RAG_STEP4_A800_REPLAY.md)。Genoa probe 已由用户报告开启且通过；本轮不再宣称独立验收。历史下文的未运行状态仅适用于当时。
 Updated 2026-09-07. Begin with [root AGENTS](../AGENTS.md) and
 [START_HERE](../START_HERE.md). Use the canonical checkout and inspect actual
 branch, HEAD and changes. The current implementation

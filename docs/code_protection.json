@@ -238,6 +238,12 @@
       "sha256": "c98b417b825953a889f929183ca454c819ef530c00ab676a06bd7c278e90c0b8"
     },
     {
+      "path": "configs/tls_rag_step4_a800_replay_v1.json",
+      "level": "L0",
+      "reason": "Approved A800 reconstructed-data replay contract/regression",
+      "sha256": "ef0af4726d026c5738d5596e831938221a71b4cdfecdbce6cd882ffd6503aa36"
+    },
+    {
       "path": "configs/tls_rag_step4_nfcorpus_probe_v2.json",
       "level": "L0",
       "reason": "Frozen experiment/config identity: roles, seeds, parameters and acceptance targets",
@@ -286,7 +292,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "361dc4f93005b699d74a3fde19bb328ed9d22e8d954f321783d91120d5f68d52"
+      "sha256": "4b7875cea409e0ee28a483f9f1c72ddca8e011e2a739aef8bf49dfca62cafc30"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -398,6 +404,12 @@
       "path": "docs/TLS_RAG_STEP3_TO_STEP4_HANDOFF.md",
       "level": "L1",
       "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP4_A800_REPLAY.md",
+      "level": "L0",
+      "reason": "Approved A800 reconstructed-data replay contract/regression",
+      "sha256": "c4f80b61fe24351bc735424459a20b502354f4fa2b168112db020689c7d88b0b"
     },
     {
       "path": "docs/TLS_RAG_STEP4_BRIEF.md",
@@ -964,6 +976,12 @@
       "sha256": "199ab95f9ee5f04456837b628d7c9e5f06b511191e8e9d781738c5b336340f33"
     },
     {
+      "path": "src/tri_rag_harness/tls_rag_step4_a800_replay.py",
+      "level": "L0",
+      "reason": "Approved A800 reconstructed-data replay contract/regression",
+      "sha256": "628c8a8e6fe910226d2f11014ff24feb191f2677765253514ab41a5876b8a70a"
+    },
+    {
       "path": "src/tri_rag_harness/tls_rag_step4_nfcorpus.py",
       "direct_test_imports": [
         "tests/test_tls_rag_step4_probe.py"
@@ -1249,6 +1267,12 @@
       "sha256": "ad12572de43d94908b4c4e2c085ad5a5597e40f36c4a78b9a352bf8960b6d632"
     },
     {
+      "path": "tests/test_tls_rag_step4_a800_replay.py",
+      "level": "L0",
+      "reason": "Approved A800 reconstructed-data replay contract/regression",
+      "sha256": "57d10b0135629652022bcef8f58983fb13a704bbfd7145c6699c5f4bb5f715fd"
+    },
+    {
       "path": "tests/test_tls_rag_step4_probe.py",
       "level": "L0",
       "reason": "Regression/conformance expectations protect frozen scientific behavior",
@@ -1394,6 +1418,41 @@
         }
       ],
       "registry_change": "Approved test and documentation hashes with actual scoped consent; no levels downgraded."
+    },
+    {
+      "date": "2026-10-22",
+      "parent_commit": "41697efcff924139a775de11e673caf4a2d68662",
+      "user_consent": "可以，但是我之前已经试过一次，在A800这个环境下基本没有什么问题。然后我也准备好了micromamba，你可以直接使用。完成之后告诉我修改了什么地方，然后使用的哪个micromamba创建的虚拟环境；随后更正：那就用miniconda吧，应该是我记错了",
+      "scope": "Approval of preceding concrete A800 replay plan: new reconstructed data, explicit non-independent replay schemas and tests, existing launcher modes/exit handling, protection and workflow docs. Use Miniconda. No old core/config/test changes.",
+      "record": "docs/TLS_RAG_STEP4_A800_REPLAY.md",
+      "protected_changes": [
+        {
+          "path": "docs/CODE_PROTECTION.md",
+          "before_sha256": "361dc4f93005b699d74a3fde19bb328ed9d22e8d954f321783d91120d5f68d52",
+          "after_sha256": "4b7875cea409e0ee28a483f9f1c72ddca8e011e2a739aef8bf49dfca62cafc30"
+        },
+        {
+          "path": "configs/tls_rag_step4_a800_replay_v1.json",
+          "before_sha256": null,
+          "after_sha256": "ef0af4726d026c5738d5596e831938221a71b4cdfecdbce6cd882ffd6503aa36"
+        },
+        {
+          "path": "src/tri_rag_harness/tls_rag_step4_a800_replay.py",
+          "before_sha256": null,
+          "after_sha256": "628c8a8e6fe910226d2f11014ff24feb191f2677765253514ab41a5876b8a70a"
+        },
+        {
+          "path": "tests/test_tls_rag_step4_a800_replay.py",
+          "before_sha256": null,
+          "after_sha256": "57d10b0135629652022bcef8f58983fb13a704bbfd7145c6699c5f4bb5f715fd"
+        },
+        {
+          "path": "docs/TLS_RAG_STEP4_A800_REPLAY.md",
+          "before_sha256": null,
+          "after_sha256": "c4f80b61fe24351bc735424459a20b502354f4fa2b168112db020689c7d88b0b"
+        }
+      ],
+      "registry_change": "Four new L0 files, scoped documentation hashes and consent; no downgrade."
     }
   ],
   "maintained_branch": "codex/tls-rag-step4-retention-v3",

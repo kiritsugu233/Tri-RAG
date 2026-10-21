@@ -1,5 +1,23 @@
 # Status
 
+## Current: A800 reconstructed-data replay implementation (2026-10-22)
+
+- Approved new replay contract: docs/TLS_RAG_STEP4_A800_REPLAY.md. Reuses frozen
+  mathematics but generates explicitly new inputs; prior Genoa probe is observed.
+- No production core or old config/test changes. New preparation/replay via the
+  existing repaired-acceptance shell entry, with explicit return-code checks.
+- User chose existing Miniconda instead of micromamba. Target isolated environment
+  /root/autodl-tmp/conda-envs/tri-rag-step4; base /root/miniconda3.
+- Local checks: `sh scripts/run_tests.sh` ran 302 tests in 36.446 s,
+  passed with one optional skip; 12 new focused tests passed. Protection check
+  passed for 186 files, shell syntax and diff whitespace checks passed.
+- Miniconda clone and pinned dependency installation succeeded; pip check exit 0.
+  Remote logs: /root/autodl-fs/tri-rag-logs/a800-replay-20261022/.
+- No new real-data replay result yet. User still performs commit/push; no agent
+  commit/push. Next: deploy exact new commit, remote gates, prepare, replay, archive.
+  Local test log: /private/tmp/tls-a800-full-final.log.
+
+
 Updated: 2026-09-28
 
 ## Current: A800 boundary test-fixture repair (2026-09-28)

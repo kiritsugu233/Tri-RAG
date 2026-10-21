@@ -270,3 +270,15 @@ L0 变更检测到后不得自动重置文件或刷新哈希。批准信息必�
 | --- | --- | --- |
 | [docs/TRI_LAW_NUMERICAL_FIX.md](TRI_LAW_NUMERICAL_FIX.md) | **L1** | Repair evidence and handoff; scientific/approval changes inherit L0 |
 | [docs/tri_law_numerical_fix_evidence.json](tri_law_numerical_fix_evidence.json) | **L1** | Post-repair audit output; preserve original failure evidence |
+
+## Approved A800 replay (2026-10-22)
+
+User approved the detailed A800 plan, then chose Miniconda. New replay files below are L0;
+observed probe is never reclassified as fresh. Existing launcher gains explicit subcommands
+and exit handling, with scientific contracts inherited as L0. No existing levels downgraded.
+See [contract and paths](TLS_RAG_STEP4_A800_REPLAY.md).
+
+- **L0** `configs/tls_rag_step4_a800_replay_v1.json`: approved reconstructed-data replay contract/regression.
+- **L0** `src/tri_rag_harness/tls_rag_step4_a800_replay.py`: approved reconstructed-data replay contract/regression.
+- **L0** `tests/test_tls_rag_step4_a800_replay.py`: approved reconstructed-data replay contract/regression.
+- **L0** `docs/TLS_RAG_STEP4_A800_REPLAY.md`: approved reconstructed-data replay contract/regression.
