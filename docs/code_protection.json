@@ -9,7 +9,7 @@
       "path": "AGENTS.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "53dca5fce4982c80c011b5a4747dd9cf267371381425f37731265274f82b0b3f"
+      "sha256": "aedb5a77446a3aefa7700ded4a251d45b3bf6ccf00673878ec25b6280daab76e"
     },
     {
       "path": "NEXT_AGENT_PROMPT.md",
@@ -267,7 +267,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "bfcfdd6562c08c405975476ab9d88a363824bd358cfcc69e4a71e6e617fb75ed"
+      "sha256": "cdd231859c171459b1d9d56a39acdfe53f3ab2a31b2186bf7e755382e9a8802c"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -1298,7 +1298,7 @@
       "path": "docs/TLS_RAG_STEP5_ANN.md",
       "level": "L0",
       "reason": "Approved new Step 5 ANN v1 scientific contract; see docs/TLS_RAG_STEP5_ANN.md and actual 2026-10-22 user consent",
-      "sha256": "80a368f58b92fd38d7723656c71be57a31332fc9dbe141976f317abf78f3eb3b"
+      "sha256": "d84a8c6bb51fbaed25f863964b74720a38050a950684e297a3525abad96111a2"
     }
   ],
   "approved_change_history": [
@@ -1594,9 +1594,45 @@
         }
       ],
       "record": "docs/MARKDOWN_REVIEW.md"
+    },
+    {
+      "date": "2026-10-23",
+      "user_consent": "把github上面新建一个branch，step5的，之后step5都用这个branch进行同步，然后再删除掉之前冗余的branch，比如step4有好几个branch。完成这些之后我们再进一步继续",
+      "scope": "Create codex/tls-rag-step5-ann from 4f836375; retire audited redundant branch refs after ancestry/open-PR checks; update only branch-routing governance/entry/current Step 5 command references and matching protection hashes. Preserve default/review backup/tags, scientific code/config/results, data boundaries and occupied worktrees. No new experiment.",
+      "new_branch": "codex/tls-rag-step5-ann",
+      "starting_commit": "4f836375c8e45361ef7e3229e66f2c1735abee1b",
+      "retired_remote_branches": {
+        "codex/calibrated-tri-predict-v2": "26079ce67793844f649d7df16ce818c3b539529f",
+        "codex/calibrated-tri-predict-v3": "f94c1aa63df459b4d2281e296f400942a8552c00",
+        "codex/tls-rag-step3": "3913ded9b786d6b6b15c734c750bd13d9c58e12c",
+        "codex/tls-rag-step4-readiness": "fc38d928e428dc8c10a3ea16e5ec5db5ccfbf72a",
+        "codex/tls-rag-step4-real-probe": "c08cd3b6800888c8d2a5a5f8c58a77d883a84ede",
+        "codex/tls-rag-step4-retention-v3": "4f836375c8e45361ef7e3229e66f2c1735abee1b",
+        "codex/tri-law-sequential-rag-step2": "f46ce73beccf5fddbf05fd87fdb0911318020add",
+        "codex/tri-law-sequential-rag-v1": "cac654ed73f75db92a1d11c09d10e9cd9973a37f"
+      },
+      "protected_changes": [
+        {
+          "path": "AGENTS.md",
+          "before_sha256": "53dca5fce4982c80c011b5a4747dd9cf267371381425f37731265274f82b0b3f",
+          "after_sha256": "aedb5a77446a3aefa7700ded4a251d45b3bf6ccf00673878ec25b6280daab76e"
+        },
+        {
+          "path": "docs/CODE_PROTECTION.md",
+          "before_sha256": "bfcfdd6562c08c405975476ab9d88a363824bd358cfcc69e4a71e6e617fb75ed",
+          "after_sha256": "cdd231859c171459b1d9d56a39acdfe53f3ab2a31b2186bf7e755382e9a8802c"
+        },
+        {
+          "path": "docs/TLS_RAG_STEP5_ANN.md",
+          "before_sha256": "80a368f58b92fd38d7723656c71be57a31332fc9dbe141976f317abf78f3eb3b",
+          "after_sha256": "d84a8c6bb51fbaed25f863964b74720a38050a950684e297a3525abad96111a2"
+        }
+      ],
+      "record": "STATUS.md",
+      "registry_change": "Maintained branch, scoped routing-document hashes and this approval record only; existing classifications/approval controls unchanged."
     }
   ],
-  "maintained_branch": "codex/tls-rag-step4-retention-v3",
+  "maintained_branch": "codex/tls-rag-step5-ann",
   "tri_law_numerical_version": 2,
   "review_backup": {
     "branch": "codex/repo-review-code-protection",

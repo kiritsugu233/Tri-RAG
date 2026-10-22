@@ -1,5 +1,14 @@
 # Implementation Plan
 
+## Step 5 branch transition and cleanup (2026-10-23)
+
+- [x] Audit every old tip for ancestry and open PRs; preserve default, review backup and tags.
+- [x] Create/push `codex/tls-rag-step5-ann` before deleting eight redundant GitHub branches.
+- [x] Switch canonical checkout and update approved branch-routing instructions/registry only.
+- [x] Retain occupied worktree branches and all historical commits/user files.
+- [x] Align GitHub/local/server branch routing and preserve the existing scientific bindings.
+- [ ] Wait for the user's next instruction before real-data work.
+
 ## Step 5 ANN v1 implementation (2026-10-22)
 
 - [x] Review proposal and record actual user implementation/synchronization consent.

@@ -1,7 +1,9 @@
 # Query-Adaptive Tri-RAG: current entry
 
-Updated 2026-10-22. Local checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
-Continue on `codex/tls-rag-step4-retention-v3`; do not create a new branch.
+Updated 2026-10-23. Local checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
+Continue all Step 5 work and synchronization on `codex/tls-rag-step5-ann`.
+The user explicitly authorized this new branch and redundant-branch cleanup;
+do not create another branch for subsequent Step 5 version updates.
 The review backup `codex/repo-review-code-protection` remains untouched at
 `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
@@ -12,9 +14,10 @@ all three gates passed. This is not independent validation or a latency,
 evidence-sufficiency or answer-quality claim. See the latest [status](STATUS.md).
 
 [Step 5 ANN v1](docs/TLS_RAG_STEP5_ANN.md) is implemented in a new namespace after
-the user's 2026-10-22 proposal-review/implementation authorization. Run the documented
-server synchronization, full offline tests and required real-HNSW synthetic self-test
-first. Tests do not download real data/models or open real experiment roles.
+the user's 2026-10-22 proposal-review/implementation authorization. The A800
+synchronization, 337 offline tests and required real-HNSW synthetic self-test
+passed on code `40728dd`; see STATUS.md for actual logs and timings.
+These tests did not download real data/models or open real experiment roles.
 Real source/model/history audits and all real-data results remain pending.
 ANN is a narrow new-stage extension; the old MVP's scope and Step 4 bindings remain frozen.
 The [earlier handoff](docs/TLS_RAG_STEP5_HANDOFF.md) records the pre-authorization boundary.

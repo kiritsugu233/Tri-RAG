@@ -5,8 +5,10 @@
 On 2026-10-22, after the exact-path proposal, the user instructed:
 “再仔细检查一遍，看看设计基线有没有问题，没问题就开始执行吧，先在本地改，改好之后同步到github，然后给我服务器端的指令同步和运行测试，告诉我预计需要运行多久。”
 This authorizes the reviewed new Step 5 implementation, local validation and normal
-GitHub synchronization. Work stays in the canonical checkout on
-`codex/tls-rag-step4-retention-v3`. It does not reopen historical roles or change
+GitHub synchronization. Initial implementation used `codex/tls-rag-step4-retention-v3`.
+On 2026-10-23 the user explicitly requested a new Step 5 branch and cleanup of
+redundant earlier branches. All subsequent Step 5 work/synchronization uses
+`codex/tls-rag-step5-ann` in the same canonical checkout. It does not reopen historical roles or change
 the old MVP's constraints. No real data, model or benchmark is run in local tests.
 
 New scientific files are `tls_rag_step5_{ann,data,policy,protocol,benchmark}.py`
@@ -175,9 +177,9 @@ cd /root/autodl-tmp/Tri-RAG-git
 git status --short --branch
 git diff --exit-code
 git diff --cached --exit-code
-git fetch origin codex/tls-rag-step4-retention-v3
-git switch codex/tls-rag-step4-retention-v3
-git pull --ff-only origin codex/tls-rag-step4-retention-v3
+git fetch origin codex/tls-rag-step5-ann
+git switch codex/tls-rag-step5-ann
+git pull --ff-only origin codex/tls-rag-step5-ann
 git rev-parse HEAD
 
 # Clone once; preserve the Step 4 environment and all old run roots.

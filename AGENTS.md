@@ -69,21 +69,27 @@ consent in a local file. Repo tooling is a review guard, not OS access control.
 
 ## Canonical local checkout and GitHub synchronization
 
-User instruction updated after the repository review and Tri-Law repair:
+User instruction updated on 2026-10-23 for the Step 5 branch transition:
 
-- Continue subsequent authorized Step 4 work on the existing `codex/tls-rag-step4-retention-v3`.
-  It includes reviewed-and-repaired baseline `62377d854ddd183925c4b62ca81653e9c14d9c34`.
+- Continue all subsequent authorized Step 5 work and synchronization on
+  `codex/tls-rag-step5-ann`. The user explicitly requested a new Step 5 branch
+  and retirement of redundant earlier branches on 2026-10-23. This supersedes
+  the 2026-09-07 instruction to keep using the Step 4 branch across later steps.
+  The new branch starts at `4f836375c8e45361ef7e3229e66f2c1735abee1b` and includes
+  reviewed-and-repaired baseline `62377d854ddd183925c4b62ca81653e9c14d9c34`.
   Preserve `codex/repo-review-code-protection` at that commit as the review backup;
   do not commit or push subsequent implementation to the backup branch.
-  The user explicitly clarified this branch arrangement on 2026-09-07. It
-  supersedes the earlier instruction to develop on the review branch itself.
-  Keep using this Step 4 branch across future version updates, despite its v3
-  name. Create another branch only when explicitly requested.
+  Keep using the Step 5 branch across Step 5 version updates. Create another
+  branch only when explicitly requested. The canonical checkout stays unchanged.
 - The latest maintained code is the HEAD of that continuing branch. The old
   `248c29e` experiment baseline and `c40b7b0` review-only commit are historical
   references, not starting points for new implementation. Read `START_HERE.md`.
-- Historical branches/tags remain for provenance. This instruction does not
-  authorize deleting them, force-pushing, or merging/changing the default branch.
+- The user-authorized 2026-10-23 branch cleanup removes only audited redundant
+  branch references whose tips are reachable from the new Step 5 branch and
+  which have no open PRs. Exact retired tips are recorded in STATUS.md and the
+  protection registry. Historical commits and tags remain available; occupied
+  local worktree branches remain untouched. This does not authorize further
+  deletions, force-pushing, or merging/changing the default branch.
 
 Standing canonical-checkout instruction:
 

@@ -1,5 +1,49 @@
 # Status
 
+## Current: Step 5 dedicated branch and redundant-branch cleanup (2026-10-23)
+
+- User explicitly requested a new GitHub Step 5 branch, all later Step 5
+  synchronization on that branch, and deletion of redundant earlier branches.
+  New maintained branch: `codex/tls-rag-step5-ann`, starting at
+  `4f836375c8e45361ef7e3229e66f2c1735abee1b`; canonical local checkout switched to it.
+- Created/pushed the new branch before retirement. All eight retired remote tips
+  are ancestors of its starting commit, with zero commits outside its history;
+  GitHub reported no open PRs. Deletion was atomic and guarded by exact old-tip
+  leases, so concurrent unreviewed updates could not be deleted.
+
+| Retired GitHub branch | Retained tip (full SHA in protection registry) |
+|---|---|
+| `codex/calibrated-tri-predict-v2` | `26079ce67793844f649d7df16ce818c3b539529f` |
+| `codex/calibrated-tri-predict-v3` | `f94c1aa63df459b4d2281e296f400942a8552c00` |
+| `codex/tls-rag-step3` | `3913ded9b786d6b6b15c734c750bd13d9c58e12c` |
+| `codex/tls-rag-step4-readiness` | `fc38d928e428dc8c10a3ea16e5ec5db5ccfbf72a` |
+| `codex/tls-rag-step4-real-probe` | `c08cd3b6800888c8d2a5a5f8c58a77d883a84ede` |
+| `codex/tls-rag-step4-retention-v3` | `4f836375c8e45361ef7e3229e66f2c1735abee1b` |
+| `codex/tri-law-sequential-rag-step2` | `f46ce73beccf5fddbf05fd87fdb0911318020add` |
+| `codex/tri-law-sequential-rag-v1` | `cac654ed73f75db92a1d11c09d10e9cd9973a37f` |
+
+- GitHub keeps only `main`, `codex/repo-review-code-protection`, and
+  `codex/tls-rag-step5-ann`. Default branch remains main; its tip `fb09c006...`,
+  review backup `62377d854...`, and the raw-v1 negative-result tag are unchanged.
+  Historical commit links remain reachable. Corresponding unoccupied local old
+  branches were safely deleted with `git branch -d`; local Step 3 and Step 2-to-3
+  branches remain because other worktrees use them. No worktree or user file removed.
+- Updated AGENTS/entry/Step 5 instructions and maintained-branch registry routing
+  only. All 22 A800 source-binding paths/digests remain unchanged; no scientific
+  source, config, tests, bounds, data roles, dependency pins or recorded result changed.
+- A800 checkout switched to `codex/tls-rag-step5-ann`; its fetch refspec and upstream
+  now target the new branch. Direct GitHub fetches hit bounded network timeouts,
+  so a SHA-256-verified thin Git bundle relayed the already-pushed/independently
+  verified GitHub commit over SSH. The origin URL stays GitHub; only committed
+  GitHub history was transferred, not an uncommitted checkout or experiment data.
+  Base relay SHA-256: `7635a5dcea16e8667531880ae3e0518919d82b95ae8b348052dc02cdef9c687d`.
+- Validation is branch ancestry/open-PR inventory, unchanged protected scientific
+  hashes, 22 unchanged A800 source bindings, Markdown links and protection/whitespace
+  checks. No algorithm test rerun is needed for routing/documentation-only changes;
+  the existing 337-test A800 result remains recorded against its actual tested code.
+- Next: wait for the user's next instruction. No real-data preparation or experiment
+  is authorized by this cleanup.
+
 ## Current: Step 5 A800 SSH test verification complete
 
 - User asked the agent to connect directly over SSH after the pasted command block
