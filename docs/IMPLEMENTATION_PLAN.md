@@ -1,10 +1,18 @@
 # Implementation Plan
 
+## A800 Step 4 closeout (2026-10-22)
+
+- [x] Verify input/model/code binding and all 34 result artifacts over SSH.
+- [x] Confirm replay_targets_met and historical strategy selection; no independent claim.
+- [x] Archive complete input/results/code/environment; 149 files verified against originals.
+- [x] Record archive SHA-256 and exact paths in STATUS.md; preserve failed attempts.
+- [x] Close Step 4 replay without rerunning the experiment or starting Step 5.
+
 ## A800 model manifest simplification (2026-10-22)
 
 - [x] Unify model path/hash validation; cover hidden/nested files and unsafe inputs.
 - [x] Full offline tests: 307, one skip; protection checks passed.
-- [ ] Synchronize remote and prepare/replay new v1-03 directories.
+- [x] Synchronize remote and prepare/replay new v1-03 directories (verified at closeout).
 
 ## A800 explicit mirror compatibility (2026-10-22)
 

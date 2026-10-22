@@ -1,5 +1,35 @@
 # Status
 
+## A800 Step 4 replay closeout (2026-10-22)
+
+- Remote checkout verified clean at a2c2a274cd2009aab9384e0288d41e5ad7292722.
+  User ran the existing entry successfully (exit 0):
+  `sh scripts/run_tls_rag_step4_repaired_acceptance.sh a800-replay /root/autodl-fs/tls-rag-step4/a800-input-v1-03 /root/autodl-fs/tls-rag-step4/a800-replay-v1-03`.
+- SSH read-only validation of `validate_rebuilt_bundle` and every result-manifest
+  entry passed: input/model/source hashes, bound code and 34 result artifacts.
+  Binding SHA-256: 3e4acee90cd86a2396c4edfec5f8a630484837ea5f86a6828a27a199f512eb3b.
+- Result: replay_targets_met, all three gates true; selected
+  row4-retention-v3-t0.900-q0.50, matching historical selection.
+  Probe n=256: retention 0.930078125, Hit@context 0.64453125,
+  mean original distances 352.625; fixed-512 uses 512 with retention 0.9421875.
+  This is a counted-distance reduction, not measured latency superiority.
+- Environment: /root/autodl-tmp/conda-envs/tri-rag-step4, created by
+  /root/miniconda3/bin/conda. Environment freeze and GPU inventory captured.
+  Remote code protection passed (186 files). Local full regression previously
+  passed 307 tests with one skip; closeout does not claim a new remote test run.
+- No experiment repeated during closeout. No ANN, LLM, answer generation or
+  end-to-end latency work. Historical probe was observed; independent_validation,
+  certified, latency_claim and evidence_sufficiency_claim remain false.
+- Verified archive: /root/autodl-fs/tls-rag-step4/closeout-v1-03-6hpj329l/step4-a800-v1-03.tar.gz.
+  149 archived files match originals; 948962827 bytes; archive exit 0.
+  SHA-256: 2a157fb7cfbf197b593cb393b716e13d724c89fe33691457bb08d439f9cce09c.
+  Includes complete input/model snapshot and result directories, source-code tar,
+  environment freeze, GPU inventory, checkout status and verification metadata.
+  Companion .sha256 and archive-check.txt retained in the same directory.
+- Step 4 A800 replay closeout complete. Prior failure directories preserved.
+  Next: retain archive; any independent validation is a separately scoped task.
+
+
 ## A800 model manifest simplification (2026-10-22)
 
 - User approved one model manifest validator retaining SHA-256 and path safety.
