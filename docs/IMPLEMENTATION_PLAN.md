@@ -1,5 +1,11 @@
 # Implementation Plan
 
+## A800 model manifest simplification (2026-10-22)
+
+- [x] Unify model path/hash validation; cover hidden/nested files and unsafe inputs.
+- [x] Full offline tests: 307, one skip; protection checks passed.
+- [ ] Synchronize remote and prepare/replay new v1-03 directories.
+
 ## A800 explicit mirror compatibility (2026-10-22)
 
 - [x] Add allowlisted explicit data/model transport and provenance/hash checks.

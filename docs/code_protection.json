@@ -409,7 +409,7 @@
       "path": "docs/TLS_RAG_STEP4_A800_REPLAY.md",
       "level": "L0",
       "reason": "Approved A800 reconstructed-data replay contract/regression",
-      "sha256": "6055d63d3a74a9be104f487fd72c4bc4651fc2177548100a1f6e8211a173cc3f"
+      "sha256": "f1af9105e5ee08a8b4089a2d82c500cce306f4649dce237bb25edf298184e08b"
     },
     {
       "path": "docs/TLS_RAG_STEP4_BRIEF.md",
@@ -979,7 +979,7 @@
       "path": "src/tri_rag_harness/tls_rag_step4_a800_replay.py",
       "level": "L0",
       "reason": "Approved A800 reconstructed-data replay contract/regression",
-      "sha256": "529a4cde7714f27925cccacb49bcd54d76816b4107cc382fff793e7037c97648"
+      "sha256": "51d9e68085cc4f33b3cde1d7417319a82662e310bb75dc6c65802ca72912e3ff"
     },
     {
       "path": "src/tri_rag_harness/tls_rag_step4_nfcorpus.py",
@@ -1270,7 +1270,7 @@
       "path": "tests/test_tls_rag_step4_a800_replay.py",
       "level": "L0",
       "reason": "Approved A800 reconstructed-data replay contract/regression",
-      "sha256": "250c2d24cd3e32ea2f5234d07e958b1549ac8fa8c2aff07f0040c5cf00ee06b4"
+      "sha256": "d634bfba0bf568d75a1ac6b199d5e7bd1755d21986d740ac40355eca2b7a108f"
     },
     {
       "path": "tests/test_tls_rag_step4_probe.py",
@@ -1479,6 +1479,29 @@
           "path": "tests/test_tls_rag_step4_a800_replay.py",
           "before_sha256": "57d10b0135629652022bcef8f58983fb13a704bbfd7145c6699c5f4bb5f715fd",
           "after_sha256": "250c2d24cd3e32ea2f5234d07e958b1549ac8fa8c2aff07f0040c5cf00ee06b4"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-22",
+      "parent_commit": "c59da26c42ed11f2361cef5d60e383572ea9d634",
+      "user_consent": "同意",
+      "scope": "User agreed to preceding scoped simplification: retain hashes and path safety, unify model manifest validation in new A800 module, necessary tests/documentation/protection updates, test and push same branch. No repository-wide deletions.",
+      "protected_changes": [
+        {
+          "path": "docs/TLS_RAG_STEP4_A800_REPLAY.md",
+          "before_sha256": "6055d63d3a74a9be104f487fd72c4bc4651fc2177548100a1f6e8211a173cc3f",
+          "after_sha256": "f1af9105e5ee08a8b4089a2d82c500cce306f4649dce237bb25edf298184e08b"
+        },
+        {
+          "path": "src/tri_rag_harness/tls_rag_step4_a800_replay.py",
+          "before_sha256": "529a4cde7714f27925cccacb49bcd54d76816b4107cc382fff793e7037c97648",
+          "after_sha256": "51d9e68085cc4f33b3cde1d7417319a82662e310bb75dc6c65802ca72912e3ff"
+        },
+        {
+          "path": "tests/test_tls_rag_step4_a800_replay.py",
+          "before_sha256": "250c2d24cd3e32ea2f5234d07e958b1549ac8fa8c2aff07f0040c5cf00ee06b4",
+          "after_sha256": "d634bfba0bf568d75a1ac6b199d5e7bd1755d21986d740ac40355eca2b7a108f"
         }
       ]
     }

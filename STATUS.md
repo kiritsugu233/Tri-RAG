@@ -1,5 +1,17 @@
 # Status
 
+## A800 model manifest simplification (2026-10-22)
+
+- User approved one model manifest validator retaining SHA-256 and path safety.
+  Hidden model files and nested paths supported; no old algorithm/adapter changes.
+- `sh scripts/run_tests.sh`: 307 tests in 37.466 s, OK (one optional skip).
+  `python3 scripts/check_code_protection.py`: 186 files passed.
+- Log: /private/tmp/model-manifest-full.log. No remote replay performed.
+- Next: sync pushed code, remote protection/full tests, prepare absent
+  a800-input-v1-03 and replay into absent a800-replay-v1-03. Preserve v1-02;
+  source binding changed, do not rewrite its fingerprint.
+
+
 ## A800 explicit mirror compatibility (2026-10-22)
 
 - User authorized scoped L0 mirror compatibility and same-branch commit/push.

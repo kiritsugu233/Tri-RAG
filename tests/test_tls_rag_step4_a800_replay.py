@@ -150,7 +150,7 @@ class A800ReplayTests(unittest.TestCase):
         parquet=NS(read_table=table)
         def snapshot(**kwargs):
             snapshots.append(kwargs)
-            path=Path(kwargs['local_dir']);path.mkdir();(path/'config.json').write_text('{}');(path/'1_Pooling').mkdir();(path/'1_Pooling/config.json').write_text('{}')
+            path=Path(kwargs['local_dir']);path.mkdir();(path/'.gitattributes').write_text('*.bin filter=lfs');(path/'config.json').write_text('{}');(path/'1_Pooling').mkdir();(path/'1_Pooling/config.json').write_text('{}')
         modules={'huggingface_hub':NS(snapshot_download=snapshot),'torch':NS(manual_seed=lambda seed:None,use_deterministic_algorithms=lambda value:None),
                  'pyarrow':NS(parquet=parquet),'pyarrow.parquet':parquet,
                  'sentence_transformers':NS(SentenceTransformer=Model)}
@@ -203,6 +203,29 @@ class A800ReplayTests(unittest.TestCase):
         _,_,_,_,check=a.validate_rebuilt_bundle(self.previous)
         (self.previous/'model_snapshot/config.json').write_text('changed')
         with self.assertRaisesRegex(ValueError,'input changed'):check()
+
+    def test_model_manifest_accepts_hidden_and_nested_files(self):
+        root=self.previous/'model_snapshot'
+        (root/'.gitattributes').write_text('*.bin filter=lfs')
+        (root/'1_Pooling').mkdir();(root/'1_Pooling/config.json').write_text('{}')
+        manifest={p.relative_to(root).as_posix():v2.sha256(p) for p in root.rglob('*') if p.is_file()}
+        self.edit_binding(model_sha256=manifest)
+        a.validate_rebuilt_bundle(self.previous)
+        self.assertEqual(len(a.checked_model_manifest(root,manifest)),3)
+
+    def test_model_manifest_rejects_unsafe_paths_digests_and_symlinks(self):
+        root=self.previous/'model_snapshot';digest=v2.sha256(root/'config.json')
+        for name in ('../config.json','/config.json','a//b','a/./b','a/../b',
+                     'C:/config.json',r'a\b','', '.', '..'):
+            with self.subTest(name=name),self.assertRaisesRegex(ValueError,'unsafe model manifest'):
+                a.checked_model_manifest(root,{name:digest})
+        for manifest in (None,[],{}, {'config.json':'wrong'}, {'config.json':None}):
+            with self.assertRaises(ValueError):a.checked_model_manifest(root,manifest)
+        (root/'link').symlink_to(root/'config.json')
+        with self.assertRaisesRegex(ValueError,'symlink'):
+            a.checked_model_manifest(root,{'link':digest})
+        with self.assertRaisesRegex(ValueError,'hash mismatch'):
+            a.checked_model_manifest(root,{'missing.json':digest})
 
     def test_config_is_frozen(self):
         path=self.root/'config.json';path.write_text('{}')

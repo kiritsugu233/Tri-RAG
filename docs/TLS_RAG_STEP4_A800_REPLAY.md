@@ -32,7 +32,7 @@ no_tune_candidate；退出码0不代表目标通过。engine_replay/保留原引
 唯一主启动入口仍是 `scripts/run_tls_rag_step4_repaired_acceptance.sh`：
 
 ```bash
-sh scripts/run_tls_rag_step4_repaired_acceptance.sh a800-prepare /root/autodl-fs/tls-rag-step4/a800-input-v1-02
+sh scripts/run_tls_rag_step4_repaired_acceptance.sh a800-prepare /root/autodl-fs/tls-rag-step4/a800-input-v1-03
 prepare_rc=$?
 echo "Preparation exit code: ${prepare_rc}"
 ```
@@ -40,7 +40,7 @@ echo "Preparation exit code: ${prepare_rc}"
 只有prepare_rc=0、精确HEAD/环境检查通过、保护检查和全套测试通过才单独执行：
 
 ```bash
-sh scripts/run_tls_rag_step4_repaired_acceptance.sh a800-replay /root/autodl-fs/tls-rag-step4/a800-input-v1-02 /root/autodl-fs/tls-rag-step4/a800-replay-v1-01
+sh scripts/run_tls_rag_step4_repaired_acceptance.sh a800-replay /root/autodl-fs/tls-rag-step4/a800-input-v1-03 /root/autodl-fs/tls-rag-step4/a800-replay-v1-03
 replay_rc=$?
 echo "Replay exit code: ${replay_rc}"
 ```
@@ -85,3 +85,12 @@ source_urls 保持官方地址，source_sha256 记录下载字节哈希。
 下载服务可能重定向到其存储 CDN；记录的传输地址是声明的请求地址。
 本次新增必需传输与模型哈希字段，旧新模块生成的绑定不可直接冒充当前绑定。
 失败的 a800-input-v1-01 保留；下次使用从未存在的 a800-input-v1-02。
+
+## 模型清单精简修复（2026-10-22）
+
+用户同意保留 SHA-256 与路径安全检查，合并新模块中重复且不一致的文件名规则。
+checked_model_manifest 统一允许 .gitattributes 等隐藏文件和嵌套相对路径，
+拒绝绝对路径、空路径组件、点路径、父路径、符号链接及不匹配的哈希。
+不修改旧校验器、适配器、算法或依赖，不新增脚本或配置。
+此修复改变源码绑定；保留 a800-input-v1-02，不手改其 binding 或源码指纹。
+当前版本准备输入需用从未存在的 a800-input-v1-03；旧失败未形成算法指标结论。

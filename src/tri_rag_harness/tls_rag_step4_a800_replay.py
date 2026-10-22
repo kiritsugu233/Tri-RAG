@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import platform
+import re
 import subprocess
 import sys
 
@@ -189,6 +190,25 @@ def prepare_rebuilt_bundle(output):
     print(f'Rebuilt replay bundle: {bundle}', flush=True)
 
 
+def checked_model_manifest(directory, manifest):
+    """Check relative model files, including dotfiles, without weakening old guards."""
+    if not isinstance(manifest, dict) or not manifest:
+        raise ValueError('invalid model manifest')
+    for name, digest in manifest.items():
+        if (not isinstance(name, str) or
+            any(part in ('', '.', '..') or not re.fullmatch(r'[A-Za-z0-9_.-]+', part)
+                for part in name.split('/')) or
+            not isinstance(digest, str) or not re.fullmatch(r'[0-9a-f]{64}', digest)):
+            raise ValueError('unsafe model manifest')
+    snapshot = {}
+    for name, digest in manifest.items():
+        path = guard.safe_path(directory / name)
+        if not path.is_file() or v2.sha256(path) != digest:
+            raise ValueError('model file hash mismatch: ' + name)
+        snapshot[path] = digest
+    return snapshot
+
+
 def validate_rebuilt_bundle(previous):
     previous = root_path(previous)
     protocol = load_protocol()
@@ -209,20 +229,7 @@ def validate_rebuilt_bundle(previous):
     transport = binding.get('transport', {})
     if transport != transport_record(transport.get('endpoint'), binding['embedding']):
         raise ValueError('transport provenance mismatch')
-    model_hashes = binding.get('model_sha256', {})
-    if not model_hashes:
-        raise ValueError('missing model hashes')
-    snapshot = {}
-    for name, digest in model_hashes.items():
-        if not isinstance(name, str) or any(part in ('', '.', '..') for part in name.split('/')):
-            raise ValueError('unsafe model manifest')
-        parts = name.split('/')
-        # Reuse strict component validation without changing the historical guard.
-        for part in parts:
-            if not part.replace('_','').replace('-','').replace('.','').isalnum():
-                raise ValueError('unsafe model manifest')
-        snapshot.update(guard.checked_manifest(previous / 'model_snapshot' / '/'.join(parts[:-1]),
-                                               {parts[-1]:digest}))
+    snapshot = checked_model_manifest(previous / 'model_snapshot', binding.get('model_sha256'))
     snapshot.update(guard.checked_manifest(bundle, binding['files']))
     if set(binding.get('source_sha256',{})) != set(adapter.SOURCES):
         raise ValueError('missing pinned source files')
