@@ -1,5 +1,16 @@
 # Implementation Plan
 
+## Step 5 raw-source acquisition (2026-10-23)
+
+- [x] At the user's request, log in over SSH and preserve the existing input root.
+- [x] Download the three official raw files through the reachable Mac connection;
+  verify collection ranges/ETag/official MD5 and all file sizes/SHA-256 values.
+- [x] Upload to `/root/autodl-fs/tls-rag-step5-input-dPpTfj/raw/`, verify transferred
+  hashes, extract only collection/train queries and verify all three TSV row counts.
+- [x] Retain exact scripts, provenance/checksum manifests and the server preparation report/log.
+- [ ] User decides on fixed-revision model acquisition and remaining source/history audit.
+- [ ] Prepare encoded input and run real stages only within the subsequently authorized scope.
+
 ## Step 5 branch transition and cleanup (2026-10-23)
 
 - [x] Audit every old tip for ancestry and open PRs; preserve default, review backup and tags.

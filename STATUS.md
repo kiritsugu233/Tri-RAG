@@ -1,5 +1,50 @@
 # Status
 
+## Current: Step 5 raw-source acquisition verified over SSH (2026-10-23)
+
+- After the server's official HTTPS download reset and the legacy Blob endpoint
+  returned HTTP 409, the user explicitly instructed: “你直接控制ssh连接然后完成这一步吧”.
+  Completed the pending raw-file download/upload/verification step only.
+- Reused the user's A800 SSH connection and existing input directory
+  `/root/autodl-fs/tls-rag-step5-input-dPpTfj`. Both checkouts were on
+  `codex/tls-rag-step5-ann` at `411dd5067c74bd5ce83ebd2d0a16a343b3d7e239`;
+  server tracked status was clean and protection checks passed (184 files).
+- The same official `https://msmarco.z22.web.core.windows.net/msmarcoranking/`
+  URLs returned HTTP 200 from the Mac. Downloaded `collection.tar.gz`,
+  `queries.tar.gz` and `qrels.train.tsv` into the dedicated local temporary directory
+  `/private/tmp/tls-rag-step5-transfer-mlhgt61p`, then uploaded those files and
+  provenance/checksum records with `scp -P 33794` to the server input's `raw/`.
+  Collection transport used eight parallel byte-range requests, checked each
+  Content-Range/ETag and checked the assembled official Content-MD5
+  `87dd01826da3e2ad45447ba5af577628`. The three files total 1,064,481,781 bytes.
+- Actual download command: `python3 -u
+  /private/tmp/tls-rag-step5-transfer-mlhgt61p/download.py`; exit 0, final successful
+  parallel acquisition/archive check took 314.841 seconds. Initial slow single-stream
+  attempt was stopped; its log/partial bytes remain in that dedicated temporary folder.
+- Actual server command: `/root/autodl-tmp/conda-envs/tri-rag-step5/bin/python -u
+  /root/autodl-fs/tls-rag-step5-input-dPpTfj/raw/verify_extract.py`, redirected to
+  `raw_preparation.log` under the input root. Exit 0; 86.356 seconds. Verified all
+  three transferred SHA-256 values, extracted only collection/train-query members,
+  then verified the following TSV row counts and SHA-256 values:
+
+| TSV | Rows | SHA-256 |
+|---|---:|---|
+| `collection.tsv` | 8,841,823 | `86e0c5820be6b22280337a67e54cbb626645453d9ac3c377bac45abb81c5653d` |
+| `queries.train.tsv` | 808,731 | `4583ebd42180bf0de26a06024d4679fdf627f33cce4b0048ae4c6fc85254506a` |
+| `qrels.train.tsv` | 532,761 | `641b3c9391ea19e4a3d9e3284299f07be6725ff2dd11591a3d4d3f293db17cf2` |
+
+- Server artifacts: input root `raw_preparation_report.json`, `raw_preparation.log`;
+  `raw/` contains the original downloads, three required TSVs, `SHA256SUMS`,
+  `download_manifest.json` and the exact validation/extraction script. The report
+  records source URLs, actual byte/hash identities, counts and completion time.
+- This establishes transport integrity and expected raw-file structure/counts;
+  it does not complete model/history/semantic-independence audits or create an
+  experimental bundle. No Step 5 model download, encoding, corpus sampling, role
+  allocation, index build, fitting, certification, latency/test run or LLM execution
+  was started. Historical protected archives and scientific code remain untouched.
+- Next: the user decides whether to proceed with fixed-revision model acquisition
+  and remaining source/history audit before the separately authorized preparation/run.
+
 ## Current: Step 5 dedicated branch and redundant-branch cleanup (2026-10-23)
 
 - User explicitly requested a new GitHub Step 5 branch, all later Step 5
