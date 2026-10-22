@@ -1,5 +1,10 @@
 # TLS-RAG Step 4 retention v3: next effectiveness acceptance
 
+> 2026-10-22 cleanup: commands referencing retired wrappers below are historical;
+> use their fixed Git checkout for historical reproduction. The current Step 4 entry is
+> `scripts/run_tls_rag_step4_repaired_acceptance.sh`. Historical commands authorize no new gate.
+> [Retired wrapper at fixed historical commit](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/scripts/run_tls_rag_step4_retention_v3.sh).
+
 > **After the approved Tri-Law repair:** this is the historical v3 experiment
 > brief and replay command for the old source-bound v2 bundle. Current development
 > uses `codex/tls-rag-step4-retention-v3` HEAD, which includes the reviewed

@@ -167,10 +167,7 @@ L0 变更检测到后不得自动重置文件或刷新哈希。批准信息必�
 | [`scripts/audit_numerical_contracts.py`](../scripts/audit_numerical_contracts.py) | **L1** | Verification/launcher orchestration; changing scientific gates or expected evidence inherits L0 |
 | [`scripts/check_code_protection.py`](../scripts/check_code_protection.py) | **L0** | Read-only governance guard; disabling or weakening requires scoped consent |
 | [`scripts/run_tests.sh`](../scripts/run_tests.sh) | **L1** | Verification/launcher orchestration; changing scientific gates or expected evidence inherits L0 |
-| [`scripts/run_tls_rag_step4_probe.sh`](../scripts/run_tls_rag_step4_probe.sh) | **L1** | Verification/launcher orchestration; changing scientific gates or expected evidence inherits L0 |
 | [`scripts/run_tls_rag_step4_readiness.sh`](../scripts/run_tls_rag_step4_readiness.sh) | **L1** | Verification/launcher orchestration; changing scientific gates or expected evidence inherits L0 |
-| [`scripts/run_tls_rag_step4_retention_v3.sh`](../scripts/run_tls_rag_step4_retention_v3.sh) | **L1** | Verification/launcher orchestration; changing scientific gates or expected evidence inherits L0 |
-| [`scripts/slurm_pdctp_foundation.sh`](../scripts/slurm_pdctp_foundation.sh) | **L1** | Verification/launcher orchestration; changing scientific gates or expected evidence inherits L0 |
 
 ## Frozen configurations
 
@@ -211,11 +208,6 @@ L0 变更检测到后不得自动重置文件或刷新哈希。批准信息必�
 | File | Level | Reason |
 | --- | --- | --- |
 | [`AGENTS.md`](../AGENTS.md) | **L0** | Scientific/protocol or governance contract; change requires prior scoped user consent |
-| [`AGENT_CALIBRATED_TRI_PREDICT.md`](../AGENT_CALIBRATED_TRI_PREDICT.md) | **L1** | Task/reference/review documentation; scientific/approval changes inherit L0 |
-| [`AGENT_CALIBRATED_TRI_PREDICT_STEP3.md`](../AGENT_CALIBRATED_TRI_PREDICT_STEP3.md) | **L1** | Task/reference/review documentation; scientific/approval changes inherit L0 |
-| [`AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP1.md`](../AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP1.md) | **L1** | Task/reference/review documentation; scientific/approval changes inherit L0 |
-| [`AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md`](../AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md) | **L1** | Task/reference/review documentation; scientific/approval changes inherit L0 |
-| [`AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md`](../AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md) | **L1** | Task/reference/review documentation; scientific/approval changes inherit L0 |
 | [`NEXT_AGENT_PROMPT.md`](../NEXT_AGENT_PROMPT.md) | **L1** | Task/reference/review documentation; scientific/approval changes inherit L0 |
 | [`START_HERE.md`](../START_HERE.md) | **L1** | Task/reference/review documentation; scientific/approval changes inherit L0 |
 | [`STATUS.md`](../STATUS.md) | **L1** | Task/reference/review documentation; scientific/approval changes inherit L0 |
@@ -248,10 +240,7 @@ L0 变更检测到后不得自动重置文件或刷新哈希。批准信息必�
 | [`docs/RETRIEVAL_LATENCY.md`](../docs/RETRIEVAL_LATENCY.md) | **L1** | Task/reference/review documentation; scientific/approval changes inherit L0 |
 | [`docs/TLS_RAG_LOCAL_WORKFLOW.md`](../docs/TLS_RAG_LOCAL_WORKFLOW.md) | **L1** | Task/reference/review documentation; scientific/approval changes inherit L0 |
 | [`docs/TLS_RAG_STEP2_SYNTHETIC.md`](../docs/TLS_RAG_STEP2_SYNTHETIC.md) | **L1** | Task/reference/review documentation; scientific/approval changes inherit L0 |
-| [`docs/TLS_RAG_STEP2_TO_STEP3.md`](../docs/TLS_RAG_STEP2_TO_STEP3.md) | **L1** | Task/reference/review documentation; scientific/approval changes inherit L0 |
-| [`docs/TLS_RAG_STEP3_START_HERE.md`](../docs/TLS_RAG_STEP3_START_HERE.md) | **L1** | Task/reference/review documentation; scientific/approval changes inherit L0 |
 | [`docs/TLS_RAG_STEP3_SYNTHETIC.md`](../docs/TLS_RAG_STEP3_SYNTHETIC.md) | **L1** | Task/reference/review documentation; scientific/approval changes inherit L0 |
-| [`docs/TLS_RAG_STEP3_TO_STEP4_HANDOFF.md`](../docs/TLS_RAG_STEP3_TO_STEP4_HANDOFF.md) | **L1** | Task/reference/review documentation; scientific/approval changes inherit L0 |
 | [`docs/TLS_RAG_STEP4_BRIEF.md`](../docs/TLS_RAG_STEP4_BRIEF.md) | **L0** | Scientific/protocol or governance contract; change requires prior scoped user consent |
 | [`docs/TLS_RAG_STEP4_READINESS.md`](../docs/TLS_RAG_STEP4_READINESS.md) | **L1** | Task/reference/review documentation; scientific/approval changes inherit L0 |
 | [`docs/TLS_RAG_STEP4_REAL_PROBE.md`](../docs/TLS_RAG_STEP4_REAL_PROBE.md) | **L1** | Task/reference/review documentation; scientific/approval changes inherit L0 |
@@ -289,3 +278,11 @@ User approved “实施测试并推送” for the specified mirror scope: new A8
 its tests and run document, plus protection hashes. Official logical URLs and
 frozen revisions stay unchanged; explicit allowlisted transport and model hashes
 are required. Historical adapter and algorithm are untouched.
+
+## Approved retirement and planning handoff — 2026-10-22
+
+用户批准删除11个旧任务/包装路径；活动登记中移除这些文件，删除前哈希与
+固定 Git 位置保存在机器登记的批准历史。[审查索引](MARKDOWN_REVIEW.md)说明
+约束保留位置。其余等级不变，检查逻辑不变，科学源码/配置/测试不变。
+
+- **L1** `docs/TLS_RAG_STEP5_HANDOFF.md`: planning-only handoff; no ANN implementation authorization.

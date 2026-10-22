@@ -10,7 +10,7 @@
 ## Scope and result
 
 Step 2 implements only the CPU/network-free walking skeleton authorized by
-`AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md`. It uses seven external synthetic
+[AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md (historical)](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md). It uses seven external synthetic
 queries, twelve normalized float64 corpus vectors, one fixed dense Gaussian
 projection, the grid `[3, 6, 12]`, `k_gt=2`, `k_ctx=2`, and a fixed maximum of
 two expansions. The controller is a frozen per-query action schedule used to

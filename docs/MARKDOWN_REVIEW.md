@@ -13,11 +13,11 @@
 | 原有文件 | 用途/审查处置 |
 | --- | --- |
 | [`AGENTS.md`](../AGENTS.md) | 根规则：新增 L0 事前审批、间接绕过禁止、清单检查；修正目录与跨分支适用范围 |
-| [`AGENT_CALIBRATED_TRI_PREDICT.md`](../AGENT_CALIBRATED_TRI_PREDICT.md) | 已完成/历史任务 brief：增加入口与授权范围说明；TLS briefs 修正过期 push/worktree 指令 |
-| [`AGENT_CALIBRATED_TRI_PREDICT_STEP3.md`](../AGENT_CALIBRATED_TRI_PREDICT_STEP3.md) | 已完成/历史任务 brief：增加入口与授权范围说明；TLS briefs 修正过期 push/worktree 指令 |
-| [`AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP1.md`](../AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP1.md) | 已完成/历史任务 brief：增加入口与授权范围说明；TLS briefs 修正过期 push/worktree 指令 |
-| [`AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md`](../AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md) | 已完成/历史任务 brief：增加入口与授权范围说明；TLS briefs 修正过期 push/worktree 指令 |
-| [`AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md`](../AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md) | 已完成/历史任务 brief：增加入口与授权范围说明；TLS briefs 修正过期 push/worktree 指令 |
+| [`AGENT_CALIBRATED_TRI_PREDICT.md`](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/AGENT_CALIBRATED_TRI_PREDICT.md) | 已完成/历史任务 brief：增加入口与授权范围说明；TLS briefs 修正过期 push/worktree 指令 |
+| [`AGENT_CALIBRATED_TRI_PREDICT_STEP3.md`](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/AGENT_CALIBRATED_TRI_PREDICT_STEP3.md) | 已完成/历史任务 brief：增加入口与授权范围说明；TLS briefs 修正过期 push/worktree 指令 |
+| [`AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP1.md`](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP1.md) | 已完成/历史任务 brief：增加入口与授权范围说明；TLS briefs 修正过期 push/worktree 指令 |
+| [`AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md`](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md) | 已完成/历史任务 brief：增加入口与授权范围说明；TLS briefs 修正过期 push/worktree 指令 |
+| [`AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md`](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md) | 已完成/历史任务 brief：增加入口与授权范围说明；TLS briefs 修正过期 push/worktree 指令 |
 | [`NEXT_AGENT_PROMPT.md`](../NEXT_AGENT_PROMPT.md) | 下一 agent 模板：改成当前启动链；不能从历史 prompt 自动重启旧任务 |
 | [`START_HERE.md`](../START_HERE.md) | 当前入口：替换旧 v2/不存在的 YAML 命令，区分科学基线与审查分支 |
 | [`STATUS.md`](../STATUS.md) | 历史状态账本：更新顶层当前状态与 Next task；旧 split 状态限定为当时记录 |
@@ -46,10 +46,10 @@
 | [`docs/RETRIEVAL_LATENCY.md`](../docs/RETRIEVAL_LATENCY.md) | 命名版本的设计/历史 gate/报告：核对引用与阶段含义；添加版本范围及根规则优先提示，保留原始实验数字 |
 | [`docs/TLS_RAG_LOCAL_WORKFLOW.md`](../docs/TLS_RAG_LOCAL_WORKFLOW.md) | 当前工作流：更新分支语义、根规则、canonical checkout/非强制 push 与 v1/v3 边界 |
 | [`docs/TLS_RAG_STEP2_SYNTHETIC.md`](../docs/TLS_RAG_STEP2_SYNTHETIC.md) | 命名版本的设计/历史 gate/报告：核对引用与阶段含义；添加版本范围及根规则优先提示，保留原始实验数字 |
-| [`docs/TLS_RAG_STEP2_TO_STEP3.md`](../docs/TLS_RAG_STEP2_TO_STEP3.md) | 命名版本的设计/历史 gate/报告：核对引用与阶段含义；添加版本范围及根规则优先提示，保留原始实验数字 |
-| [`docs/TLS_RAG_STEP3_START_HERE.md`](../docs/TLS_RAG_STEP3_START_HERE.md) | 命名版本的设计/历史 gate/报告：核对引用与阶段含义；添加版本范围及根规则优先提示，保留原始实验数字 |
+| [`docs/TLS_RAG_STEP2_TO_STEP3.md`](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/docs/TLS_RAG_STEP2_TO_STEP3.md) | 命名版本的设计/历史 gate/报告：核对引用与阶段含义；添加版本范围及根规则优先提示，保留原始实验数字 |
+| [`docs/TLS_RAG_STEP3_START_HERE.md`](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/docs/TLS_RAG_STEP3_START_HERE.md) | 命名版本的设计/历史 gate/报告：核对引用与阶段含义；添加版本范围及根规则优先提示，保留原始实验数字 |
 | [`docs/TLS_RAG_STEP3_SYNTHETIC.md`](../docs/TLS_RAG_STEP3_SYNTHETIC.md) | 已完成合成阶段：增加版本提示与 CP 解释修正；保留实际回归与历史指纹 |
-| [`docs/TLS_RAG_STEP3_TO_STEP4_HANDOFF.md`](../docs/TLS_RAG_STEP3_TO_STEP4_HANDOFF.md) | 命名版本的设计/历史 gate/报告：核对引用与阶段含义；添加版本范围及根规则优先提示，保留原始实验数字 |
+| [`docs/TLS_RAG_STEP3_TO_STEP4_HANDOFF.md`](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/docs/TLS_RAG_STEP3_TO_STEP4_HANDOFF.md) | 命名版本的设计/历史 gate/报告：核对引用与阶段含义；添加版本范围及根规则优先提示，保留原始实验数字 |
 | [`docs/TLS_RAG_STEP4_BRIEF.md`](../docs/TLS_RAG_STEP4_BRIEF.md) | 命名版本的设计/历史 gate/报告：核对引用与阶段含义；添加版本范围及根规则优先提示，保留原始实验数字 |
 | [`docs/TLS_RAG_STEP4_READINESS.md`](../docs/TLS_RAG_STEP4_READINESS.md) | 命名版本的设计/历史 gate/报告：核对引用与阶段含义；添加版本范围及根规则优先提示，保留原始实验数字 |
 | [`docs/TLS_RAG_STEP4_REAL_PROBE.md`](../docs/TLS_RAG_STEP4_REAL_PROBE.md) | 命名版本的设计/历史 gate/报告：核对引用与阶段含义；添加版本范围及根规则优先提示，保留原始实验数字 |
@@ -86,3 +86,33 @@ continuing branch; source-bound historical commands are explicitly scoped.
 | New file | Review disposition |
 | --- | --- |
 | [TRI_LAW_NUMERICAL_FIX.md](TRI_LAW_NUMERICAL_FIX.md) | Actual user consent, repair derivation, exact validation results and historical bundle compatibility; no new real-role authorization or scientific effectiveness claim |
+
+## Approved cleanup — 2026-10-22
+
+用户批准全部清理范围，并明确暂缓创建新 agent。核对候选全文、引用和唯一约束后，
+删除8份过期任务/交接文档与3个包装脚本；历史版本保留在 Git，未复制新档案目录。
+科学配置、源码、测试、数学/统计规范及实际报告保留。旧权限仅为原阶段历史，
+没有因清理获得新的数据访问或 ANN 实现授权。
+
+| 删除类别 | 仍保留的约束与事实位置 |
+| --- | --- |
+| 旧 PDCTP v2 brief | CALIBRATED_TRI_PREDICT_PROTOCOL.md、RAW_TRI_PREDICT_V1_BASELINE.md |
+| 旧 PDCTP Step 3 brief | CALIBRATED_TRI_PREDICT_V3_DIAGNOSIS.md、AGENTS.md 的版本/标签隔离 |
+| TLS Step 1/2 briefs | TRI_LAW_SEQUENTIAL_RAG_SPEC/PROTOCOL.md、TLS_RAG_STEP2_SYNTHETIC.md 与原测试 |
+| TLS Step 3 brief 与三份交接/读序 | TLS_RAG_STEP3_SYNTHETIC.md、SPEC/PROTOCOL、Step 4 冻结契约 |
+| 三个包装脚本 | 历史固定 Git 版本；Python 模块/配置/测试保留，现行 repaired 入口不变 |
+
+删除路径及删除前 SHA-256 逐项记录在 code_protection.json 的本次批准记录。
+历史恢复位置如下（只读参考，不是当前入口）：
+
+- [AGENT_CALIBRATED_TRI_PREDICT.md](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/AGENT_CALIBRATED_TRI_PREDICT.md)
+- [AGENT_CALIBRATED_TRI_PREDICT_STEP3.md](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/AGENT_CALIBRATED_TRI_PREDICT_STEP3.md)
+- [AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP1.md](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP1.md)
+- [AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md)
+- [AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md)
+- [docs/TLS_RAG_STEP2_TO_STEP3.md](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/docs/TLS_RAG_STEP2_TO_STEP3.md)
+- [docs/TLS_RAG_STEP3_START_HERE.md](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/docs/TLS_RAG_STEP3_START_HERE.md)
+- [docs/TLS_RAG_STEP3_TO_STEP4_HANDOFF.md](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/docs/TLS_RAG_STEP3_TO_STEP4_HANDOFF.md)
+- [scripts/slurm_pdctp_foundation.sh](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/scripts/slurm_pdctp_foundation.sh)
+- [scripts/run_tls_rag_step4_probe.sh](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/scripts/run_tls_rag_step4_probe.sh)
+- [scripts/run_tls_rag_step4_retention_v3.sh](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/scripts/run_tls_rag_step4_retention_v3.sh)

@@ -1,5 +1,30 @@
 # Status
 
+## Current: approved repository cleanup and deferred Step 5 handoff (2026-10-22)
+
+- User approved retirement of eight historical task documents and three obsolete wrappers;
+  fixed-commit history links replace current-path references. Scientific contracts retained.
+- Step 5 handoff prepared at docs/TLS_RAG_STEP5_HANDOFF.md. New agent creation is
+  explicitly deferred until the user returns after quota refresh. Planning only; no implementation.
+- User reports later server cleanup removed a800-input-v1-01/v1-02 and obsolete
+  code packages/temp bundles/cache; v1-03 and verified closeout archive remain.
+  Earlier statements below about preserving failed directories describe closeout time only.
+- Validation: `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
+  NUMEXPR_NUM_THREADS=1 sh scripts/run_tests.sh` ran 307 tests in 32.932 s:
+  OK, one optional skip. Log: /private/tmp/tls-cleanup-full-tests.log.
+- `python3 scripts/check_code_protection.py`: 176 registered files passed;
+  all 328 local Markdown file links resolve. Whitespace check passed.
+  Current A800 CODE_FILES/sources: all 22 paths and SHA-256 values unchanged.
+  Source, configs, tests, runtime dependencies and retained scripts have zero diff.
+  All 11 deleted paths are recoverable at fixed Git commits; retirement hashes verified.
+- Active registered Markdown reduced from 54 to 47; scripts from 8 to 5.
+  No remote experiment or archive modification in this cleanup.
+
+
+> 2026-10-22 cleanup: commands referencing retired wrappers below are historical;
+> use their fixed Git checkout for historical reproduction. The current Step 4 entry is
+> `scripts/run_tls_rag_step4_repaired_acceptance.sh`. Historical commands authorize no new gate.
+
 ## A800 Step 4 replay closeout (2026-10-22)
 
 - Remote checkout verified clean at a2c2a274cd2009aab9384e0288d41e5ad7292722.
@@ -306,7 +331,7 @@ environment, and zero failed. No frozen implementation or test was changed.
 
 The user authorized Step 2 on 2026-09-05 and requested a fresh agent. The full
 program is now explicitly capped at six steps. The new assignment is
-`AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md`; it authorizes only the tiny
+[AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md (historical)](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md); it authorizes only the tiny
 CPU/network-free exact retrieval/evidence skeleton and fixed sequential
 interface. Production Tri-Law risk aggregation, learned/calibrated stopping,
 real data, protected roles, approximate indexes, GPUs, LLMs, and answer
@@ -383,14 +408,14 @@ commits, SHA-256 values, Step 2 fingerprints, and local/Genoa tests. No
 historical file was moved, deleted, rewritten, or copied into a competing
 source of truth.
 
-The fresh Step 3 task starts at `docs/TLS_RAG_STEP3_START_HERE.md`, then reads
-`docs/TLS_RAG_STEP2_TO_STEP3.md` and only the allowlisted TLS-RAG/Tri-Law
+The fresh Step 3 task starts at [docs/TLS_RAG_STEP3_START_HERE.md (historical)](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/docs/TLS_RAG_STEP3_START_HERE.md), then reads
+[docs/TLS_RAG_STEP2_TO_STEP3.md (historical)](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/docs/TLS_RAG_STEP2_TO_STEP3.md) and only the allowlisted TLS-RAG/Tri-Law
 technical files. It must not preload this large status, the large implementation
 plan, Step 1/2 prompts, old v1/v2/v3 material, real-data documentation,
 artifacts, runs, protected roles, or archives. At final documentation time it
 may locate and update only the bounded TLS-RAG sections here and in the plan.
 
-`AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md` authorizes only a CPU/network-free
+[AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md (historical)](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md) authorizes only a CPU/network-free
 synthetic observed-pair Tri-Law profile, transparent gain/sufficiency scoring,
 disjoint fit/bound calibration, conservative dual-bound stopping, and Rows
 1--4 one-factor ablations. Step 4, real/protected roles, downloads, approximate
@@ -1058,7 +1083,7 @@ source-controlled power artifact is
 `artifacts/pdctp_network_free/power_plan_v1.json`.
 
 The checked-in Slurm entry point is
-`scripts/slurm_pdctp_foundation.sh`. It runs the complete offline test suite
+[scripts/slurm_pdctp_foundation.sh (historical)](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/scripts/slurm_pdctp_foundation.sh). It runs the complete offline test suite
 before writing a job-ID-namespaced synthetic output. It does not download data,
 load a text model, run FAISS/GPU measurement, or invoke an LLM.
 

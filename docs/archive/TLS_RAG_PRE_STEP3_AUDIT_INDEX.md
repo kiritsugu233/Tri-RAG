@@ -1,5 +1,8 @@
 # TLS-RAG pre-Step 3 audit index
 
+> 2026-10-22: the stable-path statement below describes the original archive.
+> Approved cleanup retired old briefs; hash-table links still resolve to their original Step 2 Git bytes.
+
 Status: logically archived and frozen on 2026-09-05.
 
 This index compresses the Step 1 design and Step 2 implementation history
@@ -27,8 +30,8 @@ TLS-RAG docs, Step 1/2 briefs, Step 2 module/config/test, and all files below
 
 | File | SHA-256 |
 |---|---|
-| `AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP1.md` | `f86b5542db7dbd4b13db467fda0991cc7828b8f1711f6e7a33329fbeefa828d7` |
-| `AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md` | `8fafa3bd108197f6378698d0af60fbd30a9d4c389f11ae997a804412ac9fb6b0` |
+| [AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP1.md (historical)](https://github.com/kiritsugu233/Tri-RAG/blob/f46ce73beccf5fddbf05fd87fdb0911318020add/AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP1.md) | `f86b5542db7dbd4b13db467fda0991cc7828b8f1711f6e7a33329fbeefa828d7` |
+| [AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md (historical)](https://github.com/kiritsugu233/Tri-RAG/blob/f46ce73beccf5fddbf05fd87fdb0911318020add/AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md) | `8fafa3bd108197f6378698d0af60fbd30a9d4c389f11ae997a804412ac9fb6b0` |
 | `docs/TRI_LAW_SEQUENTIAL_RAG_SPEC.md` | `672973a2f00f365064796551e668e63fa50620e18399f8c324b6e83d7914ed2d` |
 | `docs/TRI_LAW_SEQUENTIAL_RAG_PROTOCOL.md` | `33a8a052187789ae350c08316863b2102a3a10873a0633e3fa43905a57febd94` |
 | `docs/TRI_LAW_SPEC.md` | `f5cfe996dbc58b6ccfc5b0f08dad8372451079b5988a4da1164aadeea852f79d` |
@@ -83,6 +86,6 @@ specific file:
   `artifacts/`, and any `runs/` output; and
 - every returned or protected archive and all protected role data.
 
-Step 3 starts from `docs/TLS_RAG_STEP3_START_HERE.md` and
-`docs/TLS_RAG_STEP2_TO_STEP3.md`. This audit index is for human provenance and
+Step 3 starts from [docs/TLS_RAG_STEP3_START_HERE.md (historical)](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/docs/TLS_RAG_STEP3_START_HERE.md) and
+[docs/TLS_RAG_STEP2_TO_STEP3.md (historical)](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/docs/TLS_RAG_STEP2_TO_STEP3.md). This audit index is for human provenance and
 need not be loaded by the Step 3 agent.

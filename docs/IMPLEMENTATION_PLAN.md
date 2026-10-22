@@ -1,5 +1,13 @@
 # Implementation Plan
 
+## Repository cleanup and Step 5 planning handoff (2026-10-22)
+
+- [x] Read candidate briefs and wrappers; preserve scientific contracts and fixed Git provenance.
+- [x] Retire approved 11 paths and prepare one Step 5 handoff.
+- [x] Validate protection (176), Markdown links (328), full tests (307, one skip) and unchanged A800 source binding (22 files).
+- [ ] Create new agent only after the user explicitly resumes; first deliverable is a proposal.
+
+
 ## A800 Step 4 closeout (2026-10-22)
 
 - [x] Verify input/model/code binding and all 34 result artifacts over SSH.
@@ -601,7 +609,7 @@ Acceptance state:
 ## TLS-RAG successor: Step 2 synthetic skeleton
 
 Authorization state: user-authorized on 2026-09-05. Implementation is assigned
-to a fresh Codex task under `AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md`.
+to a fresh Codex task under [AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md (historical)](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md).
 
 - [x] Add a tiny deterministic external-query corpus, evidence plans, and a
   structurally separate evidence-label store.
@@ -666,9 +674,9 @@ Acceptance state:
 Acceptance state:
 
 - audit index: `docs/archive/TLS_RAG_PRE_STEP3_AUDIT_INDEX.md`;
-- minimal entry: `docs/TLS_RAG_STEP3_START_HERE.md`;
-- transition: `docs/TLS_RAG_STEP2_TO_STEP3.md`;
-- assignment: `AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md`;
+- minimal entry: [docs/TLS_RAG_STEP3_START_HERE.md (historical)](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/docs/TLS_RAG_STEP3_START_HERE.md);
+- transition: [docs/TLS_RAG_STEP2_TO_STEP3.md (historical)](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/docs/TLS_RAG_STEP2_TO_STEP3.md);
+- assignment: [AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md (historical)](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md);
 - the original Step 1/2 documents remain available and content-addressed but
   inactive for the Step 3 agent; and
 - Step 3 is user-authorized, while Step 4 and every real/protected/LLM gate

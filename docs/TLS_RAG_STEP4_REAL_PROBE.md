@@ -1,5 +1,10 @@
 # TLS-RAG Step 4: first real retrieval probe (v2)
 
+> 2026-10-22 cleanup: commands referencing retired wrappers below are historical;
+> use their fixed Git checkout for historical reproduction. The current Step 4 entry is
+> `scripts/run_tls_rag_step4_repaired_acceptance.sh`. Historical commands authorize no new gate.
+> [Retired wrapper at fixed historical commit](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/scripts/run_tls_rag_step4_probe.sh).
+
 > **Version-scoped reference.** This document describes its named method and
 > milestone, including historical results and commands. It is not a current
 > assignment or permission to reopen data. Start at [root AGENTS](../AGENTS.md)

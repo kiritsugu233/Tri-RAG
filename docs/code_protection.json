@@ -12,31 +12,6 @@
       "sha256": "53dca5fce4982c80c011b5a4747dd9cf267371381425f37731265274f82b0b3f"
     },
     {
-      "path": "AGENT_CALIBRATED_TRI_PREDICT.md",
-      "level": "L1",
-      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
-    },
-    {
-      "path": "AGENT_CALIBRATED_TRI_PREDICT_STEP3.md",
-      "level": "L1",
-      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
-    },
-    {
-      "path": "AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP1.md",
-      "level": "L1",
-      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
-    },
-    {
-      "path": "AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md",
-      "level": "L1",
-      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
-    },
-    {
-      "path": "AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md",
-      "level": "L1",
-      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
-    },
-    {
       "path": "NEXT_AGENT_PROMPT.md",
       "level": "L1",
       "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
@@ -292,7 +267,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "a691cf6fe526c92276fb9e9c8040abe203273eeccd5305171f3598a31370b7ad"
+      "sha256": "cca6ebb6d9742ab118cca17f4adadb883fe4f25c82521552154f268699cf5789"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -386,22 +361,7 @@
       "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
     },
     {
-      "path": "docs/TLS_RAG_STEP2_TO_STEP3.md",
-      "level": "L1",
-      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
-    },
-    {
-      "path": "docs/TLS_RAG_STEP3_START_HERE.md",
-      "level": "L1",
-      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
-    },
-    {
       "path": "docs/TLS_RAG_STEP3_SYNTHETIC.md",
-      "level": "L1",
-      "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
-    },
-    {
-      "path": "docs/TLS_RAG_STEP3_TO_STEP4_HANDOFF.md",
       "level": "L1",
       "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
     },
@@ -431,13 +391,13 @@
       "path": "docs/TLS_RAG_STEP4_REPAIRED_ACCEPTANCE.md",
       "level": "L0",
       "reason": "Approved compatibility, roles and acceptance contract",
-      "sha256": "da220369793f3df7afaa35d791bf428075a0912788bdf8ee6ea40c04a55ef3db"
+      "sha256": "7d48d677ac10aecdf051df34c495a02d4189f612f26d73b35f8dca05a38163ae"
     },
     {
       "path": "docs/TLS_RAG_STEP4_RETENTION_V3.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "e4fc0b6b7d381849ac7c69228b770451ca8f364944048eaada911645c62dfc72"
+      "sha256": "266b12ebb2a752e43f3e991915b4503f10fb2140f96e3c84ec63d2c43cdb2b80"
     },
     {
       "path": "docs/TLS_RAG_STEP4_START_HERE.md",
@@ -523,11 +483,6 @@
       "reason": "Verification/launcher orchestration; changing scientific gates or expected evidence inherits L0"
     },
     {
-      "path": "scripts/run_tls_rag_step4_probe.sh",
-      "level": "L1",
-      "reason": "Verification/launcher orchestration; changing scientific gates or expected evidence inherits L0"
-    },
-    {
       "path": "scripts/run_tls_rag_step4_readiness.sh",
       "level": "L1",
       "reason": "Verification/launcher orchestration; changing scientific gates or expected evidence inherits L0"
@@ -536,16 +491,6 @@
       "path": "scripts/run_tls_rag_step4_repaired_acceptance.sh",
       "level": "L1",
       "reason": "CPU command wrapper; inherited scientific contracts remain L0"
-    },
-    {
-      "path": "scripts/run_tls_rag_step4_retention_v3.sh",
-      "level": "L1",
-      "reason": "Verification/launcher orchestration; changing scientific gates or expected evidence inherits L0"
-    },
-    {
-      "path": "scripts/slurm_pdctp_foundation.sh",
-      "level": "L1",
-      "reason": "Verification/launcher orchestration; changing scientific gates or expected evidence inherits L0"
     },
     {
       "path": "src/tri_rag_harness/__init__.py",
@@ -1301,6 +1246,11 @@
       "level": "L0",
       "reason": "Regression/conformance expectations protect frozen scientific behavior",
       "sha256": "f182c5f39808479dd1cdf247c9db44d1497858727f7fbae134e4461bddcbf929"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP5_HANDOFF.md",
+      "level": "L1",
+      "reason": "Planning-only handoff; scientific contract changes require scoped L0 approval."
     }
   ],
   "approved_change_history": [
@@ -1504,6 +1454,98 @@
           "after_sha256": "d634bfba0bf568d75a1ac6b199d5e7bd1755d21986d740ac40355eca2b7a108f"
         }
       ]
+    },
+    {
+      "date": "2026-10-22",
+      "parent_commit": "4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7",
+      "user_consent": "全部批准，开始吧。但是快限额了，最后一步创建新agent，交付step5交接文档这个等刷新额度后，我再给你指令进行。完成前面的所有步骤",
+      "scope": "Approved CLEANUP_REVIEW.md: retire eight historical task docs and three wrappers; repair links; preserve scientific contracts; update scoped L0 documentation references/registry; add L1 planning handoff; test and push same branch. Defer agent creation.",
+      "retired_files": [
+        {
+          "path": "AGENT_CALIBRATED_TRI_PREDICT.md",
+          "level": "L1",
+          "sha256": "95e17cd057ab27076e200c3ca28de9848758e844dad43326d5c8994e83da4d24",
+          "historical_url": "https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/AGENT_CALIBRATED_TRI_PREDICT.md"
+        },
+        {
+          "path": "AGENT_CALIBRATED_TRI_PREDICT_STEP3.md",
+          "level": "L1",
+          "sha256": "3aa9d8b7202c0494d8686c3c5bce5a0d3138fb747130e0b72b375550ebdc188a",
+          "historical_url": "https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/AGENT_CALIBRATED_TRI_PREDICT_STEP3.md"
+        },
+        {
+          "path": "AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP1.md",
+          "level": "L1",
+          "sha256": "f5dd1ce7e9f6de0578b74e2cc508e173e25ad836b9bec8c58f43c4531f65ecea",
+          "historical_url": "https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP1.md"
+        },
+        {
+          "path": "AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md",
+          "level": "L1",
+          "sha256": "a1882a8737b2759f11618b81eed5bf835c12cd837dfc307efd967266e3adbe6e",
+          "historical_url": "https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP2.md"
+        },
+        {
+          "path": "AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md",
+          "level": "L1",
+          "sha256": "cea06ba367d6bc70f7864df20625d6edc8b3be9b9c43e85daaf4b21a1df0929d",
+          "historical_url": "https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/AGENT_TRI_LAW_SEQUENTIAL_RAG_STEP3.md"
+        },
+        {
+          "path": "docs/TLS_RAG_STEP2_TO_STEP3.md",
+          "level": "L1",
+          "sha256": "d0d7b12bf6330fb3a064ee108dd235b000f944229a972c4681deab1618d22950",
+          "historical_url": "https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/docs/TLS_RAG_STEP2_TO_STEP3.md"
+        },
+        {
+          "path": "docs/TLS_RAG_STEP3_START_HERE.md",
+          "level": "L1",
+          "sha256": "e9afb44fc5ae87cd4dc0b2b779eaa9aa037aeb9d141fa5c7b6ee9f60f0cafac7",
+          "historical_url": "https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/docs/TLS_RAG_STEP3_START_HERE.md"
+        },
+        {
+          "path": "docs/TLS_RAG_STEP3_TO_STEP4_HANDOFF.md",
+          "level": "L1",
+          "sha256": "a490d71f6d3b76a4efc806abc6efb485c29aa3a526057a2015da87b6aefc9034",
+          "historical_url": "https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/docs/TLS_RAG_STEP3_TO_STEP4_HANDOFF.md"
+        },
+        {
+          "path": "scripts/slurm_pdctp_foundation.sh",
+          "level": "L1",
+          "sha256": "15799a97ea4c76fe2344ced9bc869eb9a75a2fee5608a2da189e98196679f74a",
+          "historical_url": "https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/scripts/slurm_pdctp_foundation.sh"
+        },
+        {
+          "path": "scripts/run_tls_rag_step4_probe.sh",
+          "level": "L1",
+          "sha256": "a819d484fe5bcac1188a73586f032621cb5e49914999190572949f2978a5bd95",
+          "historical_url": "https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/scripts/run_tls_rag_step4_probe.sh"
+        },
+        {
+          "path": "scripts/run_tls_rag_step4_retention_v3.sh",
+          "level": "L1",
+          "sha256": "93b5d51f33111513c4fe65f71c40eb0fbad7d54df4b5dcfa60322f80f942f657",
+          "historical_url": "https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/scripts/run_tls_rag_step4_retention_v3.sh"
+        }
+      ],
+      "protected_changes": [
+        {
+          "path": "docs/CODE_PROTECTION.md",
+          "before_sha256": "a691cf6fe526c92276fb9e9c8040abe203273eeccd5305171f3598a31370b7ad",
+          "after_sha256": "cca6ebb6d9742ab118cca17f4adadb883fe4f25c82521552154f268699cf5789"
+        },
+        {
+          "path": "docs/TLS_RAG_STEP4_REPAIRED_ACCEPTANCE.md",
+          "before_sha256": "da220369793f3df7afaa35d791bf428075a0912788bdf8ee6ea40c04a55ef3db",
+          "after_sha256": "7d48d677ac10aecdf051df34c495a02d4189f612f26d73b35f8dca05a38163ae"
+        },
+        {
+          "path": "docs/TLS_RAG_STEP4_RETENTION_V3.md",
+          "before_sha256": "e4fc0b6b7d381849ac7c69228b770451ca8f364944048eaada911645c62dfc72",
+          "after_sha256": "266b12ebb2a752e43f3e991915b4503f10fb2140f96e3c84ec63d2c43cdb2b80"
+        }
+      ],
+      "record": "docs/MARKDOWN_REVIEW.md"
     }
   ],
   "maintained_branch": "codex/tls-rag-step4-retention-v3",

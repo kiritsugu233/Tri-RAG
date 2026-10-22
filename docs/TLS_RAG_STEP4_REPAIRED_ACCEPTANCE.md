@@ -1,5 +1,9 @@
 # Step 4 审查修复版有效性验收
 
+> 2026-10-22 cleanup: commands referencing retired wrappers below are historical;
+> use their fixed Git checkout for historical reproduction. The current Step 4 entry is
+> `scripts/run_tls_rag_step4_repaired_acceptance.sh`. Historical commands authorize no new gate.
+
 2026-09-10。工作目录固定为 `/Users/guanghongxu/Query-Adaptive-Tri-RAG`，
 工作分支固定为 `codex/tls-rag-step4-retention-v3`。审查备份分支不改动。
 本次用户明确要求：修改和测试由助手完成，**本地提交与 GitHub 推送由用户执行**；
@@ -144,7 +148,7 @@ sh scripts/run_tls_rag_step4_repaired_acceptance.sh "$tls_previous" "$tls_output
 ```
 
 新入口运行完整的验证、特征重算、拟合、校准、tune 选择以及条件满足后的 probe。
-不用再运行旧 v2 evaluate，也不使用旧 `run_tls_rag_step4_retention_v3.sh` 作为当前入口。
+不用再运行旧 v2 evaluate，也不使用旧 [run_tls_rag_step4_retention_v3.sh (historical)](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/scripts/run_tls_rag_step4_retention_v3.sh) 作为当前入口。
 最终查看根目录 `report.md` 和 `result.json`；若中断保留输出与预约记录再分析。
 
 ## 本地验证记录
