@@ -1,5 +1,37 @@
 # Status
 
+## Current: Step 5 A800 SSH test verification complete
+
+- User asked the agent to connect directly over SSH after the pasted command block
+  exited their terminal. Reused the previously user-provided AutoDL connection;
+  verified the same A800 80GB host and clean continuing-branch checkout. Ran steps
+  individually with explicit exit codes; no interactive `set -e`/`set -u`.
+- Server `/root/autodl-tmp/Tri-RAG-git` fast-forwarded from `4a6efeb` to tested code
+  `40728dd7421a212b686e843d82f2edd9e4d5ebbc`. No reset, clean, force push or
+  protected archive access. This follow-up changes status/plan documentation only.
+- Cloned `/root/autodl-tmp/conda-envs/tri-rag-step4` into the absent independent
+  `/root/autodl-tmp/conda-envs/tri-rag-step5`; installed FAISS CPU 1.8.0 there only.
+  Verified Python 3.12.3, NumPy 1.26.4, SciPy 1.13.0 and FAISS 1.8.0.
+- Actual server command: `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
+  NUMEXPR_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src
+  /root/autodl-tmp/conda-envs/tri-rag-step5/bin/python -m unittest discover -s tests -v`.
+  **337 tests passed, no skips/failures, 76.401 s suite time (77.269 s process), exit 0.**
+- Required CLI: same interpreter, `-m tri_rag_harness.tls_rag_step5_benchmark self-test
+  --require-faiss --output /root/autodl-tmp/tls-rag-step5-check-2CU9M5/hnsw-selftest`.
+  Exit 0 in 2.816 s; `ann_integration_exercised=true`, `real_data_opened=false`,
+  `no_tune_candidate`. That synthetic negative selection is expected, not a real
+  policy failure or a passed real-data quality claim.
+- Verified all five seals (synthetic bundle, indexes, model-fit, bound-fit and tune),
+  plus absence of cert/latency/test directories in the self-test run. Protection
+  check passed before/after (184 registered files); server checkout remained clean.
+- Server logs and artifacts: `/root/autodl-tmp/tls-rag-step5-check-2CU9M5/` contains
+  `tests.log`, `tests-result.json`, `selftest.log`, `selftest-result.json`,
+  `verification.json`, environment clone/install/version/freeze logs, code commit
+  and final protection log. `verification.json` records actual results/seal identities.
+- Next: wait for the user's decision on real source/model/history audit and preparation.
+  No real data/model downloaded, no real ANN index or experimental role opened, no
+  LLM/answer generation or GPU benchmark executed. Step 4 environment/results retained.
+
 ## Current: Step 5 ANN v1 local implementation and server-test handoff (2026-10-22)
 
 - User authorized review of the exact-path proposal followed by local implementation,

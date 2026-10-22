@@ -9,7 +9,8 @@
 - [x] Add local-file-only MS MARCO preparation, actual input/model fingerprints and explicit audit limitations.
 - [x] Validate real FAISS 1.8.0 in an isolated temporary local environment; preserve Step 4 dependencies/source.
 - [x] Add offline negative cases, scientific-record reproduction and all six synthetic role transitions.
-- [ ] User runs the documented A800 synchronization/full tests and real-HNSW self-test.
+- [x] At the user's request, connect over SSH, synchronize A800, clone an independent
+  environment and verify 337 full tests plus required real-HNSW self-test; retain logs.
 - [ ] Audit real source/model/history exclusions; prepare new input namespace and run real stages.
 - [ ] Record actual independent quality/latency/test results or preserved terminal negative result.
 
