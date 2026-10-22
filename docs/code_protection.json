@@ -267,7 +267,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "cca6ebb6d9742ab118cca17f4adadb883fe4f25c82521552154f268699cf5789"
+      "sha256": "bfcfdd6562c08c405975476ab9d88a363824bd358cfcc69e4a71e6e617fb75ed"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -1251,6 +1251,54 @@
       "path": "docs/TLS_RAG_STEP5_HANDOFF.md",
       "level": "L1",
       "reason": "Planning-only handoff; scientific contract changes require scoped L0 approval."
+    },
+    {
+      "path": "src/tri_rag_harness/tls_rag_step5_ann.py",
+      "level": "L0",
+      "reason": "Approved new Step 5 ANN v1 scientific contract; see docs/TLS_RAG_STEP5_ANN.md and actual 2026-10-22 user consent",
+      "sha256": "e1ac22c999dcc2cf94924c0046751d699b2110d68c39a1ab5e2f1c5758ef8469"
+    },
+    {
+      "path": "src/tri_rag_harness/tls_rag_step5_data.py",
+      "level": "L0",
+      "reason": "Approved new Step 5 ANN v1 scientific contract; see docs/TLS_RAG_STEP5_ANN.md and actual 2026-10-22 user consent",
+      "sha256": "9f795cb741f6dca86a7b396d158000d9614bec2f22071c1aefab18c5cf5a2224"
+    },
+    {
+      "path": "src/tri_rag_harness/tls_rag_step5_policy.py",
+      "level": "L0",
+      "reason": "Approved new Step 5 ANN v1 scientific contract; see docs/TLS_RAG_STEP5_ANN.md and actual 2026-10-22 user consent",
+      "sha256": "e3494f9cb678d7934715900693688bc4dcd7a6ebde81191d23aeee6c9075c09a"
+    },
+    {
+      "path": "src/tri_rag_harness/tls_rag_step5_protocol.py",
+      "level": "L0",
+      "reason": "Approved new Step 5 ANN v1 scientific contract; see docs/TLS_RAG_STEP5_ANN.md and actual 2026-10-22 user consent",
+      "sha256": "2d6a83f8e4fbab0bb624b4fa0b56525b49beb294f5fa9f9fec92b45134167a16"
+    },
+    {
+      "path": "configs/tls_rag_step5_ann_v1.json",
+      "level": "L0",
+      "reason": "Approved new Step 5 ANN v1 scientific contract; see docs/TLS_RAG_STEP5_ANN.md and actual 2026-10-22 user consent",
+      "sha256": "e27cbed307b1e14900895a5e932cabb7494cc2a8016292f750beddc95055af87"
+    },
+    {
+      "path": "tests/test_tls_rag_step5_ann.py",
+      "level": "L0",
+      "reason": "Approved new Step 5 ANN v1 scientific contract; see docs/TLS_RAG_STEP5_ANN.md and actual 2026-10-22 user consent",
+      "sha256": "8810aff897f1b3228218293af66ed79f9ffc8d66fe4d16ddf6067b2b05d20b9a"
+    },
+    {
+      "path": "src/tri_rag_harness/tls_rag_step5_benchmark.py",
+      "level": "L0",
+      "reason": "Approved new Step 5 ANN v1 scientific contract; see docs/TLS_RAG_STEP5_ANN.md and actual 2026-10-22 user consent",
+      "sha256": "63af012180ec2e9717fa5fe977c726b7740ae25f11f97eca42484b28d6dc2c2e"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP5_ANN.md",
+      "level": "L0",
+      "reason": "Approved new Step 5 ANN v1 scientific contract; see docs/TLS_RAG_STEP5_ANN.md and actual 2026-10-22 user consent",
+      "sha256": "80a368f58b92fd38d7723656c71be57a31332fc9dbe141976f317abf78f3eb3b"
     }
   ],
   "approved_change_history": [
@@ -1553,5 +1601,31 @@
   "review_backup": {
     "branch": "codex/repo-review-code-protection",
     "commit": "62377d854ddd183925c4b62ca81653e9c14d9c34"
+  },
+  "step5_authorization": {
+    "date": "2026-10-22",
+    "user_consent": "再仔细检查一遍，看看设计基线有没有问题，没问题就开始执行吧，先在本地改，改好之后同步到github，然后给我服务器端的指令同步和运行测试，告诉我预计需要运行多久。",
+    "scope": [
+      "src/tri_rag_harness/tls_rag_step5_ann.py",
+      "src/tri_rag_harness/tls_rag_step5_data.py",
+      "src/tri_rag_harness/tls_rag_step5_policy.py",
+      "src/tri_rag_harness/tls_rag_step5_protocol.py",
+      "configs/tls_rag_step5_ann_v1.json",
+      "tests/test_tls_rag_step5_ann.py",
+      "src/tri_rag_harness/tls_rag_step5_benchmark.py",
+      "docs/TLS_RAG_STEP5_ANN.md"
+    ],
+    "limits": "New Step 5 namespace only; existing scientific implementations, contracts, dependency pins and historical roles unchanged. Server tests first; no real benchmark executed locally.",
+    "registration_only_existing_paths": [
+      "docs/code_protection.json",
+      "docs/CODE_PROTECTION.md"
+    ],
+    "new_file_levels": "All eight new files L0, including scientific orchestration in benchmark module.",
+    "existing_register_append": {
+      "path": "docs/CODE_PROTECTION.md",
+      "before_sha256": "cca6ebb6d9742ab118cca17f4adadb883fe4f25c82521552154f268699cf5789",
+      "after_sha256": "bfcfdd6562c08c405975476ab9d88a363824bd358cfcc69e4a71e6e617fb75ed",
+      "change": "Append approved Step 5 namespace table/consent only; no existing rule changed."
+    }
   }
 }

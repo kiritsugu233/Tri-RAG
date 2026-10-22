@@ -1,0 +1,22 @@
+{
+  "schema": "tls-rag-step5-ann-v1",
+  "dataset": "msmarco-passage-v1-hash-subset",
+  "corpus_size": 1000000,
+  "dimension": 384,
+  "m_prime": 128,
+  "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+  "model_revision": "c9745ed1d9f207416be6d2e6f8de32d1f16199bf",
+  "max_seq_length": 256,
+  "budget_grid": [64, 256, 1024, 4096],
+  "k_gt": 10,
+  "k_ctx": 5,
+  "hnsw": {"connections": 32, "ef_construction": 200, "ef_floor": 256, "ef_multiplier": 2, "threads": 1, "faiss_version": "1.8.0"},
+  "seeds": {"corpus": 55101, "split": 55109, "projection": 55117, "index": 55121, "bootstrap": 55127, "timing": 55133, "embedding": 55139},
+  "roles": {"cal_model_fit": 8192, "cal_bound_fit": 4096, "tune": 2048, "cert": 8192, "latency": 2048, "test": 2048},
+  "features": {"sample_size": 32, "shell_size": 8, "lid_neighbors": 20},
+  "policy": {"ridge": 0.01, "scale_floor": 1e-12, "minimum_fit": 32, "thresholds": [0.9, 0.925, 0.95], "quantiles": [0.5, 0.8, 0.9]},
+  "acceptance": {"retention": 0.9, "hit_drop": 0.02, "retention_drop": 0.01, "distance_ratio": 0.9, "latency_ratio": 0.9, "p95_ratio": 1.05, "alpha_total": 0.05, "quality_claims": 3, "systems_claims": 3},
+  "timing": {"warmup": 32, "repeats": 5, "bootstrap_replicates": 5000, "batch_size": 64},
+  "resource_limits": {"max_hours": 12, "max_rss_gib": 28},
+  "interpretation": {"formal_certification": false, "iid_query_families_established": false, "qrels_are_sparse": true, "no_answer_quality_claim": true, "new_stage_extension_only": true}
+}

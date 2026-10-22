@@ -24,6 +24,24 @@ L0 变更检测到后不得自动重置文件或刷新哈希。批准信息必�
 本地 approval 文件不能自行创造授权。登记文件不自哈希，其变化必须对照 Git 审查。
 当前工具不是强制 OS/GitHub 权限，也没有自动安装 hook 或 CI。
 
+### Step 5 ANN v1 approved new namespace (2026-10-22)
+
+用户在收到精确路径方案后要求“再仔细检查一遍，看看设计基线有没有问题，没问题就开始执行吧，先在本地改，改好之后同步到github”。
+新增实现、复核修正、授权边界及服务器指令见 [ANN v1 契约](TLS_RAG_STEP5_ANN.md)。
+旧科学源码、旧测试、依赖固定版本、实验配置及数据访问边界不变；登记仅追加新项。
+本文只增加本节及新文件表，不削弱任何既有规则。
+
+| New file | Level | Protected contract |
+|---|---|---|
+| `src/tri_rag_harness/tls_rag_step5_ann.py` | **L0** | New ANN retrieval, candidate membership, exact references and ties |
+| `src/tri_rag_harness/tls_rag_step5_data.py` | **L0** | New source/subcorpus, lexical families, role separation and input identities |
+| `src/tri_rag_harness/tls_rag_step5_policy.py` | **L0** | New sampled features, ANN ridge/residual fitting and deployable decisions |
+| `src/tri_rag_harness/tls_rag_step5_protocol.py` | **L0** | Role reservations, seals, quality bounds and paired uncertainty |
+| `src/tri_rag_harness/tls_rag_step5_benchmark.py` | **L0** | Tune selection, protected-stage orchestration and timing boundaries |
+| `configs/tls_rag_step5_ann_v1.json` | **L0** | New-stage frozen parameters, roles, seeds and targets |
+| `tests/test_tls_rag_step5_ann.py` | **L0** | New-stage retrieval, leakage, failure and reproduction regressions |
+| `docs/TLS_RAG_STEP5_ANN.md` | **L0** | Approved reviewed design, statistical limitations and role boundaries |
+
 保护也沿依赖传播：在 L1 caller、新文件、依赖版本、配置、测试中更换 L0 实现、
 阈值/数据角色/比较规则，仍须 L0 事前审批。新增普通文件可在任务范围内登记；
 不能顺便删除/降级已有项。整个已有源码兼容性仍受历史冻结规则约束。

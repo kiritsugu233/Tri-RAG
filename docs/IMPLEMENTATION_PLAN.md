@@ -1,11 +1,24 @@
 # Implementation Plan
 
+## Step 5 ANN v1 implementation (2026-10-22)
+
+- [x] Review proposal and record actual user implementation/synchronization consent.
+- [x] Bound feature computation, preserve both fixed paths, and make inconclusive certification terminal.
+- [x] Implement new HNSW/persistent-candidate namespace, independent ANN calibration,
+  tune-frozen controls, role closure/receipts, conditional quality bounds and paired timing.
+- [x] Add local-file-only MS MARCO preparation, actual input/model fingerprints and explicit audit limitations.
+- [x] Validate real FAISS 1.8.0 in an isolated temporary local environment; preserve Step 4 dependencies/source.
+- [x] Add offline negative cases, scientific-record reproduction and all six synthetic role transitions.
+- [ ] User runs the documented A800 synchronization/full tests and real-HNSW self-test.
+- [ ] Audit real source/model/history exclusions; prepare new input namespace and run real stages.
+- [ ] Record actual independent quality/latency/test results or preserved terminal negative result.
+
 ## Repository cleanup and Step 5 planning handoff (2026-10-22)
 
 - [x] Read candidate briefs and wrappers; preserve scientific contracts and fixed Git provenance.
 - [x] Retire approved 11 paths and prepare one Step 5 handoff.
 - [x] Validate protection (176), Markdown links (328), full tests (307, one skip) and unchanged A800 source binding (22 files).
-- [ ] Create new agent only after the user explicitly resumes; first deliverable is a proposal.
+- [x] User resumed, received the proposal, and authorized review followed by local implementation.
 
 
 ## A800 Step 4 closeout (2026-10-22)

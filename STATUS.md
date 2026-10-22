@@ -1,5 +1,45 @@
 # Status
 
+## Current: Step 5 ANN v1 local implementation and server-test handoff (2026-10-22)
+
+- User authorized review of the exact-path proposal followed by local implementation,
+  GitHub synchronization and server synchronization/test commands. New contract and
+  actual consent: docs/TLS_RAG_STEP5_ANN.md. Canonical checkout/continuing branch retained.
+- Added a separate HNSW ANN namespace, persistent candidate membership with restarted
+  searches, bounded sampled geometry/Tri-Law features, newly fitted ANN retention
+  models, independent residual fit, tune-selected fixed comparators and primary policy,
+  exclusive role reservations, decision/label closure, conditional bounds and paired timing.
+- Local-file-only MS MARCO preparation records actual source/model hashes and lexical
+  exclusion/role audits; semantic independence, upstream source/model authenticity and
+  historical exclusion completeness are explicitly unestablished without further audit.
+- Main review corrections: cap feature samples; distinguish single/staged fixed controls;
+  terminal inconclusive bounds; float64 footprint; conservative GPU exact reference and
+  serial batch-64 blocks cannot establish optimized GPU/batched serving superiority.
+- Exact full local command: `OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
+  NUMEXPR_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src
+  /private/tmp/tls-rag-step5-faiss-check/bin/python -m unittest discover -s tests -v`.
+  Final 337 tests passed in 38.733 seconds, no skips; log
+  `/private/tmp/tls-rag-step5-final-checked.log`. FAISS CPU 1.8.0 is installed only in
+  the isolated temporary local environment; no repository dependency pin changed.
+- New focused checks include real FAISS construction/persistence, nonnested candidates,
+  score reuse, leakage/tamper/future-role rejection, power diagnostic, scientific-record
+  reproduction and complete six-stage synthetic success transitions using explicitly
+  permissive fixture thresholds. Real protocol thresholds remain frozen as registered.
+- The required real-HNSW CLI self-test completed and wrote
+  `/private/tmp/tls-rag-step5-final-hnsw-selftest` with its log at the same path plus `.log`.
+  It returned `ann_integration_exercised=true`, `real_data_opened=false` and the
+  expected synthetic `no_tune_candidate`, keeping later roles closed; not a real result.
+- Current artifacts are synthetic tests only. No historical archive opened, no real
+  source/model downloaded, no real role opened, no A800 experiment or GPU execution run.
+  All Step 4 scientific source/config/test bytes and old bindings remain unchanged.
+- Next: user performs documented server sync, isolated environment clone, full tests and
+  `self-test --require-faiss`. Expected warm test duration 1–3 minutes (allow 5); first
+  environment clone/wheel setup roughly 3–15 extra minutes. Real million-vector work is
+  unmeasured; a 6–12 hour planning window/12-hour checked compute stop budget is not an ETA.
+- Retain false formal-certification/general-serving flags. New real data, source/model
+  provenance, historical exclusion audit, CUDA path and actual quality/latency/test
+  results remain pending. Old user untracked archives/files were preserved.
+
 ## Current: approved repository cleanup and deferred Step 5 handoff (2026-10-22)
 
 - User approved retirement of eight historical task documents and three obsolete wrappers;

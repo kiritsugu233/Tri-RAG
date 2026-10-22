@@ -11,11 +11,13 @@ Step 4 A800 reconstructed-data replay is closed: `replay_targets_met`, with
 all three gates passed. This is not independent validation or a latency,
 evidence-sufficiency or answer-quality claim. See the latest [status](STATUS.md).
 
-[Step 5 handoff](docs/TLS_RAG_STEP5_HANDOFF.md) is prepared for a future agent.
-The user deferred creating/dispatching that agent until further instruction.
-Its first task will be a short ANN experiment proposal, followed by user approval;
-implementation, dependency installation and benchmark execution are not yet authorized.
-ANN remains outside the old MVP; the proposal must specify a narrow new-stage extension.
+[Step 5 ANN v1](docs/TLS_RAG_STEP5_ANN.md) is implemented in a new namespace after
+the user's 2026-10-22 proposal-review/implementation authorization. Run the documented
+server synchronization, full offline tests and required real-HNSW synthetic self-test
+first. Tests do not download real data/models or open real experiment roles.
+Real source/model/history audits and all real-data results remain pending.
+ANN is a narrow new-stage extension; the old MVP's scope and Step 4 bindings remain frozen.
+The [earlier handoff](docs/TLS_RAG_STEP5_HANDOFF.md) records the pre-authorization boundary.
 
 ## Read in order
 
