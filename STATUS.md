@@ -1,5 +1,17 @@
 # Status
 
+## A800 explicit mirror compatibility (2026-10-22)
+
+- User authorized scoped L0 mirror compatibility and same-branch commit/push.
+- Explicit TLS_RAG_HF_ENDPOINT allowlist maps data and pinned model downloads;
+  records official sources, transport and file hashes. Historical algorithms unchanged.
+- `sh scripts/run_tests.sh`: 305 tests in 36.058 s, OK (one optional skip).
+  `python3 scripts/check_code_protection.py`: 186 files passed.
+- Local test log: /private/tmp/mirror-full.log. No remote replay result from this change.
+- Next: synchronize exact pushed commit, rerun remote gates, preserve failed
+  a800-input-v1-01 and prepare fresh a800-input-v1-02 with the explicit mirror.
+
+
 ## Current: A800 reconstructed-data replay implementation (2026-10-22)
 
 - Approved new replay contract: docs/TLS_RAG_STEP4_A800_REPLAY.md. Reuses frozen

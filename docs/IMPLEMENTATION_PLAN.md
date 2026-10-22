@@ -1,5 +1,11 @@
 # Implementation Plan
 
+## A800 explicit mirror compatibility (2026-10-22)
+
+- [x] Add allowlisted explicit data/model transport and provenance/hash checks.
+- [x] Full offline tests: 305, one skip; protection and whitespace checks passed.
+- [ ] Remote gates and fresh a800-input-v1-02 preparation after synchronization.
+
 ## A800 Step 4 reconstructed-data replay (2026-10-22)
 
 - [x] Record observed-probe, non-independent replay contract and preserve frozen math.

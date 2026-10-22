@@ -3,7 +3,7 @@
 用户已批准具体 A800 方案，并授权使用现有 Miniconda（“那就用miniconda吧，应该是我记错了”）。
 开发目录 `/Users/guanghongxu/Query-Adaptive-Tri-RAG`，分支仍是
 `codex/tls-rag-step4-retention-v3`，基础提交 `41697efcff924139a775de11e673caf4a2d68662`。
-本次修改仍由用户提交推送。新的代码提交必须单独记录，不能把新代码声称为原基础提交。
+用户已明确授权本次镜像修改、测试并推送到当前分支。新的代码提交必须单独记录，不能把新代码声称为原基础提交。
 
 ## 科学边界
 
@@ -32,7 +32,7 @@ no_tune_candidate；退出码0不代表目标通过。engine_replay/保留原引
 唯一主启动入口仍是 `scripts/run_tls_rag_step4_repaired_acceptance.sh`：
 
 ```bash
-sh scripts/run_tls_rag_step4_repaired_acceptance.sh a800-prepare /root/autodl-fs/tls-rag-step4/a800-input-v1-01
+sh scripts/run_tls_rag_step4_repaired_acceptance.sh a800-prepare /root/autodl-fs/tls-rag-step4/a800-input-v1-02
 prepare_rc=$?
 echo "Preparation exit code: ${prepare_rc}"
 ```
@@ -40,7 +40,7 @@ echo "Preparation exit code: ${prepare_rc}"
 只有prepare_rc=0、精确HEAD/环境检查通过、保护检查和全套测试通过才单独执行：
 
 ```bash
-sh scripts/run_tls_rag_step4_repaired_acceptance.sh a800-replay /root/autodl-fs/tls-rag-step4/a800-input-v1-01 /root/autodl-fs/tls-rag-step4/a800-replay-v1-01
+sh scripts/run_tls_rag_step4_repaired_acceptance.sh a800-replay /root/autodl-fs/tls-rag-step4/a800-input-v1-02 /root/autodl-fs/tls-rag-step4/a800-replay-v1-01
 replay_rc=$?
 echo "Replay exit code: ${replay_rc}"
 ```
@@ -63,3 +63,25 @@ Transformers4.48.3、PyArrow19.0.1；安装前保存解析报告，安装后保�
 运行前必须核实实际部署提交与本地待交付内容一致、查看状态、检查完整依赖，
 再执行保护检查和完整测试；环境变更或失败不允许静默继续。
 本地/远端实际完成状态以STATUS记录为准，不把计划命令当作执行结果。
+
+## 显式镜像兼容（2026-10-22）
+
+用户批准上述镜像范围并要求“实施测试并推送”。仅新 A800 模块改变传输路径。
+运行准备前设置：
+
+```bash
+export TLS_RAG_HF_ENDPOINT=https://hf-mirror.com
+export HF_ENDPOINT=https://hf-mirror.com
+```
+
+仅允许精确的 https://huggingface.co 和 https://hf-mirror.com；不接受尾斜杠、
+凭据、端口、路径、查询或其他域名。TLS 变量未设置时使用官方来源；HF_ENDPOINT
+若与声明冲突则拒绝，不静默回退。数据原始 URL 与所有 revision 保持冻结。
+registration/binding 的 transport 记录逻辑模型地址、显式端点和实际请求地址；
+source_urls 保持官方地址，source_sha256 记录下载字节哈希。
+模型使用 snapshot_download 的显式 endpoint 与原 revision，保存到 model_snapshot，
+随后 local_files_only 加载；model_sha256 逐文件绑定并在重放时校验。
+这些哈希用于记录及验证本次下载完整性，不宣称已与缺失的历史字节独立比对。
+下载服务可能重定向到其存储 CDN；记录的传输地址是声明的请求地址。
+本次新增必需传输与模型哈希字段，旧新模块生成的绑定不可直接冒充当前绑定。
+失败的 a800-input-v1-01 保留；下次使用从未存在的 a800-input-v1-02。

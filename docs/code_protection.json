@@ -292,7 +292,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "4b7875cea409e0ee28a483f9f1c72ddca8e011e2a739aef8bf49dfca62cafc30"
+      "sha256": "a691cf6fe526c92276fb9e9c8040abe203273eeccd5305171f3598a31370b7ad"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -409,7 +409,7 @@
       "path": "docs/TLS_RAG_STEP4_A800_REPLAY.md",
       "level": "L0",
       "reason": "Approved A800 reconstructed-data replay contract/regression",
-      "sha256": "c4f80b61fe24351bc735424459a20b502354f4fa2b168112db020689c7d88b0b"
+      "sha256": "6055d63d3a74a9be104f487fd72c4bc4651fc2177548100a1f6e8211a173cc3f"
     },
     {
       "path": "docs/TLS_RAG_STEP4_BRIEF.md",
@@ -979,7 +979,7 @@
       "path": "src/tri_rag_harness/tls_rag_step4_a800_replay.py",
       "level": "L0",
       "reason": "Approved A800 reconstructed-data replay contract/regression",
-      "sha256": "628c8a8e6fe910226d2f11014ff24feb191f2677765253514ab41a5876b8a70a"
+      "sha256": "529a4cde7714f27925cccacb49bcd54d76816b4107cc382fff793e7037c97648"
     },
     {
       "path": "src/tri_rag_harness/tls_rag_step4_nfcorpus.py",
@@ -1270,7 +1270,7 @@
       "path": "tests/test_tls_rag_step4_a800_replay.py",
       "level": "L0",
       "reason": "Approved A800 reconstructed-data replay contract/regression",
-      "sha256": "57d10b0135629652022bcef8f58983fb13a704bbfd7145c6699c5f4bb5f715fd"
+      "sha256": "250c2d24cd3e32ea2f5234d07e958b1549ac8fa8c2aff07f0040c5cf00ee06b4"
     },
     {
       "path": "tests/test_tls_rag_step4_probe.py",
@@ -1453,6 +1453,34 @@
         }
       ],
       "registry_change": "Four new L0 files, scoped documentation hashes and consent; no downgrade."
+    },
+    {
+      "date": "2026-10-22",
+      "parent_commit": "14456286a79c5aaa9fb869e56102c73afd63bf6e",
+      "user_consent": "实施测试并推送",
+      "scope": "Explicitly approved preceding mirror compatibility scope; A800 module, tests, run documentation and protection hashes only; same branch push.",
+      "protected_changes": [
+        {
+          "path": "docs/CODE_PROTECTION.md",
+          "before_sha256": "4b7875cea409e0ee28a483f9f1c72ddca8e011e2a739aef8bf49dfca62cafc30",
+          "after_sha256": "a691cf6fe526c92276fb9e9c8040abe203273eeccd5305171f3598a31370b7ad"
+        },
+        {
+          "path": "docs/TLS_RAG_STEP4_A800_REPLAY.md",
+          "before_sha256": "c4f80b61fe24351bc735424459a20b502354f4fa2b168112db020689c7d88b0b",
+          "after_sha256": "6055d63d3a74a9be104f487fd72c4bc4651fc2177548100a1f6e8211a173cc3f"
+        },
+        {
+          "path": "src/tri_rag_harness/tls_rag_step4_a800_replay.py",
+          "before_sha256": "628c8a8e6fe910226d2f11014ff24feb191f2677765253514ab41a5876b8a70a",
+          "after_sha256": "529a4cde7714f27925cccacb49bcd54d76816b4107cc382fff793e7037c97648"
+        },
+        {
+          "path": "tests/test_tls_rag_step4_a800_replay.py",
+          "before_sha256": "57d10b0135629652022bcef8f58983fb13a704bbfd7145c6699c5f4bb5f715fd",
+          "after_sha256": "250c2d24cd3e32ea2f5234d07e958b1549ac8fa8c2aff07f0040c5cf00ee06b4"
+        }
+      ]
     }
   ],
   "maintained_branch": "codex/tls-rag-step4-retention-v3",

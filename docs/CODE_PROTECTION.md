@@ -282,3 +282,10 @@ See [contract and paths](TLS_RAG_STEP4_A800_REPLAY.md).
 - **L0** `src/tri_rag_harness/tls_rag_step4_a800_replay.py`: approved reconstructed-data replay contract/regression.
 - **L0** `tests/test_tls_rag_step4_a800_replay.py`: approved reconstructed-data replay contract/regression.
 - **L0** `docs/TLS_RAG_STEP4_A800_REPLAY.md`: approved reconstructed-data replay contract/regression.
+
+### A800 explicit mirror compatibility (2026-10-22)
+
+User approved “实施测试并推送” for the specified mirror scope: new A800 module,
+its tests and run document, plus protection hashes. Official logical URLs and
+frozen revisions stay unchanged; explicit allowlisted transport and model hashes
+are required. Historical adapter and algorithm are untouched.

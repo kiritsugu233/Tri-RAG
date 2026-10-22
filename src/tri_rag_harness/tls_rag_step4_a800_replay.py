@@ -87,13 +87,39 @@ def validate_payload(bundle, protocol):
     return env, roles
 
 
+OFFICIAL_ENDPOINT = 'https://huggingface.co'
+ALLOWED_ENDPOINTS = (OFFICIAL_ENDPOINT, 'https://hf-mirror.com')
+
+
+def transport_record(endpoint, embedding):
+    if endpoint not in ALLOWED_ENDPOINTS:
+        raise ValueError('undeclared or malformed TLS_RAG_HF_ENDPOINT')
+    prefix = OFFICIAL_ENDPOINT + '/'
+    if any(not url.startswith(prefix) for url in adapter.SOURCES.values()):
+        raise ValueError('unexpected official source URL')
+    return {'endpoint': endpoint,
+        'source_urls': {name: endpoint + url[len(OFFICIAL_ENDPOINT):]
+                        for name, url in adapter.SOURCES.items()},
+        'model_logical_url': prefix + embedding['model_id'] + '/tree/' + embedding['revision'],
+        'model_transport_url': endpoint + '/' + embedding['model_id'] + '/tree/' + embedding['revision']}
+
+
+def declared_transport(embedding):
+    endpoint = os.environ.get('TLS_RAG_HF_ENDPOINT', OFFICIAL_ENDPOINT)
+    if os.environ.get('HF_ENDPOINT', endpoint) != endpoint:
+        raise ValueError('HF_ENDPOINT conflicts with explicit TLS_RAG_HF_ENDPOINT')
+    return transport_record(endpoint, embedding)
+
+
 def prepare_rebuilt_bundle(output):
     replay = load_protocol()
     protocol = v2.load_protocol()
     output = root_path(output)
     if output.exists():
         raise FileExistsError('rebuild output must be absent; preserve prior attempts')
+    transport = declared_transport(protocol['embedding'])
     # Validate optional packages before network or directory creation.
+    from huggingface_hub import snapshot_download
     import torch
     import pyarrow.parquet as parquet
     from sentence_transformers import SentenceTransformer
@@ -107,14 +133,14 @@ def prepare_rebuilt_bundle(output):
     raw, bundle = output / 'source', output / 'bundle'
     raw.mkdir(); bundle.mkdir()
     registration = {'schema':'tls_rag_a800_rebuild_registration_v1', 'protocol':replay,
-        'data_protocol':protocol, 'source_urls':adapter.SOURCES, 'source_code_sha256':source_hashes,
+        'data_protocol':protocol, 'source_urls':adapter.SOURCES, 'transport':transport, 'source_code_sha256':source_hashes,
         'environment':environment_record(), 'historical_probe_observed':True,
         'independent_validation':False, 'embedding_device':'cpu'}
     v2.save(output / 'registration.json', registration)
     hashes = {}
     for name, url in adapter.SOURCES.items():
         print(f'Downloading pinned source: {name}', flush=True)
-        hashes[name] = adapter.download(url, raw / name)
+        hashes[name] = adapter.download(transport['source_urls'][name], raw / name)
     corpus = adapter.validate_text_rows(parquet.read_table(raw / 'corpus.parquet').to_pylist(), corpus=True)
     queries = adapter.validate_text_rows(parquet.read_table(raw / 'queries.parquet').to_pylist())
     eligible, qrels = adapter.read_train_qrels(raw / 'train.tsv')
@@ -130,8 +156,15 @@ def prepare_rebuilt_bundle(output):
     del labels, qrels
     torch.manual_seed(protocol['embedding_seed'])
     torch.use_deterministic_algorithms(True)
-    model = SentenceTransformer(protocol['embedding']['model_id'], revision=protocol['embedding']['revision'],
-        device='cpu', cache_folder=str(output / 'model_cache'), trust_remote_code=False)
+    model_dir = output / 'model_snapshot'
+    snapshot_download(repo_id=protocol['embedding']['model_id'], revision=protocol['embedding']['revision'],
+                      endpoint=transport['endpoint'], local_dir=str(model_dir))
+    model_hashes = {p.relative_to(model_dir).as_posix():v2.sha256(guard.safe_path(p))
+                    for p in sorted(model_dir.rglob('*')) if p.is_file()
+                    and '.cache' not in p.relative_to(model_dir).parts}
+    if not model_hashes:
+        raise ValueError('empty model snapshot')
+    model = SentenceTransformer(str(model_dir), device='cpu', local_files_only=True, trust_remote_code=False)
     model.max_seq_length = protocol['embedding']['max_seq_length']
     model.float().eval()
     for name, texts in (('corpus',list(corpus.values())),('queries',list(selected.values()))):
@@ -148,6 +181,7 @@ def prepare_rebuilt_bundle(output):
         raise ValueError('source changed during rebuild')
     v2.save(bundle / 'binding.json', {'schema':BINDING_SCHEMA, 'replay_protocol':replay,
         'data_protocol':protocol, 'source_urls':adapter.SOURCES, 'source_sha256':hashes,
+        'transport':transport, 'model_sha256':model_hashes,
         'source_code_sha256':source_hashes, 'embedding':protocol['embedding'],
         'embedding_device':'cpu', 'historical_probe_observed':True, 'independent_validation':False,
         'registration_sha256':v2.sha256(output / 'registration.json'),
@@ -172,7 +206,24 @@ def validate_rebuilt_bundle(previous):
     names |= {f'{r}.labels.json' for r in v2.ROLES}
     if set(binding.get('files',{})) != names or binding.get('source_urls') != adapter.SOURCES:
         raise ValueError('unexpected replay file/source manifest')
-    snapshot = guard.checked_manifest(bundle, binding['files'])
+    transport = binding.get('transport', {})
+    if transport != transport_record(transport.get('endpoint'), binding['embedding']):
+        raise ValueError('transport provenance mismatch')
+    model_hashes = binding.get('model_sha256', {})
+    if not model_hashes:
+        raise ValueError('missing model hashes')
+    snapshot = {}
+    for name, digest in model_hashes.items():
+        if not isinstance(name, str) or any(part in ('', '.', '..') for part in name.split('/')):
+            raise ValueError('unsafe model manifest')
+        parts = name.split('/')
+        # Reuse strict component validation without changing the historical guard.
+        for part in parts:
+            if not part.replace('_','').replace('-','').replace('.','').isalnum():
+                raise ValueError('unsafe model manifest')
+        snapshot.update(guard.checked_manifest(previous / 'model_snapshot' / '/'.join(parts[:-1]),
+                                               {parts[-1]:digest}))
+    snapshot.update(guard.checked_manifest(bundle, binding['files']))
     if set(binding.get('source_sha256',{})) != set(adapter.SOURCES):
         raise ValueError('missing pinned source files')
     snapshot.update(guard.checked_manifest(previous / 'source', binding['source_sha256']))
@@ -181,7 +232,7 @@ def validate_rebuilt_bundle(previous):
     snapshot[bundle / 'binding.json'] = v2.sha256(bundle / 'binding.json')
     if (registration.get('source_code_sha256') != binding['source_code_sha256'] or
         registration.get('protocol') != protocol or registration.get('data_protocol') != binding['data_protocol'] or
-        registration.get('source_urls') != adapter.SOURCES):
+        registration.get('source_urls') != adapter.SOURCES or registration.get('transport') != transport):
         raise ValueError('registration identity mismatch')
     def check():
         for path,digest in snapshot.items():

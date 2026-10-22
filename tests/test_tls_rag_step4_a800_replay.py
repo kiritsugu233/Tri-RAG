@@ -36,10 +36,12 @@ class A800ReplayTests(unittest.TestCase):
         source=self.previous/'source';source.mkdir()
         for name in a.adapter.SOURCES:
             (source/name).write_text('synthetic source fixture\n')
-        registration={'protocol':self.replay,'data_protocol':self.data,
+        model=self.previous/'model_snapshot';model.mkdir();(model/'config.json').write_text('{}')
+        transport=a.transport_record(a.OFFICIAL_ENDPOINT,self.data['embedding'])
+        registration={'transport':transport,'protocol':self.replay,'data_protocol':self.data,
                       'source_code_sha256':a.sources(),'source_urls':a.adapter.SOURCES}
         v2.save(self.previous/'registration.json',registration)
-        binding={'schema':a.BINDING_SCHEMA,'replay_protocol':self.replay,'data_protocol':self.data,
+        binding={'transport':transport,'model_sha256':{'config.json':v2.sha256(model/'config.json')},'schema':a.BINDING_SCHEMA,'replay_protocol':self.replay,'data_protocol':self.data,
             'source_code_sha256':a.sources(),'source_urls':a.adapter.SOURCES,
             'source_sha256':{p.name:v2.sha256(p) for p in source.iterdir()},
             'embedding':self.data['embedding'],'embedding_device':'cpu',
@@ -135,7 +137,7 @@ class A800ReplayTests(unittest.TestCase):
         queries=[{'_id':q.query_id,'text':q.text} for q in self.env.queries]
         all_vectors={q.text:q.embedding for q in self.env.queries}
         all_vectors.update(dict(zip(self.env.upstream.corpus_texts,self.env.upstream.corpus_embeddings)))
-        calls=[]
+        calls=[]; downloads=[]; snapshots=[]
         class Model:
             def __init__(inner,*args,**kwargs):calls.append(kwargs)
             def float(inner):return inner
@@ -146,27 +148,61 @@ class A800ReplayTests(unittest.TestCase):
         def table(path):
             return NS(to_pylist=lambda:corpus if path.name=='corpus.parquet' else queries)
         parquet=NS(read_table=table)
-        modules={'torch':NS(manual_seed=lambda seed:None,use_deterministic_algorithms=lambda value:None),
+        def snapshot(**kwargs):
+            snapshots.append(kwargs)
+            path=Path(kwargs['local_dir']);path.mkdir();(path/'config.json').write_text('{}');(path/'1_Pooling').mkdir();(path/'1_Pooling/config.json').write_text('{}')
+        modules={'huggingface_hub':NS(snapshot_download=snapshot),'torch':NS(manual_seed=lambda seed:None,use_deterministic_algorithms=lambda value:None),
                  'pyarrow':NS(parquet=parquet),'pyarrow.parquet':parquet,
                  'sentence_transformers':NS(SentenceTransformer=Model)}
         def download(url,path):
+            downloads.append(url)
             path.write_text('synthetic pinned source')
             return v2.sha256(path)
         versions={'numpy':'1.26.4','scipy':'1.13.0','sentence-transformers':'3.4.1',
                   'transformers':'4.48.3','pyarrow':'19.0.1'}
         qrels=[(q.query_id,self.env.upstream.corpus_ids[0],1) for q in self.env.queries]
-        with patch.dict(sys.modules,modules),patch.object(a.importlib.metadata,'version',side_effect=versions.__getitem__), \
+        with patch.dict(a.os.environ,{'TLS_RAG_HF_ENDPOINT':'https://hf-mirror.com','HF_ENDPOINT':'https://hf-mirror.com'}),patch.dict(sys.modules,modules),patch.object(a.importlib.metadata,'version',side_effect=versions.__getitem__), \
              patch.object(a.adapter,'download',side_effect=download), \
              patch.object(a.adapter,'read_train_qrels',return_value=({q.query_id for q in self.env.queries},qrels)), \
              patch.object(a,'environment_record',return_value={'synthetic':True}),contextlib.redirect_stdout(io.StringIO()):
             a.prepare_rebuilt_bundle(target)
         self.assertEqual(calls[0]['device'],'cpu')
-        self.assertEqual(calls[0]['revision'],self.data['embedding']['revision'])
+        self.assertEqual(snapshots[0]['revision'],self.data['embedding']['revision'])
+        self.assertEqual(snapshots[0]['endpoint'],'https://hf-mirror.com')
+        self.assertTrue(calls[0]['local_files_only'])
+        self.assertEqual(downloads,list(a.transport_record('https://hf-mirror.com',self.data['embedding'])['source_urls'].values()))
         _,binding,_,roles,_=a.validate_rebuilt_bundle(target)
         self.assertEqual(binding['schema'],a.BINDING_SCHEMA)
         self.assertEqual(roles,self.roles)
         self.assertFalse((target/'evaluation').exists())
         with self.assertRaises(FileExistsError):a.prepare_rebuilt_bundle(target)
+
+    def test_endpoint_allowlist_and_mapping(self):
+        for endpoint in a.ALLOWED_ENDPOINTS:
+            record=a.transport_record(endpoint,self.data['embedding'])
+            for name,url in a.adapter.SOURCES.items():
+                self.assertEqual(record['source_urls'][name],endpoint+url[len(a.OFFICIAL_ENDPOINT):])
+        for endpoint in ('', 'http://hf-mirror.com', 'https://hf-mirror.com/',
+                         'https://hf-mirror.com.evil', 'https://user@hf-mirror.com',
+                         'https://hf-mirror.com?x=1', ' https://hf-mirror.com'):
+            with self.assertRaises(ValueError):a.transport_record(endpoint,self.data['embedding'])
+        with patch.dict(a.os.environ,{'HF_ENDPOINT':'https://hf-mirror.com','TLS_RAG_HF_ENDPOINT':a.OFFICIAL_ENDPOINT}):
+            with self.assertRaisesRegex(ValueError,'conflicts'):a.declared_transport(self.data['embedding'])
+
+    def test_transport_tampering_rejected(self):
+        record=a.transport_record(a.OFFICIAL_ENDPOINT,self.data['embedding'])
+        record['source_urls']['corpus.parquet']='https://hf-mirror.com/wrong'
+        self.edit_binding(transport=record)
+        with self.assertRaisesRegex(ValueError,'transport provenance'):a.validate_rebuilt_bundle(self.previous)
+
+    def test_raw_source_and_model_hashes_checked(self):
+        for path in (self.previous/'source/corpus.parquet', self.previous/'model_snapshot/config.json'):
+            old=path.read_bytes();path.write_bytes(old+b'x')
+            with self.assertRaisesRegex(ValueError,'hash mismatch'):a.validate_rebuilt_bundle(self.previous)
+            path.write_bytes(old)
+        _,_,_,_,check=a.validate_rebuilt_bundle(self.previous)
+        (self.previous/'model_snapshot/config.json').write_text('changed')
+        with self.assertRaisesRegex(ValueError,'input changed'):check()
 
     def test_config_is_frozen(self):
         path=self.root/'config.json';path.write_text('{}')
