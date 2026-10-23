@@ -1,10 +1,27 @@
 # Implementation Plan
 
-## Proposed small mechanism study — awaiting user review (2026-10-24)
+## Small mechanism study — authorized, hardware readiness blocked (2026-10-24)
 
-**Status: proposal only.** The user requested this plan and explicitly reserved
-execution until after review. No implementation, SSH connection, retrieval, fit,
-new run, or protected-role opening is authorized by writing this section.
+**Status: conditional implementation authorization received; no run started.**
+The user reviewed this plan and requested: “你先ssh进去无卡模式里面检查一下硬件配置是否可以”
+and “如果可以的话就开始工作吧，本地写好代码之后同步到github上面，然后再在服务器上pull同步，然后开始这一轮的验证”.
+This authorizes the exact implementation scope below and A->B after hardware
+readiness. SSH inspection at 2026-10-23 16:35 UTC (2026-10-24 00:35 China) found
+only 0.5 CPU core quota and 2 GiB cgroup memory, without swap. Hardware readiness
+was not accepted: the million-vector exact scans and pipeline measurements should
+not start on this constrained instance. No code/config implementation, retrieval,
+fit, new experiment or unopened-role access occurred. This is a preflight resource
+decision, not an observed experiment failure or a measured runtime forecast.
+The data/cloud disks have 34.61/180.92 GiB free. Key allowed input/result files
+and cloud links remain present; the previous archive-verification receipt remains
+true. No full rehash or repeated data preparation was performed.
+
+Next: provision CPU/memory appropriate to the unchanged study and recheck actual
+cgroup limits. A full CPU core and at least 8 GiB memory (16 GiB preferred) are
+engineering provisioning suggestions, not a proven minimum or new scientific
+setting. The first-64-query throughput check and all original resource/stop rules
+below still apply. Existing approval persists within this scope; no automatic
+hardware switch or reduced sample/corpus is authorized.
 The complete Tri+HNSW/RAG acceleration route remains paused as a research direction;
 the earlier experiment is terminal and its heartbeat remains stopped.
 
@@ -209,9 +226,9 @@ research topic. Existing counterexamples establish a logical gap, not novelty.
 Literature comparison and multi-projection joint-event experiments are outside
 this run; no new theorem or research-contribution claim will be made here.
 
-### Exact implementation scope for approval, not current edits
+### Exact authorized implementation scope, pending hardware readiness
 
-New files proposed for implementation after approval:
+New files covered by the user's conditional authorization above:
 
 | Path | Proposed level and responsibility |
 |---|---|
@@ -241,11 +258,11 @@ inputs, real feature-cost accounting, fit/selection/evaluation closure, no-retry
 failure and resource stops. Run new synthetic/offline tests and the appropriate
 existing regression suite without network; protect all v1 artifacts/contracts.
 
-If the user approves this complete plan, implementation/local checks and then A->B
-may proceed within these gates, on codex/tls-rag-step5-ann, with a result checkpoint
-after A. A limited approval such as "A only" does not authorize B. Any deviation
+After hardware readiness, implementation/local checks and then A->B may proceed
+under the recorded authorization within these gates, on codex/tls-rag-step5-ann,
+with a result checkpoint after A. Any deviation
 in data access, scientific settings, resources or future ANN integration requires
-a revised concrete scope. The current deliverable is this reviewable proposal.
+a revised concrete scope. No scientific implementation or run has started.
 
 ## Tri-Law and HNSW theoretical reassessment (2026-10-23)
 

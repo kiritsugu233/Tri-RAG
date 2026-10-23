@@ -1,5 +1,40 @@
 # Status
 
+## Current: mechanism study authorized; no-GPU hardware too constrained (2026-10-24)
+
+- User conditionally approved the preceding mechanism plan: inspect no-GPU hardware
+  through SSH, and, if suitable, implement locally, check/push GitHub, pull on the
+  server and run the study. Exact consent and implementation scope are recorded
+  at the top of docs/IMPLEMENTATION_PLAN.md. No additional implementation approval
+  is needed for that scope once hardware readiness is established.
+- Connected to the requested server. At 2026-10-23 16:35 UTC (00:35 China), CPU
+  cgroup quota/period were 50000/100000 us = **0.5 CPU core**, memory limit was
+  **2147483648 bytes = 2 GiB**, and swap was absent. Host CPU is Xeon Gold 6348;
+  the visible 112 CPUs and roughly 1 TiB host memory are not this container's
+  usable allocation. Initial cgroup memory usage was about 324 MiB.
+- Read-only check: `/root/autodl-tmp/conda-envs/tri-rag-step5/bin/python` read
+  `/sys/fs/cgroup/cpu/cpu.cfs_quota_us`, `cpu.cfs_period_us`,
+  `/sys/fs/cgroup/memory/memory.limit_in_bytes`, `memory.usage_in_bytes`,
+  `/proc/cpuinfo`, `/proc/meminfo`, and `shutil.disk_usage` for both mounts.
+  Data/cloud free space is **34.61/180.92 GiB**. Storage is sufficient; no migration
+  or deletion is needed. Original/projected arrays are 3072000128/1024000128 bytes;
+  mmap can bound allocation but does not eliminate repeated scans or I/O cost.
+- Confirmed presence and sizes of those arrays, already-open tune truth/trajectory,
+  and the two preserved cloud links. The old status still says terminal
+  `no_tune_candidate`, `cloud_archive_verified=true`, `formal_certification=false`.
+  This was a presence/status inspection, not a fresh checksum audit. No original
+  cert/latency/test files were read. Server checkout is clean on the Step 5 branch
+  at `8fddb6acf9bb229ca1bef7794d7a939c83d7224b`.
+- **Readiness not accepted.** No new code/config, retrieval, fit, experiment,
+  performance claim or automatic hardware switch. The earlier 40--120 minute
+  planning estimate is not validated for this 0.5-core/2-GiB instance. Resource
+  suitability is a preflight decision, not an observed scientific failure.
+- Next: provision at least one full CPU core and about 8 GiB RAM (16 GiB preferred),
+  then recheck and continue the authorized local implementation/GitHub/server
+  sequence. This is an engineering recommendation rather than a measured minimum;
+  keep the approved two-hour compute ceiling and first-64-query forecast check.
+  A GPU is not required by the study. No new automation was created.
+
 ## Current: small mechanism-validation proposal awaiting review (2026-10-24)
 
 - The user requested a concrete small-study plan and explicitly required review
