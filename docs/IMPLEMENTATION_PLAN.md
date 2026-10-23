@@ -1,5 +1,18 @@
 # Implementation Plan
 
+## Tri-Law and HNSW theoretical reassessment (2026-10-23)
+
+- [x] Read the user-identified local source manuscript and relevant proofs; cross-check
+  the repository contract, HNSW search algorithms and pinned FAISS implementation.
+- [x] Derive the exact-projection/backend loss identity, selection-conditioning gap
+  and a fixed-M rank/Markov bound; verify dependence and graph-navigation counterexamples.
+- [x] Separate the exact single-triplet law, approximate aggregate prediction and the
+  implemented learned ANN controller; retain the negative v1 result and all limitations.
+- [x] Revise the next-step priority: mechanism decomposition before budget-grid refinement.
+- [ ] Propose and obtain scoped approval for a controlled exact-projection versus ANN
+  development audit, including precision, persistent pools and independent M/ef controls.
+  No new real experiment, L0 modification or unopened-role access is authorized here.
+
 ## Step 5 post-run storage and diagnosis (2026-10-23)
 
 - [x] At the user's request, compare all 53 hot/cloud files and embedded seals;

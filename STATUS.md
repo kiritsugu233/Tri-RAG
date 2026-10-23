@@ -1,5 +1,64 @@
 # Status
 
+## Current: Tri-Law/HNSW scope assessment; mechanism audit takes priority (2026-10-23)
+
+- User requested a first-principles reassessment of whether Tri-Law supports HNSW,
+  and identified the source manuscript in the local Desktop/HPC folder. Read its
+  relevant definitions/proofs locally, cross-checked the existing Tri-Law contract,
+  and reviewed the HNSW original Algorithm 2/5 and pinned FAISS v1.8.0 source.
+  The manuscript was not uploaded or copied into the repository. No server access,
+  new real retrieval, model fit, policy selection or protected-role opening occurred.
+- **Revised priority:** first separate projection-order loss from backend retrieval
+  differences; defer the previously proposed 16--256 budget screening until that
+  mechanism is understood. Narrowing a grid does not validate a theoretical bridge.
+- The exact law remains a probability over fresh Gaussian projections for fixed
+  query/point geometry. It has no graph/entry/efSearch inputs. HNSW does not invalidate
+  this law, but it adds navigation error that the law alone cannot bound. The current
+  sampled-risk/ridge/residual controller is an empirical ANN extension, not the
+  analytic Tri-Predict algorithm or a proven HNSW recall/stopping theorem.
+- Independently derived the exact decomposition, for original truth T, global exact
+  projected top-M E and actual size-M pool H:
+  `1-R_H = |T\E|/k + |(T intersect E)\H|/k - |(T intersect H)\E|/k`.
+  Approximate search can sometimes rescue original neighbors outside E, so its
+  effect is not always a simple nonnegative recall penalty. Existing results lack E;
+  they cannot identify how much loss comes from projection versus the backend.
+  Pure graph attribution would additionally require precision-matched references
+  and separation of persistent candidate merging from raw HNSW output.
+- A Gaussian counterexample with identical target/competitor marginal probabilities
+  but different competitor dependence gives different exact top-M retention. At
+  m'=128, beta=1.1, individual inversion probability is 0.2952877613 in both constructed
+  geometries; joint exclusion probabilities are 0.2952877613 and 0.1507991317.
+  This is an analytic counterexample, not a measurement on the real corpus.
+  It confirms that single-triplet marginals require an aggregation model even before
+  adding approximate search. A connected-graph navigation counterexample separately
+  shows that preserving distance order does not itself ensure search success; it is
+  not asserted to be a graph produced by the frozen FAISS build.
+- An independent rank-count/Markov derivation provides a valid but potentially loose
+  fixed-M exact-projection bridge without assuming independent inversions. It needs
+  all relevant competitor geometry; a sampled exposed-pair mean cannot replace that
+  sum. Projection-dependent selection and adaptive M introduce further conditioning
+  not automatically covered by a fixed-pair/fixed-M probability statement.
+- Current risk pairs are selected using the same fixed projection and returned pool;
+  their values may be useful counterfactual geometry features but are not posterior
+  missing-neighbor probabilities. The base/tri comparison also adds two distortion
+  features along with four triplet features, so its regression improvement cannot
+  be attributed solely to the triplet law. The v1 negative result does not refute
+  Tri-Law and does not demonstrate universal failure or success on HNSW.
+- Detailed local review and derivations: `/private/tmp/step5-theory-review/assessment.md`.
+  Deterministic check command: `PYTHONDONTWRITEBYTECODE=1 python3
+  /private/tmp/step5-theory-review/check_reasoning.py`; result in `reasoning_checks.json`.
+  Checked 9 eigenvalue geometries at m=1/4/128, a closed-form/integral dependence
+  counterexample, 45,360 rank implications and 6,000 set identities. These finite
+  checks supplement algebraic proofs, not empirical HNSW validation. The initial
+  concentrated-density quadrature failure was retained and corrected with split
+  integration, moment/Jensen checks and an independent CDF-variable transform.
+- Next proposal: a small already-open development subset, unchanged 64/256 anchors,
+  exact original/projected references, raw/final ANN pools, and separate M/ef controls.
+  Only then assess whether geometric risk explains the measured error and whether
+  its added cost is worthwhile. This is a proposal, not authorization to modify L0
+  code/config or run it. Statistical independence, unmeasured latency/test and
+  `formal_certification=false` limitations remain unchanged.
+
 ## Current: Step 5 storage migration and descriptive diagnosis complete (2026-10-23)
 
 - User requested “先把结果从数据盘搬到autodl-fs防止数据盘爆了，然后进行分析，有必要的话传一些文件回本地也可以”.
