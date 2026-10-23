@@ -1,5 +1,16 @@
 # Implementation Plan
 
+## Step 5 real experiment execution (2026-10-23)
+
+- [x] At the user's request, launch the unchanged complete staged experiment over SSH.
+- [x] Stage and verify the existing bundle on the fast data disk; keep control/logs on file storage.
+- [x] Start a durable sequential supervisor with stop-on-failure, disk reserve and external time ceiling.
+- [x] Complete projected HNSW build; original-space index build is running.
+- [ ] Complete cal-model-fit and every eligible successor, or preserve the terminal negative/error result.
+- [ ] Verify the terminal cloud archive, report actual results and synchronize the handoff.
+- [ ] Create a background completion heartbeat only if the user explicitly authorizes it;
+  the initial attempt was rejected by automatic approval and created nothing.
+
 ## Step 5 fixed-model and encoded-input preparation (2026-10-23)
 
 - [x] Check both storage mounts and keep new raw/model/cache/bundle artifacts on

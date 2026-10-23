@@ -1,5 +1,53 @@
 # Status
 
+## Current: Step 5 real experiment running; follow-up permission pending (2026-10-23)
+
+- User instructed “继续工作，省去不必要的步骤，尽快完成实验”. Started the real
+  frozen experiment over SSH without rerunning source/model preparation or tests.
+  Scientific source/config/tests/dependencies remain unchanged at source baseline
+  `f44a99a4d7a6bf8efc3b0dafab03e900f695a600`.
+- Durable supervisor PID 2476 executes all six registered CLI roles in order;
+  current child PID 2493 is the first `cal_model_fit` invocation, building indexes.
+  It stops immediately on any nonzero exit/non-passing stage and preserves future
+  roles closed. A separate cumulative 12-hour external compute ceiling also covers
+  native index builds; it does not replace or loosen the frozen resource checks.
+- Control/log directory:
+  `/root/autodl-fs/tls-rag-step5-input-dPpTfj/experiment-aynq9z39` (CONTROL).
+  Hot directory `/root/autodl-tmp/tls-rag-step5-run-7wh54au4` (HOT).
+  The already verified input was copied to `HOT/bundle` and its seal matched
+  `925d00d2d4e0f63e1e280c03bd1c9fea9e3e70ae9ddc6ffed0fae6a0f2ad28af`.
+  Current computation uses `HOT/run` on the fast data disk. Logs/status are on file
+  storage; the supervisor will copy the terminal run to `CONTROL/run_archive` and
+  verify closed artifact seals, retaining the original hot copy.
+- Actual supervisor command: `/root/autodl-tmp/conda-envs/tri-rag-step5/bin/python -u
+  /root/autodl-fs/tls-rag-step5-input-dPpTfj/experiment-aynq9z39/run_experiment.py`.
+  Supervisor SHA-256: `24ae00837508aed0375fd5efff7dacfac269e568de8c700f76ed2991968b0717`.
+  Exact per-stage argv/PIDs/results are saved in `CONTROL/experiment_status.json`;
+  stdout/stderr in `CONTROL/logs/ROLE.log`. One-thread BLAS/OpenMP, offline HF and
+  `CUBLAS_WORKSPACE_CONFIG=:4096:8`; no scientific setting/seed was changed.
+- Last checkpoint: projected HNSW index completed (784,106,338 bytes), original-space
+  HNSW build active. About 8 GiB RSS, one CPU core busy, no error; no decision rows
+  or label-opening receipt yet. Available space about 29.97 GiB on the data disk
+  and 190.96 GiB on file storage. The source input/model remain on file storage;
+  no old file migration was needed.
+- **Experiment remains running, not complete. No real quality/latency claim exists.**
+  `CONTROL/progress.py` is an operational status reader; avoid repeatedly scanning
+  large decision logs during the eventual timed latency stage. To resume, read
+  `experiment_status.json` first and attach to the existing task; never start a
+  second run or retry a preserved role. The supervisor survives SSH disconnection.
+- Attempted a bounded 15-minute heartbeat to check completion with fewer tokens.
+  Automatic approval rejected it because recurring SSH access, credential reuse
+  and later documentation synchronization lacked explicit recurring-task consent.
+  **No automation was created.** The user has a pending explicit authorization
+  question; elapsed time is not consent. The running server experiment is separately
+  authorized and unaffected. If the user authorizes the follow-up, create it then;
+  otherwise check results only in an active authorized conversation.
+- After terminal status, wait for `cloud_archive_verified` or diagnose archive error,
+  verify result seals/closed successors, report actual outcomes and limitations,
+  update this status/plan, and synchronize the continuing Step 5 branch. Do not
+  infer completion from the process merely having started. History/semantic
+  independence remain unestablished and `formal_certification=false` stays fixed.
+
 ## Current: Step 5 fixed-model and encoded-input preparation passed (2026-10-23)
 
 - User instructed “继续，你直接接入ssh工作就好，注意一下数据盘的空间，如果不够是否可以把一些东西搬到autodl-fs里面这应该是云盘。”
