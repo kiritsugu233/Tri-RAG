@@ -1,5 +1,24 @@
 # Status
 
+## Current: small mechanism-validation proposal awaiting review (2026-10-24)
+
+- The user requested a concrete small-study plan and explicitly required review
+  before work begins. Added the proposed plan at the top of docs/IMPLEMENTATION_PLAN.md;
+  no code/config, SSH session, retrieval, new model fit or experiment was started.
+- Proposed A: 256 already-open tune development queries, 64/256 anchors, precision
+  controls, saved ANN raw/persistent pools and exact per-query rank/set decomposition.
+- Proposed B: exact-projection-only matched feature ablations, newly fitted weights,
+  512/256/256/512 disjoint Fit/calibration/selection/evaluation queries from opened
+  parent roles, a separate 32/64/128/256 grid, honest feature/pipeline timing and
+  fixed stop rules. Old tune exposure prevents calling the evaluation fresh
+  independent certification; all original cert/latency/test roles stay closed.
+- Proposed CPU compute limit is two hours, RSS 16 GiB and new artifacts 2 GiB;
+  predicted runtime must be checked in-run without enlarging samples or switching
+  hardware automatically. An HNSW integration study and full RAG remain deferred.
+- Exact new L0/L1 paths, old source-binding compatibility, tests, manifests and
+  approval scope are specified in the proposal. Only this L1 planning/status
+  documentation was edited; the plan is not an authorization record or a result.
+
 ## Current: Tri-Law/HNSW scope assessment; mechanism audit takes priority (2026-10-23)
 
 - User requested a first-principles reassessment of whether Tri-Law supports HNSW,

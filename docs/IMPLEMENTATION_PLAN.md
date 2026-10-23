@@ -1,5 +1,252 @@
 # Implementation Plan
 
+## Proposed small mechanism study — awaiting user review (2026-10-24)
+
+**Status: proposal only.** The user requested this plan and explicitly reserved
+execution until after review. No implementation, SSH connection, retrieval, fit,
+new run, or protected-role opening is authorized by writing this section.
+The complete Tri+HNSW/RAG acceleration route remains paused as a research direction;
+the earlier experiment is terminal and its heartbeat remains stopped.
+
+### Objective and interpretation
+
+Answer two bounded questions in order: (A) where the observed loss occurs between
+original exact neighbors, exact projected retrieval and ANN; (B) whether triplet
+features add useful prediction and budget/cost value under matched exact-projection
+training and evaluation. This is a development mechanism screen, not reproduction
+of analytic Tri-Predict, independent certification, final test or an answer-quality
+claim. The local source manuscript and its relevant proofs were reviewed on
+2026-10-23; the earlier statement that only a mathematical contract was available
+is superseded. Do not upload the manuscript.
+
+Keep all 1,000,000 corpus vectors, MiniLM revision, normalization, Gaussian matrix
+(m'=128, projection seed 55117), k_gt=10 and k_ctx=5 unchanged. Do not reduce the
+corpus to make a different neighborhood problem cheaper. Reuse the original-space
+truth and archived HNSW records; no model download, encoding, original full-space
+truth regeneration, HNSW rebuilding or original-role rerun.
+
+### Proposed sample and access boundaries
+
+Use only the three already-open roles. Rank query IDs separately within each role
+by SHA-256 of canonical JSON `["step5-mechanism-v1",55141,role,query_id]`, breaking
+hash ties by query ID. Freeze the IDs and hashes before computing new diagnostics.
+
+| New development use | Parent role | Queries | Use |
+|---|---|---:|---|
+| Fit | cal_model_fit | 512 | Fit new exact-projection regressions |
+| Residual calibration | cal_bound_fit | 256 | Fit only the declared residual adjustment |
+| Selection/phase A | tune, first selected block | 256 | Decompose error; select fixed/control policies |
+| Frozen-policy evaluation | tune, next disjoint block | 512 | Evaluate once after all models/policies are sealed |
+
+Total unique queries: **1,536**; phase A uses the same 256 selection queries, not
+an additional sample. No outcome-based sampling, replacement or automatic sample
+enlargement. An invalid/missing input stops the affected stage and preserves it.
+
+All four groups must be disjoint in identity and inherit the producer's lexical
+family separation. Existing parent tune outcomes were previously inspected, so the
+last group is **isolated from this round's fitting/selection, but not a fresh,
+never-observed independent sample**. Its intervals are descriptive development
+checks; history/semantic independence and formal_certification=false remain.
+A fresh population claim would need separately authorized fresh evaluation data.
+No original cert, latency or test query arrays, IDs, labels or records are read.
+Do not call the old all-role load_bundle/Runtime loader: a new allowlisted reader
+must inspect metadata/manifests and hash only the allowed inputs it actually uses.
+Do not rewrite or refresh old seals/source bindings.
+
+### A. Error decomposition and the exact rank event
+
+For the 256 development queries, retain the original **64/256 anchors** and read:
+
+| Set | Meaning |
+|---|---|
+| T | Saved original-space exact top-10 |
+| E64 | Global exact projected top-M using original float64 projected geometry |
+| E32 | Precision-matched exact projected reference for the FAISS float32 inputs |
+| H | Saved raw projected-HNSW result at the same M |
+| C | Saved final persistent candidate pool at that M |
+
+Search all corpus rows in bounded blocks (at most 8,192 rows per block), using
+stable string-ID tie resolution. Do not materialize a query-by-corpus matrix.
+One float64 projected scan can supply both exact anchors because exact prefixes
+are nested. ANN prefixes must come from their actual saved calls, not truncation
+of a larger call. For E32, use FAISS 1.8.0 exact flat L2 with single-query direct
+distance computation; inspect cutoff ties/numerical disagreement. If arithmetic
+or tie behavior cannot be matched, label that residual combined backend/precision
+error, without attributing it wholly to graph navigation.
+
+For every query/M, record projection omissions `|T\E64|/10`, backend omissions
+`|(T intersect E64)\H|/10`, and backend rescues `|(T intersect H)\E64|/10`.
+Verify the exact identity `1-R_H = projection omissions + backend omissions - rescues`.
+Repeat for E64->E32->H->C, keeping omissions and rescues rather than only signed
+mean differences. Preserve per-query IDs, counts and offending sets for audits.
+
+During the exact projected scan, also count for each true neighbor its projected
+rank, outranking non-neighbors Z and outranking other true neighbors W. Verify
+`rank=1+Z+W` and equivalence of `rank<=M` to candidate inclusion, including the
+declared tie rule. Report departure of W from the structural surrogate j-1.
+This tests the event-to-retention link directly; it does not replace the joint
+distribution with an independent-binomial assumption. Do not compute an expensive
+full-corpus triplet-probability sum or present sampled exposed-pair means as a bound.
+
+Deliver distributions, paired per-query differences and difficult-tail examples;
+report projection versus backend effects without a forced dominant-cause label.
+Phase A is diagnostic, not a policy pass/fail gate. Integrity/equality failures
+stop before B. Nonzero search error does not invalidate the geometric law.
+No ef sweep or additional HNSW experiment is included in this first study.
+
+### B. Incremental value under pure exact projection
+
+Use a new exact-prefix grid **[32,64,128,256]**, only in the new mechanism namespace.
+Keep 256 as a maximum fallback, with no terminal prediction asserting quality.
+Compute features at 32/64/128; do not charge or compute a terminal Tri score that
+cannot affect the decision. Each feature sees only the current prefix, cached
+original distances, query and declared sample; no future-prefix information,
+truth, qrels, realized retention or budget labels enter the controller.
+
+Fit these four matched variants from scratch on the exact-projection Fit group:
+
+| Variant | Inputs | Purpose |
+|---|---|---|
+| B | Existing 13 base features, including distances/gaps/LID | Simple reference |
+| B+D | B plus the two log-distortion quantiles | Control for non-triplet additions |
+| B+T | B plus the four triplet-probability summaries | Isolate triplet additions |
+| B+D+T | All 19 features | Complete method; primary comparison is against B+D |
+
+Match sampling/sample sizes to the reviewed Step 5 feature definition. Separate
+the feature computations so base variants never execute hidden Tri calculations.
+The primary B+D+T versus B+D contrast isolates the four triplet features; B+T
+versus B is a predeclared supporting contrast, not another winner-selection route.
+
+Proposed fixed settings: stagewise standardized ridge=0.01, scale_floor=1e-12,
+minimum valid Fit records=32 per stage; no hyperparameter search or ANN weights.
+Use only Residual-calibration data for nonnegative median overprediction adjustment
+(`higher` quantile 0.5); invalid state/missing fit expands. Declare four stopping
+thresholds **[0.80,0.85,0.90,0.95]** for every variant. These are prediction
+thresholds, not relaxed acceptance targets. Each variant has the same four-policy
+selection allowance; no additional quantile/threshold tuning is permitted.
+
+On Selection data, choose the fastest quality-eligible fixed exact-projection
+budget from the four grid points. Select one candidate per feature variant among
+those meeting mean retention>=0.90, Hit@5 delta versus exact>=-0.02 and retention
+delta versus that fixed control>=-0.01; minimize original-distance work, then
+stable policy ID. If no comparator/candidate qualifies, record no candidate;
+finish prediction diagnostics but do not invent a replacement or alter thresholds.
+
+Seal sampling, fits, calibration, comparator, all selected policies, code/config
+and analysis hashes before evaluation labels or exact evaluation references are
+made available to the evaluator. The new controller interface must enforce this
+separation despite the prior developmental exposure of parent tune data.
+
+On the 512 evaluation queries, report MAE (primary: equal-weight average over
+32/64/128), RMSE, calibration error, invalid rates, retention, Hit@5, stop histogram,
+pilot/expansion/original-reranking counts and cost/quality points. Resample whole
+query blocks, preserving stages/methods/repeats, for 5,000 paired bootstrap draws
+(seed 55147), with nominal 95% intervals. Do not treat stages/repeats as independent
+queries; no formal population coverage or new statistical certificate is claimed.
+
+### Honest timing and bounded resource use
+
+Separate cached trajectory reconstruction from actual pipeline measurements.
+All exact methods share the full projected scan; fewer candidates do not remove
+that scan. An adaptive implementation may extract the maximum exact shortlist
+once, but the controller sees only each requested prefix. Fixed baselines extract
+only their own required shortlist and must not be charged artificial max-budget
+selection or Tri feature work. Reset application distance caches per method/query.
+
+On 64 fixed Selection queries, first check mandatory feature/control cost against
+the maximum removable candidate scoring/selection/reranking work. Record both
+the measured upper/lower cost components and uncertainty. If even avoiding all
+removable work cannot cover the mandatory extra cost, stop the systems-benefit
+branch as no headroom; still finish the bounded prediction analysis. Do not infer
+a measured adaptive latency from cached-prefix component sums.
+
+If there is headroom, time actual B+D+T, B+D and the selected fixed pipeline on
+the evaluation group: one CPU search thread, 16 Selection warmups, three repeats,
+balanced/shuffled method order (seed 55143). Include projection, exact scan,
+selection, feature/controller work, candidate access/scoring and reranking.
+Report warm steady-state measurements, mean, pooled-call p95, query-block intervals,
+RSS, scan/index setup and I/O conditions separately. This is a pure-exact backend
+measurement, not deployed HNSW serving performance; no answer generation.
+
+Use CPU/no-GPU mode first. Estimate **A: 10--30 minutes; B: 30--90 minutes** after
+implementation, excluding coding/review. These are planning estimates, not a
+measured commitment. Use the first 64 Selection queries as an in-run throughput
+check. Enforce a **two-hour cumulative compute ceiling**, RSS<=16 GiB, new artifacts
+<=2 GiB and at least 4 GiB remaining data-disk reserve. If the forecast/actual cap
+is exceeded, retain a resource/inconclusive result; no automatic resampling,
+corpus reduction, hardware switch or second run. No automation is created.
+
+Read existing cloud inputs; use RAM/page cache without restaging a duplicate full
+bundle on the data disk. Store only new compact results/scripts/configs in a new
+unique sibling directory under the Step 5 input root. Never write inside the old
+bundle or run_archive. Input seal remains 925d00d2...2ad28af; record the full
+original manifest identity plus separate new diagnostic source/config hashes.
+
+### Proposed stop/continue rules, fixed before evaluation
+
+The following are proposed minimum-useful-effect criteria for this development
+screen, not thresholds inferred by inspecting the new evaluation outcomes:
+
+| Outcome | Decision |
+|---|---|
+| Triplet addition has <5% primary MAE reduction, or paired 95% upper ratio>=1 | No stable incremental prediction evidence; stop this tested adaptive route |
+| Prediction improves, but no quality-eligible candidate or <10% budget saving | Information may help; current decision mechanism does not convert it into benefit; stop this controller, no threshold extension |
+| Candidate work improves but feature cost has no headroom or full latency has no stable improvement | Stop the current acceleration claim; preserve a prediction-only result |
+| Quality, budget and full-pipeline timing all meet the criteria below | Eligible to propose an HNSW integration study; do not launch it automatically |
+| Interval too wide, comparator unstable, integrity/resource failure | Inconclusive/stopped; retain artifacts and do not enlarge the experiment |
+
+Positive evidence requires: primary MAE point reduction>=5% with paired upper
+ratio<1; evaluation mean retention>=0.90 and Hit@5 delta versus exact>=-0.02;
+paired retention difference lower bound>=-0.01 versus both B+D and fixed; original
+distance ratio upper bound<=0.90 versus both; actual full-pipeline mean latency
+ratio upper bound<1 and p95 ratio upper bound<=1.05 versus both. All use the
+predeclared nominal development intervals, not formal certification. Secondary
+variants cannot replace the primary winner after inspection. Failure concerns
+this version/data/measurement condition, not the validity of Tri-Law in general.
+
+The dependency/correlation research question is recorded as a possible separate
+research topic. Existing counterexamples establish a logical gap, not novelty.
+Literature comparison and multi-projection joint-event experiments are outside
+this run; no new theorem or research-contribution claim will be made here.
+
+### Exact implementation scope for approval, not current edits
+
+New files proposed for implementation after approval:
+
+| Path | Proposed level and responsibility |
+|---|---|
+| mechanism/tls_rag_step5_audit.py | L0: allowlisted reader, identities, exact references, rank/set decomposition and isolated stage ledger |
+| mechanism/tls_rag_step5_exact_policy.py | L0: matched feature variants, new exact fits, selection/evaluation and timing boundaries |
+| configs/tls_rag_step5_mechanism_v1.json | L0: frozen sample/grid/model/threshold/gate/seed/resource settings above |
+| tests/test_tls_rag_step5_mechanism.py | L0: offline scientific/isolation/regression contracts |
+| docs/TLS_RAG_STEP5_MECHANISM_PROTOCOL.md | L0 after approval: finalized executable scientific contract |
+| scripts/run_tls_rag_step5_mechanism.sh | L1: explicit one-run launcher and resource/status reporting |
+
+Keep new scientific modules outside `src/tri_rag_harness`: the legacy source-binding
+function includes every Python file in that directory, so adding modules there
+would invalidate the old input identity. This separate namespace is explicitly
+L0, not a protection exemption. Do not edit, replace, wrap around or weaken v1
+scientific semantics or its loader/protection rules. The new reader must enforce
+its own approved access/identity contract rather than bypass an existing guard.
+
+After approval, append the new file classifications and actual approval reference
+to docs/code_protection.json and docs/CODE_PROTECTION.md. Preserve existing levels,
+rules and all old scientific-source/config/test hashes; update only the digest of
+the human-readable register to reflect its approved append-only additions. No old
+scientific binding may be refreshed to accommodate new code.
+Planning/status documentation may be updated within L1 scope. Validation must
+cover forbidden-role file access, split/query-family disjointness, old bindings,
+exact references/ties and decomposition including rescues, prefix-only controller
+inputs, real feature-cost accounting, fit/selection/evaluation closure, no-retry
+failure and resource stops. Run new synthetic/offline tests and the appropriate
+existing regression suite without network; protect all v1 artifacts/contracts.
+
+If the user approves this complete plan, implementation/local checks and then A->B
+may proceed within these gates, on codex/tls-rag-step5-ann, with a result checkpoint
+after A. A limited approval such as "A only" does not authorize B. Any deviation
+in data access, scientific settings, resources or future ANN integration requires
+a revised concrete scope. The current deliverable is this reviewable proposal.
+
 ## Tri-Law and HNSW theoretical reassessment (2026-10-23)
 
 - [x] Read the user-identified local source manuscript and relevant proofs; cross-check
