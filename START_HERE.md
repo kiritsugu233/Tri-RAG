@@ -17,8 +17,11 @@ evidence-sufficiency or answer-quality claim. See the latest [status](STATUS.md)
 the user's 2026-10-22 proposal-review/implementation authorization. The A800
 synchronization, 337 offline tests and required real-HNSW synthetic self-test
 passed on code `40728dd`; see STATUS.md for actual logs and timings.
-These tests did not download real data/models or open real experiment roles.
-Real source/model/history audits and all real-data results remain pending.
+The subsequent authorized real run ended with `no_tune_candidate`: calibration
+passed, but no Tri candidate met the declared cost gate. Cert/latency/test stayed
+closed. Results and inputs are verified on cloud storage; duplicate hot copies
+were replaced with cloud links. Read the latest storage/diagnosis and closeout in
+STATUS.md. History/semantic independence remain unestablished; no formal claim exists.
 ANN is a narrow new-stage extension; the old MVP's scope and Step 4 bindings remain frozen.
 The [earlier handoff](docs/TLS_RAG_STEP5_HANDOFF.md) records the pre-authorization boundary.
 

@@ -1,5 +1,19 @@
 # Implementation Plan
 
+## Step 5 post-run storage and diagnosis (2026-10-23)
+
+- [x] At the user's request, compare all 53 hot/cloud files and embedded seals;
+  replace only verified hot duplicates with cloud links, releasing 11.11 GiB.
+- [x] Preserve original terminal results; retain exact migration script and receipt on cloud storage.
+- [x] Extract only already-open tune/calibration diagnostics, reproduce all 18 saved
+  policies' per-query costs/retentions and transfer a hash-verified 2.8 MB local package.
+- [x] Analyze stop distribution, model errors, tail-query costs, raw/persistent overlap,
+  direct-original ANN controls and cached feature timing; record limits in STATUS.md.
+- [x] Keep all scientific source, settings and unopened successors unchanged;
+  no replacement run, policy selection or benchmark stage started.
+- [ ] Obtain scoped authorization for any future scientific successor; this analysis
+  does not authorize a modified policy, extra timing experiment or reopened role.
+
 ## Step 5 real experiment execution (2026-10-23)
 
 - [x] At the user's request, launch the unchanged complete staged experiment over SSH.

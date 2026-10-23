@@ -1,5 +1,140 @@
 # Status
 
+## Current: Step 5 storage migration and descriptive diagnosis complete (2026-10-23)
+
+- User requested “先把结果从数据盘搬到autodl-fs防止数据盘爆了，然后进行分析，有必要的话传一些文件回本地也可以”.
+  Reconnected after the restart; all experiment processes were already stopped.
+  This work used existing artifacts and CPU only, without invoking benchmark stages,
+  fitting a new model, altering a policy or opening cert/latency/test records.
+- Full cloud results already existed at
+  `/root/autodl-fs/tls-rag-step5-input-dPpTfj/experiment-aynq9z39/run_archive`;
+  the original sealed bundle was already at
+  `/root/autodl-fs/tls-rag-step5-input-dPpTfj/preparation-ov283f6o/bundle`.
+  Compared the hot and cloud inventories, byte counts and SHA-256 of **all 53 files**
+  (32 result/index files plus 21 bundle files), and checked every embedded manifest.
+  Only after complete agreement, removed the duplicate hot copies and replaced
+  `HOT/run` and `HOT/bundle` with links to their cloud counterparts. Sealed cloud
+  files and original terminal-status receipts were not edited. No historical
+  protected archive, other environment or unrelated file was removed.
+- Freed 11,924,787,200 allocated bytes (about **11.11 GiB**). Data-disk free space
+  increased from 23.50 to **34.61 GiB**; cloud free space after diagnostics was
+  about **180.92 GiB**. HOT remains
+  `/root/autodl-tmp/tls-rag-step5-run-7wh54au4`; its links preserve old lookup paths.
+  These cloud-backed paths are for preservation/analysis, not a new timing run.
+- Operational scripts, exact file hashes and migration receipt are retained in
+  `CONTROL/storage-analysis-wb2_irmj/{migrate.py,migration.json,extract.py}`,
+  where CONTROL is the experiment control directory above. Migration command:
+  `/root/autodl-tmp/conda-envs/tri-rag-step5/bin/python -u
+  CONTROL/storage-analysis-wb2_irmj/migrate.py`.
+- Read the already-open tune trajectory once, verified its original SHA-256
+  `2d4ac1cca9a5b2344f7cc2cd9f3e1b121b4e15ed379da6596692232d65e35406`,
+  and extracted 2,048 compact four-stage records in 38.866 s. Replaying the unchanged
+  saved controller against saved states reproduced **every per-query policy cost
+  and retention** for all 18 declared policies. No vectors, new retrievals or
+  unopened-role labels were used. Extraction command: `PYTHONPATH=src
+  OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1
+  /root/autodl-tmp/conda-envs/tri-rag-step5/bin/python -u
+  CONTROL/storage-analysis-wb2_irmj/extract.py`, from the server checkout.
+- Transferred only the roughly **2.8 MB** current diagnostic package via SCP to
+  `/private/tmp/step5-analysis-UZ5raZ/compact.tar.gz` and verified transport SHA-256
+  `93c6b0dd7411adf726f068c7cdccb3b401ad67c7d64b8d2ff0bd08e411c3fcee`.
+  It contains compact tune states/metrics, calibration models/residuals, summaries
+  and receipts; no corpus/model weights or unopened roles were downloaded.
+  All extracted member hashes and all saved tune means were independently checked.
+  Local analysis command: `python3 /private/tmp/step5-analysis-UZ5raZ/analyze.py`.
+  Derived `diagnosis.json` SHA-256:
+  `86a4ddda5d17a6665747decaf366d2c362da28e256a38b4397089a6d068928f7`.
+  Returned `analyze.py`, `diagnosis.json` and `analysis.log` to the same cloud
+  diagnostic directory and checked the JSON hash there. The 15 KB transfer archive
+  `analysis-results.tar.gz` has SHA-256
+  `b7720e6d1e5bfbc2b46e202cc76e82cd638f9177cf09ef43bdb29c6db21d7f0a`;
+  only its three named analysis files were unpacked (Mac metadata omitted).
+
+### Where the distance work went
+
+The lowest-cost Tri candidate is still the unselected threshold 0.9 / quantile 0.5
+candidate `fb4961a1b0fc3849`. Its complete stop distribution is:
+
+| Final budget | Queries | Query share | Share of total original-distance work |
+|---|---:|---:|---:|
+| 64 | 1,116 | 54.492% | 11.023% |
+| 256 | 640 | 31.250% | 25.286% |
+| 1,024 | 255 | 12.451% | 40.300% |
+| 4,096 | 37 | 1.807% | 23.390% |
+
+- Only **14.258%** of queries used 1,024/4,096, but contributed **63.690%** of
+  original-distance work. The last 37-query jump from 1,024 to 4,096 alone adds
+  55.5 mean distances/query. Subtracting that increment arithmetically leaves
+  260.875, still above both fixed 256 and the 230.4 gate. This decomposition is
+  not an evaluated replacement/capped policy and does not justify changing it.
+- The least expensive base ablation costs 273.71875 with stops
+  1,051/687/310/0 at the four budgets. Tri saves work on 166 queries, spends more
+  on 120 and matches on 1,762; the expensive tail outweighs earlier savings.
+  Tri's mean cost is 42.65625 higher, retention is 0.00102539 lower and Hit@5 is
+  0.00048828 lower. These paired tune descriptions do not establish population
+  significance or an independently validated base-policy alternative.
+
+### Prediction accuracy and the stopping objective
+
+- **The cheapest candidate's four residual margins are all zero.** All tune
+  states have valid base/Tri features and fits. Its failure is not explained by
+  invalid-state forced expansion or an excessive positive residual deduction.
+  Increasing the declared quantile/threshold made costs larger, as recorded.
+- Tri improves tune prediction RMSE over base at each budget: at 64 it is
+  0.10464 versus 0.10917; at 256, 0.07226 versus 0.07824; at 1,024, 0.04050 versus
+  0.04335. Better regression accuracy did not produce a better aggregate
+  quality/cost operating point under this stopping rule.
+- The 37 Tri queries sent to 4,096 are genuinely difficult as a group. At 1,024
+  their true mean retention is **0.85135**, Tri predicts **0.86692**, while base
+  predicts **0.94544**. Nineteen still have true retention below 0.9; eighteen
+  already meet 0.9. At 4,096 group retention rises to 0.96216. Thus the tail is
+  partly useful quality investment, not evidence that all expansion is a bug.
+  Their high frontier/boundary mean-risk features contribute about -0.09859 and
+  -0.05758 to the stage-1,024 Tri linear prediction relative to its fitted feature
+  means. This is an algebraic model explanation, not a causal feature ablation.
+- The acceptance target concerns a **population mean**, whereas the controller
+  pursues a predicted threshold on each query. After the pilot, 436 of the 932
+  expanding queries already have realized retention >=0.9; these labels were
+  unavailable to the deployed decision and are diagnostic only. An omniscient
+  earliest saved stage with realized per-query retention >=0.9 averages 282.8125
+  distances when the seven never-reaching queries retain the maximum fallback.
+  This is not a deployable policy or a rigorous aggregate lower bound. It shows
+  why pursuing per-query 0.9 need not satisfy the cheaper aggregate-mean objective.
+
+### Backend and implementation evidence
+
+- On every saved tune stage, accepted and raw pools have identical **top-10
+  retention values**; staged and single-call fixed retention also match per query. This
+  rules out observed retention loss from persistent membership as the explanation
+  for this run. It does not assert identical candidate sets or exact ANN prefixes.
+- Original-space ANN 64 reaches retention 0.995898 at 64 candidate scores; projected
+  ANN 256 reaches 0.959424 at 256. Tune mean complete-call times are respectively
+  2.269 and 4.486 ms. This is a strong observed comparator for this implementation,
+  without independent paired systems bounds. Exact projected reference diagnostics
+  were never run, so projection error and projected-HNSW approximation cannot be
+  separated from these results; no general theorem against projection follows.
+- Saved all-stage traces expose a substantial implementation hotspot: pilot
+  feature construction averages **14.052 ms**, versus the fixed-256 complete-call
+  tune mean of 4.486 ms. The lowest-cost Tri candidate's cached prefix feature component
+  averages 23.506 ms. These are descriptive component timings with different
+  boundaries; cached prefixes omit real online `choose` and pipeline overhead,
+  and shared base traces also compute the Tri profile. They are **not measured
+  adaptive online latency**, paired confidence bounds or a certified speed ratio.
+  Candidate-distance counts omit this feature cost, repeated graph searches,
+  merging and sorting, so distance-count improvement alone would be insufficient.
+
+### Next decision
+
+The existing evidence supports preserving the v1 negative result and reviewing a
+successor before renting GPU time for another run. A useful proposal would first
+address marginal quality gain versus added work, the direct-original ANN comparator,
+the expensive feature path and the coarse budget jumps. Simply shrinking an
+already-zero median margin or removing the last budget does not establish a fix.
+Any policy, feature, budget, comparator or backend change requires the exact-path
+L0 proposal/approval and a separately frozen version before implementation.
+No replacement policy was selected, no future role was opened, and all independence,
+formal-certification and missing-latency/test limitations in the closeout remain.
+
 ## Current: Step 5 ANN v1 closed — no tune candidate (2026-10-23)
 
 - The authorized single A800 experiment ended at `2026-10-23T09:18:00Z`
