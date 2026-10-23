@@ -1,5 +1,21 @@
 # Implementation Plan
 
+## Step 5 fixed-model and encoded-input preparation (2026-10-23)
+
+- [x] Check both storage mounts and keep new raw/model/cache/bundle artifacts on
+  file storage; preserve 34.61 GiB free on the faster data disk without migrating old files.
+- [x] Validate the complete source TSVs using the unchanged frozen reader.
+- [x] Acquire the frozen MiniLM runtime snapshot; verify official fixed-revision
+  API identity, Git/LFS hashes, transferred archive and every server model file.
+- [x] Pass deterministic offline A800 model smoke check and encode the frozen
+  million-passage subcorpus plus all 26,624 role-separated queries.
+- [x] Validate the full sealed float64 bundle with the production loader and
+  cross-check its model hashes against the independently retained upstream audit.
+- [x] Retain exact commands/environment, logs, source/model audits and result reports;
+  keep history/semantic independence limitations explicit.
+- [ ] Stage verified hot inputs on the data disk and build real indexes/cal-model-fit.
+- [ ] Run subsequent frozen stages in order, preserving failures and closed successors.
+
 ## Step 5 raw-source acquisition (2026-10-23)
 
 - [x] At the user's request, log in over SSH and preserve the existing input root.

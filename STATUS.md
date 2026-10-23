@@ -1,5 +1,72 @@
 # Status
 
+## Current: Step 5 fixed-model and encoded-input preparation passed (2026-10-23)
+
+- User instructed “继续，你直接接入ssh工作就好，注意一下数据盘的空间，如果不够是否可以把一些东西搬到autodl-fs里面这应该是云盘。”
+  Continued fixed-model acquisition and encoded-input preparation over SSH using
+  the existing Step 5 branch at `969d37c30cdd8c136f33b8b59eca62dd506f11cc`.
+- Verified `/root/autodl-fs` resolves to the separate 200 GiB AutoFS file-storage
+  mount. Before preparation, the 50 GiB data disk had 34.61 GiB available and file
+  storage had about 194 GiB available. All new model files, temporary files, logs
+  and encoded bundle were placed under file storage; no old files/environments
+  needed migration and no historical protected archive was opened or modified.
+- Actual frozen `read_tsv` validation passed all 8,841,823 collection rows and
+  808,731 train-query rows before encoding. Retained `source_preflight.json` in
+  `/root/autodl-fs/tls-rag-step5-input-dPpTfj/preparation-ov283f6o` (WORK below).
+- Downloaded 11 runtime/model-card files for `sentence-transformers/all-MiniLM-L6-v2`
+  at official revision `c9745ed1d9f207416be6d2e6f8de32d1f16199bf` from the Mac;
+  checked the fixed-revision API identity, each small file's Git blob SHA-1 and the
+  safetensors LFS SHA-256. Omitted alternate ONNX/OpenVINO/TF/bin weight formats.
+  The 91,627,520-byte transfer tar SHA-256 is
+  `9f5f76828354d18ffcb3d59ae03f88ee320fcc481b17e1db53ce6d0e846b475f`.
+  Server independently rechecked all transferred runtime files against the retained
+  official API response. Audit: `WORK/model_source_audit.json`; snapshot:
+  `WORK/model-source/model`; upstream response/download manifest retained beside it.
+- Offline deterministic CUDA smoke test passed on A800 with PyTorch 2.8.0+cu128:
+  two synthetic strings encoded as finite nonzero float32 vectors of shape (2,384),
+  max sequence length 256. No real query label was needed for this smoke test.
+- Exact supervisor command: `/root/autodl-tmp/conda-envs/tri-rag-step5/bin/python -u
+  /root/autodl-fs/tls-rag-step5-input-dPpTfj/preparation-ov283f6o/prepare_supervisor.py`.
+  It invoked the unchanged `-m tri_rag_harness.tls_rag_step5_data` producer with
+  the three verified raw TSVs, frozen revision, `--device cuda --batch-size 256`
+  and the absent `WORK/bundle` output; exact argv/environment are in
+  `WORK/process_result.json`. Hugging Face/Transformers were offline,
+  `CUBLAS_WORKSPACE_CONFIG=:4096:8`, TF32 disabled by the existing producer,
+  caches/TMPDIR on file storage. Supervisor used a separate 2-hour preparation
+  timeout; this does not change the frozen benchmark's 12-hour checked budget.
+- **Preparation and production `load_bundle` validation passed, exit 0, 436.480 s
+  including model checks, CUDA smoke, preparation and bundle validation.** Corpus:
+  1,000,000 x 384 float64; six query roles total 26,624 with the frozen counts
+  8192/4096/2048/8192/2048/2048. Verified seal, source/protocol binding, unique and
+  disjoint role IDs, dimensions, finite normalized vectors and exact correspondence
+  between bundle model-file hashes and the separately audited upstream snapshot.
+  Bundle size: 3,167,808,072 bytes. Seal binding:
+  `925d00d2d4e0f63e1e280c03bd1c9fea9e3e70ae9ddc6ffed0fae6a0f2ad28af`.
+- 59,321 eligible lexical families; excluded 749,320 queries without a positive
+  in the hash subcorpus and collapsed 90 lexical variants. No historical exclusion
+  manifest was supplied; history exclusion and semantic independence remain
+  unestablished, with the existing conservative flags unchanged. The producer's
+  `model_revision_independently_verified=false` remains unchanged; the separate
+  operator audit verifies the actual files and is bound by their matching hashes.
+- Retained `WORK/{source_preflight.json,model_source_audit.json,model_smoke.log,
+  prepare_supervisor.py,supervisor.log,prepare.log,process_result.json,
+  bundle_validation.json,bundle_validation.log}` plus original model transfer files.
+  `bundle_validation.json` SHA-256:
+  `e31eb0d61fa4e5ec981a17b79978caedab0d1f82f3dc444c41d2443982e61019`.
+  Three result reports were also copied to
+  `/private/tmp/tls-rag-step5-model-5kje7ke0/server-reports/` and checked against
+  server SHA-256 values. SSH closed remotely after success; reconnect confirmed
+  the reports, clean tracked status, passing protection check and idle GPU.
+- Final available space: data disk 34.61 GiB; file storage 190.96 GiB. No migration
+  required. Scientific source/config/tests/dependencies are unchanged; meaningful
+  validation was the actual upstream file audit, CUDA smoke and full sealed-bundle
+  validation, with protection/whitespace checks for this documentation-only update.
+- Next: build the real indexes/cal-model-fit stage when continuing the experiment.
+  No real index, fit, tune, certification, latency/test evaluation or LLM run was
+  started here. Before latency measurement, stage a verified bundle copy on the
+  faster data disk and account for index/result space; cloud-backed random reads
+  must not silently define a different storage-performance claim.
+
 ## Current: Step 5 raw-source acquisition verified over SSH (2026-10-23)
 
 - After the server's official HTTPS download reset and the legacy Blob endpoint
