@@ -5,11 +5,18 @@
 - [x] At the user's request, launch the unchanged complete staged experiment over SSH.
 - [x] Stage and verify the existing bundle on the fast data disk; keep control/logs on file storage.
 - [x] Start a durable sequential supervisor with stop-on-failure, disk reserve and external time ceiling.
-- [x] Complete projected HNSW build; original-space index build is running.
-- [ ] Complete cal-model-fit and every eligible successor, or preserve the terminal negative/error result.
-- [ ] Verify the terminal cloud archive, report actual results and synchronize the handoff.
-- [ ] Create a background completion heartbeat only if the user explicitly authorizes it;
-  the initial attempt was rejected by automatic approval and created nothing.
+- [x] Complete both HNSW indexes (2,152.179 s); pass model fit and independent residual calibration.
+- [x] Execute tune once; preserve `no_tune_candidate` (exit 2) and all closed successors.
+  All nine Tri candidates passed tune quality point gates but exceeded the 230.4-distance
+  cost ceiling; cheapest Tri cost 316.375 versus fixed 256. Compute took about 5 h 42 min.
+- [x] Verify cloud archive seals, source bindings and absent cert/latency/test directories;
+  recompute all tune summary means from 2,048 per-query metric records.
+- [x] Record actual results/commands/artifacts and limitations in STATUS.md for branch synchronization.
+- [x] After explicit “允许，仅限本次实验”, create the bounded 15-minute heartbeat;
+  pause `step-5` after terminal verification. The earlier rejected attempt created nothing.
+- [ ] Future separately authorized work: review a successor design and exact L0 scope.
+  Independent certification, paired latency and final test remain unmeasured for this run;
+  no scientific edits, retries, threshold changes or second experiment are authorized here.
 
 ## Step 5 fixed-model and encoded-input preparation (2026-10-23)
 
@@ -24,8 +31,8 @@
   cross-check its model hashes against the independently retained upstream audit.
 - [x] Retain exact commands/environment, logs, source/model audits and result reports;
   keep history/semantic independence limitations explicit.
-- [ ] Stage verified hot inputs on the data disk and build real indexes/cal-model-fit.
-- [ ] Run subsequent frozen stages in order, preserving failures and closed successors.
+- [x] Stage verified hot inputs on the data disk and build real indexes/cal-model-fit.
+- [x] Run eligible frozen stages in order; retain the terminal tune negative result and closed successors.
 
 ## Step 5 raw-source acquisition (2026-10-23)
 
@@ -59,7 +66,7 @@
 - [x] At the user's request, connect over SSH, synchronize A800, clone an independent
   environment and verify 337 full tests plus required real-HNSW self-test; retain logs.
 - [ ] Audit real source/model/history exclusions; prepare new input namespace and run real stages.
-- [ ] Record actual independent quality/latency/test results or preserved terminal negative result.
+- [x] Record preserved terminal `no_tune_candidate` result; independent quality/latency/test unopened.
 
 ## Repository cleanup and Step 5 planning handoff (2026-10-22)
 

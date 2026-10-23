@@ -1,6 +1,102 @@
 # Status
 
-## Current: Step 5 real experiment running; follow-up permission pending (2026-10-23)
+## Current: Step 5 ANN v1 closed — no tune candidate (2026-10-23)
+
+- The authorized single A800 experiment ended at `2026-10-23T09:18:00Z`
+  (17:18 China time) with `status=terminal`, `terminal_reason=no_tune_candidate`.
+  Both calibration stages passed; tune returned the declared negative-result exit
+  code 2: `no predeclared Tri-feature candidate; cert/test remain closed`.
+  No retry, replacement run, scientific edit or threshold/budget change occurred.
+- Source baseline remains `f44a99a4d7a6bf8efc3b0dafab03e900f695a600`;
+  `c5ed8e8` added the launch handoff only. All recorded runtime source hashes still
+  match. Input seal remains
+  `925d00d2d4e0f63e1e280c03bd1c9fea9e3e70ae9ddc6ffed0fae6a0f2ad28af`;
+  runtime binding is
+  `04dc2c418cdc6e05ede218ada603851f5be1d439c857299acf12c70df00c9003`.
+- Actual execution: `/root/autodl-tmp/conda-envs/tri-rag-step5/bin/python -u
+  /root/autodl-fs/tls-rag-step5-input-dPpTfj/experiment-aynq9z39/run_experiment.py`.
+  Its three executed child commands were the unchanged
+  `python -u -m tri_rag_harness.tls_rag_step5_benchmark run-stage --bundle
+  /root/autodl-tmp/tls-rag-step5-run-7wh54au4/bundle --run
+  /root/autodl-tmp/tls-rag-step5-run-7wh54au4/run --role ROLE`, for
+  `cal_model_fit`, `cal_bound_fit`, then `tune`. Full interpreter/argv/environment
+  and receipts are retained in the control directory documented below. These are
+  historical commands; do not rerun reserved roles.
+
+| Executed stage | Queries | Result | Supervisor wall seconds |
+|---|---:|---|---:|
+| `cal_model_fit` | 8,192 | passed, valid fit, exit 0 | 11,951.777 |
+| `cal_bound_fit` | 4,096 | passed, valid fit, exit 0 | 5,384.899 |
+| `tune` | 2,048 | no_tune_candidate, exit 2 | 3,183.005 |
+
+- Compute wall time was 20,519.747 s (about 5 h 42 min), including the two HNSW
+  indexes' 2,152.179 s build inside the first stage. Final supervisor time including
+  input staging and verified cloud archiving was 20,665.397 s (about 5 h 44 min).
+  This stopped on the scientific cost gate, before the external 12-hour ceiling.
+- Recomputed every tune summary from all 2,048 saved per-query metric rows.
+  The frozen rule identifies projected `fixed:256` as the fastest quality-eligible
+  fixed control (64 fails the retention point threshold), and `original:64` as the
+  fastest eligible original-space ANN control. Tune point estimates follow;
+  these are neither independent confidence bounds nor final test results.
+
+| Tune method | Retention@10 | Qrel hit@5 | Hit delta vs exact | Mean original distances/query | Tune mean ms |
+|---|---:|---:|---:|---:|---:|
+| Projected fixed 64 | 0.897168 | 0.756348 | -0.007324 | 64 | 2.020 |
+| Projected fixed 256 | 0.959424 | 0.760254 | -0.003418 | 256 | 4.486 |
+| Original ANN 64 | 0.995898 | 0.762207 | -0.001465 | 64 | 2.269 |
+| Lowest-cost Tri candidate (`fb4961a1b0fc3849`) | 0.972119 | 0.760742 | -0.002930 | 316.375 | unmeasured |
+| Lowest-cost base ablation (`422192ca3063fc9c`) | 0.973145 | 0.761230 | -0.002441 | 273.71875 | unmeasured |
+
+- All nine Tri candidates passed the tune quality and relative-retention point
+  gates, but all failed the cost requirement of at most `0.9 * 256 = 230.4`
+  original distances/query. Their costs ranged from 316.375 to 1,406.3125. The
+  lowest-cost Tri setting was threshold 0.9 / residual quantile 0.5, with 23.584%
+  more original-distance work than fixed 256; it was not selected. Its staged
+  query-to-candidate scoring comprises the initial 64 plus 252.375 mean new
+  expansion scores; cached exact scores serve reranking without rescoring those
+  candidates. This count excludes sampled pair-feature computation, ANN traversal,
+  projection, merging and controller work. The base ablation also exceeded 230.4.
+- No `selection.json` was produced. `cert`, `latency` and `test` directories are
+  absent in both hot and archived runs; no successor reservation or label-opening
+  receipt exists. Independent quality certification, paired latency/percentile
+  superiority, batching and final test metrics were **not measured**. The tune
+  fixed-control times above are selection measurements, not a latency-stage pass;
+  adaptive tune decisions were reconstructed from cached stage records and have
+  no measured adaptive latency. No answer-quality claim follows.
+- Control directory: `/root/autodl-fs/tls-rag-step5-input-dPpTfj/experiment-aynq9z39`.
+  `experiment_status.json` records `cloud_archive_verified=true`; the archived run
+  is `CONTROL/run_archive`, retaining `binding.json`, indexes, all three completed
+  stage directories, query decisions/truth/metrics, fits, summaries and seals.
+  The original hot run remains `/root/autodl-tmp/tls-rag-step5-run-7wh54au4/run`.
+  Independently rechecked all four archived directory seals with production
+  `verify_seal`, all bound source hashes, closed successors and the tune result.
+
+| Archived directory | Verified manifest binding |
+|---|---|
+| `indexes` | `35d61352fada99d2eff992f4ae686d89b7ac929f8deafdc52380cc8a34be34f7` |
+| `cal_model_fit` | `fab63a3f8635b6a7d18fe8fb9677361fe51116bfd3cc6710c2e843716a8a21e6` |
+| `cal_bound_fit` | `5d17d95bbe74f92a63602025f2d14f8d8f8484e0349a13820172345371c694d2` |
+| `tune` | `aa2e16ea28c33efc898f70f6aff83e7503c82fd1673630b95e33caabc226ecb6` |
+
+- Final check found all supervisor/experiment PIDs exited. Available space was
+  23.50 GiB on the data disk and 182.80 GiB on cloud storage after archiving;
+  no old files needed migration or deletion. Small final reports were also copied
+  to `/private/tmp/step5-aynq9z39-final-evidence.json`; the durable cloud archive
+  remains the authoritative full record.
+- The user subsequently answered “允许，仅限本次实验” to the recurring-access
+  question below. The authorized `step-5` 15-minute heartbeat was created, followed
+  only this experiment, and is now PAUSED after terminal verification. No further
+  background follow-up or experiment is scheduled by this task.
+- Validation for this result-only handoff: local/server protection checks pass
+  (184 files); runtime source bindings, archive seals, result/closure receipts and
+  all saved tune means were verified. Existing 337-test/HNSW self-test results
+  remain attached to their original code baseline; unchanged code was not retested.
+  `formal_certification=false`, historical exclusions and semantic independence
+  remain unestablished. Preserve this negative result. Any successor design needs
+  read-only analysis and exact-path L0 approval before scientific changes; no new
+  experiment is authorized by this closeout.
+
+## Launch checkpoint (superseded): Step 5 running; follow-up consent then pending (2026-10-23)
 
 - User instructed “继续工作，省去不必要的步骤，尽快完成实验”. Started the real
   frozen experiment over SSH without rerunning source/model preparation or tests.
