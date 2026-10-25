@@ -1,5 +1,117 @@
 # Status
 
+## Current: mechanism A/B complete — prediction gain, no acceleration evidence (2026-10-25)
+
+- Single authorized study completed in **4833.751 s (80 min 33.75 s)**. Scientific
+  code/config commit remains `7d3d0ad2a35bdf840703d7b68511caf06bfc8679`; no scientific
+  edits, retries, new policies or extra experiments followed evaluation inspection.
+  Supervisor1677 and study1684 have exited. Result status:
+  `prediction_only_current_decision_mechanism_not_useful`.
+  Gates: **prediction=true, candidate_quality_cost=false, systems=false**.
+- A used Selection256; B used Fit512/calibration256/selection256/evaluation512,
+  all 1536 identities disjoint within this study. Exact projection, model, corpus,
+  samples, grid, thresholds and seeds stayed frozen. Original cert/latency/test
+  directories were never created/opened. Old ANN terminal result is preserved.
+  Parent tune was previously inspected: these are descriptive development results,
+  not fresh independent certification. History/semantic independence remain
+  unestablished and **formal_certification=false**.
+
+### Actual phase A result
+
+| M | Exact projected retention | Raw HNSW retention | Projection omissions | Backend omissions | Backend rescues |
+|---:|---:|---:|---:|---:|---:|
+| 64 | .909375 | .907421875 | .090625 | .003515625 | .0015625 |
+| 256 | .96953125 | .966796875 | .03046875 | .002734375 | 0 |
+
+All per-query set and rank identities passed. The backend net decrement was
+.001953125 at64 and .002734375 at256; the projection contribution was larger in
+this development sample. Float64/float32 references had equal true-neighbor
+retention and no cutoff ties; this does not establish identical full sets or
+bitwise kernels, so no pure graph-only attribution is made. Persistent merging
+did not change true-neighbor retention here. W differed from j-1 in 1868/2560
+cases (.7296875); its departure ranged -9..8. These observations do not refute
+the exact single-triplet law or supply a joint-recall theorem.
+
+### Actual phase B result
+
+B is the 13-feature base; D adds two distortion quantiles; T adds four triplet
+summaries. Primary contrast is B+D+T versus B+D. All512 evaluation queries had
+valid predictions at all three decision stages. Adjusted prediction MAE decreased
+from **.07344629845 to .06927222105**, a **5.6832%** relative reduction. The paired
+nominal95% MAE ratio interval was **[.920958915,.967248083]**, point .943168308.
+This passes the declared prediction increment gate. Supporting B+T versus B
+MAE ratio=.950461402; it was not substituted for the primary comparison.
+
+| Method | Mean original-distance count | Mean retention | Hit@5 | Mean pipeline ms | Pooled-call P95 ms |
+|---|---:|---:|---:|---:|---:|
+| B | 65.625 | .89609375 | .74609375 | not measured | not measured |
+| B+D | 65.8125 | .8970703125 | .74609375 | 651.802986 | 704.117650 |
+| B+T | 69.75 | .9013671875 | .744140625 | not measured | not measured |
+| B+D+T | 70 | .9017578125 | .744140625 | 670.850046 | 735.450542 |
+| selected fixed64 | 64 | .8873046875 | .7421875 | 641.190091 | 692.908143 |
+
+- Full versus B+D original-distance ratio **1.06362773**, interval
+  [1.02636719,1.10370370]; versus fixed **1.09375**, interval [1.00976563,1.18457031].
+  Neither meets the required upper ratio<=.90. Full has pilot32 plus mean38
+  expansion distances; B+D has pilot32 plus33.8125. Full reaches256 on41/512
+  queries versus24/512 for B+D; stop histograms are preserved, with no post-hoc grid change.
+- Full retention exceeds B+D by .0046875 (interval [.001171875,.0083984375])
+  and fixed by .014453125 (interval [.005859375,.0234375]). Full mean retention
+  passes .90 and Hit delta vs exact=-.00390625 passes -.02. **Both primary controls
+  fall below .90 on evaluation**, although fixed64 passed selection at .909375.
+  This comparator-quality instability limits matched-quality tradeoff claims.
+  Do not select fixed128 or another threshold after viewing these outcomes.
+- Full mean latency is **2.9222% higher than B+D**, ratio interval
+  [1.02561092,1.03259587], and **4.6258% higher than fixed**, interval
+  [1.04249137,1.04985311]. P95 ratio uppers are1.06699030/1.08796210, above1.05;
+  mean and tail systems gates fail. Timed quality/budgets matched frozen replay.
+- Component means explain the prototype cost: full features **21.102 ms** versus
+  B+D **2.515 ms**; original gathering/scoring plus reranking is only about
+  **.406/.408 ms**. Full/D scan-and-selection is649.170/648.706 ms; fixed640.733 ms.
+  Selection is a subset of these scan figures (34.163/34.098/27.105 ms), not an
+  additional additive cost. Adaptive methods extract256 before prefix decisions;
+  fixed extracts64. The deliberately generous initial component screen allowed
+  timing to proceed, but the actual complete pipelines showed no gain.
+- Timing is the approved one-thread, cloud-backed, warm prototype condition:
+  16 Selection warmups, 512 evaluation queries x3 repeats x3 methods. It includes
+  resource checks and all pipeline work. It is not GPU timing, optimized serving,
+  direct HNSW latency, or a comparison to the earlier hot-disk ANN measurements.
+  Query-block bootstrap intervals are descriptive, not formal population coverage.
+
+**Decision:** retain the triplet feature's incremental prediction evidence; stop
+this tested budget controller/acceleration claim. Do not proceed automatically
+to another HNSW/RAG experiment. A revised decision mechanism or joint-event
+research needs a separately reviewed scope and appropriate fresh evaluation;
+the present outcomes cannot be reused for retuning and called independent proof.
+
+### Preservation and verification
+
+- Complete sealed output: `/root/autodl-fs/tls-rag-step5-input-dPpTfj/mechanism-v1-20261025-9affeea8`.
+  All **27 manifest entries** passed server and local SHA checks; the directory
+  including its manifest is **34,952,202 bytes**. Its sibling `.log` records launch.
+- Transport package (sibling `.results.tar.gz`): **5,390,408 bytes**, SHA-256
+  `05c11f6bfae51843dc12fc9251b7a532d57f6400f2826388f8fe51deb8512f77`.
+  Downloaded/extracted safely at `/private/tmp/step5-mechanism-results-9affeea8/`.
+  No corpus/query embeddings, encoder weights, old protected archives or unopened-role data transferred.
+- Local verification rechecked source/config identities, sample disjointness,
+  selection seal, calibration medians, every A set/rank identity, prefix nesting,
+  stored policy replay, prediction/quality aggregates, and all1536 timing blocks.
+  It reproduces saved aggregates without regenerating embeddings/exact references.
+  Command: `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src:. OPENBLAS_NUM_THREADS=1
+  OMP_NUM_THREADS=1 python3 /private/tmp/step5-mechanism-verification/verify.py
+  /private/tmp/step5-mechanism-results-9affeea8/mechanism-v1-20261025-9affeea8
+  /private/tmp/step5-mechanism-verification/verification.json`.
+- Verifier, local verification receipt and OS observations are also preserved
+  separately at `INPUT/mechanism-v1-20261025-9affeea8-analysis`, without changing
+  the sealed study. Analysis transport SHA-256:
+  `4606e343fe31b4701dd1ab38272c87ea64e31ebdb2f7092cb306dbfd00c0dda1`;
+  verification.json SHA-256:
+  `085ff65bba62eb93267ae2323db536ea84b9c420d364450e3e52a46d895b74c3`.
+- At the last live sample (elapsed4800 s), observed process VmHWM=4,853,176 KiB
+  (**4.63 GiB**) and Threads=1. No resource ceiling was hit. After packing,
+  data/cloud free space was **34.606/180.887 GiB**. No repeated follow-up or new
+  automation remains; the previous experiment's heartbeat stays stopped.
+
 ## Current: mechanism A complete, B running on the A800 (2026-10-25)
 
 - Scientific code/config commit: `7d3d0ad2a35bdf840703d7b68511caf06bfc8679`,

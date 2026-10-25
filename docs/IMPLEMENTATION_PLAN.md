@@ -10,8 +10,19 @@
 - [x] Push continuing Step 5 branch and verify GitHub HEAD; synchronize server.
 - [x] Server offline checks: 351 passed in 77.036 s; launch one bounded A->B study.
 - [x] A completed on Selection256: set/rank checks pass; results/paired intervals saved.
-- [ ] B: fixed Selection measurements, freeze all fits/policies, then evaluation and conditional timing.
-- [ ] Verify partial/final new artifact manifest, analyze, update status and push results.
+- [x] B: fixed Selection measurements; seal fits/policies before evaluation; complete all3 timing repeats.
+- [x] Verify all27 final manifest entries on server/local; replay stored decisions and aggregates.
+- [x] Analyze: prediction increment passes, candidate savings and full latency gates fail;
+  retain negative acceleration outcome and the controls' evaluation-quality limitation.
+- [x] Record final results in STATUS.md; preserve all original closed roles and reservations.
+- [x] Final result documentation prepared; delivery follows GitHub/server HEAD confirmation.
+
+Actual study output is mechanism-v1-20261025-9affeea8 under the existing cloud input
+root; code/config commit7d3d0ad. Elapsed80min33.75s, no retry/extra experiment.
+Primary MAE reduction5.6832%; full candidate count70 versus65.8125/64 controls;
+full mean latency670.850ms versus651.803/641.190ms. The tested acceleration route
+is stopped. This is development evidence with formal_certification=false, not an
+authorization to retune on evaluation data or start the deferred HNSW/RAG study.
 
 The exact reviewed settings below are unchanged. No second run, original-role
 reopening or subsequent HNSW integration is authorized by this checkpoint.

@@ -9,11 +9,13 @@ The review backup `codex/repo-review-code-protection` remains untouched at
 
 ## Current state and next assignment
 
-The user authorized the bounded [mechanism A/B study](docs/TLS_RAG_STEP5_MECHANISM_PROTOCOL.md).
-New code is isolated under mechanism/ to preserve legacy source bindings; local
-offline checks pass. The A800 hardware now has 14 CPU cores and 120 GiB RAM.
-Read the latest STATUS.md checkpoint for GitHub/server sync and actual run state.
-This study reuses only already-open cal/tune data, with no fresh certification claim.
+The authorized [mechanism A/B study](docs/TLS_RAG_STEP5_MECHANISM_PROTOCOL.md) is
+complete: triplet features improve prediction MAE by5.68%, but the selected policy
+uses more candidates and has higher measured latency. The tested acceleration
+route is stopped; no follow-on experiment is authorized. New code stays under
+mechanism/ to preserve legacy bindings. Read STATUS.md for actual tables, verified
+cloud/local artifacts and the controls' evaluation-quality limitation. Data were
+already-open cal/tune queries, with no fresh independent certification claim.
 
 Step 4 A800 reconstructed-data replay is closed: `replay_targets_met`, with
 all three gates passed. This is not independent validation or a latency,
