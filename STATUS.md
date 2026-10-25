@@ -1,5 +1,55 @@
 # Status
 
+## Current: local Tri feature profiling — lower overhead is feasible (2026-10-25)
+
+- User authorized a local optimization trial: “可以，你先这么试一下，然后告诉我结果，
+  如果需要A800的环境先告诉我，不需要的话本地测”. Completed a temporary diagnostic
+  prototype on Mac ARM64, one CPU thread; no SSH/A800, new real-data retrieval,
+  fitting, threshold change or certification. Frozen scientific sources/configs
+  and original experiment outputs remain unchanged. This is not an installed
+  feature replacement or approval for a follow-on retrieval experiment.
+- The prototype reuses per-vector differences/norms and batches calls to the
+  unchanged exact Tri-Law API. Pair order/multiplicity, scalar dot/divide/sqrt
+  sequence, invalid statuses and existing summary functions are preserved.
+  All non-timing fields match exactly on **96 synthetic states** (32 queries,
+  384->128 dimensions, budgets32/64/128); **1536** existing model/threshold
+  decisions and **11** special-pair records/summaries also match. No tolerance
+  was relaxed. This finite sample is not a universal equivalence proof.
+
+| Budget | Reference T ms | Batched T ms | Reference all features ms | Batched all features ms |
+|---:|---:|---:|---:|---:|
+| 32 | 4.060958 | .535292 | 4.511438 | .998479 |
+| 64 | 4.537000 | .591812 | 5.148521 | 1.219375 |
+| 128 | 4.741666 | .617500 | 5.463812 | 1.345437 |
+
+  Each entry is a median over8 synthetic queries x9 interleaved rounds
+  (72 calls/method/budget).
+  T construction improves about **7.6x**, all-feature construction **4.1--4.5x**.
+  These are memory-resident synthetic local timings, excluding retrieval, pilot
+  scoring, cloud I/O and server effects; they do not establish a new server T
+  latency or end-to-end acceleration. The earlier88.5x number applied only to
+  the probability API microbenchmark, not to complete T construction.
+- Existing frozen-decision analysis on Evaluation512: Tri increases budget on46
+  queries (16 have neither retention nor Hit gain), decreases it on28 (13 lose
+  retention), and leaves438 unchanged. More candidates alone do not establish
+  a worse strategy because quality also changes.
+- A true-outcome **candidate-count** oracle on the already-open Selection256,
+  using only saved32/64/128/256 results, matches the selected full policy's
+  retention=.915625 and Hit=.703125 at mean **47.25** candidates versus **64.75**:
+  a **27.03% optimistic candidate-count gap**. Integer optimization completed
+  with zero MIP gap. It sees real outcomes and omits scan/feature overhead;
+  it is not a deployable policy, latency result or independent evaluation.
+  Full projected scans remain necessary. No new controller was trained/selected.
+- Existing Tri-Law/Step3/mechanism focused regressions: **47 passed** (10+23+14).
+  Protection inventory/hash check passes190 entries. Full351-test suite was not
+  rerun because scientific source/config/test files were not edited.
+- Local reviewable artifacts: `/private/tmp/step5-tri-feature-profile/` contains
+  `profile.py`, `profile.json`, `policy_diagnosis.py`, `policy_diagnosis.json`,
+  `report.md` and their SHA manifest. Profile receipt SHA-256:
+  `e8e23599670f256cea776086bae045ecfbcf60997c89a25b22a23b75aa3979fe`.
+  These prototypes remain outside frozen runtime imports. Integration requires
+  a separately scoped source proposal; new-policy training/evaluation remains deferred.
+
 ## Current: mechanism A/B complete — prediction gain, no acceleration evidence (2026-10-25)
 
 - Single authorized study completed in **4833.751 s (80 min 33.75 s)**. Scientific

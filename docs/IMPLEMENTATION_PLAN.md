@@ -1,5 +1,29 @@
 # Implementation Plan
 
+## Local feature optimization probe (2026-10-25)
+
+User authorized “可以，你先这么试一下，然后告诉我结果，如果需要A800的环境先告诉我，
+不需要的话本地测”, and asked whether the decision strategy has optimization space.
+Scope here is a local diagnostic prototype and analysis of already-open records;
+it does not approve modifying frozen scientific sources or fitting a new policy.
+
+- [x] Profile a temporary same-pair batch path using the unchanged exact-law API,
+  preserving scalar geometry operations and existing summaries/invalid states.
+- [x] Exact non-timing feature equality on96 synthetic states;1536 identical
+  model/threshold decisions;11 special-pair equality cases, with no relaxed tolerance.
+- [x] Local feature timing only: T about7.6x faster, full construction4.1--4.5x;
+  no A800/SSH or inference about a measured server/full-pipeline speedup.
+- [x] Read-only frozen-decision diagnosis; true-outcome Selection256 oracle
+  matches full-policy quality at47.25 versus64.75 candidates, a27.03% optimistic
+  count gap. Include all limitations: outcome knowledge, feature/scan costs omitted,
+  complete projected scans unchanged, no learning/generalization/latency claim.
+- [x] Run47 existing focused regressions and the190-entry protection check.
+- [x] Preserve reviewable profiler/receipts at `/private/tmp/step5-tri-feature-profile/`.
+- [ ] Production integration: prepare exact paths/functions and equivalence scope
+  for review before any protected edit; not performed by this local diagnostic.
+- [ ] Revised decision mechanism: separately freeze action/cost objective and
+  evaluation before training; no threshold retuning or new retrieval run here.
+
 ## Mechanism implementation and execution checkpoint (2026-10-25)
 
 - [x] User reaffirmed authorization: “我申请了A800节点，你开始工作吧，你连入ssh进去之后执行这次的两阶段测试”.

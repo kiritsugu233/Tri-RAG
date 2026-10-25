@@ -12,7 +12,12 @@ The review backup `codex/repo-review-code-protection` remains untouched at
 The authorized [mechanism A/B study](docs/TLS_RAG_STEP5_MECHANISM_PROTOCOL.md) is
 complete: triplet features improve prediction MAE by5.68%, but the selected policy
 uses more candidates and has higher measured latency. The tested acceleration
-route is stopped; no follow-on experiment is authorized. New code stays under
+route is stopped; no follow-on real-data retrieval/policy-fitting experiment is
+authorized. A subsequent user-authorized local diagnostic prototype batches the
+unchanged law: T construction improves about7.6x on synthetic Mac inputs, with
+exact tested feature/decision equality. It is not installed in frozen sources or
+a server speedup result; read the latest STATUS.md for its scope and policy-oracle limits.
+New code stays under
 mechanism/ to preserve legacy bindings. Read STATUS.md for actual tables, verified
 cloud/local artifacts and the controls' evaluation-quality limitation. Data were
 already-open cal/tune queries, with no fresh independent certification claim.
