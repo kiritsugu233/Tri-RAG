@@ -267,7 +267,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "cdd231859c171459b1d9d56a39acdfe53f3ab2a31b2186bf7e755382e9a8802c"
+      "sha256": "5ffd2d221fe98c73bfb4e4559880c6efdb92afceb59e35055d85c47a5722ccf3"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -1299,6 +1299,41 @@
       "level": "L0",
       "reason": "Approved new Step 5 ANN v1 scientific contract; see docs/TLS_RAG_STEP5_ANN.md and actual 2026-10-22 user consent",
       "sha256": "d84a8c6bb51fbaed25f863964b74720a38050a950684e297a3525abad96111a2"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_audit.py",
+      "level": "L0",
+      "reason": "Approved Step 5 mechanism study: new scientific/access/validation contract",
+      "sha256": "ca4b7b756cc51dee950264ce58c3bdf7f615911f66af08b339b33994ab5e6beb"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_exact_policy.py",
+      "level": "L0",
+      "reason": "Approved Step 5 mechanism study: new scientific/access/validation contract",
+      "sha256": "2a796a464cd59d30eb34def49ca847497801ae8a82cb29b1ce90393b5720c265"
+    },
+    {
+      "path": "configs/tls_rag_step5_mechanism_v1.json",
+      "level": "L0",
+      "reason": "Approved Step 5 mechanism study: new scientific/access/validation contract",
+      "sha256": "4aed43115ee66f850d446561a1cb5dcbc330894955ebf43cba81dbadfd2cc0b5"
+    },
+    {
+      "path": "tests/test_tls_rag_step5_mechanism.py",
+      "level": "L0",
+      "reason": "Approved Step 5 mechanism study: new scientific/access/validation contract",
+      "sha256": "07c35e0631fdcb813d4acd563c90cd15defdf85776df591d18c7666af8b372d7"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP5_MECHANISM_PROTOCOL.md",
+      "level": "L0",
+      "reason": "Approved Step 5 mechanism study: new scientific/access/validation contract",
+      "sha256": "bffaa5ca3251f2ddc7f9e014b6fe1015156db1fa0640471d8da48851fd94681d"
+    },
+    {
+      "path": "scripts/run_tls_rag_step5_mechanism.sh",
+      "level": "L1",
+      "reason": "Approved mechanism launcher; scientific semantics inherit L0"
     }
   ],
   "approved_change_history": [
@@ -1663,5 +1698,20 @@
       "after_sha256": "bfcfdd6562c08c405975476ab9d88a363824bd358cfcc69e4a71e6e617fb75ed",
       "change": "Append approved Step 5 namespace table/consent only; no existing rule changed."
     }
+  },
+  "mechanism_v1_authorization": {
+    "date": "2026-10-25",
+    "user_consent": "我申请了A800节点，你开始工作吧，你连入ssh进去之后执行这次的两阶段测试",
+    "prior_consent": "如果可以的话就开始工作吧，本地写好代码之后同步到github上面，然后再在服务器上pull同步，然后开始这一轮的验证",
+    "scope": [
+      "mechanism/tls_rag_step5_audit.py",
+      "mechanism/tls_rag_step5_exact_policy.py",
+      "configs/tls_rag_step5_mechanism_v1.json",
+      "tests/test_tls_rag_step5_mechanism.py",
+      "docs/TLS_RAG_STEP5_MECHANISM_PROTOCOL.md",
+      "scripts/run_tls_rag_step5_mechanism.sh"
+    ],
+    "plan": "docs/IMPLEMENTATION_PLAN.md: small mechanism study approved 2026-10-24, hardware condition released 2026-10-25",
+    "limits": "Only approved new namespace, scoped register append, L1 current status; old scientific hashes/bindings and cert/latency/test files unchanged. A then B, one run, no automatic retry or new ANN experiment."
   }
 }

@@ -1,8 +1,22 @@
 # Implementation Plan
 
-## Small mechanism study — authorized, hardware readiness blocked (2026-10-24)
+## Mechanism implementation and execution checkpoint (2026-10-25)
 
-**Status: conditional implementation authorization received; no run started.**
+- [x] User reaffirmed authorization: “我申请了A800节点，你开始工作吧，你连入ssh进去之后执行这次的两阶段测试”.
+- [x] SSH confirms 14 CPU cores /120 GiB RAM; original input/result cloud paths remain.
+- [x] Implement only the six scoped files below; append classifications and consent.
+- [x] Local full offline suite: 351 passing tests, including real-FAISS tiny A/B path.
+- [x] Preserve existing scientific source/config/test hashes and old source binding.
+- [ ] Push continuing Step 5 branch and verify GitHub HEAD; synchronize server.
+- [ ] Server offline checks, then one bounded A->B study with its own durable output.
+- [ ] Verify partial/final new artifact manifest, analyze, update status and push results.
+
+The exact reviewed settings below are unchanged. No second run, original-role
+reopening or subsequent HNSW integration is authorized by this checkpoint.
+
+## Reviewed small mechanism study and prior readiness check (2026-10-24)
+
+**Prior checkpoint: conditional implementation authorization received; no run started.**
 The user reviewed this plan and requested: “你先ssh进去无卡模式里面检查一下硬件配置是否可以”
 and “如果可以的话就开始工作吧，本地写好代码之后同步到github上面，然后再在服务器上pull同步，然后开始这一轮的验证”.
 This authorizes the exact implementation scope below and A->B after hardware
@@ -16,7 +30,7 @@ The data/cloud disks have 34.61/180.92 GiB free. Key allowed input/result files
 and cloud links remain present; the previous archive-verification receipt remains
 true. No full rehash or repeated data preparation was performed.
 
-Next: provision CPU/memory appropriate to the unchanged study and recheck actual
+At that checkpoint, the next step was to provision CPU/memory appropriate to the unchanged study and recheck actual
 cgroup limits. A full CPU core and at least 8 GiB memory (16 GiB preferred) are
 engineering provisioning suggestions, not a proven minimum or new scientific
 setting. The first-64-query throughput check and all original resource/stop rules

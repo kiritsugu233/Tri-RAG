@@ -1,5 +1,30 @@
 # Status
 
+## Current: mechanism A/B implemented and locally validated (2026-10-25)
+
+- User requested execution on the newly allocated A800. SSH cgroup inspection
+  confirms CPU quota 1400000/100000 us = **14 cores**, memory **120 GiB**;
+  data/cloud free space **34.61/180.92 GiB**. NumPy1.26.4/SciPy1.13.0/FAISS1.8.0
+  remain installed. The node is suitable; study computation remains single-thread
+  CPU to preserve the reviewed measurement design. No GPU dependency or new download.
+- Implemented only the six approved mechanism namespace paths and append-only
+  protection entries. Existing scientific source/config/tests and parent input
+  bindings are unchanged. Protocol: docs/TLS_RAG_STEP5_MECHANISM_PROTOCOL.md.
+  New entry: scripts/run_tls_rag_step5_mechanism.sh; original roles remain closed.
+- Local offline full suite: **351 tests passed in 39.546 s**, using the existing
+  `/private/tmp/tls-rag-step5-faiss-check/bin/python` environment with pinned FAISS.
+  Command: `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src:. OMP_NUM_THREADS=1
+  OPENBLAS_NUM_THREADS=1 /private/tmp/tls-rag-step5-faiss-check/bin/python
+  -m unittest discover -s tests -v`.
+  Log: `/private/tmp/step5-mechanism-local-tests.log`.
+  Focused final rerun covers the subsequent timer/array-reuse refinement; shell
+  syntax and diff whitespace checks pass. Real data has not yet been opened by
+  the new mechanism runtime. Required next steps: push/verify GitHub HEAD,
+  synchronize server, run server offline tests, then launch this single A->B study.
+- Scientific scope and actual user consent are registered. Failed synthetic
+  checks caught an exception expectation and NumPy-boolean JSON serialization;
+  corrected before any real study. No original scientific tests were weakened.
+
 ## Current: mechanism study authorized; no-GPU hardware too constrained (2026-10-24)
 
 - User conditionally approved the preceding mechanism plan: inspect no-GPU hardware

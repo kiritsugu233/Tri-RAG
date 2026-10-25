@@ -1,6 +1,6 @@
 # Query-Adaptive Tri-RAG: current entry
 
-Updated 2026-10-23. Local checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
+Updated 2026-10-25. Local checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 Continue all Step 5 work and synchronization on `codex/tls-rag-step5-ann`.
 The user explicitly authorized this new branch and redundant-branch cleanup;
 do not create another branch for subsequent Step 5 version updates.
@@ -8,6 +8,12 @@ The review backup `codex/repo-review-code-protection` remains untouched at
 `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current state and next assignment
+
+The user authorized the bounded [mechanism A/B study](docs/TLS_RAG_STEP5_MECHANISM_PROTOCOL.md).
+New code is isolated under mechanism/ to preserve legacy source bindings; local
+offline checks pass. The A800 hardware now has 14 CPU cores and 120 GiB RAM.
+Read the latest STATUS.md checkpoint for GitHub/server sync and actual run state.
+This study reuses only already-open cal/tune data, with no fresh certification claim.
 
 Step 4 A800 reconstructed-data replay is closed: `replay_targets_met`, with
 all three gates passed. This is not independent validation or a latency,

@@ -305,3 +305,20 @@ are required. Historical adapter and algorithm are untouched.
 约束保留位置。其余等级不变，检查逻辑不变，科学源码/配置/测试不变。
 
 - **L1** `docs/TLS_RAG_STEP5_HANDOFF.md`: planning-only handoff; no ANN implementation authorization.
+
+
+## Approved Step 5 mechanism study namespace (2026-10-25)
+
+User consent: “我申请了A800节点，你开始工作吧，你连入ssh进去之后执行这次的两阶段测试”. This releases the hardware condition on the
+2026-10-24 reviewed small-study plan in docs/IMPLEMENTATION_PLAN.md.
+Only the new namespace below and this append-only registration are authorized;
+all old scientific files, seals, roles and governance rules remain unchanged.
+
+| Path | Level | Scope |
+|---|---|---|
+| `mechanism/tls_rag_step5_audit.py` | **L0** | Approved mechanism study; see reviewed plan |
+| `mechanism/tls_rag_step5_exact_policy.py` | **L0** | Approved mechanism study; see reviewed plan |
+| `configs/tls_rag_step5_mechanism_v1.json` | **L0** | Approved mechanism study; see reviewed plan |
+| `tests/test_tls_rag_step5_mechanism.py` | **L0** | Approved mechanism study; see reviewed plan |
+| `docs/TLS_RAG_STEP5_MECHANISM_PROTOCOL.md` | **L0** | Approved mechanism study; see reviewed plan |
+| `scripts/run_tls_rag_step5_mechanism.sh` | **L1** | Approved mechanism study; see reviewed plan |
