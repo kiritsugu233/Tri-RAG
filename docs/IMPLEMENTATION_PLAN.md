@@ -7,8 +7,10 @@
 - [x] Implement only the six scoped files below; append classifications and consent.
 - [x] Local full offline suite: 351 passing tests, including real-FAISS tiny A/B path.
 - [x] Preserve existing scientific source/config/test hashes and old source binding.
-- [ ] Push continuing Step 5 branch and verify GitHub HEAD; synchronize server.
-- [ ] Server offline checks, then one bounded A->B study with its own durable output.
+- [x] Push continuing Step 5 branch and verify GitHub HEAD; synchronize server.
+- [x] Server offline checks: 351 passed in 77.036 s; launch one bounded A->B study.
+- [x] A completed on Selection256: set/rank checks pass; results/paired intervals saved.
+- [ ] B: fixed Selection measurements, freeze all fits/policies, then evaluation and conditional timing.
 - [ ] Verify partial/final new artifact manifest, analyze, update status and push results.
 
 The exact reviewed settings below are unchanged. No second run, original-role

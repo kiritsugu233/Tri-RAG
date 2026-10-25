@@ -1,5 +1,47 @@
 # Status
 
+## Current: mechanism A complete, B running on the A800 (2026-10-25)
+
+- Scientific code/config commit: `7d3d0ad2a35bdf840703d7b68511caf06bfc8679`,
+  pushed and independently matched to GitHub HEAD before server synchronization.
+  Server `git pull --ff-only` timed out after 35 s (exit124); synchronized the
+  same already-pushed commit using a thin Git bundle, verified transport SHA-256
+  `f9166ac5bf6c133de4c4f9ab213d549e7b329accb19621e47628e225bb8dcdd8`,
+  bundle prerequisites and fast-forward HEAD. Origin/default branch unchanged.
+- Server offline suite: **351 tests passed in 77.036 s**, no skips, using the
+  existing tri-rag-step5 interpreter. Log:
+  `/root/autodl-fs/tls-rag-step5-input-dPpTfj/mechanism-7d3d0ad-offline.log`.
+  Protection check passes: 190 entries (L0 139/L1 48/L2 3).
+- Started one durable study at **2026-10-25 10:48:15 China** (02:48:15 UTC),
+  wrapper timeout PID1677 / study PID1684. Output:
+  `/root/autodl-fs/tls-rag-step5-input-dPpTfj/mechanism-v1-20261025-9affeea8`.
+  Its sibling `.log` is the launch log. Command: `STEP5_PYTHON=/root/autodl-tmp/conda-envs/tri-rag-step5/bin/python
+  sh scripts/run_tls_rag_step5_mechanism.sh --bundle INPUT/preparation-ov283f6o/bundle
+  --archive INPUT/experiment-aynq9z39/run_archive --output INPUT/mechanism-v1-20261025-9affeea8`,
+  with INPUT=/root/autodl-fs/tls-rag-step5-input-dPpTfj. This is the already-running
+  command, not an instruction to launch another copy; parent reservation forbids retry.
+- **A completed:** 256 selection queries; 221.742 s including its flat-index/ANN
+  extraction/setup work. All set/rank identities passed. At M64, exact projected
+  retention=.909375, raw HNSW=.907421875; projection omissions=.090625, backend
+  omissions=.003515625, rescues=.0015625 (fractions of original top10). At M256,
+  exact projected=.96953125, HNSW=.966796875; projection omissions=.03046875,
+  backend omissions=.002734375, rescues=0. Pure-projection loss exceeds the backend
+  net discrepancy in this sample; these are development observations, not a
+  general theorem or a refutation of Tri-Law.
+- Float64/FAISS-float32 references have equal true-neighbor retention on this sample,
+  with no cutoff ties; this does not prove identical full candidate sets or distance
+  kernels. Persistent merging did not change true-neighbor retention here. W differs
+  from j-1 for .7296875 of true-neighbor cases (departure range -9..8), reinforcing
+  that the rank event needs both Z and W. Exact rows/sets/ranks are in phase_a.jsonl;
+  summary and descriptive paired intervals are in phase_a.complete.json.
+- **B in progress:** fitted-role/calibration/selection trajectories constructed;
+  fixed Selection pipelines are being measured before model/policy sealing and
+  evaluation opening. The first64 component screen did not trigger no_headroom:
+  mandatory-minus-removable mean -22.459 ms, nominal95% interval [-22.686,-22.251].
+  This generous component bound is not a measured online adaptive speedup.
+  No B prediction/quality/latency conclusion yet. Original cert/latency/test remain
+  closed; formal_certification=false; no new automation or second study was started.
+
 ## Current: mechanism A/B implemented and locally validated (2026-10-25)
 
 - User requested execution on the newly allocated A800. SSH cgroup inspection
