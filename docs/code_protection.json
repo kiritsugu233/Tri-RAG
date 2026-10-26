@@ -1397,6 +1397,34 @@
       "path": "docs/step5_reuse_probe_evidence.json",
       "level": "L1",
       "reason": "Preserved complete timing/memory/equality receipts from the approved synthetic CPU probe; earlier artifacts and source bindings remain unchanged"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP5_BASELINE_HEADROOM_PROPOSAL.md",
+      "level": "L1",
+      "reason": "User-requested read-only scope proposal to complete original-space/fixed-M baselines and perfect-information cost headroom; not implementation or input-access approval"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_baseline_headroom.py",
+      "level": "L0",
+      "reason": "Approved observed-input access, original/projected baselines, selection sealing and diagnostic perfect-information cost contract",
+      "sha256": "5bce9b5ea7a68f699f022f51a4afad7c677336b08a9d4fdadcd441bbe8fa1561"
+    },
+    {
+      "path": "tests/test_tls_rag_step5_baseline_headroom.py",
+      "level": "L0",
+      "reason": "Approved baseline geometry/ties, observed-input gates, cost-oracle and immutable-output CPU regressions",
+      "sha256": "564ad8e950a0d38f83f890278ce085de972db1c65fb9286492c2537eaa7d67d3"
+    },
+    {
+      "path": "scripts/run_tls_rag_step5_baseline_headroom.py",
+      "level": "L1",
+      "reason": "Approved local CPU/readonly export orchestration inheriting baseline-headroom protocol"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP5_BASELINE_HEADROOM_PROTOCOL.md",
+      "level": "L0",
+      "reason": "Approved real-input baseline/headroom scientific comparison, data roles, quality and cost protocol",
+      "sha256": "2e166c1130b6bdab33ad2fa8b3206ae19682cb5039804e966c332c3e72024a25"
     }
   ],
   "approved_change_history": [
@@ -1788,5 +1816,18 @@
       "docs/TLS_RAG_STEP5_REUSE_PROBE_PROTOCOL.md"
     ],
     "limits": "Local synthetic CPU only, no predictor/Tri, no changes to existing scientific implementations or dependency pins, no SSH/GPU/real-data roles. New probe scientific contract only; routine L1 receipts/status permitted."
+  },
+  "baseline_headroom_v1_authorization": {
+    "date": "2026-10-26",
+    "goal_consent": "可以，先补齐1，2步吧",
+    "scoped_consent": "批准上述范围，稍后无卡启动服务器",
+    "question_scope": "Four paths in docs/TLS_RAG_STEP5_BASELINE_HEADROOM_PROPOSAL.md; reuse previously provided credentials for read-only SSH retrieval of opened queries, shared corpus/projected vectors and existing original ANN index; compute locally without predictor/Tri, closed-role reads or index rebuilding.",
+    "scope": [
+      "mechanism/tls_rag_step5_baseline_headroom.py",
+      "tests/test_tls_rag_step5_baseline_headroom.py",
+      "scripts/run_tls_rag_step5_baseline_headroom.py",
+      "docs/TLS_RAG_STEP5_BASELINE_HEADROOM_PROTOCOL.md"
+    ],
+    "limits": "Read-only remote export/download only, local CPU Selection/Evaluation development comparison; original cert/latency/test and all previous scientific files/bindings remain unchanged."
   }
 }

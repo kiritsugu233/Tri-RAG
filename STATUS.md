@@ -1,5 +1,37 @@
 # Status
 
+## Current: real baseline/headroom implementation ready; input transfer pending (2026-10-26)
+
+- User authorized “可以，先补齐1，2步吧” and explicitly approved the four precise
+  paths/read-only SSH retrieval with “批准上述范围，稍后无卡启动服务器”.
+  [Proposal](docs/TLS_RAG_STEP5_BASELINE_HEADROOM_PROPOSAL.md) and
+  [new contract](docs/TLS_RAG_STEP5_BASELINE_HEADROOM_PROTOCOL.md) record the scope.
+- Added isolated original exact/projected fixed/original ANN baselines, actual-set
+  quality, Selection choice seal/Evaluation gate and group-mean perfect-information
+  MILP/mixture accounting. Same caching optimization for exact original/projected;
+  no predictor, Tri or HNSW reconstruction. Earlier scientific files/hashes unchanged.
+- All371 offline tests pass (12 new tests); final log
+  `/private/tmp/step5-baseline-headroom-tests-20261026-final.log`,40.12s. Existing
+  output refusal, positive tiny input loading, remote subset export/closed-role
+  tripwires, original truth equality and oracle infeasibility are covered.
+- Server reached at the previously authorized endpoint in no-GPU0.5CPU/2GB mode.
+  It was used only for source-manifest checks and readonly file/subset retrieval.
+  The exported package contains exactly Selection256 and Evaluation512, original
+  top10/qrels, and four descriptors totaling5.510618GiB. Original protected roles
+  and unrelated historical files were not read. No server code/files were changed.
+- Local input root `/private/tmp/step5-baseline-headroom-input-20261026-v1` contains
+  request.json, export_readonly.py and observed.json. ID file is SHA-verified.
+  Initial SCP connection closed at541,824,000 bytes of original.faiss; that partial
+  file is retained. SFTP `reget` resumes it and then projected.npy/corpus.npy using
+  a reauthenticated keepalive connection. Cloud paths resolve to `/autodl-fs/data/`.
+  Transfer retry is input transport, not another experiment; no real run/reservation
+  has begun. Final complete-file SHA verification is mandatory before computation.
+- Pending: finish5.51GiB input download/verification, run the one new local CPU
+  comparison, preserve results and close SSH. The scientific source is ready;
+  no new quality, latency, oracle or positive/negative conclusion is claimed yet.
+  Computation is limited to45min/RSS8GiB and original data roles remain frozen;
+  formal_certification=false, no fresh independence claim.
+
 ## Current: local CPU reuse probe complete — shared backend gain, lazy overhead (2026-10-26)
 
 - User explicitly accepted the four-path proposal and requested the local CPU
