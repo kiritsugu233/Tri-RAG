@@ -9,13 +9,23 @@ The review backup `codex/repo-review-code-protection` remains untouched at
 
 ## Current state and next assignment
 
+The user-approved [local CPU reuse probe](docs/TLS_RAG_STEP5_REUSE_PROBE_RESULTS.md)
+is complete:1,008 synthetic timings and seven fresh-process memory checks on1M
+384->128 vectors. All1,924 checked prefixes match reference bitwise,359 tests pass.
+Caching and selecting once improves fixed256 from94.592ms to81.922ms locally;
+lazy reselect to256 costs100.500ms versus83.214ms for equally cached eager256.
+Preserve the shared backend optimization; no predictor/Tri training or new server
+experiment follows. Read the results/evidence for memory, noise and scope limits.
+The four-path L0 approval is recorded in the registry; existing sources stay frozen.
+
 The user-requested [scan/distance/candidate reuse audit](docs/TLS_RAG_STEP5_REUSE_AUDIT.md)
 is complete. Exact mechanism v1 already scans once and reuses prefixes/new-only
 original scores; ANN caches external candidate distances but restarts graph search.
 The previous full-rescan negative model is not the measured mechanism layout, and
 its cost bounds do not cover unmeasured lazy selection or resumable search.
 Review same-value distance caching/lazy selection before paid features or routing
-training. No new backend/probe was implemented; proposed L0 paths need scoped consent.
+training. Its subsequent four-path synthetic probe was approved and completed as above;
+the audit's original pending-proposal wording is historical.
 
 The user-authorized [actual action-cost screen](docs/TLS_RAG_STEP5_ACTION_COST_SCREEN.md)
 is complete on observed records. HNSW has real budget-dependent search work, but

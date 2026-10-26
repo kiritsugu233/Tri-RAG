@@ -1,5 +1,42 @@
 # Status
 
+## Current: local CPU reuse probe complete — shared backend gain, lazy overhead (2026-10-26)
+
+- User explicitly accepted the four-path proposal and requested the local CPU
+  distance-cache/lazy-selection benchmark without a predictor. Implemented only
+  that isolated namespace and [frozen contract](docs/TLS_RAG_STEP5_REUSE_PROBE_PROTOCOL.md).
+  [Results](docs/TLS_RAG_STEP5_REUSE_PROBE_RESULTS.md) and complete
+  [evidence](docs/step5_reuse_probe_evidence.json) are preserved.
+- Synthetic N=1M, original384/projected128 float64, normalized external queries,
+  fixed Gaussian55117, no projected renormalization, grid32/64/128/256. Mac15,3
+  16GiB, Python3.9.6/NumPy1.26.4, one numerical thread; no SSH/GPU/real-data roles.
+- 1,008 randomized/interleaved complete timing samples (12 queries x3 repeats x28
+  cases), plus28 warmups;1,036 calls/1,924 prefixes match exact candidate and
+  distance bits, original-score bits, context and reranking. All359 tests pass,
+  including8 new boundary/equality/isolation/count regressions.
+- Fixed256 benefits from caching/global selection:94.592->81.922ms (13.39% locally).
+  The same optimization goes to fixed and adaptive controls. At endpoints64/128/256,
+  lazy reselect costs87.722/93.176/100.500ms versus81.624/82.342/83.214ms for cached
+  eager256. At32 there is no clear lazy advantage; identical one-step paths show
+  sample noise. No predictor/quality constraint was evaluated by these schedules.
+- The remaining full scan is about75ms; repeated selection is still expensive.
+  Reusing row-partition suffixes also loses: nearly all N rows remain in each
+  suffix. Newly allocated peak: original16.21MiB, distance cache23.76MiB, cache plus
+  row partition30.53--30.58MiB. This includes temporaries;8MB is only the distance
+  array. Seven independent memory workers retain absolute RSS and calibrated
+  NumPy tracing; highwater deltas and shared input exclusions are documented.
+- Exact test/profiler commands are in the results. Test log:
+  `/private/tmp/step5-reuse-probe-tests-20261026.log` (39.20s); full probe:
+  `/private/tmp/step5-reuse-probe-20261026-v1/receipt.json` (142.30s, about3.8GiB inputs).
+  Corpus generation/hashes/common setup and correctness checks are outside per-call
+  latency, identically for all paths; no server/cold-I/O speedup is inferred.
+- Preserve the cache/one-selection implementation and negative lazy results;
+  do not proceed automatically to predictor/Tri fitting or another real run.
+  Earlier scientific implementations, dependency pins, artifacts and bindings are
+  unchanged. Approval records the real user consent; only new L0 rows/hashes and
+  routine L1 receipts were added. Protection/diff/source-receipt checks pass;
+  formal_certification=false and no independence claim.
+
 ## Current: scan/distance/candidate reuse audit complete (2026-10-26)
 
 - User asked to check reuse before judging predictor economics. Completed a

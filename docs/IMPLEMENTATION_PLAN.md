@@ -1,5 +1,23 @@
 # Implementation Plan
 
+## Approved local reuse probe completed (2026-10-26)
+
+User explicitly accepted the local CPU distance-cache/lazy-selection scope;
+see [protocol](TLS_RAG_STEP5_REUSE_PROBE_PROTOCOL.md) and
+[actual results](TLS_RAG_STEP5_REUSE_PROBE_RESULTS.md).
+
+- [x] Add only the four approved implementation/test/profiler/protocol paths;
+  record real approval and new L0 hashes without changing any earlier registry row.
+- [x] Compare two lazy selectors and equally optimized fixed/eager controls on
+  one million synthetic384->128 vectors, no predictor/Tri, no SSH/GPU or real roles.
+- [x] 1,008 complete timing samples,1,924 exact prefix checks, seven separate memory
+  workers, calibrated NumPy allocation tracing, paired query-block intervals.
+- [x] All359 offline tests pass; preserve raw inputs/receipts and versioned evidence.
+- [x] Shared caching/one-selection speedup is real locally; lazy expansion loses
+  after32 under the equally cached eager comparator. Record full memory and noise.
+- [ ] No routing/feature study follows automatically: first identify a further
+  action that actually avoids work and re-establish fair paid cost space.
+
 ## Reuse audit before predictor economics (2026-10-26)
 
 User requested checking reuse of the first scan, distances and candidates before
@@ -12,7 +30,7 @@ continuing this direction. See the [read-only audit](TLS_RAG_STEP5_REUSE_AUDIT.m
   original evidence. Derive the10.850679us duplicate-pilot charge in the old model.
 - [x] Specify the same-value lazy-distance layout, memory/write/selection costs,
   fair fixed controls and future scoped L0 paths; no new implementation or run.
-- [ ] If separately approved, run the local synthetic CPU reuse probe first.
+- [x] Subsequently explicitly approved and completed the local synthetic CPU probe.
 - [ ] Only with measured positive complete-cost space, consider real-input validation
   and paid predictor/Tri studies. No new data role or protocol is authorized here.
 

@@ -1364,6 +1364,39 @@
       "path": "docs/TLS_RAG_STEP5_REUSE_AUDIT.md",
       "level": "L1",
       "reason": "User-requested read-only scan/distance/candidate reuse audit and scope clarification; proposed implementations remain subject to L0 approval"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_reuse_probe.py",
+      "level": "L0",
+      "reason": "Approved isolated exact-distance cache and lazy stable selection; scientific geometry and query-bound cache contract",
+      "sha256": "c58bf0ababa16a2a9e309b196ca4576a970e1076cb372ca5a546cc60f2c7735e"
+    },
+    {
+      "path": "tests/test_tls_rag_step5_reuse_probe.py",
+      "level": "L0",
+      "reason": "Approved offline exact-equality, ties, distance-count and query-isolation regressions for reuse probe",
+      "sha256": "8a741d9762b7e69452c9053223cd39fb57eeb894f0a09e259736944829a73e22"
+    },
+    {
+      "path": "scripts/profile_tls_rag_step5_reuse_probe.py",
+      "level": "L1",
+      "reason": "Approved local synthetic CPU timing/memory orchestration; inherits frozen reuse probe protocol"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP5_REUSE_PROBE_PROTOCOL.md",
+      "level": "L0",
+      "reason": "Approved local synthetic reuse probe input, fairness, timing and memory contract",
+      "sha256": "7d3912ec9e927e562d56ecd22a88978434652ef0b392d10b2407eb52af7dfba0"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP5_REUSE_PROBE_RESULTS.md",
+      "level": "L1",
+      "reason": "Actual authorized local synthetic CPU reuse probe results and measured limitations; no new scientific settings or follow-on run authorization"
+    },
+    {
+      "path": "docs/step5_reuse_probe_evidence.json",
+      "level": "L1",
+      "reason": "Preserved complete timing/memory/equality receipts from the approved synthetic CPU probe; earlier artifacts and source bindings remain unchanged"
     }
   ],
   "approved_change_history": [
@@ -1743,5 +1776,17 @@
     ],
     "plan": "docs/IMPLEMENTATION_PLAN.md: small mechanism study approved 2026-10-24, hardware condition released 2026-10-25",
     "limits": "Only approved new namespace, scoped register append, L1 current status; old scientific hashes/bindings and cert/latency/test files unchanged. A then B, one run, no automatic retry or new ANN experiment."
+  },
+  "reuse_probe_v1_authorization": {
+    "date": "2026-10-26",
+    "user_consent": "你的意思，之前的697.8ms是没有复用的情况吗，如果是的话，那就先做本地CPU的距离缓存＋延迟选取基准，暂不接预测器。检查结果一致性、完整耗时和内存，并给固定策略相同优化。100万条距离数组本体约8MB/查询，额外索引、写入和重复选取成本都要计入。这个验证不需要A800。",
+    "proposal": "docs/TLS_RAG_STEP5_REUSE_AUDIT.md: four scoped paths and synthetic CPU validation; user explicitly accepted the recommended probe",
+    "scope": [
+      "mechanism/tls_rag_step5_reuse_probe.py",
+      "tests/test_tls_rag_step5_reuse_probe.py",
+      "scripts/profile_tls_rag_step5_reuse_probe.py",
+      "docs/TLS_RAG_STEP5_REUSE_PROBE_PROTOCOL.md"
+    ],
+    "limits": "Local synthetic CPU only, no predictor/Tri, no changes to existing scientific implementations or dependency pins, no SSH/GPU/real-data roles. New probe scientific contract only; routine L1 receipts/status permitted."
   }
 }
