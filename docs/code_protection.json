@@ -1359,6 +1359,11 @@
       "path": "docs/step5_action_cost_screen_evidence.json",
       "level": "L1",
       "reason": "Read-only oracle cost-space receipts from already-observed development data; no independent evaluation or measured new-pipeline claim"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP5_REUSE_AUDIT.md",
+      "level": "L1",
+      "reason": "User-requested read-only scan/distance/candidate reuse audit and scope clarification; proposed implementations remain subject to L0 approval"
     }
   ],
   "approved_change_history": [

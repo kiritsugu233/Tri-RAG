@@ -9,10 +9,19 @@ The review backup `codex/repo-review-code-protection` remains untouched at
 
 ## Current state and next assignment
 
+The user-requested [scan/distance/candidate reuse audit](docs/TLS_RAG_STEP5_REUSE_AUDIT.md)
+is complete. Exact mechanism v1 already scans once and reuses prefixes/new-only
+original scores; ANN caches external candidate distances but restarts graph search.
+The previous full-rescan negative model is not the measured mechanism layout, and
+its cost bounds do not cover unmeasured lazy selection or resumable search.
+Review same-value distance caching/lazy selection before paid features or routing
+training. No new backend/probe was implemented; proposed L0 paths need scoped consent.
+
 The user-authorized [actual action-cost screen](docs/TLS_RAG_STEP5_ACTION_COST_SCREEN.md)
 is complete on observed records. HNSW has real budget-dependent search work, but
 the free perfect pilot+restart oracle leaves only.088064ms/query against a
-query-independent mixture at the .90 target; paid-feature headroom is unestablished.
+query-independent mixture at the .90 target in that complete-call cost model;
+paid-feature headroom is unestablished.
 Matching original ANN quality and exact pilot+rescan are unfavorable even in the
 reviewed optimistic models. No new routing fit or Tri ablation was started.
 

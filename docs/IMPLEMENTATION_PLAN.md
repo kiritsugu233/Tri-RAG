@@ -1,5 +1,21 @@
 # Implementation Plan
 
+## Reuse audit before predictor economics (2026-10-26)
+
+User requested checking reuse of the first scan, distances and candidates before
+continuing this direction. See the [read-only audit](TLS_RAG_STEP5_REUSE_AUDIT.md).
+
+- [x] Verify exact one-scan prefix reuse and new-only original scoring already exist.
+- [x] Separate ANN external distance/candidate caches from missing graph continuation;
+  inspect the pinned FAISS1.8.0 implementation rather than assume a resume switch.
+- [x] Limit earlier rescan/restart cost conclusions to their actual models; preserve
+  original evidence. Derive the10.850679us duplicate-pilot charge in the old model.
+- [x] Specify the same-value lazy-distance layout, memory/write/selection costs,
+  fair fixed controls and future scoped L0 paths; no new implementation or run.
+- [ ] If separately approved, run the local synthetic CPU reuse probe first.
+- [ ] Only with measured positive complete-cost space, consider real-input validation
+  and paid predictor/Tri studies. No new data role or protocol is authorized here.
+
 ## Ordered action-cost screen checkpoint (2026-10-26)
 
 User authorized “按你建议的推荐顺序进行吧”. Completed the first recommended screen;

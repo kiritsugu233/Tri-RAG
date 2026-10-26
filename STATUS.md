@@ -1,5 +1,32 @@
 # Status
 
+## Current: scan/distance/candidate reuse audit complete (2026-10-26)
+
+- User asked to check reuse before judging predictor economics. Completed a
+  read-only [reuse audit](docs/TLS_RAG_STEP5_REUSE_AUDIT.md) of the frozen exact/ANN
+  implementations, existing cost receipts and FAISS v1.8.0 primary sources.
+- Exact mechanism already performs one full scan to maximum256, slices cached
+  prefixes and scores only new original candidates. ANN caches host projected
+  distances and new-only original scores; its graph search restarts at each expansion.
+  Returned top-k candidates do not preserve the graph frontier/visited state.
+- Clarification:697.800156ms was a modeled full-rescan action, not the mechanism's
+  measured execution layout. The prior88us headroom is specific to complete-call
+  restart accounting, not a bound on all reuse backends. Holding the old call
+  costs/qualities fixed, removing all duplicated pilot charges adds10.850679us
+  of mean headroom (88.064200->98.914880us); no new speedup was measured.
+- Candidate next step: exact one-scan full-distance caching with lazy stable
+  selection, against equally optimized fixed controls. One million float64
+  distances require8,000,000 bytes/query before indices/scratch/concurrency;
+  write/partition costs and information isolation must be checked. The existing
+  full scan remains unavoidable for this exact backend without valid pruning.
+- No backend, benchmark or policy was changed/run; no SSH, retrieval, fitting or
+  protected-role access. Scoped future L0 paths and validation goals are proposed
+  in the audit, not approved. Original evidence remains unchanged; formal
+  certification=false and no independence claim. Only one new L1 review row added.
+- Validation: protection/inventory and diff checks pass; prior registry entries
+  and governance metadata are unchanged. Verified the existing selection-component
+  table and the11/2048 pilot-charge arithmetic directly from saved receipts.
+
 ## Current: actual action-cost screen complete — paid headroom unestablished (2026-10-26)
 
 - User requested “按你建议的推荐顺序进行吧”. Executed the first action/cost screen
