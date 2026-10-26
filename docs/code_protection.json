@@ -1334,6 +1334,16 @@
       "path": "scripts/run_tls_rag_step5_mechanism.sh",
       "level": "L1",
       "reason": "Approved mechanism launcher; scientific semantics inherit L0"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP5_COST_AWARE_REVIEW.md",
+      "level": "L1",
+      "reason": "User-authorized planning-only cost-aware strategy review; no executable protocol or protected implementation approval"
+    },
+    {
+      "path": "docs/step5_tri_feature_cost_review_evidence.json",
+      "level": "L1",
+      "reason": "Preserved synthetic profiling receipts and read-only development cost audit; scientific claims and approval changes inherit L0"
     }
   ],
   "approved_change_history": [

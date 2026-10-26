@@ -1,6 +1,6 @@
 # Query-Adaptive Tri-RAG: current entry
 
-Updated 2026-10-25. Local checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
+Updated 2026-10-26. Local checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 Continue all Step 5 work and synchronization on `codex/tls-rag-step5-ann`.
 The user explicitly authorized this new branch and redundant-branch cleanup;
 do not create another branch for subsequent Step 5 version updates.
@@ -8,6 +8,13 @@ The review backup `codex/repo-review-code-protection` remains untouched at
 `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current state and next assignment
+
+The user-requested [cost-aware strategy review](docs/TLS_RAG_STEP5_COST_AWARE_REVIEW.md)
+is complete; local profiling/diagnosis evidence is now versioned. The unchanged
+maximum256-first layout has no positive acceleration headroom in the reviewed
+Selection component-cost model, even with free features/decisions/reranking.
+Review an action that avoids actual work before proposing router training.
+The review is not approval to edit L0 sources or start another real-data run.
 
 The authorized [mechanism A/B study](docs/TLS_RAG_STEP5_MECHANISM_PROTOCOL.md) is
 complete: triplet features improve prediction MAE by5.68%, but the selected policy

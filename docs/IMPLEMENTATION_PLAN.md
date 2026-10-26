@@ -1,5 +1,27 @@
 # Implementation Plan
 
+## Cost-aware strategy review checkpoint (2026-10-26)
+
+Authorization: “保留这次已验证的性能优化思路，再评审成本感知的预算策略。”
+The [review](TLS_RAG_STEP5_COST_AWARE_REVIEW.md) is planning-only, not a new
+executable scientific protocol or protected-source implementation approval.
+
+- [x] Preserve the original local profile and diagnosis receipts in the versioned
+  `docs/step5_tri_feature_cost_review_evidence.json`; retain the exact batching idea.
+- [x] Verify the source manifests and recompute Selection256 component means.
+- [x] Identify the maximum256-first layout cost problem: optimistic mandatory
+  projection/scan/selection629.546788ms versus eligible fixed64 complete623.956410ms.
+- [x] Review quality-constrained real-cost objectives, one-shot gain/cost actions,
+  feature information value and comparator fairness; do not interpret count gaps as latency.
+- [x] Specify stop/continue screens, observed-data limitations and exact proposed
+  L0 integration paths; no scientific implementation or new experiment performed.
+- [ ] Before controller training, review an action/layout that actually avoids
+  work and show positive complete-cost headroom against equally optimized baselines.
+- [ ] If approved separately, validate the same-value batch path on allowed real
+  inputs and measure server CPU costs; local synthetic speed ratios are insufficient.
+- [ ] Only after a positive cost screen, freeze a new learning/evaluation protocol
+  with suitable unobserved queries. Original certification/test roles remain closed.
+
 ## Local feature optimization probe (2026-10-25)
 
 User authorized “可以，你先这么试一下，然后告诉我结果，如果需要A800的环境先告诉我，

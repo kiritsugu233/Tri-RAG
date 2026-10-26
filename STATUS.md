@@ -1,5 +1,36 @@
 # Status
 
+## Current: cost-aware strategy review — gate on real work first (2026-10-26)
+
+- User requested “保留这次已验证的性能优化思路，再评审成本感知的预算策略。”
+  Completed a planning-only [review](docs/TLS_RAG_STEP5_COST_AWARE_REVIEW.md).
+  Preserved the original synthetic profiling and policy-diagnosis receipts in
+  [versioned evidence](docs/step5_tri_feature_cost_review_evidence.json), including
+  raw local timing samples, seeds, environment and source hashes. This preserves
+  the numerical batching design; no batch implementation was installed in frozen sources.
+- Review finding: current adaptive exact retrieval extracts maximum256 before
+  deciding M. In the same already-open Selection256 fixed timing records,
+  projection+scan/selection at256 averages **629.546788 ms**, versus **623.956410 ms**
+  for the quality-eligible fixed64 complete call: **+5.590378 ms** even when the
+  component model grants free features, decisions and reranking to the adaptive path.
+  This holds observed component costs fixed; it is not a universal hardware bound
+  or a newly measured adaptive pipeline. It gives no acceleration support for
+  training another router on the unchanged maximum-first layout.
+- Retain the local about7.6x T-block result and the27.03% candidate-count oracle gap
+  with their existing limitations. Neither establishes full-pipeline latency headroom.
+  Recommended order: review a budget action that avoids real work and its optimized
+  fixed baseline; pass an end-to-end cost-space screen; only then propose gain/cost
+  learning and optional Tri gating. One-shot complete actions are preferred over
+  unvalidated greedy multi-stage rules for an initial design.
+- The review specifies global quality constraints, full pilot/feature/expansion
+  accounting, free versus charged oracle interpretations, geometry-matched feature
+  controls, independent-evaluation requirements and proposed exact L0 paths for
+  a future same-value batch integration. Those paths/settings are proposals, not
+  implementation approval. No retrieval, fit, threshold tuning, SSH/A800 or
+  protected-role access occurred; formal_certification remains false.
+- Added only two L1 documentation/evidence registry entries. Existing entries,
+  protection hashes, source files, old results and governance are unchanged.
+
 ## Current: local Tri feature profiling — lower overhead is feasible (2026-10-25)
 
 - User authorized a local optimization trial: “可以，你先这么试一下，然后告诉我结果，
