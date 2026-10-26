@@ -1,5 +1,38 @@
 # Status
 
+## Current: actual action-cost screen complete — paid headroom unestablished (2026-10-26)
+
+- User requested “按你建议的推荐顺序进行吧”. Executed the first action/cost screen
+  using existing observed records, with a new L1 read-only analyzer; no retrieval,
+  HNSW build, fit, threshold tuning, SSH or protected-role access. See
+  [screen](docs/TLS_RAG_STEP5_ACTION_COST_SCREEN.md) and
+  [evidence](docs/step5_action_cost_screen_evidence.json).
+- HNSW request size changes real efSearch=max(256,2*M), so stopping can avoid
+  later graph work. Two complete calls are charged for the reviewed pilot-then-
+  fresh-replacement action. It is not frozen persistent membership; existing
+  standalone-call quality is used directly, without truncating larger ANN calls.
+- On old Tune2048 at retention>=.90 /Hit delta>=-.02, the strongest query-independent
+  mixture costs **2.132357 ms**. A perfect-information, free-feature pilot+restart
+  oracle costs **2.044292 ms**, leaving only **.088064 ms/query (4.130%)** for all
+  additional work and allocation inefficiency. Free before-search routing costs
+  2.033442ms (4.639% headroom). These are complete-call mean-cost models, not new
+  measured pipelines or certified speedups. Paid-feature feasibility is unmeasured,
+  not a reported pass or failure. At a proposed5% benefit sensitivity even free
+  routing is insufficient;5% is not a newly imposed frozen threshold.
+- Matching original ANN64's actual retention=.9958984375 /Hit=.76220703125 instead
+  costs9.798771ms even for the before-search oracle, versus2.269398ms original.
+  This is a separate quality sensitivity, not a replacement of the .90 target.
+- Within exact Selection256, free before-search routing620.258202ms versus the
+  query-independent mixture623.086876ms leaves only.454%; pilot then full rescan
+  costs697.800156ms even with free decisions. Different workloads/timing conditions
+  are not mixed. A new lazy-distance layout remains unmeasured, not ruled out.
+- Six oracle problems reached zero MIP gap. Hand-calculated accounting/error
+  self-checks pass. All actions use their workload mean cost to avoid selecting
+  incidental per-query timing noise. Source packet/trajectory hashes verified.
+- Following the ordered cost gate, do not proceed to new router training or Tri
+  ablations without positive paid headroom. Existing exact batch optimization
+  remains preserved. No formal certification or independence claim is made.
+
 ## Current: cost-aware strategy review — gate on real work first (2026-10-26)
 
 - User requested “保留这次已验证的性能优化思路，再评审成本感知的预算策略。”

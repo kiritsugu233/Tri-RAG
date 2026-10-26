@@ -1,5 +1,24 @@
 # Implementation Plan
 
+## Ordered action-cost screen checkpoint (2026-10-26)
+
+User authorized “按你建议的推荐顺序进行吧”. Completed the first recommended screen;
+its result is in [the action-cost diagnosis](TLS_RAG_STEP5_ACTION_COST_SCREEN.md).
+
+- [x] Identify actual search work: existing HNSW request/efSearch linkage and
+  restart accounting; preserve the exact maximum-first layout's sunk-cost finding.
+- [x] Analyze actual complete-call actions with original ANN and query-independent
+  mixtures as controls; never select favorable per-query timing noise.
+- [x] Six true-outcome integer oracles solved optimally; verify pilot charges,
+  scored-vector counts and infeasible/nonfinite input handling with hand fixtures.
+- [x] Record the narrow ANN .90-target headroom (.088064ms/query before all extra
+  costs), original-quality negative result and exact-rescan negative result.
+- [x] Preserve the receipts and scientific/protected inputs; no retrieval or fit.
+- [ ] Paid-feature headroom: unestablished. Only if separately pursued, measure
+  actual CPU costs and check the narrow budget; no A800 GPU is needed for the analyzer.
+- [ ] Router learning and Tri ablations: not entered because the required positive
+  paid cost-space evidence is absent. Do not treat unknown cost as a measured failure.
+
 ## Cost-aware strategy review checkpoint (2026-10-26)
 
 Authorization: “保留这次已验证的性能优化思路，再评审成本感知的预算策略。”

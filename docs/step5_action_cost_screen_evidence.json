@@ -1,0 +1,350 @@
+{
+  "schema": "step5_action_cost_screen_v1",
+  "date": "2026-10-26",
+  "scope": "Observed development data only; no new retrieval, fitting, deployed policy or certification.",
+  "formal_certification": false,
+  "independent_evaluation": false,
+  "router_fitted": false,
+  "cost_model": "Mean of real complete calls at each action. All methods pay the same mean for an action; no cherry-picking query-level timing noise.",
+  "restart_definition": "A full pilot call, then a full fresh call if selected, returning the fresh result. Two real search requests and both scoring costs are charged. No persistent-union quality is inferred.",
+  "free_before_search_definition": "Perfect knowledge selects one real action before any search; no pilot or features. Strictly optimistic information/cost model, not a proposed deployable Tri policy.",
+  "required_improvement_sensitivity": [
+    0.0,
+    0.05,
+    0.1
+  ],
+  "source_hashes": {
+    "legacy": {
+      "tune_compact.jsonl.gz": "f9942afa79b3a7bec1de0650831bbd1afb2fea736275304b6ff8fcc2194fc62e"
+    },
+    "exact": {
+      "selection_fixed_timing.jsonl": "c173e2da01ec81659adb866bbd660a012fdee990562cc2fa276a9da912dfc029",
+      "selection.json": "8f1ba365a75cfd245283ac3ac97f7edfd60e153fea2e1821da3a2b25f31c2d30",
+      "selection.jsonl": "0ec9856f37819010de0bed4d758d48b6be142498077e54a45d007ee833a329bd"
+    }
+  },
+  "source_code_sha256": {
+    "scripts/analyze_tls_rag_step5_action_costs.py": "0d2a3eb29d16f18f507c6732b9cf9b51f1edcd9bb5d183ab8ae003ecdf64f813",
+    "src/tri_rag_harness/tls_rag_step5_ann.py": "e1ac22c999dcc2cf94924c0046751d699b2110d68c39a1ab5e2f1c5758ef8469",
+    "src/tri_rag_harness/tls_rag_step5_benchmark.py": "63af012180ec2e9717fa5fe977c726b7740ae25f11f97eca42484b28d6dc2c2e",
+    "mechanism/tls_rag_step5_exact_policy.py": "2a796a464cd59d30eb34def49ca847497801ae8a82cb29b1ce90393b5720c265"
+  },
+  "scenarios": [
+    {
+      "name": "ANN_existing_quality_target",
+      "queries": 2048,
+      "quality_target": {
+        "retention": 0.9,
+        "hit": 0.743671875
+      },
+      "budgets": [
+        64,
+        256,
+        1024,
+        4096
+      ],
+      "single_call_action_mean_ms": [
+        2.0201992210786557,
+        4.485729950829409,
+        17.51669076293183,
+        88.96430922868603
+      ],
+      "controls": {
+        "eligible_fixed": {
+          "M": 256,
+          "model_mean_ms": 4.485729950829409
+        },
+        "query_independent_mixture": {
+          "feasible": true,
+          "model_mean_ms": 2.1323566974123187,
+          "weights": [
+            0.9545098039216079,
+            0.04549019607839211,
+            0.0,
+            0.0
+          ],
+          "expected_retention": 0.9,
+          "expected_hit": 0.7565253523284312
+        },
+        "original_ANN64": {
+          "retention": 0.9958984375,
+          "hit": 0.76220703125,
+          "model_mean_ms": 2.269397527925321
+        }
+      },
+      "strongest_control": "query_independent_mixture",
+      "oracles": {
+        "free_before_search": {
+          "optimal": true,
+          "mip_gap": 0.0,
+          "model_mean_ms": 2.033441817771653,
+          "mean_final_M": 65.03125,
+          "mean_charged_original_scores": 65.03125,
+          "retention": 0.9,
+          "hit": 0.7568359375,
+          "budget_histogram": {
+            "64": 2037,
+            "256": 11,
+            "1024": 0,
+            "4096": 0
+          },
+          "expanded_queries": null,
+          "action_costs_ms": [
+            2.0201992210786557,
+            4.485729950829409,
+            17.51669076293183,
+            88.96430922868603
+          ],
+          "gross_headroom_ms": 0.09891487964066581,
+          "gross_saving_fraction": 0.046387585979729425,
+          "extra_cost_budget_ms": {
+            "0.0": 0.09891487964066581,
+            "0.05": -0.007702955229950348,
+            "0.1": -0.11432079010056606
+          }
+        },
+        "pilot_then_fresh_restart": {
+          "optimal": true,
+          "mip_gap": 0.0,
+          "model_mean_ms": 2.0442924971817433,
+          "mean_final_M": 65.03125,
+          "mean_charged_original_scores": 65.375,
+          "retention": 0.9,
+          "hit": 0.7568359375,
+          "budget_histogram": {
+            "64": 2037,
+            "256": 11,
+            "1024": 0,
+            "4096": 0
+          },
+          "expanded_queries": 11,
+          "action_costs_ms": [
+            2.0201992210786557,
+            6.505929171908065,
+            19.536889984010486,
+            90.98450844976469
+          ],
+          "gross_headroom_ms": 0.08806420023057537,
+          "gross_saving_fraction": 0.0412990004615288,
+          "extra_cost_budget_ms": {
+            "0.0": 0.08806420023057537,
+            "0.05": -0.018553634640040784,
+            "0.1": -0.1251714695106565
+          }
+        }
+      }
+    },
+    {
+      "name": "ANN_match_original64_quality",
+      "queries": 2048,
+      "quality_target": {
+        "retention": 0.9958984375,
+        "hit": 0.76220703125
+      },
+      "budgets": [
+        64,
+        256,
+        1024,
+        4096
+      ],
+      "single_call_action_mean_ms": [
+        2.0201992210786557,
+        4.485729950829409,
+        17.51669076293183,
+        88.96430922868603
+      ],
+      "controls": {
+        "eligible_fixed": {
+          "M": 4096,
+          "model_mean_ms": 88.96430922868603
+        },
+        "query_independent_mixture": {
+          "feasible": true,
+          "model_mean_ms": 78.75750659071673,
+          "weights": [
+            0.0,
+            0.0,
+            0.14285714285720474,
+            0.8571428571427953
+          ],
+          "expected_retention": 0.9958984375,
+          "expected_hit": 0.763392857142857
+        },
+        "original_ANN64": {
+          "retention": 0.9958984375,
+          "hit": 0.76220703125,
+          "model_mean_ms": 2.269397527925321
+        }
+      },
+      "strongest_control": "original_ANN64",
+      "oracles": {
+        "free_before_search": {
+          "optimal": true,
+          "mip_gap": 0.0,
+          "model_mean_ms": 9.798770772269094,
+          "mean_final_M": 471.625,
+          "mean_charged_original_scores": 471.625,
+          "retention": 0.9958984375,
+          "hit": 0.76318359375,
+          "budget_histogram": {
+            "64": 1228,
+            "256": 438,
+            "1024": 257,
+            "4096": 125
+          },
+          "expanded_queries": null,
+          "action_costs_ms": [
+            2.0201992210786557,
+            4.485729950829409,
+            17.51669076293183,
+            88.96430922868603
+          ],
+          "gross_headroom_ms": -7.529373244343773,
+          "gross_saving_fraction": -3.317785073656581,
+          "extra_cost_budget_ms": {
+            "0.0": -7.529373244343773,
+            "0.05": -7.642843120740039,
+            "0.1": -7.756312997136305
+          }
+        },
+        "pilot_then_fresh_restart": {
+          "optimal": true,
+          "mip_gap": 0.0,
+          "model_mean_ms": 10.60763960102129,
+          "mean_final_M": 471.625,
+          "mean_charged_original_scores": 497.25,
+          "retention": 0.9958984375,
+          "hit": 0.76318359375,
+          "budget_histogram": {
+            "64": 1228,
+            "256": 438,
+            "1024": 257,
+            "4096": 125
+          },
+          "expanded_queries": 820,
+          "action_costs_ms": [
+            2.0201992210786557,
+            6.505929171908065,
+            19.536889984010486,
+            90.98450844976469
+          ],
+          "gross_headroom_ms": -8.33824207309597,
+          "gross_saving_fraction": -3.6742095514304958,
+          "extra_cost_budget_ms": {
+            "0.0": -8.33824207309597,
+            "0.05": -8.451711949492235,
+            "0.1": -8.565181825888502
+          }
+        }
+      }
+    },
+    {
+      "name": "Exact_existing_quality_target",
+      "queries": 256,
+      "quality_target": {
+        "retention": 0.9,
+        "hit": 0.6909375
+      },
+      "budgets": [
+        32,
+        64,
+        128,
+        256
+      ],
+      "single_call_action_mean_ms": [
+        619.1861648403574,
+        623.956409850507,
+        626.5696545597166,
+        630.6365986092715
+      ],
+      "controls": {
+        "eligible_fixed": {
+          "M": 64,
+          "model_mean_ms": 623.956409850507
+        },
+        "query_independent_mixture": {
+          "feasible": true,
+          "model_mean_ms": 623.0868763902075,
+          "weights": [
+            0.47169811320755406,
+            0.0,
+            0.5283018867924459,
+            0.0
+          ],
+          "expected_retention": 0.9000000000000001,
+          "expected_hit": 0.69921875
+        }
+      },
+      "strongest_control": "query_independent_mixture",
+      "oracles": {
+        "free_before_search": {
+          "optimal": true,
+          "mip_gap": 0.0,
+          "model_mean_ms": 620.2582018438534,
+          "mean_final_M": 43.125,
+          "mean_charged_original_scores": 43.125,
+          "retention": 0.9000000000000001,
+          "hit": 0.703125,
+          "budget_histogram": {
+            "32": 209,
+            "64": 34,
+            "128": 9,
+            "256": 4
+          },
+          "expanded_queries": null,
+          "action_costs_ms": [
+            619.1861648403574,
+            623.956409850507,
+            626.5696545597166,
+            630.6365986092715
+          ],
+          "gross_headroom_ms": 2.8286745463541365,
+          "gross_saving_fraction": 0.004539775516925961,
+          "extra_cost_budget_ms": {
+            "0.0": 2.8286745463541365,
+            "0.05": -28.325669273156223,
+            "0.1": -59.48001309266658
+          }
+        },
+        "pilot_then_fresh_restart": {
+          "optimal": true,
+          "mip_gap": 0.0,
+          "model_mean_ms": 697.8001562158056,
+          "mean_final_M": 53.5,
+          "mean_charged_original_scores": 57.5,
+          "retention": 0.9,
+          "hit": 0.70703125,
+          "budget_histogram": {
+            "32": 224,
+            "64": 4,
+            "128": 7,
+            "256": 21
+          },
+          "expanded_queries": 32,
+          "action_costs_ms": [
+            619.1861648403574,
+            1243.1425746908644,
+            1245.755819400074,
+            1249.8227634496288
+          ],
+          "gross_headroom_ms": -74.71327982559808,
+          "gross_saving_fraction": -0.11990828671989066,
+          "extra_cost_budget_ms": {
+            "0.0": -74.71327982559808,
+            "0.05": -105.86762364510844,
+            "0.1": -137.0219674646188
+          }
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Scenarios use different development populations and timing conditions; do not compare their absolute milliseconds across scenarios.",
+    "All quality records have already been observed; formal_certification=false and no independent generalization claim.",
+    "Summed mean-call costs are a model, not newly measured restart-pipeline latency.",
+    "New feature, controller and data preparation costs must fit inside the remaining headroom.",
+    "Mixture quality is expected quality on the empirical workload, not a newly executed randomized policy.",
+    "5% and10% are reported sensitivities, not approved new acceptance thresholds.",
+    "The fresh-replacement action differs from frozen persistent membership; implementation needs separate scoped approval."
+  ]
+}

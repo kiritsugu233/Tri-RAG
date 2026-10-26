@@ -9,6 +9,13 @@ The review backup `codex/repo-review-code-protection` remains untouched at
 
 ## Current state and next assignment
 
+The user-authorized [actual action-cost screen](docs/TLS_RAG_STEP5_ACTION_COST_SCREEN.md)
+is complete on observed records. HNSW has real budget-dependent search work, but
+the free perfect pilot+restart oracle leaves only.088064ms/query against a
+query-independent mixture at the .90 target; paid-feature headroom is unestablished.
+Matching original ANN quality and exact pilot+rescan are unfavorable even in the
+reviewed optimistic models. No new routing fit or Tri ablation was started.
+
 The user-requested [cost-aware strategy review](docs/TLS_RAG_STEP5_COST_AWARE_REVIEW.md)
 is complete; local profiling/diagnosis evidence is now versioned. The unchanged
 maximum256-first layout has no positive acceleration headroom in the reviewed

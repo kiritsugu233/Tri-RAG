@@ -1344,6 +1344,21 @@
       "path": "docs/step5_tri_feature_cost_review_evidence.json",
       "level": "L1",
       "reason": "Preserved synthetic profiling receipts and read-only development cost audit; scientific claims and approval changes inherit L0"
+    },
+    {
+      "path": "scripts/analyze_tls_rag_step5_action_costs.py",
+      "level": "L1",
+      "reason": "Read-only cost-space diagnostics using observed development records and existing actual calls; non-deployable oracle only, no retrieval or scientific contract changes"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP5_ACTION_COST_SCREEN.md",
+      "level": "L1",
+      "reason": "User-authorized action feasibility screen and follow-up scope proposal; not a frozen protocol or implementation approval"
+    },
+    {
+      "path": "docs/step5_action_cost_screen_evidence.json",
+      "level": "L1",
+      "reason": "Read-only oracle cost-space receipts from already-observed development data; no independent evaluation or measured new-pipeline claim"
     }
   ],
   "approved_change_history": [
