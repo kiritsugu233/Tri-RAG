@@ -1,6 +1,6 @@
 # Status
 
-## Current: real baseline/headroom implementation ready; input transfer pending (2026-10-26)
+## Current: real baseline/headroom comparison complete — little controller headroom (2026-10-26)
 
 - User authorized “可以，先补齐1，2步吧” and explicitly approved the four precise
   paths/read-only SSH retrieval with “批准上述范围，稍后无卡启动服务器”.
@@ -18,19 +18,40 @@
   It was used only for source-manifest checks and readonly file/subset retrieval.
   The exported package contains exactly Selection256 and Evaluation512, original
   top10/qrels, and four descriptors totaling5.510618GiB. Original protected roles
-  and unrelated historical files were not read. No server code/files were changed.
+  and unrelated historical files were not read. Server code and scientific files
+  were unchanged.
 - Local input root `/private/tmp/step5-baseline-headroom-input-20261026-v1` contains
   request.json, export_readonly.py and observed.json. ID file is SHA-verified.
-  Initial SCP connection closed at541,824,000 bytes of original.faiss; that partial
-  file is retained. SFTP `reget` resumes it and then projected.npy/corpus.npy using
-  a reauthenticated keepalive connection. Cloud paths resolve to `/autodl-fs/data/`.
-  Transfer retry is input transport, not another experiment; no real run/reservation
-  has begun. Final complete-file SHA verification is mandatory before computation.
-- Pending: finish5.51GiB input download/verification, run the one new local CPU
-  comparison, preserve results and close SSH. The scientific source is ready;
-  no new quality, latency, oracle or positive/negative conclusion is claimed yet.
-  Computation is limited to45min/RSS8GiB and original data roles remain frozen;
-  formal_certification=false, no fresh independence claim.
+  Initial SCP connection closed at541,824,000 bytes of original.faiss; SFTP `reget`
+  resumed it. All four complete files now match their sealed SHA; verification is
+  in download_verified.json. Cloud paths resolve to `/autodl-fs/data/`. Transfer
+  recovery was transport, not a second experiment. SSH exited and credential
+  memory was cleared after verification; the server is no longer needed.
+- One run completed at `/private/tmp/step5-baseline-headroom-run-20261026-v1`,
+  scientific implementation `b1f1158`,1054.45s (17min34s) including57.63s setup/memory.
+  [Actual results](docs/TLS_RAG_STEP5_BASELINE_HEADROOM_RESULTS.md) and
+  [evidence](docs/step5_baseline_headroom_evidence.json) preserve all records.
+- Evaluation means: original exact464.608ms/R1; original ANN64 **14.023ms/R.994141**;
+  projected fixed128103.407ms/R.927734; fixed25699.909ms/R.956836. Reduction helps
+  exact full scanning, but fixed256 is about7.12x slower than original ANN, with
+  lower retention. Mean/median/p95 all preserved because latency tails are large.
+- Selection frozeM64 (R.909375); Evaluation R.887305 fails the.90 target. No fallback
+  was selected after Eval. Other fixed curves are explicitly post-hoc diagnostics.
+- Free-before-search oracle has zero headroom over eligible fixed64/mixture on
+  Selection. On Evaluation, model cost96.727996ms/R.90 versus eligible fixed256
+  99.909287ms and query-independent mixture98.253157ms: only1.525161ms/1.5523%
+  versus the mixture before any information/feature cost. Two main MILPs reach
+  zero gap; matching original ANN quality is infeasible in both groups. No grid/
+  threshold enlargement. Oracle is a group-mean complete-call model, not real
+  controller latency or a universal algorithm bound; fine headroom is uncertain.
+- Verified every artifact/source/input SHA,768x6 actual-set quality recomputations,
+  2304 balanced timing samples and Selection seal preceding Evaluation. Three
+  independent memory workers passed: traced exact55.76MiB/projected23.76MiB;
+  ANN native allocations are not all visible to NumPy tracing. RSS highwater and
+  its limitations are recorded; no8GiB/45min breach or GPU use.
+- Next: preserve the shared cache optimization and this negative cost screen;
+  no automatic predictor/Tri fitting or new experiment. Original roles remain
+  closed, formal_certification=false and no fresh independence claim.
 
 ## Current: local CPU reuse probe complete — shared backend gain, lazy overhead (2026-10-26)
 

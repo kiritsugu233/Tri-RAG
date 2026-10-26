@@ -1,6 +1,6 @@
 # Implementation Plan
 
-## Approved baseline/headroom comparison (2026-10-26, in progress)
+## Approved baseline/headroom comparison completed (2026-10-26)
 
 Scoped user approval: “批准上述范围，稍后无卡启动服务器”.
 Read the [protocol](TLS_RAG_STEP5_BASELINE_HEADROOM_PROTOCOL.md).
@@ -9,14 +9,21 @@ Read the [protocol](TLS_RAG_STEP5_BASELINE_HEADROOM_PROTOCOL.md).
 - [x]371 offline tests pass; all previous scientific files and registry rows unchanged.
 - [x] Readonly SSH extraction verifies opened Selection256/Evaluation512 and four
   sealed shared-file descriptors; ID download verified; no closed-role access.
-- [ ] Finish/resume shared corpus/projected/index transfer; verify complete-file SHA.
-- [ ] Measure six original/projected fixed baselines on the same real workload,
+- [x] Finish/resume shared corpus/projected/index transfer; all complete-file SHA match.
+- [x] Three independent memory probes pass; Selection fixedM64 sealed before Eval.
+- [x] Measure six original/projected fixed baselines on the same real workload,
   freeze Selection fixedM before the Evaluation comparison; no index rebuilding.
-- [ ] Compute free-before-search quality-constrained cost oracle and strong fixed/
+- [x] Compute free-before-search quality-constrained cost oracle and strong fixed/
   mixture/original controls, with no favorable per-query timing selection.
-- [ ] Preserve measured quality, cost, memory, intervals and failure/infeasibility;
+- [x] Preserve measured quality, cost, memory, intervals and failure/infeasibility;
   update result docs and synchronize the continuing Step5 branch.
 - [ ] Predictor/Tri optimization is outside this authorization and not started.
+
+Outcome: [results](TLS_RAG_STEP5_BASELINE_HEADROOM_RESULTS.md). Reduction accelerates
+exact scans but loses to original ANN; Selection's fixed64 fails Eval retention.
+The free oracle has0 Selection and1.55% Evaluation-model headroom versus a no-query
+mixture, with large timing tails. No follow-on controller optimization is justified
+by this layout's paid-space evidence; original-ANN-quality targets are infeasible.
 
 ## Approved local reuse probe completed (2026-10-26)
 

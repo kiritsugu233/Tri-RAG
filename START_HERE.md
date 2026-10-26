@@ -9,12 +9,13 @@ The review backup `codex/repo-review-code-protection` remains untouched at
 
 ## Current state and next assignment
 
-The user-approved [real baseline/headroom comparison](docs/TLS_RAG_STEP5_BASELINE_HEADROOM_PROTOCOL.md)
-has been implemented and passes371 offline tests. Read-only SSH extraction verified
-Selection256/Evaluation512 and sealed shared-file descriptors. Large-file transfer
-to the local CPU input directory is in progress; no real baseline measurement has
-started. See STATUS for the exact input path, source scope and transfer state.
-Only steps1/2 (baselines and free oracle) are authorized; no predictor/Tri training.
+The user-approved [real baseline/headroom comparison](docs/TLS_RAG_STEP5_BASELINE_HEADROOM_RESULTS.md)
+is complete,371 tests pass. All5.51GiB inputs/SHA verified; SSH closed, local run
+17min34s. Original ANN64 is faster and higher-retention than projected exact fixedM;
+the free oracle leaves0 Selection headroom and only1.55% versus the Evaluation
+query-independent mixture. SelectedM64 fails Eval retention. No controller/Tri fit
+follows. Read the results for heavy latency tails, conditional model limits and
+input/run paths. Original roles/bindings stay frozen; formal_certification=false.
 
 The user-approved [local CPU reuse probe](docs/TLS_RAG_STEP5_REUSE_PROBE_RESULTS.md)
 is complete:1,008 synthetic timings and seven fresh-process memory checks on1M

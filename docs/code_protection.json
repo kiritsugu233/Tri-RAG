@@ -1425,6 +1425,16 @@
       "level": "L0",
       "reason": "Approved real-input baseline/headroom scientific comparison, data roles, quality and cost protocol",
       "sha256": "2e166c1130b6bdab33ad2fa8b3206ae19682cb5039804e966c332c3e72024a25"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP5_BASELINE_HEADROOM_RESULTS.md",
+      "level": "L1",
+      "reason": "Actual authorized observed-text CPU baseline/free-oracle results and limitations; no policy retuning or new experiments"
+    },
+    {
+      "path": "docs/step5_baseline_headroom_evidence.json",
+      "level": "L1",
+      "reason": "Preserved compact quality, all timing samples, memory, source/input bindings and solver receipts from the approved baseline/headroom comparison"
     }
   ],
   "approved_change_history": [
