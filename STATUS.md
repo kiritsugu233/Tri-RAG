@@ -1,5 +1,29 @@
 # Status
 
+## Current: three-route ANN enhancement plan and living journal ready (2026-10-27)
+
+- User requested concrete preliminary verification of all three routes and one
+  persistent Markdown record for process/results. Created the
+  [exploration journal](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md).
+- Completed primary-literature, theoretical/cost and experimental-design reviews.
+  Plans cover distance-comparison filters, actual continuous graph search, and
+  independent-view rescue, with cheap controls, action-space oracles and stop gates.
+- Distinguish backend improvement from Tri's incremental value; a deterministic
+  Tri transform of inputs already available to a control adds no observations.
+  Shadow events do not establish changed-path recall/latency; top64 is not a
+  resumable frontier; view/query heterogeneity prevents naive pooled p-squared claims.
+- Read-only formula arithmetic/boundary checks pass using the unchanged law.
+  Input presence and prior download receipts checked; no new large-file hashing,
+  ANN query, index build, model fit, SSH, closed-role access or GPU work performed.
+- Journal records three review rounds, pending settings, future five-path L0/L1
+  scope and all three not_run states. All subsequent exploration outcomes go there;
+  raw query/event receipts remain in immutable run directories linked by the journal.
+- Prior scientific sources/configs/tests/outputs stay frozen; only a new L1 review
+  row and task entry/status/plan documentation are updated. Implementation and
+  bounded CPU experiments await exact scoped approval required by AGENTS.md.
+- formal_certification=false; historical exclusion and semantic independence
+  remain unestablished. Validation/synchronization details follow in the journal.
+
 ## Current: real baseline/headroom comparison complete — little controller headroom (2026-10-26)
 
 - User authorized “可以，先补齐1，2步吧” and explicitly approved the four precise

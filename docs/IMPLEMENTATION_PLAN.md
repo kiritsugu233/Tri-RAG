@@ -1,5 +1,23 @@
 # Implementation Plan
 
+## Three-route Tri-assisted ANN feasibility plan (2026-10-27)
+
+User requested all three feasibility routes, literature cross-checks and one living
+Markdown record. [Plan and ongoing journal](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md).
+
+- [x] Cross-check DCO/routing, adaptive search and multi-view primary literature.
+- [x] Review conditional-law, geometry-cost, bridge/continuation and view-independence traps.
+- [x] Specify common observed-query separation, same-input ablations, real-cost
+  controls, stop/continue screens, memory/build costs and current not_run states.
+- [x] Preserve formula/boundary arithmetic and three review rounds in one journal.
+- [ ] Obtain scoped approval for the five proposed new implementation/config/test paths.
+- [ ] Establish native no-op equivalence and bounded shadow/continuation/rescue screens.
+- [ ] Only for positive headroom routes, run paid Tri/cheap-feature ablations and
+  actual quality/latency; append all outcomes including negative/inconclusive results.
+
+This is a planning/documentation milestone, not a new frozen scientific protocol,
+retrieval/fit/index-build result or independent certification. No old source is changed.
+
 ## Approved baseline/headroom comparison completed (2026-10-26)
 
 Scoped user approval: “批准上述范围，稍后无卡启动服务器”.

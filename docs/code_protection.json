@@ -1435,6 +1435,11 @@
       "path": "docs/step5_baseline_headroom_evidence.json",
       "level": "L1",
       "reason": "Preserved compact quality, all timing samples, memory, source/input bindings and solver receipts from the approved baseline/headroom comparison"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md",
+      "level": "L1",
+      "reason": "User-requested living research plan and append-only process/result journal for three Tri-assisted ANN feasibility routes; proposed settings are not an executable frozen protocol or scoped L0 implementation consent"
     }
   ],
   "approved_change_history": [
