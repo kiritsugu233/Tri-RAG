@@ -11,9 +11,17 @@ in the [living journal sections15–17](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATIO
 - [x] Readonly fixed-pair simulations/power integration; inspect only old fit/cal edge geometry.
 - [x] Preserve weak-angle/near-boundary negative cases, novelty limits and equal-optimization controls.
 - [x] Prepare exact five-path v2 proposal and issue scoped approval question.
-- [ ] Wait for actual exact-scope user approval; v2 has no implementation or native result yet.
-- [ ] After approval: mathematical/numeric/native no-op → fixed low-dimensional full-cost gates
-  → seal development choices → unused-v1 opened evaluation IDs → only if economic1M reuse.
+- [x] Actual exact-scope user approval received: “批准，按第16节顺序执行”.
+- [x] Implement five approved paths; mathematical/numeric/native/worker checks pass,
+  400 offline tests; freeze initial sources and append-only protection rows.
+- [x] Complete100k fixed low-dimensional full-cost gates and three batch controls;
+  freeze development choice then measure unused-v1 opened evaluation IDs.
+- [x] Record200.56s/225 workers/14,400 complete timings; direct Tri-F cuts34.03%
+  distances at unchanged retention but1.267ms versus original1.238ms. Normal/Student
+  also have no net gain; Tri/nonTri increment2.81% fails5% gate. Journal section19.
+- [x] Verify543 raw artifacts/source seals locally; protection passes with old rows intact.
+- [ ] Progressive and1M: not_run because predefined gain gate fails. Adapter not_run;
+  no automatic retuning or repeat follows.
 - [ ] Routes2/3 remain deferred; no adapter or automatic old-report retuning.
 
 

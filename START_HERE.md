@@ -9,13 +9,16 @@ The review backup `codex/repo-review-code-protection` remains untouched at
 
 ## Current state and next assignment
 
-The latest user asks to explore further route1 integrations from ANN/Tri principles.
-Read the [same journal](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md), sections15–17:
-polarization F, conditional normal/Student, weak pivot-edge geometry and mathematical
-spot checks. These are read-only derivations/old-fit-cal diagnostics, not new ANN runs.
-A concrete five-path v2 scope is in section16; its approval question is pending.
-Do not implement new L0 predicates before the actual scoped reply. Keep v1 frozen,
-old roles closed and routes2/3 deferred; no formal/fresh-independence claim.
+The user approved the exact route1 v2 scope: “批准，按第16节顺序执行”.
+Read the [same journal](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md), sections15–18:
+polarization F, conditional normal/Student and equally optimized cheap controls.
+The five new files and400 offline tests are complete. Local CPU100k run200.56s:
+direct Tri-F reduces full distances34.03% at unchanged observed retention, but is
+1.267ms versus original1.238ms (+2.29%); normal/Student also lose full latency.
+Read journal section19 and runs/ann-comparators-v2-20261028-v1/result.json.
+No100k net gain means1M/progressive/adapter not_run; routes2/3 await instruction.
+543 raw evidence files verified locally; v1 and all prior scientific sources stay
+frozen, old roles closed; formal_certification=false/fresh_independence=false.
 
 The approved route1 ANN-distance-comparison screen is complete. Read the same
 [three-route living journal](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md), section14.

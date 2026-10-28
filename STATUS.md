@@ -1,5 +1,27 @@
 # Status
 
+## Current: route1 v2 complete; all three new integrations fail net-speed gate (2026-10-28)
+
+- Exact five-path user consent: “批准，按第16节顺序执行”. Only approved new
+  comparators/runner and append-only registry added; v1 and prior science unchanged.
+- 400 offline tests pass (45.600s), including16 new math/cache/role/native/worker
+  tests without skips. Protection220/L0153 passes;215 prior rows/root metadata intact.
+- Local CPU100k run200.56s; original graph reused, zero index builds. Development
+  61 methods, report14,225 independent workers/14,400 complete timings. No-op/shadow
+  bitwise FAISS checks pass; source/selection seals verified before report.
+- Report original ANN1.238373ms/retention.99921875. Direct Tri-F64/.05 cuts34.03%
+  original distances at unchanged query-level retention/Hit, but1.266789ms (+2.29%,
+  paired ratio95%1.0093–1.0367). Normal1.371056ms (+10.71%); selected Student
+  1.303443ms (+5.25%); both retention.998828125, within allowed quality tolerance.
+- Tri is2.81% faster than selected strongest nonTri Student, below5% increment gate.
+  Online CDF is already eliminated; per-node reads/gates and partial scalar batches
+  remain. These are measured prototype costs, no blanket impossibility theorem.
+- No100k full net gain: progressive/1M/adapter not_run; routes2/3 await instruction.
+  No repeat/SSH/GPU/closed-role access; formal_certification=false/fresh_independence=false.
+- Same living journal sections18–19 records exact command, all controls, paired
+  quality/time, memory/fault limitations and hashes. Durable local evidence:
+  runs/ann-comparators-v2-20261028-v1,543 files/300.70MB verified; raw not pushed.
+  Parent RSS.863GiB, auxiliary cache46.66MiB; report workers have zero major faults.
 
 ## Current: route1 alternative integrations reviewed; new L0 scope pending (2026-10-28)
 

@@ -1,0 +1,110 @@
+{
+  "schema": "ann-comparators-v2",
+  "active_routes": [
+    1
+  ],
+  "deferred_routes": [
+    2,
+    3
+  ],
+  "parent_root": "runs/ann-enhancement-route1-20261028-v1",
+  "parent_archive_sha256": "2ce9844b74c1d4f365eb8931a4bcdf9605e80aa1195ff101d31e9b02618bdef4",
+  "opened_input_root": "/private/tmp/step5-baseline-headroom-input-20261026-v1",
+  "observed_sha256": "71af5f69a4bad2473557f56ef1021aa2031fdfea7aa76e40f0fa347940e81ae4",
+  "request_sha256": "d0f2717cc2b929e9d986c2531893d5efcfe506f30e7afdc91485914ce1eb680d",
+  "corpus_size": 1000000,
+  "subset_size": 100000,
+  "dimension": 384,
+  "k_gt": 10,
+  "k_ctx": 5,
+  "return_pool": 64,
+  "ef_search": 256,
+  "dimensions": [
+    16,
+    32,
+    64
+  ],
+  "alphas": [
+    0.001,
+    0.01,
+    0.05
+  ],
+  "strict_alpha": 1e-06,
+  "rules": [
+    "chi",
+    "polar",
+    "normal",
+    "student",
+    "corr"
+  ],
+  "main_skip": "point",
+  "batch_controls": [
+    "polar",
+    "normal",
+    "student"
+  ],
+  "progressive_stages": [
+    16,
+    32,
+    64
+  ],
+  "progressive_trigger_gain": 0.1,
+  "student_delta_min": -16.0,
+  "student_delta_max": 16.0,
+  "student_delta_step": 0.00390625,
+  "dot_guard": 0.0002,
+  "original_distance_guard_relative": 0.0001,
+  "original_distance_guard_absolute": 1e-06,
+  "guard_claim": "conservative numerical margins, not a production floating-point theorem",
+  "aux_input": "normalize actual original-index float32 coordinates in float64 before auxiliary Gaussian projection; original index unchanged",
+  "faiss_version": "1.8.0",
+  "numpy_version": "1.26.4",
+  "scipy_version": "1.13.0",
+  "threads": 1,
+  "native_headers": {
+    "HNSW.h": "02f16629b7a30bdee709cd680661f5032c0e5e37b058f3ac29e4be78a132bfae",
+    "omp.h": "5945bdb8393f7edfba9a3e69362219bcb8958958aea776512a98ff22c5040092"
+  },
+  "quality_tolerance": {
+    "retention_drop": 0.002,
+    "hit_drop": 0.01
+  },
+  "net_gain": 0.1,
+  "tri_increment": 0.05,
+  "scale_gate": "report quality feasible and paired latency ratio upper95 <= .90 versus original ef256",
+  "fixed_ef": [
+    64,
+    128,
+    256,
+    512
+  ],
+  "fixed_pool": [
+    64,
+    128
+  ],
+  "timing_queries": 64,
+  "repeats": 3,
+  "warmup": 4,
+  "bootstrap_replicates": 2000,
+  "seeds": {
+    "projection": 55331,
+    "development": 55501,
+    "report": 55503,
+    "timing": 55551,
+    "order": 55553,
+    "bootstrap": 55559,
+    "math": 55561
+  },
+  "limits": {
+    "seconds": 2700,
+    "rss_gib": 8,
+    "new_gib": 4,
+    "log_gib": 1,
+    "free_gib": 12,
+    "events_per_query": 100000
+  },
+  "adapter_training": false,
+  "formal_certification": false,
+  "fresh_independence": false,
+  "terminal_audit": 0
+}

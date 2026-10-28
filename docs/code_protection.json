@@ -1469,6 +1469,35 @@
       "path": "scripts/run_tls_rag_step5_ann_enhancement.py",
       "level": "L1",
       "reason": "Approved bounded route1 CPU runner, independent native build and immutable evidence; routes2/3 not executable"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_ann_comparators_v2.py",
+      "level": "L0",
+      "reason": "User-approved section16 route1 v2 comparator namespace; probability/numeric/cache/role semantics inherit L0; v1 and routes2/3 unchanged",
+      "sha256": "cd644e7b1af1ba6f91e4a217279b98ad45dbed8fde041cecad5feb8b5c021853"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_ann_comparators_v2.cpp",
+      "level": "L0",
+      "reason": "User-approved section16 route1 v2 comparator namespace; probability/numeric/cache/role semantics inherit L0; v1 and routes2/3 unchanged",
+      "sha256": "462859c6aceaa0c474e224a1aa34003a03d073631b949706f92c45710a00016c"
+    },
+    {
+      "path": "configs/tls_rag_step5_ann_comparators_v2.json",
+      "level": "L0",
+      "reason": "User-approved section16 route1 v2 comparator namespace; probability/numeric/cache/role semantics inherit L0; v1 and routes2/3 unchanged",
+      "sha256": "3b560dcb95b368cbc11de16f51bc661085f847b7564ceb2a1dbff4cdcc0ddf6d"
+    },
+    {
+      "path": "tests/test_tls_rag_step5_ann_comparators_v2.py",
+      "level": "L0",
+      "reason": "User-approved section16 route1 v2 comparator namespace; probability/numeric/cache/role semantics inherit L0; v1 and routes2/3 unchanged",
+      "sha256": "864dabdda850042b98399afd90bee81139e4c111dd31434908de6a7755b120b8"
+    },
+    {
+      "path": "scripts/run_tls_rag_step5_ann_comparators_v2.py",
+      "level": "L1",
+      "reason": "User-approved section16 route1 v2 comparator namespace; probability/numeric/cache/role semantics inherit L0; v1 and routes2/3 unchanged"
     }
   ],
   "approved_change_history": [
@@ -1899,5 +1928,19 @@
     ],
     "scope_reference": "ann_enhancement_v1_authorization: same five exact paths; route1 only; keep routes2/3 design and order in existing exploration journal",
     "registration_note": "Initial creation hashes recorded after synthetic native validation; only approved new files, all prior scientific rows/root metadata unchanged."
+  },
+  "ann_comparators_v2_authorization": {
+    "date": "2026-10-28",
+    "user_consent": "批准，按第16节顺序执行",
+    "question_reference": "Current user send_user_message_question_reply: exact five paths, three comparators and equally optimized cheap controls, local CPU100k; positive net gain gates1M; no adapter/v1 edit/routes2/3",
+    "proposal": "docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md section16 at b705d0c",
+    "scope": [
+      "mechanism/tls_rag_step5_ann_comparators_v2.py",
+      "mechanism/tls_rag_step5_ann_comparators_v2.cpp",
+      "configs/tls_rag_step5_ann_comparators_v2.json",
+      "tests/test_tls_rag_step5_ann_comparators_v2.py",
+      "scripts/run_tls_rag_step5_ann_comparators_v2.py"
+    ],
+    "initial_hashes": "Initial creation hashes frozen after400 passing offline tests including16 v2 tests and real native synthetic worker/no-op/shadow checks; all215 prior rows and prior root metadata unchanged; no real-data screen opened before freeze."
   }
 }
