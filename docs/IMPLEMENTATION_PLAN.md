@@ -1,6 +1,22 @@
 # Implementation Plan
 
 
+## Route1 alternative-integration theory review (2026-10-28)
+
+Latest user requests several ways of applying Tri within ANN. All process remains
+in the [living journal sections15–17](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md).
+
+- [x] Recheck exact fixed-triplet assumptions, original paper and FAISS queue/stop semantics.
+- [x] Derive polarization F and conditional normal/Student candidates without unknown full distances.
+- [x] Readonly fixed-pair simulations/power integration; inspect only old fit/cal edge geometry.
+- [x] Preserve weak-angle/near-boundary negative cases, novelty limits and equal-optimization controls.
+- [x] Prepare exact five-path v2 proposal and issue scoped approval question.
+- [ ] Wait for actual exact-scope user approval; v2 has no implementation or native result yet.
+- [ ] After approval: mathematical/numeric/native no-op → fixed low-dimensional full-cost gates
+  → seal development choices → unused-v1 opened evaluation IDs → only if economic1M reuse.
+- [ ] Routes2/3 remain deferred; no adapter or automatic old-report retuning.
+
+
 ## Route1 approved execution and initial screen completed (2026-10-28)
 
 User: “可以我们先开始做方案1。方案2，3后面我给你指令再做，但是基础方案以及执行顺序请你提前写好。”

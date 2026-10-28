@@ -1,6 +1,25 @@
 # Status
 
 
+## Current: route1 alternative integrations reviewed; new L0 scope pending (2026-10-28)
+
+- User asks for more Tri-to-ANN integrations grounded in both mechanisms. Read the
+  local Tri paper and fixed FAISS1.8 source; no new filtering implementation/run.
+- Derived direct polarization/F comparator and two conditional Gaussian comparators.
+  They need one short inner product and cached norms; distinguish direct Tri use
+  from extensions of its Gaussian model and from public backend optimizations.
+- Fixed-pair120k-sample spot checks agree at the .01 boundary;80-node analytical
+  power comparisons show no uniform winner. These are formula checks, not ANN speedups.
+- Readonly192 old fit/cal queries/1.11M events: edge-angle envelope is weak. At
+  m32/.05 fixed-path expected rejection is23.57% for polarization versus21.34% chi;
+  only2.23 points additional coverage, not an established timing or recall gain.
+- Append all derivations/data/caveats and concrete five-path v2 approval scope to
+  the same exploration journal sections15–17. v1/source seals unchanged; no adapter,
+  routes2/3, SSH/GPU, new index, original cert/test, or fresh independence claim.
+- Scoped approval question is pending. AGENTS.md requires exact-path consent before
+  changing L0 probability/filter semantics; do not implement v2 before that reply.
+
+
 ## Current: route1 initial ANN comparison screen complete; paid rules do not accelerate (2026-10-28)
 
 - Latest user explicitly executes route1 only; routes2/3 wait for separate instructions.

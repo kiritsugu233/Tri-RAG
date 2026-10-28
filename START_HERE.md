@@ -9,6 +9,14 @@ The review backup `codex/repo-review-code-protection` remains untouched at
 
 ## Current state and next assignment
 
+The latest user asks to explore further route1 integrations from ANN/Tri principles.
+Read the [same journal](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md), sections15–17:
+polarization F, conditional normal/Student, weak pivot-edge geometry and mathematical
+spot checks. These are read-only derivations/old-fit-cal diagnostics, not new ANN runs.
+A concrete five-path v2 scope is in section16; its approval question is pending.
+Do not implement new L0 predicates before the actual scoped reply. Keep v1 frozen,
+old roles closed and routes2/3 deferred; no formal/fresh-independence claim.
+
 The approved route1 ANN-distance-comparison screen is complete. Read the same
 [three-route living journal](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md), section14.
 On Apple M3,100k report original ANN is1.230ms versus free path oracle.539ms;
