@@ -2,6 +2,12 @@
 
 ## Current: route1 v2 complete; all three new integrations fail net-speed gate (2026-10-28)
 
+- Follow-up readonly diagnosis (journal section20): graph expansion stays256.3;
+  additional short-vector work uses46% of saved original coordinate terms, before
+  metadata/batch costs. Query preparation is not all per-node Tri work. Polarization
+  fixes rho=0, so it tests a valid special branch without general angle correction.
+  Current evidence rejects this measured cost tradeoff, not the fixed-triplet law
+  or all ANN applications. No new retrieval, fit, source/config edit or role access.
 - Exact five-path user consent: “批准，按第16节顺序执行”. Only approved new
   comparators/runner and append-only registry added; v1 and prior science unchanged.
 - 400 offline tests pass (45.600s), including16 new math/cache/role/native/worker

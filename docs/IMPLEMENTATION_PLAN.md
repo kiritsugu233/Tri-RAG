@@ -20,6 +20,9 @@ in the [living journal sections15–17](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATIO
   distances at unchanged retention but1.267ms versus original1.238ms. Normal/Student
   also have no net gain; Tri/nonTri increment2.81% fails5% gate. Journal section19.
 - [x] Verify543 raw artifacts/source seals locally; protection passes with old rows intact.
+- [x] Readonly cause review (journal section20): distinguish valid fixed-pair law,
+  available geometry/power, unchanged graph work and measured net cost. Recheck
+  official FAISS/ADSampling; preserve adaptive-risk and rho=0 specialization limits.
 - [ ] Progressive and1M: not_run because predefined gain gate fails. Adapter not_run;
   no automatic retuning or repeat follows.
 - [ ] Routes2/3 remain deferred; no adapter or automatic old-report retuning.
