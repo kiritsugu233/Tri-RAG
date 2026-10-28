@@ -1,6 +1,6 @@
 # Query-Adaptive Tri-RAG: current entry
 
-Updated 2026-10-27. Local checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
+Updated 2026-10-28. Local checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 Continue all Step 5 work and synchronization on `codex/tls-rag-step5-ann`.
 The user explicitly authorized this new branch and redundant-branch cleanup;
 do not create another branch for subsequent Step 5 version updates.
@@ -12,8 +12,10 @@ The review backup `codex/repo-review-code-protection` remains untouched at
 The user-requested [three-route ANN enhancement exploration journal](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md)
 now records literature/theory/design reviews and concrete feasibility screens for
 distance comparisons, continuous search control and independent-view rescue.
-New ANN runs are not_run; precise new L0 implementation paths are proposed for
-approval. Keep future process/results in this same journal. Original roles stay closed.
+On2026-10-28 the user approved the five scoped files and asked to resolve algorithm
+integration before adapter training. Section12 records the native hook, no-training
+comparison, geometry limits and environment readiness gaps. New ANN runs are not_run;
+no repeated scope approval is needed. Keep future results here; original roles stay closed.
 
 The user-approved [real baseline/headroom comparison](docs/TLS_RAG_STEP5_BASELINE_HEADROOM_RESULTS.md)
 is complete,371 tests pass. All5.51GiB inputs/SHA verified; SSH closed, local run

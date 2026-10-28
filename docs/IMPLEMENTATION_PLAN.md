@@ -10,7 +10,10 @@ Markdown record. [Plan and ongoing journal](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLOR
 - [x] Specify common observed-query separation, same-input ablations, real-cost
   controls, stop/continue screens, memory/build costs and current not_run states.
 - [x] Preserve formula/boundary arithmetic and three review rounds in one journal.
-- [ ] Obtain scoped approval for the five proposed new implementation/config/test paths.
+- [x] Scoped five-path approval received2026-10-28: “确认，可以先按这个做”; user
+  asks to resolve actual Tri-to-ANN algorithm integration before adapter training.
+- [x] Record concrete native hook, fixed-pair no-training bound, inexpensive
+  pivot geometry and its mismatch with decision-boundary risk; no system guarantee.
 - [ ] Establish native no-op equivalence and bounded shadow/continuation/rescue screens.
 - [ ] Only for positive headroom routes, run paid Tri/cheap-feature ablations and
   actual quality/latency; append all outcomes including negative/inconclusive results.

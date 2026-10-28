@@ -1844,5 +1844,18 @@
       "docs/TLS_RAG_STEP5_BASELINE_HEADROOM_PROTOCOL.md"
     ],
     "limits": "Read-only remote export/download only, local CPU Selection/Evaluation development comparison; original cert/latency/test and all previous scientific files/bindings remain unchanged."
+  },
+  "ann_enhancement_v1_authorization": {
+    "date": "2026-10-28",
+    "user_consent": "确认，可以先按这个做，但是我现有个问题，就是这个只是在探究是否有训练adapter的价值对吗，但是如何应用tri-law到ANN里面这个问题，你有什么解决方案吗，这个是不是得在此之前考虑好，这可能需要改算法代码",
+    "proposal": "docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md section10 at88483ce; current user steering resolves mathematical/algorithmic integration before adapter training",
+    "scope": [
+      "mechanism/tls_rag_step5_ann_enhancement.py",
+      "mechanism/tls_rag_step5_ann_enhancement.cpp",
+      "configs/tls_rag_step5_ann_enhancement_v1.json",
+      "tests/test_tls_rag_step5_ann_enhancement.py",
+      "scripts/run_tls_rag_step5_ann_enhancement.py"
+    ],
+    "limits": "Only the reviewed isolated five-path CPU feasibility namespace, opened local inputs, new100k subset truth/three small indexes, two independent Gaussian views, bounded screens and positive-headroom ablations. Algorithm integration/no-op checks precede learning. No changes to old scientific sources, dependency pins, historical outputs or closed roles; no SSH,1M dual-view indexes or formal certification. No new implementation/run is recorded by this authorization entry itself."
   }
 }

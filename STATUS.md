@@ -1,5 +1,23 @@
 # Status
 
+## Current: ANN scope confirmed; algorithm integration precedes learning (2026-10-28)
+
+- User confirmed the five-path exploration scope, then asked how Tri actually
+  enters ANN and whether algorithm code must change. Approval is recorded; no
+  repeated request for this same scope is needed.
+- Appended section12 to the existing exploration journal: native distance hook,
+  pending audit, true continuation and view-rescue actions come before learning.
+  A fixed-pair worst-case F-tail comparison can be studied without training;
+  adaptive reference/visit selection prevents treating it as a system guarantee.
+- Clarified a concrete pivot-edge geometry estimate and its cost: it produces
+  local ordering sensitivity, not exact candidate-vs-frontier error probability.
+  Full-distance circularity, unavailable boundary edges and angle costs remain gates.
+- Read-only numerical tail examples pass. Native readiness has gaps: clang++
+  exists, but the named temporary Python cannot import faiss and cmake was not
+  found on PATH. No compilation, ANN run or fit occurred; all routes stay not_run.
+- Old scientific sources/configs/tests/artifacts remain unchanged; subsequent
+  implementation must use the approved isolated namespace and keep the same journal.
+
 ## Current: three-route ANN enhancement plan and living journal ready (2026-10-27)
 
 - User requested concrete preliminary verification of all three routes and one
