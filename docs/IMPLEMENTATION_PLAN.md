@@ -1,5 +1,30 @@
 # Implementation Plan
 
+
+## Route1 approved execution and initial screen completed (2026-10-28)
+
+User: “可以我们先开始做方案1。方案2，3后面我给你指令再做，但是基础方案以及执行顺序请你提前写好。”
+Actual evidence stays in the [same living journal, section14](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md).
+
+- [x] Create exactly the five approved route1 files; active route1, deferred2/3.
+- [x] Restore isolated same-version native environment; preserve old dependencies.
+- [x] Verify bitwise FAISS no-op/shadow/free-path behavior before filtering.
+- [x] Seal new100k subset, original graph,Gaussian128,query groups and source identity.
+- [x] Measure fixed ef/return-pool controls, free path space and12 real no-training gates.
+- [x] Freeze selected chi.05 on select, then report; no report-driven threshold changes.
+- [x] Reuse existing1M index for64-query scale sensitivity; preserve paging/noise evidence.
+- [x]384 tests pass;117 independent timing workers/7,488 calls; verify persistent local archive.
+- [x] Record backend potential separately from paid-rule failure and unestablished Tri increment.
+- [ ] Adapter fitting, pure-kernel breakdown and fresh independent Tri evaluation: not_run;
+  current paid cost fails the acceleration screen, so no automatic training follows.
+- [ ] Route2 after explicit new instruction: full resumable-state equivalence → continuation
+  oracle → cheap-state/Tri marginal-benefit comparisons if economic (journal section6).
+- [ ] Route3 after explicit new instruction: independent100k views → exact/ANN set attribution
+  → matched-cost deep-single-view/union/rescue oracle → trigger only if economic (section7).
+
+The current route1 prototype does not accelerate the matched-quality original ANN;
+no formal certification, old-role access or automatic next route is authorized.
+
 ## Three-route Tri-assisted ANN feasibility plan (2026-10-27)
 
 User requested all three feasibility routes, literature cross-checks and one living

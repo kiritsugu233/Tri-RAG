@@ -544,3 +544,311 @@ native/配置/测试改动；若今后要改变图构建准则、投影家族或
 `cmake`在本次PATH未检出。因此尚未建立可编译/链接的FAISS1.8.0环境，更未验证
 no-op等价性。此结果只记录实现准备缺项，不是Tri/ANN算法失败。后续按原批准范围
 准备隔离的同版本环境，不更改已有依赖版本、不重建旧索引，所有运行仍为not_run。
+
+
+## 13. 2026-10-28：仅执行方案1，方案2/3等待指令
+
+### 13.1 本轮实际授权、次序与冻结设置
+
+用户最新原话：
+
+> 可以我们先开始做方案1。方案2，3后面我给你指令再做，但是基础方案以及执行顺序请你提前写好。
+
+范围收窄为已批准五文件中的route1。次序固定为：
+
+1. 共享身份/数据边界与native no-op验证；方案1免费路径空间；固定廉价/Tri规则真实搜索。
+2. 用户另行指令后才做方案2：先完整session暂停/恢复等价性，再连续轨迹oracle，
+   空间成立才做廉价状态与Tri的继续收益/成本消融。基础方案见第6节。
+3. 用户另行指令后才做方案3：先100k两个独立视图的精确/图集合归因，再同成本
+   单视图深搜/union/补救oracle；互补且经济才做触发器。基础方案见第7节。
+
+本轮不实现后两条路线，不建立投影图，不训练adapter，不SSH、不使用GPU、
+不开放原cert/latency/test。fit128/cal64/select64/report256身份按第4节固定；
+它们全部是历史已观察的开发数据，report接口隔离不产生新的独立性。
+
+配置为新100k哈希子集、Gaussian128 seed55331、原空间HNSW32/efConstruction200
+seed55341、主return64/ef256、单线程；新增子集float64精确top10。
+原版固定ef64/128/256/512、return64，以及ef128/256/512的return128均测。
+比较规则chi、pair（最坏角F比值）、tri（投影角度代入闭式阈值）、angle（同输入
+普通非线性角度余量），每条alpha=.001/.01/.05，不按report调阈值。
+若免费同路径oracle相对native no-op均价空间<5%，不进入付费规则/训练；否则只测
+这些固定无训练规则。本轮没有训练超参数或模型搜索。select封存后report仅评冻结点。
+
+**暂缓语义的具体实现限制：** 本原型把“已发现”与“已精算”分开记录；暂缓节点
+留在独立pending队列、主堆不写近似距离，并只在终止时按投影距离审核最多16个。
+有限审核仅能补结果，不能恢复没有展开的图导航；未审核pending显式计数。
+这是第5/12节有界补救的窄实现，不声称全量恢复、逐点alpha保证或召回不变。
+完整继续搜索不是本轮悄悄实现的方案2。
+
+free-oracle只跳过同一批起点上距离>=max(result threshold,frontier threshold)
+且frontier已满的节点；它们对两个堆都无更新。已处理的heap root可能没有有效ID，
+真实规则此时回退精算。oracle事先读取shadow真距离，纯诊断；不进入可部署规则。
+跳过会改变距离batch分组及float32末位，oracle对保留节点仍实际支付完整距离核，
+并用原batch位模式维持相同路径；记录这种舍入差别。因读了未来且免费判定，
+其时延只是乐观局部路径筛查，不是可部署算法或所有ANN的上界定理。
+
+### 13.2 实现准备与合成验证记录
+
+旧临时环境已不完整。建立独立 `/private/tmp/step5-ann-enhancement-env-20261028`：
+Python3.9.6、numpy1.26.4、scipy1.13.0、faiss-cpu1.8.0、packaging24.2。
+未改仓库依赖或旧环境。固定FAISS v1.8.0源码包SHA：
+`56ece0a419d62eaa11e39022fa27c8ed6d5a9b9eb7416cc5a0fdbeab07ec2f0c`。
+LLVM15.0.7的omp头只提供类型声明，不链接/替换OpenMP运行库；raw下载429后用官方
+API取同一blob。头SHA固定在新配置中，FAISS距离核仍调用原wheel导出实现。
+
+首次直接链接wheel的Mach-O bundle失败（MH_BUNDLE不能作dylib链接输入），
+改为独立shim的dynamic_lookup，先全局加载原wheel再解析；没有重编/替换FAISS。
+这些是运行前环境问题，未读取新实验report，也不是算法负结果。
+编译参数 `clang++ -std=c++17 -O3 -DNDEBUG -dynamiclib -undefined dynamic_lookup`，
+实际命令/编译器/头和库SHA写入每次build收据。
+
+- 16条合成查询初测：原版与native no-op候选ID和float32距离逐位相同。
+- 新增13个CPU离线测试实际通过（native测试启用，未跳过）：无操作/影子/免费
+  oracle等价、桥接节点不能仅按结果堆拒绝、pending及16条审核计费、原规律阈值
+  反解、非法几何、未来oracle信息隔离、report封存、独立worker结果一致性等。
+- 科学运行前保护检查通过：215项，L0=149/L1=63/L2=3；只追加4个新L0及1个L1，
+  旧210行与全部旧根元数据逐项一致。初始新文件哈希已经登记。
+
+### 13.3 实际执行接口与计时边界
+
+主命令（独立输出目录，不覆盖旧运行）：
+
+```sh
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 \
+STEP5_ROUTE1_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/route1.dylib \
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:src \
+/private/tmp/step5-ann-enhancement-env-20261028/bin/python \
+  scripts/run_tls_rag_step5_ann_enhancement.py \
+  --output /private/tmp/step5-ann-enhancement-route1-20261028-v1 \
+  --headers /private/tmp/step5-ann-enhancement-native-20261028/faiss-1.8.0 \
+  --omp-include /private/tmp/step5-ann-enhancement-native-20261028/include
+```
+
+所有大输入先完整SHA/size校验，语料/查询正规化检查，未命中则停止。
+每方法/每重复独立worker，父进程先释放图/投影/语料驻留；方法进程顺序按固定seed
+轮换，预热4条、64条查询、3重复。质量pass和计时pass候选/context逐条一致才采用。
+完整调用计时包含查询投影、判定、主/暂缓队列、有限审核、分配及原空间规范精排；
+建图、投影语料预计算和加载单列。对无投影方法不载入额外投影工作集。
+worker记录绝对RSS、计时段minor/major faults；不是多方法共驻留的主时延。
+
+计算限45分钟（编译另计），新磁盘<=4GiB、RSS<=8GiB、events<=1GiB、剩余>=12GiB。
+100k结束后仅复用既有1M原图及旧Gaussian128(seed55117)做64条已开放select查询
+敏感性，不建1M新图、不重新选择规则；不能把不同seed/规模结果称为同一独立检验。
+实际结果/未完成项将在下一条追加；本条是执行前记录，不预报通过。
+
+
+## 14. 2026-10-28 / route1-v1：实际初筛结果与停止点
+
+### 14.1 完成范围与运行身份
+
+上述命令成功完成，未自动重试、未改冻结源码/阈值、没有resource_stop。
+UTC 2026-10-28 10:42:16.889→10:46:21.069（北京时间18:42→18:46）。
+计算243.564秒；新图构建92.295秒，准备总计105.489秒（含输入校验等），编译另记。
+本地Apple M3、8核/16GiB、macOS26.6.2/arm64；数值线程1；硬件由只读sysctl核实。
+
+- 原版/native no-op/free-oracle：100k全部512条、1M64条逐查询候选ID和float32
+  距离逐位相等；100k的fit/cal192条shadow也相等。不是只核对最终top10。
+- 12条固定无训练规则实际实跑select64；最快质量可行点和最强非Tri点均为
+  `chi:0.05`，封存后才开放report256。未根据report/1M换alpha、重选或训练。
+- 共117个独立计时worker、7,488个完整调用样本；质量与计时输出逐条一致。
+- 父进程RSS高水位3.764GiB；worker最大3.295GiB；原始events27.157MiB。
+  原运行约660.34MiB；下述本地持久副本使本轮两份产物合计约1.29GiB，均在4GiB内。
+- 源码/配置/数据/索引/投影哈希、每查询集合、全部重复、进程缺页和RSS均保留。
+  全部384项CPU回归通过，新13项native测试没有跳过。不是旧测试数量的沿用。
+
+持久本地产物：[`runs/ann-enhancement-route1-20261028-v1`](../runs/ann-enhancement-route1-20261028-v1)。
+原始临时目录为 `/private/tmp/step5-ann-enhancement-route1-20261028-v1`；448个文件逐个
+SHA/size核验后复制，raw结果未改。持久目录还含console与384项回归日志。
+`archive_verified.json`索引SHA：`2ce9844b74c1d4f365eb8931a4bcdf9605e80aa1195ff101d31e9b02618bdef4`。
+大型原始产物按仓库既有runs忽略规则保存在本地，GitHub同步代码、配置、测试及本文。
+
+### 14.2 100k报告组：空间存在，付费规则尚未兑现
+
+质量使用全部report256；时间使用预定64查询×3重复的完整调用，单位ms。
+Hit@5在本表均为.0859375（子集qrels很稀疏），不能当成充分的质量保证。
+
+| 方法 | retention@10 | mean | median | p95 |
+|---|---:|---:|---:|---:|
+| 原FAISS return64/ef64 | .988281 | .504 | .506 | .589 |
+| 原FAISS return64/ef128 | .993750 | .742 | .742 | .874 |
+| **原FAISS return64/ef256（主参考）** | **.998437** | **1.230** | **1.217** | **1.536** |
+| 原FAISS return64/ef512 | .999609 | 2.041 | 2.028 | 2.460 |
+| 原FAISS return128/ef128 | .993750 | .850 | .854 | .996 |
+| 原FAISS return128/ef256 | .998437 | 1.375 | 1.358 | 1.705 |
+| 原FAISS return128/ef512 | .999609 | 2.181 | 2.175 | 2.614 |
+| native no-op | .998437 | 1.316 | 1.313 | 1.608 |
+| 免费同路径oracle（不可部署） | .998437 | .539 | .531 | .620 |
+| select冻结chi .05 | .998437 | 1.648 | 1.642 | 2.112 |
+
+- oracle相对原版的时间比.437862，query-block bootstrap95%区间
+  [.427757,.447701]；相对no-op的选择组空间59.31%。
+  它只代表本保守安全证书覆盖的同路径局部筛查，有未来真距离且不支付风险预测，
+  不是所有距离过滤的最大上界、更不是ANN整体最优性定理。
+- no-op相对原版1.069986，区间[1.057161,1.080855]：约7%插桩/实现费用
+  显式保留，不能拿较慢native当唯一对照制造加速。
+- chi相对原版1.340249，区间[1.315694,1.364431]，**慢34.02%**。
+  每查询retention/Hit及context在本report均与原版相同，256条中2条候选池变化；
+  此处配对质量差值区间[0,0]只描述这些观察，不是总体零漏失风险保证。
+- chi完整距离从6005.30降到3559.15（少40.73%），另付7113.64次128维距离。
+  距离数减少没有转化为真实时延收益。
+- ef128在select下降.0015625，曾满足开发容忍度；report却下降.0046875，
+  超过预定.002。不能用更低质量的ef128/64替代主参考宣布等质量胜出。
+
+### 14.3 Tri增量：无训练规则的开发证据
+
+下表为select64实际改路径结果，所有规则在本组retention=.9984375、Hit=.078125。
+这里是开发比较，**没有把落选Tri重新放入report**。选择/多重比较限制保留。
+
+| 规则 | alpha | mean ms | 原空间距离/查询 | 128维距离/查询 |
+|---|---:|---:|---:|---:|
+| chi | .001 | 1.695 | 5353.14 | 7170.72 |
+| chi | .01 | 1.667 | 4523.06 | 7171.58 |
+| chi | .05 | 1.618 | 3502.84 | 7176.88 |
+| pair最坏角F比值 | .001 | 1.698 | 5912.53 | 7168.83 |
+| pair最坏角F比值 | .01 | 1.685 | 5432.78 | 7168.12 |
+| pair最坏角F比值 | .05 | 1.627 | 4354.61 | 7175.92 |
+| Tri代入投影角度 | .001 | 1.964 | 5773.17 | 12829.88 |
+| Tri代入投影角度 | .01 | 1.939 | 5125.48 | 12832.22 |
+| Tri代入投影角度 | .05 | 1.860 | 3989.70 | 12843.56 |
+| 同输入普通角度规则 | .001 | 1.904 | 5807.78 | 12829.88 |
+| 同输入普通角度规则 | .01 | 1.878 | 5172.02 | 12832.70 |
+| 同输入普通角度规则 | .05 | 1.853 | 4022.64 | 12845.02 |
+
+Tri .05比pair .05少一些完整距离，却完整调用慢14.32%，配对时间比区间
+[1.133633,1.152899]。比同输入angle .05时间比1.003912，区间
+[.994954,1.012602]；该64条返回池/context均相同。**未建立Tri的5%独立净收益**。
+这只否定当前估计几何+固定规则的有用性证据，没有检验所有Tri表示/adapter。
+
+保持全精算、只额外支付判定的对照：no-op1.271ms，pair判定1.718ms，
+Tri判定1.980ms；增量约.447/.708ms，包含查询投影、投影距离、标量门控及访问。
+这不是单独的三行Tri标量公式成本；已用闭式阈值、未逐点调用SciPy CDF。
+高成本主要伴随额外低维几何和数据访问，不能再靠“把CDF查表”解释本轮问题。
+纯SIMD核分解和原空间重排子项未单独计时，不虚构其占比。
+
+**与第5节成本必要条件的核对：** 以本组no-op6051.14次完整距离为分母，
+chi .05省42.11%，但另算约1.186次128维距离/原完整距离；按维度线性模型已耗
+39.53%，只剩原距离维度工作的2.58%供队列、读取、分配与审核支付。
+Tri .05省34.07%，却另算约2.123次128维距离，维度模型费用70.75%，
+在最朴素算术层面已经逆差36.68%。这里计入了参考点投影距离和额外x-reference
+角度距离；不能继续使用“每候选仅一个128维核”的r<2/3乐观条件。
+维度模型不是实测延迟，但与本轮付费规则失败方向一致；SIMD/缓存/批处理仍以实测为准。
+
+fit/cal影子记录共1,110,260个base-layer事件。Tri .01拟拒绝177,510个，
+其中177,240个满足本批起点的保守安全证书，270个未满足。
+后者只表示“未被此充分条件认证”，不是270次真实搜索错误；批内阈值还会变化，
+最终质量必须看上述真实路径。事件不是独立查询，不能把百万事件当百万检验样本。
+
+### 14.4 1M敏感性：额外工作集和时延尾部不可忽略
+
+旧原图、旧Gaussian55117投影、同一64条开放select，冻结chi .05直接迁移，未重选。
+本表retention=.9953125、Hit=.703125均相同；chi的3条候选池变化，context不变。
+
+| 方法 | mean ms | median ms | p95 ms | 完整距离/查询 | 投影距离/查询 |
+|---|---:|---:|---:|---:|---:|
+| 原FAISS64/ef256 | 1.356 | 1.227 | 2.117 | — | 0 |
+| no-op | 1.456 | 1.412 | 2.183 | 5740.81 | 0 |
+| 免费oracle | .698 | .690 | .940 | 870.67 | 0 |
+| chi .05 | 5.266 | 3.744 | 12.739 | 2985.59 | 6653.88 |
+| 仅pair判定+全精算 | 13.260 | 3.445 | 52.146 | 5740.81 | 6663.72 |
+| 仅Tri判定+全精算 | 5.334 | 3.388 | 17.086 | 5740.81 | 11920.80 |
+
+1M投影float32数组本体额外512,000,000字节（488.28MiB）；100k为48.83MiB。
+100k报告worker原版RSS高水位342.88MiB，chi391.80MiB，oracle367.97MiB。
+1M原版1979.41MiB，chi3337.03MiB，oracle2225.70MiB；高水位包含加载历史，
+不能把其差全部解释为稳态在线额外内存。oracle缓存64条未来真值本体256MB，
+也不是可部署免费状态。
+
+1M chi三个重复均价4.704/4.571/6.523ms，原版1.309/1.480/1.281ms；
+chi时间比3.881927、query-block区间[3.444472,4.347260]。
+但chi两个worker出现major faults22/283；pair某worker3519次并拉高均值，
+重复均价31.869/2.367/5.544ms。Tri判定重复2.839/7.837/5.325ms也不稳定。
+因此1M数值作为本机内存/缺页敏感性证据，不把“3.88倍慢”或pair/Tri均值次序
+外推成稳定算法倍率。即便看中位数，当前付费方案也没有加速证据。
+100k报告全部比较worker计时段major faults均为0；select的原版pool128/ef128
+有一次6830次major faults且均价11.257ms，原始异常重复保留，未删样重测。
+
+### 14.5 结论、未完成项与下一步边界
+
+| 项目 | 本轮判断 | 证据范围 |
+|---|---|---|
+| 原空间ANN距离比较的可省工作 | 有条件正面 | 免费安全路径筛查显著省工作/时间，尚不可部署 |
+| 当前低维几何/门控实现 | 负面 | 100k同质量仍慢，1M额外工作集和尾部更差 |
+| 当前Tri相对简单规则的增量 | 未建立 | 开发组不胜普通角度/chi，落选后未在report再调参 |
+| adapter训练 | not_run，停止在训练之前 | 先解决判定和访问成本，没有自动推进复杂模型 |
+| 方案2/3 | not_run，等待用户分别指令 | 基础方案及先后顺序在第13.1/6/7节 |
+
+**建议保留“ANN内部少做完整距离”的方向，但不部署当前Tri比较器，也不直接训练
+adapter补救。** 若继续方案1，先提出一个能明显减少投影向量读取/重复参考距离/
+额外角度距离的明确算法动作，并估算其费用；与同样优化的chi/间隔控制公平对照。
+减少到只算Tri标量公式并不能免除几何输入成本。新的策略/阈值必须使用新版本和
+适当独立开发/评估身份，不能在这次report之后继续调到好看；涉及L0改动另列范围。
+
+本轮未执行小模型拟合、独立Tri泛化检验、多投影/多索引种子、正式竞品复现或
+GPU/服务器试验；没有原cert/test访问，没有正式统计认证。
+formal_certification=false；历史排除及语义独立性仍未建立。
+
+### 14.6 证据索引、保护与同步
+
+以下SHA对应未改写的原始结果；完整文件表见持久目录的archive_verified.json：
+
+| 产物 | SHA-256 |
+|---|---|
+| result.json | `f26b0c4d49d1681314bb42f83b3348a3c0569ce2d3d4a253daba58bcd29dca27` |
+| selection_seal.json | `be615e513531c1712c4112f4b3a45789eac681e1e53919b53016f684be059f87` |
+| query_records.jsonl | `64b4be84cf4470f298c3ef9e95b986fc97da048f3ab19c521c24df21c583e298` |
+| timing_records.jsonl | `4b7cc3729e43ad73b4a5b718db3217f88c4501c5f591c0467b587030c6d2055e` |
+| scale_query_records.jsonl | `752377e369caece93867252cf1586fee56a1d6872249cc11f5e6c2e2cdeee6fa` |
+| scale_timing_records.jsonl | `fd639978befc42eeb4c37c94f12757ea28fe9d00db9e02157432b180c06add3a` |
+
+运行manifest保存五个新源文件和未改projection/Tri-Law源的完整SHA。保护登记只追加
+本次4个L0/1个L1新文件及真实用户授权；原210登记行及旧根元数据逐项不变。
+后续手交付前检查/推送信息在下条记录；不将进行中的Git操作提前记为成功。
+
+
+### 14.7 本轮交付检查
+
+`python3 scripts/check_code_protection.py`通过（215项，L0=149/L1=63/L2=3）；
+`git diff --check`通过。完整回归命令：
+
+```sh
+STEP5_ROUTE1_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/route1.dylib \
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:src \
+/private/tmp/step5-ann-enhancement-env-20261028/bin/python \
+  -m unittest discover -s tests
+```
+
+实际384项、43.019秒、OK；无跳过。之后仅给runner补开始/结束时间元数据，
+科学计算/控制流未再修改，运行manifest绑定最终五源文件；运行后的保护/源哈希检查通过。
+原210登记行、旧根元数据和既有L0源码/配置/测试/绑定均未改变。
+代码、配置、测试和本文按既有授权提交推送`codex/tls-rag-step5-ann`；
+提交/远端HEAD核对的实际回执见本次交付消息，避免在自身文档内循环写入提交哈希。
+其提交可以由`git log -1 -- mechanism/tls_rag_step5_ann_enhancement.cpp`定位。
+
+### 14.8 第三方代码许可
+
+独立native原型的HNSW控制流参考/改编自Facebook Research FAISS v1.8.0。
+原距离实现、堆结构仍来自同版本已安装库。以下保留源码包LICENSE通知：
+
+```text
+MIT License
+
+Copyright (c) Facebook, Inc. and its affiliates.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```

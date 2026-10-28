@@ -1,0 +1,85 @@
+{
+  "schema": "ann-enhancement-route1-v1",
+  "active_routes": [
+    1
+  ],
+  "deferred_routes": [
+    2,
+    3
+  ],
+  "input_root": "/private/tmp/step5-baseline-headroom-input-20261026-v1",
+  "input_request_sha256": "d0f2717cc2b929e9d986c2531893d5efcfe506f30e7afdc91485914ce1eb680d",
+  "input_observed_sha256": "71af5f69a4bad2473557f56ef1021aa2031fdfea7aa76e40f0fa347940e81ae4",
+  "corpus_size": 1000000,
+  "subset_size": 100000,
+  "dimension": 384,
+  "m_prime": 128,
+  "k_gt": 10,
+  "k_ctx": 5,
+  "return_pool": 64,
+  "ef_search": 256,
+  "degree": 32,
+  "ef_construction": 200,
+  "faiss_version": "1.8.0",
+  "numpy_version": "1.26.4",
+  "scipy_version": "1.13.0",
+  "threads": 1,
+  "alphas": [
+    0.001,
+    0.01,
+    0.05
+  ],
+  "rules": [
+    "chi",
+    "pair",
+    "tri",
+    "angle"
+  ],
+  "risk_interpretation": "fixed-pair or plug-in diagnostic, never an ANN error guarantee",
+  "quality_tolerance": {
+    "retention_drop": 0.002,
+    "hit_drop": 0.01
+  },
+  "headroom_minimum": 0.05,
+  "net_gain_reference": 0.1,
+  "tri_increment_reference": 0.05,
+  "timing_queries": 64,
+  "repeats": 3,
+  "warmup": 4,
+  "bootstrap_replicates": 2000,
+  "seeds": {
+    "split": 55301,
+    "report": 55303,
+    "corpus": 55305,
+    "projection": 55331,
+    "index": 55341,
+    "timing": 55351,
+    "order": 55353,
+    "bootstrap": 55359
+  },
+  "limits": {
+    "seconds": 2700,
+    "rss_gib": 8,
+    "new_gib": 4,
+    "log_gib": 1,
+    "free_gib": 12,
+    "events_per_query": 100000
+  },
+  "formal_certification": false,
+  "observed_development_only": true,
+  "audit_limit": 16,
+  "fixed_ef": [
+    64,
+    128,
+    256,
+    512
+  ],
+  "scale_queries": 64,
+  "native_headers": {
+    "HNSW.h": "02f16629b7a30bdee709cd680661f5032c0e5e37b058f3ac29e4be78a132bfae",
+    "omp.h": "5945bdb8393f7edfba9a3e69362219bcb8958958aea776512a98ff22c5040092"
+  },
+  "scale_projection_seed": 55117,
+  "selection_rule": "quality-feasible lowest mean complete latency; no-candidate retained",
+  "pending_rule": "discovered and held separately; bounded terminal result audit only; no graph rescue guarantee"
+}

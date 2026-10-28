@@ -1440,6 +1440,35 @@
       "path": "docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md",
       "level": "L1",
       "reason": "User-requested living research plan and append-only process/result journal for three Tri-assisted ANN feasibility routes; proposed settings are not an executable frozen protocol or scoped L0 implementation consent"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_ann_enhancement.py",
+      "level": "L0",
+      "reason": "Approved route1 observed-input, source sealing, shadow/quality/cost screening and selection contract; routes2/3 execution deferred",
+      "sha256": "412c3ab4524350312adac300131427210291030e81afe57ebd014ad872a1845d"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_ann_enhancement.cpp",
+      "level": "L0",
+      "reason": "Approved isolated native HNSW no-op recording and route1 risk-distance comparison; existing algorithms/libraries unchanged",
+      "sha256": "05c59ffb3ba9c453f86ac7bc255e84c96aca0b39217d787c228f93a64cbb7307"
+    },
+    {
+      "path": "configs/tls_rag_step5_ann_enhancement_v1.json",
+      "level": "L0",
+      "reason": "Approved new route1 settings, data roles, costs, seeds and resource limits; routes2/3 inactive",
+      "sha256": "4d4b7a1b8dfb817c8444c6ac84a79ba6babe1c2bdc4c2095b7768b502d380739"
+    },
+    {
+      "path": "tests/test_tls_rag_step5_ann_enhancement.py",
+      "level": "L0",
+      "reason": "Approved route1 geometry, native equality, information-isolation, accounting and failure regressions",
+      "sha256": "1f7c3ebc505444819a8f008f732a545db8253be4f2bb05a64c1c36eee45113e2"
+    },
+    {
+      "path": "scripts/run_tls_rag_step5_ann_enhancement.py",
+      "level": "L1",
+      "reason": "Approved bounded route1 CPU runner, independent native build and immutable evidence; routes2/3 not executable"
     }
   ],
   "approved_change_history": [
@@ -1857,5 +1886,18 @@
       "scripts/run_tls_rag_step5_ann_enhancement.py"
     ],
     "limits": "Only the reviewed isolated five-path CPU feasibility namespace, opened local inputs, new100k subset truth/three small indexes, two independent Gaussian views, bounded screens and positive-headroom ablations. Algorithm integration/no-op checks precede learning. No changes to old scientific sources, dependency pins, historical outputs or closed roles; no SSH,1M dual-view indexes or formal certification. No new implementation/run is recorded by this authorization entry itself."
+  },
+  "ann_enhancement_route1_execution_authorization": {
+    "date": "2026-10-28",
+    "user_consent": "可以我们先开始做方案1。方案2，3后面我给你指令再做，但是基础方案以及执行顺序请你提前写好。",
+    "active_routes": [
+      1
+    ],
+    "deferred_routes": [
+      2,
+      3
+    ],
+    "scope_reference": "ann_enhancement_v1_authorization: same five exact paths; route1 only; keep routes2/3 design and order in existing exploration journal",
+    "registration_note": "Initial creation hashes recorded after synthetic native validation; only approved new files, all prior scientific rows/root metadata unchanged."
   }
 }

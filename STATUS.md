@@ -1,5 +1,29 @@
 # Status
 
+
+## Current: route1 initial ANN comparison screen complete; paid rules do not accelerate (2026-10-28)
+
+- Latest user explicitly executes route1 only; routes2/3 wait for separate instructions.
+  Their base plans and order remain in sections6/7/13.1 of the same
+  [living journal](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md).
+- Implemented only the five approved new paths. Fixed FAISS1.8.0 distance kernels;
+  no-op/shadow/free-path checks pass on512 subset and64 scale queries.384 offline
+  tests pass, including13 new native tests without skips; old scientific files stay frozen.
+- Apple M3 CPU run completes in243.56s;100k index build92.30s.117 independent workers,
+  7,488 complete timings; durable verified448-file local archive in
+  runs/ann-enhancement-route1-20261028-v1, raw data not pushed to GitHub.
+- 100k report: original ANN64/ef256 retention.9984375,1.230ms; free path oracle
+  .539ms at identical outputs, but unrealizable. Selected chi.05 preserves observed
+  quality yet costs1.648ms (+34.02%; paired ratio CI1.316–1.364).
+- Tri.05 is1.860ms on select versus angle1.853ms and chi1.618ms; no independent
+  Tri gain. Extra geometric kernels/read costs remain even with CDF-free scalar rules.
+- 1M fixed-rule sensitivity also loses, with major faults/large timing variation;
+  counts improve without full latency gain. Do not generalize its3.88 ratio as stable.
+- Stop before adapter training. Backend distance-filter potential remains conditional;
+  current Tri comparator has no deployment/acceleration evidence. No route2/3, SSH,
+  GPU, original cert/test or formal certification. Read journal section14 for all results,
+  resource/fault limits, artifact hashes, negative findings and proposed next boundary.
+
 ## Current: ANN scope confirmed; algorithm integration precedes learning (2026-10-28)
 
 - User confirmed the five-path exploration scope, then asked how Tri actually

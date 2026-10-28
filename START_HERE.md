@@ -9,13 +9,16 @@ The review backup `codex/repo-review-code-protection` remains untouched at
 
 ## Current state and next assignment
 
-The user-requested [three-route ANN enhancement exploration journal](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md)
-now records literature/theory/design reviews and concrete feasibility screens for
-distance comparisons, continuous search control and independent-view rescue.
-On2026-10-28 the user approved the five scoped files and asked to resolve algorithm
-integration before adapter training. Section12 records the native hook, no-training
-comparison, geometry limits and environment readiness gaps. New ANN runs are not_run;
-no repeated scope approval is needed. Keep future results here; original roles stay closed.
+The approved route1 ANN-distance-comparison screen is complete. Read the same
+[three-route living journal](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md), section14.
+On Apple M3,100k report original ANN is1.230ms versus free path oracle.539ms;
+selected paid chi rule is1.648ms at the same observed quality. Tri does not beat
+cheap/same-input angle controls on select;1M paid sensitivity loses with paging.
+384 tests pass; five scoped files only, all old scientific bindings unchanged.
+No adapter training follows. Preserve distance-filter potential separately from
+current Tri failure. Routes2/3 remain not_run until separate user instructions;
+their designs/order are sections6/7/13.1. Raw verified artifacts are local under
+runs/ann-enhancement-route1-20261028-v1; formal_certification=false.
 
 The user-approved [real baseline/headroom comparison](docs/TLS_RAG_STEP5_BASELINE_HEADROOM_RESULTS.md)
 is complete,371 tests pass. All5.51GiB inputs/SHA verified; SSH closed, local run
