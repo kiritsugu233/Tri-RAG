@@ -1,5 +1,24 @@
 # Status
 
+## Current: route4 offline geometry-based index configuration plan added (2026-10-29)
+
+- User supplied side-chat context and requested route4 in the same living journal.
+  Section21 defines fixed corpus × representative external-query distribution,
+  offline full beta/rho geometry, dimension/ranking-risk curves and a global fixed-m index.
+- Separate expected inversion count, optional conservative retention bound and
+  measured retention. Shared projection events need no independence for linear
+  expectation; sampled competitors need tail accounting; fixed selected seeds and
+  unseen queries require empirical validation beyond the random-projection law.
+- Plan exact projected-space validation before ANN; compare gap/LID/angle controls
+  and small direct dimension trials. Evaluate advisor selection regret/trials saved,
+  offline amortization, matched-quality original ANN, latency and full memory/storage.
+- Rechecked Indyk–Naor, Matryoshka and official FAISS tuning sources. A tiny1440-case
+  rank-inequality check supports the proposed bound's combinatorial step only.
+  No new vector retrieval/ANN/fit/index build/SSH/GPU or old protected-role access.
+- Route4 planned/not_run. User authorized plan documentation, not an executable
+  scientific namespace; prior400 tests and route1 failures remain historical evidence.
+  All scientific sources/settings/registry unchanged; formal_certification=false.
+
 ## Current: route1 v2 complete; all three new integrations fail net-speed gate (2026-10-28)
 
 - Follow-up readonly diagnosis (journal section20): graph expansion stays256.3;

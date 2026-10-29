@@ -1,5 +1,23 @@
 # Implementation Plan
 
+## Route4: offline geometry risk for fixed-corpus index configuration (2026-10-29)
+
+User asks to add the supplied side-chat idea as route4. The same
+[living journal section21](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md) is canonical.
+
+- [x] Record offline/global fixed-dimension objective and differences from routes1–3.
+- [x] Define fixed corpus × external-query distribution, complete/tail-accounted
+  pair risk, separate projection/ANN losses, matched data roles and fixed-seed validation.
+- [x] Plan same-information gap/angle/LID and small empirical-probe baselines;
+  include geometry/build/tuning amortization and full memory/latency costs.
+- [x] Recheck primary sources; tiny combinatorial bound check only, no ANN experiment.
+- [ ] Review/approve a separate exact L0 implementation/data/resource scope before execution.
+- [ ] Verify small synthetic/exact-projection risk curves; measure selection usefulness/cost.
+- [ ] If useful, validate a frozen global dimension/projection on reserved development
+  queries, then only selected ANN configurations against original-dimension ANN.
+- [ ] Regional/per-query dimensions, adapter/model training and formal independent
+  certification: deferred, outside the first route4 screen. Routes2/3 remain not_run.
+
 
 ## Route1 alternative-integration theory review (2026-10-28)
 
