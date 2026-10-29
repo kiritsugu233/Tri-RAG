@@ -9,21 +9,26 @@ The review backup `codex/repo-review-code-protection` remains untouched at
 
 ## Current state and next assignment
 
-The user requests deeper route2 research with repeated review and staged reporting.
-Read the same [journal sections25–26](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md).
-Readonly review reverified507 artifacts/15,744 timing outputs and384 gap replays.
-Same-query measured path prices preserve substantial future-quality headroom.
-All3 report losses had stable top10 at the preceding checkpoint and unscored pending
-neighbors; causation is not established. No new ANN/fit/paid Tri run was made.
-Section26 proposes exactly five new continuation_v2 paths: pause-boundary attribution,
-cheap/geometry/Tri learned stopping and paid end-to-end nested development checks.
-Actual exact reply: “批准第26节全部范围，按A→B→C执行”. The five-file v2
-namespace passes429 offline tests (15 new/no skips); initial sources are frozen before real phaseA.
-All768 locally
-available queries were historically opened; cross-validation cannot restore independence.
-Local CPU100k only, proposed90-minute scientific cap; no A800/SSH/1M/adapter/routes3/4.
+Deeper route2 v2 completed the approved A→B→C research study. Actual exact consent:
+“批准第26节全部范围，按A→B→C执行”. Read the same [journal sections27–31](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md).
+Frozen scientific code08ed4ce,429 offline tests (15 new/no skips),768 real equivalence
+queries;4-fold nested historical development and5 independent timing repeats.
+All3 old report losses plus1 cal loss were undiscovered neighbors, not pending;
+draining the neighbor list does not repair them. Future-quality oracle has conditional space.
+Actual final original ANN=1.168709ms; S=1.248047/G=1.393090/T=1.629399/T0=1.657511/
+selectiveTri=1.415616ms. Current learned/Tri paths fail overall net gain. Gap=.955729ms
+has small empirical loss, not a certified win. T has one extra5/10-neighbor loss;
+its quality interval crosses tolerance. Same-input T/G late prediction increment is inconclusive.
+Even symmetric removal of recorded controller sections leaves T slower than S/G.
+Unmet protocol item: trained-support/OOD fallback is not implemented; numerical/value
+validation alone is not that guard. Complete execution is not full safety acceptance.
+No formal/fresh independence:768 queries have historical exposure. No adapter/1M/SSH/GPU/
+routes3/4, no automatic retry or threshold change. Recommend retaining resumable backend,
+not adopting current Tri stopping integration as the research main line.
+Runs/ann-continuation-v2-20261030-v1 holds1658 verified files/2.15GB; cumulative17m15s,
+parent peak1.035GiB. Source/selection/model/data/worker outputs independently audited.
 
-The user now requests route2. Its first trial is a true fixed-beam continuation
+The earlier route2 first trial is a true fixed-beam continuation
 session, stopping oracle and fixed/cheap-state controls, before paid Tri/learning.
 Read the [same journal section22](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md).
 Local CPU dependencies and six100k input SHAs verified, no A800 required. Existing

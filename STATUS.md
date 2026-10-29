@@ -1,30 +1,39 @@
 # Status
 
-## Current: deeper route2 exact v2 scope approved; synthetic validation in progress (2026-10-30)
+## Current: deeper route2 A/B/C complete; current Tri integration fails net gain (2026-10-30)
 
-- User requests deeper route2 exploration, repeated checks and results/analysis after
-  each stage. Same living journal sections25–26 records the review and concrete proposal.
-- Reverified all507 archived files/269176723B,7 source/seal identities and15,744 timed
-  candidate/context outputs. Independently replayed384 saved gap decisions, all agree.
-  No new ANN call, training, paid Tri, SSH or old protected-role access.
-- Future-endpoint choices with same-query saved path times remain roughly.3243–.3555
-  of original256 on64 report timing queries; conditional oracle, not deployed speedup.
-- All3 report extra-loss queries had unchanged preceding top10. Pending-at-stop counts
-  are35/9/1; current frontier distance excludes them. Association is not causation;
-  new boundary attribution is proposed, no old failure/results/source were overwritten.
-- Tri is a deterministic transform of beta/rho in this original-space search, so compare
-  equally expressive same-input geometry controls; no stopping theorem follows from it.
-- Proposed five continuation_v2 paths cover whole-neighbor-list boundary controls,
-  lightweight learned stopping, cheap/geometry/Tri paid ablations and4-fold nested
-  development checks on768 historically opened queries. Actual reply: “批准第26节全部范围，按A→B→C执行”.
-  Only these new five files/authorization append;225 prior protected entries remain unchanged.
-- Proposed local CPU100k/90-minute scientific cap, no GPU/1M/adapter/routes3/4.
-  Positive development evidence would still need fresh independent external queries.
-- Readonly diagnostic artifacts: runs/ann-continuation-review-20261030-v1;
-  original result SHA and artifact SHAs/assumptions in journal section25.
-- Full429 offline tests pass (15 new, no skips, final56.701s), initial new hashes frozen.
-  Frozen v1 kernel reused with new boundary/diagnostic/tree endpoints; real phaseA follows.
-  Protection230 passes; exact staged commands and validation evidence in journal section27.
+- Actual exact approval: “批准第26节全部范围，按A→B→C执行”. Only five new
+  continuation_v2 files/authorization append;225 prior rows/root values unchanged.
+- Scientific code08ed4ce frozen before data.429 offline tests pass (15 new/no skips,
+  56.701s);768 real FAISS/boundary resume checks pass. Same living journal sections27–31.
+- A54.490s:4 old failed queries miss undiscovered GT, not pending. Draining pending
+  leaves their quality unchanged. Conditional oracle.409952ms vs fixed mixture.861020ms.
+- B229.930s:4 nested fit384/cal96/select96/outer192 folds;32 native/Python exports
+  agree exactly. Models vary strongly by fold, no stable same-input Tri increment.
+- C750.562s:768 outer queries×5 repeats×23 methods=88,320 timings. Overall original
+  ANN=1.168709ms, S=1.248047/G=1.393090/T=1.629399/T0=1.657511/Ts=1.415616ms.
+  All learned families lose net speed. Gap.955729ms has8 extra single-GT losses;
+  empirical18.2% speed signal is not a formal matched-quality pass or Tri gain.
+- T retention.9971354 vs original.9984375; delta95% crosses−.002 tolerance.
+  Query318000 loses5/10 GT: tree predicts remaining gain.01999, actual.5;
+  Python/native replay agrees, not a numeric export bug. Its coordinates lie in fit ranges.
+- T/G late MAE.0366619/.0367029, paired difference interval crosses0. Feature probability
+  cost.212427ms/query, geometry.106552ms; free-probability accounting still21.2% slower
+  than original. Symmetric controller-section deletion still leaves T slower than S/G.
+- Unmet safety requirement: no trained-support/OOD abstention fallback, only invalid-value/
+  dimension validation. Historical development, not fresh independence/certification;
+  execution completed but full safety/deployment acceptance did not pass.
+- Independent direct recomputation matches17,664 quality rows,88,320 timing outputs,
+  23 summaries/retention intervals and22 time ratios/intervals.796 label-free workers total,
+  118,656 timed calls. All13 sources match pushed08ed4ce, all model/data seals agree.
+- Local runs/ann-continuation-v2-20261030-v1:1658 files/2,149,374,244B verified twice,
+  archive SHA cdb56eed6a1f4cc05aa79ca399197e69c63649134af2641979d1506ecc136c62.
+  Inputs/provenance logs retained; cumulative17m15s, parent RSS1.035GiB/worker≈470MiB.
+  Eleven major faults in8 auxiliary/fixed-control workers; primary selected paths unaffected.
+- No science retry/retune, adapter/1M/new index/SSH/GPU/routes3/4 or closed-role access.
+  Preserve backend and failures; recommend against current Tri stopping as research main line.
+- Exact commands, tables, limitations, archive/source hashes and next decision in the journal.
+  Handoff checks: `python3 scripts/check_code_protection.py`, `git diff --check`,230 entries.
 
 ## Current: route2 first trial complete; headroom positive, cheap-rule quality inconclusive (2026-10-30)
 

@@ -1,9 +1,9 @@
 # Implementation Plan
 
-## Route2 deeper review and v2 proposal (2026-10-30)
+## Route2 deeper review and v2 completed study (2026-10-30)
 
 User requests deeper exploration and staged reviews. Read the same
-[journal sections25–26](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md).
+[journal sections25–31](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md).
 
 - [x] Reverify507 archived files,source/selection bindings,15,744 timed outputs and
   384 saved gap decisions; preserve all old scientific files/results.
@@ -18,12 +18,16 @@ User requests deeper exploration and staged reviews. Read the same
 - [x] Receive exact section26 approval: “批准第26节全部范围，按A→B→C执行”.
 - [x] Implement only five approved paths/append-only registration; old225 rows/root fields unchanged.
 - [x]429 full offline tests pass (15 new/no skips), freeze new sources before real-data A.
-- [ ] A: synthetic/native real equivalence; pending attribution and boundary controls;
-  check honest headroom and report evidence/failures to user.
-- [ ] B: query-isolated cheap/geometry/Tri feature/learning/calibration ablations;
-  audit leakage, same-input attribution, late gains and complete online feature cost.
-- [ ] C: frozen outer-fold real path timing/quality, independent aggregation review,
-  source/model/artifact seals, staged detailed results and research-direction judgment.
+- [x] A:768 real equivalence checks,4 prior losses undiscovered rather than pending;
+  54.49s, positive conditional headroom, no quality repair from draining a neighbor list.
+- [x] B:4 query-isolated nested folds/32 exports agree;229.93s, cheap/geometry/Tri models
+  sealed. Review identifies weak increment/calibration limits and unmet support fallback.
+- [x] C:768×5×23 real calls,750.56s; current learned/Tri paths fail overall net gain,
+  T has a5/10-neighbor tail loss and quality interval crossing. No source/threshold retune.
+- [x] Recompute raw quality/times/intervals, symmetric free-cost accounting and tail tree;
+  verify1658 files/2.15GB, publish actual negative results/limitations, preserve old science.
+- [ ] Deployment safety: explicit trained-support/abstention guard remains unimplemented;
+  not accepted as complete safety protocol, cannot be fixed by relabeling this run passed.
 - [ ] Fresh independent data/other corpus/1M/adapter/routes3/4 remain outside proposal;
   do not promote historical cross-validation to formal certification.
 
