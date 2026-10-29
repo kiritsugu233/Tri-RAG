@@ -1,5 +1,20 @@
 # Status
 
+## Current: route2 requested; local readiness and new-namespace scope prepared (2026-10-30)
+
+- User: “可以，现在先进行方案2的尝试”. The old wait-for-route2 instruction is
+  released. First trial: fixed-beam persistent session → stopping oracle → fixed/cheap
+  controls, without predictor/adapter training or automatic paid Tri follow-on.
+- Existing native science implements route1 only; frozen source-bound results stay
+  intact. Same journal section22 specifies five new continuation paths/APIs, semantics,
+  quality/timing gates and exact scope needing prior L0 consent before creation.
+- Readonly check: Python3.9.6/NumPy1.26.4/SciPy1.13.0/FAISS1.8.0 ready, fixed header
+  hashes agree; six reused100k corpus/index/query/binding files match archive SHA/size.
+  Disk free75.59GiB, existing M3 CPU sufficient; no SSH/A800/index rebuild needed.
+- No new retrieval/session implementation or run yet, no source/registry changes.
+  Resume equivalence remains untested; prior400 tests are not a route2 result.
+  Routes3/4 stay not_run; formal_certification=false and historical overlap remains.
+
 ## Current: route4 offline geometry-based index configuration plan added (2026-10-29)
 
 - User supplied side-chat context and requested route4 in the same living journal.

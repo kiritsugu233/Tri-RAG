@@ -1,6 +1,6 @@
 # Query-Adaptive Tri-RAG: current entry
 
-Updated 2026-10-29. Local checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
+Updated 2026-10-30. Local checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 Continue all Step 5 work and synchronization on `codex/tls-rag-step5-ann`.
 The user explicitly authorized this new branch and redundant-branch cleanup;
 do not create another branch for subsequent Step 5 version updates.
@@ -9,6 +9,15 @@ The review backup `codex/repo-review-code-protection` remains untouched at
 
 ## Current state and next assignment
 
+The user now requests route2. Its first trial is a true fixed-beam continuation
+session, stopping oracle and fixed/cheap-state controls, before paid Tri/learning.
+Read the [same journal section22](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md).
+Local CPU dependencies and six100k input SHAs verified, no A800 required. Existing
+native files only implement route1 and are frozen to its results; section22 proposes
+five exact new continuation paths. Scoped consent for this new namespace is pending:
+do not edit science or run new ANN until received. No adapter,1M,route3/4 or old
+protected-role access follows automatically. This is readiness/proposal, not a run.
+
 The user supplied the side-chat text and requested route4 as a new research plan.
 Read the [same living journal, section21](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md):
 offline fixed-corpus/representative-query geometry → dimension/ranking-risk curves
@@ -16,8 +25,8 @@ offline fixed-corpus/representative-query geometry → dimension/ranking-risk cu
 First choose one global index dimension, not per-query dimensions. Compare Tri with
 gap/LID/angle and small empirical dimension probes; charge offline geometry/tuning,
 index builds and full deployed query/storage costs. This is planned/not_run, no new
-code/data/role access/index build or change to any existing fixed-m contract. Routes2/3
-still await instruction; route4 implementation needs its own reviewed exact scope.
+code/data/role access/index build or change to any existing fixed-m contract. Route2
+was subsequently requested as above; route3 still waits and route4 needs its own exact scope.
 
 The user approved the exact route1 v2 scope: “批准，按第16节顺序执行”.
 Read the [same journal](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md), sections15–18:

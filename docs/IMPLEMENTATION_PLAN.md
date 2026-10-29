@@ -1,5 +1,23 @@
 # Implementation Plan
 
+## Route2 first trial: persistent search and stopping headroom (2026-10-30)
+
+User now requests route2; current readiness/proposal is in the same
+[journal section22](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md).
+
+- [x] Resolve route2 wait condition from actual user instruction; preserve route1 freezes.
+- [x] Inspect original FAISS/route1 code: no persistent session exists yet; specify
+  create/advance/snapshot/destroy semantics and exact five-path new L0/L1 scope.
+- [x] Verify local fixed dependencies, native header SHAs and six100k reusable inputs;
+  no new ANN call/index build/fit, and no GPU/SSH needed.
+- [ ] Obtain exact new-namespace consent before creating protected scientific files.
+- [ ] Verify native no-op and arbitrary pause/resume against FAISS bitwise; preserve
+  batch boundaries, heaps, visited, query lifetime, natural stop and call counts.
+- [ ] Collect100k continuous checkpoints, measure fixed/cheap controls and matched-quality
+  stopping oracle; freeze selection before report and retain complete actual costs.
+- [ ] Only after economic headroom: separately scope paid geometry/Tri marginal-gain
+  ablations. No automatic predictor/adapter,1M,route3/4 or formal certification.
+
 ## Route4: offline geometry risk for fixed-corpus index configuration (2026-10-29)
 
 User asks to add the supplied side-chat idea as route4. The same
