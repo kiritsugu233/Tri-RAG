@@ -1,19 +1,27 @@
 # Status
 
-## Current: route2 requested; local readiness and new-namespace scope prepared (2026-10-30)
+## Current: route2 first trial complete; headroom positive, cheap-rule quality inconclusive (2026-10-30)
 
-- User: “可以，现在先进行方案2的尝试”. The old wait-for-route2 instruction is
-  released. First trial: fixed-beam persistent session → stopping oracle → fixed/cheap
-  controls, without predictor/adapter training or automatic paid Tri follow-on.
-- Existing native science implements route1 only; frozen source-bound results stay
-  intact. Same journal section22 specifies five new continuation paths/APIs, semantics,
-  quality/timing gates and exact scope needing prior L0 consent before creation.
-- Readonly check: Python3.9.6/NumPy1.26.4/SciPy1.13.0/FAISS1.8.0 ready, fixed header
-  hashes agree; six reused100k corpus/index/query/binding files match archive SHA/size.
-  Disk free75.59GiB, existing M3 CPU sufficient; no SSH/A800/index rebuild needed.
-- No new retrieval/session implementation or run yet, no source/registry changes.
-  Resume equivalence remains untested; prior400 tests are not a route2 result.
-  Routes3/4 stay not_run; formal_certification=false and historical overlap remains.
+- User exact approval: “批准，按第22节首轮执行”. Five new continuation paths,
+  four new L0 hashes and runner only; all220 prior registry rows/root fields unchanged.
+- 414 offline tests pass (53.546s),14 new native/worker tests, no skips. Real100k
+  original graph reused:512 queries match actual FAISS distance/ID bitwise; paused
+  and uninterrupted call-sequence/state hashes agree. No restart/index rebuild.
+- CPU trial178.20s,246 independent workers/15,744 complete timings,3584 checkpoints.
+  Cal/select choice sealed before report; no predictor/paid Tri/adapter/1M/routes3/4.
+- Report original ef2561.139645ms/retention.9984375; cheap gap .873759ms/.997265625.
+  Time ratio.766695 [95%.726313,.810922], but retention delta−.001171875
+  [−.002734375,0] crosses−.002 tolerance. Mean feasible, quality inconclusive;
+  no lossless/matched-quality pass. Select-chosen original ef128 fails report quality.
+- Future-quality cohort-price oracle.411316ms versus strong query-independent
+  mixture.948311ms (ratio.433735, conditional descriptive95%.403321–.463913).
+  Positive backend headroom, not an achieved56.6% controller/Tri speedup.
+- Tri increment not_measured; full endpoint checkpoint overhead included. Stop this
+  approved first trial; next paid cheap/geometry/Tri comparison needs separate scope
+  and appropriate evaluation, no report retuning. All historical-independence limits remain.
+- Same journal sections23–24 has exact command, costs/quality/failures/limits/SHA.
+  Local runs/ann-continuation-v1-20261030-v1:507 files/269.18MB verified, raw not pushed.
+  Parent peakRSS.697GiB; report workers≈346MiB, zero major faults. Protection225 passes.
 
 ## Current: route4 offline geometry-based index configuration plan added (2026-10-29)
 

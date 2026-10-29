@@ -1498,6 +1498,35 @@
       "path": "scripts/run_tls_rag_step5_ann_comparators_v2.py",
       "level": "L1",
       "reason": "User-approved section16 route1 v2 comparator namespace; probability/numeric/cache/role semantics inherit L0; v1 and routes2/3 unchanged"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_ann_continuation_v1.py",
+      "level": "L0",
+      "reason": "User-approved section22 route2 first-trial namespace; persistent search/stopping/role/cost semantics inherit scoped L0; all prior sources frozen",
+      "sha256": "cdc02e3126943dab9a9357c5043210fbc8f461cb5323da4fe6e4cb1c9f127413"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_ann_continuation_v1.cpp",
+      "level": "L0",
+      "reason": "User-approved section22 route2 first-trial namespace; persistent search/stopping/role/cost semantics inherit scoped L0; all prior sources frozen",
+      "sha256": "346cce0b94fa6d986a4e4cd9ba829b2b063ad2ffa11eaca8e9cdf2f0bddccf01"
+    },
+    {
+      "path": "configs/tls_rag_step5_ann_continuation_v1.json",
+      "level": "L0",
+      "reason": "User-approved section22 route2 first-trial namespace; persistent search/stopping/role/cost semantics inherit scoped L0; all prior sources frozen",
+      "sha256": "e7c539bf79b623a001508e426d780d5e8983751373063ad7368ecebb5a41fd5a"
+    },
+    {
+      "path": "tests/test_tls_rag_step5_ann_continuation_v1.py",
+      "level": "L0",
+      "reason": "User-approved section22 route2 first-trial namespace; persistent search/stopping/role/cost semantics inherit scoped L0; all prior sources frozen",
+      "sha256": "2e3188426be997b2179494264dc63decc4c3cbc1669b77aa77c477e63b03d26f"
+    },
+    {
+      "path": "scripts/run_tls_rag_step5_ann_continuation_v1.py",
+      "level": "L1",
+      "reason": "User-approved section22 route2 first-trial namespace; persistent search/stopping/role/cost semantics inherit scoped L0; all prior sources frozen"
     }
   ],
   "approved_change_history": [
@@ -1942,5 +1971,19 @@
       "scripts/run_tls_rag_step5_ann_comparators_v2.py"
     ],
     "initial_hashes": "Initial creation hashes frozen after400 passing offline tests including16 v2 tests and real native synthetic worker/no-op/shadow checks; all215 prior rows and prior root metadata unchanged; no real-data screen opened before freeze."
+  },
+  "ann_continuation_v1_authorization": {
+    "date": "2026-10-30",
+    "user_consent": "批准，按第22节首轮执行",
+    "question_reference": "Actual user reply to exact five-path section22 first-trial question: local CPU100k reuse, session/oracle/fixed-cheap controls,45min, no predictor/adapter/1M/routes3/4",
+    "proposal": "docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md section22 at8574b91",
+    "scope": [
+      "mechanism/tls_rag_step5_ann_continuation_v1.py",
+      "mechanism/tls_rag_step5_ann_continuation_v1.cpp",
+      "configs/tls_rag_step5_ann_continuation_v1.json",
+      "tests/test_tls_rag_step5_ann_continuation_v1.py",
+      "scripts/run_tls_rag_step5_ann_continuation_v1.py"
+    ],
+    "initial_hashes": "Four initial new L0 hashes frozen after414 passing offline tests including14 route2 real-native/worker tests; before any real-data run. All220 prior rows and prior root metadata unchanged."
   }
 }

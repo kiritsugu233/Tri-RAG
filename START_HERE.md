@@ -14,9 +14,14 @@ session, stopping oracle and fixed/cheap-state controls, before paid Tri/learnin
 Read the [same journal section22](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md).
 Local CPU dependencies and six100k input SHAs verified, no A800 required. Existing
 native files only implement route1 and are frozen to its results; section22 proposes
-five exact new continuation paths. Scoped consent for this new namespace is pending:
-do not edit science or run new ANN until received. No adapter,1M,route3/4 or old
-protected-role access follows automatically. This is readiness/proposal, not a run.
+five exact new continuation paths, now approved: “批准，按第22节首轮执行”.
+414 offline tests and512 real pause/resume checks pass;100k trial completed178.20s.
+Read journal section24/runs/ann-continuation-v1-20261030-v1/result.json. Cheap gap rule
+is.874ms versus original1.140ms (23.3% faster), but retention delta95% crosses the
+declared loss tolerance; no matched-quality pass. Conditional future-quality oracle
+.411ms versus strong mixture.948ms leaves headroom; this is not deployed Tri gain.
+Paid Tri/predictor/adapter/1M/routes3/4 not_run. New policies need their own next-stage
+scope and suitable evaluation; do not retune this report. Old protected roles stay closed.
 
 The user supplied the side-chat text and requested route4 as a new research plan.
 Read the [same living journal, section21](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md):
@@ -35,7 +40,8 @@ The five new files and400 offline tests are complete. Local CPU100k run200.56s:
 direct Tri-F reduces full distances34.03% at unchanged observed retention, but is
 1.267ms versus original1.238ms (+2.29%); normal/Student also lose full latency.
 Read journal section19 and runs/ann-comparators-v2-20261028-v1/result.json.
-No100k net gain means1M/progressive/adapter not_run; routes2/3 await instruction.
+No100k net gain means route1's1M/progressive/adapter not_run; route2 was later
+separately requested/completed as above, while route3 still awaits instruction.
 543 raw evidence files verified locally; v1 and all prior scientific sources stay
 frozen, old roles closed; formal_certification=false/fresh_independence=false.
 
@@ -46,7 +52,8 @@ selected paid chi rule is1.648ms at the same observed quality. Tri does not beat
 cheap/same-input angle controls on select;1M paid sensitivity loses with paging.
 384 tests pass; five scoped files only, all old scientific bindings unchanged.
 No adapter training follows. Preserve distance-filter potential separately from
-current Tri failure. Routes2/3 remain not_run until separate user instructions;
+current Tri failure. That milestone left routes2/3 not_run; route2 has since completed
+its separately approved first trial above. Route3 still waits;
 their designs/order are sections6/7/13.1. Raw verified artifacts are local under
 runs/ann-enhancement-route1-20261028-v1; formal_certification=false.
 

@@ -10,11 +10,16 @@ User now requests route2; current readiness/proposal is in the same
   create/advance/snapshot/destroy semantics and exact five-path new L0/L1 scope.
 - [x] Verify local fixed dependencies, native header SHAs and six100k reusable inputs;
   no new ANN call/index build/fit, and no GPU/SSH needed.
-- [ ] Obtain exact new-namespace consent before creating protected scientific files.
-- [ ] Verify native no-op and arbitrary pause/resume against FAISS bitwise; preserve
+- [x] Exact scope approved: “批准，按第22节首轮执行”; only five new paths/append-only register.
+- [x]414 offline tests pass, including14 new actual native/worker checks; freeze new hashes.
+- [x] Verify native no-op and arbitrary pause/resume against FAISS bitwise; preserve
   batch boundaries, heaps, visited, query lifetime, natural stop and call counts.
-- [ ] Collect100k continuous checkpoints, measure fixed/cheap controls and matched-quality
+- [x] Collect100k continuous checkpoints, measure fixed/cheap controls and matched-quality
   stopping oracle; freeze selection before report and retain complete actual costs.
+- [x] Complete178.20s/246 workers/15,744 timings;512 real equivalence queries,
+  3584 checkpoints. Cheap gap23.3% faster but quality interval exceeds loss tolerance;
+  conditional oracle.411ms vs strong mixture.948ms. Tri increment not_measured.
+- [x] Verify507 raw artifacts/source seals; record all quality/selection failures and limits.
 - [ ] Only after economic headroom: separately scope paid geometry/Tri marginal-gain
   ablations. No automatic predictor/adapter,1M,route3/4 or formal certification.
 
