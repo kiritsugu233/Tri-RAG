@@ -1,5 +1,30 @@
 # Implementation Plan
 
+## Route2 deeper review and v2 proposal (2026-10-30)
+
+User requests deeper exploration and staged reviews. Read the same
+[journal sections25–26](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md).
+
+- [x] Reverify507 archived files,source/selection bindings,15,744 timed outputs and
+  384 saved gap decisions; preserve all old scientific files/results.
+- [x] Check conditional headroom using same-query measured path prices, rather than
+  only cohort means; retain oracle/future-label and64-query timing limitations.
+- [x] Diagnose three late-neighbor losses: prior top10 stability does not guarantee
+  safety; pending35/9/1 remain at stop, causal attribution not established.
+- [x] Recheck Tri/ANN assumptions and primary literature; require same-information
+  nonlinear geometry comparison before attributing any increment to Tri.
+- [x] Verify local historical query/truth union768; propose exact five-path v2 scope,
+  100k CPU/90-minute cap and nested development-only interpretation.
+- [ ] Receive exact section26 approval before new L0 stopping/learning/feature code.
+- [ ] A: synthetic/native real equivalence; pending attribution and boundary controls;
+  check honest headroom and report evidence/failures to user.
+- [ ] B: query-isolated cheap/geometry/Tri feature/learning/calibration ablations;
+  audit leakage, same-input attribution, late gains and complete online feature cost.
+- [ ] C: frozen outer-fold real path timing/quality, independent aggregation review,
+  source/model/artifact seals, staged detailed results and research-direction judgment.
+- [ ] Fresh independent data/other corpus/1M/adapter/routes3/4 remain outside proposal;
+  do not promote historical cross-validation to formal certification.
+
 ## Route2 first trial: persistent search and stopping headroom (2026-10-30)
 
 User now requests route2; current readiness/proposal is in the same

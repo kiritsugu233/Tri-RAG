@@ -1,5 +1,30 @@
 # Status
 
+## Current: deeper route2 readonly review complete; exact v2 scope pending (2026-10-30)
+
+- User requests deeper route2 exploration, repeated checks and results/analysis after
+  each stage. Same living journal sections25–26 records the review and concrete proposal.
+- Reverified all507 archived files/269176723B,7 source/seal identities and15,744 timed
+  candidate/context outputs. Independently replayed384 saved gap decisions, all agree.
+  No new ANN call, training, paid Tri, SSH or old protected-role access.
+- Future-endpoint choices with same-query saved path times remain roughly.3243–.3555
+  of original256 on64 report timing queries; conditional oracle, not deployed speedup.
+- All3 report extra-loss queries had unchanged preceding top10. Pending-at-stop counts
+  are35/9/1; current frontier distance excludes them. Association is not causation;
+  new boundary attribution is proposed, no old failure/results/source were overwritten.
+- Tri is a deterministic transform of beta/rho in this original-space search, so compare
+  equally expressive same-input geometry controls; no stopping theorem follows from it.
+- Proposed five continuation_v2 paths cover whole-neighbor-list boundary controls,
+  lightweight learned stopping, cheap/geometry/Tri paid ablations and4-fold nested
+  development checks on768 historically opened queries. Exact approval question pending.
+  Old first-trial approval excluded training/paid Tri;225 protected entries remain unchanged.
+- Proposed local CPU100k/90-minute scientific cap, no GPU/1M/adapter/routes3/4.
+  Positive development evidence would still need fresh independent external queries.
+- Readonly diagnostic artifacts: runs/ann-continuation-review-20261030-v1;
+  original result SHA and artifact SHAs/assumptions in journal section25.
+- Verification commands: `python3 scripts/check_code_protection.py` and
+  `git diff --check`; prior414-test result retained, no new implementation to regression-test.
+
 ## Current: route2 first trial complete; headroom positive, cheap-rule quality inconclusive (2026-10-30)
 
 - User exact approval: “批准，按第22节首轮执行”. Five new continuation paths,

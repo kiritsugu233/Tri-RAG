@@ -9,6 +9,18 @@ The review backup `codex/repo-review-code-protection` remains untouched at
 
 ## Current state and next assignment
 
+The user requests deeper route2 research with repeated review and staged reporting.
+Read the same [journal sections25–26](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md).
+Readonly review reverified507 artifacts/15,744 timing outputs and384 gap replays.
+Same-query measured path prices preserve substantial future-quality headroom.
+All3 report losses had stable top10 at the preceding checkpoint and unscored pending
+neighbors; causation is not established. No new ANN/fit/paid Tri run was made.
+Section26 proposes exactly five new continuation_v2 paths: pause-boundary attribution,
+cheap/geometry/Tri learned stopping and paid end-to-end nested development checks.
+The exact scope question is pending; do not implement before its reply. All768 locally
+available queries were historically opened; cross-validation cannot restore independence.
+Local CPU100k only, proposed90-minute scientific cap; no A800/SSH/1M/adapter/routes3/4.
+
 The user now requests route2. Its first trial is a true fixed-beam continuation
 session, stopping oracle and fixed/cheap-state controls, before paid Tri/learning.
 Read the [same journal section22](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md).
