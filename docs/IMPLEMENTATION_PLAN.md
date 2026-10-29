@@ -15,7 +15,9 @@ User requests deeper exploration and staged reviews. Read the same
   nonlinear geometry comparison before attributing any increment to Tri.
 - [x] Verify local historical query/truth union768; propose exact five-path v2 scope,
   100k CPU/90-minute cap and nested development-only interpretation.
-- [ ] Receive exact section26 approval before new L0 stopping/learning/feature code.
+- [x] Receive exact section26 approval: “批准第26节全部范围，按A→B→C执行”.
+- [x] Implement only five approved paths/append-only registration; old225 rows/root fields unchanged.
+- [x]429 full offline tests pass (15 new/no skips), freeze new sources before real-data A.
 - [ ] A: synthetic/native real equivalence; pending attribution and boundary controls;
   check honest headroom and report evidence/failures to user.
 - [ ] B: query-isolated cheap/geometry/Tri feature/learning/calibration ablations;

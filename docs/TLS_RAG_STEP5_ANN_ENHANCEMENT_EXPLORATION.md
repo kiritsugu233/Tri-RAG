@@ -6,7 +6,8 @@
 **当前状态（2026-10-30）：用户要求深入方案2；只读复审及下一版具体提案见第25–26节。
 已核验507项封存和15744次计时输出；未来质量oracle的空间在同query实测定价下仍存在。
 三条额外损失query在停前top10稳定，且有未评分pending邻居；关联尚非因果。
-下一版新增受保护实现/训练/付费Tri的精确范围待批准，不把历史开发交叉验证称独立认证。
+用户随后批准第26节全部精确范围（第27节）；新版本正在合成/离线验证，真实数据
+阶段尚未开始。不把历史开发交叉验证称独立认证。
 方案2首轮已完成（第22–24节）：414项测试、512条真实
 暂停恢复检查通过；连续停止oracle有条件空间。廉价规则实测快23.3%，但质量区间
 越界，仍不确定；Tri增量尚未测量，不自动训练/扩规模。
@@ -2105,7 +2106,7 @@ G比S好，应归因为新增几何，不能归因为Tri。rho=0消融还可区�
 独立价值仍未知。应先消除暂停语义混淆，再按实际费用检验信息增量。不需要A800，
 也不应凭已有oracle结果直接进入大数据/完整RAG/adapter训练。
 
-## 26. 方案2 v2 深入验证提案：边界归因、付费增量、开发稳定性（待精确批准）
+## 26. 方案2 v2 深入验证提案：边界归因、付费增量、开发稳定性（随后已批准）
 
 ### 26.1 精确新增路径与必要性
 
@@ -2242,3 +2243,54 @@ RSS/额外存储/page faults，不只看平均ndis。影子/免费消融仅作�
 前段失败按上述门槛终止后段，未执行的项标not_run。新增源/配置/测试绑定新namespace，
 所有旧225项字节/登记不变。原始记录保留本地不可覆盖新目录，过程/失败/结果统一
 追加本文，更新STATUS/IMPLEMENTATION_PLAN；检查后按常设授权提交推送既有Step5分支。
+
+## 27. 方案2 v2 精确授权与执行前验证（2026-10-30）
+
+用户对第26节精确五路径/CPU100k/768历史query/90分钟问题实际回复：
+
+> 批准第26节全部范围，按A→B→C执行
+
+批准已记录于机器登记`ann_continuation_v2_authorization`，只追加五路径及真实授权。
+旧225项登记/根字段逐值核对未变；人类保护表本身也为L0，未扩展其原SHA批准范围，
+一次初始追加说明触发保护检查后，已完整撤回该自有说明，未刷新任何旧行SHA。
+最终登记只改批准的新命名空间，不修改旧科学实现/依赖版本/源绑定/冻结结果。
+
+新native包含固定v1核，额外接口只排空当前已取出的邻接表、读诊断状态及执行冻结
+树。整邻接表与批边界暂停在合成图/重复点/零距上最终FAISS输出及调用序列逐位
+相同；只读快照/诊断不改活状态。树导出遵循sklearn的float32输入分支约定，避免
+Python/native比较阈值时出现隐蔽差异。选择性Tri跳过分支和真实worker输出已验证。
+
+隔离venv新增scikit-learn1.6.1、joblib1.5.3、threadpoolctl3.7.0；原NumPy1.26.4、
+SciPy1.13.0、FAISS1.8.0及所有仓库依赖文件保持不变。首轮针对性14项测试通过；
+补入合并检查点的训练/预测/校准测试后，全量429项通过（15项新增、无跳过），最终
+56.701秒。进入真实数据前的新四项L0哈希已冻结；230项保护检查及旧225行/根字段
+逐值比较通过。校准残差只覆盖允许停止的ndis>=512状态，按query取最大，再由cal/
+select检查完整策略；不让不可停止的早期状态扭曲边界。模型/几何在最低工作量之前
+不调用，仍付快照维护可见历史；选择性Tri按实际门控估价并最终真实计时。
+预检日志与版本/源收据保留`runs/ann-continuation-v2-preflight-20261030-v1`。
+这时尚无真实ANN阶段结果；当前学习仅用于合成回归。
+
+执行命令（所有阶段用相同单线程环境；先A，审核后B，审核后C）：
+
+```bash
+cd /Users/guanghongxu/Query-Adaptive-Tri-RAG
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
+export PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:src
+export STEP5_ROUTE1_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/route1.dylib
+export STEP5_COMPARATORS_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/comparators_v2.dylib
+export STEP5_CONTINUATION_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v1.dylib
+export STEP5_CONTINUATION_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v2.dylib
+/private/tmp/step5-ann-enhancement-env-20261028/bin/python -m unittest discover -s tests -v
+python3 scripts/check_code_protection.py
+/private/tmp/step5-ann-enhancement-env-20261028/bin/python scripts/run_tls_rag_step5_ann_continuation_v2.py \
+  --phase A --output runs/ann-continuation-v2-20261030-v1 \
+  --headers /private/tmp/step5-ann-enhancement-native-20261028/faiss-1.8.0 \
+  --omp-include /private/tmp/step5-ann-enhancement-native-20261028/include
+/private/tmp/step5-ann-enhancement-env-20261028/bin/python scripts/run_tls_rag_step5_ann_continuation_v2.py \
+  --phase B --output runs/ann-continuation-v2-20261030-v1
+/private/tmp/step5-ann-enhancement-env-20261028/bin/python scripts/run_tls_rag_step5_ann_continuation_v2.py \
+  --phase C --output runs/ann-continuation-v2-20261030-v1
+```
+
+命令不代表后续阶段已执行；A的真实成本/质量条件门槛必须先开放B，四fold封存才可
+运行C。各阶段失败文件、累计计算秒数及逐query输出另存，不覆盖旧v1记录。

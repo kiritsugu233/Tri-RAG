@@ -17,7 +17,9 @@ All3 report losses had stable top10 at the preceding checkpoint and unscored pen
 neighbors; causation is not established. No new ANN/fit/paid Tri run was made.
 Section26 proposes exactly five new continuation_v2 paths: pause-boundary attribution,
 cheap/geometry/Tri learned stopping and paid end-to-end nested development checks.
-The exact scope question is pending; do not implement before its reply. All768 locally
+Actual exact reply: “批准第26节全部范围，按A→B→C执行”. The five-file v2
+namespace passes429 offline tests (15 new/no skips); initial sources are frozen before real phaseA.
+All768 locally
 available queries were historically opened; cross-validation cannot restore independence.
 Local CPU100k only, proposed90-minute scientific cap; no A800/SSH/1M/adapter/routes3/4.
 

@@ -1,6 +1,6 @@
 # Status
 
-## Current: deeper route2 readonly review complete; exact v2 scope pending (2026-10-30)
+## Current: deeper route2 exact v2 scope approved; synthetic validation in progress (2026-10-30)
 
 - User requests deeper route2 exploration, repeated checks and results/analysis after
   each stage. Same living journal sections25–26 records the review and concrete proposal.
@@ -16,14 +16,15 @@
   equally expressive same-input geometry controls; no stopping theorem follows from it.
 - Proposed five continuation_v2 paths cover whole-neighbor-list boundary controls,
   lightweight learned stopping, cheap/geometry/Tri paid ablations and4-fold nested
-  development checks on768 historically opened queries. Exact approval question pending.
-  Old first-trial approval excluded training/paid Tri;225 protected entries remain unchanged.
+  development checks on768 historically opened queries. Actual reply: “批准第26节全部范围，按A→B→C执行”.
+  Only these new five files/authorization append;225 prior protected entries remain unchanged.
 - Proposed local CPU100k/90-minute scientific cap, no GPU/1M/adapter/routes3/4.
   Positive development evidence would still need fresh independent external queries.
 - Readonly diagnostic artifacts: runs/ann-continuation-review-20261030-v1;
   original result SHA and artifact SHAs/assumptions in journal section25.
-- Verification commands: `python3 scripts/check_code_protection.py` and
-  `git diff --check`; prior414-test result retained, no new implementation to regression-test.
+- Full429 offline tests pass (15 new, no skips, final56.701s), initial new hashes frozen.
+  Frozen v1 kernel reused with new boundary/diagnostic/tree endpoints; real phaseA follows.
+  Protection230 passes; exact staged commands and validation evidence in journal section27.
 
 ## Current: route2 first trial complete; headroom positive, cheap-rule quality inconclusive (2026-10-30)
 

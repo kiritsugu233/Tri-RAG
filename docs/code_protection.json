@@ -1527,6 +1527,35 @@
       "path": "scripts/run_tls_rag_step5_ann_continuation_v1.py",
       "level": "L1",
       "reason": "User-approved section22 route2 first-trial namespace; persistent search/stopping/role/cost semantics inherit scoped L0; all prior sources frozen"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_ann_continuation_v2.py",
+      "level": "L0",
+      "reason": "Approved route2 v2 section26 development namespace; old continuation/search/law contracts unchanged; actual exact-scope consent recorded",
+      "sha256": "e72fa99ec9f3a329c1e9c0ca39b0cf0ddc46566edea13998b05e1d28e235b969"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_ann_continuation_v2.cpp",
+      "level": "L0",
+      "reason": "Approved route2 v2 section26 development namespace; old continuation/search/law contracts unchanged; actual exact-scope consent recorded",
+      "sha256": "1252e002ac7d4d603b0ca5cf5eaf9709a3a8025a32428702a1abd5e45a03d7d8"
+    },
+    {
+      "path": "configs/tls_rag_step5_ann_continuation_v2.json",
+      "level": "L0",
+      "reason": "Approved route2 v2 section26 development namespace; old continuation/search/law contracts unchanged; actual exact-scope consent recorded",
+      "sha256": "7131d2bb455491e6982d1e80a594188fa451dc4e0992c43f9ed21ebfd79cc825"
+    },
+    {
+      "path": "tests/test_tls_rag_step5_ann_continuation_v2.py",
+      "level": "L0",
+      "reason": "Approved route2 v2 section26 development namespace; old continuation/search/law contracts unchanged; actual exact-scope consent recorded",
+      "sha256": "bbd2cad2ce59e9bb8ecd2a6e44dccc7198199e6b657850459ce1c592a30f1f85"
+    },
+    {
+      "path": "scripts/run_tls_rag_step5_ann_continuation_v2.py",
+      "level": "L1",
+      "reason": "Approved route2 v2 section26 development namespace; old continuation/search/law contracts unchanged; actual exact-scope consent recorded"
     }
   ],
   "approved_change_history": [
@@ -1985,5 +2014,20 @@
       "scripts/run_tls_rag_step5_ann_continuation_v1.py"
     ],
     "initial_hashes": "Four initial new L0 hashes frozen after414 passing offline tests including14 route2 real-native/worker tests; before any real-data run. All220 prior rows and prior root metadata unchanged."
+  },
+  "ann_continuation_v2_authorization": {
+    "date": "2026-10-30",
+    "user_consent": "批准第26节全部范围，按A→B→C执行",
+    "proposal": "docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md section26 atdac6c79",
+    "question_reference": "Actual current-user answer to exact five-path question, local CPU100k/768 historically opened queries/90min, A boundary attribution then B learned cheap/geometry/paidTri then C real cost/stability",
+    "scope": [
+      "mechanism/tls_rag_step5_ann_continuation_v2.py",
+      "mechanism/tls_rag_step5_ann_continuation_v2.cpp",
+      "configs/tls_rag_step5_ann_continuation_v2.json",
+      "tests/test_tls_rag_step5_ann_continuation_v2.py",
+      "scripts/run_tls_rag_step5_ann_continuation_v2.py"
+    ],
+    "limits": "No adapter/1M/SSH/index rebuild/new embeddings/routes3/4/old protected role access or formal independence claim. Only isolated fixed sklearn1.6.1 installation; existing dependency pins unchanged.",
+    "initial_hashes": "Initial new L0 hashes frozen after429 passing offline tests including15 new v2 tests and actual native/synthetic worker checks; before real phaseA. All225 prior entries/root values unchanged. Full logs retained locally."
   }
 }
