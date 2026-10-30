@@ -340,5 +340,205 @@
     "after_lines": 243,
     "removed_repeated_history_lines": 4471,
     "historical_recovery_commit": "50defc35bc9f42f5b24d2dedf5f45a89e51257ad"
+  },
+  "approved_guard_repair": {
+    "date": "2026-10-30",
+    "parent_commit": "61b92d7871ca3da703c137abb4d49cdf9eca487e",
+    "user_consent": "批准执行，执行完毕后更新github上的repo，不要另起branch，直接在step5的分支上提交",
+    "approved_paths": [
+      "scripts/check_code_protection.py",
+      "tests/test_code_protection.py",
+      "docs/CODE_PROTECTION.md",
+      "docs/code_protection.json"
+    ],
+    "status": "completed",
+    "historical_guard_counterexample_preserved": true,
+    "native_suffixes": [
+      ".c",
+      ".cc",
+      ".cpp",
+      ".cxx",
+      ".h",
+      ".hh",
+      ".hpp",
+      ".hxx"
+    ],
+    "case_insensitive_native_suffixes": true,
+    "discovery_directories": [
+      "src",
+      "tests",
+      "scripts",
+      "configs",
+      "mechanism"
+    ],
+    "fixture_scenarios": {
+      "native_extensions_including_uppercase": 10,
+      "git_states": [
+        "tracked",
+        "untracked",
+        "ignored"
+      ],
+      "native_combinations": 30,
+      "ignored_python_directories": 5,
+      "excluded_ignored_payload_directories": [
+        "runs",
+        "data",
+        ".venv",
+        "archives"
+      ],
+      "inventory_reads_payload_bytes": false
+    },
+    "test_organization": {
+      "existing_test_methods_retained": 10,
+      "added_parameterized_test_methods": 1,
+      "governance_test_methods": 11,
+      "expected_full_test_methods": 430
+    },
+    "human_register_added_paths": [
+      "docs/TLS_RAG_STEP5_COST_AWARE_REVIEW.md",
+      "docs/step5_tri_feature_cost_review_evidence.json",
+      "scripts/analyze_tls_rag_step5_action_costs.py",
+      "docs/TLS_RAG_STEP5_ACTION_COST_SCREEN.md",
+      "docs/step5_action_cost_screen_evidence.json",
+      "docs/TLS_RAG_STEP5_REUSE_AUDIT.md",
+      "mechanism/tls_rag_step5_reuse_probe.py",
+      "tests/test_tls_rag_step5_reuse_probe.py",
+      "scripts/profile_tls_rag_step5_reuse_probe.py",
+      "docs/TLS_RAG_STEP5_REUSE_PROBE_PROTOCOL.md",
+      "docs/TLS_RAG_STEP5_REUSE_PROBE_RESULTS.md",
+      "docs/step5_reuse_probe_evidence.json",
+      "docs/TLS_RAG_STEP5_BASELINE_HEADROOM_PROPOSAL.md",
+      "mechanism/tls_rag_step5_baseline_headroom.py",
+      "tests/test_tls_rag_step5_baseline_headroom.py",
+      "scripts/run_tls_rag_step5_baseline_headroom.py",
+      "docs/TLS_RAG_STEP5_BASELINE_HEADROOM_PROTOCOL.md",
+      "docs/TLS_RAG_STEP5_BASELINE_HEADROOM_RESULTS.md",
+      "docs/step5_baseline_headroom_evidence.json",
+      "docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md",
+      "mechanism/tls_rag_step5_ann_enhancement.py",
+      "mechanism/tls_rag_step5_ann_enhancement.cpp",
+      "configs/tls_rag_step5_ann_enhancement_v1.json",
+      "tests/test_tls_rag_step5_ann_enhancement.py",
+      "scripts/run_tls_rag_step5_ann_enhancement.py",
+      "mechanism/tls_rag_step5_ann_comparators_v2.py",
+      "mechanism/tls_rag_step5_ann_comparators_v2.cpp",
+      "configs/tls_rag_step5_ann_comparators_v2.json",
+      "tests/test_tls_rag_step5_ann_comparators_v2.py",
+      "scripts/run_tls_rag_step5_ann_comparators_v2.py",
+      "mechanism/tls_rag_step5_ann_continuation_v1.py",
+      "mechanism/tls_rag_step5_ann_continuation_v1.cpp",
+      "configs/tls_rag_step5_ann_continuation_v1.json",
+      "tests/test_tls_rag_step5_ann_continuation_v1.py",
+      "scripts/run_tls_rag_step5_ann_continuation_v1.py",
+      "mechanism/tls_rag_step5_ann_continuation_v2.py",
+      "mechanism/tls_rag_step5_ann_continuation_v2.cpp",
+      "configs/tls_rag_step5_ann_continuation_v2.json",
+      "tests/test_tls_rag_step5_ann_continuation_v2.py",
+      "scripts/run_tls_rag_step5_ann_continuation_v2.py",
+      "README.md",
+      "docs/REPOSITORY_MAP.md",
+      "docs/REPOSITORY_CLEANUP_REVIEW.md",
+      "docs/repository_cleanup_evidence.json"
+    ],
+    "changed_protected_hashes": [
+      {
+        "path": "docs/CODE_PROTECTION.md",
+        "before_sha256": "5ffd2d221fe98c73bfb4e4559880c6efdb92afceb59e35055d85c47a5722ccf3",
+        "after_sha256": "10bde19c8c753e27fb2795c1bd70f6e82e760b4128670593a1bed3510977c23a"
+      },
+      {
+        "path": "scripts/check_code_protection.py",
+        "before_sha256": "cbacdf02c241be8a2969fbe0305289dae1604861a86ec0374ffc39edde43d2f0",
+        "after_sha256": "b5bf08ce74ddd760d13bf79eaa259f39440e474cf6b4fda7eb40a44bc841da57"
+      },
+      {
+        "path": "tests/test_code_protection.py",
+        "before_sha256": "6092a32b73e02f96070cb4d55cba01416b05205b0c2c92b5137d2433457aa76b",
+        "after_sha256": "7e61f38828718437fe544bd0c1aa74f0ae5c7e8cd38f9f15572e9420cac98e01"
+      }
+    ],
+    "suite_restructuring_B_executed": false,
+    "validation": {
+      "source_binding_namespaces": {
+        "step5_ann": 55,
+        "step4_a800": 22,
+        "continuation_v2": 13,
+        "comparators_v2": 8,
+        "route1": 7,
+        "baseline_headroom": 10
+      },
+      "unchanged_binding_namespaces": [
+        "step5_ann",
+        "continuation_v2",
+        "comparators_v2",
+        "route1",
+        "baseline_headroom"
+      ],
+      "source_binding_differences": {
+        "step4_a800": {
+          "scripts/check_code_protection.py": {
+            "before": "cbacdf02c241be8a2969fbe0305289dae1604861a86ec0374ffc39edde43d2f0",
+            "after": "b5bf08ce74ddd760d13bf79eaa259f39440e474cf6b4fda7eb40a44bc841da57"
+          }
+        }
+      },
+      "compatibility_note": "Step4 A800 source binding includes the approved changed guard. Its computed source identity changes; old artifacts/hashes/loaders remain untouched and historical replay must use its original exact commit. All five captured Step5 binding maps remain identical. The earlier blanket unchanged-binding statement is corrected.",
+      "implementation_files_compared": 165,
+      "changed_implementation_paths": [
+        "scripts/check_code_protection.py",
+        "tests/test_code_protection.py"
+      ],
+      "existing_levels_unchanged": 234,
+      "human_register_coverage": 234,
+      "only_approved_hashes_changed": 3,
+      "baseline_failure": {
+        "log": "/private/tmp/tri-rag-protection-A-baseline-failure-20261030.log",
+        "log_sha256": "3c3f9fe038201e371efefb8c3df4bd46d6d59979c38b414c2359394baa46cc65",
+        "methods": 11,
+        "passed_methods": 9,
+        "skipped": 0,
+        "seconds": 0.061,
+        "exit_code": 1,
+        "failed_methods": 2,
+        "subtest_and_method_failure_records": 32,
+        "guard_version": "61b92d7871ca3da703c137abb4d49cdf9eca487e",
+        "new_tests_in_disposable_copy": true
+      },
+      "focused": {
+        "log": "/private/tmp/tri-rag-protection-A-focused-20261030.log",
+        "log_sha256": "b65dd8c2b2eb96d78cdf04ce8bf7bec9567ba42a6c4912b80f4423c341456533",
+        "methods": 11,
+        "passed_methods": 11,
+        "skipped": 0,
+        "seconds": 0.061,
+        "exit_code": 0
+      },
+      "full_suite": {
+        "log": "/private/tmp/tri-rag-protection-A-full-20261030.log",
+        "log_sha256": "3caebae495dafedf247eedf494b4dabe60bb5f1c0a9a3b60000e1e57a2373dd6",
+        "methods": 430,
+        "passed_methods": 430,
+        "skipped": 0,
+        "seconds": 64.757,
+        "exit_code": 0
+      },
+      "protection_check": {
+        "passed": true,
+        "registered": 234,
+        "L0": 161,
+        "L1": 70,
+        "L2": 3
+      },
+      "markdown_check": {
+        "files": 61,
+        "relative_links_missing": 0,
+        "unbalanced_fences": 0
+      },
+      "diff_whitespace_passed": true,
+      "commands": {
+        "focused": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p test_code_protection.py -v",
+        "full_suite": "TRI_RAG_TEST_PYTHON=/private/tmp/step5-ann-enhancement-env-20261028/bin/python STEP5_ROUTE1_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/route1.dylib STEP5_COMPARATORS_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/comparators_v2.dylib STEP5_CONTINUATION_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v1.dylib STEP5_CONTINUATION_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v2.dylib sh scripts/run_tests.sh"
+      }
+    }
   }
 }

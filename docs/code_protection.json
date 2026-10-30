@@ -267,7 +267,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "5ffd2d221fe98c73bfb4e4559880c6efdb92afceb59e35055d85c47a5722ccf3"
+      "sha256": "10bde19c8c753e27fb2795c1bd70f6e82e760b4128670593a1bed3510977c23a"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -475,7 +475,7 @@
       "path": "scripts/check_code_protection.py",
       "level": "L0",
       "reason": "Read-only governance guard; disabling or weakening requires scoped consent",
-      "sha256": "cbacdf02c241be8a2969fbe0305289dae1604861a86ec0374ffc39edde43d2f0"
+      "sha256": "b5bf08ce74ddd760d13bf79eaa259f39440e474cf6b4fda7eb40a44bc841da57"
     },
     {
       "path": "scripts/run_tests.sh",
@@ -1041,7 +1041,7 @@
       "path": "tests/test_code_protection.py",
       "level": "L0",
       "reason": "Regression/conformance expectations protect frozen scientific behavior",
-      "sha256": "6092a32b73e02f96070cb4d55cba01416b05205b0c2c92b5137d2433457aa76b"
+      "sha256": "7e61f38828718437fe544bd0c1aa74f0ae5c7e8cd38f9f15572e9420cac98e01"
     },
     {
       "path": "tests/test_config_projection.py",
@@ -1907,6 +1907,38 @@
       ],
       "record": "STATUS.md",
       "registry_change": "Maintained branch, scoped routing-document hashes and this approval record only; existing classifications/approval controls unchanged."
+    },
+    {
+      "date": "2026-10-30",
+      "parent_commit": "61b92d7871ca3da703c137abb4d49cdf9eca487e",
+      "user_consent": "批准执行，执行完毕后更新github上的repo，不要另起branch，直接在step5的分支上提交",
+      "scope": "中文方案 A：仅修复原生 C/C++/头文件及 ignored mechanism 发现缺口、补充参数化治理回归、同步人工保护表和对应批准哈希；测试大规模精简方案 B 未获批准。",
+      "approved_paths": [
+        "scripts/check_code_protection.py",
+        "tests/test_code_protection.py",
+        "docs/CODE_PROTECTION.md",
+        "docs/code_protection.json"
+      ],
+      "protected_changes": [
+        {
+          "path": "docs/CODE_PROTECTION.md",
+          "before_sha256": "5ffd2d221fe98c73bfb4e4559880c6efdb92afceb59e35055d85c47a5722ccf3",
+          "after_sha256": "10bde19c8c753e27fb2795c1bd70f6e82e760b4128670593a1bed3510977c23a"
+        },
+        {
+          "path": "scripts/check_code_protection.py",
+          "before_sha256": "cbacdf02c241be8a2969fbe0305289dae1604861a86ec0374ffc39edde43d2f0",
+          "after_sha256": "b5bf08ce74ddd760d13bf79eaa259f39440e474cf6b4fda7eb40a44bc841da57"
+        },
+        {
+          "path": "tests/test_code_protection.py",
+          "before_sha256": "6092a32b73e02f96070cb4d55cba01416b05205b0c2c92b5137d2433457aa76b",
+          "after_sha256": "7e61f38828718437fe544bd0c1aa74f0ae5c7e8cd38f9f15572e9420cac98e01"
+        }
+      ],
+      "record": "docs/REPOSITORY_CLEANUP_REVIEW.md#proposal-a-protected-guard-and-register-repair",
+      "registry_change": "Only three approved L0 hashes and this actual-consent record; all existing classifications, scientific hashes and prior approval history unchanged.",
+      "compatibility_note": "A800 source binding includes the explicitly approved changed checker: that computed identity changes. Preserve old artifacts/hashes/loaders and replay at their original exact commit; no bundle migration. All five captured Step5 source maps are unchanged."
     }
   ],
   "maintained_branch": "codex/tls-rag-step5-ann",

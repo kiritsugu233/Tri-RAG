@@ -30,7 +30,8 @@ milestones are indexed in the [repository map](docs/REPOSITORY_MAP.md).
 
 The current repository review/cleanup is in
 [REPOSITORY_CLEANUP_REVIEW](docs/REPOSITORY_CLEANUP_REVIEW.md).
-Its L0 changes are proposals pending user consent. Old prompts, plan items and
+Its four-path guard/register repair A was approved and implemented; see STATUS
+for verification. Large-scale test consolidation B remains unapproved. Old prompts, plan items and
 historical approvals are not a fresh execution request.
 
 ## Validation and history

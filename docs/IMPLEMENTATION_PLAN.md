@@ -19,7 +19,12 @@ Unchecked historical items are not execution authorization.
   document default-environment missing-FAISS failure rather than hiding it.
 - [x] Make the L1 test launcher independent of cwd with explicit interpreter choice;
   final full rerun from `/private/tmp`:429/429,0 skips. Protection/link/binding checks pass.
-- [ ] Obtain exact four-path L0 approval before checker/register repair (review A).
+- [x] Obtain exact four-path L0 approval for checker/register repair (review A).
+- [x] Repair native/ignored mechanism discovery and synchronize 44 missing table entries.
+- [x] Preserve all 10 governance tests; add one parameterized native/Git-state regression.
+- [x] Full fixed-environment suite:430/430,0 skips; governance11/11;234 levels preserved.
+- [x] Document A800 guard-source identity consequence; five Step5 maps unchanged.
+- [x] Complete table/link/hash verification for same-branch Step5 synchronization.
 
 ## Scientific milestone index
 
@@ -38,7 +43,8 @@ Unchecked historical items are not execution authorization.
 
 ## Pending decisions and safety limits
 
-- [ ] User decision on the [guard/register repair](REPOSITORY_CLEANUP_REVIEW.md#proposal-a-protected-guard-and-register-repair).
+- [x] User approved the [guard/register repair A](REPOSITORY_CLEANUP_REVIEW.md#proposal-a-protected-guard-and-register-repair).
+- [ ] Large-scale test-suite restructuring B needs its own exact scope/approval.
 - [ ] Trained-support/OOD fallback remains unimplemented for continuation v2.
   A future repair needs its own L0 scope/version and evaluation; do not relabel
   the historical study as safe deployment or rerun protected data automatically.

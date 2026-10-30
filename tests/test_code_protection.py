@@ -3,6 +3,7 @@ import copy
 import hashlib
 import importlib.util
 from pathlib import Path
+import subprocess
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -72,9 +73,53 @@ class CodeProtectionTests(unittest.TestCase):
         self.assertTrue(any("symlink not allowed" in item for item in self.check()))
 
     def test_ignored_new_source_is_still_discovered(self):
-        (self.file.parent / "ignored_policy.py").write_text("value = 3\n")
-        with patch.object(guard.subprocess, "check_output", return_value=b"src/core.py\0"):
-            self.assertEqual(guard.inventory(self.root), {"src/core.py", "src/ignored_policy.py"})
+        expected = {"src/core.py"}
+        for directory in ("src", "tests", "scripts", "configs", "mechanism"):
+            with self.subTest(directory=directory):
+                path = self.root / directory / "ignored_policy.py"
+                path.parent.mkdir(exist_ok=True)
+                path.write_text("value = 3\n")
+                expected.add(path.relative_to(self.root).as_posix())
+                with patch.object(guard.subprocess, "check_output", return_value=b"src/core.py\0"):
+                    self.assertEqual(guard.inventory(self.root), expected)
+
+    def test_native_inventory_respects_git_states_and_payload_exclusions(self):
+        subprocess.run(["git", "init", "-q", str(self.root)], check=True)
+        (self.root / ".gitignore").write_text(
+            "mechanism/ignored_*\nruns/\ndata/\n.venv/\narchives/\n"
+        )
+        cases, tracked, excluded = [], [], []
+        suffixes = (".c", ".cc", ".cpp", ".cxx", ".h", ".hh", ".hpp", ".hxx", ".C", ".HPP")
+        for state in ("tracked", "untracked", "ignored"):
+            for case, suffix in enumerate(suffixes):
+                directory = "mechanism" if state == "ignored" else "native"
+                name = f"{directory}/{state}_source_{case}{suffix}"
+                path = self.root / name
+                path.parent.mkdir(exist_ok=True)
+                path.write_text("// disposable native source\n")
+                cases.append((state, name))
+                if state == "tracked":
+                    tracked.append(name)
+        subprocess.run(["git", "-C", str(self.root), "add", "--", *tracked], check=True)
+        for directory in ("runs", "data", ".venv", "archives"):
+            name = directory + "/payload.cpp"
+            path = self.root / name
+            path.parent.mkdir()
+            path.write_text("// ignored payload: do not inspect\n")
+            excluded.append(name)
+        # Discovery only needs names/metadata, even for an ignored native file.
+        with patch.object(Path, "read_bytes", side_effect=AssertionError("inventory read payload bytes")):
+            discovered = guard.inventory(self.root)
+        errors = guard.check(self.root, self.registry)
+        for state, name in cases:
+            with self.subTest(state=state, path=name):
+                self.assertIn(name, discovered)
+                self.assertIn("unclassified implementation file: " + name, errors)
+        self.assertEqual(discovered, {"src/core.py", *(name for _, name in cases)})
+        for name in excluded:
+            with self.subTest(excluded=name):
+                self.assertNotIn(name, discovered)
+                self.assertTrue((self.root / name).is_file())
 
     def test_registry_self_hash_exception_is_explicit(self):
         document = self.root / "docs/code_protection.json"

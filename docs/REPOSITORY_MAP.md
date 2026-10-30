@@ -60,8 +60,11 @@ can invalidate an experiment even if an import scanner sees no current caller.
 Static unused-import leads include intentional re-exports: v2 runners import
 `metrics`, `save`, etc. through their mechanism modules. Do not apply automatic
 unused-import deletion or common-helper extraction to these frozen files.
-The only changed executable in this cleanup is the unbound L1 test launcher;
-all scientific namespace bindings are unchanged. See [review](REPOSITORY_CLEANUP_REVIEW.md).
+The initial navigation cleanup changed only the unbound L1 test launcher.
+The subsequently approved repair A also changes the governance guard/test.
+All five captured Step5 bindings stay unchanged; the historical A800 source list
+also binds the guard, so that identity changes. Keep old replay artifacts at their
+original commit; see [review](REPOSITORY_CLEANUP_REVIEW.md).
 
 ## Per-file implementation disposition
 
@@ -266,9 +269,8 @@ because they have no Python importers. No whole source file is approved for dele
 - [Living journal](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md) remains unchanged;
   read relevant sections rather than making every task preload it.
 - At the review baseline, L0 `docs/CODE_PROTECTION.md` omits40 machine-registered files.
-  This cleanup adds four L1 entries, also to be synchronized under proposal A.
-  Their actual levels still exist in `docs/code_protection.json`; synchronization
-  is proposed in the [cleanup review](REPOSITORY_CLEANUP_REVIEW.md).
+  Approved repair A synchronizes these plus the four new L1 entries, preserving
+  all machine levels. Details are in the [cleanup review](REPOSITORY_CLEANUP_REVIEW.md).
 - `artifacts/` has13 tracked historical result/witness files; preserved. JSON
   evidence under `docs/` is also preserved. Old results are not current run orders.
 - `runs/` and `data/` contain ignored runtime payloads (tracked `.gitkeep` only).

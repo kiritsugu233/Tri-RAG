@@ -10,5 +10,6 @@ Run `python3 scripts/check_code_protection.py` before editing and handoff.
 
 Step 5 continuation v2 A→B→C has completed with negative net-speed results and
 incomplete deployment safety. No new experiment or older role reopening is
-assigned by this template. The cleanup review's L0 proposals await explicit
-path/scope approval; passing the inventory check is not that approval.
+assigned by this template. Guard/register repair A was approved and implemented;
+see current STATUS for verification. Test-suite restructuring B remains unapproved.
+Further L0 changes still need exact path/scope consent.

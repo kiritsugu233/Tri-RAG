@@ -322,3 +322,74 @@ all old scientific files, seals, roles and governance rules remain unchanged.
 | `tests/test_tls_rag_step5_mechanism.py` | **L0** | Approved mechanism study; see reviewed plan |
 | `docs/TLS_RAG_STEP5_MECHANISM_PROTOCOL.md` | **L0** | Approved mechanism study; see reviewed plan |
 | `scripts/run_tls_rag_step5_mechanism.sh` | **L1** | Approved mechanism study; see reviewed plan |
+
+## 方案 A：原生源码保护补全与登记同步（2026-10-30）
+
+用户在收到四个精确 L0 路径的中文方案后明确批准：
+
+> 批准执行，执行完毕后更新github上的repo，不要另起branch，直接在step5的分支上提交
+
+批准范围限于 `scripts/check_code_protection.py`、`tests/test_code_protection.py`、
+本文件和 `docs/code_protection.json`。必要性、实际反例和验收证据见
+[方案 A 记录](REPOSITORY_CLEANUP_REVIEW.md#proposal-a-protected-guard-and-register-repair)。
+没有批准测试套件的大规模合并/删除，也没有改变任何科学算法、数据角色或已有等级。
+
+检查器现在通过 Git 清单识别 `.c/.cc/.cpp/.cxx/.h/.hh/.hpp/.hxx`（后缀大小写不敏感），
+并对 `src/tests/scripts/configs/mechanism` 补查被忽略的实现文件。原有 Python、shell、
+TOML、配置及 requirements 规则保留。被忽略的根目录 runs/data/依赖环境/archives
+不被递归遍历；检查器保持只读，不解包实验归档，不创建人类批准。
+
+兼容影响：最终核查确认 Step4 A800 的 22 路径来源清单含本次获批修改的保护脚本，
+因此 A800 新计算的来源身份会改变；之前“所有来源绑定不变”的概括不准确。
+历史包及其哈希、加载器保持原样，按原精确提交复现，不在当前分支刷新旧包哈希。
+当前五组 Step5 来源绑定保持一致；科学算法/配置本体均未修改。
+
+下表补齐原审查遗漏的 40 项及上一轮新增的 4 个 L1 文档/证据项。
+等级和理由直接取自既有机器清单；没有文件被降级或免除其继承的 L0 语义。
+
+| File | Level | Reason |
+| --- | --- | --- |
+| [docs/TLS_RAG_STEP5_COST_AWARE_REVIEW.md](../docs/TLS_RAG_STEP5_COST_AWARE_REVIEW.md) | **L1** | User-authorized planning-only cost-aware strategy review; no executable protocol or protected implementation approval |
+| [docs/step5_tri_feature_cost_review_evidence.json](../docs/step5_tri_feature_cost_review_evidence.json) | **L1** | Preserved synthetic profiling receipts and read-only development cost audit; scientific claims and approval changes inherit L0 |
+| [scripts/analyze_tls_rag_step5_action_costs.py](../scripts/analyze_tls_rag_step5_action_costs.py) | **L1** | Read-only cost-space diagnostics using observed development records and existing actual calls; non-deployable oracle only, no retrieval or scientific contract changes |
+| [docs/TLS_RAG_STEP5_ACTION_COST_SCREEN.md](../docs/TLS_RAG_STEP5_ACTION_COST_SCREEN.md) | **L1** | User-authorized action feasibility screen and follow-up scope proposal; not a frozen protocol or implementation approval |
+| [docs/step5_action_cost_screen_evidence.json](../docs/step5_action_cost_screen_evidence.json) | **L1** | Read-only oracle cost-space receipts from already-observed development data; no independent evaluation or measured new-pipeline claim |
+| [docs/TLS_RAG_STEP5_REUSE_AUDIT.md](../docs/TLS_RAG_STEP5_REUSE_AUDIT.md) | **L1** | User-requested read-only scan/distance/candidate reuse audit and scope clarification; proposed implementations remain subject to L0 approval |
+| [mechanism/tls_rag_step5_reuse_probe.py](../mechanism/tls_rag_step5_reuse_probe.py) | **L0** | Approved isolated exact-distance cache and lazy stable selection; scientific geometry and query-bound cache contract |
+| [tests/test_tls_rag_step5_reuse_probe.py](../tests/test_tls_rag_step5_reuse_probe.py) | **L0** | Approved offline exact-equality, ties, distance-count and query-isolation regressions for reuse probe |
+| [scripts/profile_tls_rag_step5_reuse_probe.py](../scripts/profile_tls_rag_step5_reuse_probe.py) | **L1** | Approved local synthetic CPU timing/memory orchestration; inherits frozen reuse probe protocol |
+| [docs/TLS_RAG_STEP5_REUSE_PROBE_PROTOCOL.md](../docs/TLS_RAG_STEP5_REUSE_PROBE_PROTOCOL.md) | **L0** | Approved local synthetic reuse probe input, fairness, timing and memory contract |
+| [docs/TLS_RAG_STEP5_REUSE_PROBE_RESULTS.md](../docs/TLS_RAG_STEP5_REUSE_PROBE_RESULTS.md) | **L1** | Actual authorized local synthetic CPU reuse probe results and measured limitations; no new scientific settings or follow-on run authorization |
+| [docs/step5_reuse_probe_evidence.json](../docs/step5_reuse_probe_evidence.json) | **L1** | Preserved complete timing/memory/equality receipts from the approved synthetic CPU probe; earlier artifacts and source bindings remain unchanged |
+| [docs/TLS_RAG_STEP5_BASELINE_HEADROOM_PROPOSAL.md](../docs/TLS_RAG_STEP5_BASELINE_HEADROOM_PROPOSAL.md) | **L1** | User-requested read-only scope proposal to complete original-space/fixed-M baselines and perfect-information cost headroom; not implementation or input-access approval |
+| [mechanism/tls_rag_step5_baseline_headroom.py](../mechanism/tls_rag_step5_baseline_headroom.py) | **L0** | Approved observed-input access, original/projected baselines, selection sealing and diagnostic perfect-information cost contract |
+| [tests/test_tls_rag_step5_baseline_headroom.py](../tests/test_tls_rag_step5_baseline_headroom.py) | **L0** | Approved baseline geometry/ties, observed-input gates, cost-oracle and immutable-output CPU regressions |
+| [scripts/run_tls_rag_step5_baseline_headroom.py](../scripts/run_tls_rag_step5_baseline_headroom.py) | **L1** | Approved local CPU/readonly export orchestration inheriting baseline-headroom protocol |
+| [docs/TLS_RAG_STEP5_BASELINE_HEADROOM_PROTOCOL.md](../docs/TLS_RAG_STEP5_BASELINE_HEADROOM_PROTOCOL.md) | **L0** | Approved real-input baseline/headroom scientific comparison, data roles, quality and cost protocol |
+| [docs/TLS_RAG_STEP5_BASELINE_HEADROOM_RESULTS.md](../docs/TLS_RAG_STEP5_BASELINE_HEADROOM_RESULTS.md) | **L1** | Actual authorized observed-text CPU baseline/free-oracle results and limitations; no policy retuning or new experiments |
+| [docs/step5_baseline_headroom_evidence.json](../docs/step5_baseline_headroom_evidence.json) | **L1** | Preserved compact quality, all timing samples, memory, source/input bindings and solver receipts from the approved baseline/headroom comparison |
+| [docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md](../docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md) | **L1** | User-requested living research plan and append-only process/result journal for three Tri-assisted ANN feasibility routes; proposed settings are not an executable frozen protocol or scoped L0 implementation consent |
+| [mechanism/tls_rag_step5_ann_enhancement.py](../mechanism/tls_rag_step5_ann_enhancement.py) | **L0** | Approved route1 observed-input, source sealing, shadow/quality/cost screening and selection contract; routes2/3 execution deferred |
+| [mechanism/tls_rag_step5_ann_enhancement.cpp](../mechanism/tls_rag_step5_ann_enhancement.cpp) | **L0** | Approved isolated native HNSW no-op recording and route1 risk-distance comparison; existing algorithms/libraries unchanged |
+| [configs/tls_rag_step5_ann_enhancement_v1.json](../configs/tls_rag_step5_ann_enhancement_v1.json) | **L0** | Approved new route1 settings, data roles, costs, seeds and resource limits; routes2/3 inactive |
+| [tests/test_tls_rag_step5_ann_enhancement.py](../tests/test_tls_rag_step5_ann_enhancement.py) | **L0** | Approved route1 geometry, native equality, information-isolation, accounting and failure regressions |
+| [scripts/run_tls_rag_step5_ann_enhancement.py](../scripts/run_tls_rag_step5_ann_enhancement.py) | **L1** | Approved bounded route1 CPU runner, independent native build and immutable evidence; routes2/3 not executable |
+| [mechanism/tls_rag_step5_ann_comparators_v2.py](../mechanism/tls_rag_step5_ann_comparators_v2.py) | **L0** | User-approved section16 route1 v2 comparator namespace; probability/numeric/cache/role semantics inherit L0; v1 and routes2/3 unchanged |
+| [mechanism/tls_rag_step5_ann_comparators_v2.cpp](../mechanism/tls_rag_step5_ann_comparators_v2.cpp) | **L0** | User-approved section16 route1 v2 comparator namespace; probability/numeric/cache/role semantics inherit L0; v1 and routes2/3 unchanged |
+| [configs/tls_rag_step5_ann_comparators_v2.json](../configs/tls_rag_step5_ann_comparators_v2.json) | **L0** | User-approved section16 route1 v2 comparator namespace; probability/numeric/cache/role semantics inherit L0; v1 and routes2/3 unchanged |
+| [tests/test_tls_rag_step5_ann_comparators_v2.py](../tests/test_tls_rag_step5_ann_comparators_v2.py) | **L0** | User-approved section16 route1 v2 comparator namespace; probability/numeric/cache/role semantics inherit L0; v1 and routes2/3 unchanged |
+| [scripts/run_tls_rag_step5_ann_comparators_v2.py](../scripts/run_tls_rag_step5_ann_comparators_v2.py) | **L1** | User-approved section16 route1 v2 comparator namespace; probability/numeric/cache/role semantics inherit L0; v1 and routes2/3 unchanged |
+| [mechanism/tls_rag_step5_ann_continuation_v1.py](../mechanism/tls_rag_step5_ann_continuation_v1.py) | **L0** | User-approved section22 route2 first-trial namespace; persistent search/stopping/role/cost semantics inherit scoped L0; all prior sources frozen |
+| [mechanism/tls_rag_step5_ann_continuation_v1.cpp](../mechanism/tls_rag_step5_ann_continuation_v1.cpp) | **L0** | User-approved section22 route2 first-trial namespace; persistent search/stopping/role/cost semantics inherit scoped L0; all prior sources frozen |
+| [configs/tls_rag_step5_ann_continuation_v1.json](../configs/tls_rag_step5_ann_continuation_v1.json) | **L0** | User-approved section22 route2 first-trial namespace; persistent search/stopping/role/cost semantics inherit scoped L0; all prior sources frozen |
+| [tests/test_tls_rag_step5_ann_continuation_v1.py](../tests/test_tls_rag_step5_ann_continuation_v1.py) | **L0** | User-approved section22 route2 first-trial namespace; persistent search/stopping/role/cost semantics inherit scoped L0; all prior sources frozen |
+| [scripts/run_tls_rag_step5_ann_continuation_v1.py](../scripts/run_tls_rag_step5_ann_continuation_v1.py) | **L1** | User-approved section22 route2 first-trial namespace; persistent search/stopping/role/cost semantics inherit scoped L0; all prior sources frozen |
+| [mechanism/tls_rag_step5_ann_continuation_v2.py](../mechanism/tls_rag_step5_ann_continuation_v2.py) | **L0** | Approved route2 v2 section26 development namespace; old continuation/search/law contracts unchanged; actual exact-scope consent recorded |
+| [mechanism/tls_rag_step5_ann_continuation_v2.cpp](../mechanism/tls_rag_step5_ann_continuation_v2.cpp) | **L0** | Approved route2 v2 section26 development namespace; old continuation/search/law contracts unchanged; actual exact-scope consent recorded |
+| [configs/tls_rag_step5_ann_continuation_v2.json](../configs/tls_rag_step5_ann_continuation_v2.json) | **L0** | Approved route2 v2 section26 development namespace; old continuation/search/law contracts unchanged; actual exact-scope consent recorded |
+| [tests/test_tls_rag_step5_ann_continuation_v2.py](../tests/test_tls_rag_step5_ann_continuation_v2.py) | **L0** | Approved route2 v2 section26 development namespace; old continuation/search/law contracts unchanged; actual exact-scope consent recorded |
+| [scripts/run_tls_rag_step5_ann_continuation_v2.py](../scripts/run_tls_rag_step5_ann_continuation_v2.py) | **L1** | Approved route2 v2 section26 development namespace; old continuation/search/law contracts unchanged; actual exact-scope consent recorded |
+| [README.md](../README.md) | **L1** | Repository landing page and current navigation; no executable or scientific contract |
+| [docs/REPOSITORY_MAP.md](../docs/REPOSITORY_MAP.md) | **L1** | Repository-wide lifecycle/dependency map; authoritative levels remain in protection registry |
+| [docs/REPOSITORY_CLEANUP_REVIEW.md](../docs/REPOSITORY_CLEANUP_REVIEW.md) | **L1** | 2026-10-30 structural review, deletion analysis and pending exact L0 proposals; no consent implied |
+| [docs/repository_cleanup_evidence.json](../docs/repository_cleanup_evidence.json) | **L1** | Read-only inventory, guard counterexample, preservation and offline-test receipts; no new scientific results |

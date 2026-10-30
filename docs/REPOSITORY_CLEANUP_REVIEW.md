@@ -7,9 +7,9 @@ Baseline: `50defc35bc9f42f5b24d2dedf5f45a89e51257ad` on
 [evidence](repository_cleanup_evidence.json) records counts, hashes and tests.
 
 The authorized L1 cleanup is complete. **No whole source file was established
-as safely deletable.** Important changes below remain proposals for the user.
-No scientific source/config/test/dependency, native implementation, existing
-protection level/hash or historical experiment was changed.
+as safely deletable.** 方案 A 随后获得用户明确批准并实施；测试套件精简方案 B 未获批准。
+原结构清理未修改科学代码；后续方案 A 仅修改获批治理检查器、治理测试和保护登记哈希，
+科学源码、科学测试、配置、依赖、原生算法和历史实验保持原样。
 
 ## Review coverage
 
@@ -41,8 +41,8 @@ historical results.
 
 | ID | Priority | Finding | Disposition |
 | --- | --- | --- | --- |
-| C1 | P1 | Guard excludes new C++/header paths and ignored mechanism Python | Reproduced; protected repair A pending |
-| C2 | P2 | Human protection register omits40 machine-registered paths | Exact paths in evidence; protected repair A pending |
+| C1 | P1 | Guard excludes new C++/header paths and ignored mechanism Python | 原反例保留；已按获批方案 A 修复 |
+| C2 | P2 | Human protection register omits40 machine-registered paths | 已按方案 A 补齐原 40 项与新增 4 项 |
 | C3 | P2 | Next-agent template says real Step5 preparation/evaluation awaits instruction; workflow names retired Step4 branch | Corrected L1 navigation to actual current state/standing AGENTS |
 | C4 | P2 | START_HERE/STATUS/plan repeat historical states as current, increasing stale-work risk | Short current summaries, fixed-Git historical links and lifecycle map |
 | C5 | P2 | Plain NumPy/SciPy environment cannot complete advertised Step5 suite |4 missing-FAISS errors retained; fixed existing env passes429; explicit interpreter/cwd support and documentation added |
@@ -75,7 +75,7 @@ but the L0 human register stops after the early mechanism namespace.40 entries (
 baseline, route1/comparator/continuation files and documents) are absent from that
 table. The machine levels are valid and unchanged. The new map shows those levels;
 it does not silently replace or downgrade the authoritative register. The four
-new L1 navigation/review entries also await human-table synchronization under A.
+new L1 navigation/review entries were subsequently synchronized under the approved A repair.
 
 ### C5: tests and environment
 
@@ -141,43 +141,52 @@ Implemented structure cleanup:
 
 ## Proposal A: protected guard and register repair
 
-**Pending user decision; not implemented.** Exact protected paths:
+**方案 A：已获批准的保护检查与登记修复（2026-10-30）**
 
-1. `scripts/check_code_protection.py` — extend `code_path` to native C/C++ source/
-   header suffixes and include `mechanism/` in ignored-file discovery. Keep
-   read-only behavior and preserve current inventory exclusions for user data,
-   environments, archives and runtime outputs.
-2. `tests/test_code_protection.py` — add disposable-fixture regressions for new
-   untracked/tracked native sources/headers and ignored mechanism code. Keep all
-   existing tests/levels/hash checks unchanged; add negative and exclusion cases.
-3. `docs/CODE_PROTECTION.md` — synchronize the40 omitted existing entries and new
-   review L1 entries with the machine inventory; document the corrected checker
-   coverage. No existing grade, consent requirement or scientific rule changes.
-4. `docs/code_protection.json` — record actual scoped user approval and only the
-   resulting approved checker/test/human-register hashes. Preserve every existing
-   classification and scientific hash; no automatic blanket baseline refresh.
+实际批准原文：
 
-Why necessary: C1 is an actual bypass of discovery for the repository's native
-implementation language, and C2 can mislead an agent reading the human table.
-An L1 wrapper/map cannot repair the canonical guard or L0 documentation. Their
-protected content must be edited directly; general cleanup authorization does
-not satisfy the exact-path L0 rule the user requested.
+> 批准执行，执行完毕后更新github上的repo，不要另起branch，直接在step5的分支上提交
 
-Impact: guard coverage and governance tests/documentation only; no retrieval,
-Tri-Law formula/tolerance, candidate ordering, calibration, stopping, model,
-config, data-role, cache/bundle schema, historical result or scientific claim
-changes. Existing scientific binding maps must remain byte-identical. The guard
-is still a review tool, not a human-approval verifier or OS permission system.
+该批准承接上一条中文方案 A，仅涉及以下四个 L0 路径；不包含测试套件精简方案 B。
+提交父版本为 `61b92d7871ca3da703c137abb4d49cdf9eca487e`，继续使用
+`codex/tls-rag-step5-ann`，不创建新分支。
 
-Validation after approval: reproduce C1 as a detected error in disposable fixtures;
-run existing/new guard tests and the full fixed-version429-plus-added suite; verify
-native no-op/resume tests, unchanged source-binding maps/all unrelated L0 hashes,
-no scanned data/archive content, Markdown/table coverage and `git diff --check`.
-Then commit/push this same branch and independently verify remote HEAD.
+| 路径 | 获批修改与实际实现 |
+| --- | --- |
+| `scripts/check_code_protection.py` | 增加 C/C++ 源码及头文件后缀识别，并补查被 Git 忽略的 mechanism 实现；保留原有只读和隔离范围 |
+| `tests/test_code_protection.py` | 保留原 10 个测试方法，扩展既有 ignored-source 场景，仅新增 1 个参数化方法覆盖真实 Git 状态和排除范围 |
+| `docs/CODE_PROTECTION.md` | 从既有机器清单补齐 40 个漏列项目及上一轮新增的 4 个 L1 项，说明实际检查范围 |
+| `docs/code_protection.json` | 记录真实批准，仅更新检查器、治理测试、人工表的 3 个获批哈希；自哈希例外保持原样 |
 
-No other important-code deletion/refactor is requested by proposal A. Current
-recommendation is to retain historical scientific namespaces; a future retirement
-would need its own exact paths, preserved contracts and migration/replay plan.
+必要性：原检查器对新 `.cpp/.hpp` 等实现可能返回成功，人工保护表也不完整。
+L1 说明文档无法修复权威检查器，必须在上述 L0 范围内修复。原始失败反例和
+历史清理证据保留在 [evidence](repository_cleanup_evidence.json)，修复结果另记，
+不把原失败覆盖成通过。
+
+实现与测试范围：
+
+- 原生后缀 `.c/.cc/.cpp/.cxx/.h/.hh/.hpp/.hxx`，大小写不敏感。
+- Git 清单负责已跟踪及未忽略的未跟踪代码；五个实现目录的递归检查补查 ignored 代码。
+- 临时 Git 仓库测试覆盖 10 个后缀示例 × 3 种 Git 状态，共 30 个组合；
+  既有测试扩展覆盖五个目录的 ignored Python 源码。
+- 核对被忽略的 runs/data/.venv/archives 不进入清单，且清单发现阶段不读取载荷字节。
+- 所有旧治理测试方法保留；治理测试 10→11，全量方法数 429→430。
+  没有为了缩减数量而删除旧断言，也没有为每种后缀独立增加方法。
+
+影响边界：不修改 Tri-Law 公式/容差、检索排序、候选集合、校准、停止决策、模型、
+配置、数据角色、科学缓存内容、历史结果及现有等级。当前五组 Step5 来源绑定
+与修复前一致；没有改写旧实验哈希。测试大规模整理仍需独立方案 B。
+
+**兼容性更正：** 原方案“所有来源绑定不变”的表述遗漏了 A800 来源清单中的保护脚本。
+最终逐路径比较确认，Step4 A800 的 22 项中只有 `scripts/check_code_protection.py`
+因本次明确批准的编辑改变 SHA；旧回放包在当前代码下可能被严格校验拒绝。
+历史复现继续使用其原精确提交，旧包、旧哈希和验收器不变；本次不迁移任何实验包。
+这一来源身份变化不表示科学算法改变，也不构成新的实验/数据访问授权。
+
+验证：使用最终新测试在隔离临时副本中运行原检查器，确认旧缺陷导致失败；
+修复后治理测试通过。随后运行包含现有原生库的完整离线套件，核对科学绑定、
+其余 L0 哈希、人工/机器清单一致性、Markdown 链接和 diff；结果追加于下文。
+检查器仍是审查辅助工具，不能证明人类批准或充当 OS 权限控制。
 
 ## Validation
 
@@ -201,7 +210,7 @@ portable cluster setup instructions. No new experiment/model/data access follows
 Final protection/link/binding/diff/launcher receipts are recorded in the evidence
 file and the final verification note below.
 
-### Final verification
+### 原结构整理验收（方案 A 之前）
 
 - Final launcher from `/private/tmp`:429/429 pass,0 skips,65.151s, exit0.
 - Protection check:234 registered files (161 L0,70 L1,3 L2); no L0 hash changes.
@@ -213,3 +222,19 @@ file and the final verification note below.
 - Existing four-case Tri-Law audit passes; old numerical evidence remains unchanged.
 - Navigation line totals and full test-log SHA-256 receipts are in the evidence
   JSON. This cleanup makes no new real-data, cluster, latency or certification claim.
+
+### 方案 A 最终验收（2026-10-30）
+
+- 用最终新测试在临时副本执行原 `61b92d7` 检查器：11 个测试方法中 2 个失败，
+  参数化场景记录 32 条失败；旧缺陷可复现。原审查反例证据未被覆盖或删除。
+- 修复后治理测试 11/11 通过；固定版本/四个原生库的完整套件 430/430 通过，
+  无跳过、64.757 秒。命令同上节固定环境的 `sh scripts/run_tests.sh`。
+- 当前 234 项登记（161 L0/70 L1/3 L2）保护检查通过，人工表覆盖全部 234 项。
+  仅三个获批内容哈希和当前批准记录更新，原有等级及批准历史保留。
+- 比较全部 165 个实现/构建/依赖路径，仅保护检查器及治理测试变化。
+  五组 Step5 绑定完全一致；A800 仅获批保护脚本的来源哈希变化，兼容影响如上。
+- 完整失败/成功日志 SHA-256、覆盖组合和来源差异保存在原 evidence 的
+  `approved_guard_repair` 字段，原清理证据保持其历史含义。
+- 大规模测试精简方案 B 未执行；无新实验、集群、模型下载或历史角色访问。
+
+本次交付补充检查：全部 61 份 Markdown 相对链接/围栏及 `git diff --check` 通过。

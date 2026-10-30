@@ -11,12 +11,15 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "docs/code_protection.json"
+SOURCE_SUFFIXES = {
+    ".py", ".sh", ".toml", ".c", ".cc", ".cpp", ".cxx", ".h", ".hh", ".hpp", ".hxx",
+}
 
 
 def code_path(path: str) -> bool:
     value = Path(path)
     return (
-        value.suffix in {".py", ".sh", ".toml"}
+        value.suffix.lower() in SOURCE_SUFFIXES
         or path.startswith("configs/")
         or (value.name.startswith("requirements") and value.suffix == ".txt")
     )
@@ -30,7 +33,7 @@ def inventory(root: Path) -> set[str]:
     paths = {p for p in raw.decode().split("\0") if p and code_path(p)}
     # Detect even ignored additions in implementation directories. Do not inspect
     # experiment archives, datasets, runs, dependency environments or .git.
-    for directory in ("src", "tests", "scripts", "configs"):
+    for directory in ("src", "tests", "scripts", "configs", "mechanism"):
         for path in (root / directory).rglob("*"):
             relative = path.relative_to(root).as_posix()
             if "__pycache__" not in path.parts and path.is_file() and code_path(relative):

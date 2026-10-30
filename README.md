@@ -11,7 +11,7 @@ paths did not achieve net latency gain; deployment safety is incomplete.
 - [Repository map](docs/REPOSITORY_MAP.md): code families, dependencies and file roles.
 - [Status](STATUS.md): latest results, validation and links to historical records.
 - [Agent rules](AGENTS.md) and [protection register](docs/CODE_PROTECTION.md).
-- [2026-10-30 cleanup review](docs/REPOSITORY_CLEANUP_REVIEW.md): findings and pending L0 scope.
+- [2026-10-30 cleanup review](docs/REPOSITORY_CLEANUP_REVIEW.md): findings and the approved guard repair.
 
 Offline tests, from an environment with the required dependencies:
 

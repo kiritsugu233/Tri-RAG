@@ -130,5 +130,6 @@ available without making every new agent preload the historical ledgers.
 New navigation/review: [root README](../README.md),
 [repository map](REPOSITORY_MAP.md), [cleanup review](REPOSITORY_CLEANUP_REVIEW.md).
 The evidence JSON records scope, historical SHA-256 values and actual test outcomes.
-The living research journal and frozen reports are unchanged. Human L0 protection
-register omissions require the separate exact approval proposed in the review.
+The living research journal and frozen reports are unchanged. The user subsequently
+approved guard/register repair A; its four-path scope and actual receipts are recorded
+in the review. All44 omitted human entries were synchronized without regrading.
