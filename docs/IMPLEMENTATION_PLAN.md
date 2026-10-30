@@ -4,6 +4,18 @@ Updated 2026-10-30. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
+## 方案4后续：已指派 Step 5 接续研究
+
+- [x] 根据用户本次实际指示，将下一轮研究追加为[探索日志第32节](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md)。
+- [x] 明确优先顺序：离线联合`(m,M)`顾问＋独立候选池筛选；独立视图并集条件后续。
+- [x] 记录2013精确翻转概率的变量代换线索、核心文献、成本账本和停止条件。
+- [ ] P0：Step5独立理论/先行工作复核，并提交精确新L0路径/API、输入角色、参数与预算提案。
+- [ ] P1：取得相应范围批准后，验证固定候选池上纯投影规律、计数界及完整成本。
+- [ ] P2：比较Tri配置、同输入间隔/角度模型和同预算直接投影试验；无增量则停止/降级。
+- [ ] P3：冻结具体配置及矩阵后，按未参与选择的查询角色验证；旧分组不冒充fresh独立性。
+- [ ] P4：仅在前置条件通过且范围明确后接ANN/扩大规模/比较同预算多视图。
+- [ ] 各阶段记录逐query/seed结果、尾部失配和负结果；本轮交接不标记任何算法阶段完成。
+
 ## Repository review and cleanup
 
 - [x] Check canonical branch/HEAD/status and protection before editing.
@@ -52,7 +64,7 @@ Unchecked historical items are not execution authorization.
 | Route1 v1/v2 | Negative net-speed results | [Journal §§14/19](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md) |
 | Route2 continuation v1/v2 | A→B→C complete; current learned/Tri paths fail net gain | [Journal §§24/27–31](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md) |
 | Route3 independent-view rescue | Not run | Same journal §7; separate scope needed |
-| Route4 offline geometry/index configuration | Plan only | Same journal §21; separate scope needed |
+| Route4 offline geometry/index configuration | Follow-up research assigned; no algorithm experiment run | Same journal §§21/32; P0 review then exact L0 scope |
 
 ## Pending decisions and safety limits
 
@@ -62,8 +74,9 @@ Unchecked historical items are not execution authorization.
 - [ ] Trained-support/OOD fallback remains unimplemented for continuation v2.
   A future repair needs its own L0 scope/version and evaluation; do not relabel
   the historical study as safe deployment or rerun protected data automatically.
-- [ ] Fresh independent confirmation, new corpus/1M, adapter/routes3/4 and formal
-  certification are separate future work, not assigned by this checklist.
+- [ ] Fresh independent confirmation, new corpus/1M, adapter/original route3 and
+  formal certification remain separate future work. Route4 research is assigned
+  above; its new implementation/data scope still requires exact approval.
 
 ## Full historical plan
 

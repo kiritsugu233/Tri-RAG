@@ -11,8 +11,14 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 TLS-RAG Step 5, route2 continuation v2 A→B→C is complete on scientific code
 `08ed4ce`. The learned/Tri stopping paths fail overall net latency gain;
 trained-support/OOD fallback remains unimplemented. Preserve the resumable
-backend and recorded failures. No new algorithm experiment is assigned by
-this entry. Routes3/4 await their own instructions; route4 is a plan only.
+backend and recorded failures. The user's 2026-10-30 direction now assigns
+**route4 follow-up research** to the continuing Step 5 agent: prioritize an
+offline joint `(m,M)` advisor plus an independent candidate-pool Gaussian
+screen, with independent-view union conditional on their results. Start with
+theory/prior-work review and a concrete scoped implementation proposal in
+[journal section32](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md).
+No new route4 algorithm experiment has run; exact L0 implementation/data scope
+still needs approval under AGENTS. The original route3 rescue remains unassigned.
 
 Read [current STATUS](STATUS.md) for the latest result and cleanup checkpoint.
 The [living exploration journal](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md),
