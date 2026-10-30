@@ -24,6 +24,22 @@ existing interpreter. Complete Step 5 verification needs fixed FAISS/sklearn and
 native libraries; see [validation](REPOSITORY_CLEANUP_REVIEW.md#validation).
 No dependency installation or model/data download occurs in the test launcher.
 
+Under [approved proposal B](TEST_SUITE_SIMPLIFICATION_PROPOSAL.md), no argument
+or `full` runs all429 methods; `step5` runs231 and `legacy` runs198. For example:
+
+```bash
+sh scripts/run_tests.sh step5  # Current Step5 iteration plus shared core/Steps2/3
+sh scripts/run_tests.sh legacy # Historical regression subset
+sh scripts/run_tests.sh full   # Required before every implementation delivery
+```
+
+The subsets are disjoint and cover the full suite. Unselected tests are not
+passed or skipped. Every invocation imports/collects the full inventory first;
+unknown files and import failures stop execution. Shared-core, governance,
+dependency or historical changes require full; all implementation handoffs,
+commits and pushes still require full. Partial success cannot be called whole
+repository validation. The counts describe this checkpoint, not a cap on tests.
+
 ## Cluster replay
 
 Cluster execution uses a separate Linux checkout synchronized through GitHub

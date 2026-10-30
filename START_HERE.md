@@ -31,19 +31,27 @@ milestones are indexed in the [repository map](docs/REPOSITORY_MAP.md).
 The current repository review/cleanup is in
 [REPOSITORY_CLEANUP_REVIEW](docs/REPOSITORY_CLEANUP_REVIEW.md).
 Its four-path guard/register repair A was approved and implemented; see STATUS
-for verification. Large-scale test consolidation B remains unapproved. Old prompts, plan items and
-historical approvals are not a fresh execution request.
+for verification. [Test simplification B](docs/TEST_SUITE_SIMPLIFICATION_PROPOSAL.md)
+was subsequently approved by the user's “执行” and implemented within its exact scope.
+All independent coverage remains; further protected changes need their own scope.
+Old prompts, plan items and historical approvals are not a fresh execution request.
 
 ## Validation and history
 
 ```bash
 python3 scripts/check_code_protection.py
 sh scripts/run_tests.sh
+# Optional daily subset; full is still required before implementation handoff:
+sh scripts/run_tests.sh step5
 ```
 
 The full Step 5/native suite needs the existing fixed-version environment and
 native libraries; see [validation](docs/REPOSITORY_CLEANUP_REVIEW.md#validation).
 `TRI_RAG_TEST_PYTHON` selects the interpreter without changing dependencies.
+No argument or `full` runs429 methods; `step5` runs231 and `legacy` runs198.
+The two subsets partition the full suite; unselected tests are not passed/skipped.
+Shared-core/governance/dependency/historical changes and every implementation
+delivery still require full validation. New test files need explicit classification.
 Keep historical source-bound artifacts at their original source identity.
 
 Detailed old startup narration is retained at

@@ -158,7 +158,7 @@ because they have no Python importers. No whole source file is approved for dele
 | [scripts/audit_numerical_contracts.py](../scripts/audit_numerical_contracts.py) | L1 | Harness/build/test infrastructure | Retain command/build entry |
 | [scripts/check_code_protection.py](../scripts/check_code_protection.py) | L0 | Governance guard | Retain command/build entry |
 | [scripts/profile_tls_rag_step5_reuse_probe.py](../scripts/profile_tls_rag_step5_reuse_probe.py) | L1 | Exact cache/selection probe | Retain command/build entry |
-| [scripts/run_tests.sh](../scripts/run_tests.sh) | L1 | Harness/build/test infrastructure | L1 launcher cleanup only; same suite |
+| [scripts/run_tests.sh](../scripts/run_tests.sh) | L1 | Harness/build/test infrastructure | Approved B: default/full429, step5=231, legacy=198; global collection checks |
 | [scripts/run_tls_rag_step4_readiness.sh](../scripts/run_tls_rag_step4_readiness.sh) | L1 | Step4 replay/probe | Retain command/build entry |
 | [scripts/run_tls_rag_step4_repaired_acceptance.sh](../scripts/run_tls_rag_step4_repaired_acceptance.sh) | L1 | Step4 replay/probe | Retain command/build entry |
 | [scripts/run_tls_rag_step5_ann_comparators_v2.py](../scripts/run_tls_rag_step5_ann_comparators_v2.py) | L1 | Route1 comparators v2 | Retain command/build entry |
@@ -177,7 +177,7 @@ because they have no Python importers. No whole source file is approved for dele
 | [tests/test_beir_dataset.py](../tests/test_beir_dataset.py) | L0 | Harness/build/test infrastructure | Retain conformance fixture |
 | [tests/test_certification.py](../tests/test_certification.py) | L0 | Shared scientific primitives | Retain conformance fixture |
 | [tests/test_code_protection.py](../tests/test_code_protection.py) | L0 | Governance guard | Retain conformance fixture |
-| [tests/test_config_projection.py](../tests/test_config_projection.py) | L0 | Harness/build/test infrastructure | Retain conformance fixture |
+| [tests/test_config_projection.py](../tests/test_config_projection.py) | L0 | Harness/build/test infrastructure | Approved B M01: two methods→one; all four cache scenarios and other five methods retained |
 | [tests/test_end_to_end.py](../tests/test_end_to_end.py) | L0 | Harness/build/test infrastructure | Retain conformance fixture |
 | [tests/test_index_retrieval.py](../tests/test_index_retrieval.py) | L0 | Harness/build/test infrastructure | Retain conformance fixture |
 | [tests/test_lid_policy.py](../tests/test_lid_policy.py) | L0 | Harness/build/test infrastructure | Retain conformance fixture |
@@ -260,6 +260,19 @@ because they have no Python importers. No whole source file is approved for dele
 | [configs/tls_rag_step5_ann_enhancement_v1.json](../configs/tls_rag_step5_ann_enhancement_v1.json) | L0 | Route1 screen v1 | Retain frozen protocol |
 | [configs/tls_rag_step5_ann_v1.json](../configs/tls_rag_step5_ann_v1.json) | L0 | Step5 ANN/diagnostics | Retain frozen protocol |
 | [configs/tls_rag_step5_mechanism_v1.json](../configs/tls_rag_step5_mechanism_v1.json) | L0 | Exact mechanism A/B | Retain frozen protocol |
+
+## Test execution after approved proposal B
+
+[Proposal B](TEST_SUITE_SIMPLIFICATION_PROPOSAL.md) retains the complete430-method
+baseline disposition/coverage table. Its only method merge yields429 current
+methods across the same46 files. Daily `step5` has231 methods in21 files; historical
+`legacy` has198 in25 files, with no overlap or missing methods. No assertion or
+test file was permanently deleted; the other45 test files remain byte-identical.
+The explicit manifests live in the existing launcher; new files fail until
+classified and new methods in classified files are automatically discovered.
+No argument/`full` still covers the whole repository and remains required before
+implementation delivery. Import/collection errors anywhere fail all modes.
+The merge and launcher do not change any of the six captured scientific source maps.
 
 ## Documentation and payloads
 

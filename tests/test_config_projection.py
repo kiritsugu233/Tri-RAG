@@ -76,8 +76,8 @@ class ConfigProjectionTests(unittest.TestCase):
             self.assertEqual(table.ids.tolist(), ["a", "b", "c"])
             np.testing.assert_array_equal(table.vectors, vectors)
 
-    def test_projection_metadata_change_invalidates_cache(self):
-        cached = projection_metadata(
+    def test_projection_cache_identity_changes_are_rejected(self):
+        identity = dict(
             dimension=32,
             m_prime=16,
             seed=1,
@@ -85,38 +85,17 @@ class ConfigProjectionTests(unittest.TestCase):
             embedding_model="model@1",
             corpus_hash="corpus-a",
         )
-        expected = projection_metadata(
-            dimension=32,
-            m_prime=16,
-            seed=2,
-            normalization=True,
-            embedding_model="model@1",
-            corpus_hash="corpus-a",
-        )
-        with self.assertRaises(CacheMetadataMismatch):
-            validate_projection_cache_metadata(cached, expected)
+        cached = projection_metadata(**identity)
         validate_projection_cache_metadata(cached, dict(cached))
-
-    def test_corpus_or_model_change_invalidates_projection_cache(self):
-        cached = projection_metadata(
-            dimension=32,
-            m_prime=16,
-            seed=1,
-            normalization=True,
-            embedding_model="model@1",
-            corpus_hash="corpus-a",
-        )
-        for model, corpus_hash in (("model@2", "corpus-a"), ("model@1", "corpus-b")):
-            expected = projection_metadata(
-                dimension=32,
-                m_prime=16,
-                seed=1,
-                normalization=True,
-                embedding_model=model,
-                corpus_hash=corpus_hash,
-            )
-            with self.assertRaises(CacheMetadataMismatch):
-                validate_projection_cache_metadata(cached, expected)
+        for field, changed_value in (
+            ("seed", 2),
+            ("embedding_model", "model@2"),
+            ("corpus_hash", "corpus-b"),
+        ):
+            with self.subTest(field=field):
+                expected = projection_metadata(**{**identity, field: changed_value})
+                with self.assertRaises(CacheMetadataMismatch):
+                    validate_projection_cache_metadata(cached, expected)
 
 
 if __name__ == "__main__":

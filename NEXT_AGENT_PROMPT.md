@@ -11,5 +11,10 @@ Run `python3 scripts/check_code_protection.py` before editing and handoff.
 Step 5 continuation v2 A→B→C has completed with negative net-speed results and
 incomplete deployment safety. No new experiment or older role reopening is
 assigned by this template. Guard/register repair A was approved and implemented;
-see current STATUS for verification. Test-suite restructuring B remains unapproved.
+see current STATUS for verification. The user's subsequent “执行” approved
+[proposal B](docs/TEST_SUITE_SIMPLIFICATION_PROPOSAL.md): one equivalent cache-test
+merge and explicit suites, with no permanent assertion deletion. Default/`full`
+runs429 methods; `step5` runs231, `legacy`198. Daily subsets do not replace the
+full suite before implementation handoff/commit/push, and collection errors in
+any cohort must fail even a partial run.
 Further L0 changes still need exact path/scope consent.

@@ -26,12 +26,18 @@ Unchecked historical items are not execution authorization.
 - [x] Document A800 guard-source identity consequence; five Step5 maps unchanged.
 - [x] Complete table/link/hash verification for same-branch Step5 synchronization.
 
-## 测试精简方案 B：仅方案，待批准
+## 测试精简方案 B：已批准并实施
 
 - [x] 对430方法逐项列出处置、实际断言/调用依据及来源绑定影响。
 - [x] 真实unittest只收集确认：日常候选232＋历史198=430，无重叠/漏项。
 - [x] 提出M01四场景等价合并及明确四路径审批，保留所有唯一历史断言。
-- [ ] 用户批准 [中文方案 B](TEST_SUITE_SIMPLIFICATION_PROPOSAL.md) 后再实施。
+- [x] 用户以“执行”批准 [中文方案 B](TEST_SUITE_SIMPLIFICATION_PROPOSAL.md) 的四路径范围。
+- [x] M01等价合并，保留四场景、其他五方法及其余45测试文件；无永久删除。
+- [x] 默认/full保持完整；新增step5/legacy，全集收集错误和未知文件明确失败。
+- [x] 收集429=231+198且互斥；仅两个旧ID→一个新ID；临时三场景故障均检出。
+- [x] 固定环境完整429/429、0跳过；Step5与历史子集单独验收，详见STATUS。
+- [x] 六组来源绑定与全部科学源码/配置/依赖不变；仅两个获批L0内容哈希更新。
+- [x] 同步实际批准、235项人工/机器登记及启动/交接命令。
 
 ## Scientific milestone index
 
@@ -51,7 +57,8 @@ Unchecked historical items are not execution authorization.
 ## Pending decisions and safety limits
 
 - [x] User approved the [guard/register repair A](REPOSITORY_CLEANUP_REVIEW.md#proposal-a-protected-guard-and-register-repair).
-- [ ] Large-scale test-suite restructuring B needs its own exact scope/approval.
+- [x] Exact [proposal B](TEST_SUITE_SIMPLIFICATION_PROPOSAL.md) approved and implemented;
+  further consolidation or permanent assertion retirement needs a separate proposal.
 - [ ] Trained-support/OOD fallback remains unimplemented for continuation v2.
   A future repair needs its own L0 scope/version and evaluation; do not relabel
   the historical study as safe deployment or rerun protected data automatically.

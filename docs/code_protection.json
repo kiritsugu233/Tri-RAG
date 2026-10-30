@@ -267,7 +267,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "10bde19c8c753e27fb2795c1bd70f6e82e760b4128670593a1bed3510977c23a"
+      "sha256": "63359f7e7d60c275de941586ecd5142027640ec03ab0101edf112c7d3ad34886"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -1047,7 +1047,7 @@
       "path": "tests/test_config_projection.py",
       "level": "L0",
       "reason": "Regression/conformance expectations protect frozen scientific behavior",
-      "sha256": "5be6e9bb3e540e27d52388bc1ab9e9847fb4d9e311b33926922599ecebd135fa"
+      "sha256": "ac202827ec6d90714eae265b81d69389348e8061d1811f2bb8a21435f5ea8dc0"
     },
     {
       "path": "tests/test_end_to_end.py",
@@ -1944,6 +1944,33 @@
       "record": "docs/REPOSITORY_CLEANUP_REVIEW.md#proposal-a-protected-guard-and-register-repair",
       "registry_change": "Only three approved L0 hashes and this actual-consent record; all existing classifications, scientific hashes and prior approval history unchanged.",
       "compatibility_note": "A800 source binding includes the explicitly approved changed checker: that computed identity changes. Preserve old artifacts/hashes/loaders and replay at their original exact commit; no bundle migration. All five captured Step5 source maps are unchanged."
+    },
+    {
+      "date": "2026-10-30",
+      "parent_commit": "7b9d44b8c85bbfb964afcaaf8fdbd1c2485ae299",
+      "user_consent": "执行",
+      "scope": "承接中文测试精简方案 B 及其四路径精确范围：仅 M01 等价合并、完整收集下的 full/step5/legacy 分组、登记与必要 L1 交接；不永久删除独立断言。",
+      "approved_paths": [
+        "tests/test_config_projection.py",
+        "scripts/run_tests.sh",
+        "docs/CODE_PROTECTION.md",
+        "docs/code_protection.json"
+      ],
+      "protected_changes": [
+        {
+          "path": "docs/CODE_PROTECTION.md",
+          "before_sha256": "10bde19c8c753e27fb2795c1bd70f6e82e760b4128670593a1bed3510977c23a",
+          "after_sha256": "63359f7e7d60c275de941586ecd5142027640ec03ab0101edf112c7d3ad34886"
+        },
+        {
+          "path": "tests/test_config_projection.py",
+          "before_sha256": "5be6e9bb3e540e27d52388bc1ab9e9847fb4d9e311b33926922599ecebd135fa",
+          "after_sha256": "ac202827ec6d90714eae265b81d69389348e8061d1811f2bb8a21435f5ea8dc0"
+        }
+      ],
+      "record": "docs/TEST_SUITE_SIMPLIFICATION_PROPOSAL.md",
+      "registry_change": "Only the two approved L0 content hashes and this actual-consent record; all existing file rows, classifications, reasons, scientific hashes, root metadata and prior approval history otherwise unchanged.",
+      "compatibility_note": "No-argument entry remains full; two cache-test IDs become one parameterized ID with all four scenarios retained. Other 45 test files and all six captured scientific source maps remain unchanged; no historical artifact/hash migration."
     }
   ],
   "maintained_branch": "codex/tls-rag-step5-ann",

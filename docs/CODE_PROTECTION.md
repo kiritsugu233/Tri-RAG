@@ -393,3 +393,30 @@ TOML、配置及 requirements 规则保留。被忽略的根目录 runs/data/依
 | [docs/REPOSITORY_MAP.md](../docs/REPOSITORY_MAP.md) | **L1** | Repository-wide lifecycle/dependency map; authoritative levels remain in protection registry |
 | [docs/REPOSITORY_CLEANUP_REVIEW.md](../docs/REPOSITORY_CLEANUP_REVIEW.md) | **L1** | 2026-10-30 structural review, deletion analysis and pending exact L0 proposals; no consent implied |
 | [docs/repository_cleanup_evidence.json](../docs/repository_cleanup_evidence.json) | **L1** | Read-only inventory, guard counterexample, preservation and offline-test receipts; no new scientific results |
+
+## 方案 B：获批测试分层与 M01 合并（2026-10-30）
+
+用户收到[中文逐项方案 B](TEST_SUITE_SIMPLIFICATION_PROPOSAL.md)及四路径范围后回复：
+
+> 执行
+
+批准父版本 `7b9d44b8c85bbfb964afcaaf8fdbd1c2485ae299`。范围仅为：
+`tests/test_config_projection.py` 的两个缓存身份方法合为一个参数化方法；
+`scripts/run_tests.sh` 增加 full/step5/legacy 及完整收集检查；本文记录规则/补提案行；
+`docs/code_protection.json` 记录实际批准和本文/该测试的两个内容哈希。
+必要 L1 交接文档按方案同步。其余 45 个测试文件和全部科学源码保持原字节；
+三个错误身份和同值合法场景都保留，无永久删除、阈值放宽或来源身份迁移。
+
+无参数入口仍为完整套件；当前 full=429、step5=231、legacy=198。
+step5 与 legacy 互斥且并集等于 full。日常迭代可显式选 step5；共享核心、
+治理/依赖/历史实现变更及任何实现交付提交/推送前仍须 full。
+部分通过不得称为全仓通过；未选集合不得记作通过或跳过。全仓收集/导入错误、
+未归类新测试文件必须失败。当前计数是实测清单，不是未来新增测试的数量上限。
+新增测试继续按其契约登记和审查，不能借分组绕过 L0。
+
+| File | Level | Reason |
+| --- | --- | --- |
+| [docs/TEST_SUITE_SIMPLIFICATION_PROPOSAL.md](TEST_SUITE_SIMPLIFICATION_PROPOSAL.md) | **L1** | User-requested Chinese proposal B with per-method keep/merge/daily-retirement coverage mapping; planning only, no implementation or weakened-test consent |
+
+该行同步已有机器登记，不降级或修改原有理由。提案文档本身不创造授权；
+执行授权来自上面引用的用户回复。实际验收记录见提案末节及 [STATUS](../STATUS.md)。

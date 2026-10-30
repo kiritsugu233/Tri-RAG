@@ -1,11 +1,12 @@
-# 测试精简审批方案 B（中文，待批准）
+# 测试精简方案 B（中文，已批准并实施）
 
 日期：2026-10-30。代码/测试审阅基线：
 `fd91423880c0d504c531dce4388ae9e4ba86b628`。
 工作目录 `/Users/guanghongxu/Query-Adaptive-Tri-RAG`，分支
-`codex/tls-rag-step5-ann`。本文件是独立审批方案，**尚未执行**。
-此前方案 A 的批准不覆盖本方案。本轮只生成文档和新增 L1 文档登记，
-未修改任何测试、执行选择或保护哈希。
+`codex/tls-rag-step5-ann`。用户在收到本方案后回复 **“执行”**，授权第五节的
+四路径范围及必要 L1 交接更新；实施父提交 `7b9d44b8c85bbfb964afcaaf8fdbd1c2485ae299`。
+此前方案 A 的批准不覆盖本方案；本次使用独立实际批准。
+下列方案和430方法表保留原审批基线含义，实施验收在第八节，不把旧方法名当成当前清单。
 
 ## 一、请批准的明确范围
 
@@ -87,7 +88,7 @@ collection/import错误必须失败，不能因过滤集合而隐藏。新增测
 5. `scripts/run_tls_rag_step4_readiness.sh` 仍通过无参数入口跑完整套件；不修改该脚本。
 
 21个日常文件和25个历史文件的明确名单见第五节；第六节给出430个方法的逐项清单。
-现有默认430方法全部收集的事实不因本方案发生改变。
+原430方法的独立覆盖全部保留；M01后默认完整收集429方法。
 
 ## 五、精确文件范围和兼容影响
 
@@ -947,12 +948,71 @@ collection/import错误必须失败，不能因过滤集合而隐藏。新增测
 以下情况不在本次批准中：永久删除198项、移动来源绑定的测试、改核心算法、放松阈值、
 新增科研实验/数据访问、改分支或默认分支、修改AGENTS。若实施需要扩大这些范围，先说明原因。
 
-## 八、审批状态与本轮交付
+## 八、实际批准与实施验收（2026-10-30）
 
-**状态：仅提案，未批准、未执行。** 用户此次只要求中文逐项审批方案。
-本轮只读收集核对430方法和断言/依赖，未运行新的科研实验或修改测试。
-完整测试最近一次结果仍归属于方案A提交fd91423，而不是尚不存在的B实现。
+实际用户批准：**“执行”**，承接本中文方案与四路径范围。没有永久删除授权。
+已按 M01 合并四场景；其余45个测试文件及本文件其他五个方法保持原字节。
+人工表同步本文已有L1行；机器清单保留235项全部等级/理由，只更新获批的两个
+L0内容哈希，并追加实际批准。原审批历史、科学哈希和元数据保持原样。
 
-本文为新增L1说明，机器清单仅追加这一行，没有改变既有等级、哈希或批准记录。
-人工L0保护表新增本文的行留在B的审批范围；其余234项仍保持方案A后的状态。
-批准B将授权第五节列出的四个实现/治理路径及必要L1交接更新，**不是永久删除旧回归的授权**。
+### 实际收集与错误检测
+
+- 通过实际入口只收集、拦截执行得到：无参数/full=429、step5=231、legacy=198。
+  两个子集互斥，并集等于完整；仅删除M01两个旧方法ID、增加一个新方法ID。
+- 临时测试作用域分别错误接受seed/model/corpus变更，新合并测试每次都恰有一个
+  对应subTest失败；原校验器的四场景全部通过。没有修改生产代码或永久引入补丁。
+- 临时独立夹具验证：无参数和显式full输出/结果相同，仓库外调用正常；未知套件、
+  多余参数、未归类文件、缺失文件、重复ID都明确失败。两个子集均会拒绝未选集合
+  的导入错误；已归类文件新增方法自动纳入。这些是入口验收，未新增仓库测试方法。
+- 固定版本/四原生库的完整实际运行结果：**429/429通过，0跳过，65.411秒**；
+  无参数从`/private/tmp`调用，保持完整验证。显式step5 **231/231、0跳过、39.611秒**；
+  legacy **198/198、0跳过、25.973秒**，两次都报告完整验证为false。
+  缓存文件单独 **6/6、0跳过、0.045秒**。这些是本机单次回归耗时，不是算法性能结论。
+- 六组来源绑定（Step5基础55、A800 22、continuation_v2 13、comparators_v2 8、
+  route1 7、headroom 10项）逐路径完全一致；保护检查器及所有科学源/配置/依赖/旧产物未改。
+  235项人工/机器登记覆盖与等级核对、保护哈希检查通过。
+
+### 实际命令及可追踪收据
+
+沿用现有固定环境，未安装依赖或重新编译/替换原生库：
+
+```bash
+export TRI_RAG_TEST_PYTHON=/private/tmp/step5-ann-enhancement-env-20261028/bin/python
+export STEP5_ROUTE1_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/route1.dylib
+export STEP5_COMPARATORS_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/comparators_v2.dylib
+export STEP5_CONTINUATION_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v1.dylib
+export STEP5_CONTINUATION_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v2.dylib
+cd /private/tmp
+sh /Users/guanghongxu/Query-Adaptive-Tri-RAG/scripts/run_tests.sh
+cd /Users/guanghongxu/Query-Adaptive-Tri-RAG
+sh scripts/run_tests.sh step5
+sh scripts/run_tests.sh legacy
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src:tests "$TRI_RAG_TEST_PYTHON" -m unittest test_config_projection -v
+python3 scripts/check_code_protection.py
+```
+
+| 本地日志 `/private/tmp/` | SHA-256 |
+| --- | --- |
+| `tri-rag-B-full-20261030.log` | `6b594c31abeba1f55ef7c8f764a2cac14ca8aa516e1a184e8a35a350455b9158` |
+| `tri-rag-B-step5-20261030.log` | `d3454d169985af79dd3e4c54f6ea44681f44897d8adf6686e11372caa6cc3b10` |
+| `tri-rag-B-legacy-20261030.log` | `138ab6a16cc430115ba30cdf3df0032663363e6c410ca72e882f88ede5fe235e` |
+| `tri-rag-B-config-20261030.log` | `8ec82877aee82c665f99e63c8fb380eb0abc583aa37a6e2342bb3a8b10da7d82` |
+| `tri-rag-B-verification-20261030.log` | `e89aec9ffecd69ed13baf2425f0399497e474bc45962011ed43342b0b582bd4d` |
+
+临时负例的实际失败摘要（每次仅注入一个错误接受行为；原校验器随即恢复）：
+
+| 故障 | 新方法实际失败 | 失败原因 |
+| --- | --- | --- |
+| 放行seed变更 | `subTest(field='seed')`，1 failure/0 errors | `AssertionError: CacheMetadataMismatch not raised` |
+| 放行模型变更 | `subTest(field='embedding_model')`，1 failure/0 errors | 同上 |
+| 放行语料变更 | `subTest(field='corpus_hash')`，1 failure/0 errors | 同上 |
+
+入口负例全部exit2：未知套件/多余参数由argparse拒绝；新增/缺失文件由清单核对拒绝；
+两个未选集合的注入ImportError在过滤前拒绝；重复方法ID在执行前拒绝。
+原合法身份调用及原校验器的三个拒绝场景通过，未把负例写进生产运行路径。
+
+验收日志位于`/private/tmp/tri-rag-B-*-20261030.log`；完整收集ID和临时负例收据位于
+`/private/tmp/tri-rag-B-verification-20261030.json`。本节保存可随Git追踪的结论与日志摘要，
+临时日志不是历史科研产物或新数据结果。
+交付前核对全部62份Markdown相对链接/围栏、235项人工登记等级、保护检查及
+`git diff --check`通过；仅第五节授权的四个实现/治理路径和九个交接文档发生变化。
