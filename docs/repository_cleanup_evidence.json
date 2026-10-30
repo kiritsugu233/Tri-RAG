@@ -1,0 +1,344 @@
+{
+  "review_date": "2026-10-30",
+  "baseline_commit": "50defc35bc9f42f5b24d2dedf5f45a89e51257ad",
+  "branch": "codex/tls-rag-step5-ann",
+  "scope": "Tracked repository source/config/test/docs structure and current key paths; no real-role experiment or user archive audit",
+  "user_request": "目前，我已经更新了好几轮代码了，已经进入了新的step，请你审阅整个repo，以及代码内容，删减掉没用的代码文件，以及针对整体代码框架做一次整理和清理，仍然遵守文件重要等级的规则，不要擅自删改重要文件，重要文件的删改必需给出合理的解释并由我来确定。",
+  "baseline_counts": {
+    "tracked_files": 242,
+    "registered_files": 230,
+    "L0": 161,
+    "L1": 66,
+    "L2": 3,
+    "package_python": 54,
+    "mechanism_python": 8,
+    "native_cpp": 4,
+    "script_files": 13,
+    "test_python": 47,
+    "configs": 36,
+    "all_python": 118,
+    "python_lines": 52435,
+    "markdown": 58
+  },
+  "guard_counterexample": {
+    "code_path_cpp": false,
+    "code_path_hpp": false,
+    "fixture_inventory": [],
+    "fixture_errors": []
+  },
+  "guard_repair_status": "proposal_A_pending_user_approval",
+  "human_register_missing_paths": [
+    "docs/TLS_RAG_STEP5_COST_AWARE_REVIEW.md",
+    "docs/step5_tri_feature_cost_review_evidence.json",
+    "scripts/analyze_tls_rag_step5_action_costs.py",
+    "docs/TLS_RAG_STEP5_ACTION_COST_SCREEN.md",
+    "docs/step5_action_cost_screen_evidence.json",
+    "docs/TLS_RAG_STEP5_REUSE_AUDIT.md",
+    "mechanism/tls_rag_step5_reuse_probe.py",
+    "tests/test_tls_rag_step5_reuse_probe.py",
+    "scripts/profile_tls_rag_step5_reuse_probe.py",
+    "docs/TLS_RAG_STEP5_REUSE_PROBE_PROTOCOL.md",
+    "docs/TLS_RAG_STEP5_REUSE_PROBE_RESULTS.md",
+    "docs/step5_reuse_probe_evidence.json",
+    "docs/TLS_RAG_STEP5_BASELINE_HEADROOM_PROPOSAL.md",
+    "mechanism/tls_rag_step5_baseline_headroom.py",
+    "tests/test_tls_rag_step5_baseline_headroom.py",
+    "scripts/run_tls_rag_step5_baseline_headroom.py",
+    "docs/TLS_RAG_STEP5_BASELINE_HEADROOM_PROTOCOL.md",
+    "docs/TLS_RAG_STEP5_BASELINE_HEADROOM_RESULTS.md",
+    "docs/step5_baseline_headroom_evidence.json",
+    "docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md",
+    "mechanism/tls_rag_step5_ann_enhancement.py",
+    "mechanism/tls_rag_step5_ann_enhancement.cpp",
+    "configs/tls_rag_step5_ann_enhancement_v1.json",
+    "tests/test_tls_rag_step5_ann_enhancement.py",
+    "scripts/run_tls_rag_step5_ann_enhancement.py",
+    "mechanism/tls_rag_step5_ann_comparators_v2.py",
+    "mechanism/tls_rag_step5_ann_comparators_v2.cpp",
+    "configs/tls_rag_step5_ann_comparators_v2.json",
+    "tests/test_tls_rag_step5_ann_comparators_v2.py",
+    "scripts/run_tls_rag_step5_ann_comparators_v2.py",
+    "mechanism/tls_rag_step5_ann_continuation_v1.py",
+    "mechanism/tls_rag_step5_ann_continuation_v1.cpp",
+    "configs/tls_rag_step5_ann_continuation_v1.json",
+    "tests/test_tls_rag_step5_ann_continuation_v1.py",
+    "scripts/run_tls_rag_step5_ann_continuation_v1.py",
+    "mechanism/tls_rag_step5_ann_continuation_v2.py",
+    "mechanism/tls_rag_step5_ann_continuation_v2.cpp",
+    "configs/tls_rag_step5_ann_continuation_v2.json",
+    "tests/test_tls_rag_step5_ann_continuation_v2.py",
+    "scripts/run_tls_rag_step5_ann_continuation_v2.py"
+  ],
+  "historical_navigation_snapshots": [
+    {
+      "path": "START_HERE.md",
+      "lines": 176,
+      "sha256": "fab3b4972c84eed7fc86aa7ef4455f58246d65ced5374b16c2261847038a83d0",
+      "git_object": "50defc35bc9f42f5b24d2dedf5f45a89e51257ad:START_HERE.md",
+      "url": "https://github.com/kiritsugu233/Tri-RAG/blob/50defc35bc9f42f5b24d2dedf5f45a89e51257ad/START_HERE.md"
+    },
+    {
+      "path": "STATUS.md",
+      "lines": 2942,
+      "sha256": "7bf13bacd6cd1dbcfa5b990078b80cd8af298915e734316727cf90156cfbd149",
+      "git_object": "50defc35bc9f42f5b24d2dedf5f45a89e51257ad:STATUS.md",
+      "url": "https://github.com/kiritsugu233/Tri-RAG/blob/50defc35bc9f42f5b24d2dedf5f45a89e51257ad/STATUS.md"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_PLAN.md",
+      "lines": 1521,
+      "sha256": "d813ed998b6b341310eb2c843f0527162be17cc5c90625feafe4c96e66301048",
+      "git_object": "50defc35bc9f42f5b24d2dedf5f45a89e51257ad:docs/IMPLEMENTATION_PLAN.md",
+      "url": "https://github.com/kiritsugu233/Tri-RAG/blob/50defc35bc9f42f5b24d2dedf5f45a89e51257ad/docs/IMPLEMENTATION_PLAN.md"
+    },
+    {
+      "path": "docs/TLS_RAG_LOCAL_WORKFLOW.md",
+      "lines": 60,
+      "sha256": "c9988dbf710b540ffebe0220b6dda322e805d374ed3320ba1230a64609b63aa1",
+      "git_object": "50defc35bc9f42f5b24d2dedf5f45a89e51257ad:docs/TLS_RAG_LOCAL_WORKFLOW.md",
+      "url": "https://github.com/kiritsugu233/Tri-RAG/blob/50defc35bc9f42f5b24d2dedf5f45a89e51257ad/docs/TLS_RAG_LOCAL_WORKFLOW.md"
+    },
+    {
+      "path": "NEXT_AGENT_PROMPT.md",
+      "lines": 15,
+      "sha256": "25703af35f0985c2915361d3f5813f2f0d363a31500c17703474fe2627dad549",
+      "git_object": "50defc35bc9f42f5b24d2dedf5f45a89e51257ad:NEXT_AGENT_PROMPT.md",
+      "url": "https://github.com/kiritsugu233/Tri-RAG/blob/50defc35bc9f42f5b24d2dedf5f45a89e51257ad/NEXT_AGENT_PROMPT.md"
+    }
+  ],
+  "baseline_source_bindings": {
+    "step5_ann": {
+      "configs/tls_rag_step5_ann_v1.json": "e27cbed307b1e14900895a5e932cabb7494cc2a8016292f750beddc95055af87",
+      "src/tri_rag_harness/__init__.py": "a70763d97ed5569a2efb5ff7bd8c3ed76b7da22a6a7ee307139b4bfb55933eb8",
+      "src/tri_rag_harness/attribution.py": "17660208dc748d4ea2c0f5cab16af7eec0b9906777aa5c44a573694ee8ad31d0",
+      "src/tri_rag_harness/beir_dataset.py": "6476bda081bad0f75c3fa80e15ad8c0eb1d3d47f27b42262d1068ed8badb9aa5",
+      "src/tri_rag_harness/certification.py": "ba0816eb20f38b846cd265c61b5e6608f50c521d85539285ab4de82ba242ad32",
+      "src/tri_rag_harness/config.py": "9921f335369ec8a2fc7940f6443b2839baa45ece3059699638c3ba74997e7db2",
+      "src/tri_rag_harness/embeddings.py": "8a73aa75d0803c84b81618608a0ac689846aa57db0e4fa8c3c4967fa573840fe",
+      "src/tri_rag_harness/indexes.py": "32a5d1988ecc604ea54f99fb4c784f9bb90a617c624c022bda12bf45b38efe15",
+      "src/tri_rag_harness/lid.py": "1a875a8a1de1cf45a923d0f78a888539b096e38fa8fed803498d0f77d8ff5f66",
+      "src/tri_rag_harness/manifest.py": "3023a93903f6cef0b6a707e72a026b0e02c5c59c9fadcd6b8ac480ca989a8832",
+      "src/tri_rag_harness/mprime_sweep.py": "ea13bc8665c8eca3e362b9480b9e4c532be940ec65d0f0e91f568aca788270da",
+      "src/tri_rag_harness/pdctp_calibration.py": "c79be4ce371579da848e9e2ba0a3ca9835aa1b48d22432455e173d0eea1ba20b",
+      "src/tri_rag_harness/pdctp_config.py": "21f1b832195506a5ecfed7c5caf5fa9e6ff1613c8437f372ee4a083a88e2817e",
+      "src/tri_rag_harness/pdctp_dataset_audit.py": "6db361c9701d369c357b5ba860d6bffc54bd02a46749b5989775582d38d6fd33",
+      "src/tri_rag_harness/pdctp_embedding_audit.py": "7854c7e03701f6c1b26b50af843a8e6832d90c640a91a1da853d64897f424a71",
+      "src/tri_rag_harness/pdctp_features.py": "a77e0b5394e6bd2562eb8143a85e9943deab3719a244638ed9a9997f1cfc775b",
+      "src/tri_rag_harness/pdctp_fiqa_dataset.py": "f997a3c6b206bbd7e3dd4360709bd9340ba765893ebf912b2cda3c92b658c603",
+      "src/tri_rag_harness/pdctp_fiqa_query_cal.py": "9e7754f81e4bbfc5932c11482238f6ca773d2f2f6f854ebd6be4fc363cd6d11a",
+      "src/tri_rag_harness/pdctp_fiqa_query_cert.py": "d91dd52619d231d9f2818ce531bec6817f8d6c407f5e132e05d84d0bc568487f",
+      "src/tri_rag_harness/pdctp_fiqa_query_tune.py": "aacb856e891ee6efaeaa76102eafcf4a04bfb87df36c4fe1fb441b9a3c127d37",
+      "src/tri_rag_harness/pdctp_foundation.py": "5fa244f81ee3dcf3e567560305057c0d3fd9c832acba16b8ee0aaefac403543f",
+      "src/tri_rag_harness/pdctp_policies.py": "3bb55ba9483b1cd423fc0e23888ff77acfc0a3ceced028c66e3ad7942ee2fdc4",
+      "src/tri_rag_harness/pdctp_protocol.py": "c008eae18ea3a17f44e216b6fc4d2b8935a52ea5108f085f5a5d87f1c1659e07",
+      "src/tri_rag_harness/pdctp_real_protocol.py": "8e2979df685dc92805c0658ba49b2e3e4c6054d3cdcf6fed5740053c9cd15ae7",
+      "src/tri_rag_harness/pdctp_statistics.py": "d279a1076c60525f21e52ee2f136066dc53618a93f3dbdd0483fbda7c2760276",
+      "src/tri_rag_harness/pdctp_v3.py": "24685068410ee8fb373cdedb7bca40d6897cd070f2d401709a3d0b375c4a0761",
+      "src/tri_rag_harness/policies.py": "e774ff9bd525e7bf3a03811e9cdd7f9cabb251116d7000472289344eaa03fe17",
+      "src/tri_rag_harness/projection.py": "91f0cd3d0493200a068b057a5637bc6d7999e351c198c5af8305332ec8fef1a3",
+      "src/tri_rag_harness/real_dimension_sweep.py": "5fd24697c61ad192f714601c5bfa08eb76daf58ccc1b80c8f77f0ecb274c8144",
+      "src/tri_rag_harness/real_original_baseline.py": "06371f33fa406bb17b03171940560467111bf45a17306b60701476a910dcbaa7",
+      "src/tri_rag_harness/real_policy_certify.py": "e46d8fceb3b63a20ab3e60983d750f17bec300247f9ce912a51f36ee9ed6e0da",
+      "src/tri_rag_harness/real_policy_test.py": "857a654700e73858011d3dda853928479084fcd1cbd5e5d99b22d66341d2f753",
+      "src/tri_rag_harness/real_policy_tune.py": "3b09b1639a73001a6161ebbfdb16b1778edddf0167b7d67707466a3aff19aacc",
+      "src/tri_rag_harness/real_tune_diagnostics.py": "c7d287b97ad035dfc3bfcebc6378ac7ca1e475f8b41e8c0af8505d16e255430f",
+      "src/tri_rag_harness/reporting.py": "f3958727e16045be919ecf6764d8ed63f04a74baf7db5fd596c9ac4ba0cc0c37",
+      "src/tri_rag_harness/retrieval_benchmark.py": "fc5e027ca8b2e1d92f83ef160620fdea739b02e0df5c9b5b35afcce2266c9e00",
+      "src/tri_rag_harness/run.py": "61880a637db2c90f3f7e5cbdb9e3b0d39357d02105b51d04a9493ac2bbefe8a4",
+      "src/tri_rag_harness/synthetic.py": "11feab7685b9a90f65457a76fa1a258f81139929fdfdd62f2ffff03822d0e2d3",
+      "src/tri_rag_harness/text_embeddings.py": "db0e20d961a6ac2f9811ace55fd8a7ffd28e64ee5241145b621f2bd438838cb1",
+      "src/tri_rag_harness/tls_rag_step2.py": "a6be67c944237ea8f7649f18eb6c6e84f71c94b1546f62cdbb037da7540ed3dd",
+      "src/tri_rag_harness/tls_rag_step3.py": "4fc53c4d98537315f25d8a531da7a53731881bb8d1638ac6696e07307fdf2b62",
+      "src/tri_rag_harness/tls_rag_step4.py": "199ab95f9ee5f04456837b628d7c9e5f06b511191e8e9d781738c5b336340f33",
+      "src/tri_rag_harness/tls_rag_step4_a800_replay.py": "51d9e68085cc4f33b3cde1d7417319a82662e310bb75dc6c65802ca72912e3ff",
+      "src/tri_rag_harness/tls_rag_step4_nfcorpus.py": "edc95097f118a3f613a198f5868266af958d456be6beb6545d060a23e836490b",
+      "src/tri_rag_harness/tls_rag_step4_probe.py": "836d57790687e5748596ab11f038563c7b7e6f45d6a2cd2e9b4c3c2bc52d6636",
+      "src/tri_rag_harness/tls_rag_step4_repaired_acceptance.py": "69aac34b8da13c86bce2e1e759918643e3b49b02e08a257f22e656d7a3a469b0",
+      "src/tri_rag_harness/tls_rag_step4_retention_v3.py": "55dd89a571494b07af7e4922aa8204beecc0c6c11863687dc5b07a7319117907",
+      "src/tri_rag_harness/tls_rag_step5_ann.py": "e1ac22c999dcc2cf94924c0046751d699b2110d68c39a1ab5e2f1c5758ef8469",
+      "src/tri_rag_harness/tls_rag_step5_benchmark.py": "63af012180ec2e9717fa5fe977c726b7740ae25f11f97eca42484b28d6dc2c2e",
+      "src/tri_rag_harness/tls_rag_step5_data.py": "9f795cb741f6dca86a7b396d158000d9614bec2f22071c1aefab18c5cf5a2224",
+      "src/tri_rag_harness/tls_rag_step5_policy.py": "e3494f9cb678d7934715900693688bc4dcd7a6ebde81191d23aeee6c9075c09a",
+      "src/tri_rag_harness/tls_rag_step5_protocol.py": "2d6a83f8e4fbab0bb624b4fa0b56525b49beb294f5fa9f9fec92b45134167a16",
+      "src/tri_rag_harness/tri_law.py": "461a78542e22f4d0cc324f5b3769348292fc53d111520cc00bc550508deed23b",
+      "src/tri_rag_harness/tri_predict.py": "1f3abafa6b9c258b50101503d750cf63b474ac7d4241b08457ad0da7ba6c766d",
+      "src/tri_rag_harness/utils.py": "044be5bbf946bf042387c3632d7c40c018c5291d3cc1132b5c7d5bd69a41562b"
+    },
+    "step4_a800": {
+      "src/tri_rag_harness/tls_rag_step4_probe.py": "836d57790687e5748596ab11f038563c7b7e6f45d6a2cd2e9b4c3c2bc52d6636",
+      "src/tri_rag_harness/tls_rag_step4_nfcorpus.py": "edc95097f118a3f613a198f5868266af958d456be6beb6545d060a23e836490b",
+      "src/tri_rag_harness/tls_rag_step3.py": "4fc53c4d98537315f25d8a531da7a53731881bb8d1638ac6696e07307fdf2b62",
+      "src/tri_rag_harness/tls_rag_step2.py": "a6be67c944237ea8f7649f18eb6c6e84f71c94b1546f62cdbb037da7540ed3dd",
+      "src/tri_rag_harness/tri_law.py": "461a78542e22f4d0cc324f5b3769348292fc53d111520cc00bc550508deed23b",
+      "src/tri_rag_harness/embeddings.py": "8a73aa75d0803c84b81618608a0ac689846aa57db0e4fa8c3c4967fa573840fe",
+      "src/tri_rag_harness/indexes.py": "32a5d1988ecc604ea54f99fb4c784f9bb90a617c624c022bda12bf45b38efe15",
+      "src/tri_rag_harness/projection.py": "91f0cd3d0493200a068b057a5637bc6d7999e351c198c5af8305332ec8fef1a3",
+      "src/tri_rag_harness/utils.py": "044be5bbf946bf042387c3632d7c40c018c5291d3cc1132b5c7d5bd69a41562b",
+      "configs/tls_rag_step3_synthetic_v1.json": "c98b417b825953a889f929183ca454c819ef530c00ab676a06bd7c278e90c0b8",
+      "configs/tls_rag_step2_synthetic_v1.json": "257c032be82e945ab757b3c1342d1d87f6cd399667b786008122c358f62ac5aa",
+      "src/tri_rag_harness/__init__.py": "a70763d97ed5569a2efb5ff7bd8c3ed76b7da22a6a7ee307139b4bfb55933eb8",
+      "pyproject.toml": "f9e0ad2647edc4abf81827b0f2aa514b83e3f40ab5352381ce9e7f743baa1939",
+      "scripts/check_code_protection.py": "cbacdf02c241be8a2969fbe0305289dae1604861a86ec0374ffc39edde43d2f0",
+      "configs/tls_rag_step4_nfcorpus_probe_v2.json": "c8378c1e0ce86aca31af9adea0c939b15cab748c0d872d643e599d7af9b0dec9",
+      "configs/tls_rag_step4_retention_v3.json": "cc001c18f5cd9c09988adc2ae84a4b7ba0a67d28fd6fde8b1d0110410f415597",
+      "src/tri_rag_harness/tls_rag_step4_retention_v3.py": "55dd89a571494b07af7e4922aa8204beecc0c6c11863687dc5b07a7319117907",
+      "src/tri_rag_harness/tls_rag_step4_repaired_acceptance.py": "69aac34b8da13c86bce2e1e759918643e3b49b02e08a257f22e656d7a3a469b0",
+      "scripts/run_tls_rag_step4_repaired_acceptance.sh": "4c86a09a9707b897447206c4c7793fc1ee3a22c73d7d3653606cad781804b345",
+      "src/tri_rag_harness/tls_rag_step4_a800_replay.py": "51d9e68085cc4f33b3cde1d7417319a82662e310bb75dc6c65802ca72912e3ff",
+      "configs/tls_rag_step4_a800_replay_v1.json": "ef0af4726d026c5738d5596e831938221a71b4cdfecdbce6cd882ffd6503aa36",
+      "requirements-tls-rag-probe.txt": "20270706720121a087b8fed3e762e0cca700a19810fcd5a5db16017aa84de2cf"
+    },
+    "continuation_v2": {
+      "mechanism/tls_rag_step5_ann_continuation_v2.py": "e72fa99ec9f3a329c1e9c0ca39b0cf0ddc46566edea13998b05e1d28e235b969",
+      "mechanism/tls_rag_step5_ann_continuation_v2.cpp": "1252e002ac7d4d603b0ca5cf5eaf9709a3a8025a32428702a1abd5e45a03d7d8",
+      "configs/tls_rag_step5_ann_continuation_v2.json": "7131d2bb455491e6982d1e80a594188fa451dc4e0992c43f9ed21ebfd79cc825",
+      "tests/test_tls_rag_step5_ann_continuation_v2.py": "bbd2cad2ce59e9bb8ecd2a6e44dccc7198199e6b657850459ce1c592a30f1f85",
+      "scripts/run_tls_rag_step5_ann_continuation_v2.py": "77fcba8e36734017b633c728eece86d68f22dbb9f5944245c29de298695dc183",
+      "mechanism/tls_rag_step5_ann_continuation_v1.py": "cdc02e3126943dab9a9357c5043210fbc8f461cb5323da4fe6e4cb1c9f127413",
+      "mechanism/tls_rag_step5_ann_continuation_v1.cpp": "346cce0b94fa6d986a4e4cd9ba829b2b063ad2ffa11eaca8e9cdf2f0bddccf01",
+      "configs/tls_rag_step5_ann_continuation_v1.json": "e7c539bf79b623a001508e426d780d5e8983751373063ad7368ecebb5a41fd5a",
+      "tests/test_tls_rag_step5_ann_continuation_v1.py": "2e3188426be997b2179494264dc63decc4c3cbc1669b77aa77c477e63b03d26f",
+      "scripts/run_tls_rag_step5_ann_continuation_v1.py": "58ac4af310311fbef6ee567411e19eb30c8658bc5f6fec85cfab4767cec66fcb",
+      "mechanism/tls_rag_step5_ann_enhancement.py": "412c3ab4524350312adac300131427210291030e81afe57ebd014ad872a1845d",
+      "src/tri_rag_harness/utils.py": "044be5bbf946bf042387c3632d7c40c018c5291d3cc1132b5c7d5bd69a41562b",
+      "src/tri_rag_harness/tri_law.py": "461a78542e22f4d0cc324f5b3769348292fc53d111520cc00bc550508deed23b"
+    },
+    "comparators_v2": {
+      "mechanism/tls_rag_step5_ann_comparators_v2.py": "cd644e7b1af1ba6f91e4a217279b98ad45dbed8fde041cecad5feb8b5c021853",
+      "mechanism/tls_rag_step5_ann_comparators_v2.cpp": "462859c6aceaa0c474e224a1aa34003a03d073631b949706f92c45710a00016c",
+      "configs/tls_rag_step5_ann_comparators_v2.json": "3b560dcb95b368cbc11de16f51bc661085f847b7564ceb2a1dbff4cdcc0ddf6d",
+      "tests/test_tls_rag_step5_ann_comparators_v2.py": "864dabdda850042b98399afd90bee81139e4c111dd31434908de6a7755b120b8",
+      "scripts/run_tls_rag_step5_ann_comparators_v2.py": "a94ef7c13872d6252ef3f078c8bf2d50540dc87571a2f0e432de6fa31fa10f44",
+      "mechanism/tls_rag_step5_ann_enhancement.py": "412c3ab4524350312adac300131427210291030e81afe57ebd014ad872a1845d",
+      "src/tri_rag_harness/projection.py": "91f0cd3d0493200a068b057a5637bc6d7999e351c198c5af8305332ec8fef1a3",
+      "src/tri_rag_harness/tri_law.py": "461a78542e22f4d0cc324f5b3769348292fc53d111520cc00bc550508deed23b"
+    },
+    "route1": {
+      "mechanism/tls_rag_step5_ann_enhancement.py": "412c3ab4524350312adac300131427210291030e81afe57ebd014ad872a1845d",
+      "mechanism/tls_rag_step5_ann_enhancement.cpp": "05c59ffb3ba9c453f86ac7bc255e84c96aca0b39217d787c228f93a64cbb7307",
+      "configs/tls_rag_step5_ann_enhancement_v1.json": "4d4b7a1b8dfb817c8444c6ac84a79ba6babe1c2bdc4c2095b7768b502d380739",
+      "tests/test_tls_rag_step5_ann_enhancement.py": "1f7c3ebc505444819a8f008f732a545db8253be4f2bb05a64c1c36eee45113e2",
+      "scripts/run_tls_rag_step5_ann_enhancement.py": "7b164c42752ade589839f71a8446b626d1c755c9bd1e5f1488275fc978bfa9c8",
+      "src/tri_rag_harness/projection.py": "91f0cd3d0493200a068b057a5637bc6d7999e351c198c5af8305332ec8fef1a3",
+      "src/tri_rag_harness/tri_law.py": "461a78542e22f4d0cc324f5b3769348292fc53d111520cc00bc550508deed23b"
+    },
+    "baseline_headroom": {
+      "mechanism/tls_rag_step5_baseline_headroom.py": "5bce9b5ea7a68f699f022f51a4afad7c677336b08a9d4fdadcd441bbe8fa1561",
+      "tests/test_tls_rag_step5_baseline_headroom.py": "564ad8e950a0d38f83f890278ce085de972db1c65fb9286492c2537eaa7d67d3",
+      "scripts/run_tls_rag_step5_baseline_headroom.py": "22b812ee0d72bc196308a74a01000326236393d5a34471df8b4eb8432071a593",
+      "docs/TLS_RAG_STEP5_BASELINE_HEADROOM_PROTOCOL.md": "2e166c1130b6bdab33ad2fa8b3206ae19682cb5039804e966c332c3e72024a25",
+      "mechanism/tls_rag_step5_reuse_probe.py": "c58bf0ababa16a2a9e309b196ca4576a970e1076cb372ca5a546cc60f2c7735e",
+      "mechanism/tls_rag_step5_exact_policy.py": "2a796a464cd59d30eb34def49ca847497801ae8a82cb29b1ce90393b5720c265",
+      "mechanism/tls_rag_step5_audit.py": "ca4b7b756cc51dee950264ce58c3bdf7f615911f66af08b339b33994ab5e6beb",
+      "src/tri_rag_harness/projection.py": "91f0cd3d0493200a068b057a5637bc6d7999e351c198c5af8305332ec8fef1a3",
+      "src/tri_rag_harness/tls_rag_step5_ann.py": "e1ac22c999dcc2cf94924c0046751d699b2110d68c39a1ab5e2f1c5758ef8469",
+      "scripts/analyze_tls_rag_step5_action_costs.py": "0d2a3eb29d16f18f507c6732b9cf9b51f1edcd9bb5d183ab8ae003ecdf64f813"
+    }
+  },
+  "checks": {
+    "baseline_default_environment": {
+      "command": "sh scripts/run_tests.sh",
+      "tests": 429,
+      "errors": 4,
+      "skipped": 33,
+      "passed": 392,
+      "seconds": 41.602,
+      "cause": "ModuleNotFoundError: faiss (4 baseline-headroom tests)",
+      "log": "/private/tmp/tri-rag-cleanup-baseline-20261030.log",
+      "log_sha256": "c44129cb93b1f2e12e76ebd123fe5f47db38d6333d72bdfa2825f13187797d47"
+    },
+    "fixed_environment_baseline": {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src STEP5_ROUTE1_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/route1.dylib STEP5_COMPARATORS_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/comparators_v2.dylib STEP5_CONTINUATION_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v1.dylib STEP5_CONTINUATION_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v2.dylib /private/tmp/step5-ann-enhancement-env-20261028/bin/python -m unittest discover -s tests -v",
+      "tests": 429,
+      "passed": 429,
+      "skipped": 0,
+      "seconds": 66.634,
+      "log": "/private/tmp/tri-rag-cleanup-full-20261030.log",
+      "log_sha256": "d65639490d0c759d4c32b9b866b70d203b4fd8119e2028683c59bf97f54a1336"
+    },
+    "baseline_markdown": {
+      "files": 58,
+      "relative_links_missing": 0,
+      "unbalanced_fences": 0
+    },
+    "python_syntax": {
+      "files": 118,
+      "errors": 0
+    },
+    "final_launcher": {
+      "cwd": "/private/tmp",
+      "command": "TRI_RAG_TEST_PYTHON=/private/tmp/step5-ann-enhancement-env-20261028/bin/python STEP5_ROUTE1_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/route1.dylib STEP5_COMPARATORS_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/comparators_v2.dylib STEP5_CONTINUATION_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v1.dylib STEP5_CONTINUATION_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v2.dylib sh /Users/guanghongxu/Query-Adaptive-Tri-RAG/scripts/run_tests.sh",
+      "tests": 429,
+      "passed": 429,
+      "skipped": 0,
+      "errors": 0,
+      "seconds": 65.151,
+      "exit_code": 0,
+      "log": "/private/tmp/tri-rag-cleanup-launcher-20261030.log",
+      "log_sha256": "654a71d1c56fbf6cc4c702ba2207c92a171d61d8e81bec10133e8d53a9aaf86b"
+    },
+    "final_markdown": {
+      "files": 61,
+      "relative_links_missing": 0,
+      "unbalanced_fences": 0
+    },
+    "tri_law_audit": {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 scripts/audit_numerical_contracts.py",
+      "cases": 4,
+      "passed": 4,
+      "exit_code": 0,
+      "existing_evidence_unchanged": true
+    },
+    "binding_comparison": {
+      "namespaces": {
+        "step5_ann": 55,
+        "step4_a800": 22,
+        "continuation_v2": 13,
+        "comparators_v2": 8,
+        "route1": 7,
+        "baseline_headroom": 10
+      },
+      "all_unchanged": true
+    },
+    "final_protection": {
+      "registered": 234,
+      "L0": 161,
+      "L1": 70,
+      "L2": 3,
+      "passed": true
+    },
+    "diff_whitespace": {
+      "passed": true
+    },
+    "shell_syntax": {
+      "command": "sh -n scripts/run_tests.sh",
+      "passed": true
+    }
+  },
+  "preservation": {
+    "existing_registry_rows_unchanged": 230,
+    "existing_registry_root_values_unchanged": true,
+    "new_L1_rows": 4,
+    "protected_hashes_refreshed": 0,
+    "scientific_source_files_deleted": 0,
+    "runtime_files_modified": [],
+    "untracked_user_archives_or_reports_touched": false,
+    "implementation_files_compared": 165,
+    "changed_implementation_paths": [
+      "scripts/run_tests.sh"
+    ]
+  },
+  "navigation_cleanup": {
+    "paths": [
+      "START_HERE.md",
+      "STATUS.md",
+      "docs/IMPLEMENTATION_PLAN.md",
+      "docs/TLS_RAG_LOCAL_WORKFLOW.md",
+      "NEXT_AGENT_PROMPT.md"
+    ],
+    "before_lines": 4714,
+    "after_lines": 243,
+    "removed_repeated_history_lines": 4471,
+    "historical_recovery_commit": "50defc35bc9f42f5b24d2dedf5f45a89e51257ad"
+  }
+}

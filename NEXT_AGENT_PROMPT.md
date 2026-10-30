@@ -1,15 +1,14 @@
 # Next agent startup
 
-Use `/Users/guanghongxu/Query-Adaptive-Tri-RAG` and the existing
-`codex/tls-rag-step5-ann` branch for all Step 5 updates and synchronization.
-The user authorized its creation and redundant-branch cleanup on 2026-10-23.
-Preserve user files, historical commits/tags and the review backup.
+Work in `/Users/guanghongxu/Query-Adaptive-Tri-RAG` on
+`codex/tls-rag-step5-ann`. Preserve user files and the review backup.
 
-Read [AGENTS.md](AGENTS.md), [START_HERE.md](START_HERE.md), then the
-[Step 5 contract](docs/TLS_RAG_STEP5_ANN.md), current STATUS.md and relevant protection entries.
-Run `python3 scripts/check_code_protection.py` before proposing edits.
+Read [AGENTS.md](AGENTS.md), [START_HERE.md](START_HERE.md),
+[current STATUS](STATUS.md), relevant protection entries and the user's actual
+brief. The [repository map](docs/REPOSITORY_MAP.md) locates versioned code.
+Run `python3 scripts/check_code_protection.py` before editing and handoff.
 
-Step 5 ANN v1 implementation and A800 offline/HNSW synthetic tests are complete.
-The earlier planning handoff describes a superseded phase, not a current work order.
-Real source/model/history audit and real-data preparation/evaluation await the
-user's next instruction. Do not open protected historical archives or execute old prompts.
+Step 5 continuation v2 A→B→C has completed with negative net-speed results and
+incomplete deployment safety. No new experiment or older role reopening is
+assigned by this template. The cleanup review's L0 proposals await explicit
+path/scope approval; passing the inventory check is not that approval.

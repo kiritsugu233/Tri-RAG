@@ -1,5 +1,8 @@
 # Architecture and Contracts
 
+> Current Step 5 code families and cross-version dependencies are mapped in
+> [REPOSITORY_MAP](REPOSITORY_MAP.md). This file remains the original exact-retrieval architecture contract/reference.
+
 > **Version-scoped reference.** This document describes its named method and
 > milestone, including historical results and commands. It is not a current
 > assignment or permission to reopen data. Start at [root AGENTS](../AGENTS.md)

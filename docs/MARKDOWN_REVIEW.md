@@ -116,3 +116,19 @@ continuing branch; source-bound historical commands are explicitly scoped.
 - [scripts/slurm_pdctp_foundation.sh](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/scripts/slurm_pdctp_foundation.sh)
 - [scripts/run_tls_rag_step4_probe.sh](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/scripts/run_tls_rag_step4_probe.sh)
 - [scripts/run_tls_rag_step4_retention_v3.sh](https://github.com/kiritsugu233/Tri-RAG/blob/4a6efebfeaf2e9f9d40d66a8c140b1753baff9b7/scripts/run_tls_rag_step4_retention_v3.sh)
+
+## 2026-10-30 repository cleanup follow-up
+
+All58 tracked baseline Markdown files passed relative-link/fence checks. Current
+startup files were reviewed against Step 5 continuation v2 and actual code.
+`NEXT_AGENT_PROMPT.md` and `TLS_RAG_LOCAL_WORKFLOW.md` contained superseded phase/
+branch instructions; corrected. START_HERE/STATUS/IMPLEMENTATION_PLAN now use
+short current summaries and fixed-Git links to their complete pre-cleanup text.
+Detailed recorded results, approvals and source-bound scientific contracts remain
+available without making every new agent preload the historical ledgers.
+
+New navigation/review: [root README](../README.md),
+[repository map](REPOSITORY_MAP.md), [cleanup review](REPOSITORY_CLEANUP_REVIEW.md).
+The evidence JSON records scope, historical SHA-256 values and actual test outcomes.
+The living research journal and frozen reports are unchanged. Human L0 protection
+register omissions require the separate exact approval proposed in the review.

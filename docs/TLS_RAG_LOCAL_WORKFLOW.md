@@ -1,60 +1,38 @@
-# TLS-RAG canonical local and cluster workflow
+# TLS-RAG local and cluster workflow
 
-The user fixed the local working directory for every subsequent step to:
+Updated 2026-10-30. Authoritative rules: [AGENTS](../AGENTS.md).
+Use `/Users/guanghongxu/Query-Adaptive-Tri-RAG` and the continuing
+`codex/tls-rag-step5-ann` branch. Inspect branch, HEAD and tracked/untracked
+status before editing; preserve user changes and existing archives.
+The review backup `codex/repo-review-code-protection` remains at
+`62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
-```text
-/Users/guanghongxu/Query-Adaptive-Tri-RAG
-```
+After an authorized milestone passes required checks, commit/push the continuing
+branch and verify its remote HEAD, per the standing synchronization instruction.
+Remote: `https://github.com/kiritsugu233/Tri-RAG.git`. Read current
+[START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) for the actual stage.
 
-Run local implementation, tests, Git commits and GitHub synchronization there.
-Do not use `.codex/worktrees/...` for new local steps without a new explicit
-exception. Preserve existing untracked files and user changes. The single continuing
-Step 4 branch is `codex/tls-rag-step4-retention-v3`, fast-forwarded to include
-reviewed baseline `62377d854ddd183925c4b62ca81653e9c14d9c34` and the approved Tri-Law
-numerical v2 repair. Inspect actual HEAD. Preserve `codex/repo-review-code-protection`
-at that baseline as a backup. Do not push ongoing work to it or create another
-branch for each Step 4 update; the continuing branch name stays the same across
-versions. `248c29e` is only the historical pre-review experiment commit.
-Historical initial readiness commit:
-`155070d8df96a773d83a650db84e6ec69d12c51e`. The remote is
-`https://github.com/kiritsugu233/Tri-RAG.git`.
-
-For every authorized milestone, validate the exact checkout, complete tests,
-commit and push the continuing branch without force, then compare the local
-commit with the GitHub branch HEAD. The standing user instruction authorizes
-this GitHub synchronization. The default branch is not implicitly changed.
-
-The Step 4 replay script refuses other local macOS working directories. From
-the canonical directory run it with a new, absent output parent:
+## Local verification
 
 ```bash
-sh scripts/run_tls_rag_step4_readiness.sh /private/tmp/tls-rag-step4-local-NEW
+python3 scripts/check_code_protection.py
+sh scripts/run_tests.sh
 ```
 
-The script still allows a Linux cluster checkout. GitHub is the synchronization
-source: fetch the named step branch, check out the reviewed full commit in a
-clean/dedicated cluster checkout, and verify that the fetched branch contains
-that commit. Avoid reset/clean or overwriting local cluster changes.
+The launcher resolves its repository and accepts `TRI_RAG_TEST_PYTHON` for an
+existing interpreter. Complete Step 5 verification needs fixed FAISS/sklearn and
+native libraries; see [validation](REPOSITORY_CLEANUP_REVIEW.md#validation).
+No dependency installation or model/data download occurs in the test launcher.
 
-Use the existing CPU environment with NumPy 1.26.4 and SciPy 1.13.0; do not
-install dependencies or download data inside the test job. A Genoa CPU node is
-appropriate. The initial replay request is one CPU, 4 GB and ten minutes with
-no GPU. Set BLAS/OpenMP thread counts to one. Use the site's actual partition
-and account. No cluster path, partition or account is inferred from this file.
+## Cluster replay
 
-The test job runs focused/full CPU suites twice and compares its two fresh
-synthetic output directories. Keep the reviewed commit, environment, Slurm job
-ID, output and exit code. Cluster success requires the actual job result.
-The v1 readiness real-data gate remains closed. Separately authorized v2/v3
-probe work follows its versioned brief and exact paths; this workflow does not
-authorize additional data access or Step 5. Read root AGENTS and run
-`python3 scripts/check_code_protection.py` before edits and at handoff.
+Cluster execution uses a separate Linux checkout synchronized through GitHub
+at the reviewed full commit. Preserve cluster modifications; verify exact SHA,
+environment, command, exit code and actual result. The present route1/2 native
+builders are macOS scoped, not validated Linux launchers.
+A new remote experiment follows the user's specific task and versioned contract.
 
-## A800 execution update (2026-10-22)
-
-User moved subsequent remote experiments to AutoDL A800. Local checkout/branch remain fixed.
-Use the existing Miniconda and an isolated tri-rag-step4 environment; preserve base.
-No set -e/-eu in the active workflow; print and inspect each exit code before proceeding.
-For this milestone the user retains commit/push responsibility. Follow
-[TLS_RAG_STEP4_A800_REPLAY.md](TLS_RAG_STEP4_A800_REPLAY.md); historical Genoa commands above
-are provenance, not current instructions.
+Historical Step 4/Genoa/A800 directory/branch/commit-and-push arrangements are
+retained at [the pre-cleanup workflow](https://github.com/kiritsugu233/Tri-RAG/blob/50defc35bc9f42f5b24d2dedf5f45a89e51257ad/docs/TLS_RAG_LOCAL_WORKFLOW.md), with exact execution
+records in [historical STATUS](https://github.com/kiritsugu233/Tri-RAG/blob/50defc35bc9f42f5b24d2dedf5f45a89e51257ad/STATUS.md). Those retired branch instructions
+and milestone-only commit arrangements are superseded by current AGENTS.

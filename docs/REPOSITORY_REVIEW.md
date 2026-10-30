@@ -1,5 +1,9 @@
 # Repository review — 2026-09-07
 
+> **2026-10-30 follow-up:** current whole-repository structure/deletion review and
+> pending guard repair are in [REPOSITORY_CLEANUP_REVIEW](REPOSITORY_CLEANUP_REVIEW.md).
+> The findings below retain their original September scope and evidence.
+
 > 后续更新：用户已明确批准修复 R1/R2。当前分支已实施 Tri-Law 数值 v2；
 > 见 [修复记录](TRI_LAW_NUMERICAL_FIX.md)。本文下方保留 `c40b7b0` 审查时的
 > 原始发现、失败输出和“待批准”历史状态，不代表当前代码仍未修复。

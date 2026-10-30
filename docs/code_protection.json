@@ -1556,6 +1556,26 @@
       "path": "scripts/run_tls_rag_step5_ann_continuation_v2.py",
       "level": "L1",
       "reason": "Approved route2 v2 section26 development namespace; old continuation/search/law contracts unchanged; actual exact-scope consent recorded"
+    },
+    {
+      "path": "README.md",
+      "level": "L1",
+      "reason": "Repository landing page and current navigation; no executable or scientific contract"
+    },
+    {
+      "path": "docs/REPOSITORY_MAP.md",
+      "level": "L1",
+      "reason": "Repository-wide lifecycle/dependency map; authoritative levels remain in protection registry"
+    },
+    {
+      "path": "docs/REPOSITORY_CLEANUP_REVIEW.md",
+      "level": "L1",
+      "reason": "2026-10-30 structural review, deletion analysis and pending exact L0 proposals; no consent implied"
+    },
+    {
+      "path": "docs/repository_cleanup_evidence.json",
+      "level": "L1",
+      "reason": "Read-only inventory, guard counterexample, preservation and offline-test receipts; no new scientific results"
     }
   ],
   "approved_change_history": [
