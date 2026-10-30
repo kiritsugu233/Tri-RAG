@@ -1576,6 +1576,11 @@
       "path": "docs/repository_cleanup_evidence.json",
       "level": "L1",
       "reason": "Read-only inventory, guard counterexample, preservation and offline-test receipts; no new scientific results"
+    },
+    {
+      "path": "docs/TEST_SUITE_SIMPLIFICATION_PROPOSAL.md",
+      "level": "L1",
+      "reason": "User-requested Chinese proposal B with per-method keep/merge/daily-retirement coverage mapping; planning only, no implementation or weakened-test consent"
     }
   ],
   "approved_change_history": [

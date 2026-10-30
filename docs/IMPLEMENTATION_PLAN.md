@@ -26,6 +26,13 @@ Unchecked historical items are not execution authorization.
 - [x] Document A800 guard-source identity consequence; five Step5 maps unchanged.
 - [x] Complete table/link/hash verification for same-branch Step5 synchronization.
 
+## 测试精简方案 B：仅方案，待批准
+
+- [x] 对430方法逐项列出处置、实际断言/调用依据及来源绑定影响。
+- [x] 真实unittest只收集确认：日常候选232＋历史198=430，无重叠/漏项。
+- [x] 提出M01四场景等价合并及明确四路径审批，保留所有唯一历史断言。
+- [ ] 用户批准 [中文方案 B](TEST_SUITE_SIMPLIFICATION_PROPOSAL.md) 后再实施。
+
 ## Scientific milestone index
 
 | Family/milestone | Recorded state | Detailed record |

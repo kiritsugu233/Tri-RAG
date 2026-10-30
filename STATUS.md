@@ -3,6 +3,13 @@
 Updated 2026-10-30. Maintained branch: `codex/tls-rag-step5-ann`.
 Canonical checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 
+## 待批准的测试精简方案 B（2026-10-30）
+
+- [中文审批方案及430方法逐项表](docs/TEST_SUITE_SIMPLIFICATION_PROPOSAL.md)。
+- 只做文档和只读收集：230项保留、2项拟合并为1项、198项拟退出日常但完整保留。
+- 拟议日常231/完整429/历史198；无参数入口仍完整，永久删除0项。
+- 实现/测试尚未修改；等待用户对精确范围批准。本文不继承方案A的执行授权。
+
 ## 已批准的方案 A：保护检查与登记修复（2026-10-30）
 
 - 实际批准：“批准执行，执行完毕后更新github上的repo，不要另起branch，直接在step5的分支上提交”。
