@@ -16,9 +16,15 @@ backend and recorded failures. The user's 2026-10-30 direction now assigns
 offline joint `(m,M)` advisor plus an independent candidate-pool Gaussian
 screen, with independent-view union conditional on their results. Start with
 theory/prior-work review and a concrete scoped implementation proposal in
-[journal section32](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md).
+[journal sections32–34](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md).
+P0 is complete: the exact marginal matches the 2013 sign-flip law after
+polarization; the loss/counting bridge is valid but need not be tight. Section34
+proposes P1 fixed-pool projection/cost screening with five new files, explicit
+test-suite membership and narrow registration changes. The user's actual reply
+was “保留P0，暂缓P1实现”: retain P0; P1 is deferred, not approved for execution.
 No new route4 algorithm experiment has run; exact L0 implementation/data scope
-still needs approval under AGENTS. The original route3 rescue remains unassigned.
+still needs approval under AGENTS. Do not resume P1 without a new user direction
+and its required scoped consent. The original route3 rescue remains unassigned.
 
 Read [current STATUS](STATUS.md) for the latest result and cleanup checkpoint.
 The [living exploration journal](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md),

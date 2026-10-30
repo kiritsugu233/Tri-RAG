@@ -9,7 +9,10 @@ Unchecked historical items are not execution authorization.
 - [x] 根据用户本次实际指示，将下一轮研究追加为[探索日志第32节](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md)。
 - [x] 明确优先顺序：离线联合`(m,M)`顾问＋独立候选池筛选；独立视图并集条件后续。
 - [x] 记录2013精确翻转概率的变量代换线索、核心文献、成本账本和停止条件。
-- [ ] P0：Step5独立理论/先行工作复核，并提交精确新L0路径/API、输入角色、参数与预算提案。
+- [x] P0：Step5独立理论/先行工作复核、输入身份审计及精确P1提案；见同日志第33–34节。
+- [x] 378组边界/常规表达式与2880项集合检查；记录相同边际、不同排名尾部的可实现反例。
+- [x] 记录实际答复“保留P0，暂缓P1实现”；保留P0并停止于此，不自动恢复P1。
+- [ ] 第34节五个新文件、测试入口归类及窄幅登记范围取得用户精确批准；当前暂缓/未批准。
 - [ ] P1：取得相应范围批准后，验证固定候选池上纯投影规律、计数界及完整成本。
 - [ ] P2：比较Tri配置、同输入间隔/角度模型和同预算直接投影试验；无增量则停止/降级。
 - [ ] P3：冻结具体配置及矩阵后，按未参与选择的查询角色验证；旧分组不冒充fresh独立性。
@@ -64,7 +67,7 @@ Unchecked historical items are not execution authorization.
 | Route1 v1/v2 | Negative net-speed results | [Journal §§14/19](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md) |
 | Route2 continuation v1/v2 | A→B→C complete; current learned/Tri paths fail net gain | [Journal §§24/27–31](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md) |
 | Route3 independent-view rescue | Not run | Same journal §7; separate scope needed |
-| Route4 offline geometry/index configuration | Follow-up research assigned; no algorithm experiment run | Same journal §§21/32; P0 review then exact L0 scope |
+| Route4 offline geometry/index configuration | P0 complete; user deferred P1; no algorithm experiment run | Same journal §§21/32–34 |
 
 ## Pending decisions and safety limits
 
