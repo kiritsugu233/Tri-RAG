@@ -22,12 +22,15 @@ polarization; the loss/counting bridge is valid but need not be tight. Section34
 proposes P1 fixed-pool projection/cost screening with five new files, explicit
 test-suite membership and narrow registration changes. The user's actual reply
 was “保留P0，暂缓P1实现”: retain P0; P1 is deferred, not approved for execution.
-No new route4 algorithm experiment has run; exact L0 implementation/data scope
-was not approved at that checkpoint. On 2026-11-01 the user explicitly said
+Exact L0 implementation/data scope was not approved at that checkpoint.
+On 2026-11-01 the user explicitly said
 “继续P1”, resuming the exact section34 eight-path scope. The new isolated
 implementation now passes445 full tests (16 P1, zero skips), after repairing
-a pre-input monitor startup failure; real-input recovery P1 is next,
-bounded to local CPU20k/96 historical queries and45 minutes. Read section36.
+a pre-input monitor startup failure. P1 is now complete on scientific source
+`b38ad51`:20k corpus,32 advice+32 select queries evaluated, eight design seeds,
+157 full timing configurations. No Gaussian configuration meets quality; all12
+free-M oracles are infeasible. Report32 stays closed; do not start P2 training,
+retune this grid, reopen report or rerun. Read section36 for results and audit.
 The original route3 rescue remains unassigned; route5 is still documentation only.
 
 On 2026-10-31 the user requested **route5 documentation only**: offline HNSW
@@ -35,7 +38,8 @@ neighbor selection/pruning with Gaussian comparisons and exact-distance fallback
 See [journal section35](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#35-方案5离线建图时的邻居选择与剪枝2026-10-31).
 Its cost screen, fixed-state diagnostics, comparator, full build and external-query
 validation are proposed/not run; the conditional-risk and graph-quality bridges
-remain unresolved. This record does not resume route4 P1 or authorize new runs.
+remain unresolved. That route5 record did not authorize route4 P1 or a route5
+run; P1's separate authorization and completed negative result are above.
 
 Read [current STATUS](STATUS.md) for the latest result and cleanup checkpoint.
 The [living exploration journal](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md),

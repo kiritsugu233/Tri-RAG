@@ -10,9 +10,10 @@ Unchecked historical items are not execution authorization.
 - [x] 五个新文件、测试入口归类及窄幅人工/机器登记；旧科学文件保持。
 - [x] 新13项和全仓442项通过、无跳过；真实PID树资源停止及封存回归通过。
 - [x] 保留105e2f9读取输入前的监控启动失败；修复真实监控测试/共享截止时间，完整445项通过。
-- [ ] 修正源码同步后按原20k/96/45分钟范围恢复真实P1，保守扣留60秒，不并发旧run。
-- [ ] 核对逐query/seed、完整成本、风险界、免费M上限、报告门及封存，记录真实负/正结果。
-- [ ] 根据证据决定是否值得另提P2；本次不训练顾问或自动推进其他方案。
+- [x] 修正源b38ad51同步后完成唯一有效真实P1，137.777秒；原预算扣留60秒，没有并发旧run。
+- [x] 独立核对64条真值/39,584质量/25,120计时及452项科学封存；记录风险、质量与成本负结果。
+- [x] 科学门槛no_candidate，12个免费M诊断全不可行；report32保持关闭，未冒充独立通过。
+- [x] 按停止条件不进入本动作空间的P2，不训练顾问或自动推进其他方案。
 
 ## 方案5：离线建图的邻居选择/剪枝（仅设计记录）
 
@@ -34,8 +35,8 @@ Unchecked historical items are not execution authorization.
 - [x] 记录2013精确翻转概率的变量代换线索、核心文献、成本账本和停止条件。
 - [x] P0：Step5独立理论/先行工作复核、输入身份审计及精确P1提案；见同日志第33–34节。
 - [x] 378组边界/常规表达式与2880项集合检查；记录相同边际、不同排名尾部的可实现反例。
-- [x] 记录实际答复“保留P0，暂缓P1实现”；保留P0并停止于此，不自动恢复P1。
-- [ ] 第34节五个新文件、测试入口归类及窄幅登记范围取得用户精确批准；当前暂缓/未批准。
+- [x] 记录10月30日实际答复“保留P0，暂缓P1实现”；该检查点未擅自恢复。
+- [x] 11月1日“继续P1”恢复第34节五文件/测试入口/窄幅登记范围，实际执行与结果见上。
 - [ ] P1：取得相应范围批准后，验证固定候选池上纯投影规律、计数界及完整成本。
 - [ ] P2：比较Tri配置、同输入间隔/角度模型和同预算直接投影试验；无增量则停止/降级。
 - [ ] P3：冻结具体配置及矩阵后，按未参与选择的查询角色验证；旧分组不冒充fresh独立性。
@@ -90,7 +91,7 @@ Unchecked historical items are not execution authorization.
 | Route1 v1/v2 | Negative net-speed results | [Journal §§14/19](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md) |
 | Route2 continuation v1/v2 | A→B→C complete; current learned/Tri paths fail net gain | [Journal §§24/27–31](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md) |
 | Route3 independent-view rescue | Not run | Same journal §7; separate scope needed |
-| Route4 offline geometry/index configuration | P0 complete; user deferred P1; no algorithm experiment run | Same journal §§21/32–34 |
+| Route4 offline geometry/index configuration | P1 completed, no candidate; report closed, P2 not started | Same journal §§21/32–36 |
 | Route5 offline graph neighbor selection/pruning | Design documented only; no implementation or build run | Same journal §35 |
 
 ## Pending decisions and safety limits

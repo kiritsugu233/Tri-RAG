@@ -17,8 +17,12 @@ audit and exact P1 proposal. The user's actual response was
 “保留P0，暂缓P1实现” at the prior checkpoint. The user's new 2026-11-01 instruction
 “继续P1” resumes the exact eight-path section34 scope. Section36 records the
 approved implementation, full445/445 tests (16 P1, no skips), and bounded
-real-input P1 continuation. Consult STATUS for actual run state; do not start a
-second run or extend the45-minute/20k/96/local CPU scope. No new retrieval or
+real-input P1 result. Scientific source is `b38ad51`; completed run is
+`runs/route4-screen-20261101-v1-recovery`, with no Gaussian candidate and12/12
+infeasible free-M diagnostics. Report32 remains closed; P2 is not started.
+Preserve the failed pre-input startup and452-file scientific archive plus
+independent postrun review. Do not rerun, retune, reopen report or extend scope.
+Consult STATUS and section36 for actual results. No new retrieval or
 index build ran in P0. The proposed
 future direction pairs an offline joint `(m,M)` advisor with an independent
 candidate-pool Gaussian screen; independent-view union remains conditional

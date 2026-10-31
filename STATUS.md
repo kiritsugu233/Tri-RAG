@@ -3,24 +3,41 @@
 Updated 2026-11-01. Maintained branch: `codex/tls-rag-step5-ann`.
 Canonical checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 
-## 方案4 P1恢复与初次科学冻结（2026-11-01）
+## 方案4 P1完成：无可行Gaussian配置（2026-11-01）
+
+- **P1执行完结、科学门槛未通过：no_candidate；停止本动作空间的P2顾问投入。**
+  科学源`b38ad51`，本地`runs/route4-screen-20261101-v1-recovery`；主监督137.777秒，
+  峰值观测528.922MiB，原科学封存452项/1,571,700,160B；无超限/运行时错误。
+- 20k库；96历史查询仅导出，实际advice32/select32已评估，report32未检索/算真值/计时。
+  八设计seed、选择质量661组、157个配置独立完整计时，各query五次。
+- 选择集C自身保留93.75%；同C最佳合格PQ M128：0.322162ms/p95 0.397861ms、0新增损失。
+  原维FP32完整扫描：1.214284ms；合格PCA96/M256：0.502439ms。
+- Gaussian192/M256/FP32：计时seed0.865304ms、额外漏4/320；八seed漏数
+  `[4,4,2,5,8,5,2,2]`，平均新增损失1.25%、最差query20%，均不满足0.5%均值/10%尾部。
+  免费选M的六维度×两dtype共12个oracle全不可行；不扩大M/维度或追调seed。
+- 全竞争者1,518,848对，Tri几何/概率计算2.459秒；advice192/M256计数上界9.560%
+  对比八seed实际均值1.758%，界合法但松，不是精确召回预测或独立认证。
+- 独立复核64条NumPy原真值、39,584条质量记录、19,973个不同E的精排、25,120个计时
+  样本及全部452项科学文件，均一致。FP32/64仅候选内部顺序差异，无成员/最终结果差异。
+- 交付索引覆盖465项/1,571,898,774B（原452科学项保留；索引自身另计），SHA256
+  `f1f347609a993ba26dcf2ef4c89ca42ce0bc0c6332aa65e37db81d434b42d5dc`；详见日志36.6–36.10。
+  `formal_certification=false,fresh_independence=false`，不宣称整体ANN加速。
 
 - 初次105e2f9入口失败于ps权限，科学子进程在读取输入前退出；现场保留，无新检索/真值。
   旧资源测试过度替换Popen，未实际验证ps，这一覆盖缺陷已明确纠正。
 - 修复后真实ps/子进程停止、监控异常封存和共享epoch截止时间均验证；完整445/445、
   0跳过、57.439秒（P1共16项；Step5收集247、legacy198）。旧科学参数不变。
 - 后续唯一有效科学run使用`runs/route4-screen-20261101-v1-recovery`；确认旧进程为0，
-  不复用旧输出，从原45分钟预算保守扣60秒，新监督最多2640秒。尚无真实结果。
+  不复用旧输出，从原45分钟预算保守扣60秒，新监督最多2640秒。最终结果见本节顶部。
 
 - 用户实际指示：“继续P1”，恢复已呈示的第34节八路径范围；旧暂缓决定仍作历史保留。
 - 新增五个隔离文件、测试入口单项归类及窄幅登记已完成；不改旧科学源/配置/依赖。
-- 新增13项CPU/offline回归及完整442项通过，0跳过，72.162秒；收集Step5=244、legacy=198。
-  资源超限真实子进程停机/封存、无真值计时接口、独立池、损失/计数、PQ实际API均覆盖。
+- 初次新增13项及完整442项通过，0跳过，72.162秒；其资源监控覆盖缺陷见上，
+  最终16项P1/完整445项验证才包含未替换的真实ps及停机/失败回归。
 - 初测保留两项发现：浮点除法再乘回不应要求逐位还原；当前系统拒绝killpg但允许终止
   自建子进程PID。现验证共同Gaussian原始抽样与已追踪PID树停机，未放宽科研阈值。
-- 下一项为本地CPU真实P1，唯一计划run为`runs/route4-screen-20261101-v1`，20k/96历史
-  已开放查询，科学累计45分钟、4GiB RSS/3GiB新产物，原cert/test保持关闭。
-  尚无新真实数据运行结果；不训练顾问/adapter、不做1M/SSH/方案3/5或多视图。
+- 最初计划root的启动失败完整保留；有效恢复run及其负结果见上。科学累计45分钟、
+  4GiB RSS/3GiB新产物边界保持，原cert/test关闭；未训练顾问/adapter或执行其他路线。
 - 现有四项未提交L1方案5记录保持原字节内容；本轮只将其完整前缀保留并追加第36节。
   保护240项、旧235项等级/旧科学哈希、差异/文档与来源检查在提交前核对。
 
@@ -37,7 +54,8 @@ Canonical checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 - 文档检查：`python3 scripts/check_code_protection.py`、`git diff --check`，
   并核对旧日志完整前缀、四路径L1范围、本地链接/新锚点及代码围栏。
   全部通过：235项保护登记、53个本地链接、新第35节锚点及围栏；旧日志完整字节保留。
-  当前产物是本地设计记录，未提交/推送；没有新的建图结果，未运行429项运行时套件。
+  该设计记录保存时只在本地，后于105e2f9原文纳入Step5提交；没有新建图结果。
+  方案5记录时未运行429项套件，本轮独立P1的445项结果见顶部。
 - 下一步仍需用户决定具体研究/实现范围；本次记录不自动执行方案5或恢复其他路线。
 
 ## 方案4后续研究与 Step 5 交接（2026-10-30）
@@ -48,10 +66,10 @@ Canonical checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
   `4.551914400963142e-15`；2880项小集合检查通过。这不是新检索算法验收。
 - P0证据目录：`runs/route4-p0-review-20261030-v1`。只校验既有100k向量/ID与768条
   历史已开放tune导出包身份，未抽新子集、检索、建索引、训练或访问封闭角色。
-- 用户本轮实际答复：“保留P0，暂缓P1实现”。P0结论保留，P1暂缓，不自动恢复。
+- 该10月30日检查点的实际答复：“保留P0，暂缓P1实现”；11月1日恢复授权及结果见顶部。
 - 第34节为未批准/暂缓的P1精确提案：本地CPU、20k/96条历史查询、独立IVF候选池、
   Gaussian/PCA/PQ与完整原空间对照、免费M上限、45分钟科学运行上限。
-  包含五个新文件、测试入口单项归类、人工/机器登记的窄幅变更；尚未批准或执行。
+  包含五个新文件、测试入口单项归类、人工/机器登记的窄幅变更；当时尚未批准/执行。
   不因P0数学成立而声称界足够紧、系统有收益或整篇论文无新意。
 - 用户实际指示：“可以，把下一轮研究内容写进方案4的后续里面，然后交付给Step5的agent让它继续按这个路线进行下去”。
 - 已追加[探索日志第32节](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md)，
@@ -148,7 +166,8 @@ hold the full process, commands, source/selection/model checks and limitations.
   abstention fallback; execution is complete, deployment safety acceptance is not.
 - Preserve resumable backend and failures; no automatic retry/threshold change,
   adapter/1M/routes3/4, SSH/GPU or closed-role access. No fresh independence or
-  formal certification. Route4 remains planned; route3 has not run.
+  formal certification. Route4 was planned at that checkpoint; its later P1
+  result is recorded above. Route3 has not run.
 - Latest raw evidence: `runs/ann-continuation-v2-20261030-v1`,1658 previously
   verified files/2,149,374,244B. This cleanup did not re-audit or rewrite them.
 
