@@ -46,7 +46,7 @@ def assert_frozen(root):
     frozen = json.loads((root / 'source_freeze.json').read_text())
     if frozen['sources'] != sources() or frozen['config'] != config():
         raise ValueError('frozen source/config changed')
-    if time.monotonic() >= frozen['deadline_monotonic']:
+    if time.time() >= frozen['deadline_unix']:
         raise ValueError('shared scientific deadline expired')
     os.kill(frozen['supervisor_pid'], 0)
 
@@ -419,13 +419,20 @@ def terminate_owned_tree(proc):
     proc.wait(timeout=5)
 
 
-def supervisor(root):
+def supervisor(root, startup_reserve_seconds=0):
     s = config()
     check_versions(s)
+    if not 0 <= startup_reserve_seconds < s['limits']['seconds']:
+        raise ValueError('invalid reserve inside original cumulative budget')
+    # Probe the real monitor before spawning any science process. Permission
+    # failures must not leave an unmonitored science child behind.
+    descendant_processes(os.getpid())
     root.mkdir(parents=True, exist_ok=False)
     started = time.monotonic()
+    remaining_seconds = s['limits']['seconds'] - startup_reserve_seconds
     save(root / 'source_freeze.json', dict(sources=sources(), config=s,
-         supervisor_pid=os.getpid(), deadline_monotonic=started + s['limits']['seconds'],
+         supervisor_pid=os.getpid(), deadline_unix=time.time() + remaining_seconds,
+         startup_reserve_seconds=startup_reserve_seconds, remaining_seconds=remaining_seconds,
          git_head=subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
          user_consent='继续P1', consent_date='2026-11-01', exact_proposal='journal section34'))
     env = dict(os.environ, OPENBLAS_NUM_THREADS='1', OMP_NUM_THREADS='1', VECLIB_MAXIMUM_THREADS='1',
@@ -439,31 +446,44 @@ def supervisor(root):
         proc = subprocess.Popen([sys.executable, __file__, 'science', '--root', str(root)],
                                 env=env, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
         last_disk = -100.
-        while proc.poll() is None:
-            elapsed = time.monotonic() - started
-            rss = descendants_rss(os.getpid())
-            maximum_rss = max(maximum_rss, rss)
-            if elapsed - last_disk >= 5:
-                size = sum(p.stat().st_size for p in root.rglob('*') if p.is_file())
-                maximum_bytes = max(maximum_bytes, size)
-                last_disk = elapsed
-            if elapsed >= s['limits']['seconds']:
-                reason = 'cumulative_wall_limit'
-            elif rss > s['limits']['rss_bytes']:
-                reason = 'aggregate_RSS_limit'
-            elif maximum_bytes > s['limits']['artifact_bytes']:
-                reason = 'artifact_bytes_limit'
-            elif shutil.disk_usage(root).free < s['limits']['free_bytes']:
-                reason = 'free_space_limit'
-            if reason:
+        try:
+            while proc.poll() is None:
+                elapsed = time.monotonic() - started
+                rss = descendants_rss(os.getpid())
+                maximum_rss = max(maximum_rss, rss)
+                if elapsed - last_disk >= 5:
+                    size = sum(p.stat().st_size for p in root.rglob('*') if p.is_file())
+                    maximum_bytes = max(maximum_bytes, size)
+                    last_disk = elapsed
+                if elapsed >= remaining_seconds:
+                    reason = 'cumulative_wall_limit'
+                elif rss > s['limits']['rss_bytes']:
+                    reason = 'aggregate_RSS_limit'
+                elif maximum_bytes > s['limits']['artifact_bytes']:
+                    reason = 'artifact_bytes_limit'
+                elif shutil.disk_usage(root).free < s['limits']['free_bytes']:
+                    reason = 'free_space_limit'
+                if reason:
+                    terminate_owned_tree(proc)
+                    break
+                time.sleep(.5)
+        except Exception:
+            reason = 'monitor_failure'
+            save(root / 'monitor_failure.json', dict(traceback=traceback.format_exc()))
+            try:
                 terminate_owned_tree(proc)
-                break
-            time.sleep(.5)
-        log.close()
-    state = 'resource_stop' if reason else ('completed' if proc.returncode == 0 else 'execution_failure')
+            except Exception:
+                # Never let a monitoring exception leave the science parent
+                # running. Any residual worker must be checked before recovery.
+                proc.kill()
+                proc.wait(timeout=5)
+        finally:
+            log.close()
+    state = ('execution_failure' if reason == 'monitor_failure' else 'resource_stop') if reason else ('completed' if proc.returncode == 0 else 'execution_failure')
     save(root / 'status.json', dict(status=state, reason=reason, exit_code=None if proc is None else proc.returncode,
          supervision_seconds=time.monotonic() - started, maximum_aggregate_rss_bytes=maximum_rss,
          maximum_monitored_artifact_bytes=maximum_bytes, stop_method='tracked_owned_PID_tree',
+         startup_reserve_seconds=startup_reserve_seconds, original_cumulative_limit=s['limits']['seconds'],
          formal_certification=False, fresh_independence=False))
     entries = {p.relative_to(root).as_posix(): dict(bytes=p.stat().st_size, sha256=sha(p))
                for p in sorted(root.rglob('*')) if p.is_file()}
@@ -488,10 +508,12 @@ def main():
     p.add_argument('--spec')
     p.add_argument('--seed', type=int)
     p.add_argument('--output', type=Path)
+    p.add_argument('--startup-reserve-seconds', type=float, default=0,
+                   help='subtract already reserved startup overhead; never enlarges the original limit')
     a = p.parse_args()
     root = a.root.resolve()
     if a.mode == 'run':
-        supervisor(root)
+        supervisor(root, a.startup_reserve_seconds)
     elif a.mode == 'timing':
         timing_worker(root, a.role, json.loads(a.spec), a.seed, a.output)
     else:

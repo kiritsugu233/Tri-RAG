@@ -25,7 +25,8 @@ was “保留P0，暂缓P1实现”: retain P0; P1 is deferred, not approved for
 No new route4 algorithm experiment has run; exact L0 implementation/data scope
 was not approved at that checkpoint. On 2026-11-01 the user explicitly said
 “继续P1”, resuming the exact section34 eight-path scope. The new isolated
-implementation passes442 full tests (13 new, zero skips); real-input P1 is next,
+implementation now passes445 full tests (16 P1, zero skips), after repairing
+a pre-input monitor startup failure; real-input recovery P1 is next,
 bounded to local CPU20k/96 historical queries and45 minutes. Read section36.
 The original route3 rescue remains unassigned; route5 is still documentation only.
 
@@ -70,7 +71,7 @@ sh scripts/run_tests.sh step5
 The full Step 5/native suite needs the existing fixed-version environment and
 native libraries; see [validation](docs/REPOSITORY_CLEANUP_REVIEW.md#validation).
 `TRI_RAG_TEST_PYTHON` selects the interpreter without changing dependencies.
-No argument or `full` now runs442 methods; the collected cohorts are step5=244,
+No argument or `full` now runs445 methods; the collected cohorts are step5=247,
 legacy=198. The previous429 count is the pre-P1 checkpoint.
 The two subsets partition the full suite; unselected tests are not passed/skipped.
 Shared-core/governance/dependency/historical changes and every implementation

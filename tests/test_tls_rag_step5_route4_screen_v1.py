@@ -218,7 +218,7 @@ class Route4P1Contracts(unittest.TestCase):
             root = Path(tmp) / 'data'
             shutil.copytree(self.root, root)
             screen.save(root / 'source_freeze.json', dict(sources=screen.sources(), config=self.s,
-                        supervisor_pid=os.getpid(), deadline_monotonic=time.monotonic() + 30))
+                        supervisor_pid=os.getpid(), deadline_unix=time.time() + 30))
             output = root / 'actual_worker.json'
             opened = []
             original = Path.open
@@ -245,7 +245,10 @@ class Route4P1Contracts(unittest.TestCase):
         s['limits'] = dict(s['limits'], seconds=.05, free_bytes=0)
         real_popen = subprocess.Popen
         def child(cmd, **kwargs):
-            return real_popen([os.sys.executable, '-c', 'import time; time.sleep(5)'], **kwargs)
+            if len(cmd) > 2 and cmd[2] == 'science':
+                return real_popen([os.sys.executable, '-c', 'import time; time.sleep(5)'], **kwargs)
+            # ps/check_output must remain real, not the synthetic science child.
+            return real_popen(cmd, **kwargs)
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp) / 'bounded'
             with patch.object(runner, 'config', return_value=s), patch.object(runner.subprocess, 'Popen', side_effect=child), contextlib.redirect_stdout(io.StringIO()):
@@ -255,7 +258,51 @@ class Route4P1Contracts(unittest.TestCase):
             status = json.loads((root / 'status.json').read_text())
             self.assertEqual(status['status'], 'resource_stop')
             self.assertEqual(status['reason'], 'cumulative_wall_limit')
+            self.assertGreater(status['maximum_aggregate_rss_bytes'], 0)
+            self.assertLess(status['supervision_seconds'], 3)
+            self.assertLess(status['exit_code'], 0)
             self.assertTrue(json.loads((root / 'archive_verified.json').read_text())['verified'])
+
+    def test_monitor_permission_failure_precedes_any_science_spawn(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / 'unstarted'
+            with patch.object(runner, 'descendant_processes', side_effect=PermissionError('ps denied')), patch.object(runner.subprocess, 'Popen') as spawn:
+                with self.assertRaises(PermissionError):
+                    runner.supervisor(root)
+            spawn.assert_not_called()
+            self.assertFalse(root.exists())
+
+    def test_monitor_failure_stops_child_and_preserves_execution_failure(self):
+        s = dict(self.s)
+        s['limits'] = dict(s['limits'], free_bytes=0)
+        real_popen = subprocess.Popen
+        real_tree = runner.descendant_processes
+        def child(cmd, **kwargs):
+            if len(cmd) > 2 and cmd[2] == 'science':
+                return real_popen([os.sys.executable, '-c', 'import time; time.sleep(5)'], **kwargs)
+            return real_popen(cmd, **kwargs)
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / 'monitor-failed'
+            def rss_denied(pid):
+                raise PermissionError('monitor denied after launch')
+            with patch.object(runner, 'config', return_value=s), patch.object(runner.subprocess, 'Popen', side_effect=child), patch.object(runner, 'descendants_rss', side_effect=rss_denied), contextlib.redirect_stdout(io.StringIO()):
+                with self.assertRaises(SystemExit):
+                    runner.supervisor(root)
+            status = json.loads((root / 'status.json').read_text())
+            self.assertEqual(status['status'], 'execution_failure')
+            self.assertEqual(status['reason'], 'monitor_failure')
+            self.assertLess(status['exit_code'], 0)
+            self.assertTrue((root / 'monitor_failure.json').exists())
+
+    def test_shared_deadline_uses_cross_process_wall_epoch(self):
+        child = float(subprocess.check_output([os.sys.executable, '-c', 'import time; print(time.time())'], text=True))
+        self.assertLess(abs(time.time() - child), 2)
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            value = dict(sources=screen.sources(), config=screen.config(), supervisor_pid=os.getpid(), deadline_unix=time.time() - 1)
+            screen.save(root / 'source_freeze.json', value)
+            with self.assertRaisesRegex(ValueError, 'deadline expired'):
+                runner.assert_frozen(root)
 
 
 if __name__ == '__main__':
