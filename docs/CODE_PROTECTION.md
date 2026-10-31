@@ -420,3 +420,26 @@ step5 与 legacy 互斥且并集等于 full。日常迭代可显式选 step5；�
 
 该行同步已有机器登记，不降级或修改原有理由。提案文档本身不创造授权；
 执行授权来自上面引用的用户回复。实际验收记录见提案末节及 [STATUS](../STATUS.md)。
+
+
+## 方案4 P1获准恢复（2026-11-01）
+
+用户在收到探索日志第34节精确八路径提案并暂缓后，本轮明确指示：
+
+> 继续P1
+
+仅恢复该提案范围：本地CPU20k/96历史开放查询、独立池/纯投影与完整成本，45分钟。
+不启动方案5、顾问/adapter训练、1M、SSH、独立视图或封闭角色。
+测试入口仅增加新模块归类；旧科学源、规则、登记行/等级与其他旧L0哈希不变。
+本节/机器登记仅追加新路径、实际批准引用与本文必要哈希。
+
+| File | Level | Reason |
+| --- | --- | --- |
+| [mechanism/tls_rag_step5_route4_screen_v1.py](../mechanism/tls_rag_step5_route4_screen_v1.py) | **L0** | Approved route4 P1 isolated namespace; inherited scientific/data/cost semantics remain protected |
+| [mechanism/tls_rag_step5_route4_risk_v1.py](../mechanism/tls_rag_step5_route4_risk_v1.py) | **L0** | Approved route4 P1 isolated namespace; inherited scientific/data/cost semantics remain protected |
+| [configs/tls_rag_step5_route4_screen_v1.json](../configs/tls_rag_step5_route4_screen_v1.json) | **L0** | Approved route4 P1 isolated namespace; inherited scientific/data/cost semantics remain protected |
+| [tests/test_tls_rag_step5_route4_screen_v1.py](../tests/test_tls_rag_step5_route4_screen_v1.py) | **L0** | Approved route4 P1 isolated namespace; inherited scientific/data/cost semantics remain protected |
+| [scripts/run_tls_rag_step5_route4_screen_v1.py](../scripts/run_tls_rag_step5_route4_screen_v1.py) | **L1** | Approved route4 P1 isolated namespace; inherited scientific/data/cost semantics remain protected |
+
+本轮初次科学冻结前，新增13项P1回归与完整442项均通过、无跳过；
+旧235项等级/登记与旧科学哈希保留，仅本文追加内容的必要哈希更新。

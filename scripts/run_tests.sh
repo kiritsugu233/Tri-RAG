@@ -32,6 +32,7 @@ test_tls_rag_step5_ann_enhancement
 test_tls_rag_step5_baseline_headroom
 test_tls_rag_step5_mechanism
 test_tls_rag_step5_reuse_probe
+test_tls_rag_step5_route4_screen_v1
 test_tri_law
 test_tri_predict
 """.split())

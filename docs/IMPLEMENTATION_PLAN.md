@@ -1,8 +1,30 @@
 # Implementation milestones
 
-Updated 2026-10-30. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
+Updated 2026-11-01. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
+
+## 方案4 P1恢复（2026-11-01）
+
+- [x] 实际指示“继续P1”恢复第34节精确八路径；追加实际批准与第36节过程记录。
+- [x] 五个新文件、测试入口归类及窄幅人工/机器登记；旧科学文件保持。
+- [x] 新13项和全仓442项通过、无跳过；真实PID树资源停止及封存回归通过。
+- [ ] 冻结源码并按本地CPU20k/96/45分钟范围完成唯一真实输入P1。
+- [ ] 核对逐query/seed、完整成本、风险界、免费M上限、报告门及封存，记录真实负/正结果。
+- [ ] 根据证据决定是否值得另提P2；本次不训练顾问或自动推进其他方案。
+
+## 方案5：离线建图的邻居选择/剪枝（仅设计记录）
+
+- [x] 按用户实际要求，将侧边讨论追加为[探索日志第35节](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#35-方案5离线建图时的邻居选择与剪枝2026-10-31)。
+- [x] 区分离线研究、真正建图及原空间线上查询；定位已知A/待算B的三点比较。
+- [x] 记录条件风险/自适应建图缺口、完整成本、强对照、图质量验证和停止规则。
+- [ ] R5-A：取得相应范围授权后，先测剪枝在完整建图中的成本份额及上限。
+- [ ] R5-B：固定候选现场的几何/投影反转与完整邻居选择重放。
+- [ ] R5-C：低维判定/精算回退的可用信息、同输入无Tri消融及配置价值。
+- [ ] R5-D：精确L0范围批准后才接新命名空间的实际建图；局部结论不冒充整图保证。
+- [ ] R5-E：合法外部查询上比较匹配质量的搜索成本，建图与查询收益分别判定。
+
+全部科学阶段尚未执行；本次仅文档写入，不恢复方案4暂缓的P1。
 
 ## 方案4后续：已指派 Step 5 接续研究
 
@@ -68,6 +90,7 @@ Unchecked historical items are not execution authorization.
 | Route2 continuation v1/v2 | A→B→C complete; current learned/Tri paths fail net gain | [Journal §§24/27–31](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md) |
 | Route3 independent-view rescue | Not run | Same journal §7; separate scope needed |
 | Route4 offline geometry/index configuration | P0 complete; user deferred P1; no algorithm experiment run | Same journal §§21/32–34 |
+| Route5 offline graph neighbor selection/pruning | Design documented only; no implementation or build run | Same journal §35 |
 
 ## Pending decisions and safety limits
 

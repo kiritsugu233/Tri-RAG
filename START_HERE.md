@@ -1,6 +1,6 @@
 # Query-Adaptive Tri-RAG: current entry
 
-Updated 2026-10-30. Canonical checkout:
+Updated 2026-11-01. Canonical checkout:
 `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 Maintained branch: **`codex/tls-rag-step5-ann`**; continue Step 5 updates there.
 The reviewed/Tri-Law-repaired backup remains `codex/repo-review-code-protection`
@@ -23,8 +23,18 @@ proposes P1 fixed-pool projection/cost screening with five new files, explicit
 test-suite membership and narrow registration changes. The user's actual reply
 was “保留P0，暂缓P1实现”: retain P0; P1 is deferred, not approved for execution.
 No new route4 algorithm experiment has run; exact L0 implementation/data scope
-still needs approval under AGENTS. Do not resume P1 without a new user direction
-and its required scoped consent. The original route3 rescue remains unassigned.
+was not approved at that checkpoint. On 2026-11-01 the user explicitly said
+“继续P1”, resuming the exact section34 eight-path scope. The new isolated
+implementation passes442 full tests (13 new, zero skips); real-input P1 is next,
+bounded to local CPU20k/96 historical queries and45 minutes. Read section36.
+The original route3 rescue remains unassigned; route5 is still documentation only.
+
+On 2026-10-31 the user requested **route5 documentation only**: offline HNSW
+neighbor selection/pruning with Gaussian comparisons and exact-distance fallback.
+See [journal section35](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#35-方案5离线建图时的邻居选择与剪枝2026-10-31).
+Its cost screen, fixed-state diagnostics, comparator, full build and external-query
+validation are proposed/not run; the conditional-risk and graph-quality bridges
+remain unresolved. This record does not resume route4 P1 or authorize new runs.
 
 Read [current STATUS](STATUS.md) for the latest result and cleanup checkpoint.
 The [living exploration journal](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md),
@@ -60,7 +70,8 @@ sh scripts/run_tests.sh step5
 The full Step 5/native suite needs the existing fixed-version environment and
 native libraries; see [validation](docs/REPOSITORY_CLEANUP_REVIEW.md#validation).
 `TRI_RAG_TEST_PYTHON` selects the interpreter without changing dependencies.
-No argument or `full` runs429 methods; `step5` runs231 and `legacy` runs198.
+No argument or `full` now runs442 methods; the collected cohorts are step5=244,
+legacy=198. The previous429 count is the pre-P1 checkpoint.
 The two subsets partition the full suite; unselected tests are not passed/skipped.
 Shared-core/governance/dependency/historical changes and every implementation
 delivery still require full validation. New test files need explicit classification.

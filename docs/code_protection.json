@@ -267,7 +267,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "63359f7e7d60c275de941586ecd5142027640ec03ab0101edf112c7d3ad34886"
+      "sha256": "5f162aa3b5d0f6b11861d328f25f3a75651c7570afd8dfdb26bc88cc75be4f84"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -1581,6 +1581,35 @@
       "path": "docs/TEST_SUITE_SIMPLIFICATION_PROPOSAL.md",
       "level": "L1",
       "reason": "User-requested Chinese proposal B with per-method keep/merge/daily-retirement coverage mapping; planning only, no implementation or weakened-test consent"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_route4_screen_v1.py",
+      "level": "L0",
+      "reason": "User-approved section34 route4 P1 isolated pool/projection/risk/cost contract; old scientific sources unchanged; 2026-11-01 consent: 继续P1",
+      "sha256": "11c700768a16429fa92b059c54e36eb5103605179ae8ef81b3fcaf398cb7580d"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_route4_risk_v1.py",
+      "level": "L0",
+      "reason": "User-approved section34 route4 P1 isolated pool/projection/risk/cost contract; old scientific sources unchanged; 2026-11-01 consent: 继续P1",
+      "sha256": "dee59f258286fd644fce9a875c36807bbe83edd3894947e75f811503e72e39d2"
+    },
+    {
+      "path": "configs/tls_rag_step5_route4_screen_v1.json",
+      "level": "L0",
+      "reason": "User-approved section34 route4 P1 isolated pool/projection/risk/cost contract; old scientific sources unchanged; 2026-11-01 consent: 继续P1",
+      "sha256": "7a2fad4049d889c77f607f56b747b6a8410dc57b35c7d03108e31129855ec0ca"
+    },
+    {
+      "path": "tests/test_tls_rag_step5_route4_screen_v1.py",
+      "level": "L0",
+      "reason": "User-approved section34 route4 P1 isolated pool/projection/risk/cost contract; old scientific sources unchanged; 2026-11-01 consent: 继续P1",
+      "sha256": "961c727712aedeba1f0c9d56dfede259127b2aaa4dcc0533f06f71a31db2e68d"
+    },
+    {
+      "path": "scripts/run_tls_rag_step5_route4_screen_v1.py",
+      "level": "L1",
+      "reason": "User-approved section34 route4 P1 isolated pool/projection/risk/cost contract; old scientific sources unchanged; 2026-11-01 consent: 继续P1"
     }
   ],
   "approved_change_history": [
@@ -2113,5 +2142,22 @@
     ],
     "limits": "No adapter/1M/SSH/index rebuild/new embeddings/routes3/4/old protected role access or formal independence claim. Only isolated fixed sklearn1.6.1 installation; existing dependency pins unchanged.",
     "initial_hashes": "Initial new L0 hashes frozen after429 passing offline tests including15 new v2 tests and actual native/synthetic worker checks; before real phaseA. All225 prior entries/root values unchanged. Full logs retained locally."
+  },
+  "route4_screen_v1_authorization": {
+    "date": "2026-11-01",
+    "user_consent": "继续P1",
+    "proposal": "docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md section34 at53f611c; resumes the exact P1 scope previously deferred",
+    "scope": [
+      "mechanism/tls_rag_step5_route4_screen_v1.py",
+      "mechanism/tls_rag_step5_route4_risk_v1.py",
+      "configs/tls_rag_step5_route4_screen_v1.json",
+      "tests/test_tls_rag_step5_route4_screen_v1.py",
+      "scripts/run_tls_rag_step5_route4_screen_v1.py",
+      "scripts/run_tests.sh",
+      "docs/CODE_PROTECTION.md",
+      "docs/code_protection.json"
+    ],
+    "limits": "Local CPU only20k/96 historically opened queries/45min/4GiB/3GiB. No predictor/adapter/1M/SSH/route3/route5/multiview/closed roles. Append-only registration and new test membership; all old scientific entries untouched.",
+    "initial_hashes": "Initial four new L0 hashes frozen after442 passing offline tests (13 new P1 tests), zero skips, before any new real-data preparation/run. All235 prior rows/levels and root values preserved except the explicitly approved append-only human-register content hash."
   }
 }
