@@ -3,6 +3,21 @@
 Updated 2026-11-01. Maintained branch: `codex/tls-rag-step5-ann`.
 Canonical checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 
+## 两个应用场景：预检完成、新试验范围待批准（2026-11-01）
+
+- 用户要求分别验证临时库总成本、Tri离线风险决策价值；[探索日志第38节](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#38-两个应用场景已有证据预检与独立小试提案2026-11-01)列实际预检及八路径提案。
+- 旧P1没有同质量Gaussian或逐库独立建库时钟，不能据阶段耗时宣称生命周期优势。
+  新验证必须加入无需训练的原维Flat，并把拟合/编码/选配置/确认/查询费用计算完整。
+- 旧36个Gaussian风险上界均无法证明低风险；高上界不是高损失证明。旧配置也全失败，
+  无法评价误拒绝安全配置及有效选择覆盖。只读预检未启动新检索/构建或读report。
+- 提案为本地CPU七个2k/5k/20k库、历史advice32/select32、全库候选、独立A→B；
+  m64/128/192、PCA另96、M128/512/1024，原维/Gaussian/PCA/PQ及真实总费用。
+  B拟比较合法上下界三态与1/3轮共享试验、跨方法三probe和总是未决基线；不训练。
+- 精确新增五文件、测试入口单项及保护登记窄幅变更列于第38.2节；新科学总上限45分钟、
+  4GiB RSS/2GiB产物，无SSH/GPU/1M/新数据下载。尚未获得本节具体路径/协议批准。
+- 预检证据`runs/route4-scenarios-preflight-20261101-v1/existing_evidence.json`，SHA256
+  `434527ceea6c3df5c3d1640fad97f8e44deaf61aeab7be4a9358c62f1e5ca300`；原科学源/封存不变。
+
 ## 方案4 P1原因复核（2026-11-01）
 
 - 按用户要求只读分析已开放结果；见[探索日志第37节](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#37-p1原因复核可修复性与质量成本边界2026-11-01)。没有新检索、变更m/M、训练或打开report。

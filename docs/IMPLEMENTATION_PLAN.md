@@ -4,6 +4,14 @@ Updated 2026-11-01. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
+## 两个应用场景验证（2026-11-01）
+
+- [x] 只读复核旧成本/质量/风险证据，指出生命周期费用缺口与“高上界不能证明危险”。
+- [x] 提出七库临时生命周期A、三态风险/直接probe价值B；精确八路径见探索日志第38节。
+- [ ] 取得第38节新科学实现/下界/数据及费用协议的精确路径授权。
+- [ ] 独立命名空间实现/完整测试/冻结源码后，本地CPU按A→B执行并独立审查。
+- [ ] 报告实际质量、费用交点、误接受/误拒绝/未决率与完整顾问价值；负结果如实停止。
+
 ## 方案4 P1原因分析（2026-11-01）
 
 - [x] 只复核既有advice/select结果，区分上游C覆盖、Gaussian排序噪声及聚合界松弛。
