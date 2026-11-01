@@ -39,6 +39,12 @@ narrow test/register additions now pass467 full tests (22 new, zero skips).
 After source commit/push verification, run temporary-bank lifecycle A then paid
 offline-risk decisions B locally, within45min/4GiB/2GiB. Read journal section39.
 This is a new namespace, not a P1 rerun; original report/cert/test stay closed.
+The run on source`1880435` has now stopped at349.469s due to its2GiB
+artifact budget: A is complete with no Gaussian lifecycle winner; all seven
+B advisor choices are sealed, with Tri costing~10.79x direct-three and selecting
+byte-identical deployment models. Extra-seed checks completed5/7; the sixth
+was truncated and the seventh was not run. Preserve resource_stop and do not
+resume/retune automatically. Read journal39.3–39.7 and STATUS for actual limits.
 
 On 2026-10-31 the user requested **route5 documentation only**: offline HNSW
 neighbor selection/pruning with Gaussian comparisons and exact-distance fallback.
