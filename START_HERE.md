@@ -33,6 +33,13 @@ free-M oracles are infeasible. Report32 stays closed; do not start P2 training,
 retune this grid, reopen report or rerun. Read section36 for results and audit.
 The original route3 rescue remains unassigned; route5 is still documentation only.
 
+Section38's two independent application scenarios were explicitly approved:
+“批准第38节全部范围，按A→B执行”. The isolated five-file implementation and
+narrow test/register additions now pass467 full tests (22 new, zero skips).
+After source commit/push verification, run temporary-bank lifecycle A then paid
+offline-risk decisions B locally, within45min/4GiB/2GiB. Read journal section39.
+This is a new namespace, not a P1 rerun; original report/cert/test stay closed.
+
 On 2026-10-31 the user requested **route5 documentation only**: offline HNSW
 neighbor selection/pruning with Gaussian comparisons and exact-distance fallback.
 See [journal section35](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#35-方案5离线建图时的邻居选择与剪枝2026-10-31).
@@ -75,7 +82,7 @@ sh scripts/run_tests.sh step5
 The full Step 5/native suite needs the existing fixed-version environment and
 native libraries; see [validation](docs/REPOSITORY_CLEANUP_REVIEW.md#validation).
 `TRI_RAG_TEST_PYTHON` selects the interpreter without changing dependencies.
-No argument or `full` now runs445 methods; the collected cohorts are step5=247,
+No argument or `full` now runs467 methods; the collected cohorts are step5=269,
 legacy=198. The previous429 count is the pre-P1 checkpoint.
 The two subsets partition the full suite; unselected tests are not passed/skipped.
 Shared-core/governance/dependency/historical changes and every implementation

@@ -3,6 +3,16 @@
 Updated 2026-11-01. Maintained branch: `codex/tls-rag-step5-ann`.
 Canonical checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 
+## 两个应用场景v1：已批准、实现验收完成（2026-11-01）
+
+- 实际答复：“批准第38节全部范围，按A→B执行”。八路径范围已实现并登记，旧科学文件不变。
+- 完整467/467、零跳过、69.212秒；新22项，Step5=269/legacy198。真实合成worker链、
+  区间计数穷举、模型/输入/选择封存、原生PQ ties、共享probe和真实资源停机均通过。
+- 首次完整调用缺四个既有native库变量而skip29项，保留日志；最终完整环境已补齐，未改依赖。
+- 将冻结/推送源码后运行`runs/route4-scenarios-20261101-v1`；按A→B独立评价，资源45分钟/
+  4GiB RSS/2GiB产物。此检查点尚无真实新场景结果；原report/cert/test保持关闭。
+- 保护245项通过；详细实现/验收命令见[第39节](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#39-两个场景v1实际批准与执行记录2026-11-01)。
+
 ## 两个应用场景：预检完成、新试验范围待批准（2026-11-01）
 
 - 用户要求分别验证临时库总成本、Tri离线风险决策价值；[探索日志第38节](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#38-两个应用场景已有证据预检与独立小试提案2026-11-01)列实际预检及八路径提案。

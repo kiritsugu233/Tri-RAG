@@ -447,3 +447,26 @@ step5 与 legacy 互斥且并集等于 full。日常迭代可显式选 step5；�
 初次入口失败后，保留原封存并纠正真实ps监控测试和跨进程截止时间。
 同一获批runner/tests范围内新增3项失败回归，最终16项P1/完整445项通过、无跳过；
 旧科学参数/身份/seed不变，恢复运行扣留60秒启动开销，原总额不增加。
+
+## 两个应用场景 v1：第38节八路径批准（2026-11-01）
+
+用户对第38节精确八路径/七库/新风险区间及45分钟本地CPU协议实际回复：
+
+> 批准第38节全部范围，按A→B执行
+
+提案父版本`ecd85c7d111585b388c9b26d5a48053889aa7554`。范围只新增下列五项，
+`scripts/run_tests.sh`只归类该测试，本文/机器表只追加登记和真实批准/必要哈希。
+新命名空间复用已修复Tri边际及旧稳定L2 helper，不改旧科学函数/阈值/依赖/封存。
+测试入口本来在旧P1七源绑定内，其归类变化使当前整树与旧b38ad51来源图不同；
+旧P1保留原来源身份，不改其manifest或绕过旧Runtime的来源拒绝；新实验只读已批准
+四项输入、独立源图/版本。没有新的旧P1重放或历史结果归属迁移。
+
+| File | Level | Reason |
+| --- | --- | --- |
+| [mechanism/tls_rag_step5_route4_scenarios_v1.py](../mechanism/tls_rag_step5_route4_scenarios_v1.py) | **L0** | Approved section38 bank/data/geometry/lifecycle semantics; old science unchanged |
+| [mechanism/tls_rag_step5_route4_advisor_v1.py](../mechanism/tls_rag_step5_route4_advisor_v1.py) | **L0** | Approved section38 bounded-count risk interval and paid offline three-state decisions |
+| [configs/tls_rag_step5_route4_scenarios_v1.json](../configs/tls_rag_step5_route4_scenarios_v1.json) | **L0** | Approved section38 inputs, seven banks, roles, grid, seeds, quality and resource contract |
+| [tests/test_tls_rag_step5_route4_scenarios_v1.py](../tests/test_tls_rag_step5_route4_scenarios_v1.py) | **L0** | Approved section38 proof, native geometry/cache/role/cost and real monitoring regressions |
+| [scripts/run_tls_rag_step5_route4_scenarios_v1.py](../scripts/run_tls_rag_step5_route4_scenarios_v1.py) | **L1** | Approved section38 orchestration; inherits frozen scientific and data/cost semantics |
+
+正式运行前需完整测试/登记检查/提交推送后冻结源码。此登记不宣称新测试或科学结果通过。

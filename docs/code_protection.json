@@ -267,7 +267,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "c56074eb392a4e0f5537451ff9e2842bed17ad3df58e4d767e0e81714936a3e9"
+      "sha256": "00193114c9baa4b3ca961c622028eed08a7c25da019d4ee6bfd191337ec0d6ba"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -1610,6 +1610,35 @@
       "path": "scripts/run_tls_rag_step5_route4_screen_v1.py",
       "level": "L1",
       "reason": "User-approved section34 route4 P1 isolated pool/projection/risk/cost contract; old scientific sources unchanged; 2026-11-01 consent: 继续P1"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_route4_scenarios_v1.py",
+      "level": "L0",
+      "reason": "Approved section38 two-scenario namespace; inherited scientific/data/cost contracts remain protected",
+      "sha256": "7561442f4b816207d6dfa59ddba96b4afde08731cb1f41df3df7c6da78141a55"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_route4_advisor_v1.py",
+      "level": "L0",
+      "reason": "Approved section38 two-scenario namespace; inherited scientific/data/cost contracts remain protected",
+      "sha256": "281cd5423ede567c3eff67952501f383e7444f70191db24a174d59f799c02abb"
+    },
+    {
+      "path": "configs/tls_rag_step5_route4_scenarios_v1.json",
+      "level": "L0",
+      "reason": "Approved section38 two-scenario namespace; inherited scientific/data/cost contracts remain protected",
+      "sha256": "52a47727facfcb6667af0aa56c225b51759facbd2605583ac6b88e007ee7ec4d"
+    },
+    {
+      "path": "tests/test_tls_rag_step5_route4_scenarios_v1.py",
+      "level": "L0",
+      "reason": "Approved section38 two-scenario namespace; inherited scientific/data/cost contracts remain protected",
+      "sha256": "9224d67af52d426418cfa69cc6dff8311070e29d2c29018e5f33214dc8f5ec28"
+    },
+    {
+      "path": "scripts/run_tls_rag_step5_route4_scenarios_v1.py",
+      "level": "L1",
+      "reason": "Approved section38 two-scenario namespace; inherited scientific/data/cost contracts remain protected"
     }
   ],
   "approved_change_history": [
@@ -2161,5 +2190,23 @@
     "initial_hashes": "Initial four new L0 hashes frozen after442 passing offline tests (13 new P1 tests), zero skips, before any new real-data preparation/run. All235 prior rows/levels and root values preserved except the explicitly approved append-only human-register content hash.",
     "pre_input_runtime_repair": "After105e2f9 startup monitor failed before any input loading, preserve failed root and repair only same approved runner/tests: real monitor preflight and exception stop; common Unix deadline (host monotonic origins differ by process); narrow science-child test substitution; new run subtracts60sec from original2700sec. No quality/identity/grid/seed change or inspected new retrieval outcomes.",
     "runtime_repair_validation": "445 full tests passed with16 P1 methods, zero skips,57.439sec. Actual ps retained in owned-child stop test; monitor denied before spawn and after spawn fail closed; Unix epoch shared deadline checked. Failed initial startup preserved and no new input/retrieval outcome existed before repair."
+  },
+  "route4_scenarios_v1_authorization": {
+    "date": "2026-11-01",
+    "user_consent": "批准第38节全部范围，按A→B执行",
+    "proposal_commit": "ecd85c7d111585b388c9b26d5a48053889aa7554",
+    "proposal": "docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md section38",
+    "scope": [
+      "mechanism/tls_rag_step5_route4_scenarios_v1.py",
+      "mechanism/tls_rag_step5_route4_advisor_v1.py",
+      "configs/tls_rag_step5_route4_scenarios_v1.json",
+      "tests/test_tls_rag_step5_route4_scenarios_v1.py",
+      "scripts/run_tls_rag_step5_route4_scenarios_v1.py",
+      "scripts/run_tests.sh",
+      "docs/CODE_PROTECTION.md",
+      "docs/code_protection.json"
+    ],
+    "limits": "Local CPU seven2k/5k/20k banks,64 historically opened advice/select queries; A lifecycle then B risk-advisor;45min scientific/4GiB RSS/2GiB new artifacts. No SSH/GPU/adapter/1M/report/cert/test/other route or old scientific edits.",
+    "validation": "467 full tests passed,22 new scenario methods,zero skips,69.212sec;step5=269/legacy=198. Actual synthetic build/family/Tri-advisor/sealed-evaluate workers, rank-count proof, cached prefix equality, real ps stop/monitor failure, shared epoch and source/input/model seals checked before real input preparation."
   }
 }
