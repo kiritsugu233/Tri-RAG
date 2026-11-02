@@ -1,7 +1,9 @@
 # Gaussian RAG：真实 benchmark 缺口审计与第一步提案
 
 2026-11-02。L1 非冻结研究说明。基线 `f80681b51c2940885f111f7d8faf41cfb27f3bbc`。
-状态：`gap_candidate_identified / gaussian_fit_unmeasured / implementation_not_approved`。
+状态：`gap_candidate_identified / gaussian_fit_unmeasured / implementation_approved`。
+
+后续授权：用户在九路径提案后回复“批准”。现按[冻结协议](GAUSSIAN_BENCHMARK_SPACE_PROTOCOL_V1.md)实施；下文“待批准”是原提案时态，执行状态以STATUS为准。
 
 ## 1. 当前问题与已有证据
 
@@ -109,4 +111,4 @@ h5py已只读取得官方PyPI元数据：Linux cp312 wheel SHA256 `aa6ae84a14103
 验证必须覆盖：来源/hash拒绝、完整N不裁剪、角色隔离、原生阈值和ID计分差异、范数/近tie审计、Gaussian尺度/无二次归一化、精确参考、ANN偶然恢复的带符号分解、平均质量oracle约束及证书、全部付费阶段计时、预算/资源停止、随机种子与指纹变化和重放。完成新测试和完整旧套件，保留失败，不放宽旧容差。
 
 现有API/历史指纹和结果不变；新数据、协议、依赖和实现形成新指纹/目录 `gaussian-benchmark-space-v1`。未来Tri与统计认证不在此次实施范围。
-本节尚未获得精确路径批准；此前T1或测试环境批准不移用于这里。依据[AGENTS.md](../AGENTS.md)：L0变更须先批准确切路径和意图。
+本节原提案时尚未批准；后续本轮用户“批准”已明确授权本节范围。此前T1批准仍不移用于其他任务。依据[AGENTS.md](../AGENTS.md)：L0变更须先批准确切路径和意图。

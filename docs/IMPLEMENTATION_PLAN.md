@@ -8,7 +8,9 @@ Unchecked historical items are not execution authorization.
 
 - [x] 完成[一手来源/gap审计与具体实施提案](GAUSSIAN_RAG_BENCHMARK_GAP_AUDIT.md)，区分已知OOD困难与尚未验证的Gaussian收益。
 - [x] Linux资源预检、固定源身份及下载失败记录；没有新科学执行。
-- [ ] 第5节九路径范围批准后实现并完成完整测试；冻结源和数据角色。
+- [x] 用户“批准”第5节九路径范围；实现新数据/指标/固定表示/真实后端/oracle/资源监控，冻结协议。
+- [x] 最终完整504项、0跳过通过；新23项与旧481项均保留。
+- [ ] 同步固定源并在Linux验证；数据完整校验后执行限定资源实验。
 - [ ] 完整语料精确投影/真实ANN/压缩对照与平均质量oracle，匹配质量计入全部费用。
 - [ ] 有实测预算空间后再考虑信息缺口和Tri增量；合成A0暂缓。
 

@@ -506,3 +506,26 @@ environment, with verified official wheel hashes and existing native libraries.
 It does not alter scientific contracts, dependency pins or authorize a new study.
 Full481 tests now pass with zero skips; the original missing-environment failure
 and both approvals remain recorded in the independent note and machine registry.
+
+## Approved Gaussian benchmark space v1 (2026-11-02)
+
+After the exact nine-path proposal in [gap audit §5](GAUSSIAN_RAG_BENCHMARK_GAP_AUDIT.md),
+the user replied **“批准”**. Scope includes new full-corpus benchmark source/roles,
+native metric plus strict-ID diagnostics, Gaussian/exact/actual FAISS comparison,
+paid timing and average-quality oracle; isolated h5py3.11.0, full regression,
+fixed-source Linux synchronization and bounded execution. Old scientific contracts,
+results and dependencies are not changed. Synthetic A0 and old routes remain deferred.
+
+| New path | Level | Contract |
+| --- | --- | --- |
+| `mechanism/gaussian_benchmark_data_v1.py` | L0 | Full source identity, native scoring, role access and stable IDs |
+| `mechanism/gaussian_benchmark_space_v1.py` | L0 | Gaussian, exact/ANN retrieval, signed loss and certified oracle LP |
+| `configs/gaussian_benchmark_space_v1.json` | L0 | Fixed source, seeds, grids, versions and resource limits |
+| `tests/test_gaussian_benchmark_space_v1.py` | L0 | Offline scientific and actual backend conformance |
+| `docs/GAUSSIAN_BENCHMARK_SPACE_PROTOCOL_V1.md` | L0 | Frozen phase1 scientific protocol and claim boundaries |
+| `scripts/run_gaussian_benchmark_space_v1.py` | L1 | Orchestration/watchdog; scientific semantics inherit L0 |
+
+Also authorized: one new test-suite membership, this append-only registration,
+and corresponding new registry rows/current register hash. No unrelated hashes
+or existing classifications may change. The actual approval is the user message,
+not the existence of this record. Validation results are recorded in STATUS.

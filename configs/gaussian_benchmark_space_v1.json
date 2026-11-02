@@ -1,0 +1,21 @@
+{
+  "version": "gaussian-benchmark-space-v1",
+  "source": {
+    "revision": "a91cc76a3ab66b0353032e8427b9e34dcee22ded",
+    "url": "https://huggingface.co/datasets/vector-index-bench/vibe/resolve/a91cc76a3ab66b0353032e8427b9e34dcee22ded/hotpotqa-harrier-640-normalized.hdf5",
+    "bytes": 13688159632,
+    "sha256": "08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114",
+    "n": 5233329, "dimension": 640, "learn": 96845, "test": 1000
+  },
+  "k": 100, "targets": [0.95, 0.99], "native_epsilon": 0.001,
+  "development_count": 256, "reference_audit_count": 32,
+  "dimensions": [64, 128, 256, 512],
+  "budgets": [100, 200, 400, 800, 1600, 3200, 6400],
+  "seeds": {"roles": 63001, "training": 63007, "graph": 63011, "projection": [63013, 63017]},
+  "hnsw": {"original_degree": [16, 32], "projected_degree": 32, "ef_construction": 200, "effort_multipliers": [1, 2]},
+  "ivfpq": {"nlist": 4096, "subquantizers": 160, "bits": 4, "training_count": 100000, "nprobe": [8, 16, 32, 64, 128], "refine": [100, 400, 1600]},
+  "development_repeats": 3, "test_repeats": 5,
+  "limits": {"seconds": 14400, "rss_bytes": 103079215104, "artifact_bytes": 107374182400, "temporary_bytes": 8589934592, "offline_threads": 8, "latency_threads": 1},
+  "block_rows": 32768, "query_batch": 16,
+  "dependencies": {"numpy": "1.26.4", "scipy": "1.13.0", "faiss": "1.8.0", "h5py": "3.11.0"}
+}
