@@ -506,3 +506,28 @@ environment, with verified official wheel hashes and existing native libraries.
 It does not alter scientific contracts, dependency pins or authorize a new study.
 Full481 tests now pass with zero skips; the original missing-environment failure
 and both approvals remain recorded in the independent note and machine registry.
+
+## Approved Scheme6 R6-A local implementation (2026-11-02)
+
+After the exact nine paths in [section42.9](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#429-首次实施的候选九路径范围尚未申请执行),
+the user requested local code first, with A800 testing after opening the server.
+Automatic review initially rejected the scientific test/shared-entry action as
+insufficiently scoped. The rejected command did not run; no rerouting occurred.
+The subsequent explicit answer was **“批准上述九路径及本地测试、同步”** to the
+question listing all nine paths. This is the actual scoped authorization.
+
+| New path | Level | Scope |
+| --- | --- | --- |
+| `mechanism/tls_rag_step5_route6_bridge_v1.py` | L0 | Cross-inversion, boundary, conditional/moment bounds and stable scalar equivalent |
+| `mechanism/tls_rag_step5_route6_a800_v1.py` | L0 | Fixed unit-sphere geometries, shared Gaussian streams, event uncertainty and finite A800 diagnostics |
+| `configs/tls_rag_step5_route6_v1.json` | L0 | Frozen R6-A grid, catalogue rules, seeds, precision and limits |
+| `tests/test_tls_rag_step5_route6_v1.py` | L0 | Independent offline mathematical/reference, replay, resource and provenance checks |
+| `docs/TLS_RAG_STEP5_ROUTE6_PROTOCOL_V1.md` | L0 | Frozen local/GPU execution and scientific claim boundaries |
+| `scripts/run_tls_rag_step5_route6_v1.py` | L1 | Supervised orchestration; inherited scientific semantics remain L0 |
+
+Also approved: append only the new module membership in `scripts/run_tests.sh`,
+this register append/current hash, and corresponding new machine registry rows.
+Old scientific source/tests/config/roles, four native libraries and dependency
+versions remain unchanged. No A800 connection/execution, VIBE work, old A0,
+route4/5 resumption, tree optimizer or real-data stage is authorized by this
+local implementation approval. Server testing waits for the user's release.

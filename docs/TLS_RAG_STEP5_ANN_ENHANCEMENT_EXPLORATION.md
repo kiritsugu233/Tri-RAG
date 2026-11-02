@@ -4612,3 +4612,104 @@ R6-A不交付“RAG最优维度”；R6-C只有在独立质量和真实费用支
 - [PyTorch CUDA数值与计时说明](https://docs.pytorch.org/docs/stable/notes/cuda.html)：TF32/精度配置随版本核验及异步计时；本提案未锁定新依赖。
 
 本轮记录状态：`scheme6_proposal_ready / implementation_not_approved / A800_not_connected / experiment_not_run`。
+
+
+## 43 方案6 R6-A获批实现与本地验收，A800待开机（2026-11-02）
+
+### 43.1 实际批准及范围
+
+第42节原文完整保留，属于先前proposal_only检查点。用户随后要求：
+
+> 你先改repo的代码吧，改好之后我开启服务器让你进行测试
+
+自动审批最初认为科学测试/共享测试入口的授权不够精确而拒绝该组合动作；被拒绝的命令未运行，
+没有改道执行。之后问题逐一列出第42.9节九个路径和窄幅登记/测试入口范围，用户实际答复：
+
+> 批准上述九路径及本地测试、同步
+
+据此实施九路径；原科学实现/测试/配置、旧封存及数据角色不改。四项L1交接文件更新为本节、
+START_HERE、STATUS和IMPLEMENTATION_PLAN；没有新增另一个科学阶段。服务器仍等用户开启，
+本轮没有SSH、安装依赖、数据下载、CUDA测试或完整60单元科学采样；不使用历史凭据推定新节点授权。
+R6-B/C/D、VIBE、旧A0、方案4/5不随本次恢复。
+
+### 43.2 交付内容与信息边界
+
+- [概率桥](../mechanism/tls_rag_step5_route6_bridge_v1.py)：`cross_inversion_bound`核对
+  `C_cross >= L*(M-k+L)`及不可能事件；经典边际锐区间、`boundary_remainder_bound`始终支付远端eta；
+  共享长度条件非中心卡方积分；二阶矩/Cantelli/阶乘矩界。联合约束不一致时明确记录并返回保守值，
+  不把负的“方差上界”截成零来形成虚假安全结论。
+- `scalar_law`提供单点对Beta等价式与两种指数包络，小Beta参数通过稳定倒数求得；
+  只有精确共线才走零概率分支，m1保留可表示的小尾概率。旧Tri实现/容差未改；
+  210点网格和独立解析夹具是有限数值核对，不是全域近似精度或新理论证明。
+- [几何/采样实现](../mechanism/tls_rag_step5_route6_a800_v1.py)：16个可实现单位球几何、60个(几何,m)单元；
+  坐标路与独立Gram路都共用真实Gaussian矩阵产生相关排序，不独立抽Bernoulli。完整事件catalogue在抽样前封存，
+  每事件使用同时CP包络；每个Pi保留身份、目标排位区间及压缩事件/点对mask。
+- 边界按精确几何边际、固定行次序选择；S1只用边际及边界外总量。S2使用坐标路同时CP联合上端点，
+  明确是额外离线统计信息；以独立Gram路遗漏区间检查，不能声称Tri边际自己推出了协方差或宏观精确概率。
+- FP64为主路径；直接差平方CPU参考与设备结果按数值误差包络检查。灰区按事件的最坏包络计数，
+  不加排名epsilon。FP32另记CPU诊断，不混入主概率；标准IEEE误差模型及SciPy积分舍入仍非定向舍入证明。
+- [运行入口](../scripts/run_tls_rag_step5_route6_v1.py)、[冻结配置](../configs/tls_rag_step5_route6_v1.json)
+  和[协议](TLS_RAG_STEP5_ROUTE6_PROTOCOL_V1.md)：Torch延迟导入，GPU不可用明确阻塞；
+  设备/依赖/精度/源码锁、干净源码检查、父子归属、累计截止时间、进程树RSS与GPU进程内存监督。
+  监控包括监督进程的CUDA上下文；TERM/KILL与监控异常均收尾。产物独占创建、有界写前预算；
+  二进制布局在样本前保存，使截断文件能按完整行复算。采样/终止滞后与回执大小超额如实记账。
+
+A800精确PyTorch/CUDA/驱动/UUID身份只能在实际节点预检后形成锁。本轮没有替它选取或安装版本，
+更没有将本机CPU验收冒充GPU验收。无静态维度选择器、真实后端/全库检索或轻量部署顾问正结果。
+
+### 43.3 本地验收、失败证据与重放
+
+本轮复用既有`/private/tmp/joint-rank-t1-test-env-20261102/bin/python`，
+NumPy1.26.4/SciPy1.13.0/FAISS1.8.0及四个旧native库保持。没有新增安装或版本变更。
+新增32项测试涵盖独立排序穷举的跨集合必要条件、同方差不同尾部反例、相关/重复几何、
+条件手算夹具、解析F等价、极端尾部、同时区间、共享随机矩阵及批量身份不变、
+二进制回放与SHA、源/锁不匹配、真实子进程限时/监控异常/产物超额停止及部分文件布局。
+
+首轮新增31项中2项失败：`scalar_grid_audit`输出字段误用未定义变量`scalar`；
+已改为本函数实际计算的`value`。失败日志保留，没有放松断言或数值阈值。
+修正后31项通过，补充中断二进制布局检查后32项通过（0.427秒、0跳过）。
+CPU入口自检通过，仅一个固定几何、两路各8样本，明确标注`finite_integration_fixture_only`。
+
+实际自检和完整回归命令（从规范checkout执行）：
+
+```bash
+PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 \
+  /private/tmp/joint-rank-t1-test-env-20261102/bin/python \
+  scripts/run_tls_rag_step5_route6_v1.py self-test \
+  > runs/route6-A-local-validation-20261102/cpu-self-test.json
+
+TRI_RAG_TEST_PYTHON=/private/tmp/joint-rank-t1-test-env-20261102/bin/python \
+STEP5_ROUTE1_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/route1.dylib \
+STEP5_COMPARATORS_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/comparators_v2.dylib \
+STEP5_CONTINUATION_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v1.dylib \
+STEP5_CONTINUATION_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v2.dylib \
+  sh scripts/run_tests.sh \
+  > runs/route6-A-local-validation-20261102/full-tests.log 2>&1
+```
+
+全量实际结果：**513/513通过，0失败、0跳过，测试体79.706秒**；Step5为315，legacy为198。
+其中旧481项全部保留，新32项纳入显式模块分类；不把仅新测试通过称为完整验收。
+真实PID监督测试需要本机允许`ps`，完整回归在获批的非沙箱进程检查环境运行。
+
+本地证据目录`runs/route6-A-local-validation-20261102/`保留：
+`new-tests-first.log`、`new-tests-second.log`、`new-tests-final.log`、`cpu-self-test.json`、
+`full-tests.log`及`validation.json`/`delivery_index.json`（含实际来源/日志/原生库SHA）。
+先前`runs/route6-A-pending-approval-20261102/handoff.json`为当时的待批准回执，原样保留。
+这些本地忽略产物不是已上传的科学结果；提交内容为实现、冻结合同与交接文档。
+
+提交前/交接前执行`python3 scripts/check_code_protection.py`、`git diff --check`、新文档链接/围栏核对，
+并核对旧登记行/根元数据、原日志完整前缀和所有无关旧科学字节保持。
+保护登记现257项（L0 177/L1 77/L2 3）；人类登记只追加真实批准，机器表只新增六项及获批登记正文SHA。
+遵循常设同步指令，在规范checkout提交并推送`codex/tls-rag-step5-ann`，核对远端HEAD。
+
+### 43.4 等待A800后的顺序
+
+1. 用户开启节点并给出当前连接/执行范围后，只读核对GPU/可用资源、Linux checkout改动及已有环境。
+   不reset旧服务器，不假定它已有本机提交；通过GitHub fetch/ff-only取得本次审查源码。
+2. 环境可用时运行`preflight --output /new/path/environment-lock.json`并审查实际锁；
+   如需新GPU包安装，先列具体版本/官方来源/hash和资源范围，不自动升级旧环境。
+3. 独立`gpu-check`通过后再以冻结配置执行`run --stage A`；60分钟及显存/RSS/产物限额不扩大。
+   达限保留部分文件和失败。有限采样完成也不等于概率公式全域证明，更不等于RAG具有质量/成本空间。
+4. 审查每事件区间、边界残差、信息层级、异常候选与完整费用后决定是否提出R6-B；后阶段不自动启动。
+
+当前状态：`R6_A_local_implemented / offline_513_passed / A800_not_connected / CUDA_not_run / full_scientific_sampling_not_run`。

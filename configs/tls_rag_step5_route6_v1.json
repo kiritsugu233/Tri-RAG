@@ -1,0 +1,17 @@
+{
+  "namespace": "tls-rag-route6-A-v1",
+  "stages_enabled": ["A"],
+  "dimension": 128,
+  "single_m": [2, 8, 32, 64], "macro_m": [8, 32, 64],
+  "single_budgets": [1, 2, 4], "macro_budget_factors": [1, 2, 4],
+  "samples_per_path": 65536, "batch": 128, "reference_samples": 32,
+  "boundary_size": 8, "conditional_bins": 8192,
+  "family_alpha": 0.05, "risk_thresholds": [0.01, 0.001],
+  "seeds": {"coordinate": 64101, "gram": 64103, "order": 64105},
+  "scalar_grid": {"m": [2, 8, 32, 64, 128, 256, 512], "beta": [1.0000009536743164, 1.01, 1.1, 2, 10, 1000000], "absolute_rho": [0, 0.5, 0.9, 0.9999990463256836, 1]},
+  "numeric": {"geometry_audit_rtol": 1e-11, "geometry_audit_atol": 1e-13, "scalar_atol": 1e-12, "scalar_rtol": 1e-8, "relative_floor": 1e-12},
+  "limits": {"seconds": 3600, "gpu_bytes": 25769803776, "gpu_free_fraction": 0.6, "rss_bytes": 34359738368, "ram_fraction": 0.6, "artifact_bytes": 8589934592, "temporary_bytes": 4294967296, "reserve_bytes": 12884901888, "poll_seconds": 0.25, "write_chunk_bytes": 1048576, "cpu_threads": 8},
+  "cpu_dependencies": {"numpy": "1.26.4", "scipy": "1.13.0"},
+  "gpu_dependency_policy": "external preflight environment lock required; no automatic install or version substitution",
+  "claim_scope": "finite synthetic Gaussian projection diagnostics; no real corpus, static selector, tree optimizer or deployment certification"
+}

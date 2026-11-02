@@ -8,12 +8,21 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
-**Latest user task: Scheme6 proposal only (2026-11-02).** Read
-[section42: boundary-focused omission bounds, static dimension selection and lightweight risk](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#42-方案6边界聚焦的候选遗漏界离线静态选维与轻量风险计算2026-11-02).
-The user requests future testing on an A800 node, with the plan first. No new
-implementation, GPU connection, data download or experiment is authorized by
-this documentation request. Section42 is the sole new append to the old journal,
-explicitly requested by the user; earlier sections and scientific files stay fixed.
+**Latest user task: Scheme6 R6-A local code and tests (2026-11-02).** The user
+explicitly approved the section42.9 nine paths, local tests and synchronization:
+“批准上述九路径及本地测试、同步”. Read the
+[implementation/validation handoff in section43](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#43-方案6-r6-a获批实现与本地验收a800待开机2026-11-02)
+and the [frozen R6-A protocol](docs/TLS_RAG_STEP5_ROUTE6_PROTOCOL_V1.md).
+The boundary/conditional/moment bridges, stable scalar equivalent, finite shared
+Gaussian sampler and supervised A800 entry are implemented in a new namespace.
+Full offline regression passes **513/513, zero skips**, including32 new R6-A tests
+(79.706s test body). The CPU self-test is an eight-sample/path integration fixture;
+no complete60-unit scientific sample or CUDA check has run. No dependencies were
+installed. A800 connection, device/environment lock and scientific execution wait
+for the user to open the node; do not infer GPU success from local tests.
+R6-B/C/D remain unimplemented and require their own data/scope approval.
+The [original section42 proposal](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#42-方案6边界聚焦的候选遗漏界离线静态选维与轻量风险计算2026-11-02)
+is retained byte-for-byte as the earlier checkpoint.
 The withdrawn VIBE work was reverted by `3fef5d8` to the pre-benchmark file tree;
 server partial data/provenance remain, and its checkout rollback was not verified
 because SSH closed before authentication. Do not resume VIBE, old A0 or routes4/5.

@@ -285,7 +285,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "6bde5872581b9d6eb2b8ba8ae821fe12c12a4a8ebc6074abe4b7732f0df21d9d"
+      "sha256": "f6f1f2156dd411dbafa1c3219e82b97adaf1d714ff591342b2b198c89ff80b95"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -1672,6 +1672,41 @@
       "path": "scripts/run_tls_rag_step5_route4_scenarios_v1.py",
       "level": "L1",
       "reason": "Approved section38 two-scenario namespace; inherited scientific/data/cost contracts remain protected"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_route6_bridge_v1.py",
+      "level": "L0",
+      "reason": "Explicit user reply 批准上述九路径及本地测试、同步 (2026-11-02), section42.9 Scheme6 R6-A only; A800 execution deferred",
+      "sha256": "0b0dd4cc4860de05a71bdf0161924b6b4383bc4f1eb0cb6101503622f0f3a565"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_route6_a800_v1.py",
+      "level": "L0",
+      "reason": "Explicit user reply 批准上述九路径及本地测试、同步 (2026-11-02), section42.9 Scheme6 R6-A only; A800 execution deferred",
+      "sha256": "33cd3def4aff4be93c96dd16338ffcad07d26b0fe6a9c4de1ec2c1955a1cf682"
+    },
+    {
+      "path": "configs/tls_rag_step5_route6_v1.json",
+      "level": "L0",
+      "reason": "Explicit user reply 批准上述九路径及本地测试、同步 (2026-11-02), section42.9 Scheme6 R6-A only; A800 execution deferred",
+      "sha256": "086236090ea54c0600787ca714f11b8da0f21e32bf801879e621cf9225f7178d"
+    },
+    {
+      "path": "tests/test_tls_rag_step5_route6_v1.py",
+      "level": "L0",
+      "reason": "Explicit user reply 批准上述九路径及本地测试、同步 (2026-11-02), section42.9 Scheme6 R6-A only; A800 execution deferred",
+      "sha256": "efcef02ed2b251c50052b88c64a4bfa8f993b65614548c2fa7f797878381ec66"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP5_ROUTE6_PROTOCOL_V1.md",
+      "level": "L0",
+      "reason": "Explicit user reply 批准上述九路径及本地测试、同步 (2026-11-02), section42.9 Scheme6 R6-A only; A800 execution deferred",
+      "sha256": "1365ee5aaada3d4b9909434c8bf1f39bbdcc566fb9607eb001d5bd2fd65b5edc"
+    },
+    {
+      "path": "scripts/run_tls_rag_step5_route6_v1.py",
+      "level": "L1",
+      "reason": "Explicit user reply 批准上述九路径及本地测试、同步 (2026-11-02), section42.9 Scheme6 R6-A only; A800 execution deferred"
     }
   ],
   "approved_change_history": [
