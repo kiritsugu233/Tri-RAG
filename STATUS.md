@@ -3,26 +3,6 @@
 Updated 2026-11-02. Maintained branch: `codex/tls-rag-step5-ann`.
 Canonical checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 
-## Benchmark v1：范围获批、实现与本地完整验收（2026-11-02）
-
-- 实际授权：用户对[九路径范围](docs/GAUSSIAN_RAG_BENCHMARK_GAP_AUDIT.md)回复“批准”。新命名空间实现完成，协议见[冻结说明](docs/GAUSSIAN_BENCHMARK_SPACE_PROTOCOL_V1.md)。
-- 本地最终完整504/504通过、0跳过、72.571秒；新增23项（含真实HNSW/FastScan、HDF5端到端、真实子进程终止及监控失败回执），旧481项未改。
-- 首次502项执行因沙盒禁止ps产生5条错误记录，保留 `runs/gaussian-benchmark-space-v1/local-validation-20261102/full-tests.log`；无沙盒503项先通过，补监控故障测试后最终504项通过，最终日志同目录 `full-tests-final.log`。
-- 新本地环境 `/private/tmp/gaussian-benchmark-env-20261102` 通过.pth复用旧固定依赖，仅安装已核验h5py3.11.0；初次未包含旧用户site导致numpy导入失败，补入既有依赖路径后通过，没有升级或修改旧环境/四个native库。
-- 完整命令：`TRI_RAG_TEST_PYTHON=/private/tmp/gaussian-benchmark-env-20261102/bin/python STEP5_ROUTE1_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/route1.dylib STEP5_COMPARATORS_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/comparators_v2.dylib STEP5_CONTINUATION_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v1.dylib STEP5_CONTINUATION_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v2.dylib sh scripts/run_tests.sh`。
-- Linux新环境 `/root/autodl-fs/gaussian-benchmark-space-v1/env` 已核验NumPy1.26.4/SciPy1.13.0/FAISS1.8.0/h5py3.11.0，实际FastScan与HNSW seed接口可用；旧环境不变。尚不代表Linux新测试或完整回归通过。
-- 官方数据镜像获取进行中，15分钟限额不延长；尚无完整SHA校验或新基准结果。先同步此实现源，再作Linux新测试和数据就绪检查；实验4小时上限不因测试通过自动扩大。
-- 保护258项通过，旧科学字节和无关登记保持；治理说明仅追加授权范围，测试入口仅新增模块成员。
-
-## 当前应用研究：真实 benchmark 优先（2026-11-02）
-
-- 用户明确先找真实gap并检验Gaussian质量/成本空间，选择Linux服务器；合成A0暂缓。
-- [来源审计与九路径提案](docs/GAUSSIAN_RAG_BENCHMARK_GAP_AUDIT.md)：VIBE HotpotQA完整523万语料、原生recall与严格ID双口径、真实ANN及压缩对照。
-- Linux实际14 CPU/120GiB，数据盘约180.9GiB可用；未安装依赖或同步旧checkout。
-- 官方下载0bytes失败；诊断为HTTPS连接重置。镜像首页可达但文件未核验。无新检索/索引/测试标签访问。
-- Gaussian适配尚未测量。下一步为该提案第5节具体范围批准后实施、完整测试、冻结并运行；不启动旧A0或旧方案4/5。
-- 本轮仅L1文档及一条新增L1登记；检查命令为 `python3 scripts/check_code_protection.py`、`git diff --check`、旧登记/文档链接审计；未重复执行历史481项测试。
-
 ## 当前交接：方案4已收尾，方案5保留提案、暂不实施（2026-11-02）
 
 - 最新实际答复：“仅保留提案，暂不实施”。方案5状态为deferred/not_run；
@@ -46,7 +26,7 @@ Canonical checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
   全局保护247项通过；其中独立理论任务新增的L1笔记及机器登记保留，不纳入本轮提交。
   本轮没有实现变更，不重复历史467项实现测试。
 
-## 此前独立研究：恢复Gaussian＋Tri-Law的RAG应用，概率桥A0提案（2026-11-02）
+## 当前独立研究：恢复Gaussian＋Tri-Law的RAG应用，概率桥A0提案（2026-11-02）
 
 - 用户明确已有环构造仍可用于RAG，重点是点对翻转到候选遗漏的差异，并指示“继续”。
   基础构造新颖性审查保留，应用研究恢复；此前停止不再被解释成应用方向的停止令。
@@ -61,7 +41,7 @@ Canonical checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 - 本轮只改L1研究／导航与新增一行L1登记；原481项完整验收保留，不重复实现回归。
   检查命令：`python3 scripts/check_code_protection.py`、`git diff --check`及一次性旧字节／登记／文档审计。
 - 实际251项保护、80本地链接、22锚点／围栏通过；旧250条登记和根元数据／科学来源／T1索引保持。
-- 当时下一步为A0；现被顶部benchmark优先指示取代，A0暂缓。
+- 下一步：第8节明确范围获批后实施并执行A0；真实查询、pilot预算器及部署认证不在该范围。
 
 ## 独立排名尾部研究：后续先行审计，当前候选止于机制笔记（2026-11-02，历史检查点）
 

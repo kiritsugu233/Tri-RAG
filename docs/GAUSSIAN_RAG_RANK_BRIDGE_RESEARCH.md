@@ -4,9 +4,6 @@
 等级：L1非冻结研究说明／符号推导／待批实施提案；不是已获批的新科学协议。
 状态：`application_research_resumed / analytic_draft_ready / implementation_not_approved`。
 
-> 最新优先级：用户要求先做真实benchmark的质量/成本空间审计。第8节合成A0暂缓，
-> 下文保留为历史提案；当前入口为[benchmark缺口审计](GAUSSIAN_RAG_BENCHMARK_GAP_AUDIT.md)。
-
 ## 1. 当前任务与停止范围的纠正
 
 用户在环构造先行审计后明确提出：

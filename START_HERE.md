@@ -8,14 +8,6 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
-**Latest application priority (2026-11-02): benchmark first.** Read the
-[real benchmark gap/source audit and exact implementation proposal](docs/GAUSSIAN_RAG_BENCHMARK_GAP_AUDIT.md).
-Synthetic A0 is deferred. Linux resource preflight is complete; official data
-transfer failed before receiving bytes, and Gaussian quality/cost is unmeasured.
-The user subsequently approved section5 explicitly. The new implementation and
-[fixed protocol](docs/GAUSSIAN_BENCHMARK_SPACE_PROTOCOL_V1.md) are being validated;
-see STATUS for actual source transfer and Linux execution, without inferring a benchmark result from tests.
-
 The current user requested closure verification for **route4**, then beginning
 **route5 offline HNSW construction**. Route4 is closed for the current method:
 the no-candidate/no-net-benefit results, resource_stop and missing checks are

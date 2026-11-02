@@ -285,7 +285,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "36cfa1506a95d607425b3213fb21346a29d81ab67877ef301a1e99a9fa374110"
+      "sha256": "6bde5872581b9d6eb2b8ba8ae821fe12c12a4a8ebc6074abe4b7732f0df21d9d"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -1672,46 +1672,6 @@
       "path": "scripts/run_tls_rag_step5_route4_scenarios_v1.py",
       "level": "L1",
       "reason": "Approved section38 two-scenario namespace; inherited scientific/data/cost contracts remain protected"
-    },
-    {
-      "path": "docs/GAUSSIAN_RAG_BENCHMARK_GAP_AUDIT.md",
-      "level": "L1",
-      "reason": "User-directed benchmark-first source/gap audit and unapproved scoped proposal; no frozen scientific contract or implementation authorization"
-    },
-    {
-      "path": "mechanism/gaussian_benchmark_data_v1.py",
-      "level": "L0",
-      "reason": "User reply 批准 to benchmark gap audit section5 nine-path scope (2026-11-02); new full-corpus Gaussian benchmark v1; inherited scientific semantics protected",
-      "sha256": "9e2dd7b6a8a8c690a6657e036e15d3ae9bcf89c63cddd54dca390a36e9c210da"
-    },
-    {
-      "path": "mechanism/gaussian_benchmark_space_v1.py",
-      "level": "L0",
-      "reason": "User reply 批准 to benchmark gap audit section5 nine-path scope (2026-11-02); new full-corpus Gaussian benchmark v1; inherited scientific semantics protected",
-      "sha256": "76f2b285cfec0efbd53cb092fc020fa8d287bf8b86972901a87a97495573d52e"
-    },
-    {
-      "path": "configs/gaussian_benchmark_space_v1.json",
-      "level": "L0",
-      "reason": "User reply 批准 to benchmark gap audit section5 nine-path scope (2026-11-02); new full-corpus Gaussian benchmark v1; inherited scientific semantics protected",
-      "sha256": "6ce51ae74c50bd118ee9e55767b60a0ff474fb6df7a27d430194cfc203708899"
-    },
-    {
-      "path": "tests/test_gaussian_benchmark_space_v1.py",
-      "level": "L0",
-      "reason": "User reply 批准 to benchmark gap audit section5 nine-path scope (2026-11-02); new full-corpus Gaussian benchmark v1; inherited scientific semantics protected",
-      "sha256": "ea9ce48ecfdf7afeb81aafede24e2bf2341fbca8e08e66edbdd2438fb2bf5b56"
-    },
-    {
-      "path": "docs/GAUSSIAN_BENCHMARK_SPACE_PROTOCOL_V1.md",
-      "level": "L0",
-      "reason": "User reply 批准 to benchmark gap audit section5 nine-path scope (2026-11-02); new full-corpus Gaussian benchmark v1; inherited scientific semantics protected",
-      "sha256": "26a49430f99ad15b955a490d389f646d371a2fcafc4cb687c421c92066f14c54"
-    },
-    {
-      "path": "scripts/run_gaussian_benchmark_space_v1.py",
-      "level": "L1",
-      "reason": "User reply 批准 to benchmark gap audit section5 nine-path scope (2026-11-02); new full-corpus Gaussian benchmark v1; inherited scientific semantics protected"
     }
   ],
   "approved_change_history": [
