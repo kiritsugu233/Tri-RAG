@@ -6,6 +6,24 @@
   "scope": "Every package source, test, script, config, dependency file and tracked Markdown at the review baseline, plus new review files. Experiment payloads/archives are excluded.",
   "files": [
     {
+      "path": "mechanism/joint_rank_cycle_v1.py",
+      "level": "L0",
+      "reason": "User-approved six-path deterministic joint-rank T1: exact signed-cycle, Gram/lift, rank and probability-gap certificates; no sampling or system integration",
+      "sha256": "ac9af03e86fb198b099faa6c45935ae29cfc9d2edac2ee33d7a5436f00f94b0e"
+    },
+    {
+      "path": "tests/test_joint_rank_cycle_v1.py",
+      "level": "L0",
+      "reason": "User-approved deterministic joint-rank T1 scientific certificate, admissibility and boundary regressions",
+      "sha256": "d49dee145d384e3a14ae9c28a3c0466bc09f4c92e5d608cd8a0ed8f3ba2f0623"
+    },
+    {
+      "path": "docs/JOINT_RANK_CYCLE_T1_PROTOCOL_V1.md",
+      "level": "L0",
+      "reason": "User-approved deterministic T1 protocol: finite cases, exact arithmetic, proof obligations, resource limits and no simulation/data/environment-install authorization",
+      "sha256": "7ec8e547e49da10474ea0fd9e37b866e5f30432bfdea2c3e9d14a90535cefc6b"
+    },
+    {
       "path": "AGENTS.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
@@ -267,7 +285,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "00193114c9baa4b3ca961c622028eed08a7c25da019d4ee6bfd191337ec0d6ba"
+      "sha256": "6bde5872581b9d6eb2b8ba8ae821fe12c12a4a8ebc6074abe4b7732f0df21d9d"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -2200,6 +2218,35 @@
     "initial_hashes": "Initial four new L0 hashes frozen after442 passing offline tests (13 new P1 tests), zero skips, before any new real-data preparation/run. All235 prior rows/levels and root values preserved except the explicitly approved append-only human-register content hash.",
     "pre_input_runtime_repair": "After105e2f9 startup monitor failed before any input loading, preserve failed root and repair only same approved runner/tests: real monitor preflight and exception stop; common Unix deadline (host monotonic origins differ by process); narrow science-child test substitution; new run subtracts60sec from original2700sec. No quality/identity/grid/seed change or inspected new retrieval outcomes.",
     "runtime_repair_validation": "445 full tests passed with16 P1 methods, zero skips,57.439sec. Actual ps retained in owned-child stop test; monitor denied before spawn and after spawn fail closed; Unix epoch shared deadline checked. Failed initial startup preserved and no new input/retrieval outcome existed before repair."
+  },
+  "joint_rank_cycle_t1_authorization": {
+    "date": "2026-11-02",
+    "user_consent": "批准，你的意思是tri-law已经有人用过了吗",
+    "proposal_commit": "a74e45b34d28e756bf1ef61f9bb4c074804d75c7",
+    "proposal": "docs/JOINT_RANK_THEORY_T0.md section7; actual approval answers the immediately preceding six-path deterministic T1 question",
+    "scope": [
+      "mechanism/joint_rank_cycle_v1.py",
+      "tests/test_joint_rank_cycle_v1.py",
+      "docs/JOINT_RANK_CYCLE_T1_PROTOCOL_V1.md",
+      "scripts/run_tests.sh",
+      "docs/CODE_PROTECTION.md",
+      "docs/code_protection.json"
+    ],
+    "limits": "Deterministic n=3/4, beta=2, r=0 or1/4 and explicitly proposed boundary fixtures, m=2/M=n; no Monte Carlo/integration/LP/T2/real data/dependency installation. New scientific checks at most300s/1GiB/32MiB. Old scientific files, roles, artifacts and source hashes unchanged; only necessary human-register hash may change.",
+    "validation_state": "T1 deterministic acceptance complete: full481/481 tests passed, zero skips,70.081s test body/70.949944s call; step5=283,legacy=198 includes14 new methods. Original missing-faiss collection failure and14-test/Schur certificates retained.",
+    "evidence": "runs/joint-rank-theory-v1/t1-20261102-bf190bff; delivery_index.json SHA2560102a374e530df9cdfb703b1bf21450972ea6172813d342cff476d98d092afc4",
+    "environment_restore_authorization": {
+      "date": "2026-11-02",
+      "user_consent": "补齐完整测试，批准",
+      "proposal": "docs/JOINT_RANK_THEORY_T0.md section10 and immediately preceding final permission question",
+      "environment": "/private/tmp/joint-rank-t1-test-env-20261102",
+      "packages": {
+        "faiss-cpu": "1.8.0",
+        "scikit-learn": "1.6.1"
+      },
+      "scope": "Validation-only supplemental exception to the original no-install limit: two verified official wheels, no-deps, reuse existing pinned numerical dependencies and four native libraries; no repo dependency edits, native rebuild or new study."
+    },
+    "full_validation_evidence": "runs/joint-rank-theory-v1/t1-20261102-validation; full_regression_restored.log SHA25619594051218790c19ee84ea1d2de5ed7200ab9740be10a1031ab932e9d73d4da; final9 files/66529B delivery_index.json SHA25692e3a3e9c272a31e34df07c67aafabf5a79fe312e2f9cb7f5e912341d327847d"
   },
   "route4_scenarios_v1_authorization": {
     "date": "2026-11-01",

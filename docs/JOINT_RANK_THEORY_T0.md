@@ -295,3 +295,132 @@ git diff --check
 保护247项（L0=169、L1=75、L2=3）通过，科学路径未创建。
 本轮保留另一任务的方案5暂缓决定和日志，不撤销或重写其提交。
 下一步批准只可能覆盖实际呈示的第7节范围，不能反写本次为已批准。
+
+## 9. T1实际批准、复核与当前验收缺口（2026-11-02）
+
+用户随后实际回复：
+
+> 批准，你的意思是tri-law已经有人用过了吗
+
+这批准了a74e45b中第7节的六路径确定性核验；第6–8节的“未批准/尚未创建”是该回复之前的T0历史状态。
+当前三项新科学文件及测试成员登记已实现，见
+[获批T1协议](JOINT_RANK_CYCLE_T1_PROTOCOL_V1.md)。不把批准扩展到安装环境、MC或T2。
+
+**对Tri-Law先行的澄清。** 已再次核对Durrant–Kabán2013 Thm3.2及§4.1：
+其对象是同一iid Gaussian矩阵下固定正内积翻负的精确概率，用于分类误差分析。
+令 `u=b+a,v=b-a`，则投影内积就是 `||Pi*b||²-||Pi*a||²`，且
+
+```text
+c = (beta-1)/sqrt((beta-1)^2+4*beta*(1-rho^2))
+p = I_((1-c)/2)(m/2,m/2).
+```
+
+这与项目的精确点对距离反转概率代数等价。原文并未因此被认定使用“Tri-Law”这个名称；
+这里明确区分同一概率律的先行、该名称/表述以及本轮联合排名问题。
+边际本身不能再作首次发现的主张，也不能据此断言整个后续联合尾部研究已经完成。
+
+**补充先行核对。** 1977出版者全文仍403，不能写作已读全文。
+[Royen1995](https://www3.stat.sinica.edu.tw/statistica/oldpdf/A5n123.pdf)全文取得并核对§1式(1.2)、
+Thm3.1及其条件混合表示；[Royen2007 v1](https://arxiv.org/pdf/0704.0539)核对§1式(1)–(3)和相关说明，
+其已明确研究不同协方差的多元gamma卷积。联合分布／卷积表征仍作为已知工具。
+[Royen1994树型表示](https://link.springer.com/article/10.1007/BF01720592)只取得出版者摘要。
+本轮未在这些已读段落中找到直接陈述同真子集反转律的单位球排名间隔，
+但这不证明先行不存在，`novelty_not_established`保持。
+
+**证明复核。** 对照两条有限代数路径：主子式系数与Leibniz排列展开；
+全体真子集对角符号证书与全环无此证书；最小范数线性条件与直接点Gram重建。
+再次核对两实Gaussian行产生determinant的−1次幂；CDF的Laplace变换多出 `1/product(sj)`，
+其恰消去行列式差中的全单项式。正卷积密度在正象限连续，故可以取对角线值。
+角度积分前因子为 `1/det(R)`，利用 `R^-1<=I/(1-2r)` 与Hadamard不等式得到下界；
+没有把Laplace变换大小直接误当CDF大小。该概率推导是人工符号复核，有限代码证书不取代证明。
+
+**实际验证。** 独立命名空间：
+`runs/joint-rank-theory-v1/t1-20261102-bf190bff`。
+新增14项确定性测试全部通过、0跳过，unittest本体0.038秒；
+含证书生成的受监督核验0.124671秒，观测峰值RSS含监督进程35,553,280字节。
+四项固定(n,r)证书、八组正负几何及单位球Gram保存；没有抽Pi或数值积分。
+原沙箱不允许ps，受监督核验经工具授权读取自建进程资源后执行；未放宽资源限额。
+独立Schur补审计另外用0.005230秒精确复核八组Gram的PSD/秩与位移重建，源哈希一致。
+首次审计启动有一项括号语法错误、在任何代码执行前失败，已保留记录并修正审计命令；科学源和证书不变。
+证据共11文件/105,007字节；`delivery_index.json` SHA256
+`0102a374e530df9cdfb703b1bf21450972ea6172813d342cff476d98d092afc4`。
+
+全仓回归的实际命令为既有固定解释器＋四个既有native库环境变量下
+`sh scripts/run_tests.sh`；1.305697秒后收集失败、返回码2，缺 `faiss` 导入。
+两个旧route4测试模块未能导入，没有完成全仓测试，不能把历史467项或预期481项记为通过。
+失败日志及SHA：`full_regression.log`，
+`4c5e88b6cc979e405812f50fe8624b2f5d4394d58ffcd38cdb134b903342d064`。
+只读检查还发现全局sklearn为1.4.2，旧continuation_v2明确需要1.6.1；
+NumPy1.26.4、SciPy1.13.0已存在。旧临时venv无pyvenv.cfg，FAISS仅余二进制文件。
+
+当前状态：`T1_new_checks_passed / full_regression_blocked_environment`。
+不标T1完整验收，不据此提交/推送未通过必要全仓验证的实现；所有变更和失败保留本地，
+保护登记只有新三项L0、真实批准和获批人工表哈希变化，旧科学哈希不变。
+
+## 10. 为完成全仓验收所需的最小环境恢复范围（待批）
+
+六路径T1提案明确“不安装依赖”，因此以下是额外恢复范围，不自动执行：
+
+- 新建专用 `/private/tmp/joint-rank-t1-test-env-20261102`，保留旧不完整环境、用户全局包和四个既有native库。
+- 只恢复原固定测试版本 `faiss-cpu==1.8.0`、`scikit-learn==1.6.1`，使用官方PyPI相应平台wheel，
+  下载时核对其发布SHA256；只装这两个包，不自动解析升级依赖、不修改仓库依赖文件。
+- 复用已经存在的NumPy1.26.4、SciPy1.13.0、joblib1.4.0、threadpoolctl3.4.0；
+  开始前核对版本/导入与四native库的实际兼容性。不重建native库，不恢复HNSW头文件或执行方案5。
+- 使用新解释器和原四库执行完整离线回归；如还有确切缺项则保留失败并报告，不扩大安装范围。
+  通过后才完成T1验收、提交/推送既有分支并核对远端HEAD。
+
+这一恢复只支持已批准的离线测试，不新增研究案例、MC、数据访问或新版本科研语义。
+
+## 11. 环境恢复批准与T1完整验收（2026-11-02）
+
+用户对第10节范围实际回复：
+
+> 补齐完整测试，批准
+
+这项补充授权只恢复专用临时测试环境；第7节原先“不安装依赖”的限制及冻结协议的初始授权描述
+作为历史保留，以本次明确补充授权执行全仓验证。科学模块、测试断言、冻结数学参数和原生库未因此改变。
+
+**环境与来源。** 新建 `/private/tmp/joint-rank-t1-test-env-20261102`，Python3.9.6，
+使用system-site-packages复用原NumPy1.26.4/SciPy1.13.0/joblib1.4.0/threadpoolctl3.4.0。
+只从官方PyPI读取发布元数据及下载以下两个arm64 wheel，逐项核对发布SHA256与大小：
+
+| 包与平台wheel | SHA256 |
+| --- | --- |
+| `faiss_cpu-1.8.0-cp39-cp39-macosx_11_0_arm64.whl` | `8c6fa6b7eaf558307b4ab118a236e8d1da79a8685222928e4dd52e277dba144a` |
+| `scikit_learn-1.6.1-cp39-cp39-macosx_12_0_arm64.whl` | `e7be3fa5d2eb9be7d77c3734ff1d599151bb523674be9b834e8da6abe132f44e` |
+
+随后只在新环境执行 `pip install --no-index --no-deps --ignore-installed --require-hashes`，
+来源为已验证的本地wheel目录，未自动升级/解析其他依赖。旧不完整环境、全局包和仓库依赖文件保留。
+原沙箱DNS不允许访问PyPI，下载命令按本次明确授权经工具审批执行；没有省略哈希检查。
+四个既有native库的SHA256与恢复前一致，ctypes加载通过；新旧FAISS extension的共同SHA256为
+`dc7ef26c92d6cc247e3ed0f14a9d3143778c0352885ecd4cb34db791c25a86f2`。
+未重建native库、恢复HNSW头文件或执行旧Step5实验。
+
+**完整测试。** 实际从 `/private/tmp` 调用以下命令，保持原测试入口逻辑与全部断言：
+
+```bash
+export TRI_RAG_TEST_PYTHON=/private/tmp/joint-rank-t1-test-env-20261102/bin/python
+export STEP5_ROUTE1_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/route1.dylib
+export STEP5_COMPARATORS_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/comparators_v2.dylib
+export STEP5_CONTINUATION_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v1.dylib
+export STEP5_CONTINUATION_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v2.dylib
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1
+cd /private/tmp
+sh /Users/guanghongxu/Query-Adaptive-Tri-RAG/scripts/run_tests.sh
+```
+
+实际收集并执行481项，step5=283/legacy=198，**481通过、0跳过**，
+测试本体70.081秒，总调用70.949944秒，`full_repository_validation_passed=true`。
+包含全部既有467项和新增14项；本轮没有修改/跳过旧测试或以部分通过替代全仓验证。
+首次缺FAISS的失败日志、原11项证书/交付索引和新环境恢复的过程均保留。
+
+验收回执进入新目录 `runs/joint-rank-theory-v1/t1-20261102-validation`，
+完整日志SHA256 `19594051218790c19ee84ea1d2de5ed7200ab9740be10a1031ab932e9d73d4da`。
+原研究证据目录及其交付索引不变。T1的有限精确证书、独立Schur补审计与全仓回归共同完成本阶段验收；
+概率推导的人工复核不变成形式证明，发表新颖性仍为`novelty_not_established`。
+不自动启动T2采样、扩大n/m/M、真实数据验证或ANN接口研究。
+
+最终验收回执9文件/66,529字节，`delivery_index.json` SHA256
+`92e3a3e9c272a31e34df07c67aafabf5a79fe312e2f9cb7f5e912341d327847d`。
+保护250项、旧247项仅获批人工登记哈希改变；312个本地链接、19个锚点/围栏通过。
+全部科学/测试入口来源与完整测试时一致，四native库/全局依赖/旧11项证据不变。

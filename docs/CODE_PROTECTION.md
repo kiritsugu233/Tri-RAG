@@ -470,3 +470,39 @@ step5 与 legacy 互斥且并集等于 full。日常迭代可显式选 step5；�
 | [scripts/run_tls_rag_step5_route4_scenarios_v1.py](../scripts/run_tls_rag_step5_route4_scenarios_v1.py) | **L1** | Approved section38 orchestration; inherits frozen scientific and data/cost semantics |
 
 正式运行前需完整测试/登记检查/提交推送后冻结源码。此登记不宣称新测试或科学结果通过。
+
+## Independent joint-rank theory T1: approved deterministic scope (2026-11-02)
+
+The user answered the exact six-path question based on T0 section7 at
+`a74e45b34d28e756bf1ef61f9bb4c074804d75c7`:
+
+> 批准，你的意思是tri-law已经有人用过了吗
+
+Approval covers the three new L0 files below, one test-module membership entry
+in `scripts/run_tests.sh`, and narrow append-only consent/registration changes
+here and in `docs/code_protection.json`. The protocol freezes deterministic
+verification semantics, not a claim that publication novelty is established.
+No Monte Carlo/integration/LP/T2, data access, system experiment or dependency
+installation follows. The existing incomplete FAISS environment is a distinct
+full-regression prerequisite; failed/missing checks remain explicitly recorded.
+
+| File | Level | Contract |
+| --- | --- | --- |
+| [mechanism/joint_rank_cycle_v1.py](../mechanism/joint_rank_cycle_v1.py) | **L0** | Exact cycle/Gram/unit-sphere/rank and finite probability-gap certificates |
+| [tests/test_joint_rank_cycle_v1.py](../tests/test_joint_rank_cycle_v1.py) | **L0** | Approved deterministic scientific and boundary regressions |
+| [docs/JOINT_RANK_CYCLE_T1_PROTOCOL_V1.md](JOINT_RANK_CYCLE_T1_PROTOCOL_V1.md) | **L0** | Approved finite cases, exact arithmetic, proof/resource and authorization boundaries |
+
+Existing scientific source/test/config bytes, levels and recorded artifacts are
+unchanged. Only this human-register content hash is necessarily refreshed with
+actual approval. The new test membership changes newly calculated source maps
+that bind `scripts/run_tests.sh`; historical route4 manifests retain their old
+identity and are not migrated or rerun. Actual validation belongs in the independent
+T0 note/STATUS, not in an invented retrospective approval.
+
+The user subsequently answered the minimal independent validation-environment
+proposal in T0 section10 with “补齐完整测试，批准”. This supplemental approval
+permits restoring only faiss-cpu1.8.0/scikit-learn1.6.1 in the dedicated temporary
+environment, with verified official wheel hashes and existing native libraries.
+It does not alter scientific contracts, dependency pins or authorize a new study.
+Full481 tests now pass with zero skips; the original missing-environment failure
+and both approvals remain recorded in the independent note and machine registry.

@@ -26,7 +26,49 @@ Canonical checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
   全局保护247项通过；其中独立理论任务新增的L1笔记及机器登记保留，不纳入本轮提交。
   本轮没有实现变更，不重复历史467项实现测试。
 
-## 独立排名尾部研究：T0首轮文献／符号审计（2026-11-02）
+## 独立排名尾部研究：环境恢复获批，T1完整验收通过（2026-11-02）
+
+- 最新实际指示：“补齐完整测试，批准”，批准[T0笔记第10节](docs/JOINT_RANK_THEORY_T0.md#10-为完成全仓验收所需的最小环境恢复范围待批)的专用临时测试环境恢复；此前缺环境失败保留。
+- 新环境 `/private/tmp/joint-rank-t1-test-env-20261102`，仅安装faiss-cpu1.8.0和scikit-learn1.6.1；
+  官方PyPI arm64 wheel SHA256核对，no-deps/require-hashes/no-index安装，现有NumPy1.26.4/
+  SciPy1.13.0/joblib1.4.0/threadpoolctl3.4.0复用；用户全局包、旧不完整环境及仓库依赖文件不改。
+- 四原native库哈希保持且均成功加载；新旧FAISS extension逐字节相同，不重建原生库或恢复方案5头文件。
+- 从 `/private/tmp` 执行完整测试：**481/481通过、0跳过**；实际收集step5=283、legacy=198，
+  含新增14项。测试本体70.081秒，总调用70.949944秒；不是只跑新增或部分子集。
+- 重放：设置 `TRI_RAG_TEST_PYTHON=/private/tmp/joint-rank-t1-test-env-20261102/bin/python` 及
+  原四个STEP5 native变量后，`sh /Users/guanghongxu/Query-Adaptive-Tri-RAG/scripts/run_tests.sh`；
+  精确环境变量/命令/哈希在[T0笔记第11节](docs/JOINT_RANK_THEORY_T0.md#11-环境恢复批准与t1完整验收2026-11-02)及新验收回执。
+- 新回执：`runs/joint-rank-theory-v1/t1-20261102-validation`，完整日志SHA256
+  `19594051218790c19ee84ea1d2de5ed7200ab9740be10a1031ab932e9d73d4da`。
+  原11项T1证书/失败交付索引 `0102a374...092afc4` 保持，不覆盖或改写原失败。
+- 最终验收回执9文件/66,529B，交付索引SHA256
+  `92e3a3e9c272a31e34df07c67aafabf5a79fe312e2f9cb7f5e912341d327847d`；250项保护、312本地链接/
+  19锚点/围栏、旧247项增量及科学/原生来源审计通过，旧全局依赖和证据保持。
+- T1确定性实现验收完成；新颖性仍未建立，没有启动T2联合排名采样、真实数据或系统实验。
+  按常设指令完成保护/登记/来源审计后，在canonical checkout现有分支提交并同步GitHub。
+
+## 独立排名尾部研究：T1初验通过／全仓环境缺项（2026-11-02，已恢复的历史检查点）
+
+- 实际批准：“批准，你的意思是tri-law已经有人用过了吗”，承接a74e45b的六路径T1提案。
+- 三项新L0模块/测试/[协议](docs/JOINT_RANK_CYCLE_T1_PROTOCOL_V1.md)已实现，测试入口仅追加一项；
+  治理登记只新增三行/真实批准与获批人工表哈希。旧科学源码/测试/协议/依赖版本及旧日志不改。
+- 新14项确定性测试全通过、0跳过，0.038秒；受监督核验及证书生成0.124671秒，
+  观测峰值RSS含监督35,553,280B。四固定(n,r)、八组正负几何和单位球Gram已保存。
+- 证据：`runs/joint-rank-theory-v1/t1-20261102-bf190bff`，没有MC/数值积分/新查询或系统实验。
+- 独立Schur补审计通过八组PSD/秩与重建；证据11文件/105,007B，交付索引SHA256
+  `0102a374e530df9cdfb703b1bf21450972ea6172813d342cff476d98d092afc4`。
+- 全仓命令为原固定解释器＋四native库下 `sh scripts/run_tests.sh`；实际1.305697秒，
+  返回码2，两个旧route4模块缺faiss而收集失败。467是旧检查点，481是新增后的预期，均不写成本轮通过。
+- 环境只读核对：旧venv缺pyvenv.cfg及FAISS Python文件；全局sklearn1.4.2而旧代码需1.6.1；
+  NumPy1.26.4/SciPy1.13.0可用。未安装环境或更换依赖，未跳过测试/改导入绕开失败。
+- 当前 `T1_new_checks_passed / full_regression_blocked_environment`；实现保留本地，必要全仓检查
+  未通过前不提交/推送。本轮不标T1完整完成。最小额外环境恢复范围见[T0笔记第10节](docs/JOINT_RANK_THEORY_T0.md#10-为完成全仓验收所需的最小环境恢复范围待批)。
+- Tri-Law边际经极化等价于Durrant–Kabán2013 Thm3.2，原文用于分类翻转；
+  这不代表已确认其使用Tri-Law名称或已解决本轮联合排名问题。发表新颖性仍未建立。
+- 交付前文档/来源审计通过：250项保护，旧247项仅获批人工登记哈希改变；310个本地链接、
+  17个锚点/围栏及全部证据哈希一致。测试入口仅多一个成员，额外环境目录尚未创建。
+
+## 独立排名尾部研究：T0首轮文献／符号审计（2026-11-02，历史交付）
 
 - 用户最新指示将研究交给新agent并考虑与Step5隔离；本聊天独立接手，沿用canonical checkout/
   现有分支保存，旧Step5探索日志只读；没有向旧聊天发消息或创建分支/worktree。

@@ -19,6 +19,7 @@ test_code_protection
 test_config_projection
 test_end_to_end
 test_index_retrieval
+test_joint_rank_cycle_v1
 test_lid_policy
 test_mprime_sweep
 test_retrieval_benchmark

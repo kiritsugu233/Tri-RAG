@@ -28,10 +28,17 @@ and the [original framework](docs/TRI_LAW_JOINT_RANK_RESEARCH_FRAMEWORK.md).
 T0 identifies a signed-cycle candidate: identical proper-subset inversion laws
 can coexist with a positive fixed-target rank-tail gap, including on the unit
 sphere. The cycle identifiability mechanism has close prior work; publication
-novelty is **not established**, and the derivation awaits independent review.
-The six-path deterministic T1 proposal is not approved; no new scientific code,
-protocol or simulation has run. Keep the old Step5 journal read-only for this
-study; record new theory work in the independent note/namespace. The previous
+novelty is **not established**. The user approved the six-path deterministic T1
+scope and then explicitly approved the minimal test-environment restoration.
+Three new scientific files and14 deterministic tests are implemented; exact
+certificates and an independent Schur-complement audit agree. The complete
+offline suite now passes481/481 with zero skips (70.081s test body).
+Only faiss-cpu1.8.0 and scikit-learn1.6.1 were restored in the separate temporary
+environment, with official wheel hashes verified; four existing native libraries
+and their binary identities are preserved. Initial environment failures remain
+recorded. T1 deterministic acceptance is complete; no joint-rank T2 sampling,
+new data access or system experiment is authorized. Keep the old Step5 journal
+read-only for this study; record new theory work in the independent note/namespace. The previous
 system stops and closed data roles below remain in force.
 
 TLS-RAG Step 5, route2 continuation v2 A→B→C is complete on scientific code
@@ -108,16 +115,22 @@ Old prompts, plan items and historical approvals are not a fresh execution reque
 
 ```bash
 python3 scripts/check_code_protection.py
+export TRI_RAG_TEST_PYTHON=/private/tmp/joint-rank-t1-test-env-20261102/bin/python
+export STEP5_ROUTE1_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/route1.dylib
+export STEP5_COMPARATORS_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/comparators_v2.dylib
+export STEP5_CONTINUATION_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v1.dylib
+export STEP5_CONTINUATION_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v2.dylib
 sh scripts/run_tests.sh
-# Optional daily subset; full is still required before implementation handoff:
-sh scripts/run_tests.sh step5
 ```
 
-The full Step 5/native suite needs the existing fixed-version environment and
-native libraries; see [validation](docs/REPOSITORY_CLEANUP_REVIEW.md#validation).
+The full Step 5/native suite needs the fixed-version environment and native
+libraries above; the older temporary Python environment is incomplete. See
+[current replay and environment provenance](docs/JOINT_RANK_THEORY_T0.md#11-环境恢复批准与t1完整验收2026-11-02).
 `TRI_RAG_TEST_PYTHON` selects the interpreter without changing dependencies.
-No argument or `full` now runs467 methods; the collected cohorts are step5=269,
-legacy=198. The previous429 count is the pre-P1 checkpoint.
+The current full suite collects and passes481 methods (step5=283, legacy=198),
+including14 new independent-theory methods in the shared daily cohort.
+The previous467 checkpoint was step5=269, legacy=198.
+The previous429 count is the pre-P1 checkpoint.
 The two subsets partition the full suite; unselected tests are not passed/skipped.
 Shared-core/governance/dependency/historical changes and every implementation
 delivery still require full validation. New test files need explicit classification.

@@ -24,7 +24,11 @@ Unchecked historical items are not execution authorization.
 - [x] T0首轮实质核对：见[独立笔记](JOINT_RANK_THEORY_T0.md)，复核条件律与单位球限制，补入2017环/主子式先行。
 - [x] 选择唯一JRC-CYCLE-1命题：同真子集反转律、不同排名尾部；给符号间隔草稿与六路径最小确定性T1提案。
 - [ ] 发表新颖性未建立（novelty_not_established）；1977全文及等价先行覆盖待补，纯符号推导待独立复核。
-- [ ] T1：对应范围获批后复核数学基准与几何可实现性；不把框架中的式子当已验收。
+- [x] T1：按获批确定性范围复核数学基准与几何可实现性，保留有限证书与解析推导的区别。
+- [x] 用户“批准，你的意思是tri-law已经有人用过了吗”批准六路径确定性T1；已实现精确证书和冻结核验协议。
+- [x] 新14项离线确定性测试通过，保存四(n,r)/八几何证书；无MC，来源于符号下界。
+- [x] 初次全仓收集因缺faiss失败，保留失败；用户“补齐完整测试，批准”授权第10节独立临时环境恢复。
+- [x] 两固定包官方wheel哈希、四原native库身份/加载核对；完整481/481、0跳过、70.081秒通过，完成T1验收。
 - [ ] T2：冻结同摘要/不同联合结构的受控比较，保存逐投影记录及统计不确定性。
 - [ ] T3：完成主命题证明或严格反例/不可辨识界；没有结论则如实停止该命题。
 - [ ] T4：独立复核与先行对照，交付明确适用范围；不自动扩到ANN或其他系统接口。
@@ -141,7 +145,7 @@ Unchecked historical items are not execution authorization.
 | Route3 independent-view rescue | Not run | Same journal §7; separate scope needed |
 | Route4 offline geometry/index configuration | P1 completed, no candidate; report closed, P2 not started | Same journal §§21/32–36 |
 | Route5 offline graph neighbor selection/pruning | Proposal retained; user explicitly deferred implementation; no build run | Same journal §§35/41 |
-| Joint-Gaussian rank-tail theory | Independent T0 review/claim draft complete; novelty not established; deterministic T1 scope pending approval, no simulation | [T0 note](JOINT_RANK_THEORY_T0.md), [framework](TRI_LAW_JOINT_RANK_RESEARCH_FRAMEWORK.md); journal §40 is historical only |
+| Joint-Gaussian rank-tail theory | T1 deterministic acceptance complete; new14 and full481 tests pass, zero skips; initial environment failure retained; novelty not established, T2 not authorized | [T0 note](JOINT_RANK_THEORY_T0.md), [T1 protocol](JOINT_RANK_CYCLE_T1_PROTOCOL_V1.md); journal §40 is historical only |
 
 ## Pending decisions and safety limits
 
