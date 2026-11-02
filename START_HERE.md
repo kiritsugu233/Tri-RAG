@@ -1,6 +1,6 @@
 # Query-Adaptive Tri-RAG: current entry
 
-Updated 2026-11-01. Canonical checkout:
+Updated 2026-11-02. Canonical checkout:
 `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 Maintained branch: **`codex/tls-rag-step5-ann`**; continue Step 5 updates there.
 The reviewed/Tri-Law-repaired backup remains `codex/repo-review-code-protection`
@@ -8,10 +8,19 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+The current user requested a **joint-Gaussian rank-tail research framework and
+agent-ready Markdown**. Read
+[the framework](docs/TRI_LAW_JOINT_RANK_RESEARCH_FRAMEWORK.md) and journal section40.
+The planning focus is the information/geometry needed to control a fixed nearest
+neighbor's projected rank tail. Begin with T0 prior-work/claim review; the new
+document does not approve unspecified L0 implementation or scientific simulation.
+No new agent has been dispatched or theory experiment run by this framework task.
+The previous system stops and closed data roles below remain in force.
+
 TLS-RAG Step 5, route2 continuation v2 A→B→C is complete on scientific code
 `08ed4ce`. The learned/Tri stopping paths fail overall net latency gain;
 trained-support/OOD fallback remains unimplemented. Preserve the resumable
-backend and recorded failures. The user's 2026-10-30 direction now assigns
+backend and recorded failures. The user's historical 2026-10-30 direction assigned
 **route4 follow-up research** to the continuing Step 5 agent: prioritize an
 offline joint `(m,M)` advisor plus an independent candidate-pool Gaussian
 screen, with independent-view union conditional on their results. Start with

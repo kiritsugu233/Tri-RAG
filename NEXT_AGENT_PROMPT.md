@@ -8,8 +8,17 @@ Read [AGENTS.md](AGENTS.md), [START_HERE.md](START_HERE.md),
 brief. The [repository map](docs/REPOSITORY_MAP.md) locates versioned code.
 Run `python3 scripts/check_code_protection.py` before editing and handoff.
 
+The current user requested a research framework and agent-ready Markdown for
+**joint Gaussian projection and nearest-neighbor rank tails**. Read
+[the complete work brief](docs/TRI_LAW_JOINT_RANK_RESEARCH_FRAMEWORK.md), especially
+its exact k=1 target, information hierarchy, T0–T4 gates and final startup prompt.
+Start with T0 prior-work/claim review if assigned this research. The framework
+does not authorize new L0 code, tests, protocol or scientific runs, and its
+proposed parameters are not frozen. No new agent was dispatched by its creation.
+Keep the current system studies stopped and preserve all closed roles/results.
+
 Step 5 continuation v2 A→B→C has completed with negative net-speed results and
-incomplete deployment safety. The user now assigns **route4 follow-up research**
+incomplete deployment safety. The user previously assigned **route4 follow-up research**
 to the existing Step 5 agent; read journal section32 in
 [the exploration record](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md).
 P0 review is complete; read sections33–34 for its proof, counterexample, input
@@ -22,17 +31,16 @@ real-input P1 result. Scientific source is `b38ad51`; completed run is
 infeasible free-M diagnostics. Report32 remains closed; P2 is not started.
 Preserve the failed pre-input startup and452-file scientific archive plus
 independent postrun review. Do not rerun, retune, reopen report or extend scope.
-Consult STATUS and section36 for actual results. No new retrieval or
-index build ran in P0. The proposed
-future direction pairs an offline joint `(m,M)` advisor with an independent
-candidate-pool Gaussian screen; independent-view union remains conditional
-future work. This research direction does not authorize unspecified protected
-edits, access to closed roles or new benchmarks. Preserve route1/2 failures.
+Consult STATUS and sections36–39 for actual results. No new retrieval or index
+build ran in P0. The subsequent approved two-scenario run ended with no Gaussian
+lifecycle winner and no paid-advisor decision gain; its resource_stop and missing
+checks remain. Do not resume that run, its advisor, independent-view expansion
+or route5 by treating this theory framework as permission. Preserve route1/2 failures.
 Guard/register repair A was approved and implemented;
 see current STATUS for verification. The user's subsequent “执行” approved
 [proposal B](docs/TEST_SUITE_SIMPLIFICATION_PROPOSAL.md): one equivalent cache-test
 merge and explicit suites, with no permanent assertion deletion. Default/`full`
-runs445 methods after P1 additions; collected `step5`247, `legacy`198. Daily subsets do not replace the
+runs467 methods at the latest scenarios checkpoint; collected `step5`269, `legacy`198. Daily subsets do not replace the
 full suite before implementation handoff/commit/push, and collection errors in
 any cohort must fail even a partial run.
 Further L0 changes still need exact path/scope consent.

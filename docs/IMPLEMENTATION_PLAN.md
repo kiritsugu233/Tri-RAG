@@ -1,8 +1,20 @@
 # Implementation milestones
 
-Updated 2026-11-01. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
+Updated 2026-11-02. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
+
+## 共同Gaussian投影的排名尾部：理论研究框架
+
+- [x] 按用户请求提供[完整研究框架与Agent启动说明](TRI_LAW_JOINT_RANK_RESEARCH_FRAMEWORK.md)。
+- [x] 固定k=1概率对象及信息层级；区分已有边际/反例、经典矩界与待研究Gaussian约束。
+- [x] 给出条件基准、归一化/可实现性、唯一主命题卡、实施提案路径和停止条件。
+- [x] 将本次文档交付追加到探索日志第40节；科学源/旧结果不变，登记仅新增一个L1条目。
+- [ ] T0：系统核对先行结果，选择一个可检验的增量，形成精确L0实现/协议/预算提案。
+- [ ] T1：对应范围获批后复核数学基准与几何可实现性；不把框架中的式子当已验收。
+- [ ] T2：冻结同摘要/不同联合结构的受控比较，保存逐投影记录及统计不确定性。
+- [ ] T3：完成主命题证明或严格反例/不可辨识界；没有结论则如实停止该命题。
+- [ ] T4：独立复核与先行对照，交付明确适用范围；不自动扩到ANN或其他系统接口。
 
 ## 两个应用场景验证（2026-11-01）
 
@@ -114,6 +126,7 @@ Unchecked historical items are not execution authorization.
 | Route3 independent-view rescue | Not run | Same journal §7; separate scope needed |
 | Route4 offline geometry/index configuration | P1 completed, no candidate; report closed, P2 not started | Same journal §§21/32–36 |
 | Route5 offline graph neighbor selection/pruning | Design documented only; no implementation or build run | Same journal §35 |
+| Joint-Gaussian rank-tail theory | Framework delivered; T0–T4 not run in this task | [Framework](TRI_LAW_JOINT_RANK_RESEARCH_FRAMEWORK.md), same journal §40 |
 
 ## Pending decisions and safety limits
 

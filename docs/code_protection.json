@@ -405,6 +405,11 @@
       "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
     },
     {
+      "path": "docs/TRI_LAW_JOINT_RANK_RESEARCH_FRAMEWORK.md",
+      "level": "L1",
+      "reason": "User-requested joint Gaussian rank-tail research framework and agent work brief; proposed claims, implementation paths and budgets are not frozen contracts or scoped L0 execution consent"
+    },
+    {
       "path": "docs/TRI_LAW_NUMERICAL_FIX.md",
       "level": "L1",
       "reason": "Repair evidence and handoff; scientific/approval changes inherit L0"
