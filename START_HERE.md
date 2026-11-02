@@ -21,14 +21,18 @@ direction. Resume only after a new explicit instruction covering the scope.
 The old temporary FAISS environment and HNSW headers remain incomplete; any
 later authorized implementation must restore the same pinned versions/verified source.
 
-The separate **joint-Gaussian rank-tail research framework and
-agent-ready Markdown** has been delivered. Read
-[the framework](docs/TRI_LAW_JOINT_RANK_RESEARCH_FRAMEWORK.md) and journal section40.
-Its planning focus is the information/geometry needed to control a fixed nearest
-neighbor's projected rank tail. Begin with T0 prior-work/claim review; the new
-document does not approve unspecified L0 implementation or scientific simulation.
-No new agent has been dispatched or theory experiment run by this framework task.
-The previous system stops and closed data roles below remain in force.
+The user has handed the separate **joint-Gaussian rank-tail theory study** to a
+new chat, managed independently from the Step5 systems experiments. Read the
+[T0 literature audit, symbolic derivation and sole claim card](docs/JOINT_RANK_THEORY_T0.md)
+and the [original framework](docs/TRI_LAW_JOINT_RANK_RESEARCH_FRAMEWORK.md).
+T0 identifies a signed-cycle candidate: identical proper-subset inversion laws
+can coexist with a positive fixed-target rank-tail gap, including on the unit
+sphere. The cycle identifiability mechanism has close prior work; publication
+novelty is **not established**, and the derivation awaits independent review.
+The six-path deterministic T1 proposal is not approved; no new scientific code,
+protocol or simulation has run. Keep the old Step5 journal read-only for this
+study; record new theory work in the independent note/namespace. The previous
+system stops and closed data roles below remain in force.
 
 TLS-RAG Step 5, route2 continuation v2 A→B→C is complete on scientific code
 `08ed4ce`. The learned/Tri stopping paths fail overall net latency gain;

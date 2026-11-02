@@ -14,13 +14,16 @@ Unchecked historical items are not execution authorization.
 - [ ] 本地CPU完成完整费用、剪枝份额/上限及投影准备代价；无空间/不确定均如实保留。
 - [ ] 依R5-A证据决定是否提出R5-B；本轮不自动进入比较器或近似图实验。
 
-## 共同Gaussian投影的排名尾部：理论研究框架
+## 共同Gaussian投影的排名尾部：独立理论研究
 
 - [x] 按用户请求提供[完整研究框架与Agent启动说明](TRI_LAW_JOINT_RANK_RESEARCH_FRAMEWORK.md)。
 - [x] 固定k=1概率对象及信息层级；区分已有边际/反例、经典矩界与待研究Gaussian约束。
 - [x] 给出条件基准、归一化/可实现性、唯一主命题卡、实施提案路径和停止条件。
 - [x] 将本次文档交付追加到探索日志第40节；科学源/旧结果不变，登记仅新增一个L1条目。
-- [ ] T0：系统核对先行结果，选择一个可检验的增量，形成精确L0实现/协议/预算提案。
+- [x] 按最新接手指示建立独立聊天/研究笔记命名空间；旧Step5探索日志仅作只读历史。
+- [x] T0首轮实质核对：见[独立笔记](JOINT_RANK_THEORY_T0.md)，复核条件律与单位球限制，补入2017环/主子式先行。
+- [x] 选择唯一JRC-CYCLE-1命题：同真子集反转律、不同排名尾部；给符号间隔草稿与六路径最小确定性T1提案。
+- [ ] 发表新颖性未建立（novelty_not_established）；1977全文及等价先行覆盖待补，纯符号推导待独立复核。
 - [ ] T1：对应范围获批后复核数学基准与几何可实现性；不把框架中的式子当已验收。
 - [ ] T2：冻结同摘要/不同联合结构的受控比较，保存逐投影记录及统计不确定性。
 - [ ] T3：完成主命题证明或严格反例/不可辨识界；没有结论则如实停止该命题。
@@ -138,7 +141,7 @@ Unchecked historical items are not execution authorization.
 | Route3 independent-view rescue | Not run | Same journal §7; separate scope needed |
 | Route4 offline geometry/index configuration | P1 completed, no candidate; report closed, P2 not started | Same journal §§21/32–36 |
 | Route5 offline graph neighbor selection/pruning | Proposal retained; user explicitly deferred implementation; no build run | Same journal §§35/41 |
-| Joint-Gaussian rank-tail theory | Framework delivered; T0–T4 not run in this task | [Framework](TRI_LAW_JOINT_RANK_RESEARCH_FRAMEWORK.md), same journal §40 |
+| Joint-Gaussian rank-tail theory | Independent T0 review/claim draft complete; novelty not established; deterministic T1 scope pending approval, no simulation | [T0 note](JOINT_RANK_THEORY_T0.md), [framework](TRI_LAW_JOINT_RANK_RESEARCH_FRAMEWORK.md); journal §40 is historical only |
 
 ## Pending decisions and safety limits
 

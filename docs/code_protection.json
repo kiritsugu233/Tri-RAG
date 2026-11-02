@@ -405,6 +405,11 @@
       "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
     },
     {
+      "path": "docs/JOINT_RANK_THEORY_T0.md",
+      "level": "L1",
+      "reason": "User-authorized independent joint Gaussian rank-tail T0 literature and symbolic research notes; provisional claim and scoped future proposal, not a frozen scientific contract or L0 implementation/simulation approval"
+    },
+    {
       "path": "docs/TRI_LAW_JOINT_RANK_RESEARCH_FRAMEWORK.md",
       "level": "L1",
       "reason": "User-requested joint Gaussian rank-tail research framework and agent work brief; proposed claims, implementation paths and budgets are not frozen contracts or scoped L0 execution consent"
