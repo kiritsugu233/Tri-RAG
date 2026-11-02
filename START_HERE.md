@@ -8,10 +8,22 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
-The current user requested a **joint-Gaussian rank-tail research framework and
-agent-ready Markdown**. Read
+The current user requested closure verification for **route4**, then beginning
+**route5 offline HNSW construction**. Route4 is closed for the current method:
+the no-candidate/no-net-benefit results, resource_stop and missing checks are
+retained; do not resume it. Archive/index and eight review payloads were verified
+again on2026-11-02, with GitHub HEAD matching the local closure record.
+Read journal section41 for the route5 source audit and concrete **R5-A cost-only
+proposal**. New scientific code/data settings need its exact-path consent under
+AGENTS.md; the general instruction to begin route5 has not approved unspecified
+L0 paths. R5-B–E are not automatically opened by the R5-A proposal.
+The old temporary FAISS environment and HNSW headers are incomplete; restore the
+same pinned versions/verified source before fresh implementation checks.
+
+The separate **joint-Gaussian rank-tail research framework and
+agent-ready Markdown** has been delivered. Read
 [the framework](docs/TRI_LAW_JOINT_RANK_RESEARCH_FRAMEWORK.md) and journal section40.
-The planning focus is the information/geometry needed to control a fixed nearest
+Its planning focus is the information/geometry needed to control a fixed nearest
 neighbor's projected rank tail. Begin with T0 prior-work/claim review; the new
 document does not approve unspecified L0 implementation or scientific simulation.
 No new agent has been dispatched or theory experiment run by this framework task.
@@ -40,13 +52,14 @@ a pre-input monitor startup failure. P1 is now complete on scientific source
 157 full timing configurations. No Gaussian configuration meets quality; all12
 free-M oracles are infeasible. Report32 stays closed; do not start P2 training,
 retune this grid, reopen report or rerun. Read section36 for results and audit.
-The original route3 rescue remains unassigned; route5 is still documentation only.
+The original route3 rescue remains unassigned; route5's current preparation is in section41.
 
 Section38's two independent application scenarios were explicitly approved:
 “批准第38节全部范围，按A→B执行”. The isolated five-file implementation and
 narrow test/register additions now pass467 full tests (22 new, zero skips).
-After source commit/push verification, run temporary-bank lifecycle A then paid
-offline-risk decisions B locally, within45min/4GiB/2GiB. Read journal section39.
+After source commit/push verification, temporary-bank lifecycle A then paid
+offline-risk decisions B ran locally, within the declared45min/4GiB/2GiB limits.
+Read journal section39 for the actual artifact-limit stop and overshoot.
 This is a new namespace, not a P1 rerun; original report/cert/test stay closed.
 The run on source`1880435` has now stopped at349.469s due to its2GiB
 artifact budget: A is complete with no Gaussian lifecycle winner; all seven
@@ -59,7 +72,8 @@ On 2026-10-31 the user requested **route5 documentation only**: offline HNSW
 neighbor selection/pruning with Gaussian comparisons and exact-distance fallback.
 See [journal section35](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#35-方案5离线建图时的邻居选择与剪枝2026-10-31).
 Its cost screen, fixed-state diagnostics, comparator, full build and external-query
-validation are proposed/not run; the conditional-risk and graph-quality bridges
+validation remain not run; the new direction/proposal is recorded in section41.
+The conditional-risk and graph-quality bridges
 remain unresolved. That route5 record did not authorize route4 P1 or a route5
 run; P1's separate authorization and completed negative result are above.
 
