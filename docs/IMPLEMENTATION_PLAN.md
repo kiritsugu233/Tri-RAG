@@ -14,7 +14,17 @@ Unchecked historical items are not execution authorization.
 - [ ] 本地CPU完成完整费用、剪枝份额/上限及投影准备代价；无空间/不确定均如实保留。
 - [ ] 依R5-A证据决定是否提出R5-B；本轮不自动进入比较器或近似图实验。
 
-## 共同Gaussian投影的排名尾部：独立理论研究
+## Gaussian＋Tri-Law用于RAG：应用概率桥（当前）
+
+- [x] 按用户澄清恢复应用研究，将已有环构造的基础新颖性与RAG可行性分开。
+- [x] 完成Raw mean-field／旧Markov桥的只读审计，形成[独立应用说明](GAUSSIAN_RAG_RANK_BRIDGE_RESEARCH.md)。
+- [x] 给出共享目标长度的条件边际、无需竞争者独立的条件尾部区间，以及不松于旧界的符号比较。
+- [x] 手算m2/n4/beta2夹具、区间和独立近似偏差，明确真实目标几何尚非线上可部署输入。
+- [x] 第8节形成精确八路径合成A0、固定案例／统计／资源／失败条件；未创建新科学路径。
+- [ ] 待具体L0范围批准后，完成科学实现、新增及完整回归、冻结源码并执行A0。
+- [ ] 依据实际误差、剩余区间宽度及信息费用决定下一步；真实query／pilot校准／认证未启动。
+
+## 共同Gaussian投影的排名尾部：独立理论研究（此前检查点）
 
 - [x] 按用户请求提供[完整研究框架与Agent启动说明](TRI_LAW_JOINT_RANK_RESEARCH_FRAMEWORK.md)。
 - [x] 固定k=1概率对象及信息层级；区分已有边际/反例、经典矩界与待研究Gaussian约束。

@@ -423,6 +423,11 @@
       "reason": "Task/reference/review documentation; scientific/approval changes inherit L0"
     },
     {
+      "path": "docs/GAUSSIAN_RAG_RANK_BRIDGE_RESEARCH.md",
+      "level": "L1",
+      "reason": "User-directed Gaussian plus Tri-Law RAG application research; provisional conditional-tail derivation and scoped future A0 proposal, not a frozen scientific contract or new L0 implementation/sampling consent"
+    },
+    {
       "path": "docs/JOINT_RANK_THEORY_T0.md",
       "level": "L1",
       "reason": "User-authorized independent joint Gaussian rank-tail T0 literature and symbolic research notes; provisional claim and scoped future proposal, not a frozen scientific contract or L0 implementation/simulation approval"

@@ -49,6 +49,17 @@ or solves the broader Gaussian identifiability question. Keep the old Step5 jour
 read-only for this study; record new theory work in the independent note/namespace. The previous
 system stops and closed data roles below remain in force.
 
+The user's subsequent clarification explicitly resumes **Gaussian plus Tri-Law
+RAG application research**, even when the cycle construction is known. Read the
+[application research note and exact A0 proposal](docs/GAUSSIAN_RAG_RANK_BRIDGE_RESEARCH.md).
+The cycle novelty stop above applies only to that foundational contribution;
+it does not stop this application task. The new symbolic draft retains the shared
+target length, applies known Bernoulli marginal bounds conditionally, and then
+integrates. It gives a valid mathematical bridge and a no-weaker-bound comparison,
+while keeping oracle geometry separate from deployable pilot inputs. No new code,
+sampling or data access has been approved: section8 proposes the exact eight-path
+synthetic A0 scope. Existing T1 acceptance and all prior systems results remain.
+
 TLS-RAG Step 5, route2 continuation v2 A→B→C is complete on scientific code
 `08ed4ce`. The learned/Tri stopping paths fail overall net latency gain;
 trained-support/OOD fallback remains unimplemented. Preserve the resumable
