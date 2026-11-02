@@ -37,7 +37,15 @@ Only faiss-cpu1.8.0 and scikit-learn1.6.1 were restored in the separate temporar
 environment, with official wheel hashes verified; four existing native libraries
 and their binary identities are preserved. Initial environment failures remain
 recorded. T1 deterministic acceptance is complete; no joint-rank T2 sampling,
-new data access or system experiment is authorized. Keep the old Step5 journal
+new data access or system experiment is authorized. The subsequent
+[prior-work and proof audit](docs/JOINT_RANK_THEORY_T0.md#12-后续先行与证明审计保留机制笔记停止当前候选升级2026-11-02)
+finds the same signed-cycle matrix pair explicitly in Urschel et al.2017 Lemma2.
+The rank-tail bridge remains valid under the stated assumptions, but its
+publication increment has not been established beyond a specialization of known
+tools. Retain JRC-CYCLE-1 as a mechanism note; stop its T2 escalation under the
+predeclared contribution gate (`covered_or_corollary_only`, corollary-only case).
+This does not claim that prior work states the identical rank-gap lower bound
+or solves the broader Gaussian identifiability question. Keep the old Step5 journal
 read-only for this study; record new theory work in the independent note/namespace. The previous
 system stops and closed data roles below remain in force.
 
