@@ -1672,6 +1672,11 @@
       "path": "scripts/run_tls_rag_step5_route4_scenarios_v1.py",
       "level": "L1",
       "reason": "Approved section38 two-scenario namespace; inherited scientific/data/cost contracts remain protected"
+    },
+    {
+      "path": "docs/GAUSSIAN_RAG_BENCHMARK_GAP_AUDIT.md",
+      "level": "L1",
+      "reason": "User-directed benchmark-first source/gap audit and unapproved scoped proposal; no frozen scientific contract or implementation authorization"
     }
   ],
   "approved_change_history": [

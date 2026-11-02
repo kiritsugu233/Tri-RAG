@@ -4,6 +4,14 @@ Updated 2026-11-02. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
+## 当前应用优先级：真实 benchmark 质量/成本空间
+
+- [x] 完成[一手来源/gap审计与具体实施提案](GAUSSIAN_RAG_BENCHMARK_GAP_AUDIT.md)，区分已知OOD困难与尚未验证的Gaussian收益。
+- [x] Linux资源预检、固定源身份及下载失败记录；没有新科学执行。
+- [ ] 第5节九路径范围批准后实现并完成完整测试；冻结源和数据角色。
+- [ ] 完整语料精确投影/真实ANN/压缩对照与平均质量oracle，匹配质量计入全部费用。
+- [ ] 有实测预算空间后再考虑信息缺口和Tri增量；合成A0暂缓。
+
 ## 当前任务：方案4关闭，方案5暂缓实施
 
 - [x] 再核对方案4原status、封存索引、八项审查回执及GitHub同步；当前方法收尾。
@@ -14,7 +22,7 @@ Unchecked historical items are not execution authorization.
 - [ ] 本地CPU完成完整费用、剪枝份额/上限及投影准备代价；无空间/不确定均如实保留。
 - [ ] 依R5-A证据决定是否提出R5-B；本轮不自动进入比较器或近似图实验。
 
-## Gaussian＋Tri-Law用于RAG：应用概率桥（当前）
+## Gaussian＋Tri-Law用于RAG：应用概率桥（此前提案，A0暂缓）
 
 - [x] 按用户澄清恢复应用研究，将已有环构造的基础新颖性与RAG可行性分开。
 - [x] 完成Raw mean-field／旧Markov桥的只读审计，形成[独立应用说明](GAUSSIAN_RAG_RANK_BRIDGE_RESEARCH.md)。
