@@ -3,7 +3,11 @@
 Updated 2026-11-02. Maintained branch: `codex/tls-rag-step5-ann`.
 Canonical checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 
-## 当前交接：方案4收尾确认，方案5成本预检提案（2026-11-02）
+## 当前交接：方案4已收尾，方案5保留提案、暂不实施（2026-11-02）
+
+- 最新实际答复：“仅保留提案，暂不实施”。方案5状态为deferred/not_run；
+  不创建五个科学实现文件、不恢复环境、不读取实验向量或运行R5-A–E。
+  保留第41节及既有审计；等待用户以后明确恢复，不持续申请批准或启动后台任务。
 
 - 用户要求检查方案4收尾后开始方案5。已核对当前分支/GitHub HEAD、原科学状态、
   已验证封存索引及八项审查回执；与第39节记录一致。方案4当前方法收尾，不再补跑。
@@ -12,7 +16,7 @@ Canonical checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 - 方案5已完成只读接口审计与[第41节具体R5-A提案](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#41-方案4收尾核对与方案5-r5-a成本预检提案2026-11-02)：
   先量出原空间HNSW完整建图中真正可省的剪枝距离费用，覆盖首次选择和反向重剪，
   再决定是否值得开发Tri比较器。当前没有新建图/投影/检索或新科学结果。
-- 第41节列五个新文件、测试入口单项、两份登记的精确范围；等待这一L0范围的实际批准。
+- 第41节列五个新文件、测试入口单项、两份登记的精确范围；该范围本次未批准，已暂缓。
   仅本地CPU、已开放20k语料、无query访问；R5-B–E不随首轮自动启动。
 - 环境预检发现旧`/private/tmp/step5-ann-enhancement-env-20261028`无法导入faiss，
   旧头目录缺`faiss/impl/HNSW.h`；不能复用历史467项通过作为本轮验收。

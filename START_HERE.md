@@ -14,11 +14,12 @@ the no-candidate/no-net-benefit results, resource_stop and missing checks are
 retained; do not resume it. Archive/index and eight review payloads were verified
 again on2026-11-02, with GitHub HEAD matching the local closure record.
 Read journal section41 for the route5 source audit and concrete **R5-A cost-only
-proposal**. New scientific code/data settings need its exact-path consent under
-AGENTS.md; the general instruction to begin route5 has not approved unspecified
-L0 paths. R5-B–E are not automatically opened by the R5-A proposal.
-The old temporary FAISS environment and HNSW headers are incomplete; restore the
-same pinned versions/verified source before fresh implementation checks.
+proposal**. The user's subsequent actual reply was **“仅保留提案，暂不实施”**:
+route5 is deferred/not_run. Retain the proposal; do not implement, restore its
+environment, read its scientific inputs or run R5-A–E under the earlier general
+direction. Resume only after a new explicit instruction covering the scope.
+The old temporary FAISS environment and HNSW headers remain incomplete; any
+later authorized implementation must restore the same pinned versions/verified source.
 
 The separate **joint-Gaussian rank-tail research framework and
 agent-ready Markdown** has been delivered. Read

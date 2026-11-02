@@ -4,11 +4,12 @@ Updated 2026-11-02. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
-## 当前任务：方案4关闭，方案5先做R5-A
+## 当前任务：方案4关闭，方案5暂缓实施
 
 - [x] 再核对方案4原status、封存索引、八项审查回执及GitHub同步；当前方法收尾。
 - [x] 保留B仅5/7额外核查和resource_stop；未完成部分不再自动补跑。
 - [x] 只读核对FAISS1.8建图调用路径，形成[第41节R5-A精确提案](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#41-方案4收尾核对与方案5-r5-a成本预检提案2026-11-02)。
+- [x] 记录最新实际答复“仅保留提案，暂不实施”；R5-A–E均不执行，环境保持原状。
 - [ ] 第41节八路径获批后，恢复原固定环境，实施等价建图成本探针并冻结源码。
 - [ ] 本地CPU完成完整费用、剪枝份额/上限及投影准备代价；无空间/不确定均如实保留。
 - [ ] 依R5-A证据决定是否提出R5-B；本轮不自动进入比较器或近似图实验。
@@ -62,14 +63,15 @@ Unchecked historical items are not execution authorization.
 - [x] 按用户实际要求，将侧边讨论追加为[探索日志第35节](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#35-方案5离线建图时的邻居选择与剪枝2026-10-31)。
 - [x] 区分离线研究、真正建图及原空间线上查询；定位已知A/待算B的三点比较。
 - [x] 记录条件风险/自适应建图缺口、完整成本、强对照、图质量验证和停止规则。
-- [x] 2026-11-02用户指示开始方案5；只读准备及具体R5-A提案完成，第41节实现范围待批。
+- [x] 2026-11-02只读准备及具体R5-A提案完成；随后用户选择“仅保留提案，暂不实施”。
 - [ ] R5-A：取得相应范围授权后，先测剪枝在完整建图中的成本份额及上限。
 - [ ] R5-B：固定候选现场的几何/投影反转与完整邻居选择重放。
 - [ ] R5-C：低维判定/精算回退的可用信息、同输入无Tri消融及配置价值。
 - [ ] R5-D：精确L0范围批准后才接新命名空间的实际建图；局部结论不冒充整图保证。
 - [ ] R5-E：合法外部查询上比较匹配质量的搜索成本，建图与查询收益分别判定。
 
-全部方案5科学阶段尚未执行；当前准备不重开已收尾的方案4。
+全部方案5科学阶段尚未执行且已暂缓；以下未勾选项是保留规划，不是自动待办。
+当前准备不重开已收尾的方案4。
 
 ## 方案4后续：已指派 Step 5 接续研究
 
@@ -135,7 +137,7 @@ Unchecked historical items are not execution authorization.
 | Route2 continuation v1/v2 | A→B→C complete; current learned/Tri paths fail net gain | [Journal §§24/27–31](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md) |
 | Route3 independent-view rescue | Not run | Same journal §7; separate scope needed |
 | Route4 offline geometry/index configuration | P1 completed, no candidate; report closed, P2 not started | Same journal §§21/32–36 |
-| Route5 offline graph neighbor selection/pruning | R5-A source audit/proposal ready; exact implementation scope pending, no build run | Same journal §§35/41 |
+| Route5 offline graph neighbor selection/pruning | Proposal retained; user explicitly deferred implementation; no build run | Same journal §§35/41 |
 | Joint-Gaussian rank-tail theory | Framework delivered; T0–T4 not run in this task | [Framework](TRI_LAW_JOINT_RANK_RESEARCH_FRAMEWORK.md), same journal §40 |
 
 ## Pending decisions and safety limits
