@@ -4,6 +4,17 @@ Updated 2026-11-02. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
+## 当前任务：方案6提案与A800验证路线
+
+- [x] 按用户要求在[探索日志第42节](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#42-方案6边界聚焦的候选遗漏界离线静态选维与轻量风险计算2026-11-02)追加方案6，旧章节保持。
+- [x] 写明宏观计数桥、边界残差、条件/联合信息、标量化误差和静态选型目标及先行限制。
+- [x] 给出R6-A有限A800试验、两路相关采样/同时区间、CPU-GPU精度、费用、资源与未来九路径审核范围。
+- [x] 记录VIBE撤回与服务器部分数据保留；不恢复旧A0/方案4/方案5。
+- [ ] 以后按用户明确实施指示和精确范围，先核验A800节点/环境并锁定依赖，完成实现及完整回归，再冻结运行。
+- [ ] R6-A数学信息门→R6-B新真实场景表示/成本门→R6-C静态顾问增量→R6-D轻量化；后阶段不自动获批。
+
+当前仅方案交付；下列旧未勾选事项是保留历史，不是自动待办或恢复授权。
+
 ## 当前任务：方案4关闭，方案5暂缓实施
 
 - [x] 再核对方案4原status、封存索引、八项审查回执及GitHub同步；当前方法收尾。

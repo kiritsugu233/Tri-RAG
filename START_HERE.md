@@ -8,6 +8,18 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**Latest user task: Scheme6 proposal only (2026-11-02).** Read
+[section42: boundary-focused omission bounds, static dimension selection and lightweight risk](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#42-方案6边界聚焦的候选遗漏界离线静态选维与轻量风险计算2026-11-02).
+The user requests future testing on an A800 node, with the plan first. No new
+implementation, GPU connection, data download or experiment is authorized by
+this documentation request. Section42 is the sole new append to the old journal,
+explicitly requested by the user; earlier sections and scientific files stay fixed.
+The withdrawn VIBE work was reverted by `3fef5d8` to the pre-benchmark file tree;
+server partial data/provenance remain, and its checkout rollback was not verified
+because SSH closed before authentication. Do not resume VIBE, old A0 or routes4/5.
+The older current-stage paragraphs below are historical checkpoints, subordinate
+to this latest instruction and the current STATUS.
+
 The current user requested closure verification for **route4**, then beginning
 **route5 offline HNSW construction**. Route4 is closed for the current method:
 the no-candidate/no-net-benefit results, resource_stop and missing checks are
