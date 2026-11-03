@@ -21,7 +21,9 @@ establish Gaussian RAG headroom, a lightweight predictor or static dimension sel
 The original delivery index has a stale progress hash and omits source_freeze.
 It is retained; an independent full19-file index and all local SHA/source checks
 pass. The approved runner/test scope now fixes closed-product indexing; final
-full537 tests pass, zero skips (77.023s). No second M0 run occurred. Preserve the
+full537 tests pass, zero skips (77.023s), plus21 Linux tests (7.564s). Repair
+commitb71273f is verified on GitHub and the node; TLS failures required a verified
+GitHub bundle relay, with origin unchanged. No second M0 run occurred. Preserve the
 original run/source identity and failure evidence. Do not auto retry/expand M0
 or reopen R6-B/C/D, VIBE, old A0 or routes4/5. Nodes remain on; computation exited.
 
