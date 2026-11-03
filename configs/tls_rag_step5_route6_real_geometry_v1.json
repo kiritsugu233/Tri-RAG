@@ -1,0 +1,48 @@
+{
+  "namespace": "tls-rag-route6-real-geometry-v1",
+  "stage": "B0",
+  "source": {
+    "file": "hotpotqa-harrier-640-normalized.hdf5",
+    "revision": "a91cc76a3ab66b0353032e8427b9e34dcee22ded",
+    "bytes": 13688159632,
+    "sha256": "08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114",
+    "partial_bytes": 10703863808,
+    "partial_path": "/root/autodl-fs/gaussian-benchmark-space-v1/source-mirror-20261102/data.hdf5.partial",
+    "urls": [
+      "https://huggingface.co/datasets/vector-index-bench/vibe/resolve/a91cc76a3ab66b0353032e8427b9e34dcee22ded/hotpotqa-harrier-640-normalized.hdf5",
+      "https://hf-mirror.com/datasets/vector-index-bench/vibe/resolve/a91cc76a3ab66b0353032e8427b9e34dcee22ded/hotpotqa-harrier-640-normalized.hdf5"
+    ],
+    "rows": 5233329,
+    "dimension": 640,
+    "metric": "normalized"
+  },
+  "query_dataset": "learn",
+  "queries": 128,
+  "discovery_queries": 64,
+  "role_seed": 2026110301,
+  "sample_seed": 2026110302,
+  "k": 100,
+  "budget_factors": [2, 4, 8, 16],
+  "near_boundary": 16,
+  "half_width": 16,
+  "far_fractions": [0.01, 0.1, 0.5],
+  "far_samples": [16, 12, 12, 12, 12],
+  "max_points": 320,
+  "block": 65536,
+  "norm_tolerance": 0.0000152587890625,
+  "projection": null,
+  "cuda_called": false,
+  "new_mc_samples": 0,
+  "dependencies": {"numpy": "1.26.4", "scipy": "1.13.0", "h5py": "3.11.0"},
+  "limits": {
+    "seconds": 3600,
+    "prepare_seconds": 1800,
+    "compute_seconds": 1200,
+    "network_bytes": 4294967296,
+    "rss_bytes": 4294967296,
+    "artifact_bytes": 1073741824,
+    "disk_bytes": 21474836480,
+    "free_bytes": 25769803776,
+    "cpu_threads": 14
+  }
+}

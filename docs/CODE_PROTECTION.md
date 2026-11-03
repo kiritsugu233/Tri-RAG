@@ -583,3 +583,29 @@ New source maps bind the changed registry/test membership. Historical R6-A
 manifests keep their original identity, without migration or another sample run.
 Four L1 handoff files record actual progress. One existing-node M0 uses no new
 MC/CUDA/data/dependency installation and has no automatic retry/expansion.
+
+## Approved R6-B0 real-geometry audit (2026-11-03)
+
+The exact exploration §49.6–49.7 nine-path/environment/testing/synchronization
+and one bounded B0 question received the actual user answer:
+
+> 批准第49节九路径、环境准备、测试同步及一次B0
+
+| New path | Level | Approved scope |
+| --- | --- | --- |
+| `mechanism/tls_rag_step5_route6_real_geometry_v1.py` | L0 | Complete stored-vector L2/IP diagnostic ranks, weighted complement sample, signed Gram and query-direction/general-residual geometry |
+| `mechanism/tls_rag_step5_route6_real_audit_v1.py` | L0 | Copied-prefix bounded source acquisition, full SHA, learn-only development roles, geometry products/identity and offline cost |
+| `configs/tls_rag_step5_route6_real_geometry_v1.json` | L0 | Frozen source/roles/seeds/k100/312-point sampling and one B0 resource budget |
+| `tests/test_tls_rag_step5_route6_real_geometry_v1.py` | L0 | Independent math/order/sampling/role/source/ownership and final-index regressions |
+| `docs/TLS_RAG_STEP5_ROUTE6_REAL_GEOMETRY_PROTOCOL_V1.md` | L0 | Complete-source and development-role limits, general dependence, precision, execution/stop/replay contract |
+| `scripts/run_tls_rag_step5_route6_real_geometry_v1.py` | L1 | Exclusive CPU supervisor/closed delivery; all scientific semantics inherit L0 |
+
+Only new test membership is added to scripts/run_tests.sh. Append this approval,
+six rows and required approved hashes; old scientific APIs/results/contracts and
+levels remain unchanged. Local h5py3.11.0 only enters an independent approved
+temporary target after official-wheel SHA verification. The node reuses the
+existing HDF5 environment. Once full regression and GitHub/Linux sync pass,
+one new-directory B0 may copy the preserved prefix and receive at most4GiB in
+1800s, then audit128 learn development queries for at most1200s, total3600s,
+RSS4GiB/products1GiB/new disk20GiB. No MC/GPU/ANN, test payloads or old closed
+cert/test roles. No automatic retry, resource enlargement or later-stage approval.

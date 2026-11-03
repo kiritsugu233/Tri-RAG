@@ -5730,3 +5730,48 @@ diff空白检查通过；原cb6536d探索日志完整字节前缀保持。六个
 旧科学文件/配置/测试/登记未改。节点回执SHA256为
 `a9f5fb53ad6d5405a8c9d9d1676aac5f141a58d0444e25d8656cba6da4c2eedc`。
 仅文档/只读准备不重复537项实现回归；待精确批准后，新实现须按上节完成完整验收。
+
+## 50 R6-B0获批实施与本地完整验收（2026-11-03）
+
+用户对第49.6–49.7节九路径、临时环境、完整测试同步及一次限额B0的实际答复：
+
+> 批准第49节九路径、环境准备、测试同步及一次B0
+
+本轮在该范围内新增real_geometry/real_audit、config/test/runner/冻结协议，
+只改既有run_tests新模块归类、CODE_PROTECTION批准/6行登记与机器登记必要SHA。
+旧科学源码、API、阈值、历史数据/MC与关闭角色不变。源保护269项通过（187/79/3）；
+相对655d2e1旧登记除批准的人类登记SHA外逐项一致。
+
+实现全库存储向量FP64直接L2及独立FP64 IP诊断、稳定ties、完整GT100/B148/全补集分层64、
+单点及同层/跨层联合纳入率、signed Gram/query方向精确分解/一般残差与固定局部谱候选。
+零位移/零残差/非正差距离方差系数单列，原矩阵不加jitter；谱/夹角不是宏观尾概率验证。
+有完整来源/角色/ID-map、逐query数组/JSON、CSV及五张独立SVG；候选摘要保持开发/语义独立限制。
+runner先复制旧前缀再206限额续传、完整SHA验明后只读train/learn，阶段/全局时限与RSS/disk/产物监督；
+关闭worker/progress/execution后生成真实SHA索引，不复用M0旧索引的初始空进度哈希。
+
+本机官方h5py3.11.0 wheel2,951,710字节/SHA与第49节一致，`--no-deps --no-index`安装到批准临时target。
+新增25项首次0.427秒全通过。完整入口固定PYTHONPATH导致第一次收集缺h5py；独立临时venv
+初次未继承用户全局NumPy，又保留一次收集失败。随后新venv启用与原测试环境相同的system/user包可见性，
+仅在新venv的.pth引用不变的原测试包与隔离h5py target；未改原venv/全局包或任何依赖版本。
+实际核对NumPy1.26.4/SciPy1.13.0/FAISS1.8.0/sklearn1.6.1与原路径相同，h5py来自独立target。
+全562项/零跳过67.989秒通过后，最终审查补非正系数诊断/奇异零位移回归，
+**563/563、零跳过、68.270秒通过**，包含新增26项。没有弱化测试或科学容差。
+
+精确完整回归命令（规范checkout）：
+
+```sh
+TRI_RAG_TEST_PYTHON=/private/tmp/route6-b0-local-env-20261103/bin/python \
+STEP5_ROUTE1_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/route1.dylib \
+STEP5_COMPARATORS_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/comparators_v2.dylib \
+STEP5_CONTINUATION_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v1.dylib \
+STEP5_CONTINUATION_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v2.dylib \
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 sh scripts/run_tests.sh
+```
+
+日志/完整临时toy产物保存在`runs/route6-B0-preparation-20261103`，两个收集失败日志、562项通过日志、
+563项最终日志分别保留。独立toy生成五个SVG/CSV与矩阵；QuickLook缩略图裁剪预览，
+browser本地file协议不被允许，未通过其他浏览器/本地HTTP绕过该限制；SVG结构/边界及可见缩略图已检查，
+未把不完整预览说成完整浏览器视觉验证。该非必要预览限制不影响核心CPU测试或后续计算。
+
+本节是实现/本地验收检查点，不是节点结果。下一项是提交推送及GitHub HEAD核对、Linux干净ff同步、
+新增26项回归/环境预检后，按第49节预算在新目录执行唯一一次B0；完成/失败及实际来源另行记录。

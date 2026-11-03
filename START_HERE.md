@@ -8,7 +8,18 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
-**Latest task: R6-B0 read-only preparation completed; exact implementation scope proposed (2026-11-03).**
+**Latest task: R6-B0 approved and implemented; local validation complete (2026-11-03).**
+The user answered section49's exact question: “批准第49节九路径、环境准备、测试同步及一次B0”.
+Six new files and narrow test/protection updates implement complete-source,
+learn-only, general real-geometry auditing. Full563 CPU/offline tests pass with
+zero skips (68.270s), including26 new tests. Old scientific files/contracts stay
+fixed;269 registered files pass protection. Read
+[section50](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#50-r6-b0获批实施与本地完整验收2026-11-03).
+Next: GitHub/clean Linux synchronization, Linux tests, then the single approved
+bounded source preparation/geometry run. No real query payload or source resume
+has run at this checkpoint. Do not auto retry or broaden the approved budget.
+
+**Preparation checkpoint: R6-B0 source/node scope (2026-11-03).**
 The user said to start and confirmed the SSH endpoint. Node access now works:
 A80080GB idle,14 CPU quota,120GiB RAM; retained partial is10,703,863,808 bytes.
 The complete frozen source must be13,688,159,632 bytes with its published SHA.
@@ -19,7 +30,7 @@ earlier256. Proposed128 development queries come only from `learn`; `test`
 payloads stay closed. Lost original text-ID mapping prevents a semantic
 independence claim. Native inner-product and stored-vector L2 orders must be
 audited separately. No source resume, query sampling or new scientific code has
-run. General start consent permits preparation; exact new L0 scope is pending.
+run at the preparation checkpoint. Exact L0 scope was subsequently approved above.
 
 **Previous plan: general-correlation real geometry (2026-11-03).**
 The user requires general dependence under one shared Gaussian matrix. Independent

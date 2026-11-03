@@ -285,7 +285,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "3f0b209475638f6bf04b2fda0effbe74a5162a47f398037bf2b494b0dd2503c5"
+      "sha256": "4806b13428897f64dcb79f16a603521de61d442240f8d9e3dd3958e5dc36af10"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -1742,6 +1742,41 @@
       "level": "L0",
       "reason": "R6-M0 exact nine-path approval: 批准九路径、测试同步及一次M0计算（推荐）; structured macro reference only, exploration section46.8",
       "sha256": "6c7710157fc5ff904a6fe020847744cee61f0e112e473a518cd8134e5f0e8181"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_route6_real_geometry_v1.py",
+      "level": "L0",
+      "reason": "User approved exploration §49 nine paths/environment/tests/sync/one B0: Complete real geometry, ties and complement sampling",
+      "sha256": "44b970e6d4656b304ed087585c3d2cd1e118ee7627c6e1f60fd1ce0ae9722c45"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_route6_real_audit_v1.py",
+      "level": "L0",
+      "reason": "User approved exploration §49 nine paths/environment/tests/sync/one B0: Source identity, learn-only roles, data access and audit contracts",
+      "sha256": "4e1824addbfd818e9191f492174901a97e6cb47814d7776123efa487eec75238"
+    },
+    {
+      "path": "configs/tls_rag_step5_route6_real_geometry_v1.json",
+      "level": "L0",
+      "reason": "User approved exploration §49 nine paths/environment/tests/sync/one B0: Frozen B0 source, roles, seeds, sampling and resource budget",
+      "sha256": "23dfa1fa63388a8a56aae4038407c429e4ef423880b5a9ff3479f0654489ea5c"
+    },
+    {
+      "path": "tests/test_tls_rag_step5_route6_real_geometry_v1.py",
+      "level": "L0",
+      "reason": "User approved exploration §49 nine paths/environment/tests/sync/one B0: B0 scientific, role, acquisition and resource conformance",
+      "sha256": "36f693f105ff2afcbc8b398f2a953f28229d3ca478cd7418e5b186b2164bc848"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP5_ROUTE6_REAL_GEOMETRY_PROTOCOL_V1.md",
+      "level": "L0",
+      "reason": "User approved exploration §49 nine paths/environment/tests/sync/one B0: Frozen B0 real-geometry scope, precision and execution contract",
+      "sha256": "f199eea9c6fbada2a2ecdd04a7b5fd8362e715ae8f24374fcfc4bdd03aeb4654"
+    },
+    {
+      "path": "scripts/run_tls_rag_step5_route6_real_geometry_v1.py",
+      "level": "L1",
+      "reason": "User approved exploration §49 nine paths/environment/tests/sync/one B0: Supervised B0 orchestration; inherited scientific semantics remain L0"
     }
   ],
   "approved_change_history": [
