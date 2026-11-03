@@ -4923,3 +4923,323 @@ R6-A有限程序/数值检查已完成，科学结论为：S2额外信息在单�
 本轮止于R6-A收尾；R6-B/C/D、VIBE与旧A0/方案4/5均未启动。计算进程已退出，服务器未关机。
 
 当前状态：`R6_A_revision1_finite_complete / artifacts_verified / macro_gap_remains / no_RAG_headroom_claim / no_automatic_next_stage`。
+
+
+## 46 宏观遗漏的集合排序参考：推导、积分包络与R6-M0提案（2026-11-03）
+
+### 46.1 本轮指示、已知失败与研究对象
+
+用户对上一轮宏观缺口分析实际答复：
+
+> 我觉得你上面分析的几点都没问题，按你说的继续做吧
+
+据此继续非冻结数学推导、只读审查及具体实施提案。该一般指示没有列新L0路径，
+不能记为以下新科学实现/协议已经获批。§§42–45、旧科学源、结果、516项验收及两轮原始产物保持。
+本节是L1研究草稿/待批准范围；不是冻结协议、新科学认证或已运行的参考计算。
+
+当前缺口有三层，不能合并成一个校准倍数：
+
+1. 固定边界8点后，远端只保留期望，Markov残差预算本身过大；
+2. 每个GT分别使用最坏内部排位，再对遗漏数用一阶界，丢失集合内部排序约束；
+3. 点对边际不识别联合尾部，现有S2补的是同一GT面对两个竞争者，仍缺跨GT的联合排序结构。
+
+已释放元数据的事后诊断在`runs/route6-A-macro-gap-analysis-20261103/diagnosis.json`：
+N64/k8/m64/M32/ell8的independent实例，Gram同时CP上端0.0002024461，旧跨集合界0.3062273、
+边界S2界0.3956522。每GT远端eta在[5.4392641,8.0893169]，h=M-k+1=25；
+即使边界内计数尾部全部已知，当前付费形式的聚合下限仍至少为
+`min(1,sum_i min(1,eta_i/h)/ell)=0.2690435`。
+这不是实际概率的下界，而是**这一种上界表达式不能低于的数值**。
+
+16/10个宏观低风险事件中，ell=k占14/9、ell=ceil(k/2)占2/1，ell1为0；
+全部36个ell1事件在两门槛均被原同时CP判fail。若应用要求一个GT都不能漏，
+该合成网格没有达标，不能靠更紧界改变实际质量。本研究不因这个发现重选旧质量目标。
+
+### 46.2 精确事件转换与逐竞争者概率
+
+固定目标集合G（|G|=k）与竞争者O（|O|=n=N-k），固定M>=k，1<=ell<=k。
+投影距离为`S_i=||Pi*(x_i-q)||²`，L是G中未进入投影top-M的个数。
+先讨论跨点投影距离几乎必然无平局的情形；当前正定宏观几何满足。
+确定性证书可用统一稳定ID的全序扩展；不能把实际严格距离事件悄悄加epsilon。
+
+定义
+
+```text
+I_ij = 1{S_j<S_i},  i in G, j in O,
+H_j = sum_{i in G} I_ij,
+J_j^(ell) = 1{H_j>=ell},
+t = k-ell+1, h = M-k+ell,
+T_t = 第t小的GT投影距离。
+```
+
+精确恒等式为
+
+```text
+{L>=ell} = {rank_projected(GT_(t))>M}
+         = {sum_{j in O} 1{S_j<T_t}>=h}
+         = {sum_{j in O} J_j^(ell)>=h}.
+```
+
+证明：GT_(t)之前恰有t-1个GT；若之前有Z个竞争者，全局排位就是t+Z。
+留存GT必为GT内部排序的一个前缀，故至少ell遗漏当且仅当该点排位超过M。
+而S_j<T_t当且仅当j压过至少ell个GT。该证明不需要竞争者独立。
+M=N时h>n，事件不可能；必须返回精确0。
+之前N6/k3的720个全排列、4个M、3个ell共8640个确定性比较已核对该身份，
+不是MC，也没有把这一检查当作全域证明。
+
+令`q_j^(ell)=P(H_j>=ell)`，可得到
+
+```text
+P(L>=ell) <= U(q^(ell),h) <= min(1,sum_j q_j^(ell)/h),
+q_j^(ell) <= U((p_ij)_{i in G},ell) <= min(1,sum_i p_ij/ell).
+```
+
+U为此前已核对的经典边际尾上界。它对每个输入单调，因此仅用原Tri边际p，
+令u_j=U(p_:j,ell)后再算U(u,h)，所得界不松于旧跨集合Markov界
+`min(1,sum_ij p_ij/[ell*(M-k+ell)])`。
+事后同输入重算108项：18项严格变紧，两门槛合格数仍0，最小上界0.1554792；
+上述例子从0.3062273收紧到0.2188375，仍远离所需尾部。
+这些是诊断，不覆盖原R6-A记录，也不构成新统计认证。
+
+T_t由投影后排序选择，不是原空间固定的第t个GT；不能只把旧h改成M-k+ell，
+再向旧单点对Tri API传入一个事后选中的目标。新的q需要跨GT联合信息。
+
+### 46.3 两类理想几何的精确条件距离律
+
+新参考只处理既有宏观设计的理想模型：
+
+```text
+G_ij = sigma_i*sigma_j*((1-c)*1{i=j}+c),
+sigma_i² = 1+i/100,  i=0,...,63,
+c in {0,1/2}, k in {4,8}, m in {8,32,64}.
+```
+
+共同正缩放不改变排位；单位球提升的公共scale可消去。
+构造相互独立Z0,Z1,...,ZN~N_m(0,I)，则可表示
+
+```text
+Pi*u_i = sigma_i/sqrt(m) * (sqrt(c)*Z0 + sqrt(1-c)*Zi).
+```
+
+c0时S_i独立，`m*S_i/sigma_i² ~ chi_square(m)`。
+c1/2时令R=||Z0||²~chi_square(m)。给定Z0，各S_i独立，且每个条件分布只依赖R，
+故条件于R后范数也仍相互独立：对任意事件集合，给定Z0的联合核为仅依赖R的边际核乘积，
+对Z0方向再平均不会破坏这个乘积。
+
+```text
+S_i | R=r ~ [sigma_i²*(1-c)/m] * noncentral_chi_square(m, c*r/(1-c)),
+F_i(s|r) = F_ncx2(m*s/[sigma_i²*(1-c)]; m, c*r/(1-c)).
+```
+
+nc参数是平方标准化均值之和，遵循[SciPy1.13定义](https://docs.scipy.org/doc/scipy-1.13.0/reference/generated/scipy.stats.ncx2.html)。
+条件长度的精确降维在这里依赖对所有点成立的共同因子结构；一般Gram没有该许可。
+c=1、负相关、异质多因子/任意Gram不在首轮实现域，不通过近似等相关来冒充精确。
+
+### 46.4 一维/二维宏观积分与Tri一致性
+
+给定r和s，定义计数的概率生成函数：
+
+```text
+A(z;s,r) = product_{i in G} [1-F_i(s|r)+F_i(s|r)*z],
+B(z;s,r) = product_{j in O} [1-F_j(s|r)+F_j(s|r)*z].
+F_Tt(s|r) = sum_{a=t}^k [z^a] A(z;s,r),
+g_h(s|r) = sum_{b=h}^n [z^b] B(z;s,r).
+```
+
+使用非负递推计算完整Poisson-binomial PMF并直接求相应尾和，避免用`1-small_cdf`
+计算极小尾部。递推/生成函数工具已有先行，参见
+[Zhang–Hong–Balakrishnan原稿](https://arxiv.org/abs/1702.01326)；不主张新分布或新算法。
+
+条件于r，GT与O独立，所以
+
+```text
+theta(r) = integral_0^infinity g_h(s|r) dF_Tt(s|r),
+Theta = theta                         (c=0; r无关，一维积分),
+Theta = integral theta(r) dF_chi2_m(r) (c=1/2; 二维积分).
+```
+
+这是理想模型下的精确概率表达式，不是把多个Tri概率相乘。
+同一(s,r)的两组PMF可同时服务全部M/ell，12个(几何,m)模型共108个原有宏观事件，
+不必为每个事件独立重复全部CDF工作。
+
+逐竞争者q的下一层精确表达也已确定：
+
+```text
+q_j^(ell) = E_R integral P(PB({1-F_i(s|R)}_{i in G})>=ell) dF_j(s|R).
+```
+
+它可将“缺跨GT联合信息”和“保留q后仍只用边际尾界”的损失进一步区分。
+首轮M0先完成Theta参考；全量q计算/分组压缩放在后续具体范围，不默认同时实施。
+M0不能把总松弛量唯一归因到这两部分。
+
+k1/一个竞争者/M1时，积分必须回到不变的`tri_law_probability(beta,c,m)`。
+这是必要的一致性核对，宏观扩展额外使用c/因子结构，不声称仅靠p可识别联合律。
+这里风险针对随机Pi；固定部署矩阵跨新query的质量仍需独立评估。
+
+### 46.5 有误差账本的积分：内层单调，外层不假定单调
+
+**内层Stieltjes积分。** 对任意距离分区0=s0<...<sQ=+infinity，记
+`w_a=F_Tt(s_(a+1))-F_Tt(s_a)`。g_h对s单调不减，故
+
+```text
+sum_a w_a*g_h(s_a) <= theta <= sum_a w_a*g_h(s_(a+1)),
+gap = sum_a w_a*(g_h(s_(a+1))-g_h(s_a)) <= max_a w_a.
+```
+
+使用CDF差的实际区间质量；若用近似分位点选网格，也不能把其权重假设成精确1/Q。
+无穷尾区间使用解析端点CDF=1及g=1（h>n的全局不可能事件另走0分支），其质量明确计入上端。
+细分可按最大gap贡献选择区间；不把相邻高阶求积结果之差当严格误差证书。
+
+**外层共同因子。** theta(r)是两组同时变化的分布的比较事件，首轮不假设它随r单调。
+非中心卡方随nc随机增大：可用Poisson混合构造，nc变大增加Poisson计数，
+再叠加非负的独立中心卡方变量；也见
+[Segura关于非中心卡方/Marcum函数的单调性研究](https://arxiv.org/abs/1406.6106)。
+
+定义theta(a,b)为GT使用r=a的条件距离分布、O使用r=b的条件距离分布时的独立模型概率。
+遗漏事件对每个GT距离单调增、对每个O距离单调减，因此对r in [a,b]可用共同Uniform分位耦合证明：
+
+```text
+theta(a,b) <= theta(r,r) <= theta(b,a).
+```
+
+再对r分区，用其chi-square实际质量W_b加权：
+
+```text
+sum_b W_b*inner_lower(theta(a_b,b_b)) <= Theta
+    <= sum_b W_b*inner_upper(theta(b_b,a_b)).
+```
+
+两端都可用前述内层包络。外层最后[a,+infinity]可安全用[0,1]，其chi-square尾质量全部入账；
+按误差贡献继续细分，或在节点/总时限内返回仍有宽度的结果。
+这避开了未证明的theta(r)单调假设；理论上细分产生嵌套包络。
+
+**数值声明。** 上述界在精确CDF算术下成立。SciPy FP64的CDF/ppf与DP舍入未做定向舍入证明；
+首轮输出`discretization_bracket`、实际gap、CDF/DP质量/单调性检查与`roundoff_certified=false`。
+到达目标宽度只记`numerically_resolved`，不叫正式概率认证。
+遇到明显负质量、概率不守恒或区间反向就保存失败；不调容差、归一化PMF或裁剪结果掩盖异常。
+未达到宽度记`unresolved`，不是将中点当真值。
+
+旧MC来自机器浮点单位球Gram，以上是理想等相关模型：适配器必须同时记录两者偏差，
+不把“接近某模型”自动当成完全同一模型。正定时可报告额外的Gaussian KL/TV转移诊断：
+若E=Gideal^(-1/2)*Gactual*Gideal^(-1/2)-I，rho=||E||_2<1，则
+`TV <= sqrt(m)*||E||_F/sqrt(8*(1-rho))`（KL二次上界＋Pinsker）。
+其FP64矩阵计算也非正式舍入证书；与旧CP的比较标为理想模型/实现数值一致性诊断。
+一般低秩近似的支持集/KL可失效，不能直接将此诊断推广到全库近似Gram。
+
+### 46.6 独立可核验夹具与验收方向
+
+候选科学测试不依赖网络/新MC/torch；不修改任何旧516项断言：
+
+- 精确事件恒等式：小N全排列、所有合法M/ell，含M=N不可能事件和稳定ID全序。
+- Poisson-binomial：小n用独立子集枚举和有理数Bernoulli卷积参照，覆盖0/1概率、空组、稀有尾部及质量守恒。
+- 单点对：k1/一个O时，对c0和c1/2、m1/2/8/32与若干beta回到旧Tri；有限CPU测试用可负担的预声明宽度。
+- 等尺度可交换性：任意固定G的留存数R服从Hypergeom(N,k,M)，
+  `P(L>=ell)=sum_{r<=k-ell} C(k,r)C(N-k,M-r)/C(N,M)`；c0/c1/2均成立。
+  这是数学单元夹具，适配器的实际宏观输入仍要求原GT边界严格，不借它放宽旧检索合同。
+- 独立m2有理数夹具：N4/k2、sigma²=[1,3/2,2,3]、M2、ell2。
+  `T_min~Exp(5/3)`，两O速率1/2与1/3，故
+  `Theta=1-10/13-5/6+2/3=5/78`（0.0641025641）；已用Fraction核对纯算术，无新投影样本。
+- 内层细分前后包络、显式尾质量、外层混合端点包络；用已知闭式参照检查，
+  不通过假设theta(r)单调过关，也不只测试“相邻网格相近”。
+- 无效模型/维度/ID/源hash、缺失旧文件或预算终止必须明确失败，产物独占创建，真实进程监督收尾。
+
+M0评价每个事件的上下端、gap、节点、状态、时间/内存/产物及旧界/CP差距；
+分别汇报ell1、ceil(k/2)、k，不挑选“全部遗漏”的易过尾部冒充严格保留质量。
+原CP同时区间已经释放，只用作开发一致性参照，不新拟合/认证，不重抽Pi或复用旧结果选新表示。
+若能缩小集合排序模型的数值包络，可说明旧聚合确实丢失信息；
+若计算费用过大/宽度仍不足，也如实记录，不自动扩节点、换积分器或改门槛追结果。
+
+### 46.7 R6-M0最小有限计算与资源候选（待批准）
+
+新命名空间`tls-rag-route6-macro-reference-v1`，独立于R6-A和真实数据阶段R6-B。
+只读本机已释放/校验的`runs/route6-A-repair1-local-validation-20261103/full-metadata-verified/`：
+固定来源bdd6cc8的source_freeze、原完整文件索引、4个macro Gram/ID、12个macro风险汇总与12个Gram路径事件记录。
+核验原来源/配置/文件SHA/事件身份，构造既定12个模型并输出全108项；不读raw bin、VIBE或旧外部query角色。
+
+候选数值目标：全局绝对包络宽度`2^-14`，每个模型组最多32,768个不同(s,r)条件CDF向量节点，
+一个节点指一次全部64个点条件CDF的向量计算；9个M/ell共用缓存。
+DP总质量/CDF范围/嵌套单调性的数值审计阈值预声明为`2^-40`；
+阈值内的浮点偏差也保留并标记roundoff未认证，不用它伪造严格包含或放宽主包络宽度。
+误差驱动细分只看CDF/包络，不看旧MC的成功/失败标签。
+固定遍历c0/k4、c0/k8、c1/2/k4、c1/2/k8，各m8/32/64，不选seed，无随机组件。
+节点/时间耗尽保存当前包络与未完成项，不把没完成组记成功。
+首次不做全量q_j积分、分组近似、Chernoff替代器、校准器或静态参数选择器。
+
+实施批准后的顺序：本机tiny回归/完整CPU套件和来源检查→规范checkout提交推送/核对GitHub→
+既有A800节点只读核验/ff-only同步→复用原Python/NumPy1.26.4/SciPy1.13.0环境，CPU执行一次M0。
+该工作主要是CDF/DP积分，**不调用CUDA或重跑A800 Gaussian采样**；原GPU可以空闲。
+这不是自动恢复前一轮运行或后续检索实验。
+
+候选科学限额：累计1200秒、单worker、最多4个已分配CPU线程、RSS4GiB、产物256MiB、tmp128MiB、余盘12GiB；
+复用现有只读process-tree监督/有界写辅助，不改其源码。独立环境安装不在范围，无依赖升级或新高精度包。
+监控/数值错误或总额达限停止owned worker，保留部分包络/失败与采样监督可能滞后；无自动重启。
+本机CPU测试及旧完整回归另记时间，不把测试耗时或既有环境成本计作零。
+
+### 46.8 首轮精确九路径与保护影响（申请前提案）
+
+以下文件尚未创建；新增科学实现不能放进L1包装或临时替代源来绕过审批。
+本节仅供用户批准具体范围，不把“继续做吧”追认为路径级同意。
+
+| 精确路径 | 等级与函数/修改 |
+| --- | --- |
+| `mechanism/tls_rag_step5_route6_macro_reference_v1.py` | 新L0；`omission_from_cross_counts`、`poisson_binomial_pmf`、`conditional_distance_cdf`、`target_order_cdf`、`conditional_omission_bracket`、`macro_reference_interval`；精确事件、两类模型、嵌套积分与误差/状态 |
+| `mechanism/tls_rag_step5_route6_macro_audit_v1.py` | 新L0；`load_frozen_macro_inputs`、`geometry_model_diagnostic`、`compare_reference_records`；只读已释放固定来源，理想/浮点Gram差异、108项全报及旧边际/残差对照 |
+| `configs/tls_rag_step5_route6_macro_reference_v1.json` | 新L0；输入身份/12模型108事件、2^-14/32,768节点、数值审计规则和1200秒等限额，其他阶段关闭 |
+| `tests/test_tls_rag_step5_route6_macro_reference_v1.py` | 新L0；§46.6独立确定性/解析/来源/资源回归；不新MC、不放松旧断言 |
+| `scripts/run_tls_rag_step5_route6_macro_reference_v1.py` | 新L1继承科学保护；manifest/独占产物/监督/输入与源码核验/CPU tiny及M0入口；不安装环境或访问新数据 |
+| `docs/TLS_RAG_STEP5_ROUTE6_MACRO_REFERENCE_PROTOCOL_V1.md` | 新L0；获批后冻结数学域、误差标签、数据角色/来源/停止和费用合同 |
+| `scripts/run_tests.sh` | 仅新增该测试模块的一项显式Step5归类，旧行为不改 |
+| `docs/CODE_PROTECTION.md` | 只追加实际用户批准、六新路径和必要来源影响 |
+| `docs/code_protection.json` | 只对应新增登记/新L0哈希及人工登记内容hash；等级/根元数据/无关旧项保持 |
+
+四项L1交接：START_HERE、STATUS、IMPLEMENTATION_PLAN、本日志仅更新真实阶段/追加，不改变旧结果。
+新源/配置/协议/依赖版本/输入SHA均入新fingerprint；新registry/测试归类会使绑定它们的旧整树来源图不同，
+不迁移历史R6-A manifest、不绕过其旧锁拒绝或再次运行它。
+新M0只读旧源/数据，不替代任何既有API；老Tri、R6-A bridge/a800/config/protocol/runner及所有旧科学合同保持。
+完整套件确切数量以实际收集为准，不提前声称通过或声称已实现。
+
+当前状态：`macro_reference_symbolic_draft_ready / scoped_M0_proposal_ready / new_L0_not_approved / no_new_sampling_or_reference_run`。
+
+
+## 47 R6-M0获批实现、完整验收与一次CPU参考计算（2026-11-03）
+
+### 47.1 实际批准与实施范围
+
+第46.8节精确九路径、完整本地测试/同步及现有节点一次最多20分钟M0问题，用户实际答复：
+
+> 批准九路径、测试同步及一次M0计算（推荐）
+
+据此新增macro_reference_v1、macro_audit_v1及config/test/runner/冻结协议六文件；
+只窄幅增加run_tests显式归类、人工保护追加与机器登记六新行/人工登记hash。
+四项L1导航/计划/状态/本日志如实更新；旧R6-A和其他科学源/测试/配置/协议字节保持。
+第46节原申请草稿完整保留，不能把其中当时的pending状态理解为当前仍未获批。
+
+核心按最大事件gap细分内层距离格；外层根据误差贡献细分共同因子格或其内层。
+外层新格初始内层较粗，原始包络可暂时放宽，因此全局取历史有效包络交集，
+单独记录partition_reset_widening；不把该重置当FP舍入错误，也不假设theta(r)单调。
+无限尾质量完整入账，实际CDF质量权重，不归一化PB或静默裁剪概率。
+理想/机器Gram先以固定Gactual[0,0]/sigma0²对齐共同正尺度，再报告偏差和非认证TV诊断。
+数据适配器核对冻结索引及33项只读元数据，不访问raw bin或新真实数据。
+
+### 47.2 本机实际验收与环境
+
+新增20项含穷举身份、Fraction PB、5/78、超几何、单点对Tri一致性、交叉端点/尾质量/节点期限、
+文件来源/ID/独占有界写和真实owned CPU child停止。首轮19项通过，真实监督因沙箱禁止ps报错，
+保留`runs/route6-M0-local-tests-initial-20261103.log`，没有跳过或以mock代替该检查。
+允许ps后运行完整套件：**536/536通过、0跳过、76.594秒**，日志
+`runs/route6-M0-full-tests-20261103.log`。旧516项断言保持；无需安装/升级依赖。
+微型5/78入口输出[0.0596163394,0.0694011141]、32节点、width0.01，仅为解析CPU夹具。
+实际旧输入本机核验12模型/108事件/33文件通过；不把微型宽度当生产2^-14验收。
+
+```bash
+TRI_RAG_TEST_PYTHON=/private/tmp/joint-rank-t1-test-env-20261102/bin/python \
+STEP5_ROUTE1_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/route1.dylib \
+STEP5_COMPARATORS_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/comparators_v2.dylib \
+STEP5_CONTINUATION_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v1.dylib \
+STEP5_CONTINUATION_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v2.dylib \
+sh scripts/run_tests.sh > runs/route6-M0-full-tests-20261103.log 2>&1
+```
+
+现有节点预检：Linux checkout干净、原bdd6cc8；Python3.12.3、NumPy1.26.4/SciPy1.13.0，
+磁盘可用36,417,810,432字节。没有安装环境或运行新采样。先规范checkout提交/推送/远端核对，
+再ff-only同步/节点保护检查和20项CPU微型验收，随后新目录执行获批一次M0。
+实际运行/状态/成本/产物及最终source身份在本节后续追加；此处不预记计算成功。

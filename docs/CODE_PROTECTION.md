@@ -557,3 +557,29 @@ lock, independent GPU check and sample0 run in a fresh repair1 directory.
 The fresh R6-A has a separately approved3600s maximum and unchanged other
 resource caps. Old failed samples/lock/receipts remain distinct and immutable;
 no count pooling, automatic retry or later-stage approval follows.
+
+## Approved R6-M0 structured macro reference (2026-11-03)
+
+The exact nine-path, local full regression/synchronization and one bounded CPU
+M0 question linked to exploration §46.8 received the actual user answer:
+
+> 批准九路径、测试同步及一次M0计算（推荐）
+
+This is separate scoped consent, not a reinterpretation of general continuation.
+
+| New path | Level | Approved scope |
+| --- | --- | --- |
+| `mechanism/tls_rag_step5_route6_macro_reference_v1.py` | L0 | Exact set-ranking event, independent/equicorrelated conditional laws and integral enclosures |
+| `mechanism/tls_rag_step5_route6_macro_audit_v1.py` | L0 | Frozen released inputs, ideal/machine geometry and complete macro comparisons |
+| `configs/tls_rag_step5_route6_macro_reference_v1.json` | L0 | Frozen12-model/108-event inputs, widths, nodes and one1200s CPU resource budget |
+| `tests/test_tls_rag_step5_route6_macro_reference_v1.py` | L0 | Independent deterministic/analytic, provenance, resource and orchestration regressions |
+| `docs/TLS_RAG_STEP5_ROUTE6_MACRO_REFERENCE_PROTOCOL_V1.md` | L0 | Frozen structured-model scope, numerical labels, input roles and execution contract |
+| `scripts/run_tls_rag_step5_route6_macro_reference_v1.py` | L1 | Exclusive CPU supervised orchestration; all inherited science remains L0 |
+
+Only explicit test-module membership is added to `scripts/run_tests.sh`; this
+register is appended and its current hash plus the six new rows are registered.
+Old levels/root metadata and scientific sources/tests/contracts stay fixed.
+New source maps bind the changed registry/test membership. Historical R6-A
+manifests keep their original identity, without migration or another sample run.
+Four L1 handoff files record actual progress. One existing-node M0 uses no new
+MC/CUDA/data/dependency installation and has no automatic retry/expansion.

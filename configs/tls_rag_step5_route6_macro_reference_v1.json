@@ -1,0 +1,187 @@
+{
+  "N": 64,
+  "audit_tolerance": 9.094947017729282e-13,
+  "budget_factors": [
+    1,
+    2,
+    4
+  ],
+  "c": [
+    0,
+    0.5
+  ],
+  "cpu_dependencies": {
+    "numpy": "1.26.4",
+    "scipy": "1.13.0"
+  },
+  "input_binding": {
+    "index_sha256": "0ac8d55bbbf943ea6d7e28e0fafb825f1d095337788afba0c1708834c63bf271",
+    "old_config": {
+      "batch": 128,
+      "boundary_size": 8,
+      "claim_scope": "finite synthetic Gaussian projection diagnostics; no real corpus, static selector, tree optimizer or deployment certification",
+      "conditional_bins": 8192,
+      "cpu_dependencies": {
+        "numpy": "1.26.4",
+        "scipy": "1.13.0"
+      },
+      "dimension": 128,
+      "family_alpha": 0.05,
+      "gpu_dependency_policy": "external preflight environment lock required; no automatic install or version substitution",
+      "limits": {
+        "artifact_bytes": 8589934592,
+        "cpu_threads": 8,
+        "gpu_bytes": 25769803776,
+        "gpu_free_fraction": 0.6,
+        "poll_seconds": 0.25,
+        "ram_fraction": 0.6,
+        "reserve_bytes": 12884901888,
+        "rss_bytes": 34359738368,
+        "seconds": 3600,
+        "temporary_bytes": 4294967296,
+        "write_chunk_bytes": 1048576
+      },
+      "macro_budget_factors": [
+        1,
+        2,
+        4
+      ],
+      "macro_m": [
+        8,
+        32,
+        64
+      ],
+      "namespace": "tls-rag-route6-A-v1",
+      "numeric": {
+        "geometry_audit_atol": 1e-13,
+        "geometry_audit_rtol": 1e-11,
+        "relative_floor": 1e-12,
+        "scalar_atol": 1e-12,
+        "scalar_rtol": 1e-08
+      },
+      "reference_samples": 32,
+      "risk_thresholds": [
+        0.01,
+        0.001
+      ],
+      "samples_per_path": 65536,
+      "scalar_grid": {
+        "absolute_rho": [
+          0,
+          0.5,
+          0.9,
+          0.9999990463256836,
+          1
+        ],
+        "beta": [
+          1.0000009536743164,
+          1.01,
+          1.1,
+          2,
+          10,
+          1000000
+        ],
+        "m": [
+          2,
+          8,
+          32,
+          64,
+          128,
+          256,
+          512
+        ]
+      },
+      "seeds": {
+        "coordinate": 64101,
+        "gram": 64103,
+        "order": 64105
+      },
+      "single_budgets": [
+        1,
+        2,
+        4
+      ],
+      "single_m": [
+        2,
+        8,
+        32,
+        64
+      ],
+      "stages_enabled": [
+        "A"
+      ]
+    },
+    "old_sources": {
+      "configs/tls_rag_step5_route6_v1.json": "086236090ea54c0600787ca714f11b8da0f21e32bf801879e621cf9225f7178d",
+      "docs/TLS_RAG_STEP5_ROUTE6_PROTOCOL_V1.md": "ce3b6af7f863d2a366652fd11ca8fa753acd41f3c709a31cd835caee93cc8d65",
+      "docs/code_protection.json": "280a3315f796867cda1a873be296126676b83fa5a9f9144ae9861a4769dc4436",
+      "mechanism/tls_rag_step5_route6_a800_v1.py": "58ec14d4be0618da50471fd5fc67a9289259dfdc0c1e792ecf1107e114c21d07",
+      "mechanism/tls_rag_step5_route6_bridge_v1.py": "0b0dd4cc4860de05a71bdf0161924b6b4383bc4f1eb0cb6101503622f0f3a565",
+      "scripts/check_code_protection.py": "b5bf08ce74ddd760d13bf79eaa259f39440e474cf6b4fda7eb40a44bc841da57",
+      "scripts/run_tls_rag_step5_route6_v1.py": "1e023d9beffc546588dadf8a5d9dafd03328df5ab81c0b340aa7a63051e47fd6",
+      "src/tri_rag_harness/tri_law.py": "461a78542e22f4d0cc324f5b3769348292fc53d111520cc00bc550508deed23b"
+    },
+    "selected_paths": [
+      "source_freeze.json",
+      "geometry/macro-k4-independent/gram.npy",
+      "geometry/macro-k4-independent/ids.json",
+      "bounds/macro-k4-independent-m8.json",
+      "units/macro-k4-independent-m8-gram.json",
+      "bounds/macro-k4-independent-m32.json",
+      "units/macro-k4-independent-m32-gram.json",
+      "bounds/macro-k4-independent-m64.json",
+      "units/macro-k4-independent-m64-gram.json",
+      "geometry/macro-k8-independent/gram.npy",
+      "geometry/macro-k8-independent/ids.json",
+      "bounds/macro-k8-independent-m8.json",
+      "units/macro-k8-independent-m8-gram.json",
+      "bounds/macro-k8-independent-m32.json",
+      "units/macro-k8-independent-m32-gram.json",
+      "bounds/macro-k8-independent-m64.json",
+      "units/macro-k8-independent-m64-gram.json",
+      "geometry/macro-k4-equicorrelated/gram.npy",
+      "geometry/macro-k4-equicorrelated/ids.json",
+      "bounds/macro-k4-equicorrelated-m8.json",
+      "units/macro-k4-equicorrelated-m8-gram.json",
+      "bounds/macro-k4-equicorrelated-m32.json",
+      "units/macro-k4-equicorrelated-m32-gram.json",
+      "bounds/macro-k4-equicorrelated-m64.json",
+      "units/macro-k4-equicorrelated-m64-gram.json",
+      "geometry/macro-k8-equicorrelated/gram.npy",
+      "geometry/macro-k8-equicorrelated/ids.json",
+      "bounds/macro-k8-equicorrelated-m8.json",
+      "units/macro-k8-equicorrelated-m8-gram.json",
+      "bounds/macro-k8-equicorrelated-m32.json",
+      "units/macro-k8-equicorrelated-m32-gram.json",
+      "bounds/macro-k8-equicorrelated-m64.json",
+      "units/macro-k8-equicorrelated-m64-gram.json"
+    ],
+    "source_commit": "bdd6cc80a67084ca72dded91bd7e50d944e14fd2"
+  },
+  "k": [
+    4,
+    8
+  ],
+  "limits": {
+    "artifact_bytes": 268435456,
+    "cpu_threads": 4,
+    "gpu_bytes": 0,
+    "poll_seconds": 0.25,
+    "reserve_bytes": 12884901888,
+    "rss_bytes": 4294967296,
+    "seconds": 1200,
+    "temporary_bytes": 134217728,
+    "write_chunk_bytes": 1048576
+  },
+  "m": [
+    8,
+    32,
+    64
+  ],
+  "max_nodes_per_model": 32768,
+  "namespace": "tls-rag-route6-macro-reference-v1",
+  "stages_enabled": [
+    "M0"
+  ],
+  "width_goal": 6.103515625e-05
+}

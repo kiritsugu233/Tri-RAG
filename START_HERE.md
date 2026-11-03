@@ -8,6 +8,19 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**Latest task: approved R6-M0 structured macro reference (2026-11-03).**
+The user's exact answer to [section46.8's nine-path scope](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#468-首轮精确九路径与保护影响申请前提案)
+was “批准九路径、测试同步及一次M0计算（推荐）”. The independent scientific
+namespace now implements the exact set-ordering event and independent/one-factor
+conditional integrals, with crossed outer endpoints and explicit tail mass.
+Read the [frozen M0 protocol](docs/TLS_RAG_STEP5_ROUTE6_MACRO_REFERENCE_PROTOCOL_V1.md).
+It separates discretization brackets, uncertified FP64 rounding and ideal/machine
+Gram differences. Six new files plus narrow membership/register changes stay
+within the approved scope. Full local regression passes536/536, zero skips (76.594s). Commit,
+push/verify and ff-only node synchronization precede one CPU1200s/4GiB/256MiB
+M0 run on the existing node. No new MC/CUDA, dependency install or real data.
+Preserve all old R6-A scientific sources/results and withdrawn/deferred stages.
+
 **Latest checkpoint: R6-A numerical revision1 completed on A800 (2026-11-03).**
 Scientific source `bdd6cc8`; local full516/516 and Linux35 tests pass, with no skips.
 After a fresh lock/GPU check, all60 units/120 paths completed in350.464s:

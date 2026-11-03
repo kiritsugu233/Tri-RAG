@@ -285,7 +285,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "0dda63eea08c45465824e6952263f716551c0f93117f211fbe0df69ee8ef9a60"
+      "sha256": "3f0b209475638f6bf04b2fda0effbe74a5162a47f398037bf2b494b0dd2503c5"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -1707,6 +1707,41 @@
       "path": "scripts/run_tls_rag_step5_route6_v1.py",
       "level": "L1",
       "reason": "Explicit user reply 批准上述九路径及本地测试、同步 (2026-11-02), section42.9 Scheme6 R6-A only; A800 execution deferred"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_route6_macro_reference_v1.py",
+      "level": "L0",
+      "reason": "R6-M0 exact nine-path approval: 批准九路径、测试同步及一次M0计算（推荐）; structured macro reference only, exploration section46.8",
+      "sha256": "445e4fe9b53d7b63f790731e674686a9bae19a594ea5da9d88edea053eac1ea5"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_route6_macro_audit_v1.py",
+      "level": "L0",
+      "reason": "R6-M0 exact nine-path approval: 批准九路径、测试同步及一次M0计算（推荐）; structured macro reference only, exploration section46.8",
+      "sha256": "51efd7f7e056977eb9cdcc946fc91d345350e025bf9b480d007d2c55a2c5eeee"
+    },
+    {
+      "path": "configs/tls_rag_step5_route6_macro_reference_v1.json",
+      "level": "L0",
+      "reason": "R6-M0 exact nine-path approval: 批准九路径、测试同步及一次M0计算（推荐）; structured macro reference only, exploration section46.8",
+      "sha256": "2d3940f3c3164e0c9a4fb1f311344ea7b0071de4587da7ac3e7cbc548608a070"
+    },
+    {
+      "path": "tests/test_tls_rag_step5_route6_macro_reference_v1.py",
+      "level": "L0",
+      "reason": "R6-M0 exact nine-path approval: 批准九路径、测试同步及一次M0计算（推荐）; structured macro reference only, exploration section46.8",
+      "sha256": "823bcc3027fce967628ec4be662356c2591e9996fc98a7d1913763b07607b4b6"
+    },
+    {
+      "path": "scripts/run_tls_rag_step5_route6_macro_reference_v1.py",
+      "level": "L1",
+      "reason": "R6-M0 exact nine-path approval: 批准九路径、测试同步及一次M0计算（推荐）; structured macro reference only, exploration section46.8"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP5_ROUTE6_MACRO_REFERENCE_PROTOCOL_V1.md",
+      "level": "L0",
+      "reason": "R6-M0 exact nine-path approval: 批准九路径、测试同步及一次M0计算（推荐）; structured macro reference only, exploration section46.8",
+      "sha256": "6c7710157fc5ff904a6fe020847744cee61f0e112e473a518cd8134e5f0e8181"
     }
   ],
   "approved_change_history": [
