@@ -263,6 +263,26 @@ class MacroReferenceTests(unittest.TestCase):
             self.assertNotEqual(value['returncode'], 0)
             self.assertEqual(value['observed_peaks']['gpu_bytes'], 0)
 
+    def test_delivery_index_measures_closed_progress_and_includes_source_freeze(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root/'source_freeze.json').write_text('{}')
+            store = runner.helpers.ArtifactStore(root, dict(runner.config()['limits'], reserve_bytes=0))
+            store.write('progress.jsonl', b'')
+            with (root/'progress.jsonl').open('ab') as stream:
+                store.append(stream, b'{"nodes":1}\n')
+            runner.write_delivery_index(store)
+            receipt = json.loads((root/'delivery_index.json').read_text())
+            rows = {row['path']: row for row in receipt['files']}
+            self.assertEqual(set(rows), {'source_freeze.json', 'progress.jsonl'})
+            for path, row in rows.items():
+                self.assertEqual(row['bytes'], (root/path).stat().st_size)
+                self.assertEqual(row['sha256'], audit.sha(root/path))
+            before = (root/'delivery_index.json').read_bytes()
+            with self.assertRaises(FileExistsError):
+                runner.write_delivery_index(store)
+            self.assertEqual((root/'delivery_index.json').read_bytes(), before)
+
 
 if __name__ == '__main__':
     unittest.main()

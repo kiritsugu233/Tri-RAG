@@ -60,6 +60,19 @@ def tiny_check():
                 exact_reference='5/78', cuda_called=False)
 
 
+def write_delivery_index(store):
+    """Fingerprint closed products, including appended progress and source freeze.
+
+    ArtifactStore.rows records a file at initial creation; appendable progress
+    must be measured after it closes, not copied from that initial receipt.
+    """
+    excluded = ['delivery_index.json', 'worker.log', 'execution.json']
+    rows = [dict(path=str(path.relative_to(store.root)), bytes=path.stat().st_size,
+                 sha256=helpers.sha(path)) for path in sorted(store.root.rglob('*'))
+            if path.is_file() and str(path.relative_to(store.root)) not in excluded]
+    store.json('delivery_index.json', dict(files=rows, excludes=excluded))
+
+
 def execute(root, cfg, freeze, store, check):
     models, receipt = audit.load_frozen_macro_inputs(freeze['measurement_dir'], freeze['index_path'], cfg)
     store.json('input_receipt.json', receipt)
@@ -113,7 +126,7 @@ def execute(root, cfg, freeze, store, check):
                   roundoff_certified=False, cuda_called=False, new_mc_samples=0,
                   scientific_claim='ideal structured-model reference, not RAG headroom or deployment certification')
     store.json('result.json', result)
-    store.json('delivery_index.json', dict(files=store.rows.copy(), excludes=['delivery_index.json', 'worker.log', 'execution.json']))
+    write_delivery_index(store)
     return 0 if status == 'complete' else (2 if status == 'resource_stop' else 1)
 
 

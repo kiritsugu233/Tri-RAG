@@ -8,18 +8,22 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
-**Latest task: approved R6-M0 structured macro reference (2026-11-03).**
-The user's exact answer to [section46.8's nine-path scope](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#468-首轮精确九路径与保护影响申请前提案)
-was “批准九路径、测试同步及一次M0计算（推荐）”. The independent scientific
-namespace now implements the exact set-ordering event and independent/one-factor
-conditional integrals, with crossed outer endpoints and explicit tail mass.
-Read the [frozen M0 protocol](docs/TLS_RAG_STEP5_ROUTE6_MACRO_REFERENCE_PROTOCOL_V1.md).
-It separates discretization brackets, uncertified FP64 rounding and ideal/machine
-Gram differences. Six new files plus narrow membership/register changes stay
-within the approved scope. Full local regression passes536/536, zero skips (76.594s). Commit,
-push/verify and ff-only node synchronization precede one CPU1200s/4GiB/256MiB
-M0 run on the existing node. No new MC/CUDA, dependency install or real data.
-Preserve all old R6-A scientific sources/results and withdrawn/deferred stages.
+**Latest checkpoint: R6-M0 completed; partial numerical resolution (2026-11-03).**
+The user explicitly approved the nine paths/tests/sync and one CPU M0. Read
+[section47's results and provenance limitation](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#47-r6-m0获批实现完整验收与一次cpu参考计算2026-11-03)
+and the [frozen protocol](docs/TLS_RAG_STEP5_ROUTE6_MACRO_REFERENCE_PROTOCOL_V1.md).
+Scientific source48e2af5 evaluated all12 models/108 events in642.842s, with zero
+new MC/CUDA. Independent models resolve54 events to2^-14; all54 equicorrelated
+events remain unresolved at32768 nodes/model. FP64 rounding is uncertified.
+All108 brackets overlap old Gram CP diagnostically. The old aggregation can be
+vastly loose, yet all36 ell1 events still have high omission risk; this does not
+establish Gaussian RAG headroom, a lightweight predictor or static dimension selection.
+The original delivery index has a stale progress hash and omits source_freeze.
+It is retained; an independent full19-file index and all local SHA/source checks
+pass. The approved runner/test scope now fixes closed-product indexing; final
+full537 tests pass, zero skips (77.023s). No second M0 run occurred. Preserve the
+original run/source identity and failure evidence. Do not auto retry/expand M0
+or reopen R6-B/C/D, VIBE, old A0 or routes4/5. Nodes remain on; computation exited.
 
 **Latest checkpoint: R6-A numerical revision1 completed on A800 (2026-11-03).**
 Scientific source `bdd6cc8`; local full516/516 and Linux35 tests pass, with no skips.

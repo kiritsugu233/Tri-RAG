@@ -1730,7 +1730,7 @@
       "path": "tests/test_tls_rag_step5_route6_macro_reference_v1.py",
       "level": "L0",
       "reason": "R6-M0 exact nine-path approval: 批准九路径、测试同步及一次M0计算（推荐）; structured macro reference only, exploration section46.8",
-      "sha256": "823bcc3027fce967628ec4be662356c2591e9996fc98a7d1913763b07607b4b6"
+      "sha256": "8c1c9739c5934c1740dacf355f90afb58820ceeb2b8ada3b575f48cd1417feac"
     },
     {
       "path": "scripts/run_tls_rag_step5_route6_macro_reference_v1.py",
