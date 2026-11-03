@@ -4,6 +4,15 @@ Updated 2026-11-03. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
+## 当前任务：一般相关真实几何审计与算法计划（非冻结）
+
+- [x] 记录用户一般相关约束；独立/统一等相关仅作控制，不作真实数据默认假设。
+- [x] 追加第48节：角度×间隔/有符号Gram分组审计、真实共同投影参照、残差条件依赖和线上可支付输入计划。
+- [x] 明确原空间边界与事后投影边界、局部诊断与全库遗漏、随机Pi风险与固定Pi新query质量的区别。
+- [ ] 核验完整真实数据源、原生度量/真值、新开发query角色及实际N/d/k；不自动恢复VIBE或旧封闭角色。
+- [ ] 在实际来源基础上冻结首轮几何审计的采样/资源与新增确切L0路径，再实施。
+- [ ] 后续共享投影/一般Gram、实际后端空间与付费摘要各自具体立项；不从本计划自动执行。
+
 ## 当前任务：集合排序宏观参考 R6-M0（九路径/测试同步/一次计算已获批）
 
 - [x] 用户接受分析并要求继续；完成[第46节](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#46-宏观遗漏的集合排序参考推导积分包络与r6-m0提案2026-11-03)非冻结推导与确切实施范围。

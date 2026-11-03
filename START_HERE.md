@@ -8,6 +8,18 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**Latest task: general-correlation real-geometry plan (2026-11-03).**
+The user requires general dependence under one shared Gaussian matrix. Independent
+and equicorrelated cases remain controls; future models must be justified by real
+query displacement angles, distance margins and signed Gram structure. Read
+[section48's nonfrozen plan](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#48-一般相关下的真实几何审计与算法设计计划非冻结提案2026-11-03).
+Proposed R6-B0 first audits complete real-corpus geometry on fresh development
+queries; later shared-projection checks distinguish local structure, full-corpus
+omission and actual backend headroom. Conditional residual dependence and online
+input/selection costs remain explicit. No new scientific code, data transfer,
+sampling or node run is authorized/executed by this planning turn. Data/source,
+roles, resource limits and exact new L0 paths precede any implementation/run.
+
 **Latest checkpoint: R6-M0 completed; partial numerical resolution (2026-11-03).**
 The user explicitly approved the nine paths/tests/sync and one CPU M0. Read
 [section47's results and provenance limitation](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#47-r6-m0获批实现完整验收与一次cpu参考计算2026-11-03)
