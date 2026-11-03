@@ -6369,3 +6369,21 @@ Linux新34测试通过（1.030秒）。首次tiny目录`/root/autodl-tmp/route6-
 此为首次S0前的环境检查兼容修正，不消耗或重启真实S0。现有同意覆盖新runner和其资源回归，
 不要求重复批准同一范围。下一步推送/节点同步修正版、Linux36测试和新目录tiny，
 成功后才可执行唯一一次已批准S0。原失败不覆盖，无新依赖或资源放宽。
+
+## 58 R6-S0 首次真实运行前的有界参考工作区复核（2026-11-03）
+
+7ff42c945cb7e4f774427242ae01b744e329bff2已push并核对远端、节点干净ff-only同步；Linux36项1.031秒通过。
+新目录tiny CUDA实际通过：总3.211秒、worker2.984秒、RSS988,229,632B、GPU587,202,560B。
+四类原维/Gaussian/PCA/hybrid与CPU FP64顺序完全匹配；关闭产品回收到device-cgroup-verified逐SHA通过。
+原tiny预检失败仍保留。此时仍未打开真实learn_neighbors或运行S0。
+
+启动前静态内存复核发现：640维FP64库26,794,644,480B，若L2参考一次计算全库平方临时张量，
+两份53,589,288,960B已约49.9GiB，高于48GiB上限（这是理论工作区，不冒称实际超限观测）。
+在原批准的新representation参考中，将相同row平方和放入8192行块，新增范数向量约40MiB，
+临时平方约40MiB；不改距离公式、dtype、tolerance、查询/配置/seed或任何上限。
+新runner的tiny用block13跨越64点，核对多个CUDA块与独立CPU顺序；无新科学模块或路径。
+这实现了原获批bounded reference要求，尚无真实S0结果或缓存需要迁移。
+
+**最终完整615项通过、0skip、68.372秒**。full-tests-bounded-workspace.log SHA256 `f5f87e681267010410c79dc836ea6cf6132f7a66ffd5e7a1adb2993338fcae9c`。
+保护281项通过；仅原批准的新模块/runner及必要新模块SHA和四L1交接变更。
+下一步最终提交/push/远端核对、Linux36与新tiny后，启动唯一一次已批准真实S0。

@@ -287,11 +287,15 @@ def exact_representation_search(values, queries, count, metric='l2', codes=None,
     # One serial reference corpus at a time; no query-by-corpus matrix on disk.
     dimension = queries.shape[1]
     device_values = torch.empty((n, dimension), dtype=torch.float64, device='cuda')
+    norms = torch.empty(n,dtype=torch.float64,device='cuda') if metric=='l2' else None
     for start in range(0, n, block):
         check()
         x = decode_codes(codes[start:start+block], centers) if codes is not None else values[start:start+block]
         device_values[start:start+len(x)] = torch.as_tensor(x, dtype=torch.float64, device='cuda')
-    norms = (device_values*device_values).sum(dim=1) if metric == 'l2' else None
+        if norms is not None:
+            part=device_values[start:start+len(x)]
+            norms[start:start+len(x)]=(part*part).sum(dim=1)
+            del part
     for start in range(0, len(queries), batch):
         check()
         q = torch.as_tensor(queries[start:start+batch], dtype=torch.float64, device='cuda')

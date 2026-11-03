@@ -242,7 +242,7 @@ def _worker(root,cfg,device_only=False):
                 spec=dict(id=kind,kind=kind,dim=16 if kind=='raw' else 8,seed=cfg['seeds']['gaussian'],retained=4)
                 model=rep.fit_representation(spec,x,pca,cfg,check);v=rep.transform_batch(model,x);q=rep.transform_batch(model,queries)
                 cpu=rep.exact_representation_search(v,q,8,model['metric'])
-                gpu=rep.exact_representation_search(v,q,8,model['metric'],torch=torch,check=check)
+                gpu=rep.exact_representation_search(v,q,8,model['metric'],torch=torch,check=check,block=13)
                 if not np.array_equal(cpu,gpu):raise RuntimeError('tiny CUDA FP64 ordering mismatch')
                 dv=torch.as_tensor(v,device='cuda');native=np.asarray([rep.search_backend(model,z,8,device_values=dv,torch=torch) for z in queries])
                 if not np.array_equal(cpu,native):raise RuntimeError('tiny CUDA FP32 ordering mismatch')

@@ -1817,7 +1817,7 @@
       "path": "mechanism/tls_rag_step5_route6_representation_v1.py",
       "level": "L0",
       "reason": "User-approved §55 R6-S0: Stored metric/truth rows, sample Gaussian/PCA/PQ/hybrid and label-free full/IVF search",
-      "sha256": "7594b1a4da5f3561f598a8124f07b438b2c7aad79cbd6371c77269b55c07942b"
+      "sha256": "23edb091872432c1a77b0ee54234a30a38eb4bfaaa33328c82d83f2bc097b162"
     },
     {
       "path": "mechanism/tls_rag_step5_route6_representation_screen_v1.py",

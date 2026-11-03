@@ -286,3 +286,12 @@ newly authorized; official test/old closed roles/Tri stage remain closed.
 - [x] Final full615 tests pass,0skip,68.497s (new36).
 - [ ] Push/sync resource-reader correction, Linux36 + new-directory tiny CUDA.
 - [ ] First and only S0 after successful tiny receipt.
+
+### Bounded FP64 workspace before first S0
+
+- [x] 7ff42c9 clean Linux sync,36 tests1.031s, actual tiny CUDA3.211s.
+- [x] Tiny closed products locally SHA-verified; first preflight failure preserved.
+- [x] Prelaunch static memory review replaces whole-corpus squared temporary
+  with bounded per-block norms; same row sums, dtype and resource cap.
+- [x] Final full615/0skip/68.372s on bounded-workspace implementation.
+- [ ] Final GitHub/Linux sync and block13 tiny CUDA receipt, then single real S0.
