@@ -4,6 +4,15 @@ Updated 2026-11-03. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
+## 当前任务：R6-S0表示/接入点筛选与免费预算oracle
+
+- [x] 用户指定三步顺序；只读核对原benchmark目标度量/epsilon主recall、learn发布标签结构和现有接法。
+- [x] 8固定公开快照/原128角色SHA复核；用户确认开机后完成节点只读环境/资源/完整源元数据检查，无向量或label读取。
+- [x] 第55节提出16主+4同字节+4 seed、完整竞争者/原发布learn真值、真实CPU/GPU/索引费用与LP/MILP oracle合同、精确九路径和一次限额范围。
+- [ ] 九路径及一次S0精确批准；实施/登记、完整本地回归、提交同步、Linux CPU/tiny CUDA。
+- [ ] 唯一限额表示/实际后端筛选、原指标与严格ID/同维/同字节/全生命周期账本、已选接法免费oracle诊断。
+- [ ] 根据筛选结果提出Tri增量的具体下一范围；一般Gram尾/线上联合信息/静态选维与标量公式不提前部署。
+
 ## 当前任务：R6-B0只读准备及精确实施范围
 
 - [x] 执行用户“直接开始”授权内的只读准备：8份公开快照SHA、存量文件/环境、节点资源和Git状态。

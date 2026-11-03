@@ -3,6 +3,17 @@
 Updated 2026-11-03. Maintained branch: `codex/tls-rag-step5-ann`.
 Canonical checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 
+## 当前准备：R6-S0表示/接入点与免费oracle筛选（2026-11-03）
+
+- 用户指定先筛表示、再测oracle空间、最后验证Tri增量；完成只读接口/benchmark语义/既有产物核查，并在[第55节](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#55-表示与接入点筛选-r6-s0只读准备与精确实施提案2026-11-03待路径级批准)给出具体九路径提案。
+- 基线bdc388e/追踪干净/275项保护；8公开快照与原128角色SHA再次通过。源/真值payload均未读，无新科学实现、配置、测试或训练/检索。
+- 两次SSH认证前关闭；用户确认“节点已开启，原命令不变”后重连成功。节点干净bdc388e、A800空闲、CPU14/RAM120GiB、fast disk空闲35.746GB，原完整文件大小/元数据一致。
+- 实核现有Faiss CPU1.8.0 AVX2，GPU资源接口缺失；NumPy1.26.4/SciPy1.13.0/h5py3.11.0/Torch2.8.0+cu128复用，无安装。
+- 计划16主+4同字节+4 seed诊断，共24固定表示；同维、同载荷字节和匹配质量分别比较。PCA前缀+Gaussian残差及三者组合纳入，原raw全成本保留。
+- 发现benchmark主recall用distance cutoff+1e-3，learn只有发布邻居无距离；拟仅打开原128条learn_neighbors并重算截止，同时全库native IP复核、严格ID另列。正式test/邻居/距离payload仍关闭，开发检查不冒称正式test或认证。
+- 拟一次节点scientific7200秒/parent总9000秒、RSS64GiB/GPU48GiB/产物8GiB/新盘12GiB/空闲>=16GiB，先完整本地回归/同步、Linux CPU/tiny CUDA。该九路径和新标签/资源范围待确切批准；不把三步方向同意写成已有路径同意。
+- 下一项：取得第55.7–55.8节确切范围同意后实施第一轮；不恢复旧VIBE源码/route4/5、不启动第三阶段Tri或新MC。
+
 ## 当前完成：B0 v2完整128条，全部产物关闭核验（2026-11-03）
 
 - 科学22ab36c已推送/远端独立核对、Linux干净ff-only同步；完整579项（0跳过/68.788秒）、Linux16项（1.063秒）和真实tiny CUDA均通过，保护275项通过。

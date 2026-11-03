@@ -8,6 +8,18 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**Active preparation: representation/integration screen R6-S0 (2026-11-03).**
+User requested representation/backend headroom, free-budget oracle, then Tri
+increment. Read [section55](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#55-表示与接入点筛选-r6-s0只读准备与精确实施提案2026-11-03待路径级批准):
+16 main representations +4 byte-matched +4 fixed seed diagnostics, original
+full corpus/128 development roles, published learn-neighbor truth with native
+distance-threshold recall plus strict ID retention, real Faiss/Torch costs and
+LP/MILP oracle diagnostics. A800 reconnected after user confirmed power-on;
+node clean bdc388e, CPU-only Faiss1.8 verified. Only metadata/public snapshots
+and closed roles read; no new vectors/labels/training/search. Exact nine new/
+narrow paths and one<=150min run are proposed, not yet path-level approved.
+Old test payloads/results stay closed/fixed. New science awaits scoped consent.
+
 **Latest completed task: B0 v2 full128-query A800 geometry audit (2026-11-03).**
 Actual consent: “批准第51节九路径、保留并停止原轮、测试同步及一次v2”.
 Six new files plus narrow test/registry updates implement FP64 batch16 direct

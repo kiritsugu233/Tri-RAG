@@ -6102,3 +6102,211 @@ query方向的精确共同分量有解释作用，剩余相关仍需保留；不
 这反映该冻结局部二阶近似随rank改善，尚不是最优因子分析、全库谱、rank variance、翻转率或遗漏尾精度。
 一般相关宏观尾的计算精度/费用，以及线上付得起的联合摘要仍是下一研究问题。
 静态选维、轻量标量公式和真实RAG收益尚未被验证；本轮未启动下一阶段。
+
+## 55 表示与接入点筛选 R6-S0：只读准备与精确实施提案（2026-11-03，待路径级批准）
+
+### 55.1 当前任务与已完成准备
+
+用户明确要求开始三步：先筛表示/接入点，再查免费预算oracle空间，最后检验Tri增量。
+因此先立项新namespace `tls-rag-route6-representation-screen-v1`，不以Gaussian优胜为前提。
+本节是L1研究提案，不是冻结协议或实际九路径同意；依AGENTS，新的科学实现/配置/测试/协议先获确切路径批准。
+当前仅更新四项L1交接文档，复核公开源码/既有关闭记录、只读节点资源和HDF5元数据。
+
+基线bdc388ee9307b67e8cdb132da67f7e90603c6658，Step5分支、追踪清洁、保护275项通过。
+旧8份公开源码/指针再次逐SHA验证，B0原128角色SHA一致。SSH最初两次认证前关闭；
+用户答复“节点已开启，原命令不变”后重连成功。节点干净HEAD=bdc388e，A80080GB PCIe空闲，
+同UUID/driver580.82.07；CPU配额14、RAM120GiB，fast disk空闲35,746,021,376字节。
+原环境Python3.12.3、NumPy1.26.4/SciPy1.13.0/h5py3.11.0/Torch2.8.0+cu128、
+Faiss CPU1.8.0 AVX2。`get_num_gpus()==0`且无StandardGpuResources，不假称有GPU Faiss。
+原文件大小13,688,159,632字节；只核元数据，没有重新做完整SHA/读取向量或labels。
+准备证据：`runs/route6-S0-preparation-20261103/{readonly-preparation.json,node-readonly.txt}`。
+
+### 55.2 输入、真值与角色：首先消除度量混淆
+
+复用唯一完整Hotpot–Harrier train[5233329,640]及B0原128 learn query，原文件/失败/产物全保留：
+
+```text
+source: /root/autodl-fs/route6-B0-v1-9f963f9-20261103T0959Z/source/data.hdf5
+source SHA256: 08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114
+roles: /root/autodl-fs/route6-B0-v1-9f963f9-20261103T0959Z/roles.json
+roles SHA256: f1a83a8c9aa008e63b52ae29a55fb45f60d200ec2c4c228866f21ad0885b4e08
+VIBE source commit: 7ac76c1f8320a411ce7c9cb3791bdd7f2349b30c
+dataset revision: a91cc76a3ab66b0353032e8427b9e34dcee22ded
+```
+
+全库完整参与竞争，不以20k子库或312点Gram代替。k100；存储float32已归一化，不二次归一化，
+沿用norm gate2^-16。Gaussian/PCA/混合表示后不归一化、不whiten。原目标度量保持
+`clip(1-dot(q,x),0,2)`，精排回到同一原目标；另外记录存储向量FP64 L2诊断，不能互换真值。
+
+已核对的固定VIBE源码：`distance.py::normalized_cosine`；
+`faiss/module.py::FaissFlat.fit/query_with_distances`使用native IP并以原向量重算返回距离；
+`export_results.py::get_recall_values`用第100真值距离+epsilon1e-3，计返回100点中达阈值者/k。
+因此主质量为该距离阈值recall，严格top100 ID retention另列，不能仅报较宽松指标。
+
+拟新批准**仅打开原128条对应的learn_neighbors[96845,100]发布标签行**。learn没有发布distances；
+对发布100个ID按固定原距离公式重算截止距离，标记为“发布learn真值上的同公式开发指标”，
+不冒称正式1000条test成绩。固定源码允许learn标签由GPU cuVS或CPU Faiss生成；实际文件是哪条路径未记录，不能假定。
+另用全库native FP32 IP和FP64存储几何复核发布GT、距离截止、ties/数值差，保留发布与新算两份身份，
+不悄悄覆盖发布真值。ID越界/重复、SHA/形状不符或截止差超过原epsilon则停止真值门，保留未决。
+原`test/neighbors/distances/avg_distances` payload、旧cert/report/test仍关闭。
+
+原64 discovery用作screen选择，原64 check作冻结选择后的开发审计；旧角色文件不改。
+所有128均已用于几何开发，整个原learn池仍是开发数据，不作独立认证或语义独立性声明。
+选变换、预算和backend参数只看discovery；check结果不反向修改本轮配置。后续正式确认需单独新范围。
+
+### 55.3 首轮固定表示矩阵：16主配置＋8预定诊断
+
+所有主表示存储FP32，PQ为8bit子码；“字节”是每点编码/坐标载荷，不含公共raw/ID/索引开销。
+
+| 族 | 主配置 | 数量 |
+| --- | --- | ---: |
+| 原维 | 原640维、native IP | 1 |
+| Gaussian | 总维128/256，iid N(0,1/m) | 2 |
+| PCA | 总维128/256，corpus-only中心化，无whitening | 2 |
+| PCA保留＋Gaussian残差 | (r,s)=(32,96)/(64,192)，总维128/256 | 2 |
+| PQ | 原640维→32/64字节 | 2 |
+| OPQ→PQ | 原640维完整旋转→32/64字节 | 2 |
+| PCA→PQ | PCA256→32/64字节 | 2 |
+| Gaussian→PQ | Gaussian256主seed→32/64字节 | 2 |
+| PCA＋Gaussian＋PQ | (64,192)混合表示主seed→64字节 | 1 |
+
+额外4项仅对未量化Gaussian128/256和两种混合表示使用第二个预定seed，做质量稳定性检查；
+不挑seed、不开Gaussian MC，不把两个实例当充分随机投影泛化证据。
+另有4项Gaussian8/16和PCA8/16（主seed/同PCA模型前缀），分别以FP32的32/64字节载荷
+与PQ/OPQ及量化组合做实际同字节对照，而非只拿512/1024字节的128/256维float与32/64字节PQ比。
+这4项也测固定候选质量/实际扫描费用，可参与同字节frontier；额外seed4项仅作质量稳定性。
+总计24个固定表示实例。总索引/常驻内存另实测，不把同载荷冒称全部系统字节相同。
+候选M固定100/200/400/800/1600/3200/6400。每个配置的维度和矩阵固定，部署不逐query选维。
+Gaussian128/256使用同一标准高斯矩阵的前缀并分别按1/sqrt(m)缩放；保存实际矩阵SHA。
+混合表示Phi(x)=[U_rᵀ(x-mu); G_s(I-U_rU_rᵀ)(x-mu)]，离线合成线性矩阵，
+计总r+s坐标和完整变换；不在线免费重建高维残差，不调用TriLaw(beta,rho,r+s)冒充精确概率。
+不加入PCA完整旋转后再接Gaussian作为“新精度优势”配置；不把随机正交旋转当iid Gaussian。
+
+同一65,536个corpus行拟合PCA/PQ/OPQ/IVF，使用PCG64/seed2026110351无放回抽样，
+排好row顺序并冻结其ID映射/SHA；不读query或标签来训练表示。PCA用该样本FP64中心协方差/eigh，
+明确是样本PCA而非全库精确PCA；不以解释方差替代近邻保持。所有变换、码本和训练成本保存。
+Gaussian主/稳定seed2026110353/2026110354；PQ seed2026110355，coarse2026110357，
+timing schedule2026110359。每个实际RNG入口均进manifest；任何隐式默认必须显式记录/核验。
+Faiss PQ/coarse niter25/nredo1；OPQ保留v1.8默认外层50、首轮PQ40/其后4，初始旋转固定1234，
+最终编码PQ仍25轮。默认来源见[VectorTransform.h](https://raw.githubusercontent.com/facebookresearch/faiss/v1.8.0/faiss/VectorTransform.h)
+及[对应训练源码](https://raw.githubusercontent.com/facebookresearch/faiss/v1.8.0/faiss/VectorTransform.cpp)。
+不用缩短OPQ训练来制造Gaussian优势，组件超时则记incomplete，不临时换弱配置。
+
+### 55.4 三层对照及可选实际backend
+
+1. **全库表示参考。** 对未量化存储表示全扫描FP64 L2；PQ/OPQ用同一冻结码本的全库ADC
+   （小块解码FP64核对其距离）；原640保留native IP参考。检验表示/量化与浮点差异，不能把全扫描叫ANN漏搜。
+   FP64是有限精度参考，不是形式化实数排序证书；投影输入的浮点误差不沿用B0单位norm的固定E。
+2. **真实全扫描实现。** Faiss1.8 Flat/PQ及Torch2.8 CUDA FP32线性全扫描。逐query记录相对参考的差异，
+   所有流程返回M后按原metric精排top100；PQ原维主对照用IP，另报同码本L2 ADC诊断，避免把量化范数偏置混同维度损失。
+3. **实际非穷举实现。** 用Faiss IVF Flat/IVFPQ，nlist1024、nprobe16/64/256/1024、max_codes0。
+   原640直接IVFFlat始终保留；PCA和32/64字节非Gaussian压缩对照始终各保留一个；
+   至多3个Gaussian族接法由discovery固定frontier规则选择，总计至多7个IVF索引，不建全库HNSW。
+   每个IVFPQ必须用**自己的同一残差码本和编码**在nprobe=nlist下作全库ADC参考，不能用另一个IndexPQ的码本替代。
+
+固定frontier筛选：对recall目标.95/.99分别在discovery选择达标配置的最小平均完整延迟，
+同分按更小总resident bytes/配置字典序；Gaussian族至多各留一个未量化Gaussian、一个混合、一个含PQ接法。
+若某族无预算达标，记录该族当前网格不合格；不增加m/M或跳过不利配置。保存全部完成点，不仅保存赢家。
+真值指标以原发布learn cutoff为主；严格ID另给独立frontier，不能跨指标挑优势。
+这只筛指定Faiss1.8/Torch接法，不声称胜过整个VIBE榜单或所有ANN实现。
+
+记录G中每个ID在各阶段的保留/遗漏转移与“救回”。不同排序的topM一般不嵌套，
+表示/量化/索引的recall差可能有正有负，不能把各差裁成非负再假装精确可加的遗漏分解。
+当前相关/一般Gram不作独立或等相关假设；本轮不计算宏观Tri尾，也不拟合轻量风险公式。
+
+### 55.5 质量、系统与生命周期费用
+
+共同主延迟模式batch1；CPU同硬件对照所有方法使用同一CPU配置（Faiss线程14、BLAS1），
+GPU完整部署曲线另列。不能将CPU PQ与GPU Gaussian差异归因为表示算法；也不能把自写Torch扫描当GPU Faiss。
+CPU单线程敏感性只用按query ID哈希/seed2026110361预定的16条discovery子集，且只作补充，不参与选择。
+所有计时实际执行每次query变换/检索/M读取/精排/传输与同步；不由maxM前缀切片冒充各M独立调用时间。
+
+质量参考可批量扫描，每配置只取maxM后复用前缀计算所有M质量；这项离线优化不迁移到在线费用。
+主完整延迟：各配置在discovery上对目标.95/.99选出的最多2个固定M，2次预热、3次正式逐query重复；
+候选ID/参数与质量阶段核对。索引变换/编码不在计时循环偷偷复用query特征；访问顺序由固定seed交错。
+随后将固定配置在64 check上同样测量；保存每query每重复样本、均值/median/p95，不只记录最快一次。
+真值/标签仅评估器可见，固定部署search接口不能读GT、retention或oracle输出。
+
+内存分开报raw原向量常驻/磁盘、搜索表示、ID/IVF/codebook/矩阵、重复副本、工作区、CPU RSS/GPU峰值。
+共同精排raw13,397,322,240字节不能因来源已存在就记0；PQ压缩率不冒称全系统内存压缩率。
+索引载荷和实测进程峰值分开；不序列化保存所有原维/低维全库float副本来扩大产物，
+保存可重建的输入身份/模型/码本/list/编码和逐query候选的紧凑显式ID-map。重复raw副本实际存在就计费。
+
+离线分别记样本/训练、全库变换编码、索引构建、写入/加载与审计参考开销；
+部署账本为P+Q*T，Q=1/10^3/10^5/10^6并给交点，不靠无限次查询摊薄训练成本。
+已保留的B0/source取得成本单列历史沉没成本，S0新增费用单列；冷启动与暖常驻测量不能混成一个吞吐数字。
+CPU/GPU共享raw或变换模型时按实际部署解释共享/复制，不人为合并不同时存在的物理布局。
+
+### 55.6 免费oracle：限制动作空间，先给乐观下界
+
+只对至多3个已选择Gaussian族pipeline，在固定表示/维度/seed/backend/nprobe下诊断M。
+先测各M的真实逐query完整t(q,M)，2预热/3重复，原投影/检索/精排仍付费；oracle只免预算决策和pilot，
+允许看已存真值，但只作为离线表，不能进入部署接口。不给未测M填插值时延，不由全scan前缀伪造扩展费用。
+对每个质量目标，以相同query/指标/硬件最快合格固定对照和固定混合做比较。
+
+令a(q,M)为已存benchmark recall，t为配对测量均值；解
+min (1/n) sum_qM x_qM t_qM，约束sum_M x_qM=1，(1/n)sum_qM x_qM a_qM>=R。
+先解0<=x<=1的LP松弛；它允许每query随机混合，**是更乐观的下界，不冒称可部署的确定oracle**。
+另用SciPy1.13 milp给0/1解与gap/status，求解超时不把可行上界当最优；每solver至多60秒，累计300秒。
+严格ID质量目标单列求解，不把两种约束在看结果后混合。均值质量约束不替换成更严格的每query达标。
+保存原系数、解、可行性/目标/gap、对照和zero-cost控制器可支付的费用余量；一并报计时波动。
+
+若乐观LP在该测量表上也无正余量，说明当前动作空间不能靠更好的预算预测器挽救；
+若LP有余量而确定解未明，结论仍未决。正余量仅支持下一项研究，不证明可由线上输入实现。
+不足或相差不足5%的单轮计时只标小/未决，不作为稳健性能优势；bootstrap仅为描述性不确定性，非独立认证。
+原空间、PQ/PCA对照不能从候选数直接推时延；任何硬件/查询数变化都需新的对应测量。
+
+### 55.7 本轮精确九路径与兼容性
+
+| 拟新增/修改路径 | 等级与具体API/改动 |
+| --- | --- |
+| `mechanism/tls_rag_step5_route6_representation_v1.py` | 新L0；`load_screen_inputs`/`fit_representation`/`transform_batch`/`encode_pq`/`exact_representation_search`/`search_backend`；发布learn真值和原metric、变换/量化/真实后端 |
+| `mechanism/tls_rag_step5_route6_representation_screen_v1.py` | 新L0；`benchmark_recall`/`loss_transitions`/`measure_call`/`select_fixed`/`oracle_budget_bound`/`lifecycle_cost`/`seal_report`；角色、费用和下界解释 |
+| `configs/tls_rag_step5_route6_representation_v1.json` | 新L0；本节16主+4同字节+4稳定性配置、输入/roles/seed/训练/指标/预算/资源和关闭阶段 |
+| `tests/test_tls_rag_step5_route6_representation_v1.py` | 新L0；独立tiny表示/ADC/metric/角色/费用/oracle/资源回归 |
+| `docs/TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V1.md` | 新L0；冻结数据payload与度量、配置表、完整费用/计时/停止/报告合同 |
+| `scripts/run_tls_rag_step5_route6_representation_v1.py` | 新L1，科学语义继承L0；所有重量级import/parent预检前启动统一deadline，独占目录、限额与关闭索引 |
+| `scripts/run_tests.sh` | 仅增加新测试模块归类，不改旧断言/套件/skip |
+| `docs/CODE_PROTECTION.md` | 仅追加6行及实际新同意的引用 |
+| `docs/code_protection.json` | 仅新增6行和必要新L0/人类登记SHA；不刷新旧科学hash或改等级 |
+
+四L1交接文档按实际维护。旧Tri-Law、B0/M0、route4/5、撤回的VIBE实现和原冻结文件不改/不恢复；
+新研究明确超出旧MVP的单表示边界，是用户本次指定的独立探索，不改AGENTS治理。
+仅加L1 wrapper不能实现本轮：表示几何/真值payload/训练/选择/浮点/费用/oracle都是新L0语义。
+新指纹含source/原roles/fit样本/模型和码本、dtype/scaling/中心化/原metric/epsilon、seed/实际库二进制SHA、
+硬件/线程/精度/backend参数与全部来源映射；旧cache不迁移，旧科学产物仍可按旧提交重放。
+
+### 55.8 验收与一次节点限额
+
+获准后先完成新CPU离线回归及完整原套件（当前579项不是新S0的通过），不用网络/真实数据做单测。
+包括直接手算的原IP/L2非等范数反例、epsilon recall和严格ID区分、精确ties/重复点不删、
+Gaussian scale/不后归一化、PCA中心抵消及残差正交、混合总字节、固定码本ADC与独立解码距离一致、
+同IVF编码的全probe参考、阶段救回转移、不泄露标签/旧test、指纹错配拒绝、费用不能漏raw/传输、
+LP与小型枚举/MILP夹具及松弛方向、真实拥有worker超时/内存/产物停止、监控失败不成功和关闭索引完整性。
+使用既有临时本地venv/FAISS1.8/native库，不安装或升级依赖。实现/新完整测试通过后commit/push并核对远端HEAD。
+Linux干净ff-only同步、CPU新测试、tiny CUDA与CPU表示/搜索核对通过，才允许真实S0。
+
+拟申请**现有A800节点一次S0**：科学累计<=7200秒、从parent轻量入口开始总<=9000秒（150分钟），
+包含环境/旧输入/full source SHA前后校验、训练编码、全部参考/后端/时钟/oracle/报告；
+进程树RSS64GiB、GPU进程48GiB、CPU配额14、产物8GiB、新磁盘12GiB、空闲盘始终>=16GiB。
+单worker/单GPU，串行加载表示；纯元数据预检若资源不足则不启动科学部分。训练单组件最多1200秒，
+超时保留失败/未完成，不能缩训练轮数后继续冒称同配置；总限额先到就停，缺测不能当负面科学结果。
+不下载/重编码embedding、不安装GPU Faiss、不复制或重写旧13.7GB来源；正式test和旧封闭角色保持关闭。
+不做投影概率MC、Tri控制器/风险公式、线上pilot或下一轮；本次仅表示/系统筛选和免费oracle诊断。
+
+所有监控/输入冻结/总timer从parent预检前生效，修正B0只能报告预检外时间的边界；
+<=1秒拥有进程树/显存/磁盘监控与写前字节检查，外部工具有超时，监控失败停拥有worker，保留旧轮。
+科学结果只进新目录；完成/失败后关闭所有进度/log/receipt再生成全产物SHA索引，原件保留服务器。
+交付每query候选/保留转移/真实时间、fit/索引/内存账本、同维/同字节/匹配质量frontier、
+oracle系数与费用余量，以及每族continue/stop/unresolved和限制。是否足以开展Tri增量由这些结果决定，
+不在本轮自动训练第三阶段。若S0不完整，不自动重跑、扩资源、开test或挑更有利query。
+
+依据[AGENTS.md](../AGENTS.md)的原文：
+“Before any edit, obtain explicit user approval for the exact affected paths and intended change.”
+用户当前“可以那就开始这样做吧”已指定三步方向，但未列出本节新九路径和新真值/150分钟范围，
+故尚未创建上述科学文件、打开learn_neighbors或进行新训练/检索；待精确同意后继续实施。
+
+本轮准备交付核验：原日志443,878字节完整前缀保留，仅四L1文档新增；全部本地链接、围栏和diff检查通过。
+275项保护通过，191项已有L0 SHA一致、注册表自身原有无自hash规则及文件字节未变；六个拟新增文件均不存在。
+纯文档准备没有重跑原579项，也不将它们称为S0通过。初次辅助审查脚本误假设注册表自带sha256，
+KeyError已保留到准备回执，随后按其原有git_review_no_self_hash声明和Git原字节核对；未修改守卫或登记。
