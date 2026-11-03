@@ -3,14 +3,24 @@
 Updated 2026-11-03. Maintained branch: `codex/tls-rag-step5-ann`.
 Canonical checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 
-## 当前任务：B0完整来源已核验，CPU轮受吞吐限制；v2九路径待批（2026-11-03）
+## 当前收尾：B0计算限额退出，24/128部分记录封存核验；v2待批（2026-11-03）
+
+- 原轮resource_stop，触发geometry compute deadline；returncode2，监督2468.804613秒，峰值RSS1,264,685,056字节；未触发RSS/磁盘限额，无GPU/MC。完整563项及Linux26项测试均已通过。
+- 实际仅24条discovery完成，104未完成、check0；没有生成完整result.json，不把子集当128条结果。
+- 独立关闭后核验完整source/原prefix SHA均一致；57项关闭输出与索引完整性通过。57,159,429字节archive SHA e5bda1c4...9241f5b6，本机57项逐大小/SHA再次通过；原件保持。
+- 部分几何：G-B平均rho .471922、去query方向后平均残差rho .296508；各query残差均值范围.235578–.382603，不能默认条件独立。谱rank1/16的每query方差误差p95中位数11.86%/5.26%，不是遗漏误差或最优因子模型结果。
+- 24条FP64 IP/L2 top100一致、零距离0；Gram/U、D/U、分解最大误差约2.00e-15/4.44e-16/2.44e-15，纳入率/人口/ID核验通过；没有另跑全库truth或宏观概率。
+- [第52节](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#52-b0首轮限额退出完整封存与24条部分几何结果2026-11-03)和`runs/route6-B0-preparation-20261103/partial-analysis/analysis.md`、CSV/PNG给出范围/数据解释；来源及原前缀留服务器。
+- 第51节v2精确新九路径/GPU/一次新轮仍待用户批准；没有v2实现或GPU调用。计算已退出、节点保持开启，不自动重跑/扩额。
+
+## 来源/吞吐检查点：B0与v2提案（2026-11-03）
 
 - 科学9f963f9已GitHub核对、Linux干净fetch/ff-only同步；Linux26项通过（unittest1.344秒/进程6.678秒），来源map与本机一致。
 - 唯一CPU B0于09:57:54Z启动，监督PID1761；节点输出`/root/autodl-fs/route6-B0-v1-9f963f9-20261103T0959Z`。
 - 完整来源13,688,159,632字节/发布SHA于1267.661秒内取得，新增2,984,295,824字节；原部分文件完整hash/大小保持。
 - 实际train[5233329,640]、learn[96845,640]；原128条/64+64开发roles SHA f1a83a8c...5b4e08已冻结，官方test/邻居payload未读取。
 - 逐query读取20–22秒/距离30–32秒，之后仍42秒级，128条无法在原1200秒内完成。这是我这版重复全库扫描的工程问题，不能归因于Gaussian/Tri质量。
-- 10:28:40Z完成11条，仅部分开发诊断；原轮继续既定资源限额，未重启或扩大。SSH复用结束后重连未影响独立监督任务。
+- 10:28:40Z完成11条，仅部分开发诊断；原轮随后按既定资源限额停止在24条，未重启或扩大。SSH复用结束后重连未影响独立监督任务。
 - [第51节](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#51-b0首轮完整来源取得cpu吞吐问题与批量a800完成提案2026-11-03待批准)提出独立v2九路径、原完整源/roles只读复用、FP64批量A800/CPU近序簇复核、完整回归与一轮1200秒计算（GPU40GiB/RSS4GiB）；新代码/运行待批，原v1不改。
 
 ## 实现检查点：R6-B0获批实现及本地验收（2026-11-03）

@@ -8,7 +8,19 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
-**Latest task: R6-B0 full source verified; CPU audit in progress, batch completion proposed (2026-11-03).**
+**Latest task: R6-B0 stopped at compute cap;24/128 partial discovery records verified (2026-11-03).**
+The original CPU run ended with resource_stop after2468.805s, because the1200s
+compute limit expired.24 discovery queries completed;104 remain, check not reached.
+Peak tree RSS1.178GiB; no GPU/MC. Complete input and historical partial SHA
+were independently reverified, with all57 closed output files/indexes checked on
+node and locally. Read [section52](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#52-b0首轮限额退出完整封存与24条部分几何结果2026-11-03).
+Partial geometry supports retaining general residual dependence; it is not128-query
+completion, macro-risk validation or Gaussian RAG headroom. The source remains
+on the server. Code/full563 tests and Linux26 tests passed. v2's exact new GPU/
+nine-path/one-run question remains pending; no v2 code/run. Computation exited;
+keep the node on and do not automatically retry the original scope.
+
+**Source/throughput checkpoint: R6-B0 (2026-11-03).**
 Scientific commit9f963f9 is on GitHub and the clean node. Local563 tests and
 Linux26 tests pass. The only authorized B0 started at09:57:54Z; full source
 size/SHA passed after1267.661s, with the historical partial unchanged.
@@ -16,7 +28,7 @@ Actual train is5,233,329x640; learn96,845x640; test payload stays closed.
 Read [section51](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#51-b0首轮完整来源取得cpu吞吐问题与批量a800完成提案2026-11-03待批准).
 The per-query CPU scan takes42–56s, incompatible with128 queries in1200s.
 This is an audit implementation throughput defect, not Gaussian quality evidence.
-At10:28:40Z11 queries were complete; the original limits remain active.
+At10:28:40Z11 queries were complete; the original limit subsequently stopped at24.
 A separate nine-path v2 FP64 A800 batch/CPU near-order proposal needs explicit
 consent for GPU use and another run. No v2 code/GPU has run at this checkpoint.
 
