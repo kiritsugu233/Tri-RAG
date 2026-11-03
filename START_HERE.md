@@ -11,8 +11,11 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 **R6-S0 authorized implementation (2026-11-03).** Actual answer to exploration
 §55.7–55.8: “批准九路径、测试同步及一次S0（推荐）”. The six new files and narrow
 test/protection registration are implemented in the canonical Step5 checkout.
-Final full613 CPU/offline tests passed, zero skips (70.388s); new34 included.
-Only approved source paths changed. No S0 real labels/training/search have run.
+Final full615 CPU/offline tests passed, zero skips (68.497s); new36 included.
+Only approved source paths changed. Node118de8d CPU34 passed; tiny preflight exposed cgroup-v1 path compatibility
+(before worker/CUDA), original failure retained. The runner now reads v1/v2
+without changing limits; two new resource regressions pass. No S0 real
+labels/training/search have run.
 Next: commit/push/remote verification, clean Linux sync/newCPU
 and tiny actual CUDA, then one bounded scientific7200s/global9000s run.
 No automatic retry, test payload or third-stage Tri. See the frozen

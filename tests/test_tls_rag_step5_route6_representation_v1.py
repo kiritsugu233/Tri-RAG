@@ -269,6 +269,30 @@ class RepresentationTests(unittest.TestCase):
         limits.update(changes)
         return runner.monitor_worker([sys.executable,'-c',code],root,limits,use_gpu=False)
 
+    def test_cgroup_v1_and_v2_same_allocation(self):
+        for version in (1,2):
+            with tempfile.TemporaryDirectory() as temp:
+                root=Path(temp)
+                if version==1:
+                    (root/'memory').mkdir();(root/'cpu').mkdir()
+                    (root/'memory/memory.limit_in_bytes').write_text(str(120*2**30))
+                    (root/'cpu/cpu.cfs_quota_us').write_text('1400000')
+                    (root/'cpu/cpu.cfs_period_us').write_text('100000')
+                else:
+                    (root/'memory.max').write_text(str(120*2**30))
+                    (root/'cpu.max').write_text('1400000 100000')
+                with mock.patch.object(runner.os,'sched_getaffinity',return_value=set(range(32)),create=True):
+                    self.assertEqual(runner.allocated_resources(root),dict(memory_bytes=120*2**30,cpu_threads=14))
+
+    def test_cgroup_invalid_and_unbounded_are_not_success(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);(root/'memory.max').write_text('max');(root/'cpu.max').write_text('1400000 100000')
+            with self.assertRaises(RuntimeError):runner.allocated_resources(root)
+            (root/'memory.max').write_text(str(120*2**30));(root/'cpu.max').write_text('max 100000')
+            with self.assertRaises(RuntimeError):runner.allocated_resources(root)
+            (root/'cpu.max').write_text('0 100000')
+            with self.assertRaises(RuntimeError):runner.allocated_resources(root)
+
     def test_actual_owned_worker_timeout_and_closed_index(self):
         with tempfile.TemporaryDirectory() as temp:
             result=self.monitor(temp,'import time;time.sleep(30)',total_seconds=5.3,scientific_seconds=5.3)

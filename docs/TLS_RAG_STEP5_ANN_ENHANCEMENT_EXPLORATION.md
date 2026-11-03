@@ -6352,3 +6352,20 @@ OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 sh scripts/run
 
 下一步是canonical提交/push/远端SHA核对、Linux干净ff-only同步/新34测试/tiny CUDA；
 通过后只启动已批准的一次S0。此段时点尚未在节点打开新真值、训练或检索。
+
+## 57 R6-S0 节点预检兼容修正（2026-11-03）
+
+118de8d4f47aa5bbdc31513cba0c9e4e575a655a已canonical提交、push并逐SHA核对GitHub，节点干净ff-only同步。
+Linux新34测试通过（1.030秒）。首次tiny目录`/root/autodl-tmp/route6-S0-device-118de8d-20261103`
+在parent cgroup路径读取时失败：节点是v1，无`/sys/fs/cgroup/cpu.max`。0.223秒即退出，
+回执明确science_started=false；没有worker、CUDA、real labels/训练/检索。
+该关闭索引1文件在节点保留，并回收`runs/route6-S0-preparation-20261103/device-first-verified`逐SHA核对。
+
+仅在已获准的新runner中补stdlib v1/v2资源读取，旧helper不改；CPU仍14、RSS仍64GiB，
+缺失/非正/无限quota不能被当合格。新测试增加v1/v2同配额及非法/无限值拒绝，共36项。
+测试行hash只更新获批新S0测试；原科学源/门槛/配置/协议/旧保护行不改。
+**最终完整615测试通过、0skip、68.497秒**；full-tests-cgroup.log SHA256 `8ea1114345faa98c9e8fad70d1d8cb997e5fc51cbf103394b65edbf33da86d99`。
+
+此为首次S0前的环境检查兼容修正，不消耗或重启真实S0。现有同意覆盖新runner和其资源回归，
+不要求重复批准同一范围。下一步推送/节点同步修正版、Linux36测试和新目录tiny，
+成功后才可执行唯一一次已批准S0。原失败不覆盖，无新依赖或资源放宽。

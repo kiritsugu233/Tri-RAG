@@ -1835,7 +1835,7 @@
       "path": "tests/test_tls_rag_step5_route6_representation_v1.py",
       "level": "L0",
       "reason": "User-approved §55 R6-S0: Independent CPU metric/representation/ADC/truth-role/cost/oracle/owned-resource regressions",
-      "sha256": "b9a91c955aa8fb5de0886a1fa325d1d09f188b46b152e8fed10b6177fe0b917e"
+      "sha256": "43580f28b82db91e63a44f1d3fad851ff8a0c6de780684dc9e3c6160deb31446"
     },
     {
       "path": "docs/TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V1.md",

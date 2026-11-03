@@ -54,6 +54,26 @@ def config():
     return value
 
 
+def allocated_resources(cgroup_root='/sys/fs/cgroup'):
+    """Read either cgroup generation without importing numerical libraries."""
+    root=Path(cgroup_root)
+    memory_path=root/'memory.max'
+    if not memory_path.is_file():memory_path=root/'memory/memory.limit_in_bytes'
+    memory=memory_path.read_text().strip()
+    if not memory.isdigit() or int(memory)<=0:
+        raise RuntimeError('finite positive cgroup memory required')
+    if (root/'cpu.max').is_file():
+        q,p=(root/'cpu.max').read_text().split()
+        if q=='max':raise RuntimeError('finite positive cgroup CPU quota required')
+    else:
+        q=(root/'cpu/cpu.cfs_quota_us').read_text().strip()
+        p=(root/'cpu/cpu.cfs_period_us').read_text().strip()
+    if not q.isdigit() or not p.isdigit() or int(q)<=0 or int(p)<=0:
+        raise RuntimeError('finite positive cgroup CPU allocation required')
+    affinity=len(os.sched_getaffinity(0)) if hasattr(os,'sched_getaffinity') else os.cpu_count()
+    return dict(memory_bytes=int(memory),cpu_threads=min(int(q)/int(p),affinity))
+
+
 def process_tree(pid):
     """Only descendants of this parent; no name-based killing or unrelated RSS."""
     if sys.platform=='linux':
@@ -250,10 +270,9 @@ def supervise(root,cfg,receipt=None,device_only=False):
         env=environment(cfg);sources=source_map()
         if gpu_memory({os.getpid()})!=0:raise RuntimeError('GPU busy before S0')
         if shutil.disk_usage(root).free<cfg['limits']['free_bytes']:raise RuntimeError('free disk gate')
-        quota=Path('/sys/fs/cgroup/cpu.max').read_text().split()
-        if quota[0]!='max' and int(quota[0])/int(quota[1])<cfg['limits']['cpu_threads']:raise RuntimeError('CPU quota')
-        memory=Path('/sys/fs/cgroup/memory.max').read_text().strip()
-        if memory!='max' and int(memory)<cfg['limits']['rss_bytes']:raise RuntimeError('RSS allocation')
+        allocation=allocated_resources()
+        if allocation['cpu_threads']<cfg['limits']['cpu_threads']:raise RuntimeError('CPU quota/affinity')
+        if allocation['memory_bytes']<cfg['limits']['rss_bytes']:raise RuntimeError('RSS allocation')
         if not device_only:
             saved=json.loads(Path(receipt).read_text())
             if saved['status']!='passed' or saved['sources']!=sources or saved['config']!=cfg or saved['environment']!=env:
@@ -261,7 +280,7 @@ def supervise(root,cfg,receipt=None,device_only=False):
         limits=dict(cfg['limits'])
         if device_only:limits.update(scientific_seconds=120,total_seconds=180)
         write_json(root/'source_freeze.json',dict(config=cfg,sources=sources,environment=env,parent_pid=os.getpid(),
-            global_start_unix=start,deadline_unix=start+limits['total_seconds'],
+            allocation=allocation,global_start_unix=start,deadline_unix=start+limits['total_seconds'],
             device_receipt_sha256=sha(receipt) if receipt else None,
             commit=subprocess.run(['git','rev-parse','HEAD'],cwd=ROOT,capture_output=True,text=True,check=True,timeout=5).stdout.strip(),
             mode='tiny CUDA only' if device_only else 'one approved S0'))

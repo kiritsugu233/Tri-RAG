@@ -276,3 +276,13 @@ at their existing local paths. This index does not replace those contracts.
 Use [the frozen protocol](TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V1.md).
 Existing source/128 development roles only, corresponding learn_neighbors rows
 newly authorized; official test/old closed roles/Tri stage remain closed.
+
+### Node preflight compatibility checkpoint
+
+- [x] 118de8d pushed/remote SHA verified; clean node ff-only synced.
+- [x] Linux34 new CPU tests pass,1.030s.
+- [x] Original tiny preflight failure retained/locally SHA-verified; no worker/CUDA/science.
+- [x] New stdlib runner reads both cgroup generations; unchanged14CPU/64GiB gates.
+- [x] Final full615 tests pass,0skip,68.497s (new36).
+- [ ] Push/sync resource-reader correction, Linux36 + new-directory tiny CUDA.
+- [ ] First and only S0 after successful tiny receipt.
