@@ -4713,3 +4713,93 @@ STEP5_CONTINUATION_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/
 4. 审查每事件区间、边界残差、信息层级、异常候选与完整费用后决定是否提出R6-B；后阶段不自动启动。
 
 当前状态：`R6_A_local_implemented / offline_513_passed / A800_not_connected / CUDA_not_run / full_scientific_sampling_not_run`。
+
+
+## 44 R6-A A800首轮失败与数值修复提案，待批准（2026-11-03）
+
+### 44.1 节点释放、预检与真实首轮结果
+
+用户于2026-11-03提供当前SSH连接并明确“已开启”，据此连接既有节点进行已计划的R6-A。
+凭据不入库。单A800 80GB PCIe、驱动580.82.07、CPU cgroup14核/内存120GiB，数据盘初始空闲约34.6GiB。
+现有`/root/autodl-tmp/conda-envs/tri-rag-step5/bin/python`可直接使用：Python3.12.3、
+NumPy1.26.4/SciPy1.13.0、Torch2.8.0+cu128/CUDA12.8；无安装、升级或源码替换。
+初始非交互PATH缺python3，改用既有绝对路径解决；原探测失败保留。
+
+服务器仓库`/root/autodl-tmp/Tri-RAG-git`原本干净、位于持续分支的70816b5；
+通过GitHub fetch/ff-only同步到审查源码`dde67209e372fb26ec7ffdc2aa266ec26b1f89eb`，保护257项通过。
+Linux新增32项0跳过通过（0.583秒），CPU自检与独立CUDA自检均通过（各路径8样本、0不确定bit）。
+设备锁含实际GPU UUID/依赖/Torch二进制SHA及TF32关闭/确定性配置，八源hash与本机审查源码逐项一致。
+
+冻结60单元测量的新目录为服务器及回收本机的`runs/route6-A-a800-20261103/`；
+预检/环境锁/启动及复现证据为`runs/route6-A-a800-preflight-20261103/`。
+实际首轮`worker_failed`，returncode1，监督墙钟153.482226秒；30单元的60个路径汇总已写，
+29单元风险汇总完成。显存观测峰值1,069,547,520字节、进程树RSS峰值1,604,276,224字节，
+回执前产物231,625,267字节，临时盘0；无资源/监控错误，进程已停止。
+未完成全部60单元，不将部分结果写成完整科学通过；不自动重跑或修改受保护源码。
+
+### 44.2 可复现缺陷及必要修改
+
+最后单元`single-equicorrelated-alpha0.5-m2`，`analyze_unit`用
+`eta=float(p[i].sum()-local.sum())`计算未选边界风险。
+节点保存的四个概率为
+`[0.32322330470336313,0.3232233047033632,0.32322330470336325,0.3232233047033632]`，
+边界顺序`[2,1,3,0]`已经包含全部竞争者，补集为空。
+两次不同顺序的浮点求和相减得到`-2.220446049250313e-16`，触发
+`bridge.boundary_remainder_bound`对负eta的正确拒绝。直接对补集求和为精确0。
+仅使用已保存Gram/事件记录的只读复现再次触发同一异常，新增投影抽样数0；
+完整输入/traceback保存在`failure-reproduction.json`。
+
+要求不是放宽eta非负合同或数值阈值，而是直接计算数学定义中的非负补集和。
+L1包装不能修复已冻结`analyze_unit`内部计算；在调用外裁剪/截断将掩盖缺陷并绕过L0保护。
+原桥函数及拒绝规则、Tri-Law、样本量/种子/几何/事件/ties/区间/数据角色均不变。
+
+### 44.3 精确五路径候选修复及验证范围（尚未批准）
+
+| 精确路径 | 拟修改 |
+| --- | --- |
+| `mechanism/tls_rag_step5_route6_a800_v1.py` | 新增内部`_boundary_remainder_expectation(p,selected)`以bool补集mask直接求和；`analyze_unit`改用它；不使用max/epsilon裁剪 |
+| `tests/test_tls_rag_step5_route6_v1.py` | 增加上述真实浮点顺序/空补集、很小的正补集和、全部固定几何/维度分区检查；保留原负eta拒绝测试及全部旧断言 |
+| `docs/TLS_RAG_STEP5_ROUTE6_PROTOCOL_V1.md` | 记录相同数学合同的数值修订、失败来源和实际批准；原失败目录保留，新源码/环境锁/独立GPU检查及新目录重跑不混合旧计数 |
+| `docs/CODE_PROTECTION.md` | 仅追加这次实际五路径批准及数值修复影响 |
+| `docs/code_protection.json` | 仅更新上述获批科学/测试/协议及人类登记的必要SHA；不改等级、根元数据或无关旧项 |
+
+该改法仍为`eta=sum_{j outside boundary}p_j`；避免总和相减带来的负数或吞掉微小正残差。
+数值修订使用独立源码指纹和新产物目录，v1数学合同/种子命名空间保持；不把旧部分数据拼进新置信区间。
+旧环境锁因来源变化作废，必须在新审查提交上重新生成；历史锁/失败回执保持原字节。
+不需修改桥源、配置、runner或任何旧科学文件，不实施拟合器/真实数据阶段。
+
+批准后才改五路径，执行新增回归+完整CPU套件/保护/源与历史字节审计，提交推送并核对远端HEAD；
+服务器ff-only到新提交，重新预检锁定/独立GPU自检。
+请求新一轮R6-A从样本0在`runs/route6-A-a800-20261103-repair1/`开始，**新一轮最多60分钟**，
+仍单GPU/24GiB、RSS32GiB、产物8GiB/tmp4GiB/余盘12GiB；这是另一次明确执行申请，不自动续跑或扩额。
+首轮已用153.482226秒单列保留。若再次失败或达限保留证据，不暗改或继续重试。
+四项L1交接文档按实际阶段更新；没有保护批准就只回收/核对部分结果并交付提案。
+
+当前：`A800_preflight_and_tiny_CUDA_passed / first_R6_A_worker_failed / numerical_repair_not_approved / rerun_not_started`。
+
+
+### 44.4 实际批准与数值修订本地验收（2026-11-03）
+
+用户对上述精确五路径、测试同步及新一轮同配置/最多60分钟问题实际答复：
+
+> 批准五路径修复、测试同步及新一轮R6-A（推荐）
+
+随后才编辑获批文件。`_boundary_remainder_expectation`使用bool补集mask直接求和，
+`analyze_unit`只替换原eta计算；无裁剪、无新epsilon，原bridge负值拒绝与全部旧阈值保持。
+增加三项独立要求：首轮Linux浮点输入/空补集、1e-20正补集不可因总和相减消失、
+全部16几何/60维度单元的有效分区。单点对旧Tri、配置/种子/事件/样本量/runner未改。
+协议记录数值修订1及真实批准，人类登记追加本次范围，机器表仅更新四个必要的获批SHA。
+
+复用原本机固定环境及四个旧native库；新35项通过（0.573秒、0跳过），
+**完整516/516通过，0跳过，72.108秒**。精确重放方式沿第43.3节完整命令，
+输出目录改为`runs/route6-A-repair1-local-validation-20261103/`；新增模块仍为
+`PYTHONPATH=src:. PYTHONDONTWRITEBYTECODE=1 /private/tmp/joint-rank-t1-test-env-20261102/bin/python -m unittest discover -s tests -p test_tls_rag_step5_route6_v1.py -v`。
+没有安装依赖或修改测试分类。保护257项通过，提交前还须检查diff/链接/旧登记/首轮来源保持。
+
+取证时一次SSH远端关闭，原始scp在约36MiB部分副本处失败；没有科学进程继续运行。
+重连后在旧审查源码上独立回放全部60条已写路径：3,932,160个Pi、每事件mask/排名、
+计数及同时CP端点一致，14,472事件完整catalogue保留；29个已汇总单元统计异常候选0。
+这只是首轮部分产物完整性通过，整体仍为worker_failed。
+全部原始bin保留服务器，首轮元数据/逐文件SHA另包回收；不把部分本机bin副本当完整封存。
+本次完整回归通过后按常设指令提交/推送新修订，服务器仅ff-only同步；重新锁定/独立GPU检查后
+启动新目录repair1，同网格/种子从0采样，不合并首轮数据。不因先前探测失败扩大数据或资源。

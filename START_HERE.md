@@ -1,12 +1,32 @@
 # Query-Adaptive Tri-RAG: current entry
 
-Updated 2026-11-02. Canonical checkout:
+Updated 2026-11-03. Canonical checkout:
 `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 Maintained branch: **`codex/tls-rag-step5-ann`**; continue Step 5 updates there.
 The reviewed/Tri-Law-repaired backup remains `codex/repo-review-code-protection`
 at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
+
+**Latest checkpoint: first R6-A A800 run failed; scoped numerical repair approved
+(2026-11-03).** The user opened the node. Existing dependencies were reused,
+the clean Linux checkout was synchronized through GitHub/ff-only to `dde6720`,
+32 Linux tests and an independent tiny CUDA check passed. The first fixed run
+then stopped with `worker_failed` after153.482226s:30 units sampled on both paths,
+29 units analyzed. No resource or monitor limit was hit.
+In `analyze_unit`, subtracting reordered floating-point sums produced eta
+`-2.22e-16` for an empty complement. The negative-input guard correctly rejected it.
+Read [section44's reproducible failure and exact five-path proposal](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#44-r6-a-a800首轮失败与数值修复提案待批准2026-11-03).
+The user's actual reply to the exact five-path repair and fresh-run question was
+“批准五路径修复、测试同步及新一轮R6-A（推荐）”. The complement is now summed
+directly, preserving the negative guard/thresholds and the failed run. All
+**516 offline tests pass, zero skips** (72.108s), including35 Scheme6 tests.
+After source synchronization, create a new lock and GPU check before the approved
+sample0 repair1 run (a separately approved3600s maximum, unchanged other caps).
+Do not reuse the old environment lock, mix old/new counts or infer a completed
+A800 measurement from the local regression. Section44.4 records actual approval
+and tests; complete finite scientific acceptance is still pending.
+R6-B/C/D and previously closed tasks remain stopped.
 
 **Latest user task: Scheme6 R6-A local code and tests (2026-11-02).** The user
 explicitly approved the section42.9 nine paths, local tests and synchronization:

@@ -285,7 +285,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "f6f1f2156dd411dbafa1c3219e82b97adaf1d714ff591342b2b198c89ff80b95"
+      "sha256": "0dda63eea08c45465824e6952263f716551c0f93117f211fbe0df69ee8ef9a60"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -1683,7 +1683,7 @@
       "path": "mechanism/tls_rag_step5_route6_a800_v1.py",
       "level": "L0",
       "reason": "Explicit user reply 批准上述九路径及本地测试、同步 (2026-11-02), section42.9 Scheme6 R6-A only; A800 execution deferred",
-      "sha256": "33cd3def4aff4be93c96dd16338ffcad07d26b0fe6a9c4de1ec2c1955a1cf682"
+      "sha256": "58ec14d4be0618da50471fd5fc67a9289259dfdc0c1e792ecf1107e114c21d07"
     },
     {
       "path": "configs/tls_rag_step5_route6_v1.json",
@@ -1695,13 +1695,13 @@
       "path": "tests/test_tls_rag_step5_route6_v1.py",
       "level": "L0",
       "reason": "Explicit user reply 批准上述九路径及本地测试、同步 (2026-11-02), section42.9 Scheme6 R6-A only; A800 execution deferred",
-      "sha256": "efcef02ed2b251c50052b88c64a4bfa8f993b65614548c2fa7f797878381ec66"
+      "sha256": "eb79d7b5512fc29a999805bd30d4ca5d219c0ee6711547b08753732e66eb08df"
     },
     {
       "path": "docs/TLS_RAG_STEP5_ROUTE6_PROTOCOL_V1.md",
       "level": "L0",
       "reason": "Explicit user reply 批准上述九路径及本地测试、同步 (2026-11-02), section42.9 Scheme6 R6-A only; A800 execution deferred",
-      "sha256": "1365ee5aaada3d4b9909434c8bf1f39bbdcc566fb9607eb001d5bd2fd65b5edc"
+      "sha256": "ce3b6af7f863d2a366652fd11ca8fa753acd41f3c709a31cd835caee93cc8d65"
     },
     {
       "path": "scripts/run_tls_rag_step5_route6_v1.py",

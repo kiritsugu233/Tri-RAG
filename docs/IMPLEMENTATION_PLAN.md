@@ -1,10 +1,10 @@
 # Implementation milestones
 
-Updated 2026-11-02. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
+Updated 2026-11-03. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
-## 当前任务：方案6 R6-A本地实现，A800待开机
+## 当前任务：方案6 R6-A数值修复获批，516项通过，准备新轮
 
 - [x] 按用户要求在[探索日志第42节](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#42-方案6边界聚焦的候选遗漏界离线静态选维与轻量风险计算2026-11-02)追加方案6，旧章节保持。
 - [x] 写明宏观计数桥、边界残差、条件/联合信息、标量化误差和静态选型目标及先行限制。
@@ -14,8 +14,14 @@ Unchecked historical items are not execution authorization.
 - [x] 新命名空间完成概率桥、稳定标量式、16个单位球几何、60单元双路采样接口、事件封存/误差包络及资源监督。
 - [x] 新32项CPU离线测试通过；完整513/513、0跳过、79.706秒通过；原481项科学行为及依赖保持。
 - [x] 记录首轮变量名错误及修复、真实子进程停止/部分文件回放检查和CPU微型自检；见[第43节](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#43-方案6-r6-a获批实现与本地验收a800待开机2026-11-02)。
-- [ ] 用户开启节点后只读核验A800/现有checkout/环境，锁定实际依赖/设备身份；需安装时先明确来源与范围。
-- [ ] 在已同步的审查源码上完成独立GPU集成检查，再按冻结R6-A执行有限科学测量；目前两项均not_run。
+- [x] 用户开启节点；只读核验A800/cgroup/现有干净checkout和环境，复用既有依赖并锁定实际设备/精度/来源，无安装。
+- [x] GitHub/ff-only同步到dde6720；Linux32项、独立CUDA微型自检通过，启动固定R6-A。
+- [x] 保留153.482226秒首轮worker_failed，30单元双路样本、29风险汇总；负eta已用保存输入复现，完整测量不通过。
+- [x] [第44节](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#44-r6-a-a800首轮失败与数值修复提案待批准2026-11-03)列精确五路径数值修复/回归/来源影响及新目录重跑申请；受保护源码未改。
+- [x] 实际答复“批准五路径修复、测试同步及新一轮R6-A（推荐）”；直接求补集和，原负值拒绝/配置/阈值保持。
+- [x] 新35项、本机完整516/516、0跳过、72.108秒通过；首轮完整部分记录独立核对，失败不抹除。
+- [ ] 新修订提交推送/服务器ff-only，重新设备锁与GPU检查，再按单独批准60分钟在repair1新目录从样本0重跑。
+- [ ] 完成全矩阵、逐样本回放/同时区间及异常审查；首轮失败不视为完成，后续阶段不自动恢复。
 - [ ] R6-A数学信息门→R6-B新真实场景表示/成本门→R6-C静态顾问增量→R6-D轻量化；后阶段不自动获批。
 
 当前交付为R6-A代码与本地验收；下列旧未勾选事项是保留历史，不是自动待办或恢复授权。

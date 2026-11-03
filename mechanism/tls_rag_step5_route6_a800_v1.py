@@ -238,6 +238,18 @@ def boundary_indices(geometry, m, config):
     return [np.lexsort((np.arange(len(row)), -row))[:config['boundary_size']].tolist() for row in p]
 
 
+def _boundary_remainder_expectation(p, selected):
+    """Sum the actual complement; subtraction can erase or negate its mass.
+
+    ``selected`` is the trusted row-index output of boundary_indices. No clipping
+    or tolerance changes the nonnegative remainder contract.
+    """
+    p = bridge.probabilities(p)
+    outside = np.ones(len(p), dtype=bool)
+    outside[np.asarray(selected, dtype=np.intp)] = False
+    return float(p[outside].sum())
+
+
 def unit_events(geometry, m, path, config):
     k, n = geometry['spec']['k'], geometry['spec']['N']
     selected = boundary_indices(geometry, m, config)
@@ -368,7 +380,7 @@ def analyze_unit(geometry, m, config, coordinate_records):
             conditional.append(min(classical[-1], detail['upper']))
             ids = selected[i]
             local = p[i, ids]
-            eta = float(p[i].sum()-local.sum())
+            eta = _boundary_remainder_expectation(p[i], ids)
             u = np.zeros((len(ids), len(ids)))
             for a, b in combinations(range(len(ids)), 2):
                 j, l = sorted((k+ids[a], k+ids[b]))

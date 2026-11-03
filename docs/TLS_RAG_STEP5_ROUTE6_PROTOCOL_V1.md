@@ -16,6 +16,22 @@ standing GitHub synchronization. A800 connection, environment installation and
 scientific execution wait for the user's server release. R6-B/C/D, VIBE download,
 real data, tree optimization and a deployed static selector remain out of scope.
 
+On2026-11-03 the user opened the A800 node. Existing fixed CPU packages and
+Torch2.8.0+cu128 were reused without installation. Linux32 tests and tiny CUDA
+checks passed, but the first run on `dde6720` stopped after153.482226s: an empty
+boundary complement produced eta=-2.22e-16 by subtracting reordered sums.
+The original failed run/lock remain immutable. The user then approved section44's
+exact five-path numerical repair, tests/synchronization and a fresh R6-A run:
+
+> 批准五路径修复、测试同步及新一轮R6-A（推荐）
+
+Numerical revision1 directly sums the complement; it never clips eta or relaxes
+the existing negative-input guard. Mathematical v1 contract, seeds, grid and
+resource settings remain fixed. The fresh run has its own source fingerprint,
+environment lock and `route6-A-a800-20261103-repair1` directory, starts at sample0
+and has a separately approved maximum3600s. Counts are not pooled with the failed
+run. Recheck the reviewed source, full tests and independent GPU fixture first.
+
 ## Probability, geometry and fixed finite design
 
 The complete finite design is in `configs/tls_rag_step5_route6_v1.json` and the

@@ -85,6 +85,34 @@ class Route6Tests(unittest.TestCase):
         self.assertEqual(bridge.cantelli_bound(1, 1, 2), .5)
         self.assertEqual(bridge.factorial_bound(1, 4, 3), 1/3)
 
+    def test_empty_boundary_complement_preserves_observed_linux_failure_fixture(self):
+        p = np.array([.32322330470336313, .3232233047033632,
+                      .32322330470336325, .3232233047033632])
+        selected = [2, 1, 3, 0]
+        self.assertLess(float(p.sum()-p[selected].sum()), 0)
+        eta = gpu._boundary_remainder_expectation(p, selected)
+        self.assertEqual(eta, 0)
+        self.assertEqual(bridge.boundary_remainder_bound(.1, eta, 2), .1)
+        with self.assertRaises(ValueError):
+            bridge.boundary_remainder_bound(.1, -np.finfo(float).eps, 2)
+
+    def test_tiny_positive_boundary_complement_is_not_lost_to_cancellation(self):
+        p = np.array([.5, .25, 1e-20])
+        self.assertEqual(float(p.sum()-p[:2].sum()), 0)
+        self.assertEqual(gpu._boundary_remainder_expectation(p, [1, 0]), 1e-20)
+        self.assertEqual(gpu._boundary_remainder_expectation(p, []), float(p.sum()))
+
+    def test_all_fixed_geometry_boundary_partitions_have_nonnegative_remainders(self):
+        for spec in gpu.geometry_specs():
+            geometry = gpu.build_geometry(spec, self.cfg)
+            for m in self.cfg['single_m'] if spec['k'] == 1 else self.cfg['macro_m']:
+                p, _, _ = bridge.geometry_probabilities(geometry['gram'], spec['k'], m)
+                for row, selected in zip(p, gpu.boundary_indices(geometry, m, self.cfg)):
+                    complement = sorted(set(range(len(row)))-set(selected))
+                    eta = gpu._boundary_remainder_expectation(row, selected)
+                    self.assertGreaterEqual(eta, 0)
+                    self.assertEqual(eta, float(row[complement].sum()))
+
     def test_inconsistent_joint_information_is_not_silently_repaired(self):
         result = bridge.second_order_bounds([1, 1], np.zeros((2, 2)), 2)
         self.assertEqual(result['status'], 'inconsistent_joint_constraints')

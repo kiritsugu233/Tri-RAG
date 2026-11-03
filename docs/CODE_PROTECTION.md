@@ -531,3 +531,29 @@ Old scientific source/tests/config/roles, four native libraries and dependency
 versions remain unchanged. No A800 connection/execution, VIBE work, old A0,
 route4/5 resumption, tree optimizer or real-data stage is authorized by this
 local implementation approval. Server testing waits for the user's release.
+
+
+## Scheme6 R6-A boundary-complement numerical repair (2026-11-03)
+
+The first A800 run on `dde6720` failed after153.482226s. Section44 records the
+saved Linux fixture: reordering a complete boundary produced eta=-2.22e-16 by
+subtracting two rounded sums. The negative-eta guard correctly rejected it.
+The user answered the exact five-path repair/test/synchronization and fresh-run
+question with:
+
+> 批准五路径修复、测试同步及新一轮R6-A（推荐）
+
+Approved edits: `mechanism/tls_rag_step5_route6_a800_v1.py` directly sums the
+actual complement through a private helper and changes only that analyze_unit
+calculation; `tests/test_tls_rag_step5_route6_v1.py` adds the observed empty-set,
+tiny-positive remainder and fixed-geometry partition regressions;
+`docs/TLS_RAG_STEP5_ROUTE6_PROTOCOL_V1.md` records numerical revision1 and the
+actual approval; this register and the machine register update only this consent
+and the four necessary approved SHA values. All levels/root metadata, old Tri,
+bridge guards/tolerances, seeds/grid/config, runner and historical bytes stay fixed.
+
+Full regression and reviewed source synchronization precede a new environment
+lock, independent GPU check and sample0 run in a fresh repair1 directory.
+The fresh R6-A has a separately approved3600s maximum and unchanged other
+resource caps. Old failed samples/lock/receipts remain distinct and immutable;
+no count pooling, automatic retry or later-stage approval follows.
