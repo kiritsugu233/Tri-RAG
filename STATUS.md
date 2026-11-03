@@ -1,5 +1,16 @@
 # Status
 
+**R6-S0 authorized implementation (2026-11-03).** Actual answer to exploration
+§55.7–55.8: “批准九路径、测试同步及一次S0（推荐）”. The six new files and narrow
+test/protection registration are implemented in the canonical Step5 checkout.
+Final full613 CPU/offline tests passed, zero skips (70.388s); new34 included.
+Only approved source paths changed. No S0 real labels/training/search have run.
+Next: commit/push/remote verification, clean Linux sync/newCPU
+and tiny actual CUDA, then one bounded scientific7200s/global9000s run.
+No automatic retry, test payload or third-stage Tri. See the frozen
+[protocol](docs/TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V1.md).
+
+
 Updated 2026-11-03. Maintained branch: `codex/tls-rag-step5-ann`.
 Canonical checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 

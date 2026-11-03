@@ -1,0 +1,344 @@
+{
+  "namespace": "tls-rag-route6-representation-screen-v1",
+  "stage": "S0",
+  "source": {
+    "path": "/root/autodl-fs/route6-B0-v1-9f963f9-20261103T0959Z/source/data.hdf5",
+    "sha256": "08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114",
+    "bytes": 13688159632,
+    "rows": 5233329,
+    "dimension": 640,
+    "metric": "normalized",
+    "revision": "a91cc76a3ab66b0353032e8427b9e34dcee22ded"
+  },
+  "roles_path": "/root/autodl-fs/route6-B0-v1-9f963f9-20261103T0959Z/roles.json",
+  "roles_sha256": "f1a83a8c9aa008e63b52ae29a55fb45f60d200ec2c4c228866f21ad0885b4e08",
+  "old_reference": "/root/autodl-tmp/route6-B0-v2-22ab36c-20261103T1216Z",
+  "old_index_sha256": "4f8493b4a95e61adc171e925da8ace813b4adfacc671fd4564e1871470d5f36d",
+  "query_dataset": "learn",
+  "queries": 128,
+  "discovery_queries": 64,
+  "k": 100,
+  "epsilon": 0.001,
+  "norm_tolerance": 1.52587890625e-05,
+  "budgets": [
+    100,
+    200,
+    400,
+    800,
+    1600,
+    3200,
+    6400
+  ],
+  "targets": [
+    0.95,
+    0.99
+  ],
+  "fit_rows": 65536,
+  "block": 8192,
+  "query_batch": 8,
+  "representations": [
+    {
+      "id": "raw640",
+      "family": "raw",
+      "kind": "raw",
+      "dim": 640,
+      "bytes": 2560,
+      "diagnostic": false
+    },
+    {
+      "id": "gaussian128",
+      "family": "gaussian",
+      "kind": "gaussian",
+      "dim": 128,
+      "bytes": 512,
+      "seed": 2026110353,
+      "retained": 0,
+      "diagnostic": false
+    },
+    {
+      "id": "gaussian256",
+      "family": "gaussian",
+      "kind": "gaussian",
+      "dim": 256,
+      "bytes": 1024,
+      "seed": 2026110353,
+      "retained": 0,
+      "diagnostic": false
+    },
+    {
+      "id": "pca128",
+      "family": "pca",
+      "kind": "pca",
+      "dim": 128,
+      "bytes": 512,
+      "seed": 2026110353,
+      "retained": 0,
+      "diagnostic": false
+    },
+    {
+      "id": "pca256",
+      "family": "pca",
+      "kind": "pca",
+      "dim": 256,
+      "bytes": 1024,
+      "seed": 2026110353,
+      "retained": 0,
+      "diagnostic": false
+    },
+    {
+      "id": "hybrid128",
+      "family": "hybrid",
+      "kind": "hybrid",
+      "dim": 128,
+      "bytes": 512,
+      "seed": 2026110353,
+      "retained": 32,
+      "diagnostic": false
+    },
+    {
+      "id": "hybrid256",
+      "family": "hybrid",
+      "kind": "hybrid",
+      "dim": 256,
+      "bytes": 1024,
+      "seed": 2026110353,
+      "retained": 64,
+      "diagnostic": false
+    },
+    {
+      "id": "pq32",
+      "family": "pq",
+      "kind": "raw",
+      "dim": 640,
+      "bytes": 32,
+      "pq_bytes": 32,
+      "seed": 2026110353,
+      "diagnostic": false
+    },
+    {
+      "id": "pq64",
+      "family": "pq",
+      "kind": "raw",
+      "dim": 640,
+      "bytes": 64,
+      "pq_bytes": 64,
+      "seed": 2026110353,
+      "diagnostic": false
+    },
+    {
+      "id": "opq32",
+      "family": "opq",
+      "kind": "opq",
+      "dim": 640,
+      "bytes": 32,
+      "pq_bytes": 32,
+      "seed": 2026110353,
+      "diagnostic": false
+    },
+    {
+      "id": "opq64",
+      "family": "opq",
+      "kind": "opq",
+      "dim": 640,
+      "bytes": 64,
+      "pq_bytes": 64,
+      "seed": 2026110353,
+      "diagnostic": false
+    },
+    {
+      "id": "pca_pq32",
+      "family": "pca_pq",
+      "kind": "pca",
+      "dim": 256,
+      "bytes": 32,
+      "pq_bytes": 32,
+      "seed": 2026110353,
+      "diagnostic": false
+    },
+    {
+      "id": "pca_pq64",
+      "family": "pca_pq",
+      "kind": "pca",
+      "dim": 256,
+      "bytes": 64,
+      "pq_bytes": 64,
+      "seed": 2026110353,
+      "diagnostic": false
+    },
+    {
+      "id": "gaussian_pq32",
+      "family": "gaussian_pq",
+      "kind": "gaussian",
+      "dim": 256,
+      "bytes": 32,
+      "pq_bytes": 32,
+      "seed": 2026110353,
+      "diagnostic": false
+    },
+    {
+      "id": "gaussian_pq64",
+      "family": "gaussian_pq",
+      "kind": "gaussian",
+      "dim": 256,
+      "bytes": 64,
+      "pq_bytes": 64,
+      "seed": 2026110353,
+      "diagnostic": false
+    },
+    {
+      "id": "hybrid_pq64",
+      "family": "hybrid_pq",
+      "kind": "hybrid",
+      "dim": 256,
+      "retained": 64,
+      "bytes": 64,
+      "pq_bytes": 64,
+      "seed": 2026110353,
+      "diagnostic": false
+    },
+    {
+      "id": "gaussian128_seed2",
+      "family": "gaussian",
+      "kind": "gaussian",
+      "dim": 128,
+      "bytes": 512,
+      "seed": 2026110354,
+      "retained": 0,
+      "diagnostic": true
+    },
+    {
+      "id": "gaussian256_seed2",
+      "family": "gaussian",
+      "kind": "gaussian",
+      "dim": 256,
+      "bytes": 1024,
+      "seed": 2026110354,
+      "retained": 0,
+      "diagnostic": true
+    },
+    {
+      "id": "hybrid128_seed2",
+      "family": "hybrid",
+      "kind": "hybrid",
+      "dim": 128,
+      "bytes": 512,
+      "seed": 2026110354,
+      "retained": 32,
+      "diagnostic": true
+    },
+    {
+      "id": "hybrid256_seed2",
+      "family": "hybrid",
+      "kind": "hybrid",
+      "dim": 256,
+      "bytes": 1024,
+      "seed": 2026110354,
+      "retained": 64,
+      "diagnostic": true
+    },
+    {
+      "id": "gaussian8_bytes",
+      "family": "gaussian",
+      "kind": "gaussian",
+      "dim": 8,
+      "bytes": 32,
+      "seed": 2026110353,
+      "diagnostic": false,
+      "byte_matched": true
+    },
+    {
+      "id": "gaussian16_bytes",
+      "family": "gaussian",
+      "kind": "gaussian",
+      "dim": 16,
+      "bytes": 64,
+      "seed": 2026110353,
+      "diagnostic": false,
+      "byte_matched": true
+    },
+    {
+      "id": "pca8_bytes",
+      "family": "pca",
+      "kind": "pca",
+      "dim": 8,
+      "bytes": 32,
+      "seed": 2026110353,
+      "diagnostic": false,
+      "byte_matched": true
+    },
+    {
+      "id": "pca16_bytes",
+      "family": "pca",
+      "kind": "pca",
+      "dim": 16,
+      "bytes": 64,
+      "seed": 2026110353,
+      "diagnostic": false,
+      "byte_matched": true
+    }
+  ],
+  "seeds": {
+    "fit": 2026110351,
+    "gaussian": 2026110353,
+    "stability": 2026110354,
+    "pq": 2026110355,
+    "coarse": 2026110357,
+    "schedule": 2026110359,
+    "sensitivity": 2026110361,
+    "opq_initial": 1234,
+    "hybrid_domain": 1
+  },
+  "training": {
+    "niter": 25,
+    "nredo": 1,
+    "opq_outer": 50,
+    "opq_first": 40,
+    "opq_later": 4
+  },
+  "ivf": {
+    "nlist": 1024,
+    "nprobes": [
+      16,
+      64,
+      256,
+      1024
+    ],
+    "max_codes": 0,
+    "max_indices": 7
+  },
+  "timing": {
+    "warmup": 2,
+    "repeats": 3,
+    "faiss_threads": 14,
+    "blas_threads": 1,
+    "sensitivity_queries": 16
+  },
+  "limits": {
+    "scientific_seconds": 7200,
+    "total_seconds": 9000,
+    "component_seconds": 1200,
+    "solver_seconds": 60,
+    "solver_total_seconds": 300,
+    "rss_bytes": 68719476736,
+    "gpu_bytes": 51539607552,
+    "artifact_bytes": 8589934592,
+    "disk_bytes": 12884901888,
+    "free_bytes": 17179869184,
+    "cpu_threads": 14
+  },
+  "dependencies": {
+    "numpy": "1.26.4",
+    "scipy": "1.13.0",
+    "h5py": "3.11.0",
+    "faiss-cpu": "1.8.0",
+    "torch": "2.8.0"
+  },
+  "closed_payloads": [
+    "test",
+    "neighbors",
+    "distances",
+    "avg_distances"
+  ],
+  "new_mc_samples": 0,
+  "tri_stage": false
+}

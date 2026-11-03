@@ -285,7 +285,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "15574dd737e94db79b315db440a8240fd2d216446caa73f49865bd38e330f4d6"
+      "sha256": "d77ebeeaff73b6d01cfe28c7639c42a5ba502aca52edf98785688a40dbf9cec2"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -1812,6 +1812,41 @@
       "path": "scripts/run_tls_rag_step5_route6_real_geometry_v2.py",
       "level": "L1",
       "reason": "User approved exploration §51 exact nine paths/tests/sync/one v2: Owned v2 GPU supervision; scientific semantics inherit L0"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_route6_representation_v1.py",
+      "level": "L0",
+      "reason": "User-approved §55 R6-S0: Stored metric/truth rows, sample Gaussian/PCA/PQ/hybrid and label-free full/IVF search",
+      "sha256": "7594b1a4da5f3561f598a8124f07b438b2c7aad79cbd6371c77269b55c07942b"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_route6_representation_screen_v1.py",
+      "level": "L0",
+      "reason": "User-approved §55 R6-S0: Frozen roles, quality transitions, full-cost selection and LP/MILP oracle lower bound",
+      "sha256": "fee0c3e29c64c12a07eee1b1223ab65bb1f73dade3a9ffda808d7c2a08563d17"
+    },
+    {
+      "path": "configs/tls_rag_step5_route6_representation_v1.json",
+      "level": "L0",
+      "reason": "User-approved §55 R6-S0: Frozen24 representations, source/roles/truth, seeds/training/backend and one S0 limits",
+      "sha256": "63aa78c693ca9a3e98c0e87c4c4c15cbe46c9e1706c0e786043c79e6f9f65070"
+    },
+    {
+      "path": "tests/test_tls_rag_step5_route6_representation_v1.py",
+      "level": "L0",
+      "reason": "User-approved §55 R6-S0: Independent CPU metric/representation/ADC/truth-role/cost/oracle/owned-resource regressions",
+      "sha256": "b9a91c955aa8fb5de0886a1fa325d1d09f188b46b152e8fed10b6177fe0b917e"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V1.md",
+      "level": "L0",
+      "reason": "User-approved §55 R6-S0: Frozen published-learn development metrics, representations, accounting and one-run contract",
+      "sha256": "c27a541174ef3287d4305a49da228cac99d9df5a4d1fc68b5265f2cb35f699f4"
+    },
+    {
+      "path": "scripts/run_tls_rag_step5_route6_representation_v1.py",
+      "level": "L1",
+      "reason": "User-approved §55 R6-S0: Stdlib-only timed parent, owned-worker resource supervision and closed SHA delivery; inherited science remains L0"
     }
   ],
   "approved_change_history": [

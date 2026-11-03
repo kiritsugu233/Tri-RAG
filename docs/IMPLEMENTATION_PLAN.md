@@ -261,3 +261,18 @@ git show 50defc35bc9f42f5b24d2dedf5f45a89e51257ad:docs/IMPLEMENTATION_PLAN.md
 
 The source-bound scientific contracts and append-only research journal remain
 at their existing local paths. This index does not replace those contracts.
+
+## R6-S0 actual approval and implementation (2026-11-03)
+
+- [x] Exact §55.7–55.8 consent: “批准九路径、测试同步及一次S0（推荐）”.
+- [x] Six new approved files, membership-only test change and six protection rows.
+- [x] New34 offline CPU regressions pass; existing failures preserved in ignored runs.
+- [x] Final full613 CPU regressions pass, zero skips,70.388s.
+- [ ] Reviewed canonical commit/push/remote verification.
+- [ ] Clean Linux synchronization, new CPU tests and actual tiny CUDA.
+- [ ] One S0 <=7200s science/9000s global, complete or explicitly unresolved closure.
+- [ ] Actual cost/quality/oracle analysis and verified local closed delivery.
+
+Use [the frozen protocol](TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V1.md).
+Existing source/128 development roles only, corresponding learn_neighbors rows
+newly authorized; official test/old closed roles/Tri stage remain closed.

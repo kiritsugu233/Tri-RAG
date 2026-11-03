@@ -6310,3 +6310,45 @@ oracle系数与费用余量，以及每族continue/stop/unresolved和限制。�
 275项保护通过，191项已有L0 SHA一致、注册表自身原有无自hash规则及文件字节未变；六个拟新增文件均不存在。
 纯文档准备没有重跑原579项，也不将它们称为S0通过。初次辅助审查脚本误假设注册表自带sha256，
 KeyError已保留到准备回执，随后按其原有git_review_no_self_hash声明和Git原字节核对；未修改守卫或登记。
+
+## 56 R6-S0 精确批准、实现与本地验收（2026-11-03）
+
+用户对第55.7–55.8节精确九路径/本地测试同步/一次节点S0的实际回答：
+
+> 批准九路径、测试同步及一次S0（推荐）
+
+该同意已经覆盖六项新文件、测试归类和保护登记，不重复请求。四L1交接文档记录实际进度。
+已在 canonical Step5 分支实现；旧科学源/测试/配置/协议/结果不改。281项登记，L0=197/L1=81/L2=3。
+新34项CPU离线测试通过（0.791秒）；完整旧+新套件进行中，不先称全套通过。
+首轮编辑的函数声明语法问题保留在new-tests-first.log；第二次有3个sandbox ps失败和1个
+单位圆PCA测试夹具断言失败，日志保留。修正新函数声明/夹具，并以实际已有授权执行ps进程检查；
+没有跳过、放宽旧断言、安装依赖或修改旧科学行为。新增实际OPQ/PQ编码、IVF自身参考测试也通过。
+
+具体实现补足：同一Gaussian维度前缀；hybrid用SeedSequence([主/稳定seed,1])分离残差随机流；
+发布learn距离阈值recall与严格ID分列；FP64参考/实际Faiss/Torch/自身IVF残差编码分层；
+只由discovery固定选择，check不挑新赢家。raw IVFFlat完整13.4GB浮点payload不序列化，
+保留coarse、list显式ID映射并从原来源/矩阵重建；其真实常驻内存仍计费。
+无预算达标的配置补M100/6400费用诊断，不冒称达标；额外seed仅质量、不参与计时筛选。
+本轮原learn_neighbors payload、实际训练和检索尚未在节点启动。
+
+冻结合同见[TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V1.md](TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V1.md)。
+准备日志为runs/route6-S0-preparation-20261103；完整本地验收后才提交同步、做Linux/tinyCUDA及唯一一次限额S0。
+
+最终费用复核后再次全套验收：**613项通过、0 skip、70.388秒**（原579+新34）。
+full-tests-final.log SHA256 `06ef5b6915c16c0fe4a9dcd9dc3aa6b367579623ee4d01fd72f3b95efb1ed9b6`。原191项L0科学SHA、注册表旧行/根元数据全保留，
+人类登记和journal原前缀完整；九路径+四L1交接文档内，无其他追踪修改。
+源角色SHA/加载、IVF写入、逻辑常驻布局与物理审计峰值分开；IVF生命周期剔除未部署的globalPQ/Flat构建费用。
+
+本地实际命令（同既有固定临时环境/native库；无安装）：
+
+```sh
+TRI_RAG_TEST_PYTHON=/private/tmp/route6-b0-local-env-20261103/bin/python \
+STEP5_ROUTE1_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/route1.dylib \
+STEP5_COMPARATORS_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/comparators_v2.dylib \
+STEP5_CONTINUATION_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v1.dylib \
+STEP5_CONTINUATION_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v2.dylib \
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 sh scripts/run_tests.sh
+```
+
+下一步是canonical提交/push/远端SHA核对、Linux干净ff-only同步/新34测试/tiny CUDA；
+通过后只启动已批准的一次S0。此段时点尚未在节点打开新真值、训练或检索。

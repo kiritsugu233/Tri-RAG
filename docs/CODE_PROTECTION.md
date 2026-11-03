@@ -631,3 +631,26 @@ run, compute1200s/total1800s/RSS4GiB/GPU40GiB/products1GiB. Reuse original
 source/128 roles without downloading/reselecting; no Gaussian MC/ANN/test.
 Only necessary human-register hash and six new rows are added. Old scientific
 entries, tests, hashes, APIs, artifacts and authorization boundaries stay intact.
+
+## Approved R6-S0 representation screen (2026-11-03)
+
+Actual user answer to exploration §55.7–55.8 exact nine-path/test/sync/one-run question:
+
+> 批准九路径、测试同步及一次S0（推荐）
+
+| New path | Level | Approved scope |
+| --- | --- | --- |
+| `mechanism/tls_rag_step5_route6_representation_v1.py` | L0 | Stored metric/truth rows, sample Gaussian/PCA/PQ/hybrid and label-free full/IVF search |
+| `mechanism/tls_rag_step5_route6_representation_screen_v1.py` | L0 | Frozen roles, quality transitions, full-cost selection and LP/MILP oracle lower bound |
+| `configs/tls_rag_step5_route6_representation_v1.json` | L0 | Frozen24 representations, source/roles/truth, seeds/training/backend and one S0 limits |
+| `tests/test_tls_rag_step5_route6_representation_v1.py` | L0 | Independent CPU metric/representation/ADC/truth-role/cost/oracle/owned-resource regressions |
+| `docs/TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V1.md` | L0 | Frozen published-learn development metrics, representations, accounting and one-run contract |
+| `scripts/run_tls_rag_step5_route6_representation_v1.py` | L1 | Stdlib-only timed parent, owned-worker resource supervision and closed SHA delivery; inherited science remains L0 |
+
+Only new test-module membership and these six new rows plus this register hash
+are changed. Old entries/root metadata/levels/scientific hashes remain fixed.
+Full local regression and reviewed GitHub/Linux sync precede tiny actual CUDA
+and one S0, scientific7200s/total9000s/RSS64GiB/GPU48GiB/artifacts8GiB/newdisk12GiB.
+Reuse complete source/original128 learn roles; open only corresponding published
+learn_neighbors rows. Official test stays closed; no new MC/Tri stage/install/
+automatic retry. Four L1 handoff documents record actual progress.
