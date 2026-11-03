@@ -8,13 +8,20 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
-**Active task: approved B0 v2 implementation and one bounded A800 audit (2026-11-03).**
+**Latest completed task: B0 v2 full128-query A800 geometry audit (2026-11-03).**
 Actual consent: “批准第51节九路径、保留并停止原轮、测试同步及一次v2”.
 Six new files plus narrow test/registry updates implement FP64 batch16 direct
-L2/IP with CPU overlap-cluster order repair. Original CPU run already ended
-naturally; preserve all of its outputs. Full CPU regression passed579/579, zero skips,68.788s;
-Linux/CUDA checks and the one v2 run remain pending. Reuse the complete source
-and exact original128 roles; no Gaussian MC/ANN/test payloads. See
+L2/IP with CPU overlap-cluster order repair. Full579 CPU tests, Linux16 and
+tiny actual CUDA passed. Scientific22ab36c was GitHub-verified/ff-only synced.
+The only v2 completed128/128 (64/64 roles),24/24 old CPU matches,789.925s compute;
+peak tree RSS3.085GiB/GPU27.168GiB. All279 closed products were SHA-verified on
+node and locally; original57 CPU products remain unchanged. Full source/old
+prefix remain on server, GPU compute exited, node stays on. No new source
+download/Gaussian MC/ANN/test payload. General residual dependence persists:
+G-B rho .470848, residual rho .295713; local factor variance accuracy does not
+establish omission-tail accuracy or RAG headroom. Read
+[complete results](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#54-b0-v2完整完成封存与一般相关结果2026-11-03),
+[local data/figures](runs/route6-B0-preparation-20261103/v2-analysis/analysis.md),
 [the v2 protocol](docs/TLS_RAG_STEP5_ROUTE6_REAL_GEOMETRY_PROTOCOL_V2.md) and
 [section53](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#53-b0-v2实际批准与实现验收2026-11-03).
 

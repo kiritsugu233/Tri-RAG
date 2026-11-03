@@ -18,7 +18,8 @@ Unchecked historical items are not execution authorization.
 - [x] 57项关闭输出/索引、完整source/旧prefix独立SHA及本机回收逐SHA通过；24条代数/分层/ID/费用与部分CSV/图表说明完成。
 - [x] 第51节v2九路径/测试同步/一次GPU新轮得到精确批准；六个新文件与窄幅登记/测试归类完成。
 - [x] v2完整579/579 CPU验收通过，零跳过，68.788秒；保护275项通过。
-- [ ] v2提交同步、Linux CPU/tiny CUDA和唯一一次限额实测。完整128条/进入check尚未完成，不以子集代替。
+- [x] v2科学22ab36c提交/推送/GitHub核对、Linux ff-only/16项CPU/tiny CUDA通过，唯一限额轮完成128/128、64/64及24/24旧CPU参考。
+- [x] compute789.925秒、树RSS3.085GiB/GPU27.168GiB；279项节点及本机关闭核验、旧57项不变、完整描述性CSV/PNG/JSON和第54节收尾完成。
 - [ ] 后续完整结果及模型/宏观风险检验依新范围推进；当前几何谱/方差误差不代表遗漏尾或真实RAG收益。
 
 ## 前次任务：一般相关真实几何审计与算法计划（非冻结）

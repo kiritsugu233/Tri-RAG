@@ -3,7 +3,18 @@
 Updated 2026-11-03. Maintained branch: `codex/tls-rag-step5-ann`.
 Canonical checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 
-## 当前任务：第51节B0 v2已获准、实现与本机验收中（2026-11-03）
+## 当前完成：B0 v2完整128条，全部产物关闭核验（2026-11-03）
+
+- 科学22ab36c已推送/远端独立核对、Linux干净ff-only同步；完整579项（0跳过/68.788秒）、Linux16项（1.063秒）和真实tiny CUDA均通过，保护275项通过。
+- 唯一v2 complete/returncode0：128/128、64 discovery+64 check、旧CPU24/24匹配；compute789.925秒/监督792.544秒，峰值树RSS3.085GiB、GPU27.168GiB，无限额或监控失败。
+- 节点及本机279项逐大小/SHA通过，运行指纹独立复算一致；旧轮57项再次核验不变。完整源/原部分文件/原CPU失败保持。GPU计算进程退出，节点保持开启。
+- 已回收305,465,634字节结果包（SHA feaab4ff...4031d27a），关闭索引SHA 4f8493b4...70d5f36d；本机`runs/route6-B0-preparation-20261103/v2-verified`保存完整逐query矩阵/记录。
+- 全128条G-B rho均值.470848、残差rho .295713，query残差均值范围.227351–.382603；discovery/check为.296005/.295420。不能默认独立或统一等相关。
+- 局部谱rank1/16的“每query距离差方差相对误差p95”中位数13.27%/5.34%，最大67.75%/6.54%；不是rank variance、遗漏概率误差或最优因子分析结论。
+- 128条FP64 IP/L2 top100一致、零距离0；已核验选点/近序簇差最大1.9984e-15/2.6645e-15，旧CPU几何差0，roundoff_certified=false。官方FP32 truth保持关闭。
+- [第54节](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#54-b0-v2完整完成封存与一般相关结果2026-11-03)、[完整分析/图表](runs/route6-B0-preparation-20261103/v2-analysis/analysis.md)及CSV/JSON给出数据。宏观遗漏尾、线上付费联合信息、静态选维/轻量公式/真实RAG收益仍未验证；未启动下一阶段。
+
+## 实现检查点：第51节B0 v2获准与本机验收（2026-11-03）
 
 - 用户实际答复：“批准第51节九路径、保留并停止原轮、测试同步及一次v2”；原CPU轮已自然退出，不需要再终止。旧轮全部源/结果/失败保持。
 - 六个新v2文件及测试归类/保护登记完成；保护275项（L0=192/L1=80/L2=3），旧科学文件和旧登记不变，仅追加新六项/人类登记SHA。

@@ -5989,3 +5989,113 @@ A800只读复核旧科学9f963f9、跟踪干净、单卡81153MiB空闲、fast di
 命令与第50节相同独立临时venv/四个原native库，仅日志改为`v2-full-tests.log`。
 真实ps拥有子进程终止、GPU监控替身失败/上限、关闭索引、固定旧参考/禁读payload均通过。
 未在本机安装Torch/执行CUDA或新科学数据计算。275项保护通过；旧269项除批准人类登记SHA外逐项相同。
+
+### 53.2 节点验收与唯一v2启动
+
+科学提交22ab36ca418c93340bbc9cbb6689853b6c85b543已推送并独立核对GitHub HEAD；
+节点从9f963f9干净fetch/ff-only到该提交。275项保护和Linux新增16项CPU测试通过（1.063秒）。
+实际tiny CUDA为9点/3query（零/重复/near-tie/partial batch），完整L2/IP顺序均与CPU一致，
+最大核验L2误差0；这不是一般kernel的形式化证明。所有16份source_map与本机逐SHA相符。
+
+依赖NumPy1.26.4/SciPy1.13.0/h5py3.11.0/Torch2.8.0+cu128复用；
+物理GPU为A80080GB PCIe，UUID GPU-ec76e707-ccb3-6692-e511-3827dba1fd55，driver580.82.07。
+未安装/升级或下载源数据。
+
+```text
+run: /root/autodl-tmp/route6-B0-v2-22ab36c-20261103T1216Z
+validation: /root/autodl-tmp/route6-B0-v2-validation-22ab36c-20261103T1214Z
+actual launch: 2026-11-03T12:11:38.721233+00:00
+supervisor PID: 1520; owned worker PID: 1545
+```
+
+目录时间是预设标签，实际启动以上述launch.json为准。只启动本次一轮；
+原完整source/旧CPU轮只读，128固定query不重新选择。仍受1200秒计算、1800秒总时长、
+4GiB RSS/40GiB GPU/1GiB产物限制。初次状态为校验中、0条完成，不把启动当成功。
+
+## 54 B0 v2完整完成、封存与一般相关结果（2026-11-03）
+
+### 54.1 冻结验收与真实费用
+
+第51节获准的唯一v2已完成，未自动重跑/改样本/扩额。科学提交22ab36c；
+执行路径和实际启动时间见53.2。`result.json` complete：128/128、64 discovery/64 check、
+旧CPU24/24参考匹配。末次完整source SHA通过，roles SHA与原件一致。
+`execution.json` complete、returncode0，limit/monitor_error均为空。
+
+| 项 | 实测 |
+| --- | ---: |
+| 计算墙钟（含输入/末次SHA等） | 789.925464秒 |
+| worker监督墙钟 | 792.543946秒 |
+| 峰值进程树RSS | 3,312,443,392字节，3.084953GiB |
+| 实测GPU进程显存峰值 | 29,171,384,320字节，27.167969GiB |
+| 设备语料准备（一次） | 32.730061秒 |
+| 8批距离计算/回传合计 | 18.534444秒 |
+| 其中kernel / D2H | 10.541731 /7.887205秒 |
+| 8批完整墙钟合计 | 420.010834秒 |
+| query排序/CPU复核合计 | 342.459881秒 |
+| query局部后处理合计 | 55.944754秒 |
+| 监督末次receipt前产物大小 | 337,648,635字节 |
+
+共享批费用只计一次，逐query字段标明摊销。整批和全生命周期还包含参考比对/JSON存储、
+SHA/旧输入核验/图表等，不把剩余时间全标为GPU计算或FUSE时间；本轮未单独计出每次SHA秒数。
+这些是离线审计费用，不是Gaussian+Tri线上费用或ANN速度优势。
+全部在compute1200/total1800/RSS4GiB/GPU40GiB/产物1GiB内。
+实际监督总秒数不包括GitHub同步、测试、打包/回传/报告；这些不能冒充零成本。
+
+### 54.2 精度与产物完整性
+
+- 128条FP64 IP/L2 top100一致，零距离query数0；官方FP32 truth/邻居及test payload未打开。
+- 旧24条所有G/B/F选点ID、全库rank和分层一致，U/Gram/D/loading/残差Gram最大差0；不另跑CPU science。
+- 全128条选点CPU/GPU核验差最大1.998401e-15，近序簇差最大2.664535e-15，均小于固定E；最大簇3点。`roundoff_certified=false`保持。
+- 节点279项关闭文件大小/SHA通过，旧轮57项再次逐SHA不变；GPU计算进程列表在结束后为空，未关节点。
+- 本机回收并独立验证完整archive/279项/16份source_map/配置/roles；独立复算运行指纹一致。128条均312点、完整G100、选点无重复，所有均值从关闭records再算相符。
+- 本机保存几何的内部核验：Gram/U最大1.998401e-15、D/U8.881784e-16、G−aaᵀ−H2.442491e-15，联合纳入率再算差0。这是内部代数一致性，不是额外完整truth或宏观概率验证。
+
+```text
+fingerprint: f4703cacf2fa245705d4fad7025c47ea4801969a9f703756e1fba39ac130d914
+delivery_index SHA256: 4f8493b4a95e61adc171e925da8ace813b4adfacc671fd4564e1871470d5f36d
+archive bytes: 305465634
+archive SHA256: feaab4ff3c19ce5aae1f3ade25440ebacdf032ee7a6df27a5dcdb5034031d27a
+local raw: runs/route6-B0-preparation-20261103/v2-verified
+local receipt: runs/route6-B0-preparation-20261103/v2-local-delivery-audit.json
+local analysis: runs/route6-B0-preparation-20261103/v2-analysis/analysis.md
+```
+
+完整来源/原prefix/旧CPU失败均保留服务器。新原始输出约338MB，打包约305MB，两者合计仍小于1GiB；
+结果包回传较慢后完整到达，本机逐SHA完成，不仅回收aggregate。
+纯报告首个脚本误列尚不存在的rank32/64等，StopIteration且未写summary；随后只汇总冻结的实际rank1/2/4/8/16，
+未增加因子计算或运行。正式科学result/执行状态不受影响；报告聚合0.257秒，PNG/SVG已本机目视检查。
+
+### 54.3 完整128条几何数据与含义
+
+下表query等权，query内使用原纳入率；F包含边界集外所有补集层及近处空隙，不是只选最远点。
+G100/B148/各人口和种子保持。rho为位移夹角余弦，residual rho为去query方向后的有符号余弦。
+Delta=|Di−Dj|/(Di+Dj)；rho²均值是共享Gaussian平方距离误差相关，不是翻转指标相关。
+
+| 点对 | rho | rho² | residual rho | Delta |
+| --- | ---: | ---: | ---: | ---: |
+| G-G | .478868 | .236369 | .315552 | .019470 |
+| G-B | .470848 | .226924 | .295713 | .042747 |
+| G-F | .441896 | .196759 | .213157 | .204953 |
+| B-B | .476500 | .231865 | .292972 | .016392 |
+| B-F | .458333 | .211468 | .221509 | .163760 |
+| F-F | .532145 | .284833 | .268246 | .032549 |
+
+G-B残差rho的query均值范围.227351–.382603；同一query内原rho的5%–95%区间宽度中位数.206468。
+discovery/check残差均值.296005/.295420，方向一致，但仍是开发几何检查，不是独立认证。
+query方向的精确共同分量有解释作用，剩余相关仍需保留；不能直接套条件独立或统一等相关。
+该分解不足不等于排除所有一因子模型。边界margin较小支持边界聚焦，远端人口巨大，
+本轮没有测投影尾，不能由margin均值推出远端贡献可忽略。
+
+局部谱rank加对角近似的**每query G-B距离差方差相对误差p95**：
+
+| rank | 跨query中位数 | 跨query最大值 |
+| --- | ---: | ---: |
+| 1 | 13.2703% | 67.7537% |
+| 2 | 9.9082% | 17.9856% |
+| 4 | 8.1468% | 13.4611% |
+| 8 | 6.6573% | 9.4819% |
+| 16 | 5.3419% | 6.5437% |
+
+这反映该冻结局部二阶近似随rank改善，尚不是最优因子分析、全库谱、rank variance、翻转率或遗漏尾精度。
+一般相关宏观尾的计算精度/费用，以及线上付得起的联合摘要仍是下一研究问题。
+静态选维、轻量标量公式和真实RAG收益尚未被验证；本轮未启动下一阶段。
