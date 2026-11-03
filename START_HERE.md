@@ -8,7 +8,25 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
-**Latest checkpoint: first R6-A A800 run failed; scoped numerical repair approved
+**Latest checkpoint: R6-A numerical revision1 completed on A800 (2026-11-03).**
+Scientific source `bdd6cc8`; local full516/516 and Linux35 tests pass, with no skips.
+After a fresh lock/GPU check, all60 units/120 paths completed in350.464s:
+7,864,320 shared-projection samples,14,472 catalogue events,509 artifact files.
+Independent mask/rank/count/CP and source/SHA audits passed; no numerical gray
+bits, marginal/omission anomaly candidates or S2 input warnings were observed.
+Read [section45 results and limitations](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#45-r6-a数值修订1完整a800结果与收尾2026-11-03).
+At risk0.01/0.001, best S1 bounds pass28/6 of252 cells; S2 with extra offline
+joint-CP inputs passes37/14. All gains are single-target. In108 macro cells,
+independent Gram CP passes16/10 but every bound passes0: the macro aggregation
+gap remains. This is finite diagnostic completion, not RAG headroom or a formal
+all-domain theorem. Full raw bins remain on the server; all metadata/indexes
+were recovered and verified locally. The original failed run/lock and interrupted
+copy remain intact. Computation exited; the node was not shut down.
+R6-A is closed for this fixed design; do not retune/rerun or begin R6-B/C/D/VIBE/
+old A0/routes4/5 automatically. A new application gap/scope or macro theory
+proposal is required. The checkpoint paragraphs below retain the actual history.
+
+**Previous checkpoint: first R6-A A800 run failed; scoped numerical repair approved
 (2026-11-03).** The user opened the node. Existing dependencies were reused,
 the clean Linux checkout was synchronized through GitHub/ff-only to `dde6720`,
 32 Linux tests and an independent tiny CUDA check passed. The first fixed run

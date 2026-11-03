@@ -4,7 +4,7 @@ Updated 2026-11-03. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
-## 当前任务：方案6 R6-A数值修复获批，516项通过，准备新轮
+## 当前任务：方案6 R6-A修订1测量与核对完成，宏观界仍有缺口
 
 - [x] 按用户要求在[探索日志第42节](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#42-方案6边界聚焦的候选遗漏界离线静态选维与轻量风险计算2026-11-02)追加方案6，旧章节保持。
 - [x] 写明宏观计数桥、边界残差、条件/联合信息、标量化误差和静态选型目标及先行限制。
@@ -20,8 +20,11 @@ Unchecked historical items are not execution authorization.
 - [x] [第44节](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#44-r6-a-a800首轮失败与数值修复提案待批准2026-11-03)列精确五路径数值修复/回归/来源影响及新目录重跑申请；受保护源码未改。
 - [x] 实际答复“批准五路径修复、测试同步及新一轮R6-A（推荐）”；直接求补集和，原负值拒绝/配置/阈值保持。
 - [x] 新35项、本机完整516/516、0跳过、72.108秒通过；首轮完整部分记录独立核对，失败不抹除。
-- [ ] 新修订提交推送/服务器ff-only，重新设备锁与GPU检查，再按单独批准60分钟在repair1新目录从样本0重跑。
-- [ ] 完成全矩阵、逐样本回放/同时区间及异常审查；首轮失败不视为完成，后续阶段不自动恢复。
+- [x] 新修订bdd6cc8提交推送/服务器ff-only，Linux35项、新锁与GPU检查通过；按单独批准在repair1新目录从样本0重跑。
+- [x] 全60单元/120路径、7,864,320个Pi、14,472事件完成（350.464秒）；509文件源/SHA及全部mask/计数/CP独立核对通过。
+- [x] 如实记录S2额外信息只在单目标新增9/8项；宏观108项中Gram可判低风险16/10而所有上界合格0；见[第45节](TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#45-r6-a数值修订1完整a800结果与收尾2026-11-03)。
+- [x] 首轮失败与中断复制保留；全量raw留服务器、全部元数据/索引本机核验；计算退出，节点不关机。
+- [ ] 后续R6-B新真实应用gap或宏观理论改进须另提精确范围；有限测量完成不作为自动恢复/扩大设计授权。
 - [ ] R6-A数学信息门→R6-B新真实场景表示/成本门→R6-C静态顾问增量→R6-D轻量化；后阶段不自动获批。
 
 当前交付为R6-A代码与本地验收；下列旧未勾选事项是保留历史，不是自动待办或恢复授权。
