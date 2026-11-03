@@ -8,7 +8,19 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
-**Latest task: R6-B0 approved and implemented; local validation complete (2026-11-03).**
+**Latest task: R6-B0 full source verified; CPU audit in progress, batch completion proposed (2026-11-03).**
+Scientific commit9f963f9 is on GitHub and the clean node. Local563 tests and
+Linux26 tests pass. The only authorized B0 started at09:57:54Z; full source
+size/SHA passed after1267.661s, with the historical partial unchanged.
+Actual train is5,233,329x640; learn96,845x640; test payload stays closed.
+Read [section51](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#51-b0首轮完整来源取得cpu吞吐问题与批量a800完成提案2026-11-03待批准).
+The per-query CPU scan takes42–56s, incompatible with128 queries in1200s.
+This is an audit implementation throughput defect, not Gaussian quality evidence.
+At10:28:40Z11 queries were complete; the original limits remain active.
+A separate nine-path v2 FP64 A800 batch/CPU near-order proposal needs explicit
+consent for GPU use and another run. No v2 code/GPU has run at this checkpoint.
+
+**Implementation checkpoint: R6-B0 local validation (2026-11-03).**
 The user answered section49's exact question: “批准第49节九路径、环境准备、测试同步及一次B0”.
 Six new files and narrow test/protection updates implement complete-source,
 learn-only, general real-geometry auditing. Full563 CPU/offline tests pass with

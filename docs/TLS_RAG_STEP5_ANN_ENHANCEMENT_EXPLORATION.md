@@ -5775,3 +5775,104 @@ browser本地file协议不被允许，未通过其他浏览器/本地HTTP绕过�
 
 本节是实现/本地验收检查点，不是节点结果。下一项是提交推送及GitHub HEAD核对、Linux干净ff同步、
 新增26项回归/环境预检后，按第49节预算在新目录执行唯一一次B0；完成/失败及实际来源另行记录。
+
+## 51 B0首轮完整来源取得、CPU吞吐问题与批量A800完成提案（2026-11-03，待批准）
+
+### 51.1 已发生的来源与执行事实
+
+科学提交`9f963f93b6e2d765f1547dc4809acbaa9bdcab47`已推送/GitHub HEAD核对，
+Linux从029b026正常fetch/ff-only同步，269项保护/新增26项CPU测试通过（unittest1.344秒，进程墙钟6.678秒），
+环境预检一致，无服务器安装。唯一一次B0于2026-11-03T09:57:54.531680Z启动：
+
+```text
+run: /root/autodl-fs/route6-B0-v1-9f963f9-20261103T0959Z
+validation: /root/autodl-fs/route6-B0-validation-9f963f9-20261103T0957Z
+supervisor PID: 1761
+```
+
+SSH复用会话中途结束后重新认证连接；未重启任务。原轮有独立节点监督。
+完整来源在1267.660950秒准备内取得并校验：13,688,159,632字节、SHA与第49节一致。
+固定官方HF请求连接被重置，转既定固定mirror，新增正文2,984,295,824字节，未超过4GiB。
+原部分文件保持10,703,863,808字节，完整prefix SHA为
+`61e1fbe943da487141237ffd98c4eb96eb8dda7eafa58a6699c188a03be8f0a1`。
+新完整来源实际解析路径为
+`/autodl-fs/data/route6-B0-v1-9f963f9-20261103T0959Z/source/data.hdf5`。
+这次不再是完整性未决的旧前缀；完整来源可留服务器供后续授权工作只读复用。
+
+实际HDF5元数据确认train float32[5233329,640]、learn float32[96845,640]、test float32[1000,640]，
+neighbors100列，原生distance=normalized。仅train/learn payload打开；test和邻居/evidence标签保持关闭。
+固定128条开发角色已生成，`roles.json`34,026字节、SHA：
+
+```text
+f1a83a8c9aa008e63b52ae29a55fb45f60d200ec2c4c228866f21ad0885b4e08
+```
+
+角色仍为64discovery/64check，整个已检查learn池不再作为未来独立角色。
+来源/角色/费用只读证据存本机`runs/route6-B0-preparation-20261103/batch_proposal_inputs.json`；
+节点关闭的preflight/测试/launch回执已回收并逐source_map核对本机。
+
+### 51.2 问题是本轮审计实现的吞吐，不能说成Gaussian质量失败
+
+10:26:53Z已完成9条；10:28:40Z完成11条，均为当前冻结query顺序的前部开发记录。
+前三条每query52.59/55.88/52.98秒：读取20.30–21.68秒、距离计算29.89–32.03秒、
+全L2/IP排序1.63–1.65秒、局部Gram约0.10秒。后续有42秒级，仍不足以在1200秒内完成128条。
+按当前实现吞吐估计需要约90分钟以上，不是硬件/算法的不可能下界。
+
+我在第49节落地时选择逐query完整扫描，把全库读取、FP64转换、范数检查和内存遍历重复128遍。
+这是本轮实现需要改正的工程问题；FUSE存储和单线程路径使它更明显，但不能只归咎于数据或Tri计算。
+不将其作为Gaussian表示/宏观风险/真实RAG费用结论。原轮仍受既定时限，没有改阈值、种子、样本或资源。
+完成子集不是预定128条的完整结果，也不用于选择更有利的查询。
+
+### 51.3 拟改为新v2，保留旧轮及其全部行为
+
+原v1/协议/输出保持，不改动正在运行的source_map。新增v2命名空间，
+先待原轮停止（获批可提前停止其拥有worker并记录operator_stop；否则原限额自然停止），
+再实施/登记v2。原轮的部分结果与真实退出状态不改写为通过。
+
+v2只读复用已完整校验来源及上述roles SHA，**不重新下载、复制或编码**，不重新抽query。
+在A800一次分块读取、范数核验及转入FP64全语料设备张量；输入约26.79GB设备字节。
+每批16个query、corpus block8192，直接计算FP64 `(x-q)^2`并求和；不改用投影或ANN。
+IP另用FP64计算。CPU每批只保存16×N的L2/IP工作数组，处理后释放，不保存全128×N矩阵。
+单张A800/GPU总预算40GiB、进程树RSS4GiB；全部读取、设备准备、传输/同步、排序、精排、几何和存储计费。
+没有Gaussian矩阵、没有投影MC、没有线上预算模型或静态选维。
+
+GPU/CPU规约顺序可能有FP64末位差异，不能只因都叫精确搜索就忽略：
+
+- 冻结绝对差包络E=2^-36，同时用于已归一化float32来源的FP64 L2/IP诊断；不根据本轮risk结果拟合E。
+  在d640、存储范数误差≤2^-16、FP32精确转FP64、IEEE双精度算术/无溢出下，
+  直接减/乘/规约与CPU参考的标准gamma_(d+O(1))误差和远小于该保守包络。
+  协议给出该操作计数推导及适用条件；库/kernel事实仍以冻结环境、tiny设备检查和roundoff_uncertified报告限制，
+  不声称完整底层浮点实现已获形式化认证。
+- 将GPU近似距离排序，相邻间隔≤2E的点连成所有可能跨序簇；CPU对这些簇用原FP32值精确转FP64后直接差分重算，
+  簇内按CPU值/稳定ID重排。不同簇的区间分离用于保留次序；同值ties仍按稳定ID。
+  保存包络、簇/复算点数、费用及异常；不静默忽略近ties，不删重复点。
+- 任一数值/精度状态不符、边界复核失败或资源不够则停止，不增E或换成近似结果。
+  对旧轮已完成查询，另核对完整G/B/F选取ID/rank与局部Gram/原始D；不借此拟合模型或选择query。
+
+旧有Gram/分层/角色数学复用v1已冻结纯函数，原函数不改。新批处理和数值包络属于新科学合同，
+不能在L1 wrapper里替换旧科学实现，也不能用旧批准自动增加一次运行/GPU使用。
+
+### 51.4 精确九路径、资源、影响及验收
+
+| 路径 | 拟实施内容 |
+| --- | --- |
+| `mechanism/tls_rag_step5_route6_real_geometry_v2.py` | 新L0；FP64设备语料准备/批量直差分、CPU跨序簇参考修复、稳定完整排序与费用 |
+| `mechanism/tls_rag_step5_route6_real_audit_v2.py` | 新L0；只读完整来源/固定旧roles、逐批逐query输出、旧CPU选点对照和原数学的显式复用 |
+| `configs/tls_rag_step5_route6_real_geometry_v2.json` | 新L0；新namespace/backend/E/batch/输入roles绑定、GPU40GiB及原RSS/科学参数不变 |
+| `tests/test_tls_rag_step5_route6_real_geometry_v2.py` | 新L0；CPU/offline包络/簇/near-tie/重复点反例、批次顺序/角色/源hash/完整关闭索引/真实监督回归 |
+| `scripts/run_tls_rag_step5_route6_real_geometry_v2.py` | 新L1、科学语义继承L0；单GPU环境/精度/空闲锁、拥有worker限额、GPU/主机费用及完整关闭产物索引 |
+| `docs/TLS_RAG_STEP5_ROUTE6_REAL_GEOMETRY_PROTOCOL_V2.md` | 新L0；FP64包络假设/推导与未认证限制、只读来源/角色、v1对照与一次GPU完成范围 |
+| `scripts/run_tests.sh` | 仅加入v2模块归类，旧测试不改/不跳过 |
+| `docs/CODE_PROTECTION.md` | 仅新增6行及引用实际新批准，不改旧批准和科学行为 |
+| `docs/code_protection.json` | 仅新增6行与必要人类登记SHA，不重写v1/旧科学hash |
+
+保持k100、312采样点/全部人口、seed、128固定query与64/64角色、源SHA和预处理不变。
+新指纹加入v2/批尺寸/backend/E/Torch2.8.0+cu128/设备UUID/CUDA精度状态；无旧cache迁移。
+正式cert/test或evidence payload仍不打开。v1科学提交与旧未完成状态保持，v2不能冒称新独立评价。
+
+新增/完整CPU离线回归和保护、GitHub/干净Linux同步后，先进行一次tiny真实CUDA与CPU参考检查，
+包括零/重复/near-tie、批尾、source指纹和顺序；通过才启动**一轮**v2：
+compute至多1200秒、总1800秒、RSS4GiB、GPU40GiB、产物1GiB、无新网络数据。
+复用原环境已有Torch2.8.0+cu128，不安装/升级；设备忙、dtype/环境不符或可用显存不足则不启动。
+原v1已有多少CPU参考就报告多少，不扩跑旧query来制造额外一致性样本。
+若v2也未完成，保留未决/失败，不自动增额。当前尚未写v2路径或调用GPU，待新的精确批准。
