@@ -8,7 +8,20 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
-**Latest task: general-correlation real-geometry plan (2026-11-03).**
+**Latest task: R6-B0 read-only preparation completed; exact implementation scope proposed (2026-11-03).**
+The user said to start and confirmed the SSH endpoint. Node access now works:
+A80080GB idle,14 CPU quota,120GiB RAM; retained partial is10,703,863,808 bytes.
+The complete frozen source must be13,688,159,632 bytes with its published SHA.
+The retained HDF5 environment is usable without a server install. Read
+[section49's nine-path proposal](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#49-r6-b0只读准备实际来源与精确九路径提案2026-11-03).
+Official default k100 requires a320-point cap (312 planned), rather than the
+earlier256. Proposed128 development queries come only from `learn`; `test`
+payloads stay closed. Lost original text-ID mapping prevents a semantic
+independence claim. Native inner-product and stored-vector L2 orders must be
+audited separately. No source resume, query sampling or new scientific code has
+run. General start consent permits preparation; exact new L0 scope is pending.
+
+**Previous plan: general-correlation real geometry (2026-11-03).**
 The user requires general dependence under one shared Gaussian matrix. Independent
 and equicorrelated cases remain controls; future models must be justified by real
 query displacement angles, distance margins and signed Gram structure. Read

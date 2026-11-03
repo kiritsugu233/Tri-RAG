@@ -5533,3 +5533,200 @@ Tri边际用于离线解释哪些距离/角度区域重要；若计算则记录�
 下一项具体准备是完整数据源/新query身份与存量状态核验，然后给出实际N/d/k、
 128条/256点是否可负担、时间/内存/产物限额，以及新增科学模块/config/test/runner/协议的确切L0路径。
 当前不借旧九路径M0批准执行新阶段；本轮只交计划并同步L1研究记录。
+
+## 49 R6-B0只读准备、实际来源与精确九路径提案（2026-11-03）
+
+### 49.1 本轮实际做了什么及授权边界
+
+用户在第48节计划之后要求“可以直接开始吧”，本轮开始只读准备。
+AGENTS.md第37–47行要求新L0路径及用途先明确批准；泛化开始指令不替代精确范围批准。
+本节是可审阅的非冻结实施提案，不是自制批准记录；尚未新增科学模块/config/test/协议。
+
+核验目录`runs/route6-B0-preparation-20261103`：
+
+- `preparation.json`核对旧公开来源的8份源码/指针快照：全部大小/SHA一致。
+  回执SHA256为`81903139387e1eeded88b17e708d657ad63754c35928f5a16837686e8f6f4a3c`。
+- 前两次SSH在认证前关闭；用户确认原地址后第三次成功。未据此前失败推断服务器关闭。
+  `node_inventory.json`保存实际资源、依赖、文件及Git只读回执，未含凭证。
+- A80080GB PCIe，观察时0MiB/0%利用率；cgroup v1 CPU配额1400000/100000=14核，
+  内存上限128849018880字节=120GiB。`autodl-fs`剩余183482482688字节，
+  `autodl-tmp`剩余36392472576字节；这些是观察时的资源，不保证执行时仍空闲。
+- Linux规范checkout干净、Step5分支，HEAD029b02682606450a80bf19387cc2e0a4b5da1bb6；
+  本轮尚未修改或同步节点仓库。服务器主M0环境无h5py；旧独立HDF5环境可直接复用：
+  `/root/autodl-fs/gaussian-benchmark-space-v1/env/bin/python`，Python3.12.3、NumPy1.26.4、
+  SciPy1.13.0、h5py3.11.0、FAISS1.8.0、sklearn1.9.1。
+
+未读取真实query向量、官方test/旧cert/test标签，未续传、编码、采样、投影或建索引。
+旧部分文件与失败记录保持；节点未关闭。
+
+### 49.2 来源、默认k和不能省略的限制
+
+继续以现有HotpotQA–Harrier完整发布文件为唯一候选，避免换成方便的小前缀。
+公开源码固定`vector-index-bench/vibe@7ac76c1f8320a411ce7c9cb3791bdd7f2349b30c`；
+数据revision固定`a91cc76a3ab66b0353032e8427b9e34dcee22ded`，
+文件`hotpotqa-harrier-640-normalized.hdf5`，预期13,688,159,632字节，完整SHA256：
+
+```text
+08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114
+```
+
+[官方README](https://github.com/vector-index-bench/vibe)列N=5,233,329、d640，默认count100；
+冻结的`datasets.py`中`write_output(count=100)`产生100邻居，`hotpotqa`选择外部queries，
+`text_embedding_dataset`从query集合分1000条test、其余learn。以上是发布信息/生成逻辑，
+**实际HDF5形状、属性、learn可用组数尚未验证**；运行时必须核验，不能把推定写成实测。
+
+三个具体问题必须进入新合同，不能只包装旧M0：
+
+1. 默认k100与旧256点提案不相容。完整G100+B148+补集64共312点，新上限320；
+   不静默改成top10或少保留GT。预算边界只用于几何取点，尚未选择投影维度或线上M。
+2. `normalized`官方FaissFlat使用IP，距离是clip(1-dot,0,2)；Gaussian律对应存储向量位移的L2。
+   即使文件曾归一化，FP32行范数未必严格等于1，近ties可能使两种排序不同。
+   保存官方原生排序、独立FP64直接差分L2排序及其top100/边界差异；不覆盖官方truth，不再次归一化文件来消除差异。
+   逐行有限性/范数检查须先通过，允许的已归一化存储范数误差上限提议2^-16；超出即停止重提。
+   native IP和L2有差异时如实标注，B0只作L2几何诊断，不宣称已复现官方召回。
+3. 生成器对文本`list(set(documents))`后未将原文ID写入已见的输出格式。
+   不能按另一次加载顺序重建原Hotpot ID，不能凭此映射evidence或声称语义级独立。
+   允许明确的`完整文件SHA/数据集键/行号`绑定稳定字符串ID与显式ID-map。
+   首轮仅开发诊断；未来证据/认证角色须另解决原始身份与语义组映射。
+
+### 49.3 一次数据准备及新开发角色
+
+当前保留文件：
+`/root/autodl-fs/gaussian-benchmark-space-v1/source-mirror-20261102/data.hdf5.partial`，
+实际10,703,863,808字节，与旧回执相符，尚无完整SHA。
+
+拟在新的`route6-B0-v1-<source-commit>-<timestamp>`目录复制其前缀，记录原件大小/散列，
+只向新文件请求剩余2,984,295,824字节，保留旧部分文件/失败回执原样。
+请求固定revision的官方HF地址；允许原有hf-mirror传输同一固定文件，最终仍须完整大小/SHA相等。
+HTTP必须返回匹配起点、总长的206/Content-Range；不支持range则停止，不自动下载另一整份。
+新网络接收上限4GiB、准备1800秒；完整SHA不符即停止保留失败产物，不把前缀当全库。
+旧文件变化、磁盘不足、依赖缺失也停止；不扩大资源或另选数据。
+
+完整SHA通过后仅允许打开train/learn及必要的元数据。
+可记录test/neighbor数据集的shape/dtype/根属性，但**不读取test、neighbors、distances的payload**；
+也不读取learn_neighbors作为选择信号。B0自行精确计算原空间几何truth。
+若无float32二维learn、d640、至少128个不同向量组，停止而不回落到test。
+train必须为完整发布N/d且原生metric匹配；不抽语料或重编码。
+
+query seed固定2026110301，仅在learn内按规范FP32向量字节SHA分组（含统一signed-zero编码），
+用带seed的组hash排序选择128个不同组，组代表采用最小行号。
+前64组geometry_discovery、后64组geometry_check；保存选择前的角色manifest及每条稳定ID/原始行号/向量hash。
+重复组不跨两角色；这是向量级防重复，**不是已验证的语义分组**。
+整个已检查learn池以后均按开发访问处理；官方test及未来cal/tune/cert/latency/report保持关闭。
+全库L2扫描中若发现query/语料向量完全重合或零位移，保留位置/退化标志，不替换query或加epsilon。
+不以这两开发角色的结果宣称正式独立认证。
+
+### 49.4 精确排序、分层与一般相关几何
+
+对128条query逐条分块扫描完整train，block65536，FP64直接差分求平方L2；
+每条只保留一维N距离及必要rank，不保存Q×N矩阵或全库Gram。
+并行计算原生FP64点积诊断；官方FP32结果/存储truth保留为其独立对象，不把高精度点积冒称官方机器实现。
+排序按距离、稳定ID；稳定ID行号使用固定宽度数字，词典序与显式行号tie顺序一致。
+近等距、精确ties、零/重复位移数量与边界差异单列，不以数值扰动拆开。
+
+G为全部L2 top100。B为下列原L2 rank的并集，均不含G：
+
+```text
+101..116;
+M-16..M+16, M in {200,400,800,1600}.
+```
+
+实际N足够时B148点，最大原rank1616。F从整个`train \ (G union B)`分层，
+不能漏掉稠密边界带之间的竞争者后只研究最远端：
+
+| 层 | 原rank范围（排除G/B） | 样本数 |
+| --- | --- | --- |
+| F0 | 101..1616的补集 | 16 |
+| F1 | 1617..floor(.01N) | 12 |
+| F2 | floor(.01N)+1..floor(.1N) | 12 |
+| F3 | floor(.1N)+1..floor(.5N) | 12 |
+| F4 | floor(.5N)+1..N | 12 |
+
+每层均匀无放回，sample seed2026110302按query稳定派生；无层不够就暗换样本的行为。
+每层保存全部人口n_h和s_h，单点纳入率s_h/n_h；同层两点联合率
+`s_h*(s_h-1)/(n_h*(n_h-1))`，跨层为各自纳入率乘积，确定选取G/B的纳入率1。
+用于总体分布/点对加权时采用正确设计权重；局部谱/因子诊断明确是偏重边界的312点集合，不能当全库谱。
+加权分布不是遗漏概率保证。
+
+每query保存所选原位移坐标、D、有符号Gram、稳定ID/rank/来源层，足以重算rho、beta、Delta。
+区分G-G/G-B/G-F/B-B/B-F/F-F，保存逐query分布和困难尾部，输出夹角×间隔、rank/radius、
+signed Gram热图/谱和层人口/加权摘要；不把所有点对混为单个均值。
+几何范围不在预期N/k、点数超过320、非有限值等均停止或记明确退化，不自动修数据。
+
+### 49.5 共同因子先用可验证的query方向分解
+
+除描述一般Gram外，新审计加入一个无需假设等相关的精确分解。
+对非零q，令e=q/||q||，a_i=(x_i-q)·e，r_i=(x_i-q)-a_i e，则：
+
+```text
+G = a*a^T + H, H_ij = r_i·r_j, H is PSD;
+若||x_i||=||q||=1，a_i=-D_i/2，H_ij=G_ij-D_i*D_j/4。
+```
+
+这是正交分解的直接代数结果，不是拟合或新颖性声明。
+同一Gaussian矩阵作用于e和各r_i时，`Pi e`与全部`Pi r_i`联合独立，
+而后者之间仍由H相关；故天然存在一个异质载荷的共同分量，但**不推出条件逐点独立**。
+实际存储范数不严格为1时用a的直接内积式，不用近似`-D/2`改写实际Gram。
+
+审计对照去除该精确分量前后，GT/边界/远端残差相关的变化；
+也报告固定rank1/2/4/8/16谱分量与残差对角候选的局部误差，保持对角尺度并记录PSD/舍入诊断。
+保留全部eigenvalues和残差相关，不加jitter把真实奇异结构变成满秩。
+比较除谱解释量外的近边界差距离方差系数
+`A_ij=D_i²+D_j²-2*G_ij²`及其近似误差；真正投影时Var(S_j-S_i)=2*A_ij/m。
+首轮不选择m，不套正态尾公式，也不计算/拟合宏观遗漏。
+只有后续证据支持H的可压缩结构，才进一步讨论条件积分、相关残差块或线上摘要。
+
+### 49.6 精确九路径、API与L0必要性
+
+| 路径 | 级别与拟实施内容 |
+| --- | --- |
+| `mechanism/tls_rag_step5_route6_real_geometry_v1.py` | 新L0；`exact_geometry_search`、`sample_geometry`、`query_direction_decomposition`、`describe_geometry`：全库L2/原生度量诊断、ties/退化、无放回权重、一般Gram/残差与差距离方差 |
+| `mechanism/tls_rag_step5_route6_real_audit_v1.py` | 新L0；`prepare_source`、`validate_source`、`freeze_roles`、`run_geometry_audit`：限额续传/完整SHA、HDF5键访问隔离、角色/数据指纹、逐query产物与成本/失败回执 |
+| `configs/tls_rag_step5_route6_real_geometry_v1.json` | 新L0；固定来源、learn角色、k100/B/F/seed、资源/范数预检阈值、无MC/无GPU/不读test |
+| `tests/test_tls_rag_step5_route6_real_geometry_v1.py` | 新L0；科学/角色/精度/源文件与资源约束回归，CPU tiny/offline |
+| `scripts/run_tls_rag_step5_route6_real_geometry_v1.py` | 新L1但科学语义继承L0；CLI、拥有子进程的有界监督/真实费用、关闭后完整交付索引，拒绝覆盖 |
+| `docs/TLS_RAG_STEP5_ROUTE6_REAL_GEOMETRY_PROTOCOL_V1.md` | 新L0；冻结上述科学对象、角色、来源、偏差/数值限制、执行/停止条件与重放 |
+| `scripts/run_tests.sh` | 窄幅修改现有测试文件归类，加入新模块，不跳过或放松旧测试 |
+| `docs/CODE_PROTECTION.md` | 窄幅新增6行登记及引用用户实际批准记录，不改旧边界 |
+| `docs/code_protection.json` | 窄幅新增6行及相应L0 SHA/人类登记SHA；不更新旧科学文件hash或降级 |
+
+此前M0/R6-A的实现是固定合成几何/旧输入，不能以L1包装改变为真实查询、不同度量/分层/数据角色。
+新实现涉及精确检索、科学采样及新冻结合同，所以需要新L0范围批准；只读准备和L1文档已先完成。
+新API/版本/指纹包含完整数据SHA、数据集键/角色/稳定映射、k/B/F/seed、规范排序/存储预处理、
+dtype/依赖版本及实现/config hash。无投影则projection字段显式null，不借用旧projection cache。
+旧API、旧tests、旧结果、失败记录和历史指纹不变；不导入新实现以替换旧科学行为。
+
+### 49.7 环境、限额、验证与交付
+
+服务器复用已核对的旧独立HDF5环境，不安装/升级依赖；执行前核对实际版本、GitHub/节点commit及资源，
+若缺失/不符则停止。规范checkout完整本地回归/同步后，在新目录启动**一次**R6-B0：
+
+- 数据准备至多1800秒/新接收4GiB；完整源校验通过后计算至多1200秒；全监督总上限3600秒。
+- 最多14 CPU线程，进程树RSS4GiB；GPU计算/新投影/MC/ANN建图为0。
+- 新增源/临时/产物占用总上限20GiB，预检可用空间至少24GiB；科学/日志产物上限1GiB，
+  回收本机最多512MiB，完整HDF5留服务器。超限停止保留部分输出，不减查询或换种子掩盖未完成。
+- 精确扫描、排序、采样、Gram/谱、ID-map/压缩和来源读取分别计时；源下载/hash/copy也入账，
+  明确这些是离线审计费用，不是线上延迟。
+
+本机既有测试Python无h5py。拟只下载官方h5py3.11.0 cp39/macos arm64 wheel（2,951,710字节），
+SHA256`6c4b760082626120031d7902cd983d8c1f424cdba2809f1067511ef283629d4b`，
+校验后`--no-deps --target /private/tmp/route6-b0-h5py-20261103`，在本轮测试PYTHONPATH中显式加入。
+不改主环境/旧依赖版本；wheel官方元数据/URL已保存在原只读来源提案中。
+
+验证包括：直接差分/完整排序手算参考、near/精确ties与IP/L2不等范数反例；
+一般PSD/奇异/负夹角、query方向恒等式与非对角残差反例；全G覆盖/B去重/补集人口/单点及联合纳入率；
+重复query组不跨角色、test/官方邻居payload访问陷阱；大小/SHA/range失败关闭与旧文件不改；
+拒绝复用不匹配缓存/覆盖；确定seed回放；实际拥有子进程资源停止和完整关闭产物索引。
+所有测试使用tiny合成HDF5与模拟传输，无网络/真实数据。运行新增CPU测试、完整仓库回归、保护检查；
+同步经GitHub验证的commit至节点，Linux新增测试通过后才执行上述一次计算。
+
+交付源/角色manifest、ID-map、逐query几何/分层/数值诊断、汇总图表/费用、状态/失败记录及完整SHA索引。
+没有读到的查询记未完成，不以已完成子集代表128条；没有官方文本映射就不交付evidence或语义独立保证。
+范围不包含全库Gaussian表示收益、一般相关宏观尾积分、付费线上特征、静态选维/轻量公式或新认证；
+这些仍需后续证据及具体范围。本节待用户明确批准，不能写成已实施结果。
+
+本轮准备交付检查：263项保护登记通过（L0=182/L1=78/L2=3），4项L1文档局部链接/围栏及
+diff空白检查通过；原cb6536d探索日志完整字节前缀保持。六个新科学/runner/协议路径均尚不存在，
+旧科学文件/配置/测试/登记未改。节点回执SHA256为
+`a9f5fb53ad6d5405a8c9d9d1676aac5f141a58d0444e25d8656cba6da4c2eedc`。
+仅文档/只读准备不重复537项实现回归；待精确批准后，新实现须按上节完成完整验收。

@@ -3,7 +3,18 @@
 Updated 2026-11-03. Maintained branch: `codex/tls-rag-step5-ann`.
 Canonical checkout: `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 
-## 当前任务：一般相关约束下的真实几何审计计划（2026-11-03，仅方案）
+## 当前任务：R6-B0只读准备完成，精确实施范围待批（2026-11-03）
+
+- 用户“可以直接开始吧”后已执行定源/节点只读准备；再次确认SSH后连接成功，前两次认证前断开记录保留。
+- 节点A80080GB空闲、CPU配额14核、RAM120GiB；存量部分文件10,703,863,808字节，完整文件预期13,688,159,632字节，尚未续传/校验完整SHA。
+- 旧HDF5环境可复用（NumPy1.26.4/SciPy1.13.0/h5py3.11.0）；主M0环境缺h5py，未改动。Linux checkout干净，仍为029b026。
+- 8份冻结公开源码/指针快照逐大小/SHA核验；官方N5,233,329/d640、默认k100来自发布表/源码，实际HDF5形状尚未确认。
+- [第49节精确九路径提案](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#49-r6-b0只读准备实际来源与精确九路径提案2026-11-03)：仅learn中128开发query，完整GT100、B148、补集分层64=312点，上限320；原生IP/L2差异、query方向精确分解及一般残差审计。
+- 提议新目录复制旧前缀后限额续传，原文件不改；新增网络最多4GiB/1800秒，计算一次1200秒，RSS4GiB/产物1GiB/总3600秒，无MC/ANN/GPU计算。
+- 本机h5py未装；提案仅允许官方3.11.0已知SHA wheel进入独立临时target，不改原依赖。九路径/完整测试同步/单次B0仍待确切批准。
+- 准备回执：`runs/route6-B0-preparation-20261103/{preparation,node_inventory}.json`。未读取query向量/官方test或旧cert/test标签，未创建新科学源/配置/协议。
+
+## 前次任务：一般相关约束下的真实几何审计计划（2026-11-03，仅方案）
 
 - 用户要求同一Gaussian矩阵下按一般相关处理，先查真实query的GT/候选边界/远端位移夹角与距离间隔。
 - [第48节](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#48-一般相关下的真实几何审计与算法设计计划非冻结提案2026-11-03)给出非冻结计划：定源/角色/质量目标→完整原空间几何审计→实际相关参照和全库表示/后端门→线上付费摘要与同输入对照。
