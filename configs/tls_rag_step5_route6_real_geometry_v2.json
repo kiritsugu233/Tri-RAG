@@ -1,0 +1,71 @@
+{
+  "namespace": "tls-rag-route6-real-geometry-v2",
+  "stage": "B0",
+  "source": {
+    "file": "hotpotqa-harrier-640-normalized.hdf5",
+    "revision": "a91cc76a3ab66b0353032e8427b9e34dcee22ded",
+    "bytes": 13688159632,
+    "sha256": "08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114",
+    "rows": 5233329,
+    "dimension": 640,
+    "metric": "normalized"
+  },
+  "query_dataset": "learn",
+  "queries": 128,
+  "discovery_queries": 64,
+  "role_seed": 2026110301,
+  "sample_seed": 2026110302,
+  "k": 100,
+  "budget_factors": [
+    2,
+    4,
+    8,
+    16
+  ],
+  "near_boundary": 16,
+  "half_width": 16,
+  "far_fractions": [
+    0.01,
+    0.1,
+    0.5
+  ],
+  "far_samples": [
+    16,
+    12,
+    12,
+    12,
+    12
+  ],
+  "max_points": 320,
+  "block": 8192,
+  "norm_tolerance": 1.52587890625e-05,
+  "projection": null,
+  "cuda_called": true,
+  "new_mc_samples": 0,
+  "dependencies": {
+    "numpy": "1.26.4",
+    "scipy": "1.13.0",
+    "h5py": "3.11.0",
+    "torch": "2.8.0+cu128"
+  },
+  "limits": {
+    "seconds": 1800,
+    "compute_seconds": 1200,
+    "network_bytes": 0,
+    "rss_bytes": 4294967296,
+    "artifact_bytes": 1073741824,
+    "disk_bytes": 21474836480,
+    "free_bytes": 25769803776,
+    "cpu_threads": 14,
+    "gpu_bytes": 42949672960
+  },
+  "query_batch": 16,
+  "comparison_envelope": 1.4551915228366852e-11,
+  "backend": "cuda-fp64-direct-with-cpu-order-repair",
+  "source_path": "/root/autodl-fs/route6-B0-v1-9f963f9-20261103T0959Z/source/data.hdf5",
+  "old_run": "/root/autodl-fs/route6-B0-v1-9f963f9-20261103T0959Z",
+  "old_index_sha256": "044f8a7dc48e8459d0e6cd3bdd2e6c4e8e0a8756cac3e89cb3d7bdf2a188a412",
+  "roles_sha256": "f1a83a8c9aa008e63b52ae29a55fb45f60d200ec2c4c228866f21ad0885b4e08",
+  "old_scientific_commit": "9f963f93b6e2d765f1547dc4809acbaa9bdcab47",
+  "old_completed_queries": 24
+}

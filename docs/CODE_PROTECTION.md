@@ -609,3 +609,25 @@ one new-directory B0 may copy the preserved prefix and receive at most4GiB in
 1800s, then audit128 learn development queries for at most1200s, total3600s,
 RSS4GiB/products1GiB/new disk20GiB. No MC/GPU/ANN, test payloads or old closed
 cert/test roles. No automatic retry, resource enlargement or later-stage approval.
+
+## R6-B0 v2 exact nine-path authorization (2026-11-03)
+
+Actual user consent: **“批准第51节九路径、保留并停止原轮、测试同步及一次v2”**,
+answering exploration §51.3–51.4. Original v1 already stopped naturally; all
+source/result/failure bytes remain. Only these six files are introduced, plus
+new test membership and the append-only human/machine protection registration.
+
+| Path | Level | Approved scope |
+| --- | --- | --- |
+| `mechanism/tls_rag_step5_route6_real_geometry_v2.py` | L0 | One FP64 CUDA corpus, batch16 direct distances/IP, fixed-envelope CPU overlap-component repair |
+| `mechanism/tls_rag_step5_route6_real_audit_v2.py` | L0 | Read-only fixed source/roles and24 CPU references, original geometry reuse, new bounded products |
+| `configs/tls_rag_step5_route6_real_geometry_v2.json` | L0 | Fixed v2 source/roles/backend/envelope/batches and one-run limits |
+| `tests/test_tls_rag_step5_route6_real_geometry_v2.py` | L0 | CPU comparison/input/ties/batch/receipt and owned-process regressions |
+| `docs/TLS_RAG_STEP5_ROUTE6_REAL_GEOMETRY_PROTOCOL_V2.md` | L0 | FP64 arithmetic assumptions/uncertified limit, frozen inputs, one CUDA run and replay |
+| `scripts/run_tls_rag_step5_route6_real_geometry_v2.py` | L1 | Device/environment/owner lock and resource monitor; scientific semantics inherit L0 |
+
+Full CPU tests and synchronized reviewed code precede tiny CUDA and one v2
+run, compute1200s/total1800s/RSS4GiB/GPU40GiB/products1GiB. Reuse original
+source/128 roles without downloading/reselecting; no Gaussian MC/ANN/test.
+Only necessary human-register hash and six new rows are added. Old scientific
+entries, tests, hashes, APIs, artifacts and authorization boundaries stay intact.

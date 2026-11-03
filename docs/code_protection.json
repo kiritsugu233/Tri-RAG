@@ -285,7 +285,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "4806b13428897f64dcb79f16a603521de61d442240f8d9e3dd3958e5dc36af10"
+      "sha256": "15574dd737e94db79b315db440a8240fd2d216446caa73f49865bd38e330f4d6"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -1777,6 +1777,41 @@
       "path": "scripts/run_tls_rag_step5_route6_real_geometry_v1.py",
       "level": "L1",
       "reason": "User approved exploration §49 nine paths/environment/tests/sync/one B0: Supervised B0 orchestration; inherited scientific semantics remain L0"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_route6_real_geometry_v2.py",
+      "level": "L0",
+      "reason": "User approved exploration §51 exact nine paths/tests/sync/one v2: FP64 batched CUDA and frozen CPU interval repair",
+      "sha256": "b4a8d58944febc294d694975dcec8b40161f1413284cb57dd4d6858e852aca86"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_route6_real_audit_v2.py",
+      "level": "L0",
+      "reason": "User approved exploration §51 exact nine paths/tests/sync/one v2: Fixed full input/roles and CPU reference scientific audit",
+      "sha256": "ff248554901b2f5932240edc7faf71c15ceb704265989385206978d570095a70"
+    },
+    {
+      "path": "configs/tls_rag_step5_route6_real_geometry_v2.json",
+      "level": "L0",
+      "reason": "User approved exploration §51 exact nine paths/tests/sync/one v2: Frozen v2 scientific inputs and one GPU run resource contract",
+      "sha256": "37f171ef71c5e76524fe78377946856acdc66d86253f8483d31f6b47905593b7"
+    },
+    {
+      "path": "tests/test_tls_rag_step5_route6_real_geometry_v2.py",
+      "level": "L0",
+      "reason": "User approved exploration §51 exact nine paths/tests/sync/one v2: Scientific input/comparison/receipt and owned-process conformance",
+      "sha256": "07e499a69babc50b5a737d0cb8ced7e1b003bdcd9249391324ac5d72b5c55edd"
+    },
+    {
+      "path": "docs/TLS_RAG_STEP5_ROUTE6_REAL_GEOMETRY_PROTOCOL_V2.md",
+      "level": "L0",
+      "reason": "User approved exploration §51 exact nine paths/tests/sync/one v2: FP64 conditional error model and one-run frozen protocol",
+      "sha256": "1692d45490ae76ebc9dbc4dce07572176e0601f2addf52e54018bce14ceed68a"
+    },
+    {
+      "path": "scripts/run_tls_rag_step5_route6_real_geometry_v2.py",
+      "level": "L1",
+      "reason": "User approved exploration §51 exact nine paths/tests/sync/one v2: Owned v2 GPU supervision; scientific semantics inherit L0"
     }
   ],
   "approved_change_history": [

@@ -8,6 +8,18 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**Active task: approved B0 v2 implementation and one bounded A800 audit (2026-11-03).**
+Actual consent: “批准第51节九路径、保留并停止原轮、测试同步及一次v2”.
+Six new files plus narrow test/registry updates implement FP64 batch16 direct
+L2/IP with CPU overlap-cluster order repair. Original CPU run already ended
+naturally; preserve all of its outputs. Full CPU regression passed579/579, zero skips,68.788s;
+Linux/CUDA checks and the one v2 run remain pending. Reuse the complete source
+and exact original128 roles; no Gaussian MC/ANN/test payloads. See
+[the v2 protocol](docs/TLS_RAG_STEP5_ROUTE6_REAL_GEOMETRY_PROTOCOL_V2.md) and
+[section53](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#53-b0-v2实际批准与实现验收2026-11-03).
+
+Previous checkpoints below retain their historical pending/partial state.
+
 **Latest task: R6-B0 stopped at compute cap;24/128 partial discovery records verified (2026-11-03).**
 The original CPU run ended with resource_stop after2468.805s, because the1200s
 compute limit expired.24 discovery queries completed;104 remain, check not reached.

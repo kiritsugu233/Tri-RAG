@@ -38,6 +38,7 @@ test_tls_rag_step5_route4_scenarios_v1
 test_tls_rag_step5_route6_v1
 test_tls_rag_step5_route6_macro_reference_v1
 test_tls_rag_step5_route6_real_geometry_v1
+test_tls_rag_step5_route6_real_geometry_v2
 test_tri_law
 test_tri_predict
 """.split())
