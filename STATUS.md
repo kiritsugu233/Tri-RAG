@@ -3,6 +3,26 @@
 Updated2026-11-04. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
 maintained branch `codex/tls-rag-step5-ann`.
 
+## 当前收尾：NVML r1仍因真实3秒失联停止，5项质量完成、无新正式计时
+
+- 已按第68节实际同意完成六路径、完整651项/0skip/80.699秒、GitHub/干净Linux098ca95同步和Linux36项/12.341秒。一次同reporter三启动CUDA门11.704秒完成，21项节点/本机逐SHA一致；门内最慢NVML查询.221856秒。
+- 唯一正式r1于北京时间12:55:08启动，777.695秒后monitor_failed。NVML第7719次采样3.072845秒，parent看到前样本年龄3.171795秒，按原3秒界终止worker2293（-15）；没有修改阈值、伪造零样本或重跑。发生于OPQ32后端初始化，尚无binary_identity/新phase/训练；不能归因OPQ算法。
+- 5/24配置完整质量：raw640、PQ64、Hybrid256、PCA128及固定Hybrid128_seed2诊断；其中PCA128为此前未完成的新主配置。其余19项无完整质量，计时/IVF/LP-MILP费用oracle均未开始，整轮没有正常完成。
+
+| check64，M6400/k100 | benchmark recall | 严格ID保留 | 至少漏1个GT |
+| --- | ---: | ---: | ---: |
+| raw640 | 100% | 100% | 0/64 |
+| PQ64 | 100% | 98.671875% | 33/64 |
+| PCA128 | 91.28125% | 87.234375% | 57/64 |
+| Hybrid256 | 96.140625% | 91.5625% | 58/64 |
+
+- 12544条逐query主指标从保存距离/发布truth独立重算通过；全部候选保留也与精排严格ID率一致。8组实际后端对FP64参考（每组896条）主指标/返回ID集合差异0，支持已测项主要为表示损失，非ANN漏搜。
+- 同固定7预算/表示下，PCA128免费逐query最优预算的benchmark上限仍<95%；Hybrid256上限<99% benchmark及<95%严格，但95% benchmark的费用空间仍未测。不是实测费用oracle或总体结论；纯Gaussian、PCA256/OPQ/组合/同字节多数未决，Tri/静态选维/轻量公式/RAG收益未验证。
+- 正式107项节点验证、本机106项；唯一PQ代码334933184B留节点。index SHA `675839be2bd46a422f6836fc829f013576e1ce7da26b5170b78d1de41bd3cbef`。输入完整SHA前后一致、角色未变，父/report/全部拥有worker已退出，GPU compute为空。两科学模块、原文件/旧失败/新失败原件保持在服务器。
+- [第70节完整收尾](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#70-nvml-r1正式轮失联停止质量数据与完整收尾2026-11-04)、[中文解释/CSV/图](runs/route6-S0-nvml-r1-preparation-20261104/analysis/analysis_zh.md)。后续应先定位采样/初始化时延并评估进程结构，再补未测链路与费用；当前不改代码/监控合同，不自动第二轮。本轮已停止，节点数据保留，服务器可由用户按需关闭。
+
+以下保留旧历史检查点，未批准/未启动等仅描述当时状态。
+
 ## 当前实施：NVML r1完整651项通过，准备同步/三次启动设备门
 
 - 实际批准：“批准六路径、测试同步、设备门及通过后一次S0”（第68.2–68.3节）。六路径完成持久NVML/冻结身份ABI/r1 namespace和3次独立CUDA启动门；3秒query-start年龄/250ms及原上限保持，两科学模块字节不改。

@@ -6861,3 +6861,105 @@ global≤9000秒、component≤1200秒、RSS64GiB/GPU48GiB/CPU14/artifacts8GiB/n
 两科学模块逐字节相同。跨进程时钟、post-exit新鲜空GPU样本和真实worker回收合同保留。
 只读重连：节点clean7f44240、GPU空闲、fastdisk35,287,248,896B、库SHA同第67节。
 未运行新的设备门或S0；先提交/GitHub核对/干净Linux同步及CPU模块测试。
+
+## 70 NVML r1正式轮失联停止、质量数据与完整收尾（2026-11-04）
+
+### 70.1 代码/回归/门和正式执行分别是什么结果
+
+第68节实际答复“批准六路径、测试同步、设备门及通过后一次S0”已实施并实际使用。
+科学提交`098ca95e2c7b6c1d60855025745fe3187bcf7ac0`经push和独立ls-remote核对。
+节点从clean7f44240经增量bundle SHA
+`c9fe215c0e59012954e0721db59c0bb5b1de7828374fd85340ead0ba44f6c493`干净ff-only；origin不变。
+完整651项/0skip/80.699秒日志SHA见69.1；Linux36项12.341秒，日志SHA
+`288c8442926a57a337fd55ebadfae899a138f08418367b7970e1430b8775c622`。
+两项v2科学模块与旧保护登记/根元数据（获准四行SHA除外）原字节保持。
+
+一次设备门根`/root/autodl-tmp/route6-S0-nvml-r1-device-098ca95-20261104`：
+11.704秒complete，worker2236/2240/2244分别3.517/3.776/3.271秒，全部4类tiny距离/范数检查通过。
+同一reporter112条API成功样本最慢.221856秒；21项在节点/本机逐SHA通过，index SHA
+`5f5168543b5dfb260dc60e5673ff74182caaec4a78752a30bfb5443deac85c77`。
+独立GPU空样本在各worker退出后取得，所有身份/精度/源码相同；旧单tiny凭据没有用于放行。
+
+正式根`/root/autodl-tmp/route6-S0-nvml-r1-098ca95-20261104`，parent2255/reporter2256。
+实际命令（五BLAS线程变量均1、PYTHONPATH=src、PYTHONDONTWRITEBYTECODE=1、CUBLAS_WORKSPACE_CONFIG=:4096:8）：
+
+```sh
+/root/autodl-fs/gaussian-benchmark-space-v1/env/bin/python \
+  scripts/run_tls_rag_step5_route6_representation_v2.py run \
+  --run-dir /root/autodl-tmp/route6-S0-nvml-r1-098ca95-20261104 \
+  --device-receipt /root/autodl-tmp/route6-S0-nvml-r1-device-098ca95-20261104/device_receipt.json
+```
+
+2026-11-04T04:55:08.076Z（北京时间12:55:08）启动，777.695秒后monitor_failed封存，**不是正常完成**。
+已完成prepare及5项完整质量，4项主配置+1项seed诊断；随后OPQ32后端初始化worker2293停止，returncode-15。
+有原始启动/节点回执和关闭日志，不从本地回归/tiny推断真实计算完成；原一次新增授权已使用，不再自动重试。
+
+### 70.2 具体监控失败证据和仍不确定的根因
+
+第7719次原生采样墙钟3.072844662秒；parent采到前一有效第7718次样本年龄3.171794519秒。
+原query-start≤3秒合同触发，采样在kill期间恢复不能追溯取消失联。7721条日志的valid均true，
+只说明API成功解析，不说明每次回包及时；新鲜度由parent独立检查。
+没有API错误/NA填0/放宽年龄，也不是RSS/GPU超上限；观测树RSS25.970165GiB、GPU26.212891GiB，
+保留采样/终止超调的原限制，不声称全时段零超调认证。
+
+旧phase停在已结束worker2290的pca128:cuda_quality；**不能把这个旧phase归到新worker2293**。
+2293没有binary_identity，worker.log为空，只有owned_worker/execution，没有OPQ训练产物。
+它在导入/后端/原生身份准备期间被停止，无法用现有回执再细分是哪一步；不能说OPQ算法失败。
+provider.query包括多个身份/进程API、周期性库SHA和系统调度，未分段计时，故不能唯一断言驱动
+某条API阻塞。三次启动门通过也不证明任意后续初始化都满足3秒；换持久provider并非充分解决。
+若后续继续，应先窄幅定位延迟来源并评估减少重复CUDA初始化的结构，不直接增加启动次数或放宽3秒。
+当前仅分析，未改新合同/架构或启动第二轮。
+
+### 70.3 新轮完成的质量数据、定义和上限诊断
+
+完整5233329竞争者、原128learn开发query（64discovery/64check）、原发布truth/epsilon/k/M全部保持。
+完成raw640、PQ64、Hybrid128_seed2、Hybrid256、PCA128；新增PCA128主结果，其余4项质量此前v1已存在，
+本轮重测/复核并未把旧计时复用为新计时。OPQ32无质量；余18项未到达，总19/24未完成。
+所有正式计时/IVF/实测费用oracle/finalize均未执行，不能称完整表示筛选完成。
+
+check64、k100、M6400、Faiss全扫描结果：
+
+| 表示 | 单条表示payload字节 | benchmark recall | 严格ID保留 | 至少漏1个GT |
+| --- | ---: | ---: | ---: | ---: |
+| raw640 | 2560 | 100% | 100% | 0/64 |
+| PQ64 | 64 | 100% | 98.671875% | 33/64 |
+| PCA128 | 512 | 91.28125% | 87.234375% | 57/64 |
+| Hybrid256 | 1024 | 96.140625% | 91.5625% | 58/64 |
+| Hybrid128_seed2（仅诊断） | 512 | 63.03125% | 59.796875% | 64/64 |
+
+所有链路仍保留原维用于精排，payload字节不等于全系统内存。benchmark按原发布截止距离+.001容差，
+严格ID按交集；PQ64的100%不等于所有GT均入候选，仍平均每query漏1.328125个GT、最差漏13个。
+这批query频率不是固定query对随机G的概率，更不是Tri宏观尾验证，没有Gaussian MC。
+
+本机从保存的原空间距离/发布truth独立重算12544条指标，同时从保存候选数组重算12544条候选保留，
+全部匹配；候选保留与返回严格ID保留在本批数据完全相同。8组实际后端对FP64参考、各896条记录，
+主指标及返回ID集合差异均0；已测项损失主要来自表示，不是全扫描后端漏搜，但非普遍数值认证。
+
+离线仅对已保存7动作逐query取质量max再均值，无独立/等相关假设：PCA128 discovery/check的benchmark
+上限91.140625%/91.28125%，连免费选最优M也达不到95%。Hybrid256为95.796875%/96.140625%，
+达不到99% benchmark；严格上限91.640625%/91.5625%，达不到95%。其95% benchmark费用空间仍未测。
+PQ64 discovery在M3200达99.265625% benchmark，冻结此M在check达99.21875%；严格分别96.6875%/95.859375%。
+check严格质量上限98.671875%仍<99%。这些是有限开发样本/表示/网格的诊断，不是总体/更大M定理。
+未运行LP/MILP成本solver，不能把质量上限称为费用oracle，更不能推断Tri/静态选维/标量或RAG净收益。
+纯Gaussian、PCA256/OPQ/组合/同字节链路仍未决，不能从局部配置否定或支持整个家族。
+
+### 70.4 关闭核验、完整源和交接
+
+正式107项节点逐大小/SHA通过；106项本机逐SHA通过，index SHA
+`675839be2bd46a422f6836fc829f013576e1ce7da26b5170b78d1de41bd3cbef`。
+唯一大项`representations/pq64/codes.npy` 334933184B留服务器原目录，SHA
+`bc0ed8c42624b87bbc85b45a54845d6aad8f20a42012a43e514aa6672ca7edac`，不是丢失或无校验。
+关闭小产物压缩包61485751B，SHA `1deb9bc16a18f8056cc516a73e5d0f7646b763e6b748b9782b0f5c5eef0c4b09`。
+本机`runs/route6-S0-nvml-r1-preparation-20261104/s0-verified-small/`保留原记录；
+`analysis/analysis_zh.md`、质量CSV、质量上限CSV、独立核验JSON和PNG/PDF有完整解释。
+
+输入13688159632B前后完整SHA均`08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114`，
+roles SHA `f1a83a8c9aa008e63b52ae29a55fb45f60d200ec2c4c228866f21ad0885b4e08`不变。
+停止后只读完整SHA13.795秒，不是新科学轮/角色payload访问；不重下载/装包/加MC/开test。
+父2255/report2256、worker2264/2268/2277/2283/2287/2290/2293均已退出，nvidia-smi compute为空。
+VIBE完整文件、原v1/v2和新r1原件保留服务器；本轮已停止，用户可按需关闭节点。
+原源码可按098ca95重放，但本节命令记录不新增执行授权。四L1交接文档收尾后同步，旧L0和保护SHA不变。
+
+本机派生分析9项关闭核验通过（报告/CSV/JSON/PNG/PDF），analysis delivery index SHA
+`d7341d166c4bbeccca59eabbf4f324f50ecd5a5a657f7173f62ce7d4a3c10b89`。图表已目视检查；
+此后只修改四L1交接文档，未改变科学代码/config/test/protocol/保护登记。最终287项保护通过。

@@ -8,6 +8,27 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**NVML r1 closed with partial quality, not a complete experiment (2026-11-04).**
+The approved six-path revision passed full651/0skip/80.699s and Linux36/12.341s.
+Three independent CUDA startups passed in11.704s,21 products verified on node/local.
+The one real r1 at scientific098ca95 stopped after777.695s: one native sampling
+cycle took3.072845s and previous-sample age reached3.171795s. No threshold was
+relaxed and no retry started. OPQ32 worker2293 stopped during backend initialization,
+before its binary receipt or training; exact slow-API/scheduling cause is unresolved.
+Five of24 configurations completed quality (four main plus one fixed seed diagnostic);
+no new formal timing/IVF/cost-oracle results. All107 products verified on node,
+106 locally; only334.9MB PQ codes remain node-only. Input/roles SHA match before/after,
+all owned compute exited and GPU is empty. See [section70](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#70-nvml-r1正式轮失联停止质量数据与完整收尾2026-11-04)
+and [data/plots/Chinese explanation](runs/route6-S0-nvml-r1-preparation-20261104/analysis/analysis_zh.md).
+AtM6400/check, benchmark/strict quality: PCA12891.28125%/87.234375%,
+Hybrid25696.140625%/91.5625%, PQ64100%/98.671875% (33/64 queries still omit GT).
+Pure Gaussian/most combinations and matched cost remain unmeasured; do not turn
+these fixed-representation query frequencies into Gaussian omission probabilities.
+Both scientific modules and every old failure/result are unchanged. Server inputs
+and all closed outputs remain. This authorization is used; no automatic further run.
+
+Earlier entries below are historical checkpoints, superseded by this closure.
+
 **NVML r1 approved; final local regression passed (2026-11-04).** Actual consent
 for exploration §68.2–68.3: “批准六路径、测试同步、设备门及通过后一次S0”.
 Six scoped paths now implement persistent pinned NVML, unchanged3s query-start
