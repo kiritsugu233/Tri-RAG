@@ -3,6 +3,16 @@
 Updated2026-11-04. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
 maintained branch `codex/tls-rag-step5-ann`.
 
+## 当前完成：S0 manual-r2正常结束，815项封存核验通过
+
+- 本轮 `/root/autodl-tmp/route6-S0-manual-r2-3d372f9-20261104` 正常complete，总8984.503秒（149.74分钟）、科学8975.895秒；全部55阶段complete/returncode0，没有监控终止或自动重试。
+- 24/24质量、20项非seed诊断配置计时、5项选定IVF（raw640/PCA256/OPQ32/OPQ64/Hybrid256）完成。冻结选择只让 `hybrid256:cuda` 进入oracle逐预算计时，之后求解/finalize均执行完成；这不代表每条链路均作oracle计时，亦不宣称求解结果或质量/成本收益已独立分析通过。
+- 封存815文件在节点独立逐大小/SHA核对通过，index SHA `003ccbbca3c10ad6725462556d79554c8c0c4deb5329999219313c97bb0dad1a`；产物3943429379B（约3.67GiB）。完整来源post-SHA与原08f1c68c…一致，roles/input匹配，test payload未读；没有属于本轮的controller/worker/reporter进程残留。
+- execution明确streams_closed=true、sealing_in_progress=false。manual_control的历史state仍为closing，不能单独据此推断仍在计算；以最终execution/已验证index/进程身份检查为准。5分钟观测只支持抽样最大值，不支持全过程资源合规或真实峰值。
+- 定时任务 `a800-s0-5` 已删除，实验本身已正常退出；没有执行stop/kill、重跑、新MC或Tri。仅回收小型关闭凭证；完整产物保留服务器，当前只完成流程/封存核验，详细表示/质量/延迟/内存/预算空间解释待后续分析。见[第74节](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#74-s0-manual-r2正常完成封存核验与停止定时跟进2026-11-04)。
+
+以下记录是历史启动与监控检查点。
+
 ## 当前运行：新目录S0 manual-r2，已清理旧轮重复大文件
 
 - 用户当前明确要求“启动实验”，并授权必要重测时清理旧中断结果。当前程序没有跨r1 namespace的断点续跑；采用现有已测试流程新目录重测，不改cache合同，不把旧部分结果拼成新轮complete。仅按原实现校验复用v1 PQ64训练/编码和历史预处理费用。

@@ -7201,3 +7201,51 @@ cleanup receipt/plan、device/real launch ledger和console同步回收，local-r
 摘录保存在first-status-extract.json。正式轮继续按既有manual-r2每300秒记录，由用户决定停止；
 实际质量/计时/IVF/oracle与最终输入post-SHA仍未完成。运行checkout保持3d372f9；
 本次启动交接只在canonical/GitHub维护四L1文档，不在科学计算中切换节点checkout。
+
+## 74 S0 manual-r2正常完成、封存核验与停止定时跟进（2026-11-04）
+
+用户明确要求每5分钟检查；已建立当前对话heartbeat `a800-s0-5`，每次只读status，
+不额外NVML/CLI采样、不自动终止、不重启实验。定时唤醒/SSH重新认证可能使实际报告晚于计划；
+实际已读进度保存在本对话，没有补造未发生的五分钟检查。运行期间节点checkout保持3d372f9。
+
+### 74.1 实际正常完成与覆盖范围
+
+10:34Z的status首次看到execution.status=complete、active_stage=null、finalize返回0。
+总时间8984.502841秒（149.74分钟）、科学阶段8975.895095秒；全部55个stage均complete/returncode0，
+monitor_error=null、automatic_stop=false、automatic_retry=false。覆盖24个配置的质量、
+20个非seed诊断配置的正式计时，以及选中的5条IVF链路raw640/PCA256/OPQ32/OPQ64/Hybrid256。
+select-oracle按冻结的discovery规则只选 `hybrid256:cuda`，其逐预算oracle计时53.309968秒，
+oracle-solve执行2.622717秒，finalize16.193223秒。没有把未入选链路称为已测oracle。
+流程执行完成不保证所有数学solver目标均可行/收敛；实际求解状态和科学效果需要后续逐结果分析。
+
+summary.completed/quality_complete为24、timing_complete为20、missing=[]；
+formal_test_score/formal_test、tri_validated、independent_certification、formal_RAG_or_Tri_claim
+均false，claims为空。当前只确认流程完成，不提前宣布Gaussian/静态选维/轻量公式/Tri增量/RAG收益。
+
+### 74.2 独立封存及退出核验
+
+当前轮delivery_index在节点独立逐文件大小/SHA核对815项通过，index SHA256：
+`003ccbbca3c10ad6725462556d79554c8c0c4deb5329999219313c97bb0dad1a`。
+产物3943429379B（约3.67GiB），closure hash+verify8.437059秒。复核使用当前runner的
+`verify_index(root)`；等价CLI入口：
+
+```sh
+/root/autodl-fs/gaussian-benchmark-space-v1/env/bin/python /root/autodl-tmp/Tri-RAG-git/scripts/run_tls_rag_step5_route6_representation_v2.py verify --run-dir /root/autodl-tmp/route6-S0-manual-r2-3d372f9-20261104
+```
+
+source_post_sha.matched=true，完整源SHA仍为
+`08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114`；
+inputs保存原roles SHA `f1a83a8c9aa008e63b52ae29a55fb45f60d200ec2c4c228866f21ad0885b4e08`、
+只读mmap/no-renormalization/test_payload_read=false。按execution记录的全部worker、
+controller2169和reporter2170检查/proc命令行与本轮绑定，没有本轮所属进程残留。
+execution的all_worker_and_reporter_streams_closed=true、sealing_in_progress=false；
+manual_control历史state仍为closing，不能仅凭该字段称为尚在封存或尝试再次stop。
+
+报告中sampled_max_RSS31856132096B、sampled_max_GPU12035555328B仅是每300秒抽样最大值，
+continuous_resource_compliance_claim=false；不是连续合规认证或真实峰值。未额外启动GPU监控。
+
+确认当前轮结束后，已通过automation工具删除 `a800-s0-5`，返回deleteStatus=deleted；
+这里只结束定时跟进，没有向已正常退出的科学进程发送stop/kill。旧v1/B0/源/roles、旧失败记录和
+本轮完整产物继续保留服务器。仅维护四L1交接文档，科学实现/配置/协议/保护登记字节未改，
+不为文档重复执行既有完整664/Linux49测试。后续仍需完整科学产物回收、独立指标/费用/oracle解释，
+不能由一次complete状态得出研究方向的正面结论。

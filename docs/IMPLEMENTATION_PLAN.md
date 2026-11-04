@@ -4,6 +4,12 @@ Updated 2026-11-04. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
+## 当前完成：S0 manual-r2正常退出与终轮核验
+
+- [x] 同一新轮执行55阶段全部complete/returncode0：24质量、20计时、5选定IVF、1选定oracle计时及求解/finalize，总149.74分钟；没有自动重试。
+- [x] 节点815项关闭大小/SHA独立核对、完整来源post-SHA/roles/input核对、所属进程退出检查；a800-s0-5定时任务已删除，原产物/科学源码保留。
+- [ ] 完整结果回收、独立逐query指标/成本/oracle复算和三步研究目标的实测解释；本次流程complete不等于Gaussian/Tri/RAG收益已验证。
+
 ## 当前执行：S0 manual-r2重测与旧中断轮空间清理
 
 - [x] 用户明确启动；评估现有runner无跨namespace断点续跑，选择新目录同配置重测，仅复用已有受校验v1 PQ64训练/编码。

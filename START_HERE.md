@@ -8,6 +8,20 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**S0 manual-r2 finished normally; completion verified (2026-11-04).** Real run
+`route6-S0-manual-r2-3d372f9-20261104` reports complete after8984.503s
+(149.74min), all55 stages returning0:24 quality,20 timing,5 selected IVF,
+one selected Hybrid256/CUDA oracle-timing and the remaining orchestration/solve/finalize.
+All815 closed products were independently size/SHA-verified on node; input post-SHA
+matches the original full source, no owned run processes remain. Index SHA
+`003ccbbca3c10ad6725462556d79554c8c0c4deb5329999219313c97bb0dad1a`.
+The five-minute heartbeat was deleted after completion; no further experiment
+started. This establishes workflow completion, not Gaussian/Tri or RAG benefit.
+Quality/cost/frontier/oracle interpretation and full result recovery remain next.
+See [section74](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#74-s0-manual-r2正常完成封存核验与停止定时跟进2026-11-04).
+
+Earlier entries below are historical checkpoints.
+
 **S0 manual-r2 started in a new directory (2026-11-04).** The user explicitly
 requested launch and cleanup of interrupted outputs if a restart was needed.
 The current runner cannot resume r1 products across its namespace/fingerprint
