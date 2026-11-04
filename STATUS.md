@@ -3,6 +3,18 @@
 Updated2026-11-04. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
 maintained branch `codex/tls-rag-step5-ann`.
 
+## 当前完成：分析数据已回收，可关闭节点；现有Gaussian链路无竞争性预算空间
+
+- 用户要求回收分析并准备关闭服务器；对完整缓存/分析数据的选择实际回答“分析数据收齐即可关机（推荐）”。本机798份数据＋原index共799文件/880746775B，逐大小/SHA全部通过；17个大编码/索引/行号数组和完整原库仍在节点。`recovery-verification.json`有逐文件清单。已明确告知可以关闭；后续未再连接节点或启动实验。`partial-bulk-transfer/`是主动停止的部分大文件副本，不能称完整run。
+- 本机独立重算88文件/78848质量记录、52864候选损失分解（候选保留与精排strict差异0），核对72文件/18960计时调用、364指标点及364生命周期账本；4个可行LP/MILP解的权重/整数性/质量/费用通过。保存距离到指标的重算不等于重新读取原13.7GB源重算距离。
+- 相同256维/1024B搜索表示：Gaussian/M6400 check benchmark84.344%、strict79.734%、CUDA9.764ms；PCA/M1600为98.766%/96.453%/5.113ms，M3200为99.844%/98.875%/6.311ms。Hybrid256=PCA64＋Gaussian192，M6400为96.141%/91.5625%/9.320ms。严格均值与至少漏一个GT的query频率不同；PCA/M3200仍有23/64 query漏GT，不是Gaussian矩阵随机概率。
+- Hybrid25695% benchmark oracle：check LP7.847848ms、MILP7.852427ms（gap0）、query-blind混合9.041295ms、同轮固定M6400为9.608048ms；PCA固定5.113472ms且质量98.766%。LP仍慢53.47%，控制器余量−2.734376ms。99% benchmark及95%/99% strict的两角色共6个问题因质量上限不可行。本轮固定动作空间即使零成本预测器也不能逆转该比较；不推广到所有维度/种子/数据。
+- 35组真实Flat/CUDA对同指标FP64的31360条比较仅OPQ32/discovery qi52/M100有一条主指标不同（recall53%→52%、strict51%→50%，具体数值原因仍未定位）；总7条返回集合差异，其余不改变主指标。评分度量改变的same_code_l2、IVF同码漏搜另行归类，不混称数值错误。
+- CPU冻结95%/99% benchmark控制为OPQ64-IVF64/256-M6400：check95.828%/99.797%，16条check的计时15.150/36.367ms；GPU64条check同硬件比较见报告。PCA256与OPQ64还有strict99质量可行但未计时的预算，故保存的strict99前沿不能当全面最优。PCA拟合0.828秒，CUDA冷准备22.71秒；相对raw/M100热延迟降低42.02%，约5376次查询后摊销额外准备费，原向量保留费用已计入。
+- [完整中文解释、CSV/图及重放脚本](runs/route6-S0-manual-r2-recovery-20261104/analysis/analysis_zh.md)、[第75节](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#75-s0分析数据回收离线复核与gaussian应用空间判断2026-11-04)。当前不进入这套链路的Tri在线控制器工程；静态Tri选维、标量公式、一般Gram概率尾和RAG答案收益仍未验证。仅四L1文档及未绑定分析产物，科学源码/配置/协议/原结果不变，不为文档重跑664项或启动新服务器计算。
+
+以下记录为此前终轮/监控检查点。
+
 ## 当前完成：S0 manual-r2正常结束，815项封存核验通过
 
 - 本轮 `/root/autodl-tmp/route6-S0-manual-r2-3d372f9-20261104` 正常complete，总8984.503秒（149.74分钟）、科学8975.895秒；全部55阶段complete/returncode0，没有监控终止或自动重试。

@@ -7249,3 +7249,114 @@ continuous_resource_compliance_claim=false；不是连续合规认证或真实�
 本轮完整产物继续保留服务器。仅维护四L1交接文档，科学实现/配置/协议/保护登记字节未改，
 不为文档重复执行既有完整664/Linux49测试。后续仍需完整科学产物回收、独立指标/费用/oracle解释，
 不能由一次complete状态得出研究方向的正面结论。
+
+## 75 S0分析数据回收、离线复核与Gaussian应用空间判断（2026-11-04）
+
+用户当前要求“把数据传回来分析吧，我要关闭服务器了”。开始完整回收后，明确询问是否需要
+完整大缓存，其实际选择为：
+
+> 分析数据收齐即可关机（推荐）
+
+此轮只做读取/回收/离线指标复算、报告与四L1交接文档，不改科学实现、配置、协议、阈值、
+旧结果或保护登记。无新MC/ANN训练/设备门/官方test/第三阶段Tri。
+
+### 75.1 实际回收与关机边界
+
+本机 `runs/route6-S0-manual-r2-recovery-20261104/priority/` 有798项原index内数据和index本身，
+共799文件/880746775B（约840MiB）。逐大小/SHA全部通过，原index SHA仍为
+`003ccbbca3c10ad6725462556d79554c8c0c4deb5329999219313c97bb0dad1a`。
+`recovery-verification.json`列逐项SHA及17项server-only：9份PQ编码、2份序列化IVF索引、
+原corpus与5份IVF大行号表。其余逐query候选/返回距离/指标、时延、oracle系数/解、模型和来源记录均已收齐。
+原完整13.7GB源和大缓存仍在服务器；不能把本机所选快照称为完整815项本机恢复。
+
+用户选择后，仅向逐一核验的本机rsync/scp传输进程发SIGINT，保留部分传输记录，不涉及远端
+科学worker或源文件。换独立连接续传分析快照成功；原大文件部分副本标为partial-bulk-transfer，
+不是完整run。校验完成即明确告知“可以关闭服务器”，之后未再依赖SSH；实际关机由用户操作，
+不推断节点已经断电。后续交接只同步canonical/GitHub，不要求重启节点同步文档。
+
+### 75.2 独立重算范围与数值/ANN分解
+
+按保存的原维精排距离、发布truth/cutoff和角色，离线重算88文件/78848条质量指标；
+52864条候选丢失/挽回分解通过，候选GT保留与精排strict差异0。
+核对72文件/18960条计时调用及对应输出，重算364个指标点、364条P+Q*T及cold-verified账本。
+95% benchmark的两角色LP/MILP共4个可行最优解，其权重约束/整数性/质量/费用独立通过。
+没有重新取13.7GB原向量重算每条距离，也没有把保存记录重放称为新的全库实验。
+
+35组真实Flat/CUDA对同指标FP64参考共31360条，只有OPQ32 discovery qi52/M100一条主指标不同：
+recall .53→.52、strict .51→.50；数值原因未进一步定位。总7条返回集合不同，其余不改变主指标。
+纯Gaussian/PCA主指标与对应FP64全扫描一致。same_code_l2主动改变PQ码上评分度量，另记为
+alternate_metric_same_code；IVF另与自己的残差编码全扫描比较，不能混算为数值实现错误。
+例如check/M6400 OPQ32全局Flat98.188%→IVF自有编码全扫描94.344%→nprobe25694.172%，
+前后两段分别涉及表示/残差编码改变和同码ANN漏搜。
+
+### 75.3 已测质量和真实费用
+
+下表为check64的CUDA实际查询变换/搜索/传输/同步＋原维精排，预算由冻结discovery规则决定，
+失败链路按原100/6400回退；不据check重选。
+
+| 表示 | M | benchmark recall | 严格ID保留 | 至少漏一个GT | ms/query |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| raw640 | 100 | 100% | 100% | 0/64 | 8.819 |
+| Gaussian128 | 6400 | 46.625% | 44.297% | 64/64 | 8.810 |
+| Gaussian256 | 6400 | 84.344% | 79.734% | 63/64 | 9.764 |
+| PCA64＋Gaussian192（Hybrid256） | 6400 | 96.141% | 91.5625% | 58/64 | 9.320 |
+| PCA256 | 1600 | 98.766% | 96.453% | 38/64 | 5.113 |
+| PCA256 | 3200 | 99.844% | 98.875% | 23/64 | 6.311 |
+
+同为256维/1024B表示时，PCA256明显更适配这批数据。Gaussian256的搜索/变换/传输约5.253ms，
+但M6400精排约4.476ms；PCA/M1600分别4.308ms和.772ms。压低搜索维度并不等于总延迟降低。
+PCA拟合仅.828s（样本.202s）；不能仅用“训练PCA贵”解释本轮选择Gaussian的必要性。
+
+同字节32B：Gaussian8/PCA8/PQ32/OPQ32的M6400 check benchmark分别.984%/6.484%/90.672%/98.188%；
+64B：Gaussian16/PCA16/PQ64/OPQ64分别3.375%/19.5625%/100%/100%。Gaussian→PQ32/64为69.625%/80.609%，
+Hybrid→PQ64为92.828%。PCA→PQ32/64为95.141%/99.906%，不能只看check便宣称通过discovery目标。
+OPQ训练代价也高于PCA→PQ：本轮CPU Flat离线P约397.84s对29.45s（64B），需要合看冷/热费用。
+
+CPU冻结95%/99% benchmark目标控制为OPQ64-IVF64/256-M6400：check95.828%/99.797%，
+16条check计时15.150/36.367ms；GPU控制则为PCA256-M1600/3200，64条check计时5.113/6.311ms。
+硬件和计时队列不同，不作跨硬件算法加速比。logical resident包含原始向量约12.48GiB，
+PCA/CUDA约17.49GiB，raw/CUDA约24.96GiB，OPQ64/IVF约12.83GiB；不是编码大小的全系统压缩比。
+
+PCA-M1600的CUDA离线P22.710s，raw-M100为2.791s；热延迟降低42.02%，约5376次query后摊销额外P。
+共有输入SHA/范数审计95.950s另计入cold-verified总费；不把重复科学审计当一次部署的必需计算。
+P是协议记录的表示/索引冷准备，不是全服务/库初始化/RAG总冷启动或GPU租用货币费用；
+数据获取与embedding生成另列历史沉没费用，不将本轮账本称为所有业务费用的完整计量。
+
+### 75.4 免费预算oracle与当前接入点判断
+
+Hybrid256的check95% benchmark oracle：同次全预算计时的固定M6400为9.608048ms，
+query-blind全局预算混合9.041295ms，逐query确定性MILP7.852427ms（gap0），随机化LP下界7.847848ms。
+该LP仍比质量98.766%的PCA固定控制5.113472ms慢53.47%，控制器余量为−2.734376ms。
+oracle不计pilot、联合信息、风险公式、策略调用费用，且偷看逐query质量，不能作为可部署策略。
+
+相对Hybrid自己的固定预算可乐观省18.32%，相对query-blind混合省13.20%，并不说明相对竞争者
+有增量。本轮Gaussian-family只有这一条链路入选oracle；其他链路按冻结的质量/选择规则未入选。
+Hybrid免费质量上限check为benchmark96.141%/strict91.5625%，discovery为95.797%/91.641%；
+99% benchmark和95%/99% strict的两角色6项均不可行，不是监控终止或solver超时。
+
+因此在当前固定128/256维、M≤6400、选定混合比例和已测后端中，没有发现Gaussian+Tri能竞争的应用空间，
+不继续这套动作空间的第三阶段在线Tri控制器工程。这个结论不能推广到其他维度、其他PCA保留比例、
+其他embedding/数据/硬件/随机矩阵；一般相关Gram数学研究也没有由本轮被证伪。
+
+### 75.5 明确限制、产物与下一范围
+
+正式预算计时只由benchmark目标选点：PCA256/M6400和OPQ64/M3200的discovery strict已≥99%，
+却没有本轮正式计时，所以strict99完整费用前沿仍未测；不能把保存前沿只选中raw写成全局最优。
+固定表示的query遗漏频率也不等于Gaussian矩阵上的宏观概率；PCA/M3200虽benchmark99.844%，
+仍有23/64 query至少遗漏一个GT。官方test、独立认证、真实RAG答案、静态Tri选维、轻量标量公式
+和一般Gram尾均未被本轮验证，不自动开启新试验补齐。
+
+完整本机中文报告、CSV、三组PNG/PDF和只读复核脚本位于
+`runs/route6-S0-manual-r2-recovery-20261104/analysis/`；`analysis_zh.md`解释全部表格和复核范围，
+`replay_analysis.py`从已回收快照离线重算。原实验所有科学字节/结果不变，本轮仅四L1交接文档，
+沿用已有完整664/Linux49软件测试证据，针对数据回收/复核做实际SHA和指标/费用检查，不为文档重复跑套件。
+
+最终从交付的replay_analysis.py本身离线重放成功，计数保持78848/18960/364；三张图已视觉核对，
+报告区分真实后端、改变评分度量和ANN误差。20个派生产物关闭清单analysis_delivery_index.json
+SHA256为 `3cfb4c6a836d6a8e4569584f95d93a2af2db16a9c653abc382034988b3e25ab4`，
+逐大小/SHA核验通过，绑定原source index与recovery-verification SHA。保护287项和diff检查通过。
+重放命令（只读已回收科学数据，输出派生表/图）：
+
+```sh
+MPLCONFIGDIR=/private/tmp/r6-s0-mpl XDG_CACHE_HOME=/private/tmp/r6-s0-fontcache OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 /private/tmp/route6-b0-local-env-20261103/bin/python runs/route6-S0-manual-r2-recovery-20261104/analysis/replay_analysis.py --recovery /Users/guanghongxu/Query-Adaptive-Tri-RAG/runs/route6-S0-manual-r2-recovery-20261104
+```

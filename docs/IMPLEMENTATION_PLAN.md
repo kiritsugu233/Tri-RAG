@@ -4,11 +4,18 @@ Updated 2026-11-04. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
+## 当前完成：S0分析回收、独立复核与应用空间结论
+
+- [x] 用户选“分析数据收齐即可关机”；798数据＋index本机逐SHA通过，17大缓存留服务器，明确告知可关机；后续分析不依赖SSH。
+- [x] 78848质量/52864候选分解、18960计时、364点/费用账本及4个可行oracle解离线复核，报告/CSV/PNG/PDF与可重放脚本齐备。
+- [x] 现有Gauss128/256表示质量不足；Hybrid256免费预算LP7.848ms仍慢于PCA固定5.113ms，当前动作空间不立项Tri在线控制器；保留不同维度/混合/数据的外推限制。
+- [x] 标明strict99未计时预算、CPU16/GPU64角色队列、开发集非认证、same-code度量与ANN误差分解及一个OPQ32数值差异；未将完成流程写成Tri/RAG收益通过。
+
 ## 当前完成：S0 manual-r2正常退出与终轮核验
 
 - [x] 同一新轮执行55阶段全部complete/returncode0：24质量、20计时、5选定IVF、1选定oracle计时及求解/finalize，总149.74分钟；没有自动重试。
 - [x] 节点815项关闭大小/SHA独立核对、完整来源post-SHA/roles/input核对、所属进程退出检查；a800-s0-5定时任务已删除，原产物/科学源码保留。
-- [ ] 完整结果回收、独立逐query指标/成本/oracle复算和三步研究目标的实测解释；本次流程complete不等于Gaussian/Tri/RAG收益已验证。
+- [x] 按用户分析数据范围回收、独立逐query指标/成本/oracle复算和实测解释完成；大缓存留服务器，未宣称Tri/RAG收益已验证。
 
 ## 当前执行：S0 manual-r2重测与旧中断轮空间清理
 
@@ -16,7 +23,7 @@ Unchecked historical items are not execution authorization.
 - [x] 核对快速盘约33GiB可用；旧r1本机106项逐SHA通过，清理36个已备份/重复数组及两个传输包623741371B，保留全部JSON结果/失败/原历史index与完整输入/B0/v1依赖，记录清理receipt及旧目录不再完整verify。
 - [x] clean3d372f9实际三次独立CUDA检查通过53.021秒，26项封存节点验证；正式controller2169在新目录启动，prepare worker2178。
 - [x] 设备门26项本机逐SHA复核；首个300秒快照prepare完成/raw640 Faiss质量运行，RSS25.96GiB/free32.75GiB，无计算错误；GPU旧样本不当当前值。
-- [ ] 每5分钟只读状态/汇报，由用户决定停止；完成24配置质量、实际费用/ANN/oracle后核验回收与分析。当前仅启动，不声称完整科学结果。
+- [x] 每5分钟跟进同一轮至正常complete，核验封存、删除定时任务；按用户当前范围回收和离线分析完成。
 
 ## 当前请求：S0人工监督、每5分钟报告
 
@@ -50,8 +57,8 @@ Unchecked historical items are not execution authorization.
 - [x] 098ca95 canonical提交/push/独立远端核对、SHA bundle干净Linux同步及36项12.341秒通过。
 - [x] 一次同reporter下三独立CUDA启动门11.704秒/21项封存通过；随后唯一正式r1启动，777.695秒失联停止，未自动重试。
 - [x] 正式107项节点/106项本机SHA、完整输入前后SHA、拥有进程退出、12544条质量及候选遗漏独立重算与中文报告/CSV/图表收尾；未把局部完成改成完整完成。
-- [ ] 完整表示/实际后端筛选、同维/同字节/全生命周期账本、实测费用oracle与实际结果分析。
-- [ ] 根据筛选结果提出Tri增量的具体下一范围；一般Gram尾/线上联合信息/静态选维与标量公式不提前部署。
+- [x] 协议范围内表示/实际后端、同维/同字节/全生命周期账本和预算oracle分析完成；strict99完整费用前沿仍不在本轮已测覆盖内。
+- [x] 依据现有动作空间的竞争性缺口，暂不进入第三阶段Tri控制器；一般Gram尾/线上联合信息/静态Tri选维与标量公式未验证，后续另立范围。
 
 ## 当前任务：R6-B0只读准备及精确实施范围
 

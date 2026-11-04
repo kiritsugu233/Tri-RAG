@@ -8,6 +8,22 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**S0 analysis data recovered and audited locally (2026-11-04).** The user chose
+“分析数据收齐即可关机（推荐）”.798 selected files plus the original index (840MiB)
+passed local size/SHA checks;17 bulky code/index/row-map arrays stay on server.
+The user was told the node may be powered off; subsequent analysis is offline.
+Replayed78848 quality records,18960 timed calls,364 points/cost ledgers and four
+feasible oracle solutions. Pure Gaussian256/M6400 achieves check recall84.344%;
+PCA256/M1600 achieves98.766% at5.113ms CUDA. Hybrid256's free95%-recall LP costs
+7.848ms, worse than that fixed PCA control; current tested Gaussian actions show
+no competitive Tri entry point. This is an observed development-screen result,
+not a universal theorem or a formal RAG/Tri claim. Strict-ID99% latency coverage
+is incomplete (PCA256/M6400 and OPQ64/M3200 have quality but no formal timing).
+See [section75](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#75-s0分析数据回收离线复核与gaussian应用空间判断2026-11-04)
+and the [Chinese report/data/plots](runs/route6-S0-manual-r2-recovery-20261104/analysis/analysis_zh.md).
+
+Earlier entries below are historical checkpoints.
+
 **S0 manual-r2 finished normally; completion verified (2026-11-04).** Real run
 `route6-S0-manual-r2-3d372f9-20261104` reports complete after8984.503s
 (149.74min), all55 stages returning0:24 quality,20 timing,5 selected IVF,
