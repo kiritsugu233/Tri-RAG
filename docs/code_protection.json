@@ -1882,6 +1882,11 @@
       "path": "scripts/run_tls_rag_step5_route6_representation_v2.py",
       "level": "L1",
       "reason": "User-approved §62 S0 v2: Owned serial workers and independent bounded telemetry; all scientific semantics inherit L0"
+    },
+    {
+      "path": "docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md",
+      "level": "L1",
+      "reason": "User-requested PQ refinement research design and first-cost-gate handoff; non-frozen reference only, no new scientific implementation or inherited L0 contract changes"
     }
   ],
   "approved_change_history": [

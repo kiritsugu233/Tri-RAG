@@ -3,6 +3,13 @@
 Updated2026-11-04. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
 maintained branch `codex/tls-rag-step5-ann`.
 
+## 当前授权任务：PQ精化第一门与Step5精简交接
+
+- 用户已审阅MD并授权现有Step5先完成第一门C0–C2；本机成本分析先行，需要服务器时明确通知用户开机。
+- 方案已持久化为[仓库MD](docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md)，追加L1登记；[当前工作摘要](NEXT_AGENT_PROMPT.md)替换旧活动待办。
+- 方案1–4依用户指令退出活动上下文；方案5、旧理论和监控细节仅按需查证。历史证据、科学合同和数据角色保留。
+- 本交接仅改研究/导航文档及新L1追加登记，未启动新成本benchmark、检索、草图或服务器工作；第一门尚未完成，第二门/Tri实现不自动开始。
+
 ## 当前完成：分析数据已回收，可关闭节点；现有Gaussian链路无竞争性预算空间
 
 - 用户要求回收分析并准备关闭服务器；对完整缓存/分析数据的选择实际回答“分析数据收齐即可关机（推荐）”。本机798份数据＋原index共799文件/880746775B，逐大小/SHA全部通过；17个大编码/索引/行号数组和完整原库仍在节点。`recovery-verification.json`有逐文件清单。已明确告知可以关闭；后续未再连接节点或启动实验。`partial-bulk-transfer/`是主动停止的部分大文件副本，不能称完整run。

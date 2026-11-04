@@ -8,6 +8,17 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**Current task: PQ refinement cost gate only (2026-11-04).** The user approved
+the reviewed MD route and asked the existing Step5 agent to complete the first
+gate before proceeding. Read [the compact active brief](NEXT_AGENT_PROMPT.md)
+and [the plan with actual consent](docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md).
+Finish all local cost audits first; if real read/compute replay needs the server,
+notify the user to power it on. No gate2/3, new Gaussian representation or Tri
+controller. Schemes1–4 are retired from active context; route5 and completed
+route6 science are reference only. Keep protected contracts and evidence.
+
+Earlier completed checkpoints follow; they are not current pending tasks.
+
 **S0 analysis data recovered and audited locally (2026-11-04).** The user chose
 “分析数据收齐即可关机（推荐）”.798 selected files plus the original index (840MiB)
 passed local size/SHA checks;17 bulky code/index/row-map arrays stay on server.

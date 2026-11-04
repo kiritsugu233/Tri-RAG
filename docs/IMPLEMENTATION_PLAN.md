@@ -4,6 +4,15 @@ Updated 2026-11-04. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
+## 当前任务：PQ精化第一门成本空间（2026-11-04）
+
+- [x] 用户审阅MD并指示交给现有Step5，先完成第一门。
+- [x] MD持久化、精简NEXT_AGENT_PROMPT及当前导航；方案1–4从活动待办退役，历史证据保留。
+- [ ] Step5按C0复核最新完整S0逐query成本、样本覆盖和新增控制可用预算。
+- [ ] 按C1拆分原向量获取/拷贝、距离、排序等真实可取消费用；需服务器时先通知用户。
+- [ ] 按C2给通过/不足/未决及明确证据；未完成分解不以精排总占比代替读取空间。
+- [ ] 第一门结果供审阅；第二门/新Tri控制器不自动开始。
+
 ## 当前完成：S0分析回收、独立复核与应用空间结论
 
 - [x] 用户选“分析数据收齐即可关机”；798数据＋index本机逐SHA通过，17大缓存留服务器，明确告知可关机；后续分析不依赖SSH。

@@ -1,46 +1,75 @@
-# Next agent startup
+# Step5 compact active brief: PQ refinement cost gate only
 
-Work in `/Users/guanghongxu/Query-Adaptive-Tri-RAG` on
-`codex/tls-rag-step5-ann`. Preserve user files and the review backup.
+Updated 2026-11-04. This replaces obsolete active instructions in this file.
+Actual user consent is quoted at the top of the [current plan](docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md).
+The user approved that MD, asked the EXISTING Step5 agent to finish gate 1 first,
+retired schemes 1-4 from working context, and requested notice when server power-on is needed.
 
-Read [AGENTS.md](AGENTS.md), [START_HERE.md](START_HERE.md),
-[current STATUS](STATUS.md), relevant protection entries and the user's actual
-brief. The [repository map](docs/REPOSITORY_MAP.md) locates versioned code.
-Run `python3 scripts/check_code_protection.py` before editing and handoff.
+## Only current task
 
-The current user requested a research framework and agent-ready Markdown for
-**joint Gaussian projection and nearest-neighbor rank tails**. Read
-[the complete work brief](docs/TRI_LAW_JOINT_RANK_RESEARCH_FRAMEWORK.md), especially
-its exact k=1 target, information hierarchy, T0–T4 gates and final startup prompt.
-Start with T0 prior-work/claim review if assigned this research. The framework
-does not authorize new L0 code, tests, protocol or scientific runs, and its
-proposed parameters are not frozen. No new agent was dispatched by its creation.
-Keep the current system studies stopped and preserve all closed roles/results.
+Complete C0-C2 in the plan. Immediately finish all available local cost audits.
+Gate 1 includes separating actual cancellable read/compute work: aggregate rerank
+fraction alone does not complete or pass it. If server replay is necessary, report
+what is missing and ask the user to power on the server after finishing local work.
+Do not enter gate 2 residual/sketch experiments or gate 3 Tri implementation.
+Do not expand representations, action grids or query roles.
 
-Step 5 continuation v2 A→B→C has completed with negative net-speed results and
-incomplete deployment safety. The user previously assigned **route4 follow-up research**
-to the existing Step 5 agent; read journal section32 in
-[the exploration record](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md).
-P0 review is complete; read sections33–34 for its proof, counterexample, input
-audit and exact P1 proposal. The user's actual response was
-“保留P0，暂缓P1实现” at the prior checkpoint. The user's new 2026-11-01 instruction
-“继续P1” resumes the exact eight-path section34 scope. Section36 records the
-approved implementation, full445/445 tests (16 P1, no skips), and bounded
-real-input P1 result. Scientific source is `b38ad51`; completed run is
-`runs/route4-screen-20261101-v1-recovery`, with no Gaussian candidate and12/12
-infeasible free-M diagnostics. Report32 remains closed; P2 is not started.
-Preserve the failed pre-input startup and452-file scientific archive plus
-independent postrun review. Do not rerun, retune, reopen report or extend scope.
-Consult STATUS and sections36–39 for actual results. No new retrieval or index
-build ran in P0. The subsequent approved two-scenario run ended with no Gaussian
-lifecycle winner and no paid-advisor decision gain; its resource_stop and missing
-checks remain. Do not resume that run, its advisor, independent-view expansion
-or route5 by treating this theory framework as permission. Preserve route1/2 failures.
-Guard/register repair A was approved and implemented;
-see current STATUS for verification. The user's subsequent “执行” approved
-[proposal B](docs/TEST_SUITE_SIMPLIFICATION_PROPOSAL.md): one equivalent cache-test
-merge and explicit suites, with no permanent assertion deletion. Default/`full`
-runs467 methods at the latest scenarios checkpoint; collected `step5`269, `legacy`198. Daily subsets do not replace the
-full suite before implementation handoff/commit/push, and collection errors in
-any cohort must fail even a partial run.
-Further L0 changes still need exact path/scope consent.
+## Minimal read set
+
+1. START_HERE.md latest current entry, AGENTS.md, relevant protection entries, this brief.
+2. docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md execution note and sections 2-4/6.
+3. runs/route6-S0-manual-r2-recovery-20261104/analysis/analysis_zh.md.
+4. Its latency_components.csv and ../priority/ivf/opq64/{64,256}/timings.json;
+   ../priority/representations/pq64/cpu14/timings.json. Read other provenance only as needed.
+
+Canonical checkout: /Users/guanghongxu/Query-Adaptive-Tri-RAG.
+Continuing branch: codex/tls-rag-step5-ann. Pre-handoff HEAD: 15712d15db85bdee034cd8b67b5ff65c8496aa4b.
+Inspect actual HEAD/status, preserve untracked archives, do not create another checkout/branch.
+Protection checks before edits/handoff; exact L0 approval and data-role guards remain binding.
+Routine authorized L1 analysis/docs need no renewed generic approval.
+Classify new files by actual impact; do not treat every new analysis file as L0 automatically.
+Commit/push/verify the continuing branch after authorized work and required checks.
+
+## Facts to retain
+
+- Full S0 completed normally. Local recovery verified 798 selected products plus index;
+  17 large caches and the full original source remain on the server. It may be off.
+- Corpus: 5,233,329 x 640 FP32. k=100. Native clip(1-dot,0,2), original ties unchanged.
+- 128 observed development queries: 64 discovery +64 check; no independent certification.
+- CPU timed cohort: 16 queries per role, 3 calls each; 48 calls are not 48 independent queries.
+- Primary OPQ64/IVF64/M6400: check total15.149721ms, rerank4.771083ms, fraction31.493%.
+- Quality control IVF256/M6400: total36.366667ms, rerank5.029427ms, fraction13.830%.
+- Low-headroom PQ64/Flat/M3200: total137.272857ms, rerank2.862618ms, fraction2.085%.
+- Rerank includes gathering/copying, distance, sorting: not a physical-read counter.
+- Proposed engineering target is10% total reduction; halving primary rerank leaves
+  about0.870569ms for new summary access, query projection and control.
+- Current S0 Gaussian/Hybrid main representations had no competitive Tri entry point.
+  Auxiliary residual summaries are a different, still unverified hypothesis.
+
+## Context to retire
+
+- Schemes1-4 are rejected/retired by the user. Remove their pending tasks and long
+  implementation narratives from active summaries. Do not resume or rerun them.
+- Route5 remains an unimplemented historical proposal, not current work.
+- Old Step4 execution details, monitoring incidents, advisor/LID tuning and old
+  controller plans are historical. Do not reread the whole exploration journal.
+- Gaussian cycle/T0/T1/M0/B0 work is reference only; retain necessary conclusions
+  and evidence pointers, not independent theory work as pending tasks.
+- Preserve historical files, scientific contracts, failures and consent records.
+  Context cleanup does not delete evidence or weaken governance.
+- Recover only a targeted historical dependency if a concrete current question needs it.
+- This is working-summary cleanup, not a claim that model history was physically erased.
+  If no supported compaction tool is available, continue directly using this active brief.
+
+## Gate1 deliverables
+
+Query-level cost audit; coverage/provenance; cancellable-work decomposition;
+read-vs-compute evidence or the exact minimal server replay still needed;
+10% target with5%/20% sensitivity; same-hardware paired uncertainty;
+pass/insufficient/unresolved verdict with limitations. Do not declare the gate
+complete while required physical read/compute decomposition remains unmeasured.
+
+When a new L0 contract or file is necessary, prepare exact paths/impact/validation
+for scoped consent while continuing unaffected local analysis. Do not ask whether
+starting gate1 is allowed: the user already instructed it.
+Report in the Step5 chat. No other chat messaging or automatic gate2 start is authorized.
