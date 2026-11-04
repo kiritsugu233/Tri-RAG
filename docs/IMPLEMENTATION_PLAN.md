@@ -4,7 +4,7 @@ Updated 2026-11-04. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
-## 当前任务：PQ精化第一门成本空间（2026-11-04）
+## 当前状态：PQ精化C0保留、C1暂缓（2026-11-04）
 
 - [x] 用户审阅MD并指示交给现有Step5，先完成第一门。
 - [x] MD持久化、精简NEXT_AGENT_PROMPT及当前导航；方案1–4从活动待办退役，历史证据保留。
@@ -12,7 +12,8 @@ Unchecked historical items are not execution authorization.
 - [x] 独立核对成本代数及query层配对区间、5%/10%/20%敏感性；保留低空间PQ Flat停止结论。
 - [x] 本机C1前准备：原callback读取/计算路径、真实候选虚拟地址和13项服务器输入清单完成。
 - [x] 提出计划第11节精确八路径及验证/人工监督范围；当前未批准，未创建C1实现或启动服务器。
-- [ ] 按C1拆分原向量获取/拷贝、距离、排序等真实可取消费用；需服务器时先通知用户。
+- [x] 记录实际选择“暂缓C1，保留C0结果”及“暂不开机”；停止推进，保留结果和提案。
+- [ ] C1读取/拷贝、距离、排序实测已暂缓，作为保留规划，不是自动执行待办。
 - [ ] 按C2给通过/不足/未决及明确证据；未完成分解不以精排总占比代替读取空间。
 - [ ] 第一门结果供审阅；第二门/新Tri控制器不自动开始。
 

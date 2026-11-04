@@ -8,12 +8,13 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
-**Current task: PQ refinement cost gate only (2026-11-04).** The user approved
-the reviewed MD route and asked the existing Step5 agent to complete the first
-gate before proceeding. Read [the compact active brief](NEXT_AGENT_PROMPT.md)
-and [the plan with actual consent](docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md).
-Finish all local cost audits first; if real read/compute replay needs the server,
-notify the user to power it on. No gate2/3, new Gaussian representation or Tri
+**Current state: retain PQ refinement C0; defer C1 (2026-11-04).** After the
+completed C0 audit and concrete C1 proposal, the user's actual replies were
+“暂缓C1，保留C0结果” and “暂不开机”. Retain all C0 results and the proposal;
+do not implement C1, access SSH, request power-on again or start further measurements
+without a new explicit instruction. Read [the compact brief](NEXT_AGENT_PROMPT.md)
+and [the plan with actual decisions](docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md).
+No gate2/3, new Gaussian representation or Tri
 controller. Schemes1–4 are retired from active context; route5 and completed
 route6 science are reference only. Keep protected contracts and evidence.
 
@@ -25,9 +26,9 @@ rerank leaves0.870569ms for added work at10% total reduction. PQ Flat has only
 [recorded evidence](docs/pq_refinement_cost_c0_evidence_v0.json).
 Local C1 input/address preparation is done. Full original vectors remain on
 the server; actual gather/read/compute costs have not been measured. The precise
-C1 eight-path implementation proposal is pending consent; no C1 code/runtime or
-server work has started. CPU is sufficient; request power-on with at least32GiB
-RAM. A changed CPU allocation requires a newly paired full baseline.
+C1 eight-path implementation proposal is explicitly deferred; no C1 code/runtime or
+server work has started. Its CPU/RAM and pairing requirements are retained as
+future proposal details, not active power-on or execution instructions.
 
 Earlier completed checkpoints follow; they are not current pending tasks.
 
