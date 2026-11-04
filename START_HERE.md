@@ -1,6 +1,6 @@
 # Query-Adaptive Tri-RAG: current entry
 
-Updated 2026-11-03. Canonical checkout:
+Updated 2026-11-04. Canonical checkout:
 `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 Maintained branch: **`codex/tls-rag-step5-ann`**; continue Step 5 updates there.
 The reviewed/Tri-Law-repaired backup remains `codex/repo-review-code-protection`
@@ -8,7 +8,34 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
-**R6-S0 authorized implementation (2026-11-03).** Actual answer to exploration
+**R6-S0 closed with partial results; the real experiment did not complete (2026-11-04).**
+Scientific commit `140e9de8244b354a157286e79cf260ce4aeaa774` remains unchanged.
+After1867.539s, one `nvidia-smi` query exceeded0.75s; the supervisor recorded
+`monitor_failed` and terminated its owned worker (returncode-15). Observed
+RSS26.117GiB/GPU26.213GiB were below64/48GiB caps; the cause of the slow telemetry
+call is unknown. Safety shutdown is not scientific completion. The615 CPU tests,
+Linux36 tests and block13 tiny CUDA passed separately.
+
+Raw640 and PQ64 completed quality/timing; one predeclared seed diagnostic completed
+quality only. Hybrid256 completed all128 quality records but not its timing.
+The other20 configurations, ANN and measured cost-oracle stages were not reached.
+All71 indexed products were verified on the node before shutdown;70 are verified
+locally, with only the334,933,184-byte PQ code array retained on the server.
+Full input SHA matched before/after. Read [closure and data](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#61-s0监控失败退出部分结果分析与封存收尾2026-11-04)
+and [中文分析/CSV/图表](runs/route6-S0-preparation-20261103/analysis/analysis_zh.md).
+PQ64/check/M3200 reaches99.21875% benchmark recall but95.859375% strict ID retention;
+52/64 queries still omit at least one exact GT item. These fixed-representation
+query frequencies do not validate Gaussian projection probabilities or Tri tails.
+
+The user powered off the server on2026-11-04. Local analysis/closure needs no
+restart; node documentation sync is deferred. The one approved S0 is spent.
+[Section62](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#62-s0-v2修正提案精确范围与验证计划2026-11-04未批准未实施)
+proposes new-version norm caching, complete cost accounting, independent bounded
+telemetry and quality-first scheduling. No v2 code or second run is authorized.
+
+The following entries are historical checkpoints, superseded by the closure above.
+
+**Historical R6-S0 implementation checkpoint (2026-11-03).** Actual answer to exploration
 §55.7–55.8: “批准九路径、测试同步及一次S0（推荐）”. The six new files and narrow
 test/protection registration are implemented in the canonical Step5 checkout.
 Final full615 CPU/offline tests passed, zero skips (68.372s); new36 included.

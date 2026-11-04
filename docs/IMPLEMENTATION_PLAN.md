@@ -1,6 +1,6 @@
 # Implementation milestones
 
-Updated 2026-11-03. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
+Updated 2026-11-04. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
@@ -9,8 +9,11 @@ Unchecked historical items are not execution authorization.
 - [x] 用户指定三步顺序；只读核对原benchmark目标度量/epsilon主recall、learn发布标签结构和现有接法。
 - [x] 8固定公开快照/原128角色SHA复核；用户确认开机后完成节点只读环境/资源/完整源元数据检查，无向量或label读取。
 - [x] 第55节提出16主+4同字节+4 seed、完整竞争者/原发布learn真值、真实CPU/GPU/索引费用与LP/MILP oracle合同、精确九路径和一次限额范围。
-- [ ] 九路径及一次S0精确批准；实施/登记、完整本地回归、提交同步、Linux CPU/tiny CUDA。
-- [ ] 唯一限额表示/实际后端筛选、原指标与严格ID/同维/同字节/全生命周期账本、已选接法免费oracle诊断。
+- [x] 九路径及一次S0精确批准；实施/登记、最终完整615项回归、GitHub/Linux同步、Linux36项和真实block13 tiny CUDA。
+- [x] 唯一S0执行并如实封存：1867.539秒后monitor_failed，三项预定任务完成、第四项仅质量完成；不是整轮科学完成。
+- [x] 节点71项/本机70项关闭SHA核验、来源前后SHA一致、3584条指标独立重算及中英文分析/CSV/图表/失败说明。
+- [x] 第61节收尾和第62节v2精确修正提案；保留原v1科学/失败，不自动重跑；用户已关机，本地收尾无需重启。
+- [ ] 完整表示/实际后端筛选、同维/同字节/全生命周期账本、实测费用oracle仍未完成；v2新九路径和一次新轮待批准。
 - [ ] 根据筛选结果提出Tri增量的具体下一范围；一般Gram尾/线上联合信息/静态选维与标量公式不提前部署。
 
 ## 当前任务：R6-B0只读准备及精确实施范围
@@ -268,10 +271,11 @@ at their existing local paths. This index does not replace those contracts.
 - [x] Six new approved files, membership-only test change and six protection rows.
 - [x] New34 offline CPU regressions pass; existing failures preserved in ignored runs.
 - [x] Final full613 CPU regressions pass, zero skips,70.388s.
-- [ ] Reviewed canonical commit/push/remote verification.
-- [ ] Clean Linux synchronization, new CPU tests and actual tiny CUDA.
-- [ ] One S0 <=7200s science/9000s global, complete or explicitly unresolved closure.
-- [ ] Actual cost/quality/oracle analysis and verified local closed delivery.
+- [x] Reviewed canonical scientific commit/push/remote verification (final140e9de).
+- [x] Clean Linux synchronization, new36 CPU tests and actual block13 tiny CUDA.
+- [x] One S0 <=7200s science/9000s global; explicitly incomplete monitor_failed closure.
+- [x] Partial quality/actual cost analysis and verified local closed delivery (70/71, code array server-only).
+- [ ] Remaining representation/backend coverage and measured cost-oracle; no inferred results.
 
 Use [the frozen protocol](TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V1.md).
 Existing source/128 development roles only, corresponding learn_neighbors rows
@@ -284,8 +288,8 @@ newly authorized; official test/old closed roles/Tri stage remain closed.
 - [x] Original tiny preflight failure retained/locally SHA-verified; no worker/CUDA/science.
 - [x] New stdlib runner reads both cgroup generations; unchanged14CPU/64GiB gates.
 - [x] Final full615 tests pass,0skip,68.497s (new36).
-- [ ] Push/sync resource-reader correction, Linux36 + new-directory tiny CUDA.
-- [ ] First and only S0 after successful tiny receipt.
+- [x] Push/sync resource-reader correction, Linux36 + new-directory tiny CUDA.
+- [x] First and only S0 after successful tiny receipt; later stopped monitor_failed.
 
 ### Bounded FP64 workspace before first S0
 
@@ -294,4 +298,35 @@ newly authorized; official test/old closed roles/Tri stage remain closed.
 - [x] Prelaunch static memory review replaces whole-corpus squared temporary
   with bounded per-block norms; same row sums, dtype and resource cap.
 - [x] Final full615/0skip/68.372s on bounded-workspace implementation.
-- [ ] Final GitHub/Linux sync and block13 tiny CUDA receipt, then single real S0.
+- [x] Final GitHub/Linux sync and block13 tiny CUDA receipt, then single real S0.
+
+### Single real S0 started
+
+- [x] Scientific140e9de GitHub SHA verified; clean Linux ff-only sync.
+- [x] Linux36/1.031s and actual block13 CUDA3.228s pass,6 closed products.
+- [x] First and only S0 started2026-11-03T14:33:43Z; parent2737/worker2747.
+- [x] Observe stop and seal actual partial results; no automatic restart.
+
+Run `/root/autodl-tmp/route6-S0-v1-140e9de-20261103`; source SHA was first observed phase.
+
+### Running-S0 interpretation limits found by read-only review
+
+- [x] Native/published/prior top100 all128 exact-set matches; cutoffs delta0.
+- [x] Raw CPU main1.047/1.111s and CUDA8.322/8.325ms at quality1/1 recorded.
+- [ ] Current Torch L2 recomputes corpus norms/query: do not infer optimized
+  Gaussian/PCA GPU absence from its latency. Norm-cache refinement is not run.
+- [ ] GPU cold placement timer is missing; do not claim complete GPU lifecycle P.
+- [ ] Distinguish actual duplicate raw layout from fundamental memory requirements.
+
+Frozen v1 source and failed run stay unchanged; no second run has been authorized.
+
+### S0 partial closure and v2 proposal (2026-11-04)
+
+- [x] Distinguish615 passing software tests/tiny CUDA from the incomplete real S0.
+- [x] Verify71 indexed products on node,70 locally, archive/input SHA and exited owned processes before shutdown.
+- [x] Recompute3584 saved query-budget metrics; report mean recall, strict retention and any-GT omission separately.
+- [x] Preserve quality-only hybrid256 results and report its finite-grid oracle quality ceiling without inventing measured oracle costs.
+- [x] Complete Chinese/English reports, actual latency/quality CSV, PNG/PDF, source-bound analysis index and four-L1 handoff.
+- [x] Record cached-norm/cold-cost/monitor/scheduling defects and exact new-version proposal in §62; no implementation.
+- [ ] New scoped v2 approval, full regression/synchronization, fresh tiny receipt and one additional bounded run if approved.
+- [ ] Node documentation sync deferred: user powered off server; local analysis/closure needs no restart.

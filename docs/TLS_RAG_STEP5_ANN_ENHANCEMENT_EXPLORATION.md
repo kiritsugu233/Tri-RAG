@@ -6387,3 +6387,231 @@ Linux新34测试通过（1.030秒）。首次tiny目录`/root/autodl-tmp/route6-
 **最终完整615项通过、0skip、68.372秒**。full-tests-bounded-workspace.log SHA256 `f5f87e681267010410c79dc836ea6cf6132f7a66ffd5e7a1adb2993338fcae9c`。
 保护281项通过；仅原批准的新模块/runner及必要新模块SHA和四L1交接变更。
 下一步最终提交/push/远端核对、Linux36与新tiny后，启动唯一一次已批准真实S0。
+
+## 59 R6-S0 唯一真实运行启动（2026-11-03）
+
+科学提交140e9de8244b354a157286e79cf260ce4aeaa774已push/核对GitHub，Linux干净ff-only同步。
+Linux36测试1.031秒通过；新tiny目录`/root/autodl-tmp/route6-S0-device-140e9de-20261103`
+实际block13 CUDA通过（3.228秒、RSS987,193,344B、GPU587,202,560B、6项关闭产品）。
+CPU与四类CUDA FP64/FP32顺序完全匹配，独立关闭索引通过。
+
+首次且唯一真实S0于**2026-11-03T14:33:43.664Z**启动：
+`/root/autodl-tmp/route6-S0-v1-140e9de-20261103`；parent2737/worker2747。
+冻结实际资源128,849,018,880B/14CPU；科学7200s/全局9000s，
+RSS64GiB/GPU48GiB/artifacts8GiB/newdisk12GiB/free>=16GiB保持。
+初次只读观察为source_full_sha阶段，尚无质量/速度结论。原失败/old source/roles全保留。
+
+通过预检后的实际启动命令（原repo cwd、五BLAS变量均1、PYTHONDONTWRITEBYTECODE=1、
+PYTHONPATH=src、CUBLAS_WORKSPACE_CONFIG=:4096:8）：
+
+```sh
+nohup /root/autodl-fs/gaussian-benchmark-space-v1/env/bin/python \
+scripts/run_tls_rag_step5_route6_representation_v1.py run \
+--run-dir /root/autodl-tmp/route6-S0-v1-140e9de-20261103 \
+--device-receipt /root/autodl-tmp/route6-S0-device-140e9de-20261103/device_receipt.json \
+> /dev/null 2>&1 < /dev/null &
+```
+
+nohup仅让网络断开不移除监督parent；所有科学日志在受监控run目录。
+当前继续观察该唯一运行；不拉新源码到运行节点、不重启/扩限、不做第二轮或Tri。
+
+## 60 S0运行中只读实现及费用审查：GPU结果解释边界（2026-11-03）
+
+当前只有一次S0仍在执行；不修改运行源码、参数、身份、seed或restart。真值门已通过：
+128条published/nativeFP32/priorFP64 top100集合全部一致，重算原metric cutoff差均0。
+完整SHA/roles46.882s、全库加载norm gate36.515s、128 query/truth读取0.037s。
+原维CPU main完成：discovery/check mean1.047240/1.110607s，primary recall与strictID均1。
+原维CUDA main完成：192正式样本/role，mean0.008322462/0.008325262s，二项质量均1。
+这是指定实现和warm batch1数据，不是正式test、独立认证或普遍CPU/GPU速度定理。
+
+发现一个必须保留的实现边界：`representation_v1.py::search_backend`的Torch L2分支
+每次执行`(device_values*device_values).sum(dim=1)`，尽管corpus norms与query无关。
+原维用native IP，不付这一项；Gaussian/PCA/hybrid投影后必须保留变长norm，但其范数
+可在索引构建时存为N个FP32（20,933,316B）并按source/model/dtype/device指纹冻结。
+当前实现因此不能作为优化后Gaussian/PCA GPU链路的性能下界，也不能以它的负面结果
+宣称不存在Gaussian应用空间。质量参考与CPU Faiss对照不受此缓存优化点影响。
+本轮结果明确标记当前实现；不在观察已开数据后改代码/选择规则。
+
+另一个费用审查项：GPU corpus placement未单独打timer；当前lifecycle账本复用了CPU
+Flat构建P。逐query实测包括query变换、传输、搜索、同步、rerank，仍可报告warm延迟，
+但GPU冷启动P与GPU P+Q*T不可冒称完整验证。CPU/审计/PCAfit等已测项仍按实际保留；
+缺测的GPU placement不填0或理论带宽估计。raw复制内存属于指定实现，原维可有其他
+共享原向量的更省复制设计，不将本轮layout优势说成表示方法的内在内存优势。
+
+这些是运行中只读审查，不是新的实现/新GPU轮批准。完成本次后，依据实际覆盖/费用
+缺口再给出可审阅的修正范围；原一次S0同意不自动授权另一次运行。
+
+## 61 S0监控失败退出、部分结果分析与封存收尾（2026-11-04）
+
+### 61.1 先区分软件通过、安全停止与真实实验完成
+
+用户指出上次“监控失败安全退出”的日志，问实际测试是否正常完成，并告知已经关闭服务器。
+答案是：**软件回归与tiny CUDA通过；监督器成功停止其拥有的计算；真实S0整轮未完成。**
+第59–60节是当时运行中的检查点，不是最终状态。没有把失败状态改成complete，也没有自动再跑。
+
+唯一真实S0科学源为`140e9de8244b354a157286e79cf260ce4aeaa774`，目录
+`/root/autodl-tmp/route6-S0-v1-140e9de-20261103`。
+2026-11-03T14:33:43.664Z（北京时间22:33:43.664）启动，约15:04:51.203Z结束：
+
+| 回执字段 | 实际值与解释 |
+| --- | --- |
+| status | `monitor_failed`，不是complete |
+| monitor_error | `nvidia-smi --query-compute-apps=pid,used_memory --format=csv,noheader,nounits`超过0.75秒 |
+| worker returncode | -15，监督器终止其拥有的worker |
+| total / scientific worker seconds | 1867.539078 / 1867.325872；约31分7.5秒 |
+| peak tree RSS / GPU bytes | 28,042,981,376 / 28,145,876,992；约26.12 / 26.21GiB |
+| artifacts / disk bytes | 454,959,096 |
+
+没有观测到64GiB RSS或48GiB GPU限额超出，也没有达到7200/9000秒时限。
+触发原因是遥测查询超时；其底层原因没有证据确认，不能归因为Gaussian质量、GPU故障或数值错误。
+监控存在采样和终止延迟，回执保留`sampling_and_shutdown_overshoot_possible=true`，
+不能把所见峰值当作全过程资源上界证明。停止后parent2737/worker2747及GPU计算进程已退出，原日志保留。
+
+最后科学版本完整本机615项、0跳过、68.372秒；Linux36项1.031秒；真实block13 tiny CUDA3.228秒均通过。
+这三项是软件/微型验收，与真实S0的monitor_failed分别记录。本次文档收尾不重复运行未改动的615项。
+
+### 61.2 实际覆盖，缺测不能当失败质量
+
+| 已进入配置/阶段 | 完成程度 |
+| --- | --- |
+| raw640 | 全128条质量、CPU/CUDA完整暖调用计时和CPU1敏感性完成 |
+| pq64 | 全128条质量、CPU计时及同码本IP/L2诊断完成 |
+| hybrid128_seed2 | 全128条预定质量诊断完成；本来就不作主计时/选赢家 |
+| hybrid256（64PCA＋192Gaussian残差） | 全128条质量/候选完整；CPU计时中断，未得到完整延迟产品，CUDA未完成 |
+| 其他20项表示 | 未执行；含独立Gaussian/PCA/OPQ及其他组合/同字节/seed项 |
+| IVF/ANN、实测费用oracle LP/MILP | 未进入 |
+
+因此24项中只有3项完成预定工作，其中2项是主配置，1项是额外seed诊断；第4项只有质量完成。
+hybrid256计时的未关闭内存中间态不补作完整延迟。不能说“表示比较已完成”，更不能说“Gaussian没有空间”。
+原128条published/native FP32/prior FP64 top100集合全部匹配、cutoff差0；完整竞争者5,233,329×640。
+只有对应learn_neighbors打开；官方test、旧cert/test和第三阶段Tri仍关闭，无新投影MC或答案评估。
+
+### 61.3 已测数据：相同硬件内解释，开发角色不冒称正式test
+
+以下使用64条开发check；另64条discovery按原冻结规则用于选择，均已被前期开发检查观察。
+主benchmark为原metric截止＋0.001距离容差recall，严格ID保留单列。
+
+| 接法 | M | 平均benchmark recall | 平均严格ID保留 | 完整暖调用均值 |
+| --- | ---: | ---: | ---: | ---: |
+| raw640 CPU Faiss | 100 | 100% | 100% | 1110.607ms |
+| raw640 CUDA Torch FP32 | 100 | 100% | 100% | 8.325ms |
+| pq64 CPU Faiss | 1600 | 95.53125% | 90.515625% | 131.869ms |
+| pq64 CPU Faiss | 3200 | 99.21875% | 95.859375% | 133.660ms |
+| hybrid256 | 6400 | 96.140625% | 91.5625% | 未完成 |
+
+CPU为既定Faiss14线程配置/BLAS1/batch1；原维CUDA为另一硬件/实现，包含query变换、传输、
+搜索、同步、原空间精排。CPU的PQ64显示指定实现上的质量/延迟折中，不能说已匹配原维100%质量；
+GPU原维8.325ms又是另一部署下的重要竞争基线，不能用跨硬件比值当表示方法收益。
+GPU冷启动P的缺项仍按第60节保留，原向量存储/重复副本不能记成免费。
+
+### 61.4 宏观遗漏的可观察事实与概率边界
+
+本地3584条已存query-budget记录以已提交指标函数独立重算全部一致，原空间精排额外GT损失均0。
+令L(q)=|G(q)\C_M(q)|，则平均严格保留=1−mean(L)/100，而至少漏一项的经验频率=mean(1[L>0])。
+benchmark还允许集合外的近距离替代，因此三项不能混同。
+
+| 接法 | M | benchmark | strict ID | 至少漏1个GT的query | 平均漏GT数 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| pq64 | 1600 | 95.53125% | 90.515625% | 61/64＝95.3125% | 9.484375 |
+| pq64 | 3200 | 99.21875% | 95.859375% | 52/64＝81.25% | 4.140625 |
+| pq64 | 6400 | 100% | 98.671875% | 33/64＝51.5625% | 1.328125 |
+| hybrid256 | 6400 | 96.140625% | 91.5625% | 58/64＝90.625% | 8.4375 |
+
+PQ64/M3200平均3.359375个集合外替代满足距离容差，解释其benchmark与strict之间的差。
+M6400 benchmark100%也不意味着完整保留严格GT。该事实有助于明确研究损失，但不能在看到数据后
+将更严格的“完整top-k”偷偷替换成原benchmark主胜负目标；实际证据/答案收益仍需独立检验。
+
+**这些比例是固定表示对当前query样本的经验频率，不是固定query下对Gaussian矩阵随机性取的概率。**
+没有新MC，不验证Tri-Law一般相关宏观尾的精度，也不能从1个额外seed诊断推断投影总体。
+
+对已存固定M网格，任意策略有`mean a(q,M(q)) <= mean max_M a(q,M)`，无需独立/等相关假设。
+hybrid256的discovery/check benchmark上限为95.796875%/96.140625%，strict上限91.640625%/91.5625%。
+即使免费知道最佳预算，该具体表示/网格也达不到平均99% benchmark或95% strict；更好的预算预测器
+无法补回该网格的质量不足。这是有限表的质量可行性结论，不是未执行的含实测费用LP/MILP oracle。
+它不否定其他Gaussian维度、PCA/PQ组合、更大网格或其他后端；多数尚未测到。
+
+### 61.5 回收、完整性与交付范围
+
+- 节点71项关闭索引产物全部逐大小/SHA验证；本机回收70项逐SHA通过。原delivery_index SHA256为`5364d9e19848c4b297102e9bae2c20abcfea57128b196c602594ac5f6c9991fc`。
+- 唯一仅在节点的`representations/pq64/codes.npy`为334,933,184字节，SHA256 `bc0ed8c42624b87bbc85b45a54845d6aad8f20a42012a43e514aa6672ca7edac`。已核验，不把70/71说成全量本地副本；它不影响当前指标分析。
+- 其余产物gzip包45,447,947字节，节点及本机独立SHA相同：`24f01b77cfb0716a54091ff95641f2db37e9c1d00c91870e7e94be44468e274d`。最初慢速传输中断的本机部分副本另存，未混用/删除。
+- 原source完整SHA前后均为`08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114`；原HDF5/roles/旧轮及tiny预检失败保留。关机前已验证退出，未启动第二轮。
+- 本地根目录`runs/route6-S0-preparation-20261103/`保存`s0-verified/`、`closure-verification.json`和`analysis/`；后者有中英文解释、全部已测预算CSV、真正完成的延迟CSV、JSON和PNG/PDF。分析索引与原运行索引分开，不改写历史。
+
+直接阅读[中文分析](../runs/route6-S0-preparation-20261103/analysis/analysis_zh.md)、
+[质量/遗漏数据](../runs/route6-S0-preparation-20261103/analysis/quality_by_budget.csv)、
+[真实延迟](../runs/route6-S0-preparation-20261103/analysis/measured_latencies.csv)和
+[图表](../runs/route6-S0-preparation-20261103/analysis/quality_and_omission.pdf)。
+它们是本机run产物，不进入Git源码；GitHub交接记录保留核心数值/来源SHA/范围，后续重放仍用科学140e9de。
+
+用户2026-11-04已关闭服务器，本轮不重连。上述本地数据足以完成分析与文档收尾，无需现在重启。
+维护仅限四L1交接文档，旧科学和治理登记不改；canonical文档提交/push并核对GitHub，
+Linux文档同步留待后续获准开机时ff-only完成，不把未同步说成已完成。
+
+本次本地收尾验收：70项原产物大小/SHA与原关闭索引一致，唯一缺本地项仍为上述PQ编码；
+45,447,947字节原回收包SHA再核对一致，当前科学source map与运行冻结完全匹配。
+3584条指标、候选前缀/ID、精排转移逐条重算通过；journal保持HEAD的468,463字节完整前缀。
+9项分析产物的新索引SHA256为`90c43d93b3943ae4ff8d3dd3b73b0a0c6f8f052bee4dabd3141ec3461b5cdafa`，
+含`analysis/handoff_verification.json`。四项L1追踪文档之外没有源码/登记变更，281项保护、
+52个本地链接、5份Markdown围栏和`git diff --check`通过；没有为纯文档变更重复全套科学测试。
+
+## 62 S0 v2修正提案：精确范围与验证计划（2026-11-04，未批准、未实施）
+
+### 62.1 修正目的及必要性
+
+本节是失败后的可审阅提案，**不是新冻结合同或第二轮运行授权**。第55节“一次S0”已实际使用。
+优先补齐表示/接入点筛选，不因部分数据开始Tri控制器，也不预设Gaussian胜过PCA/PQ。
+
+1. `representation_v1.search_backend`每query重复算全库静态norm；拟新增v2索引准备/搜索接口，构建一次N个FP32范数（20,933,316字节），绑定source/model/dtype/device/metric并计离线时间、常驻与磁盘。坐标、L2公式、不后归一化不变；CPU/FP64参考和独立直接距离验证照常，绝不改v1旧产物。
+2. GPU corpus placement未独立计时，lifecycle复用CPU Flat P；拟分别记录每硬件fit、全库变换/编码、build、serialize/load、H2D与norm准备，避免共享项重复加总或漏记。复用既存模型也必须展示原训练/编码成本与新加载成本，不能把历史预处理当0。暖T、冷P、P＋Q·T分别报告，raw保留与真实副本照计。
+3. 同步外部监控0.75秒超时把遥测抖动直接变成终止；拟以独立轻量reporter和监督循环隔离阻塞。parent每250ms检查拥有PID/RSS/全局截止/磁盘；reporter只查GPU并输出原子带单调时钟/PID身份的有效样本。外部调用仍有界，拟单调用最多3秒、GPU样本最多3秒未更新即停止拥有计算和reporter。未知/过期/非法数值不能置0或无限重试；启动前须先有新鲜有效样本。**该3秒新鲜度合同明确改变旧≤1秒采样/0.75秒外调边界，增加可观测延迟，需单独批准；并非声称监控零风险或保持旧停止语义。** 所有拥有进程计RSS，不触碰外部任务，统一限额不随遥测重置。
+4. v1每配置先做长CPU计时再进入下一配置，导致质量覆盖不足。拟先按冻结顺序完成24配置质量，再测有完整质量的后端；训练组件单次1200秒上限失败后保留失败、关闭该组件再前进，不能缩OPQ训练轮数或重试成有利参数。采用至多一个重量级拥有worker串行阶段，全局预算累计不重置；超全局限额仍未决，不承诺必能跑完。
+5. 为使计时可承担，拟CPU主计时固定16discovery＋16check，按原query ID与seed2026110361在每角色内哈希选择；**这是相对v1全128计时的明确合同变化**，不能追选最快query。全128质量/完整竞争者保持；GPU主计时仍全128，2预热/3重复不变。CPU费用oracle仅同32条质量/实测时间队列，GPU仅同128条，分别给样本/角色，不能跨队列配对或冒称原128 CPU结论。CPU1敏感性保留原预定16discovery。
+6. 只读元数据表明原train连续存储、FP32、无压缩/chunk、offset6144，可在校验文件SHA/shape/dtype/offset后只读mmap；拟避免一次载入独立13.4GB raw副本，不下载/改写原源。计RSS/存储时区分文件映射与实际复制；不以mmap隐去raw保留费用。
+
+L1-only包装不能完成：GPU检索缓存/浮点和指纹、停止/失败状态、计时角色及选择/费用oracle都是L0语义。
+故拟新v2科学模块与协议，保留全部v1字节和运行证据，不在旧失败上续算或合并成complete。
+
+### 62.2 拟申请的精确九路径
+
+| 新增/窄幅修改路径 | 拟改动/API |
+| --- | --- |
+| `mechanism/tls_rag_step5_route6_representation_v2.py` | 新L0；`load_screen_inputs`只读布局验证/mmap、`prepare_cuda_index`一次norm、`search_backend`缓存消费/错配拒绝、明确布局账本；变换/码本规则按v1冻结 |
+| `mechanism/tls_rag_step5_route6_representation_screen_v2.py` | 新L0；`run_screen`质量优先/阶段关闭、固定计时队列、`lifecycle_cost`按硬件实际P/T、`select_gaussian_pipelines`在discovery内按同硬件frontier选择、`oracle_budget_bound`同队列配对 |
+| `configs/tls_rag_step5_route6_representation_v2.json` | 新L0；绑定原source/roles/fit rows/24配置、计时32/128队列、3秒GPU遥测新鲜度、全局/组件上限与关闭角色 |
+| `tests/test_tls_rag_step5_route6_representation_v2.py` | 新L0；独立距离/缓存/布局、调度/计时角色/费用/遥测失败与退出回归 |
+| `docs/TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V2.md` | 新L0；明确所有相对v1变化、队列适用结论、遥测延迟及科学/费用/封存合同 |
+| `scripts/run_tls_rag_step5_route6_representation_v2.py` | 新L1继承L0；独立reporter/统一监督、串行组件拥有关系、全局限额/原子样本/关闭索引，轻量入口起计时 |
+| `scripts/run_tests.sh` | 仅新增v2测试归类，不改旧测试、skip或断言 |
+| `docs/CODE_PROTECTION.md` | 仅追加6个v2文件行及未来实际同意引用；当前不写入虚构批准 |
+| `docs/code_protection.json` | 仅新增6行/新L0 SHA及人类登记必要SHA，旧登记/科学hash不变 |
+
+四L1交接文档另按实际维护。新namespace拟`tls-rag-route6-representation-screen-v2`，
+缓存指纹含科学版本、source/layout/roles/fit样本/模型/码本、dtype/device/metric、计时队列、后端/库/线程。
+旧v1缓存不直接冒充v2缓存；若只读复用旧模型/编码，须绑定第61节关闭索引SHA、逐文件SHA与完全相同
+fit身份/公式。v2正式调用计时重新测量，不拼接旧时间制造新配对优势；旧训练费用作为可追溯历史费用单列。
+
+### 62.3 不变部分、验收和新轮边界
+
+拟保持原完整source及128开发query/64＋64角色、16主＋4同字节＋4 seed、k100、M网格、
+epsilon、训练65536行/OPQ默认、投影seed和Gaussian方差/无后归一化不变；不查看test/旧封闭角色。
+优先原维、PCA/PQ非Gaussian控制与所选Gaussian族，按原.95/.99平均质量分别给主benchmark和strict frontier；
+宏观完整GT遗漏只作另列诊断，不能替换胜负目标。至多3条Gaussian族费用oracle按各自同硬件实测队列比较，
+不硬编码只测CPU，也不因CPU原维较慢省略已有GPU原维强基线。ANN仍需自己的全probe同码本参考。
+
+验证计划：
+
+- CPU tiny独立解码/直接距离与缓存norm等价；非单位范数/重复点/ties、错source/model/dtype/layout/device拒绝；mmap只读且shape/offset不符拒绝，原payload关闭守卫保持。
+- 从准备/模型/搜索路径核对全库norm只算一次；缓存字节及P/T拆分不漏raw/H2D/同步/重复副本，不把共享步骤算两遍；小型LP/MILP及队列身份/质量时间配对正确。
+- 用受控假的遥测命令模拟短抖动、持续阻塞、非法/过期样本、外部PID；全局timer在reporter阻塞时仍生效，越界/失联终止全部拥有进程，不影响外部任务，监控失败不报complete。
+- 模拟一项组件失败/截止后关闭与下一阶段，确保单重量级worker、全局累计及失败证据保存；完整24状态表不能遗漏未启动项，不能将部分计时当完整。
+- 完整原套件＋新离线CPU测试、保护检查、canonical commit/push/远端核对、Linux干净ff-only/新增CPU回归，以及绑定最终版本的实际tiny CUDA全部通过后才允许新真实轮。
+
+未来拟申请一次新目录v2：科学累计7200秒/parent全局9000秒、RSS64GiB/GPU48GiB、CPU14、
+产物8GiB/新盘12GiB/空闲≥16GiB，训练单组件1200秒；所有worker/reporter/预检/校验/封存均在限额内，
+单GPU/单重量级worker。只读复用原完整源/环境，完整source SHA前后核验，不装依赖、不下载/重编码embedding，
+不新增MC/pilot/Tri/答案评估，不自动重试。限额到或监控失败仍封存未决；这些上限不保证所有配置可完成。
+
+当前依据[AGENTS.md](../AGENTS.md)：“Before any edit, obtain explicit user approval for the exact affected paths and intended change.”
+本节新增路径和停止/计时合同未获新批准，尚未创建六个v2文件、修改测试/登记或请求新节点计算。
+用户服务器已关机，本轮分析/收尾无需开机；只有后续明确批准并准备补测时再请用户开启。

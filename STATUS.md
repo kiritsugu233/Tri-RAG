@@ -1,6 +1,24 @@
 # Status
 
-**R6-S0 authorized implementation (2026-11-03).** Actual answer to exploration
+Updated2026-11-04. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
+maintained branch `codex/tls-rag-step5-ann`.
+
+## 当前收尾：S0监控失败，部分数据有效，整轮未完成
+
+- 唯一真实S0科学提交140e9de，实际命令见[第59节](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#59-r6-s0-唯一真实运行启动2026-11-03)。1867.539秒后因一次`nvidia-smi`超过0.75秒退出，状态monitor_failed/worker返回-15；不是正常complete，也不是质量门失败。
+- 观测峰值RSS26.117GiB/GPU26.213GiB低于64/48GiB上限；采样/终止仍有超调可能，不能把监控失败推断成全过程资源认证。parent/worker/GPU计算在用户关机前已退出。
+- raw640、PQ64完成质量和计时；hybrid128_seed2完成预定质量诊断；hybrid256完成128条质量、CPU计时中断。其余20配置、ANN、实测费用LP/MILP未执行，不能称表示筛选完成或已否定Gaussian。
+- 本机完整615项（0skip/68.372秒）、Linux36项（1.031秒）、真实block13 tiny CUDA（3.228秒）均通过。这些是软件/微型检查，不是S0真实实验完成凭证；本轮收尾仅改四L1文档，没有重跑套件或改科学代码。
+- 节点71项关闭产物已逐SHA通过；本机70项通过，仅334,933,184字节PQ codes保留服务器。来源前后SHA一致；原失败/日志/部分副本保留。详见[第61节](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#61-s0监控失败退出部分结果分析与封存收尾2026-11-04)和`runs/route6-S0-preparation-20261103/closure-verification.json`。
+- 本地3584条query-budget记录独立重算与已提交指标一致，精排额外GT损失均0；[中文报告及数据](runs/route6-S0-preparation-20261103/analysis/analysis_zh.md)给出全部已测预算与PNG/PDF。PQ64/check/M3200：benchmark99.21875%、strict95.859375%、52/64条至少遗漏1个GT；不是Gaussian随机矩阵遗漏概率。
+- hybrid256在既定M网格上免费知道每query最佳预算也只能达到check benchmark96.140625%/strict91.5625%；这是质量上限，不是未运行的费用oracle。其他Gaussian/PCA/OPQ链路未决；GPU冷启动/全生命周期账本仍有缺项。
+- 用户2026-11-04已关闭服务器。本地分析和封存收尾不需要重启；最后节点仍为科学140e9de，后续文档快进同步留待下次获准开机。当前仅本地/GitHub收尾，不重连节点，不重跑。
+- 下一项为审阅[第62节v2修正提案](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#62-s0-v2修正提案精确范围与验证计划2026-11-04未批准未实施)：新九路径/监控合同/计时队列和一次新轮需另行明确批准。原一次S0已用完，未创建v2代码、未启动第二轮或Tri阶段。
+
+以下保留历史实现/运行检查点；其中“未启动/仍运行/保持开机”仅描述当时状态。
+
+
+**Historical R6-S0 implementation checkpoint (2026-11-03).** Actual answer to exploration
 §55.7–55.8: “批准九路径、测试同步及一次S0（推荐）”. The six new files and narrow
 test/protection registration are implemented in the canonical Step5 checkout.
 Final full615 CPU/offline tests passed, zero skips (68.372s); new36 included.
