@@ -3,6 +3,12 @@
 Updated2026-11-04. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
 maintained branch `codex/tls-rag-step5-ann`.
 
+## 当前请求：取消S0监督自动停止，每5分钟汇报、用户决定终止
+
+第71节已列出精确七路径/函数、全部隐含deadline和产物预算、人工停止入口与验证计划。
+当前只读检查/提案完成；保护287项通过，旧科学源码/配置/协议/测试/登记均未改。
+按AGENTS.md的精确路径批准要求等待同意；仅准备代码修改/完整回归/同步，不启动新A800轮。
+
 ## 当前收尾：NVML r1仍因真实3秒失联停止，5项质量完成、无新正式计时
 
 - 已按第68节实际同意完成六路径、完整651项/0skip/80.699秒、GitHub/干净Linux098ca95同步和Linux36项/12.341秒。一次同reporter三启动CUDA门11.704秒完成，21项节点/本机逐SHA一致；门内最慢NVML查询.221856秒。

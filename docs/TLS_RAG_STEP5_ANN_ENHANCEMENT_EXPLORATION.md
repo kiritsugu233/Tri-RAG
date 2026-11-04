@@ -6963,3 +6963,65 @@ VIBE完整文件、原v1/v2和新r1原件保留服务器；本轮已停止，用
 本机派生分析9项关闭核验通过（报告/CSV/JSON/PNG/PDF），analysis delivery index SHA
 `d7341d166c4bbeccca59eabbf4f324f50ecd5a5a657f7173f62ce7d4a3c10b89`。图表已目视检查；
 此后只修改四L1交接文档，未改变科学代码/config/test/protocol/保护登记。最终287项保护通过。
+
+## 71 用户要求取消监督自动停止、每5分钟报告并人工决策（2026-11-04，实施前精确范围）
+
+### 71.1 实际指令、范围与当前状态
+
+用户实际要求：
+
+> 你把这些监督的超时停止全都取消，并且不要一直监控这样很烧token，改成每3分钟或者5分钟监控一次，然后提供信息让我来判断是否要终止实验
+
+按该指令选择5分钟，不再索取频率偏好。当前没有本轮科学进程在运行；第70节失败/数据继续保持。
+本节是实施前具体范围，不把需求原句误记成对下表尚未展示七路径的逐路径批准。
+仅修改当前S0及后续新S0的监督策略，不改历史其他实验的监督器，不启动新科学轮。
+
+取消所有本流程中以监督时限或资源观测为由终止/中断worker的路径：
+NVML调用慢/有效样本超龄、首样本/退出后GPU样本等待、reporter退出或观测异常、component1200s、
+science7200s、global9000s、worker内deadline、提前60s停止、tiny120/180s和关闭索引deadline。
+RSS/GPU/磁盘/产物/剩余空间阈值改为报告参考，不由监督器自动杀计算；产品写入器也不能暗中
+以原8GiB预算触发整轮异常。实际OS/库分配失败、磁盘写失败等仍如实记录为计算/IO失败。
+数据角色、source/config/native身份、输入SHA、数值与检索正确性校验保持，不将错误当作成功。
+内部求解器原有算法/收敛预算不作为“监督器杀整个实验”处理，不改oracle数学/精度。
+
+### 71.2 精确七路径与具体函数
+
+| 路径 | 修改要求 |
+| --- | --- |
+| `scripts/run_tls_rag_step5_route6_representation_v2.py` | `config`/`reporter`/`Guard`或明确命名的manual supervisor/`run_job`/`worker.check`/`worker.phase`/`await_gpu_idle`/`close_run`/`supervise`/CLI：取消上述全部监督自动停止，5分钟采样和资源快照，观测失败记unknown不填0；用户显式停止入口仅终止经身份核验的拥有进程并封存；执行完成/真实计算错误正常记录；新manual-r2身份与源码绑定 |
+| `mechanism/tls_rag_step5_route6_representation_screen_v2.py` | 只调整`Products`及其构造点，将新manual模式的产物预算改为报告参考，保留旧默认强制模式以保存独立回归；不改公式、表示/检索、样本、计时、选择、oracle算法 |
+| `configs/tls_rag_step5_route6_representation_v2.json` | 新manual-r2 namespace；300s采样/汇报、无监督自动终止；原资源数值标为报告参考；原24表示/角色/seed/训练/k/M/epsilon/硬件/solver算法预算不变 |
+| `tests/test_tls_rag_step5_route6_representation_v2.py` | 新语义独立测试：原生观测阻塞超过旧3秒不杀worker、旧各类监督deadline过期不杀worker、资源/观测异常只报告、300s采样调度、手动停止的PID/所有权及封存；旧数学/数据/检索断言不放宽，历史强制模式的回归明确保留 |
+| `docs/TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V2.md` | 明确记录本次manual-r2覆盖的监督合同、人工决策/停止入口与报告口径；不能再声称5分钟采样提供连续显存合规或准确峰值；旧r1按原提交重放 |
+| `docs/CODE_PROTECTION.md` | 仅在取得下表精确批准后追加实际同意和本次范围，不改等级/旧记录 |
+| `docs/code_protection.json` | 只刷新本次获准screen/config/test/protocol/人类登记SHA并追加真实同意；其他行/根历史记录原样 |
+
+两项代码中的表示/距离/rerank/候选集合/FP64参考/数据隔离/训练与oracle数学不变。
+`mechanism/tls_rag_step5_route6_representation_v2.py`保持原字节。
+四L1交接文档按实际状态维护，历史journal只追加；旧失败/输入/产物不覆盖。
+
+仅L1修改不能完成：worker和封存中仍有deadline；新配置/停止语义/资源写入预算/CPU conformance
+均是AGENTS.md列出的L0冻结合同，不能靠调用层绕过。保持显式新namespace与指纹，旧结果不迁移成新完成。
+
+### 71.3 报告内容、令牌和验证/同步边界
+
+程序在节点每300秒采样一次，不用LLM高频调用工具。worker退出由进程等待取得，不能每250ms
+扫描资源/跑NVML。远程状态检查每5分钟一次，汇报当前配置/阶段、已用时、完成数、RSS、GPU显存、
+产物/剩余磁盘，以及观测是否成功/最新值年龄。查询失败明确标未知，并保留最后值的原时间。
+阶段完成/真实报错/用户指令可即时报告；不为“仍运行”发每分钟状态消息。
+监控子进程本身可隔离阻塞或结束失败探针，但不能因此终止科学worker。
+
+用户决定继续或停止；提供一个可审计手动停止命令，核对run路径、PID启动身份/所属session，
+只操作本轮拥有进程，保留已完成/失败/用户停止状态和逐文件封存。
+不设置新的隐蔽总时限，不把300秒采样间隔当新停止阈值，不以缺失监控数据生成零显存。
+
+先在CPU用真实拥有进程检验“旧超时后仍存活，只有明确停止才结束”，包括独立阻塞原生调用，
+测试300秒调度用受控时钟，避免真实等待多小时；数值/检索/来源回归全部保留。运行完整回归、
+保护检查、canonical提交/push并核对GitHub。仅代码和文档同步，不新增A800正式运行或安装/下载。
+
+依据本仓库AGENTS.md：
+
+> Before any edit, obtain explicit user approval for the exact affected paths and intended change.
+
+这次明确需求与旧r1的3秒/限额合同不同，且多出screen中产物预算这一路径。先展示这七路径和
+无自动终止语义再请求一次路径级批准；当前未编辑上述受保护实现/配置/测试/协议/治理登记。

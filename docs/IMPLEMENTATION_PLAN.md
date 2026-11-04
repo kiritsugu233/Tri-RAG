@@ -4,6 +4,12 @@ Updated 2026-11-04. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
+## 当前请求：S0人工监督、每5分钟报告
+
+- [x] 用户明确要求取消监督超时停止；选定5分钟周期，检查worker/阶段/全局/关闭索引等全部隐含时限。
+- [x] 第71节七路径具体方案：监督资源阈值只汇报、人工停止、保留科学校验/历史结果；无新实验启动。
+- [ ] 取得精确路径同意后实施、完整离线回归、保护核对、提交/push/同步。
+
 ## 当前任务：R6-S0表示/接入点筛选与免费预算oracle
 
 - [x] 用户指定三步顺序；只读核对原benchmark目标度量/epsilon主recall、learn发布标签结构和现有接法。

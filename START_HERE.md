@@ -8,6 +8,13 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**User requests manual S0 supervision, five-minute checks (2026-11-04).**
+Exploration §71 specifies seven paths: remove all supervisor timeout/resource
+abort paths, report every300s, let the user decide when to stop, retain input/
+scientific correctness checks and every old result. No experiment is running.
+The concrete proposal is ready; L0 exact-path consent is pending before edits.
+This request does not start another A800 run. Earlier r1 closure remains below.
+
 **NVML r1 closed with partial quality, not a complete experiment (2026-11-04).**
 The approved six-path revision passed full651/0skip/80.699s and Linux36/12.341s.
 Three independent CUDA startups passed in11.704s,21 products verified on node/local.
