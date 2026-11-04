@@ -128,6 +128,11 @@ CPU/GPU peaks remain distinct. No full-system PQ compression claim from codes al
 
 Global timer starts at the stdlib entry before preflight/imports. Reporter is
 a separate owned session and calls the GPU CLI with a3s timeout. Successful
+queries follow a0.1s start-to-start target cadence; subtract query duration
+from the wait, so slow valid calls are followed immediately by the next query.
+This is denser sampling, not a longer valid-sample age: age still begins at
+query start and cannot exceed3s. Parent polling remains250ms.
+Successful
 atomic samples carry nonce/owner/reporter PID, monotonic start/end/sequence and
 actual process-memory bytes. Cross-process timestamps use POSIX CLOCK_MONOTONIC
 (the same system origin, including Python3.9/mac CPU fixtures). Failures are logged and do not replace the last

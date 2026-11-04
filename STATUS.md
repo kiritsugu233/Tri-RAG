@@ -3,6 +3,13 @@
 Updated2026-11-04. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
 maintained branch `codex/tls-rag-step5-ann`.
 
+## 当前预检：tiny因监控节拍停止，真实v2未开始
+
+- 节点3a01475干净同步，Linux29项8.003秒通过。首次实际tiny于5.165秒monitor_failed，worker-15；9项关闭输出在节点逐SHA通过并回收，原件不覆盖。无完整device_receipt，不启动真实S0。
+- 遥测9次有效，第9次2.834秒；此前.25秒固定等待加上慢查询，使前一条样本超过3秒年龄上限。已在批准的new runner/config/test/protocol范围改为.1秒起始节拍，等待扣掉调用耗时；query-start年龄3秒/CLI3秒/parent250ms不变，未知不置0。
+- 新30项11.798秒通过，含受控2.8秒有效慢查询下保持3秒新鲜度和阻塞时全局截止；最终完整645项、0跳过、80.596秒通过。首次tiny仅初始化检查，正式一次v2尚未使用；下一项提交同步/Linux30/新tiny，成功后只执行原获批一次真实轮。
+- [第66节](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#66-s0-v2首次tiny监控停止与采样节拍修正2026-11-04)有根因和数据。以下保留644/643等历史验收检查点。
+
 ## 当前实施：S0 v2最终完整644项通过，准备最终节点/tiny核对
 
 - 实际用户答复：“批准第62节九路径、测试同步及一次v2补测”。六个v2文件和窄幅测试/登记实现完成；旧v1科学、失败和治理规则不改。

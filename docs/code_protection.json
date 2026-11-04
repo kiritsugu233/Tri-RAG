@@ -1864,19 +1864,19 @@
       "path": "configs/tls_rag_step5_route6_representation_v2.json",
       "level": "L0",
       "reason": "User-approved §62 S0 v2: Same24 configurations/source/roles; approved telemetry/cohort/one-run v2 contract",
-      "sha256": "f175d446aa9030cfc1c78a9997b09583bdf23ce3a5adb252d046f3db050917cd"
+      "sha256": "6d4eafa981bf526e6c090c33b8f0f6eb7be65328ff6a5311abdb7b424d99b92f"
     },
     {
       "path": "tests/test_tls_rag_step5_route6_representation_v2.py",
       "level": "L0",
       "reason": "User-approved §62 S0 v2: Independent mmap/cache/role/cost and actual reporter/owned-process CPU regressions",
-      "sha256": "ace2ce9fbfee8854af0718f69ff205797dd73312773b415023ae052dc2317a00"
+      "sha256": "ae8caac2cd2b6ebb3be1ddbdaf319723a30caf8c7f1a07f82e000c2b36c044b2"
     },
     {
       "path": "docs/TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V2.md",
       "level": "L0",
       "reason": "User-approved §62 S0 v2: Frozen v2 timing/telemetry/staging/lifecycle contract with old scientific boundaries",
-      "sha256": "bb9c47c5664525b6ab8d6d6285f1c6aa855a34fa3936be8732fae8fcad5842ea"
+      "sha256": "66a87ddc73312cecca1c273dfb733e6eb7f0072f41e80b56ce86e63d45fac22f"
     },
     {
       "path": "scripts/run_tls_rag_step5_route6_representation_v2.py",
@@ -2487,6 +2487,6 @@
     "proposal": "docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md §62.2–62.3",
     "scope": "Six new v2 files, test membership and two append-only registers; full tests/sync/tiny then one new-directory7200s/9000s/RSS64GiB/GPU48GiB run;32CPU/128GPU timing,3s telemetry; no old source/result/test/MC/Tri changes",
     "old_entries_preserved": "All existing classifications/scientific hashes and root metadata unchanged except explicitly approved human-register hash; prior approvals preserved",
-    "validation": "Final full644 CPU/offline tests passed, zero skips,76.189s;29 new tests; log SHA256 b7f05e1156e9712b40d73ca1e63c3d5a42dc29c0e87105f28e9299f9c4207c12. This records prelaunch validation; actual tiny CUDA and real v2 results are separate."
+    "validation": "Final full645 CPU/offline tests passed, zero skips,80.596s;30 new tests; log SHA256 80a551f097d4a81c4d5d2724c25f1c05c331681af5338dfa76c596ba05d76ecf. First failed tiny retained; unchanged3s query-start age/CLI limit,0.1s start-anchored cadence. Actual fresh tiny and one real S0 remain required."
   }
 }

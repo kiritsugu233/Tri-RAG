@@ -109,7 +109,9 @@ def reporter(root, nonce, owner_pid, settings, query_command=None):
                 # Retain the last valid sample, never fabricate a zero sample.
                 log.write(json.dumps(dict(sequence=sequence,valid=False,error=type(exc).__name__+': '+str(exc)))+'\n')
             log.flush()
-            time.sleep(settings['report_seconds'])
+            # Anchor cadence to query start. An extra fixed sleep after a slow
+            # but valid call can make the preceding sample exceed the3s age.
+            time.sleep(max(0.,settings['report_seconds']-(monotonic()-started)))
 
 
 def telemetry_memory(root, nonce, reporter_pid, owned, settings, now=None, retired_owned=()):

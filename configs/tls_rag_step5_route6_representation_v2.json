@@ -356,7 +356,7 @@
     "poll_seconds": 0.25,
     "command_seconds": 3.0,
     "gpu_max_age_seconds": 3.0,
-    "report_seconds": 0.25
+    "report_seconds": 0.1
   },
   "reuse_v1": {
     "path": "/root/autodl-tmp/route6-S0-v1-140e9de-20261103",

@@ -316,6 +316,21 @@ class RepresentationV2Tests(unittest.TestCase):
                 self.assertEqual(result['reason'],'total_seconds');self.assertLess(time.monotonic()-tick,3)
             finally:guard.close()
 
+    def test_slow_valid_query_keeps_three_second_freshness_without_extra_gap(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);count=root/'query_count'
+            code='from pathlib import Path;import time;p=Path('+repr(str(count))+');n=int(p.read_text())+1 if p.exists() else 1;p.write_text(str(n));time.sleep(2.8 if n==2 else 0);print("")'
+            settings=dict(self.cfg['monitor'],poll_seconds=.02)
+            guard=runner.Guard(root,self.limits(),settings,query_command=[sys.executable,'-c',code])
+            try:
+                guard.start_reporter();guard.ready()
+                result=self.job(root,guard,'slow-valid','import time;time.sleep(3.6)')
+                self.assertEqual(result['status'],'complete',result)
+                samples=[json.loads(line) for line in (root/'telemetry.log').read_text().splitlines()]
+                self.assertTrue(any(s.get('query_seconds',0)>=2.8 for s in samples))
+                self.assertEqual(settings['gpu_max_age_seconds'],3.)
+            finally:guard.close()
+
     def test_actual_reporter_failure_is_not_success(self):
         with tempfile.TemporaryDirectory() as tmp:
             guard=runner.Guard(tmp,self.limits(),self.cfg['monitor'],query_command=[sys.executable,'-c','print("N/A")'])

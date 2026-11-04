@@ -17,6 +17,10 @@ Unchecked historical items are not execution authorization.
 - [x] v2完整642项CPU回归通过，零skip、77.052秒；原281行/旧科学及journal原前缀保留，287项保护通过。
 - [x] 启动前逐query FP32质量/部署路径统一，边界回归增加；最终643项、零skip、77.816秒通过，无真实v2科学执行。
 - [x] b59c6ed GitHub核对、bundle逐SHA与Linux干净ff-only/28项7.917秒通过；补齐native/精度锁后最终644项、0skip、76.189秒通过。
+- [x] 3a01475节点Linux29项8.003秒通过；首次tiny monitor_failed的9项产物保留核验，无真实S0输入/检索。
+- [x] 2.834秒有效CLI＋.25秒等待的采样年龄根因已定位；.1秒起始节拍保持原3秒年龄/调用界，30项新增测试11.798秒通过。
+- [x] 最终645项完整回归、0skip、80.596秒通过；新采样节拍保持原3秒失联边界。
+- [ ] 提交同步/Linux30/新tiny CUDA通过后，再启动唯一一次真实v2。
 - [ ] canonical提交/push/远端及Linux同步、新CPU/tiny CUDA；通过后唯一一次补测。
 - [ ] 完整表示/实际后端筛选、同维/同字节/全生命周期账本、实测费用oracle与实际结果分析。
 - [ ] 根据筛选结果提出Tri增量的具体下一范围；一般Gram尾/线上联合信息/静态选维与标量公式不提前部署。

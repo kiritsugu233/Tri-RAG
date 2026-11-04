@@ -8,6 +8,17 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**Latest prelaunch checkpoint: tiny monitor stop, cadence repair in validation.**
+Node3a01475/Linux29 passed8.003s. First actual v2 tiny stopped after5.165s:
+one valid GPU CLI call took2.834s, and the fixed.25s inter-query gap let the
+prior sample age exceed3s. All9 closed products retained/verified; no real S0
+source/query payloads or retrieval ran. Reporter now targets.1s from query start,
+subtracts query duration from waits, and keeps the same3s query-start age/CLI
+limits and250ms parent polling. Final full645/0skip/80.596s passes, including30
+new cases. Next: commit/sync, Linux30 and fresh actual tiny before real S0.
+Read [section66](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#66-s0-v2首次tiny监控停止与采样节拍修正2026-11-04).
+Preserve the failed tiny; the one authorized real v2 has not started.
+
 **R6-S0 v2 approved; local full regression passed (2026-11-04).** Actual
 answer to §62.2–62.3: “批准第62节九路径、测试同步及一次v2补测”. The six v2 files,
 membership-only test addition and append-only protection registration implement
