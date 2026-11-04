@@ -20,7 +20,10 @@ Unchecked historical items are not execution authorization.
 - [x] 3a01475节点Linux29项8.003秒通过；首次tiny monitor_failed的9项产物保留核验，无真实S0输入/检索。
 - [x] 2.834秒有效CLI＋.25秒等待的采样年龄根因已定位；.1秒起始节拍保持原3秒年龄/调用界，30项新增测试11.798秒通过。
 - [x] 最终645项完整回归、0skip、80.596秒通过；新采样节拍保持原3秒失联边界。
-- [ ] 提交同步/Linux30/新tiny CUDA通过后，再启动唯一一次真实v2。
+- [x] 7f44240提交/GitHub/节点核对、Linux30项11.772秒、实际tiny3.587秒/10项关闭产物全部通过。
+- [x] 唯一正式v2实际启动并封存：5.148秒monitor_failed，外部CLI确实超3秒，未产生真实benchmark数据；节点/本机9项逐SHA通过。
+- [x] 区分设备tiny与真实完成；第67节失败证据和第68节持久NVML/新六路径提案完成，仅只读元数据诊断。
+- [ ] 新监控provider/revision和额外一次真实轮需新批准；不自动补跑原授权。
 - [ ] canonical提交/push/远端及Linux同步、新CPU/tiny CUDA；通过后唯一一次补测。
 - [ ] 完整表示/实际后端筛选、同维/同字节/全生命周期账本、实测费用oracle与实际结果分析。
 - [ ] 根据筛选结果提出Tri增量的具体下一范围；一般Gram尾/线上联合信息/静态选维与标量公式不提前部署。

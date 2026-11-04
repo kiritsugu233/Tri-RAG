@@ -3,6 +3,14 @@
 Updated2026-11-04. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
 maintained branch `codex/tls-rag-step5-ann`.
 
+## 当前结果：正式v2准备阶段监控失败，新增benchmark数据为0
+
+- 唯一正式v2科学7f44240于2026-11-04T02:50:50.322Z启动（北京时间10:50:50），5.148秒monitor_failed；prepare worker2052返回-15，parent2040已退出。未进入source_full_sha，未打开真实query或产出表示/计时/ANN/oracle结果。
+- telemetry.log明确记录一次nvidia-smi超过3秒超时；.1秒节拍能消除额外等待，但不能保证外部CLI本身始终及时。该实际失败保留，不归因于Gaussian质量，也不把通过tiny当完成S0。
+- 正式轮9项关闭文件节点/本机逐SHA通过，index SHA a3abd76aad3dc621e8a39a8685d1de9a3e4e6eb5ac922ff13c3833de29b2a4bb；原失败tiny9项/成功tiny10项及Linux30、完整645项记录保留。
+- 原一次正式v2授权已使用，不自动重跑。只读3秒限额NVML元数据检查：现有driver580.82.07/NVML13.580.82.07、单GPU、v3符号可用、init.0214秒、pynvml未装；没有创建CUDA任务，也不代表CUDA初始化时NVML必然及时。
+- [第67节失败收尾](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#67-s0-v2正式启动失败封存与无新增benchmark数据2026-11-04)及[第68节新六路径提案](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#68-持久nvml监控修正与新一轮精确六路径提案2026-11-04未批准)记录下一步。拟保留原3秒界，用现有NVML库的持久reporter和三次独立CUDA启动验证，成功才允许一轮新目录同配置S0；尚未批准/实现/运行。
+
 ## 当前预检：tiny因监控节拍停止，真实v2未开始
 
 - 节点3a01475干净同步，Linux29项8.003秒通过。首次实际tiny于5.165秒monitor_failed，worker-15；9项关闭输出在节点逐SHA通过并回收，原件不覆盖。无完整device_receipt，不启动真实S0。

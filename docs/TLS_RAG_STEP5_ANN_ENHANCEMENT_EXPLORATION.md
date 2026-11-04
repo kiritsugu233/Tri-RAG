@@ -6735,3 +6735,106 @@ SHA256 `631814046f0a8020091e490be20ce3cd51ede72c9ace9841482d43a80f947ec0`在节�
 `full-tests-cadence.log` SHA256 `80a551f097d4a81c4d5d2724c25f1c05c331681af5338dfa76c596ba05d76ecf`。
 原失败tiny的9项关闭文件也在本机逐SHA通过；所有旧源码/产物不变，287项保护通过。
 现准备提交同步、Linux30和新目录tiny；原一次真实v2仍未启动。
+
+## 67 S0 v2正式启动失败封存与无新增benchmark数据（2026-11-04）
+
+7f442403be48f6cdc02816bce98d02b839600401已canonical提交/push/GitHub核对，节点逐SHA验证12,862字节
+增量bundle（SHA256 `da741fef3ffdd7822e45f34e1f46cc9f23ef63c1a992e684a6cc8cb2afdb406d`）后干净ff-only。
+Linux新30项**11.772秒通过**。新目录tiny `route6-S0-v2-device-7f44240-20261104`实际complete：
+总3.586714秒、worker3.269454秒、RSS1,015,201,792B/GPU587,202,560B，四类CPU/CUDA顺序匹配。
+10项关闭产物在本机逐SHA/来源/config核验，index SHA `ac5cddf6b7343ee29c52a8c544dcfdbd78871664f6c236db8a2b7a67cf8d36db`；
+actual NumPy/Torch_C/Faiss AVX512二进制和精度与v1原身份也完全相同。原失败tiny仍保留。
+
+在全部验收门通过后，**唯一已批准正式v2**于`2026-11-04T02:50:50.321683Z`启动：
+`/root/autodl-tmp/route6-S0-v2-7f44240-20261104`，parent2040、reporter2041、prepare worker2052。
+原14CPU/64GiB RSS/48GiB GPU/7200s science/9000s total和数据/角色/seed/训练/预算保持。
+该次启动已实际使用“一次真实v2”授权，不能因早退或未读query而把计数重置。
+实际命令（repo cwd，五BLAS变量1、PYTHONDONTWRITEBYTECODE=1、PYTHONPATH=src、CUBLAS_WORKSPACE_CONFIG=:4096:8）：
+
+```sh
+/root/autodl-fs/gaussian-benchmark-space-v1/env/bin/python \
+scripts/run_tls_rag_step5_route6_representation_v2.py run \
+--run-dir /root/autodl-tmp/route6-S0-v2-7f44240-20261104 \
+--device-receipt /root/autodl-tmp/route6-S0-v2-device-7f44240-20261104/device_receipt.json
+```
+
+用带独立session/stdin-out-err均DEVNULL的Popen脱离SSH启动；与nohup等价的连接存活处理不移除
+监督器。**正式轮在5.148370秒monitor_failed**，prepare worker4.835866秒/returncode-15，
+峰值RSS656,027,648B、GPU观测0。尚未写入prepare binary_identity或phase，未进入source_full_sha，
+未打开真实query/truth，0项表示质量、0项计时、0项ANN/oracle；没有新增科学性能数据。
+没有观测到资源超限，但这不是全过程资源证明。全部拥有计算停止，parent已退出。
+
+这次telemetry前19条有效CLI均约.018秒，随后明确记录**一次nvidia-smi超过3.0秒超时**。
+第20条.031秒恢复记录在停止收尾期间出现，不能倒过来使已过期窗口合格。
+因此.1秒节拍修复只解决第66节额外等待，不保证外部CLI本身足够及时。CPU回归和单次tiny通过
+都不能证明所有真实worker初始化的遥测及时性；不会忽略失败或继续读取数据。
+
+正式轮9项关闭产物在节点和本机逐大小/SHA通过，index SHA256
+`a3abd76aad3dc621e8a39a8685d1de9a3e4e6eb5ac922ff13c3833de29b2a4bb`。
+本机`runs/route6-S0-v2-preparation-20261104/s0-first-verified/`完整保留；原轮、失败/成功tiny、
+旧v1数据均不覆盖。不自动再启动真实轮，也不把这次新数据数目0解释成Gaussian/PCA/PQ的质量结论。
+
+停止后仅作3秒外部上限的只读NVML元数据探测，没有创建CUDA任务：driver580.82.07、
+NVML13.580.82.07、单GPU、ComputeRunningProcesses_v3符号可用、init.021429秒。
+未安装pynvml，未装任何包；现有库为`/usr/lib/x86_64-linux-gnu/libnvidia-ml.so.580.82.07`，
+SHA256 `008cc04afc61b8317ed4ddccfa2d1bd367ceb6e71334eb352dc846e0ac450340`。
+空闲时初始化及时仅支持“可实现持久NVML探测”，**尚不证明CUDA初始化时能守住3秒**。
+
+## 68 持久NVML监控修正与新一轮精确六路径提案（2026-11-04，未批准）
+
+### 68.1 具体改动与适用范围
+
+改动目的仅为修复遥测provider的时延/覆盖验证，不改表示、检索、预算或统计目标。
+拟用stdlib ctypes加载第67节现有driver库，独立reporter**初始化NVML一次并保持device handle**，
+之后直接取得compute PID/实际显存字节。避免每个样本都fork/exec/nvmlInit一次，但不能预先声称
+必能消除驱动阻塞；必须由更强的节点tiny检验。NVIDIA文档明确提供
+[compute process query](https://docs.nvidia.com/deploy/nvml-api/latest/api/group__nvmlDeviceQueries.html)
+及[PID/显存结构](https://docs.nvidia.com/deploy/nvml-api/latest/api/structnvmlProcessInfo__t.html)。
+ABI和返回码按官方v3接口/当前库符号固定，未知/不支持/NA显存不能转成0；容量不足仅作有界扩容，
+设备数量/UUID、版本和实际库SHA必须与冻结值匹配，不安装pynvml或升级driver。
+
+保留**query-start起3秒新鲜度**、parent250ms、reporter.1秒起始节拍、所有已有RSS/GPU/总时限和
+外部PID拒绝规则。native调用若阻塞，由独立parent的3秒失联检查终止整个reporter/拥有worker；
+不改成完成时间年龄，不加入启动宽限、丢样本填0、无限重试或fallback继续科学运行。
+GPU身份CLI仅在无重worker的preflight取得，仍有3秒上限；持续显存监测不再依赖CLI新进程。
+每条日志保存query start/end、sequence、provider身份、成功/失败；失败回执增加实际样本年龄和
+身份字段，避免只留下通用identity/staleness错误。所有stdio关闭后索引/独立SHA照常。
+
+新namespace拟`tls-rag-route6-representation-screen-v2-nvml-r1`，新目录和源指纹；v1/7f44240
+原源码可按Git重放，三个已关闭失败/成功目录不改写。CUDA norm/质量/费用科学模块保持原字节；
+新revision只改变监控提供方与验证门。旧tiny不能作为新provider的凭据，旧5秒失败不能当未执行。
+
+### 68.2 精确六路径与为何需要新批准
+
+| 路径 | 具体批准请求 |
+| --- | --- |
+| `scripts/run_tls_rag_step5_route6_representation_v2.py` | 持久NVML ABI/provider/库身份、独立3秒失联/详细日志；tiny改为同一reporter下3个独立CUDA初始化worker，全部通过才生成总凭据 |
+| `configs/tls_rag_step5_route6_representation_v2.json` | 新r1 namespace、现有库path/SHA/driver/NVML/API标识及3次启动验证合同；原表示/角色/seed/训练/预算/资源上限不变 |
+| `tests/test_tls_rag_step5_route6_representation_v2.py` | ctypes ABI/单位/NA/容量/错误码/外部PID/错库拒绝，native阻塞时parent截止及三次启动凭据的独立CPU回归；旧断言不动 |
+| `docs/TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V2.md` | 新monitor revision的provider/ABI/身份/三次启动门与已明确不变的3秒停止语义 |
+| `docs/CODE_PROTECTION.md` | 只追加本次实际新同意及改动范围，不改等级/旧记录 |
+| `docs/code_protection.json` | 只刷新获准config/test/protocol/人类登记的必要SHA并追加实际同意；旧科学SHA/分类/历史根字段保持 |
+
+四L1交接文档按实际维护。仅L1包裹不能解决：monitor provider/ABI、冻结config、CPU conformance、
+tiny放行门与namespace是L0合同；另一次真实执行也超出已使用的一次授权。
+当前只作本节只读分析/提案，**没有上述NVML生产实现、没有新CUDA探测/正式轮**。
+
+### 68.3 验收与一次新轮的明确边界
+
+先在CPU用独立字节布局/假库验证ABI、bytes/MiB、NA/错误码、增容次数和错误身份；用实际拥有进程
+证明阻塞API不会阻塞parent的wall/RSS检查、任何失联不能通过，保留全部旧失败与旧测试。
+运行完整原＋新离线回归，保护核对，canonical提交/push/GitHub/节点SHA及干净ff-only、Linux CPU。
+
+拟一次**有界设备门**：同一持久NVML reporter下，串行启动3个独立重worker，每个完成CUDA初始化及
+原4类tiny距离/范数检查；每次worker退出后确认无残留，三次native/精度/provider身份一致才发总凭据。
+该设备门合计science≤120秒/total≤180秒，原CPU/RSS/GPU限额保持，无真实query/data payload。
+任一失联/失败就停止，不从三次中挑通过的一次，不跳过最慢启动，不修改3秒界。
+
+只有这个新设备门全部通过，才请求允许**一次**新目录同配置R6-S0：science≤7200秒、
+global≤9000秒、component≤1200秒、RSS64GiB/GPU48GiB/CPU14/artifacts8GiB/newdisk12GiB/free≥16GiB；
+同一完整库/128开发query、24表示、原seed/训练/M/k/epsilon、CPU32/GPU128计时和费用oracle。
+不安装/下载/加MC/pilot/Tri或打开test/旧封闭角色；不自动再试。设备门失败则不启动真实轮。
+新正式轮仍可能因真实3秒失联或限额而未决，提案不保证所有配置完成或NVML永远及时。
+
+依据AGENTS.md：“Before any edit, obtain explicit user approval for the exact affected paths and intended change.”
+第62节同意的一次真实轮已经用完，新provider/冻结门/新一轮须明确批准；这不是要求重复批准旧范围。

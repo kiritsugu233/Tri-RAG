@@ -8,6 +8,20 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**Final real-v2 status: monitor_failed before any benchmark data (2026-11-04).**
+The one approved real run7f44240 started02:50:50Z and stopped after5.148s in
+prepare/backend initialization. A GPU CLI call actually exceeded3s; denser
+sampling cannot prevent that. Worker2052/parent2040 exited,9 closed products
+were verified on node and locally; quality/timing/ANN/oracle counts are all0.
+Full645 CPU/Linux30 and successful tiny are software/device checks, not a
+completed real experiment. Old v1 results stay valid in their original scope.
+Read [section67](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#67-s0-v2正式启动失败封存与无新增benchmark数据2026-11-04).
+The one-real-run authorization is spent; no automatic restart. [Section68](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#68-持久nvml监控修正与新一轮精确六路径提案2026-11-04未批准)
+proposes a persistent, existing-driver NVML reporter, same3s freshness and
+three independent CUDA startups inside one bounded tiny gate before any new
+real run. This provider/protocol/revision and additional run need new consent.
+Only read-only library metadata was checked; no NVML implementation yet.
+
 **Latest prelaunch checkpoint: tiny monitor stop, cadence repair in validation.**
 Node3a01475/Linux29 passed8.003s. First actual v2 tiny stopped after5.165s:
 one valid GPU CLI call took2.834s, and the fixed.25s inter-query gap let the
