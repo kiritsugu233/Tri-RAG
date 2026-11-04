@@ -7025,3 +7025,65 @@ RSS/GPU/磁盘/产物/剩余空间阈值改为报告参考，不由监督器自�
 
 这次明确需求与旧r1的3秒/限额合同不同，且多出screen中产物预算这一路径。先展示这七路径和
 无自动终止语义再请求一次路径级批准；当前未编辑上述受保护实现/配置/测试/协议/治理登记。
+
+## 72 Manual-r2精确批准实施与完整664项验收（2026-11-04）
+
+用户对第71节七路径、完整测试/同步、无新实验问题实际回答：
+
+> 批准七路径、完整测试与同步
+
+七路径按scope完成，四L1文档维护；未以旧六路径同意推断新授权。新namespace
+`tls-rag-route6-representation-screen-v2-manual-r2`。当前S0生产入口改用ManualSupervisor/
+manual_run_job/manual_reporter，不再调用旧Guard/run_job的强制停止路径；旧严格模式测试保留为
+显式历史回归，并非生产退回选项。旧源码/失败按原commit重放，旧产物不修改。
+
+### 72.1 实际语义与人工停止
+
+取消NVML慢/样本年龄/首样本/退出后样本等待、reporter死亡或观测失败、资源阈值、阶段/全局/
+worker/tiny/closure时限与提前60s停止；不靠改大数代替取消。freeze中deadline为null，
+关闭索引不设deadline，Products通过显式工厂使用报告模式。旧limits资源/运行时间字段保留供
+审计参考，不执行监督停止；solver60s/300s仍是内部数学solver预算，不终止整个实验。
+
+300秒一次程序采样和资源遍历，worker退出用进程等待；等待周期到达只采样不kill。无快速追赶探针。
+source身份检查周期也为300秒，源/父/config/role/native/precision和实际计算/IO错误不伪装成功。
+产品写入仍独占、有限JSON、尺寸合法与路径/symlink隔离，不以隐藏8GiB预算中断。
+GPU未知不填0：保存pending/error状态、最后成功值/年龄、关联/外部PID；5分钟样本不声称真实峰值或连续资源合规。
+status只读已有snapshot/progress/phase/完成标记；远程检查每5分钟一次，不为“仍运行”反复调用模型。
+阶段完成/真实报错/用户命令可即时处理，后台采样不使用模型token。
+
+人工停止入口（此处是操作说明，不启动任何任务）：
+
+```sh
+/root/autodl-fs/gaussian-benchmark-space-v1/env/bin/python \
+  scripts/run_tls_rag_step5_route6_representation_v2.py status --run-dir /absolute/new/run
+/root/autodl-fs/gaussian-benchmark-space-v1/env/bin/python \
+  scripts/run_tls_rag_step5_route6_representation_v2.py stop --run-dir /absolute/new/run
+```
+
+stop核对run/PID启动身份/argv/UID/运行状态，写nonce请求，再只通知拥有controller；
+controller仅清理拥有worker/reporter session，记user_stopped并封存。fork/exec间先发布Popen身份
+再处理操作信号，child信号mask恢复；用户停止不会被观测异常处理吞掉。关闭hash期间已无计算，
+stop会说明正在封存，不假报又终止了计算。正常完成或真实计算失败也正常回收所属session；
+监控本身不能再终止科学worker。CLI探针30s只是探针自身界，不是新科学自动终止条件。
+
+### 72.2 实际验证与范围核对
+
+原36项独立通过12.444s，保留原数学/数据/cache/严格监督断言；新的manual测试13项通过4.699s。
+第一次48项测试有2个新fixture错误：本机无Torch而元数据替身不完整；macOS /var与/private/var
+临时路径别名不一致导致正确PID被拒绝。原失败日志保留，修正替身和路径规范化，未放宽PID/start核验。
+新增产品symlink/越界检查防止取消全目录预算遍历时丢失原路径隔离。
+
+新测试以真实拥有进程证明：原生调用阻塞>3s、全部旧时限已过、RSS/产物参考阈值极低时仍完成；
+观测异常不kill、计算返回码7仍是真失败；伪造PID启动身份被拒绝，正确手动请求终止且封存；
+子进程信号mask未被父临界区污染，人工停止信号不被吞；300秒调度不突发追赶；未知GPU与超旧
+样本如实报告；超旧产物预算仍可独占写入，closure无deadline。完整CPU三worker编排stand-in
+在已死reporter和过期旧时限下完成，明确只验证编排而非CUDA数值，不充当真实device receipt。
+
+最终全库CPU/offline回归664项、0skip、90.191秒（原615＋v2模块49），沿用第63节固定Python/
+四native参数、三单线程环境变量和`sh scripts/run_tests.sh`。日志
+`runs/route6-S0-manual-r2-preparation-20261104/full-tests.log`，SHA256
+`d02c7fade9d05fa4076683c74a4ef4a48f4c60f21870e4d1b78ed26cd0b08388`。
+源审计比较347df14：representation_v2.py字节相同；归一化产品工厂调用后，screen模块其余AST
+完全相同。保护旧行/根记录除获准screen/config/test/protocol/人类登记五行SHA外保持。
+287项保护通过。完整源、旧失败/结果和封闭角色不动，无新A800运行/设备门/下载/安装。
+下一项canonical提交/push/核对GitHub和节点干净同步、Linux CPU49，实际结果另行追加。

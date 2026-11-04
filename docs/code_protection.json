@@ -285,7 +285,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "2c46fe88f490d525890d2b56db6ac91a96a3410a2e99dbeb3c71906147f05f42"
+      "sha256": "d506d44d73b3b18625124f3b245d41fe238066eab56f905c52283abbb70ef92e"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -1858,25 +1858,25 @@
       "path": "mechanism/tls_rag_step5_route6_representation_screen_v2.py",
       "level": "L0",
       "reason": "User-approved §62 S0 v2: Quality-first staged development screen,32CPU/128GPU timing, cold costs and paired oracle",
-      "sha256": "426cd4cc3df722324c23b085ea510d45d91bd99e6bc1d296c95768620738c63c"
+      "sha256": "18e6ec5c514fbd9acc2b664907c729f5f94339402336e35001a68078d16ca7f3"
     },
     {
       "path": "configs/tls_rag_step5_route6_representation_v2.json",
       "level": "L0",
       "reason": "User-approved §62 S0 v2: Same24 configurations/source/roles; approved telemetry/cohort/one-run v2 contract",
-      "sha256": "adecd20cf1dea7ace52b4d1ae664d4e56cf8b3019a9a1ee60dc9a4291947cfb1"
+      "sha256": "85847c6ccea437f852eda535468cc18da36bcb225d28ac98e141babca0a4354b"
     },
     {
       "path": "tests/test_tls_rag_step5_route6_representation_v2.py",
       "level": "L0",
       "reason": "User-approved §62 S0 v2: Independent mmap/cache/role/cost and actual reporter/owned-process CPU regressions",
-      "sha256": "c08eed68cc1cc7c42df1fd3804b44f5ed85e50abf6c4fb38b94e8cf79d7f2d1a"
+      "sha256": "53b3c655a839879e7babad70c69b197e5dc84e0ab635da52ceaaf5d1b104fb37"
     },
     {
       "path": "docs/TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V2.md",
       "level": "L0",
       "reason": "User-approved §62 S0 v2: Frozen v2 timing/telemetry/staging/lifecycle contract with old scientific boundaries",
-      "sha256": "37a8573fbe661e3f4d06fec700b8eee24c304e83bf9596b70251a3eb5d7f5b91"
+      "sha256": "e11a4a6748fe08369ea6c2d45e2866ddd6b0dbf19253f50d455e6a347323fdb5"
     },
     {
       "path": "scripts/run_tls_rag_step5_route6_representation_v2.py",
@@ -2503,5 +2503,22 @@
     ],
     "limits": "Persistent existing NVML v3/ABI/provider; new r1 namespace; unchanged3s query-start age/250ms parent and caps. Full tests/sync then one three-startup120s/180s device gate; all pass before one same24/128-role7200s/9000s S0. No install/download/test/MC/Tri/retry; both scientific modules and old artifacts unchanged.",
     "validation": "Full651 CPU/offline tests passed, zero skips,80.699s;36 v2 methods. Log SHA256 d96be8574d50e38de1035525b2753fce36e08fdc991a91e5d815bd9362d8ee18. Both scientific modules and prior rows/root metadata remain unchanged except four approved SHA rows."
+  },
+  "route6_s0_manual_r2_authorization": {
+    "date": "2026-11-04",
+    "actual_user_consent": "批准七路径、完整测试与同步",
+    "proposal": "docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md §71 at347df1418229d2c2b69fe000bb787fae10df30c5",
+    "scope": [
+      "scripts/run_tls_rag_step5_route6_representation_v2.py",
+      "mechanism/tls_rag_step5_route6_representation_screen_v2.py",
+      "configs/tls_rag_step5_route6_representation_v2.json",
+      "tests/test_tls_rag_step5_route6_representation_v2.py",
+      "docs/TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V2.md",
+      "docs/CODE_PROTECTION.md",
+      "docs/code_protection.json"
+    ],
+    "semantics": "No production supervisor timeout/resource automatic termination;300s observations/status, explicit owned-PID/start/argv manual stop, unknown observation never zero. Products reference budget only in manual mode; default strict fixtures retained. Source/data/native/precision and scientific math unchanged.",
+    "execution_scope": "Full offline CPU regression and commit/push/source sync only; no new A800 gate/run/install/download/closed-role access.",
+    "validation": "Full664 CPU/offline tests passed, zero skips,90.191s;49 v2 fixtures including13 manual. Log SHA256 d02c7fade9d05fa4076683c74a4ef4a48f4c60f21870e4d1b78ed26cd0b08388. Representation module byte-identical; normalized screen AST differs only in writer/factory calls; old rows/root values preserved except five approved SHA rows. No real A800 run/device gate."
   }
 }

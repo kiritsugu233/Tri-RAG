@@ -8,6 +8,24 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**Manual S0 supervision implemented; full664 CPU tests pass (2026-11-04).**
+Actual §71 consent: “批准七路径、完整测试与同步”. Current namespace is
+`tls-rag-route6-representation-screen-v2-manual-r2`. Production no longer
+terminates science on telemetry slowness/age/failure, elapsed supervisor limits
+or resource-reference crossings, including worker/closure/tiny and hidden
+Products budgets. Observations and resource scans occur every300s; saved-status
+reads add no NVML query. Unknown GPU values remain null with last-value age.
+The operator chooses `stop`; PID/start/argv/UID ownership is checked and only
+owned sessions are reaped, recording user_stopped and closed artifacts.
+Representation/metric/data/precision checks and actual compute errors remain.
+Full664/0skip/90.191s passed (615 earlier +49 v2, including13 manual fixtures).
+Source audit confirms the representation module byte-identical and screen
+changes limited to Products/factory calls. Old failures/data stay unchanged.
+No new A800 run/device gate. Next: source commit/GitHub/clean Linux sync and
+CPU49; this change-only approval does not restart science. See [section72](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#72-manual-r2精确批准实施与完整664项验收2026-11-04).
+
+Earlier entries below are historical checkpoints.
+
 **User requests manual S0 supervision, five-minute checks (2026-11-04).**
 Exploration §71 specifies seven paths: remove all supervisor timeout/resource
 abort paths, report every300s, let the user decide when to stop, retain input/

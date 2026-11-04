@@ -51,13 +51,14 @@ def source_map():
 
 def config():
     cfg = json.loads(CONFIG.read_text())
-    if (cfg['namespace'] != 'tls-rag-route6-representation-screen-v2-nvml-r1' or len(cfg['representations']) != 24
+    if (cfg['namespace'] != 'tls-rag-route6-representation-screen-v2-manual-r2' or len(cfg['representations']) != 24
             or cfg['queries'] != 128 or cfg['query_dataset'] != 'learn' or cfg['k'] != 100
             or cfg['new_mc_samples'] != 0 or cfg['tri_stage'] or cfg['timing']['cpu_queries_per_role'] != 16
-            or cfg['timing']['gpu_queries'] != 128 or cfg['monitor']['gpu_max_age_seconds'] != 3.):
+            or cfg['timing']['gpu_queries'] != 128):
         raise ValueError('frozen v2 scope')
-    if cfg['monitor'] != MONITOR or cfg['device_gate'] != dict(independent_cuda_workers=3,scientific_seconds=120,total_seconds=180):
-        raise ValueError('frozen NVML r1 monitor/gate')
+    if (cfg['monitor'] != MANUAL_MONITOR or cfg['supervision'] != MANUAL_POLICY
+            or cfg['device_gate'] != dict(independent_cuda_workers=3,scientific_seconds=None,total_seconds=None)):
+        raise ValueError('frozen manual r2 monitor/gate')
     return cfg
 
 
@@ -98,6 +99,10 @@ MONITOR = dict(poll_seconds=.25,command_seconds=3.,gpu_max_age_seconds=3.,report
     library_sha256='008cc04afc61b8317ed4ddccfa2d1bd367ceb6e71334eb352dc846e0ac450340',
     driver_version='580.82.07',nvml_version='13.580.82.07',
     device_uuid='GPU-0c08388b-2980-4723-8c2e-2318f276cd0c',max_processes=1024)
+
+
+MANUAL_MONITOR=dict(MONITOR,poll_seconds=300.,report_seconds=300.,gpu_max_age_seconds=None,command_seconds=30.)
+MANUAL_POLICY=dict(mode='manual',automatic_stop=False,resource_budget_enforced=False,report_interval_seconds=300)
 
 
 class NVMLProcess(ctypes.Structure):
@@ -253,11 +258,17 @@ def environment(cfg):
     versions = {name:importlib.metadata.version(name) for name in cfg['dependencies']}
     if any(versions[n].split('+')[0] != v for n,v in cfg['dependencies'].items()):
         raise RuntimeError('dependency version lock')
-    rows = subprocess.run(['nvidia-smi','--query-gpu=uuid,name,driver_version','--format=csv,noheader'],
-        capture_output=True,text=True,check=True,timeout=cfg['monitor']['command_seconds']).stdout.strip().splitlines()
-    if len(rows)!=1 or 'A800' not in rows[0]: raise RuntimeError('one A800 required')
+    identity_error=None;physical=None
+    try:
+        rows=subprocess.run(['nvidia-smi','--query-gpu=uuid,name,driver_version','--format=csv,noheader'],
+            capture_output=True,text=True,check=True,timeout=cfg['monitor']['command_seconds']).stdout.strip().splitlines()
+        if len(rows)!=1 or 'A800' not in rows[0]:raise ValueError('one A800 required')
+        physical=rows[0]
+    except (subprocess.SubprocessError,OSError) as exc:
+        if not manual_policy(cfg):raise
+        identity_error=type(exc).__name__+': '+str(exc)
     if any(os.environ.get(n)!='1' for n in THREADS): raise RuntimeError('five BLAS thread limits must be1')
-    return dict(versions=versions,physical_identity=rows[0],python=sys.version,executable=sys.executable,
+    return dict(versions=versions,physical_identity=physical,gpu_identity_observation_error=identity_error,python=sys.version,executable=sys.executable,
         threads={n:os.environ[n] for n in THREADS},
         package_binaries={n:sha(importlib.util.find_spec(n).origin) for n in ('numpy','scipy','h5py','faiss','torch')})
 
@@ -292,7 +303,7 @@ class Guard:
 
     def start_reporter(self):
         if not self.use_gpu:return
-        command=[sys.executable,str(Path(__file__).resolve()),'reporter','--run-dir',str(self.root),
+        command=[sys.executable,str(Path(__file__).resolve()),'legacy-reporter','--run-dir',str(self.root),
             '--nonce',self.nonce,'--owner-pid',str(os.getpid())]
         if self.query_command:command+=['--query-command-json',json.dumps(self.query_command)]
         self.report=subprocess.Popen(command,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True)
@@ -387,15 +398,10 @@ def worker(root,cfg,stage,ident=None,pipeline=None):
     if source_map()!=freeze['sources'] or cfg!=freeze['config'] or os.getppid()!=freeze['parent_pid']:
         raise RuntimeError('worker source/config/owner lock')
     last=[0.]
-    def check():
-        if os.getppid()!=freeze['parent_pid'] or monotonic()>=freeze['deadline_monotonic']-5:
-            raise TimeoutError('parent/global deadline')
-        if monotonic()-last[0]>=10:
-            if source_map()!=freeze['sources']:raise RuntimeError('source changed during worker')
-            last[0]=monotonic()
+    def check():worker_check(freeze,last,cfg)
     def phase(name,component=False):
         check();value=dict(name=name,worker_pid=os.getpid(),time_unix=time.time(),
-            component_deadline_monotonic=monotonic()+cfg['limits']['component_seconds'] if component else None)
+            component_deadline_monotonic=monotonic()+cfg['limits']['component_seconds'] if component and not manual_policy(cfg) else None)
         atomic_json(root/'phase.json',value);print(json.dumps(value),flush=True)
     try:
         from mechanism.tls_rag_step5_route6_a800_v1 import torch_backend
@@ -418,14 +424,14 @@ def worker(root,cfg,stage,ident=None,pipeline=None):
             else:screen.linear_timing(cfg,root,pipeline.split(':')[0],torch,check,phase,all_budgets=True,
                 backend='cuda' if pipeline.endswith(':cuda') else 'cpu14')
         elif stage=='oracle-solve':
-            spent=0.;products=screen.Products(root,cfg['limits']['artifact_bytes'],check)
+            spent=0.;products=screen.products_for(root,cfg,check)
             for p in json.loads((root/'oracle_selection.json').read_text())['pipelines']:
                 ident,backend=p.split(':');folder=root/'oracle'/(ident+'-'+('cpu14' if backend=='cpu_flat' else backend))
                 if (folder/'timings.json').exists():spent=screen.solve_oracle(cfg,root,p,products,check,phase,spent)
             products.json('oracle_solver_spent.json',dict(seconds=spent))
         elif stage=='select-ivf':
             points=screen.collect_points(root);configs={s['id']:s for s in cfg['representations']}
-            screen.Products(root,cfg['limits']['artifact_bytes'],check).json('ivf_selection.json',dict(
+            screen.products_for(root,cfg,check).json('ivf_selection.json',dict(
                 ids=screen.select_ivf_identities(points,configs,cfg),role='geometry_discovery'))
         elif stage=='select-oracle':screen.write_selections(cfg,root,check)
         elif stage=='finalize':screen.finalize(cfg,root,torch,check,phase)
@@ -485,7 +491,7 @@ def close_run(root,result,start,total_seconds):
     """Charge hashing and its independent verification before final metadata."""
     root=Path(root);tick=monotonic()
     def check():
-        if monotonic()-start>=total_seconds-1:raise TimeoutError('global deadline during closure')
+        if total_seconds is not None and monotonic()-start>=total_seconds-1:raise TimeoutError('global deadline during closure')
     def digest(path):
         h=hashlib.sha256()
         with path.open('rb') as stream:
@@ -523,47 +529,331 @@ def close_run(root,result,start,total_seconds):
     return result
 
 
+class UserStopped(BaseException):
+    """Only an explicit operator signal requests worker termination."""
+
+
+def manual_policy(cfg):
+    return cfg.get('supervision',{}).get('mode')=='manual'
+
+
+def next_observation(started,completed,interval):
+    # Missed slots never cause a burst of catch-up probes.
+    return started+interval if started+interval>completed else completed+interval
+
+
+def process_identity(pid):
+    """Linux start ticks reject PID reuse; portable CPU fixtures also bind argv."""
+    if sys.platform=='linux':
+        folder=Path('/proc')/str(pid);tail=(folder/'stat').read_text().rsplit(') ',1)[1].split()
+        return dict(pid=pid,start_identity=tail[19],process_group=int(tail[2]),session=int(tail[3]),
+            uid=folder.stat().st_uid,commandline=(folder/'cmdline').read_bytes().decode().split('\0')[:-1])
+    output=subprocess.check_output(['ps','-p',str(pid),'-o','pgid=,lstart=,command='],text=True).strip()
+    if not output:raise ProcessLookupError(pid)
+    fields=output.split(None,6)
+    return dict(pid=pid,process_group=int(fields[0]),start_identity=' '.join(fields[1:6]),
+        commandline=fields[6],uid=os.getuid())
+
+
+def install_manual_control(root):
+    root=Path(root).resolve();identity=process_identity(os.getpid())
+    control=dict(run_dir=str(root),controller=identity,nonce=secrets.token_hex(16),signal='SIGUSR1')
+    def stopped(signum,frame):raise UserStopped('operator signal '+signal.Signals(signum).name)
+    previous={sig:signal.signal(sig,stopped) for sig in (signal.SIGUSR1,signal.SIGINT,signal.SIGTERM)}
+    try:write_json(root/'manual_control.json',dict(control,state='running'))
+    except BaseException:
+        for sig,handler in previous.items():signal.signal(sig,handler)
+        raise
+    return previous
+
+
+def request_stop(root):
+    root=Path(root).resolve()
+    if (root/'delivery_index.json').exists():raise ValueError('run is already closed')
+    path=root/'manual_control.json'
+    if path.is_symlink():raise ValueError('control symlink')
+    control=json.loads(path.read_text());saved=control['controller']
+    current=process_identity(saved['pid'])
+    argv=current['commandline']
+    args=argv if isinstance(argv,list) else argv.split()
+    bound=any(arg.startswith('/') and Path(arg).resolve()==root for arg in args)
+    if control.get('state')!='running':raise ValueError('compute finished; product index is closing')
+    if (control['run_dir']!=str(root) or current!=saved or current['uid']!=os.getuid() or not bound):
+        raise ValueError('controller PID/start/argv/owner mismatch')
+    request=dict(controller_pid=saved['pid'],nonce=control['nonce'],time_unix=time.time(),
+                 action='explicit_user_stop',run_dir=str(root))
+    write_json(root/'manual_stop_request.json',request)
+    os.kill(saved['pid'],signal.SIGUSR1)
+    return request
+
+
+def manual_reporter(root,nonce,owner_pid,settings,query_command=None):
+    """One observation per300s; a slow/failed probe never controls science."""
+    root=Path(root);provider=None;sequence=0
+    identity=dict(backend='cpu-command-fixture') if query_command else provider_identity(settings)
+    with (root/'telemetry.log').open('x') as log:
+        try:
+            while os.getppid()==owner_pid:
+                sequence+=1;started=monotonic()
+                event=dict(sequence=sequence,started_monotonic=started,provider=identity,
+                    nonce=nonce,owner_pid=owner_pid,reporter_pid=os.getpid(),status='pending')
+                atomic_json(root/'telemetry_status.json',event)
+                try:
+                    if query_command:
+                        value=subprocess.run(query_command,capture_output=True,text=True,check=True,
+                            timeout=settings['command_seconds'])
+                        values=parse_gpu(value.stdout)
+                    else:
+                        if provider is None:provider=NVMLProvider(settings)
+                        values=provider.query()
+                    completed=monotonic()
+                    sample=dict(event,status='ok',completed_monotonic=completed,
+                        memory_bytes={str(p):v for p,v in values.items()})
+                    atomic_json(root/'telemetry.json',sample)
+                    event.update(status='ok',valid=True,completed_monotonic=completed,query_seconds=completed-started)
+                except Exception as exc:
+                    event.update(status='error',valid=False,completed_monotonic=monotonic(),
+                        error=type(exc).__name__+': '+str(exc))
+                atomic_json(root/'telemetry_status.json',event)
+                log.write(json.dumps(event)+'\n');log.flush()
+                due=next_observation(started,monotonic(),settings['report_seconds'])
+                time.sleep(max(0.,due-monotonic()))
+        finally:
+            if provider:provider.close()
+
+
+def manual_gpu_observation(root,nonce,reporter_pid,owned,settings,reporter_alive,retired_owned=()):
+    result=dict(status='unknown',sampled_bytes=None,last_known_bytes=None,sample_age_seconds=None,
+                reporter_alive=reporter_alive,unrelated_compute_pids=[])
+    try:
+        value=json.loads((Path(root)/'telemetry.json').read_text());now=monotonic()
+        expected=dict(backend='cpu-command-fixture') if settings.get('fixture_command') else provider_identity(settings)
+        if (value['nonce']!=nonce or value['owner_pid']!=os.getpid() or value['reporter_pid']!=reporter_pid
+                or value['provider']!=expected or type(value['sequence']) is not int or value['sequence']<1
+                or not 0<=value['started_monotonic']<=value['completed_monotonic']<=now):
+            raise ValueError('telemetry identity/timestamp')
+        memory={}
+        for pid,amount in value['memory_bytes'].items():
+            if not pid.isdigit() or int(pid)<=0 or str(int(pid))!=pid or type(amount) is not int or amount<0:
+                raise ValueError('unknown/malformed GPU memory')
+            memory[int(pid)]=amount
+        allowed=set(owned)
+        for pid in retired_owned:
+            try:os.kill(pid,0)
+            except ProcessLookupError:allowed.add(pid)
+        result.update(last_known_bytes=sum(memory.values()),sample_age_seconds=now-value['started_monotonic'],
+            unrelated_compute_pids=sorted(set(memory)-allowed),sample_sequence=value['sequence'],process_memory_bytes=memory,
+            last_known_owned_bytes=sum(v for p,v in memory.items() if p in allowed))
+        latest=json.loads((Path(root)/'telemetry_status.json').read_text())
+        if (latest.get('nonce')!=nonce or latest.get('owner_pid')!=os.getpid()
+                or latest.get('reporter_pid')!=reporter_pid or latest.get('provider')!=expected):
+            raise ValueError('reporter status identity')
+        result['latest_query_status']=latest['status']
+        if reporter_alive and latest['status']=='ok' and latest['sequence']==value['sequence']:
+            result.update(status='sampled',sampled_bytes=sum(memory.values()))
+        else:result['detail']=latest.get('error','pending query or exited reporter')
+    except Exception as exc:result['detail']=type(exc).__name__+': '+str(exc)
+    return result
+
+
+def launch_owned(command,publish,**kwargs):
+    # Publish the Popen handle before delivering a stop signal received during
+    # fork/exec. The caller can then always reap its own session in finally.
+    previous=signal.pthread_sigmask(signal.SIG_BLOCK,{signal.SIGUSR1,signal.SIGINT,signal.SIGTERM})
+    try:
+        child=subprocess.Popen(command,start_new_session=True,
+            preexec_fn=lambda:signal.pthread_sigmask(signal.SIG_SETMASK,previous),**kwargs)
+        publish(child)
+    finally:signal.pthread_sigmask(signal.SIG_SETMASK,previous)
+    return child
+
+
+class ManualSupervisor:
+    """Observe on schedule; neither time nor resource values terminate work."""
+    def __init__(self,root,limits,settings,start=None,use_gpu=True,query_command=None):
+        self.root=Path(root);self.limits=limits;self.settings=settings
+        self.start=monotonic() if start is None else start;self.scientific_start=None
+        self.nonce=secrets.token_hex(16);self.report=None;self.use_gpu=use_gpu;self.query_command=query_command
+        self.provider=dict(backend='cpu-command-fixture') if query_command else provider_identity(settings)
+        self.next_sample=self.start;self.last_observation=None;self.active=None
+        self.sampled_max_rss=None;self.sampled_max_gpu=None;self.known_owned=set()
+
+    def start_reporter(self):
+        if not self.use_gpu:return
+        command=[sys.executable,str(Path(__file__).resolve()),'reporter','--run-dir',str(self.root),
+            '--nonce',self.nonce,'--owner-pid',str(os.getpid())]
+        if self.query_command:command+=['--query-command-json',json.dumps(self.query_command)]
+        launch_owned(command,lambda child:setattr(self,'report',child),stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+        write_json(self.root/'owned_reporter.json',dict(pid=self.report.pid,nonce=self.nonce,parent_pid=os.getpid()))
+
+    def observe(self):
+        started=monotonic()
+        if started<self.next_sample:return self.last_observation
+        snapshot=dict(time_unix=time.time(),started_monotonic=started,elapsed_seconds=started-self.start,
+            sampling_interval_seconds=self.settings['report_seconds'],active_stage=self.active,
+            rss_bytes=None,disk_bytes=None,artifact_bytes=None,free_bytes=None,advisories=[],errors={},
+            automatic_stop=False,continuous_resource_compliance_claim=False,reference_thresholds=self.limits)
+        owned=set()
+        try:
+            tree=process_tree(os.getpid());owned=set(tree);self.known_owned.update(owned);snapshot['rss_bytes']=sum(tree.values())
+            self.sampled_max_rss=max(self.sampled_max_rss or 0,snapshot['rss_bytes'])
+        except Exception as exc:snapshot['errors']['rss']=str(exc)
+        if self.use_gpu:
+            snapshot['gpu']=manual_gpu_observation(self.root,self.nonce,self.report.pid if self.report else None,
+                owned,dict(self.settings,fixture_command=bool(self.query_command)),
+                self.report is not None and self.report.poll() is None,retired_owned=self.known_owned)
+            amount=snapshot['gpu']['sampled_bytes']
+            if amount is not None:self.sampled_max_gpu=max(self.sampled_max_gpu or 0,amount)
+            if snapshot['gpu']['status']!='sampled':snapshot['advisories'].append('GPU observation unknown; user decision')
+            if snapshot['gpu']['unrelated_compute_pids']:snapshot['advisories'].append('unrelated GPU compute observed; user decision')
+        else:snapshot['gpu']=dict(status='not_requested',sampled_bytes=None)
+        try:snapshot['disk_bytes'],snapshot['artifact_bytes']=storage_sizes(self.root)
+        except Exception as exc:snapshot['errors']['storage']=str(exc)
+        try:snapshot['free_bytes']=shutil.disk_usage(self.root).free
+        except Exception as exc:snapshot['errors']['free_bytes']=str(exc)
+        for key in ('rss_bytes','disk_bytes','artifact_bytes','free_bytes'):
+            value=snapshot[key]
+            if value is not None and (value<self.limits[key] if key=='free_bytes' else value>self.limits[key]):
+                snapshot['advisories'].append(key+' crossed reference threshold; user decision')
+        gpu=snapshot['gpu']['sampled_bytes']
+        if gpu is not None and gpu>self.limits['gpu_bytes']:snapshot['advisories'].append('gpu_bytes crossed reference threshold; user decision')
+        phase=self.root/'phase.json'
+        if phase.exists():
+            try:
+                value=json.loads(phase.read_text())
+                snapshot['phase']=value if self.active and value.get('worker_pid')==self.active['worker_pid'] else None
+            except Exception as exc:snapshot['errors']['phase']=str(exc)
+        snapshot['completed_quality']=[p.parent.name for p in (self.root/'representations').glob('*/quality_complete.json')]
+        snapshot['completed_stages']=len(list((self.root/'stages').glob('*/execution.json')))
+        try:
+            atomic_json(self.root/'observation.json',snapshot)
+            with (self.root/'observations.jsonl').open('a') as log:log.write(json.dumps(snapshot)+'\n')
+        except Exception as exc:print('observation write failed: '+str(exc),file=sys.stderr,flush=True)
+        self.last_observation=snapshot
+        self.next_sample=next_observation(started,monotonic(),self.settings['report_seconds'])
+        return snapshot
+
+    def safe_observe(self):
+        try:return self.observe()
+        except Exception as exc:
+            # A monitor implementation/IO failure is advisory, never a worker kill.
+            self.next_sample=monotonic()+self.settings['report_seconds']
+            print('observation unavailable: '+str(exc),file=sys.stderr,flush=True)
+            return None
+
+    def close(self):
+        if self.report is not None:terminate_owned(self.report)
+
+
+def manual_run_job(command,root,guard,name,env=None):
+    root=Path(root);stage=root/'stages'/name;stage.mkdir(parents=True,exist_ok=False)
+    started=monotonic();failure=None;status=None;owned=[None];code=None
+    with (stage/'worker.log').open('xb') as log:
+        try:
+            launch_owned(command,lambda child:owned.__setitem__(0,child),stdout=log,stderr=subprocess.STDOUT,env=env)
+            child=owned[0];guard.known_owned.add(child.pid);guard.active=dict(name=name,worker_pid=child.pid)
+            atomic_json(root/'progress.json',dict(active_stage=guard.active,time_unix=time.time()))
+            if guard.scientific_start is None:guard.scientific_start=monotonic()
+            write_json(stage/'owned_worker.json',dict(pid=child.pid,parent_pid=os.getpid()))
+            while True:
+                guard.safe_observe()
+                try:
+                    child.wait(timeout=max(.01,guard.next_sample-monotonic()))
+                    break
+                except subprocess.TimeoutExpired:continue  # reporting cadence, never termination
+        except UserStopped as exc:status='user_stopped';failure=str(exc)
+        except BaseException as exc:status='controller_failed';failure=type(exc).__name__+': '+str(exc)
+        finally:
+            child=owned[0]
+            if child is not None:
+                if child.poll() is None:terminate_owned(child)
+                code=child.wait(timeout=2.)
+    result=dict(name=name,status=status or ('complete' if code==0 else 'worker_failed'),reason=failure,
+        returncode=code,seconds=monotonic()-started,worker_pid=child.pid if child else None,exited_monotonic=monotonic(),
+        automatic_stop=False)
+    write_json(stage/'execution.json',result);guard.active=None
+    atomic_json(root/'progress.json',dict(active_stage=None,last_stage=result,time_unix=time.time()))
+    return result
+
+
+def worker_check(freeze,last,cfg):
+    if os.getppid()!=freeze['parent_pid']:raise RuntimeError('worker parent identity lost')
+    if not manual_policy(cfg) and monotonic()>=freeze['deadline_monotonic']-5:
+        raise TimeoutError('parent/global deadline')
+    interval=cfg['monitor']['report_seconds'] if manual_policy(cfg) else 10.
+    if monotonic()-last[0]>=interval:
+        if source_map()!=freeze['sources']:raise RuntimeError('source changed during worker')
+        last[0]=monotonic()
+
+
+def status_snapshot(root):
+    """Read saved progress only; never launch an extra NVML/resource probe."""
+    root=Path(root);result=dict(run_dir=str(root.resolve()),read_only=True)
+    for name in ('observation.json','progress.json','execution.json'):
+        path=root/name
+        if path.exists():result[name]=json.loads(path.read_text())
+    value=result.get('observation.json')
+    if value:
+        age=max(0.,time.time()-value['time_unix']);result['snapshot_age_seconds']=age
+        gpu_age=value.get('gpu',{}).get('sample_age_seconds')
+        result['last_gpu_sample_age_seconds_now']=None if gpu_age is None else age+gpu_age
+    result['completed_quality']=[p.parent.name for p in (root/'representations').glob('*/quality_complete.json')]
+    active=result.get('progress.json',{}).get('active_stage')
+    phase=root/'phase.json'
+    if phase.exists():
+        current=json.loads(phase.read_text())
+        result['current_phase']=current if active and current.get('worker_pid')==active['worker_pid'] else None
+    return result
+
+
+def same_environment(saved,current):
+    # Telemetry availability is not a scientific identity. Known identities must
+    # still agree; dependency/native/precision/A800 checks remain independent.
+    ignored={'physical_identity','gpu_identity_observation_error'}
+    if {k:v for k,v in saved.items() if k not in ignored}!={k:v for k,v in current.items() if k not in ignored}:return False
+    return not (saved.get('physical_identity') and current.get('physical_identity')
+        and saved['physical_identity']!=current['physical_identity'])
+
+
 def supervise(root,cfg,receipt=None,device_only=False):
     if sys.platform!='linux':raise RuntimeError('real screen requires Linux node')
     root=Path(root).resolve();root.mkdir(exist_ok=False)
     limits=dict(cfg['limits'])
-    if device_only:limits.update(scientific_seconds=cfg['device_gate']['scientific_seconds'],total_seconds=cfg['device_gate']['total_seconds'])
-    guard=Guard(root,limits,cfg['monitor'],start=ENTRY_MONOTONIC);results=[];failure=None;status='preflight_failed'
+    guard=ManualSupervisor(root,limits,cfg['monitor'],start=ENTRY_MONOTONIC);results=[];failure=None;status='preflight_failed'
+    previous=install_manual_control(root)
     childenv=dict(os.environ,PYTHONDONTWRITEBYTECODE='1',CUBLAS_WORKSPACE_CONFIG=':4096:8')
     try:
-        guard.start_reporter();guard.ready()
-        subprocess.run([sys.executable,str(ROOT/'scripts/check_code_protection.py')],cwd=ROOT,check=True,timeout=30)
-        if subprocess.run(['git','status','--porcelain','--untracked-files=no'],cwd=ROOT,capture_output=True,text=True,check=True,timeout=5).stdout.strip():
+        guard.start_reporter();guard.safe_observe()
+        subprocess.run([sys.executable,str(ROOT/'scripts/check_code_protection.py')],cwd=ROOT,check=True)
+        if subprocess.run(['git','status','--porcelain','--untracked-files=no'],cwd=ROOT,capture_output=True,text=True,check=True).stdout.strip():
             raise RuntimeError('tracked checkout dirty')
-        env=environment(cfg);sources=source_map();allocation=allocated_resources()
-        if allocation['cpu_threads']<limits['cpu_threads'] or allocation['memory_bytes']<limits['rss_bytes']:
-            raise RuntimeError('cgroup/affinity allocation')
-        if telemetry_memory(root,guard.nonce,guard.report.pid,set(process_tree(os.getpid())),cfg['monitor'])!=0:
-            raise RuntimeError('GPU busy before science')
+        env=environment(cfg);sources=source_map()
+        try:allocation=allocated_resources()
+        except Exception as exc:allocation=dict(observation_error=str(exc))
         if not device_only:
             saved=json.loads(Path(receipt).read_text())
-            if saved['status']!='passed' or saved['sources']!=sources or saved['config']!=cfg or saved['environment']!=env or saved.get('provider')!=guard.provider or saved.get('independent_cuda_workers')!=3 or len(saved.get('startup_receipt_sha256',[]))!=3 or len(set(saved.get('worker_pids',[])))!=3:
+            if saved['status']!='passed' or saved['sources']!=sources or saved['config']!=cfg or not same_environment(saved['environment'],env) or saved.get('provider')!=guard.provider or saved.get('independent_cuda_workers')!=3 or len(saved.get('startup_receipt_sha256',[]))!=3 or len(set(saved.get('worker_pids',[])))!=3:
                 raise RuntimeError('missing/mismatched successful tiny CUDA receipt')
         write_json(root/'source_freeze.json',dict(config=cfg,sources=sources,environment=env,allocation=allocation,
             parent_pid=os.getpid(),global_start_unix=ENTRY_UNIX,global_start_monotonic=ENTRY_MONOTONIC,
-            deadline_monotonic=ENTRY_MONOTONIC+limits['total_seconds'],device_receipt_sha256=sha(receipt) if receipt else None,
+            deadline_monotonic=None,device_receipt_sha256=sha(receipt) if receipt else None,
             native_binary_sha256=saved['binary_sha256'] if not device_only else None,
             precision=saved['precision'] if not device_only else None,
-            commit=subprocess.run(['git','rev-parse','HEAD'],cwd=ROOT,capture_output=True,text=True,check=True,timeout=5).stdout.strip(),
-            mode='tiny only' if device_only else 'one approved S0 v2'))
+            commit=subprocess.run(['git','rev-parse','HEAD'],cwd=ROOT,capture_output=True,text=True,check=True).stdout.strip(),
+            mode='manual r2 tiny' if device_only else 'manual r2 S0',automatic_stop=False))
         def job(stage,ident=None,pipeline=None,allow_component=False):
             name=freeze_stage_name(stage,ident,pipeline)
             command=[sys.executable,str(Path(__file__).resolve()),'worker','--run-dir',str(root),'--stage',stage]
             if ident:command+=['--ident',ident]
             if pipeline:command+=['--pipeline',pipeline]
-            result=run_job(command,root,guard,name,childenv);results.append(result)
+            result=manual_run_job(command,root,guard,name,childenv);results.append(result)
             if result['status']=='complete':return True
-            if allow_component and result['status']=='component_stop':return False
+            if result['status']=='user_stopped':raise UserStopped(result['reason'])
             raise RuntimeError('stage stopped: '+json.dumps(result))
         if device_only:
             for number in range(1,4):
                 job('tiny',ident='startup'+str(number))
-                await_gpu_idle(root,guard,results[-1]['exited_monotonic'])
+                # Worker exit and all numeric checks matter; no telemetry-age/idle deadline gate.
             seal_device_gate(root,cfg,results,guard.provider)
         else:
             job('prepare');order=json.loads((root/'schedule.json').read_text())['configuration_order']
@@ -587,29 +877,38 @@ def supervise(root,cfg,receipt=None,device_only=False):
         status='incomplete' if any(r['status']!='complete' for r in results) else 'complete'
     except BaseException as exc:
         failure=type(exc).__name__+': '+str(exc)
-        if isinstance(exc,ResourceStop):status='resource_stop'
-        elif isinstance(exc,MonitorFailure):status='monitor_failed'
+        if isinstance(exc,UserStopped):status='user_stopped'
         elif results:status=results[-1]['status'] if results[-1]['status']!='complete' else 'worker_failed'
-        write_json(root/'controller_failure.json',dict(detail=failure,traceback=traceback.format_exc(),
+        write_json(root/('user_stop.json' if isinstance(exc,UserStopped) else 'controller_failure.json'),dict(detail=failure,traceback=traceback.format_exc(),
             science_started=bool(results),automatic_retry=False))
-    finally:guard.close()
+    finally:
+        for sig in previous:signal.signal(sig,signal.SIG_IGN)
+        control=json.loads((root/'manual_control.json').read_text());control['state']='closing'
+        atomic_json(root/'manual_control.json',control)
+        guard.close()
     disk,artifacts=storage_sizes(root)
     result=dict(status=status,monitor_error=failure,total_seconds=monotonic()-ENTRY_MONOTONIC,
         scientific_elapsed_seconds=0. if guard.scientific_start is None else monotonic()-guard.scientific_start,
-        peak_rss_bytes=guard.peak_rss,peak_gpu_bytes=guard.peak_gpu,artifact_bytes=artifacts,disk_bytes=disk,
-        stages=results,sampling_and_shutdown_overshoot_possible=True,automatic_retry=False)
-    return close_run(root,result,ENTRY_MONOTONIC,limits['total_seconds'])
+        sampled_max_rss_bytes=guard.sampled_max_rss,sampled_max_gpu_bytes=guard.sampled_max_gpu,artifact_bytes=artifacts,disk_bytes=disk,
+        stages=results,automatic_stop=False,report_interval_seconds=300,continuous_resource_compliance_claim=False,automatic_retry=False)
+    try:return close_run(root,result,ENTRY_MONOTONIC,None)
+    finally:
+        for sig,handler in previous.items():signal.signal(sig,handler)
 
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('action',choices=('device-check','run','worker','reporter','verify'))
+    parser=argparse.ArgumentParser();parser.add_argument('action',choices=('device-check','run','worker','reporter','legacy-reporter','verify','status','stop'))
     parser.add_argument('--run-dir',required=True);parser.add_argument('--device-receipt');parser.add_argument('--stage')
     parser.add_argument('--ident');parser.add_argument('--pipeline');parser.add_argument('--nonce');parser.add_argument('--owner-pid',type=int)
     parser.add_argument('--query-command-json')
-    args=parser.parse_args();cfg=config()
+    args=parser.parse_args()
+    if args.action=='status':print(json.dumps(status_snapshot(args.run_dir)));return 0
+    if args.action=='stop':print(json.dumps(request_stop(args.run_dir)));return 0
+    cfg=config()
     if args.action=='verify':print(verify_index(args.run_dir));return 0
-    if args.action=='reporter':
-        reporter(args.run_dir,args.nonce,args.owner_pid,cfg['monitor'],json.loads(args.query_command_json) if args.query_command_json else None);return 0
+    if args.action in ('reporter','legacy-reporter'):
+        report=manual_reporter if args.action=='reporter' else reporter
+        report(args.run_dir,args.nonce,args.owner_pid,cfg['monitor'] if args.action=='reporter' else MONITOR,json.loads(args.query_command_json) if args.query_command_json else None);return 0
     if args.action=='worker':return worker(args.run_dir,cfg,args.stage,args.ident,args.pipeline)
     if args.action=='run' and not args.device_receipt:parser.error('run requires tiny --device-receipt')
     result=supervise(args.run_dir,cfg,args.device_receipt,args.action=='device-check');print(json.dumps(result))

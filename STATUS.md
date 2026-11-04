@@ -3,6 +3,15 @@
 Updated2026-11-04. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
 maintained branch `codex/tls-rag-step5-ann`.
 
+## 当前实施完成：S0人工监督，完整664项通过，准备同步
+
+- 实际同意：“批准七路径、完整测试与同步”（第71节）。新manual-r2 namespace已实现，生产supervise明确使用ManualSupervisor/manual_run_job/manual_reporter；旧强制模式仅为独立历史回归。
+- 已取消全部监督超时/资源阈值自动终止，包括NVML失联、首/退出样本等待、worker/阶段/全局/tiny/封存deadline及Products隐藏8GiB限额。资源/旧时限数值只供人工参考，内部数学solver预算不变；科学/角色/源/native/数值校验及真实计算错误保留。
+- 节点采样与资源快照每300秒一次；status只读已有记录，不加NVML探针。慢/失效采样为未知并保留最后值/年龄，不能当0显存或连续合规/真实峰值。人工stop核对run路径/PID启动身份/argv/UID，仅清理拥有session，记user_stopped并封存。
+- 原36项回归通过；新增13项通过4.699秒。最终完整664项、0skip、90.191秒通过，日志 `runs/route6-S0-manual-r2-preparation-20261104/full-tests.log` SHA `d02c7fade9d05fa4076683c74a4ef4a48f4c60f21870e4d1b78ed26cd0b08388`。初次两个CPU fixture错误已保留并修正（本机无Torch的元数据替身、macOS临时目录别名路径核验），没有隐藏跳过。
+- AST独立核对：screen科学函数除产品工厂调用外相同，representation_v2.py字节不变；保护287项通过，旧行/根记录除获准五行SHA外不变。
+- 当前无新A800运行/设备门；下一项提交/GitHub核对/干净Linux同步及CPU49。此次仅改代码/测试同步，不自动启动新实验。第72节记录实际命令与验收。
+
 ## 当前请求：取消S0监督自动停止，每5分钟汇报、用户决定终止
 
 第71节已列出精确七路径/函数、全部隐含deadline和产物预算、人工停止入口与验证计划。

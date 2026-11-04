@@ -57,7 +57,7 @@ class FakeNVML:
 class RepresentationV2Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        faiss.omp_set_num_threads(1);cls.cfg=json.loads(runner.CONFIG.read_text())
+        faiss.omp_set_num_threads(1);cls.cfg=json.loads(runner.CONFIG.read_text());cls.legacy_monitor=dict(runner.MONITOR)
 
     def fixture(self,root):
         x=np.array([[1,0],[0,1],[-1,0],[0,-1]],np.float32);q=x[:2].copy()
@@ -254,17 +254,17 @@ class RepresentationV2Tests(unittest.TestCase):
             self.assertEqual(len(lifecycle['costs']),8)
 
     def sample(self,root,**changes):
-        value=dict(provider=runner.provider_identity(self.cfg['monitor']),nonce='n',reporter_pid=123,owner_pid=os.getpid(),sequence=1,
+        value=dict(provider=runner.provider_identity(self.legacy_monitor),nonce='n',reporter_pid=123,owner_pid=os.getpid(),sequence=1,
             started_monotonic=10.,completed_monotonic=10.1,memory_bytes={})
         value.update(changes);runner.atomic_json(Path(root)/'telemetry.json',value)
 
     def test_telemetry_rejects_stale_unknown_malformed_and_identity(self):
         with tempfile.TemporaryDirectory() as tmp:
-            self.sample(tmp);self.assertEqual(runner.telemetry_memory(tmp,'n',123,[],self.cfg['monitor'],now=11),0)
-            with self.assertRaises(RuntimeError):runner.telemetry_memory(tmp,'n',123,[],self.cfg['monitor'],now=13.01)
+            self.sample(tmp);self.assertEqual(runner.telemetry_memory(tmp,'n',123,[],self.legacy_monitor,now=11),0)
+            with self.assertRaises(RuntimeError):runner.telemetry_memory(tmp,'n',123,[],self.legacy_monitor,now=13.01)
             for changes in [dict(nonce='bad'),dict(memory_bytes={'999999':1}),dict(memory_bytes={'1':'N/A'}),dict(completed_monotonic=20)]:
                 self.sample(tmp,**changes)
-                with self.assertRaises(RuntimeError):runner.telemetry_memory(tmp,'n',123,[],self.cfg['monitor'],now=11)
+                with self.assertRaises(RuntimeError):runner.telemetry_memory(tmp,'n',123,[],self.legacy_monitor,now=11)
 
     def test_gpu_parse_never_fills_unknown_with_zero(self):
         self.assertEqual(runner.parse_gpu('123, 10\n'),{123:10*2**20})
@@ -292,7 +292,7 @@ class RepresentationV2Tests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             self.sample(tmp,memory_bytes={str(os.getpid()):1024})
             with self.assertRaises(RuntimeError):
-                runner.telemetry_memory(tmp,'n',123,[],self.cfg['monitor'],now=11,retired_owned=[os.getpid()])
+                runner.telemetry_memory(tmp,'n',123,[],self.legacy_monitor,now=11,retired_owned=[os.getpid()])
 
     def limits(self,**changes):
         value=dict(total_seconds=30,scientific_seconds=30,component_seconds=1200,rss_bytes=8*2**30,
@@ -304,7 +304,7 @@ class RepresentationV2Tests(unittest.TestCase):
 
     def test_actual_component_stop_then_next_owned_worker(self):
         with tempfile.TemporaryDirectory() as tmp:
-            root=Path(tmp);guard=runner.Guard(root,self.limits(),self.cfg['monitor'],use_gpu=False)
+            root=Path(tmp);guard=runner.Guard(root,self.limits(),self.legacy_monitor,use_gpu=False)
             code='import json,os,time;from pathlib import Path;Path('+repr(str(root/'phase.json'))+').write_text(json.dumps(dict(name="train",worker_pid=os.getpid(),component_deadline_monotonic=time.clock_gettime(time.CLOCK_MONOTONIC)+.1)));time.sleep(30)'
             first=self.job(root,guard,'train',code);self.assertEqual(first['status'],'component_stop')
             with self.assertRaises(ProcessLookupError):os.kill(first['worker_pid'],0)
@@ -315,7 +315,7 @@ class RepresentationV2Tests(unittest.TestCase):
     def test_actual_rss_and_artifact_stops(self):
         for resource in ('rss_bytes','artifact_bytes'):
             with tempfile.TemporaryDirectory() as tmp:
-                guard=runner.Guard(tmp,self.limits(**{resource:1}),self.cfg['monitor'],use_gpu=False)
+                guard=runner.Guard(tmp,self.limits(**{resource:1}),self.legacy_monitor,use_gpu=False)
                 # Exercise post-spawn enforcement separately from the preflight
                 # gate, which would already reject this deliberately tiny cap.
                 with mock.patch.object(guard,'ready'):
@@ -325,7 +325,7 @@ class RepresentationV2Tests(unittest.TestCase):
     def test_actual_gpu_query_above_old_timeout_survives(self):
         with tempfile.TemporaryDirectory() as tmp:
             command=[sys.executable,'-c','import time;time.sleep(.9);print("")']
-            guard=runner.Guard(tmp,self.limits(),self.cfg['monitor'],query_command=command)
+            guard=runner.Guard(tmp,self.limits(),self.legacy_monitor,query_command=command)
             try:
                 guard.start_reporter();guard.ready()
                 result=self.job(tmp,guard,'work','import time;time.sleep(1.1)')
@@ -336,7 +336,7 @@ class RepresentationV2Tests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp);flag=root/'first'
             code='from pathlib import Path;import time;p=Path('+repr(str(flag))+');first=not p.exists();p.touch();time.sleep(0 if first else 10);print("")'
-            guard=runner.Guard(root,self.limits(total_seconds=2),self.cfg['monitor'],query_command=[sys.executable,'-c',code])
+            guard=runner.Guard(root,self.limits(total_seconds=2),self.legacy_monitor,query_command=[sys.executable,'-c',code])
             try:
                 guard.start_reporter();guard.ready();tick=time.monotonic()
                 result=self.job(root,guard,'blocked','import time;time.sleep(30)')
@@ -347,7 +347,7 @@ class RepresentationV2Tests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp);count=root/'query_count'
             code='from pathlib import Path;import time;p=Path('+repr(str(count))+');n=int(p.read_text())+1 if p.exists() else 1;p.write_text(str(n));time.sleep(2.8 if n==2 else 0);print("")'
-            settings=dict(self.cfg['monitor'],poll_seconds=.02)
+            settings=dict(self.legacy_monitor,poll_seconds=.02)
             guard=runner.Guard(root,self.limits(),settings,query_command=[sys.executable,'-c',code])
             try:
                 guard.start_reporter();guard.ready()
@@ -360,7 +360,7 @@ class RepresentationV2Tests(unittest.TestCase):
 
     def test_actual_reporter_failure_is_not_success(self):
         with tempfile.TemporaryDirectory() as tmp:
-            guard=runner.Guard(tmp,self.limits(),self.cfg['monitor'],query_command=[sys.executable,'-c','print("N/A")'])
+            guard=runner.Guard(tmp,self.limits(),self.legacy_monitor,query_command=[sys.executable,'-c','print("N/A")'])
             try:
                 guard.start_reporter()
                 with self.assertRaises(runner.MonitorFailure):guard.ready()
@@ -369,7 +369,7 @@ class RepresentationV2Tests(unittest.TestCase):
 
     def test_monitor_exception_stops_owned_child(self):
         with tempfile.TemporaryDirectory() as tmp:
-            guard=runner.Guard(tmp,self.limits(),self.cfg['monitor'],use_gpu=False)
+            guard=runner.Guard(tmp,self.limits(),self.legacy_monitor,use_gpu=False)
             real=guard.check;calls=[0]
             def fail(*a,**kw):
                 calls[0]+=1
@@ -405,8 +405,8 @@ class RepresentationV2Tests(unittest.TestCase):
 
 
     def nvml(self,library):
-        with mock.patch.object(runner,'sha',return_value=self.cfg['monitor']['library_sha256']),mock.patch.object(runner.ctypes,'CDLL',return_value=library):
-            return runner.NVMLProvider(self.cfg['monitor'])
+        with mock.patch.object(runner,'sha',return_value=self.legacy_monitor['library_sha256']),mock.patch.object(runner.ctypes,'CDLL',return_value=library):
+            return runner.NVMLProvider(self.legacy_monitor)
 
     def test_nvml_independent_abi_bytes_and_persistent_initialization(self):
         library=FakeNVML([(7,2,[]),(0,2,[(101,1234567),(202,0)]),(0,0,[])])
@@ -436,7 +436,7 @@ class RepresentationV2Tests(unittest.TestCase):
 
     def test_nvml_wrong_library_device_version_or_mutation_rejected(self):
         with mock.patch.object(runner,'sha',return_value='bad'),mock.patch.object(runner.ctypes,'CDLL') as loader:
-            with self.assertRaises(RuntimeError):runner.NVMLProvider(self.cfg['monitor'])
+            with self.assertRaises(RuntimeError):runner.NVMLProvider(self.legacy_monitor)
             loader.assert_not_called()
         for field,value in [('driver','wrong'),('version','wrong'),('uuid','wrong'),('count',2)]:
             library=FakeNVML();setattr(library,field,value)
@@ -455,13 +455,13 @@ class RepresentationV2Tests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             self.sample(tmp,provider=dict(backend='unapproved'))
             with self.assertRaisesRegex(RuntimeError,'age_seconds.*1.0'):
-                runner.telemetry_memory(tmp,'n',123,[],self.cfg['monitor'],now=11)
+                runner.telemetry_memory(tmp,'n',123,[],self.legacy_monitor,now=11)
             self.sample(tmp,memory_bytes={'01':1})
-            with self.assertRaises(RuntimeError):runner.telemetry_memory(tmp,'n',123,[],self.cfg['monitor'],now=11)
+            with self.assertRaises(RuntimeError):runner.telemetry_memory(tmp,'n',123,[],self.legacy_monitor,now=11)
 
     def test_actual_native_query_block_stops_parent_and_owned_worker(self):
         with tempfile.TemporaryDirectory() as tmp:
-            root=Path(tmp);guard=runner.Guard(root,self.limits(),self.cfg['monitor'])
+            root=Path(tmp);guard=runner.Guard(root,self.limits(),self.legacy_monitor)
             # Native sleep is inside the reporter process, with no subprocess
             # timeout to rescue it. Only the parent's unchanged3s age can stop.
             code="""import ctypes,os
@@ -474,7 +474,7 @@ class Provider:
   return {}
  def close(self):pass
 r.NVMLProvider=Provider
-r.reporter(ROOT,NONCE,OWNER,r.config()['monitor'])
+r.reporter(ROOT,NONCE,OWNER,r.MONITOR)
 """.replace('ROOT',repr(str(root))).replace('NONCE',repr(guard.nonce)).replace('OWNER',str(os.getpid()))
             guard.report=subprocess.Popen([sys.executable,'-c',code],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True)
             try:
@@ -492,7 +492,7 @@ r.reporter(ROOT,NONCE,OWNER,r.config()['monitor'])
             name='tiny-startup'+str(i);folder=root/'stages'/name;folder.mkdir(parents=True)
             child=subprocess.Popen([sys.executable,'-c','pass']);child.wait()
             results.append(dict(name=name,status='complete',worker_pid=child.pid))
-            receipt=dict(status='passed',worker_pid=child.pid,provider=runner.provider_identity(self.cfg['monitor']),
+            receipt=dict(status='passed',worker_pid=child.pid,provider=runner.provider_identity(self.legacy_monitor),
                 sources=freeze['sources'],config=self.cfg,environment=freeze['environment'],binary_sha256={'native':'same'},
                 precision={'exact':True},checks=[dict(kind=k,cpu_cuda_exact=True) for k in ('raw','gaussian','pca','hybrid')])
             runner.write_json(folder/'device_receipt.json',receipt)
@@ -511,10 +511,10 @@ r.reporter(ROOT,NONCE,OWNER,r.config()['monitor'])
                 if defect=='check':receipt['checks'][0]['cpu_cuda_exact']=False
                 runner.atomic_json(path,receipt)
                 if defect=='none':
-                    saved=runner.seal_device_gate(root,self.cfg,results,runner.provider_identity(self.cfg['monitor']))
+                    saved=runner.seal_device_gate(root,self.cfg,results,runner.provider_identity(self.legacy_monitor))
                     self.assertEqual(saved['independent_cuda_workers'],3);self.assertEqual(len(saved['startup_receipt_sha256']),3)
                 else:
-                    with self.assertRaises(RuntimeError):runner.seal_device_gate(root,self.cfg,results,runner.provider_identity(self.cfg['monitor']))
+                    with self.assertRaises(RuntimeError):runner.seal_device_gate(root,self.cfg,results,runner.provider_identity(self.legacy_monitor))
                     self.assertFalse((root/'device_receipt.json').exists())
 
     def test_frozen_old_inventory_training_and_new_limits(self):
@@ -522,8 +522,228 @@ r.reporter(ROOT,NONCE,OWNER,r.config()['monitor'])
         for key in ('representations','seeds','training','budgets','targets','limits','queries','roles_sha256'):
             self.assertEqual(self.cfg[key],old[key])
         self.assertEqual(self.cfg['timing']['cpu_queries_per_role'],16)
-        self.assertEqual(self.cfg['monitor']['gpu_max_age_seconds'],3)
+        self.assertEqual(self.legacy_monitor['gpu_max_age_seconds'],3)
+        self.assertEqual(self.cfg['monitor']['report_seconds'],300)
+        self.assertIsNone(self.cfg['monitor']['gpu_max_age_seconds'])
+        self.assertFalse(self.cfg['supervision']['automatic_stop'])
         self.assertFalse(self.cfg['tri_stage']);self.assertEqual(self.cfg['new_mc_samples'],0)
 
+
+class ManualSupervisionTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):cls.cfg=json.loads(runner.CONFIG.read_text())
+
+    def limits(self):
+        return dict(self.cfg['limits'],scientific_seconds=-1,total_seconds=-1,component_seconds=-1,
+            rss_bytes=1,gpu_bytes=1,artifact_bytes=1,disk_bytes=1,free_bytes=10**30)
+
+    def test_exact_five_minute_config_and_no_deadline_gate(self):
+        self.assertEqual(runner.config()['namespace'],'tls-rag-route6-representation-screen-v2-manual-r2')
+        self.assertEqual(self.cfg['monitor']['report_seconds'],300)
+        self.assertEqual(self.cfg['monitor']['poll_seconds'],300)
+        self.assertIsNone(self.cfg['monitor']['gpu_max_age_seconds'])
+        self.assertIsNone(self.cfg['device_gate']['total_seconds'])
+        self.assertIsNone(self.cfg['device_gate']['scientific_seconds'])
+        self.assertEqual(self.cfg['supervision'],dict(mode='manual',automatic_stop=False,
+            resource_budget_enforced=False,report_interval_seconds=300))
+
+    def test_observations_only_on_five_minute_schedule_and_no_catchup(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);clock=[0.];guard=runner.ManualSupervisor(root,self.limits(),self.cfg['monitor'],start=0,use_gpu=False)
+            with mock.patch.object(runner,'monotonic',side_effect=lambda:clock[0]),mock.patch.object(runner,'process_tree',return_value={os.getpid():999}) as scan:
+                first=guard.observe()
+                for now in (1,10,299.99):clock[0]=now;self.assertIs(guard.observe(),first)
+                self.assertEqual(scan.call_count,1)
+                clock[0]=300;guard.observe();self.assertEqual(scan.call_count,2)
+                clock[0]=950;guard.observe();self.assertEqual(scan.call_count,3)
+                self.assertEqual(guard.next_sample,1250)
+                self.assertFalse(guard.last_observation['automatic_stop']);self.assertTrue(first['advisories'])
+            self.assertEqual(len((root/'observations.jsonl').read_text().splitlines()),3)
+        self.assertEqual(runner.next_observation(0,350,300),650)
+
+    def test_unknown_stale_failed_or_unrelated_gpu_is_report_only(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);settings=self.cfg['monitor'];nonce='n';pid=123;now=runner.monotonic()
+            sample=dict(nonce=nonce,reporter_pid=pid,owner_pid=os.getpid(),sequence=1,
+                started_monotonic=now-10000,completed_monotonic=now-9999,
+                provider=runner.provider_identity(settings),memory_bytes={'987654321':1024})
+            runner.atomic_json(root/'telemetry.json',sample)
+            status=dict(sample,status='ok');runner.atomic_json(root/'telemetry_status.json',status)
+            value=runner.manual_gpu_observation(root,nonce,pid,[],settings,True)
+            self.assertEqual(value['sampled_bytes'],1024);self.assertGreater(value['sample_age_seconds'],9999)
+            self.assertEqual(value['unrelated_compute_pids'],[987654321])
+            for state,alive in [('pending',True),('error',True),('ok',False)]:
+                runner.atomic_json(root/'telemetry_status.json',dict(status,status=state))
+                value=runner.manual_gpu_observation(root,nonce,pid,[],settings,alive)
+                self.assertEqual(value['status'],'unknown');self.assertIsNone(value['sampled_bytes'])
+                self.assertEqual(value['last_known_bytes'],1024)
+            runner.atomic_json(root/'telemetry.json',dict(sample,memory_bytes={'1':'N/A'}))
+            value=runner.manual_gpu_observation(root,nonce,pid,[],settings,True)
+            self.assertIsNone(value['sampled_bytes']);self.assertIsNone(value['last_known_bytes'])
+
+    def test_actual_blocked_native_probe_and_all_old_limits_do_not_kill_worker(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);guard=runner.ManualSupervisor(root,self.limits(),self.cfg['monitor'])
+            code="""import ctypes,os,sys
+from scripts import run_tls_rag_step5_route6_representation_v2 as r
+class Provider:
+ def __init__(self,settings):pass
+ def query(self):ctypes.CDLL(None).sleep(20);return {}
+ def close(self):pass
+r.NVMLProvider=Provider
+r.manual_reporter(sys.argv[1],sys.argv[2],int(sys.argv[3]),r.config()['monitor'])
+"""
+            guard.report=subprocess.Popen([sys.executable,'-c',code,str(root),guard.nonce,str(os.getpid())],
+                stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True)
+            try:
+                result=runner.manual_run_job([sys.executable,'-c','import time;time.sleep(4.1)'],root,guard,'past-all-old-limits')
+                self.assertEqual(result['status'],'complete',result);self.assertEqual(result['returncode'],0)
+                self.assertGreaterEqual(result['seconds'],4.1)
+                self.assertEqual(guard.report.poll(),None)
+                self.assertEqual(json.loads((root/'telemetry_status.json').read_text())['status'],'pending')
+                self.assertTrue(guard.last_observation['advisories'])
+            finally:guard.close()
+            self.assertIsNotNone(guard.report.poll())
+
+    def test_actual_monitor_exception_does_not_kill_and_worker_error_is_recorded(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            guard=runner.ManualSupervisor(tmp,self.limits(),self.cfg['monitor'],use_gpu=False)
+            with mock.patch.object(guard,'observe',side_effect=RuntimeError('broken monitoring')):
+                result=runner.manual_run_job([sys.executable,'-c','import time;time.sleep(.1)'],tmp,guard,'monitor-broken')
+            self.assertEqual(result['status'],'complete')
+            result=runner.manual_run_job([sys.executable,'-c','raise SystemExit(7)'],tmp,guard,'real-error')
+            self.assertEqual(result['status'],'worker_failed');self.assertEqual(result['returncode'],7)
+
+    def test_user_stop_is_not_swallowed_by_observation_error_handling(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            guard=runner.ManualSupervisor(tmp,self.limits(),self.cfg['monitor'],use_gpu=False)
+            with mock.patch.object(guard,'observe',side_effect=runner.UserStopped('operator')):
+                result=runner.manual_run_job([sys.executable,'-c','import time;time.sleep(30)'],tmp,guard,'explicit-stop')
+            self.assertEqual(result['status'],'user_stopped')
+            with self.assertRaises(ProcessLookupError):os.kill(result['worker_pid'],0)
+
+    def test_spawn_preserves_worker_signal_mask(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            guard=runner.ManualSupervisor(tmp,self.limits(),self.cfg['monitor'],use_gpu=False)
+            code='import signal;assert not (set(signal.pthread_sigmask(signal.SIG_BLOCK,[])) & {signal.SIGUSR1,signal.SIGINT,signal.SIGTERM})'
+            result=runner.manual_run_job([sys.executable,'-c',code],tmp,guard,'signals')
+            self.assertEqual(result['status'],'complete')
+
+    def test_worker_old_deadline_ignored_but_owner_and_source_locks_remain(self):
+        freeze=dict(parent_pid=42,deadline_monotonic=-100000,sources={'s':'hash'});last=[0.]
+        with mock.patch.object(runner.os,'getppid',return_value=42),mock.patch.object(runner,'monotonic',return_value=100000),mock.patch.object(runner,'source_map',return_value={'s':'hash'}):
+            runner.worker_check(freeze,last,self.cfg)
+        with mock.patch.object(runner.os,'getppid',return_value=43):
+            with self.assertRaisesRegex(RuntimeError,'parent'):runner.worker_check(freeze,last,self.cfg)
+        with mock.patch.object(runner.os,'getppid',return_value=42),mock.patch.object(runner,'monotonic',return_value=100301),mock.patch.object(runner,'source_map',return_value={'s':'changed'}):
+            with self.assertRaisesRegex(RuntimeError,'source'):runner.worker_check(freeze,last,self.cfg)
+
+    def test_manual_products_exceed_old_budget_but_remain_exclusive_and_finite(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            cfg=copy.deepcopy(self.cfg);cfg['limits']['artifact_bytes']=1
+            products=screen.products_for(tmp,cfg);products.array('larger.npy',np.zeros(1000))
+            self.assertGreater((Path(tmp)/'larger.npy').stat().st_size,1)
+            with self.assertRaises(FileExistsError):products.array('larger.npy',np.ones(1))
+            with self.assertRaises(ValueError):products.json('bad.json',{'value':float('nan')})
+            with self.assertRaises(ValueError):products.reserve(-1)
+            outside=Path(tmp)/'outside';outside.mkdir();(Path(tmp)/'link').symlink_to(outside,target_is_directory=True)
+            with self.assertRaises(RuntimeError):products.array('link/escaped.npy',np.zeros(1))
+            with self.assertRaises(ValueError):products.json('../escaped.json',{})
+            self.assertFalse((outside/'escaped.npy').exists())
+
+    def test_no_closure_deadline_and_status_launches_no_extra_probe(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);(root/'payload').write_bytes(b'abc')
+            value=dict(started_monotonic=runner.monotonic()-10000,time_unix=time.time()-10000,
+                automatic_stop=False,gpu=dict(status='unknown',sampled_bytes=None))
+            runner.atomic_json(root/'observation.json',value)
+            with mock.patch.object(runner,'NVMLProvider') as provider,mock.patch.object(runner,'process_tree') as scan:
+                status=runner.status_snapshot(root);self.assertGreater(status['snapshot_age_seconds'],9999)
+                provider.assert_not_called();scan.assert_not_called()
+            result=runner.close_run(root,dict(status='complete'),runner.monotonic()-100000,None)
+            self.assertEqual(result['status'],'complete');self.assertEqual(runner.verify_index(root),3)
+
+    def test_preflight_gpu_probe_timeout_is_advisory(self):
+        with mock.patch.object(runner.importlib.metadata,'version',side_effect=lambda n:self.cfg['dependencies'][n]),mock.patch.object(runner.subprocess,'run',side_effect=subprocess.TimeoutExpired('nvidia-smi',30)),mock.patch.object(runner,'sha',return_value='hash'),mock.patch.object(runner.importlib.util,'find_spec',return_value=SimpleNamespace(origin='fixture')),mock.patch.dict(os.environ,{n:'1' for n in runner.THREADS}):
+            value=runner.environment(self.cfg)
+            self.assertIsNone(value['physical_identity']);self.assertIn('TimeoutExpired',value['gpu_identity_observation_error'])
+        other=dict(value,physical_identity='known A800',gpu_identity_observation_error=None)
+        self.assertTrue(runner.same_environment(other,value))
+        self.assertFalse(runner.same_environment(other,dict(other,physical_identity='different A800')))
+        self.assertFalse(runner.same_environment(other,dict(value,threads={})))
+
+    def test_cpu_supervisor_gate_finishes_with_dead_reporter_and_expired_old_limits(self):
+        # CPU stand-ins isolate the changed orchestration, not CUDA numerics.
+        # Numeric CUDA conformance still requires a separately authorized node run.
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)/'gate';cfg=copy.deepcopy(self.cfg)
+            stage_worker="""import sys,os,json
+from pathlib import Path
+from scripts import run_tls_rag_step5_route6_representation_v2 as r
+root=Path(sys.argv[1]);ident=sys.argv[2];freeze=json.loads((root/'source_freeze.json').read_text())
+assert freeze['deadline_monotonic'] is None
+r.write_json(root/'stages'/('tiny-'+ident)/'device_receipt.json',dict(status='passed',worker_pid=os.getpid(),
+ provider=r.provider_identity(freeze['config']['monitor']),sources=freeze['sources'],config=freeze['config'],
+ environment=freeze['environment'],checks=[dict(kind=k,cpu_cuda_exact=True) for k in ('raw','gaussian','pca','hybrid')],
+ binary_sha256={'cpu_fixture':'same'},precision={'cpu_fixture':True}))
+"""
+            real_job=runner.manual_run_job
+            def job(command,folder,guard,name,env=None):
+                self.assertIsInstance(guard,runner.ManualSupervisor)
+                ident=command[command.index('--ident')+1]
+                return real_job([sys.executable,'-c',stage_worker,str(folder),ident],folder,guard,name,env)
+            def fake_reporter(guard):guard.report=SimpleNamespace(pid=999999999,poll=lambda:1)
+            def command(args,**kwargs):return SimpleNamespace(stdout='fixture' if args[:2]==['git','rev-parse'] else '')
+            identity=dict(pid=os.getpid(),uid=os.getuid(),start_identity='cpu_fixture',commandline=[str(root.resolve())])
+            with mock.patch.object(runner.sys,'platform','linux'),mock.patch.object(runner,'process_identity',return_value=identity),mock.patch.object(runner,'process_tree',return_value={os.getpid():100}),mock.patch.object(runner.ManualSupervisor,'start_reporter',fake_reporter),mock.patch.object(runner,'environment',return_value={'cpu_fixture':True}),mock.patch.object(runner,'allocated_resources',side_effect=RuntimeError('unavailable')),mock.patch.object(runner,'source_map',return_value={'cpu_fixture':'same'}),mock.patch.object(runner.subprocess,'run',side_effect=command),mock.patch.object(runner,'manual_run_job',side_effect=job),mock.patch.object(runner,'ENTRY_MONOTONIC',runner.monotonic()-100000):
+                result=runner.supervise(root,cfg,device_only=True)
+            self.assertEqual(result['status'],'complete',result)
+            self.assertFalse(result['automatic_stop']);self.assertEqual(result['report_interval_seconds'],300)
+            receipt=json.loads((root/'device_receipt.json').read_text())
+            self.assertEqual(receipt['independent_cuda_workers'],3)
+            self.assertEqual(len(set(receipt['worker_pids'])),3)
+            self.assertEqual(result['sampled_max_gpu_bytes'],None)
+            runner.verify_index(root)
+
+    def test_actual_manual_stop_checks_start_identity_and_seals_only_owned_work(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);log=(root/'controller.log').open('xb')
+            code="""import sys,signal,json
+from pathlib import Path
+from scripts import run_tls_rag_step5_route6_representation_v2 as r
+root=Path(sys.argv[1]);cfg=r.config();previous=r.install_manual_control(root)
+guard=r.ManualSupervisor(root,cfg['limits'],cfg['monitor'],use_gpu=False)
+result=r.manual_run_job([sys.executable,'-c','import time;time.sleep(30)'],root,guard,'work')
+for sig in previous:signal.signal(sig,signal.SIG_IGN)
+control=json.loads((root/'manual_control.json').read_text());control['state']='closing';r.atomic_json(root/'manual_control.json',control)
+r.close_run(root,dict(status=result['status']),r.monotonic(),None)
+"""
+            controller=subprocess.Popen([sys.executable,'-c',code,str(root)],stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+            original=None
+            try:
+                deadline=time.monotonic()+6
+                while not (root/'stages/work/owned_worker.json').exists():
+                    if controller.poll() is not None or time.monotonic()>deadline:self.fail((root/'controller.log').read_text())
+                    time.sleep(.02)
+                original=json.loads((root/'manual_control.json').read_text())
+                forged=copy.deepcopy(original);forged['controller']['start_identity']='wrong'
+                runner.atomic_json(root/'manual_control.json',forged)
+                with self.assertRaises(ValueError):runner.request_stop(root)
+                self.assertIsNone(controller.poll())
+                runner.atomic_json(root/'manual_control.json',original)
+                request=runner.request_stop(root);self.assertEqual(request['controller_pid'],controller.pid)
+                controller.wait(timeout=5);self.assertEqual(controller.returncode,0,(root/'controller.log').read_text())
+                self.assertEqual(json.loads((root/'execution.json').read_text())['status'],'user_stopped')
+                worker=json.loads((root/'stages/work/owned_worker.json').read_text())['pid']
+                with self.assertRaises(ProcessLookupError):os.kill(worker,0)
+                runner.verify_index(root)
+                with self.assertRaisesRegex(ValueError,'closed'):runner.request_stop(root)
+            finally:
+                if controller.poll() is None:
+                    if original:runner.atomic_json(root/'manual_control.json',original)
+                    try:runner.request_stop(root);controller.wait(timeout=3)
+                    finally:
+                        if controller.poll() is None:runner.terminate_owned(controller)
+                log.close()
 
 if __name__=='__main__':unittest.main()

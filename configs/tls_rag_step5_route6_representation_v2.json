@@ -1,5 +1,5 @@
 {
-  "namespace": "tls-rag-route6-representation-screen-v2-nvml-r1",
+  "namespace": "tls-rag-route6-representation-screen-v2-manual-r2",
   "stage": "S0",
   "source": {
     "path": "/root/autodl-fs/route6-B0-v1-9f963f9-20261103T0959Z/source/data.hdf5",
@@ -353,10 +353,10 @@
   "new_mc_samples": 0,
   "tri_stage": false,
   "monitor": {
-    "poll_seconds": 0.25,
-    "command_seconds": 3.0,
-    "gpu_max_age_seconds": 3.0,
-    "report_seconds": 0.1,
+    "poll_seconds": 300.0,
+    "command_seconds": 30.0,
+    "gpu_max_age_seconds": null,
+    "report_seconds": 300.0,
     "backend": "persistent-nvml-v3",
     "library_path": "/usr/lib/x86_64-linux-gnu/libnvidia-ml.so.580.82.07",
     "library_sha256": "008cc04afc61b8317ed4ddccfa2d1bd367ceb6e71334eb352dc846e0ac450340",
@@ -380,7 +380,13 @@
   ],
   "device_gate": {
     "independent_cuda_workers": 3,
-    "scientific_seconds": 120,
-    "total_seconds": 180
+    "scientific_seconds": null,
+    "total_seconds": null
+  },
+  "supervision": {
+    "mode": "manual",
+    "automatic_stop": false,
+    "resource_budget_enforced": false,
+    "report_interval_seconds": 300
   }
 }

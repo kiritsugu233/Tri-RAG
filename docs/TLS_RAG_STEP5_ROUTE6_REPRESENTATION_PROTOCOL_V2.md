@@ -1,6 +1,11 @@
 # R6-S0 representation screen v2
 
-Current frozen namespace `tls-rag-route6-representation-screen-v2-nvml-r1`.
+Current frozen namespace `tls-rag-route6-representation-screen-v2-manual-r2`.
+The manual-r2 section at the end supersedes all earlier supervisory deadlines,
+resource enforcement and telemetry-age gates in this document. Earlier v2/r1
+monitor sections below are historical; their mathematical/data contracts remain
+unchanged. Existing resource/time numbers in `limits` are reference values only
+under manual supervision, except the unchanged internal solver algorithm budgets.
 The earlier v2 namespace/source/failures remain immutable in Git and closed run directories. Actual2026-11-04 consent
 to exploration §62.2–62.3's exact nine paths, testing/sync and one new run:
 
@@ -198,3 +203,95 @@ product. Keep failure products and per-stage identities; global complete require
 all expected stages, otherwise incomplete/resource_stop/monitor_failed/worker_failed
 as applicable. No automatic second attempt, relabeling partial timing as complete,
 newMC/test/cert roles, Tri validation or RAG superiority claim.
+
+
+## Current manual-r2 supervision contract (2026-11-04)
+
+Actual response to exploration §71's seven-path question:
+
+> 批准七路径、完整测试与同步
+
+Scope: runner, screen Products/factory/call sites, config, tests, this protocol,
+and two append-only protection registers. Full CPU regression and source sync;
+**no new A800 device gate, real run, installation or download is authorized by
+this change-only approval**. Old results/failures remain under their original
+commits. Representation/metric/seed/roles/k/M/epsilon/precision/training/timing
+cohorts and oracle mathematics stay unchanged. The representation_v2 module is
+byte-identical. New namespace/fingerprints reject old r1 device receipts.
+
+Production `supervise` uses `ManualSupervisor`, `manual_reporter` and
+`manual_run_job`; legacy Guard/reporter/run_job/telemetry_memory/await_gpu_idle
+remain explicitly for the historical strict CPU regressions. The `run` and
+`device-check` actions do not call those strict helpers. The explicit
+`legacy-reporter` action is a probe-only fixture path and cannot run science.
+
+- No supervisor termination for NVML slowness, sample age, missing first/post-exit
+  sample, reporter death, unknown/invalid observation, unrelated GPU PID,
+  elapsed component/science/global/tiny time, or RSS/GPU/storage/free-space
+  reference crossings. No early shutdown reserve or global closure deadline.
+- `limits` retains old values for audit compatibility and human reference.
+  Those values do not enforce time/resource termination in manual mode.
+  Solver60s/300s budgets remain the existing mathematical solver policy and
+  can yield unresolved solver output; they do not kill the experiment.
+- `Products` keeps its strict budget default for legacy fixtures. All current
+  production construction sites explicitly use `products_for(cfg)` with budget
+  enforcement false. Preserve exclusive writes, finite JSON, nonnegative sizes
+  and per-path symlink/escape rejection without a full resource scan per write.
+- Input/source/config/role/native/precision locks, A800 numerical backend checks,
+  dependency identities and actual computation/IO errors remain real checks.
+  Owner/source loss is a provenance error, not a telemetry timeout.
+
+One isolated reporter targets one native query every300s; an initial query is
+allowed. It records pending start, success/error/end/sequence/provider, keeping
+last successful bytes and their original time. Native blocking stays isolated.
+An optional CLI probe timeout30s only ends that probe, logs unknown, and never
+ends science. No rapid retry/catch-up burst. Identity CLI unavailability is
+advisory; dependency/native/precision checks remain mandatory. Known physical
+identities must agree between receipt and run; unavailable telemetry is recorded
+as unknown, not passed off as verified UUID continuity.
+
+Parent resource collection also occurs at300s intervals, independent of job
+boundaries. Worker completion is obtained by waiting for its process; a wait
+interval expiry schedules a report, not a termination. Every snapshot records
+stage/phase owner, elapsed time, completed quality/stage counts, RSS, GPU sample,
+its age/status, disk/artifacts/free space, reference thresholds and advisories.
+No fresh GPU reading is inferred from a saved old or malformed record. Dead,
+failed or pending reporters yield current value null plus last valid value/age.
+Previously owned, exited PIDs in saved samples are distinguished from live
+unrelated/reused PIDs. A source/phase for a previous worker is not attached to a
+new initializing worker. No claim of continuous resource compliance or true
+peak memory: only sampled maxima are available at this cadence.
+
+`status` reads saved observation/progress/phase/completion files; it does not
+launch NVML or scan resource counters. The assistant should request this status
+every5 minutes while an authorized experiment runs, rather than repeatedly
+polling/reporting unchanged state. Completion, actual failure and user commands
+can be handled immediately. Node sampling needs no model/tool calls.
+
+```sh
+# Read saved status; no extra NVML probe.
+python scripts/run_tls_rag_step5_route6_representation_v2.py status --run-dir /absolute/new/run
+# Only when the user explicitly chooses to stop.
+python scripts/run_tls_rag_step5_route6_representation_v2.py stop --run-dir /absolute/new/run
+```
+
+The stop command verifies absolute resolved run binding, controller PID/start
+identity/argv/UID and running state, writes an explicit nonce-bound request and
+signals only that controller. The controller owns separate worker/reporter
+sessions and reaps only those sessions. Publish Popen handles before delivering
+operator signals; restore the child signal mask before exec. UserStopped cannot
+be swallowed as a monitor error. SIGUSR1/operator SIGINT/SIGTERM produce
+`user_stopped`, preserve logs/completed records and close/hash/independently
+verify products. Only explicit stop, normal completion or actual controller/
+worker failure closes owned sessions; no resource observation does so.
+Once computation has ended and product hashing is closing, the stop command
+reports that state; it does not claim to stop an already finished worker.
+Shutdown grace/SIGKILL fallback applies only to the already requested cleanup,
+not an elapsed-runtime watchdog. Actual OS allocation/disk/driver errors can
+still prevent completion and are not disguised as successful results.
+
+CPU tests include real native blocking beyond3s with every old limit expired,
+5-minute sampling under a controlled clock, manual stop/start-identity rejection,
+signal-mask/owned-child cleanup, unknown observations, exclusive writes beyond
+old artifact budget, no closure deadline and a three-worker CPU orchestration
+stand-in. That stand-in tests control flow only, not actual CUDA conformance.

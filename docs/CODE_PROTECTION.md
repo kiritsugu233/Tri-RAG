@@ -699,3 +699,26 @@ the two v2 scientific modules, old classifications/root records/hashes stay
 unchanged. Only approved config/test/protocol/this-register hashes refresh;
 append actual consent, never replace earlier authorization. Four L1 handoff
 documents record progress and measured outcomes separately from software checks.
+
+## Approved S0 manual-r2 supervision (2026-11-04)
+
+Actual answer to exploration §71 at347df1418229d2c2b69fe000bb787fae10df30c5:
+
+> 批准七路径、完整测试与同步
+
+Seven affected paths: `scripts/run_tls_rag_step5_route6_representation_v2.py`,
+`mechanism/tls_rag_step5_route6_representation_screen_v2.py`,
+`configs/tls_rag_step5_route6_representation_v2.json`,
+`tests/test_tls_rag_step5_route6_representation_v2.py`,
+`docs/TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V2.md`, this register,
+`docs/code_protection.json`. No classification or old approval changes.
+New manual-r2 namespace; remove all production supervisor deadlines/telemetry
+age gates and automatic resource aborts, including worker/closure/tiny deadlines
+and Products' hidden artifact cap.300s observations, null/age for unknown GPU,
+user-controlled owned-PID/start/session stop and closed evidence. Old strict
+helpers/tests remain explicitly separate; numerical/role/source/native locks,
+representations/training/quality/timing/solver math and representation_v2.py
+bytes stay fixed. Only approved screen/config/test/protocol/this-register SHA
+rows refresh, with this actual authorization appended. Full CPU regression,
+commit/push/verified sync are authorized; no new scientific run/device gate,
+install/download or reopening closed roles. Four L1 documents record progress.

@@ -21,14 +21,40 @@ same_byte_frontiers = frozen.same_byte_frontiers
 select_ivf_identities = frozen.select_ivf_identities
 seal_report = frozen.seal_report
 class Products(frozen.Products):
+    def __init__(self,root,limit,check=lambda:None,enforce_budget=True):
+        super().__init__(root,limit,check);self.enforce_budget=enforce_budget
+
+    def validate_path(self,name):
+        relative=Path(name)
+        if relative.is_absolute() or '..' in relative.parts:raise ValueError('product path outside run')
+        path=self.root
+        if path.is_symlink():raise RuntimeError('run directory symlink')
+        for part in relative.parts:
+            path=path/part
+            if path.is_symlink():raise RuntimeError('run directory symlink')
+
+    def json(self,name,value):
+        self.validate_path(name);return super().json(name,value)
+
+    def array(self,name,value):
+        self.validate_path(name);return super().array(name,value)
+
     def reserve(self,size):
-        self.check();used=0
+        self.check()
+        if size<0:raise ValueError('negative product size')
+        if not self.enforce_budget:return
+        used=0
         for path in self.root.rglob('*'):
             try:info=path.lstat()
             except FileNotFoundError:continue  # owned atomic telemetry rename
             if stat.S_ISLNK(info.st_mode):raise RuntimeError('run directory symlink')
             if stat.S_ISREG(info.st_mode):used+=info.st_size
         if size<0 or used+size>self.limit:raise RuntimeError('artifact write budget')
+
+
+def products_for(root,cfg,check=lambda:None):
+    return Products(root,cfg['limits']['artifact_bytes'],check,
+        enforce_budget=cfg.get('supervision',{}).get('resource_budget_enforced',True))
 
 
 def timing_cohort(roles, cfg, hardware):
@@ -130,7 +156,7 @@ def prepared(root, cfg):
 
 
 def prepare(cfg, root, torch, check, phase):
-    products = Products(root, cfg['limits']['artifact_bytes'], check); root = Path(root)
+    products = products_for(root,cfg,check); root = Path(root)
     raw, queries, truth, roles, inputs = rep.load_screen_inputs(cfg, check, phase)
     products.json('inputs.json', inputs); products.json('roles.json', dict(queries=roles))
     products.array('queries.npy', queries); products.array('published_truth.npy', truth)
@@ -215,7 +241,7 @@ def _reuse_pq64(cfg, root, spec, products):
 
 def quality(cfg, root, ident, torch, check, phase):
     import faiss
-    root=Path(root);products=Products(root,cfg['limits']['artifact_bytes'],check)
+    root=Path(root);products=products_for(root,cfg,check)
     raw,queries,truth,cutoffs,fit_rows,roles,receipt=prepared(root,cfg)
     spec=next(s for s in cfg['representations'] if s['id']==ident); prefix='representations/'+ident
     sample=np.array(raw[fit_rows],copy=True);phase(ident+':fit',component=True);tick=time.monotonic()
@@ -328,7 +354,7 @@ def lifecycle_cost(cost, backend, raw_bytes, payload_bytes, model_bytes, norm_by
 
 
 def linear_timing(cfg,root,ident,torch,check,phase,all_budgets=False,backend=None):
-    root=Path(root);products=Products(root,cfg['limits']['artifact_bytes'],check)
+    root=Path(root);products=products_for(root,cfg,check)
     model,raw,queries,truth,cutoffs,roles,receipt,values,restore=backend_state(cfg,root,ident,check,phase)
     spec=model['spec'];prefix='representations/'+ident
     if spec['diagnostic']:raise ValueError('seed diagnostic cannot enter timing')
@@ -409,7 +435,7 @@ def select_gaussian_pipelines(points,configs,cfg):
 
 
 def write_selections(cfg,root,check=lambda:None):
-    root=Path(root);products=Products(root,cfg['limits']['artifact_bytes'],check)
+    root=Path(root);products=products_for(root,cfg,check)
     points=collect_points(root);configs={s['id']:s for s in cfg['representations']}
     products.json('all_points.json',points);products.json('all_frontiers.json',frontiers(points,cfg))
     products.json('same_byte_frontiers.json',same_byte_frontiers(points,configs,cfg))
@@ -483,7 +509,7 @@ def solve_oracle(cfg,root,pipeline,products,check,phase,solver_spent):
 
 def ivf(cfg,root,ident,torch,check,phase):
     import faiss
-    root=Path(root);products=Products(root,cfg['limits']['artifact_bytes'],check)
+    root=Path(root);products=products_for(root,cfg,check)
     model,raw,queries,truth,cutoffs,roles,receipt,values,restore=backend_state(cfg,root,ident,check,phase,payload=False)
     del values
     sample=raw[np.load(root/'fit_rows.npy')].copy();spec=model['spec'];prefix='ivf/'+ident
@@ -551,11 +577,11 @@ def oracle_ivf_timing(cfg,root,pipeline,torch,check,phase):
     index.nprobe=int(backend[3:]);phase(pipeline+':oracle_all_M')
     measured=timings(model,raw,queries,roles,cfg['budgets'],index,cfg,check)
     quality=json.loads((root/'ivf'/ident/backend[3:]/'quality.json').read_text());verify_timings(measured,quality)
-    Products(root,cfg['limits']['artifact_bytes'],check).json('oracle/'+ident+'-'+backend+'/timings.json',measured)
+    products_for(root,cfg,check).json('oracle/'+ident+'-'+backend+'/timings.json',measured)
 
 
 def finalize(cfg,root,torch,check,phase):
-    root=Path(root);products=Products(root,cfg['limits']['artifact_bytes'],check)
+    root=Path(root);products=products_for(root,cfg,check)
     phase('final_source_full_sha')
     if rep.sha(cfg['source']['path'],check)!=cfg['source']['sha256']:raise ValueError('source changed during v2')
     products.json('source_post_sha.json',dict(sha256=cfg['source']['sha256'],matched=True))
