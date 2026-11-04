@@ -1887,6 +1887,16 @@
       "path": "docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md",
       "level": "L1",
       "reason": "User-requested PQ refinement research design and first-cost-gate handoff; non-frozen reference only, no new scientific implementation or inherited L0 contract changes"
+    },
+    {
+      "path": "scripts/analyze_pq_refinement_cost_space.py",
+      "level": "L1",
+      "reason": "User-authorized gate1 C0 read-only analysis of verified observed S0 timing/candidate records; query-cluster descriptive uncertainty and logical-address accounting only, no retrieval, scientific contract, role or original artifact changes"
+    },
+    {
+      "path": "docs/pq_refinement_cost_c0_evidence_v0.json",
+      "level": "L1",
+      "reason": "Actual C0 read-only cost audit and query-level receipts from already observed S0 records; unresolved C1 and unmeasured physical traffic retained, no scientific contract or execution authorization"
     }
   ],
   "approved_change_history": [

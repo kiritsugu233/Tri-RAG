@@ -14,6 +14,12 @@ what is missing and ask the user to power on the server after finishing local wo
 Do not enter gate 2 residual/sketch experiments or gate 3 Tri implementation.
 Do not expand representations, action grids or query roles.
 
+Latest checkpoint: C0 and local C1 preparation are complete; read plan sections10–11.
+Do not repeat the C0 run unless investigating a discrepancy. C1's new exact eight
+paths are proposed, not approved. Await that scope and server power-on before
+new scientific implementation/replay. No C1 code has been created.
+Cost gate is unresolved; actual gather/read-vs-compute costs remain unknown.
+
 ## Minimal read set
 
 1. START_HERE.md latest current entry, AGENTS.md, relevant protection entries, this brief.
@@ -43,6 +49,13 @@ Commit/push/verify the continuing branch after authorized work and required chec
 - Rerank includes gathering/copying, distance, sorting: not a physical-read counter.
 - Proposed engineering target is10% total reduction; halving primary rerank leaves
   about0.870569ms for new summary access, query projection and control.
+- C0 independently checks288 candidate hashes/outputs and96 query groups/72 cost
+  assumptions. Primary check F/T query-cluster95% interval30.660%–32.375%; this
+  describes observed development queries, not certification or hardware drift.
+- Free removal of all PQ Flat rerank gives only2.085%; stop that refinement interface.
+- M6400 logical gathers total16,640,000B including100 output rereads; virtual page
+  coverage/NumPy requests are not physical DRAM/SSD traffic. C1 manifest is ready;
+  CPU-only server with >=32GiB RAM can supply original vectors/index already there.
 - Current S0 Gaussian/Hybrid main representations had no competitive Tri entry point.
   Auxiliary residual summaries are a different, still unverified hypothesis.
 
@@ -73,3 +86,6 @@ When a new L0 contract or file is necessary, prepare exact paths/impact/validati
 for scoped consent while continuing unaffected local analysis. Do not ask whether
 starting gate1 is allowed: the user already instructed it.
 Report in the Step5 chat. No other chat messaging or automatic gate2 start is authorized.
+
+Current evidence: docs/pq_refinement_cost_c0_evidence_v0.json;
+runs/pq-refinement-cost-C0-20261104-v2/analysis_zh.md and C1_input_manifest.json.

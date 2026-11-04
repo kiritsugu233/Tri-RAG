@@ -1,0 +1,1777 @@
+{
+  "kind": "C0 actual observed-record cost audit; gate1 remains unresolved",
+  "audit": {
+    "schema": "pq-refinement-cost-C0-audit-v0",
+    "source_index_sha256": "003ccbbca3c10ad6725462556d79554c8c0c4deb5329999219313c97bb0dad1a",
+    "source_commit": "3d372f9dda99463b80808753b6c070043cd53499",
+    "audit_script_sha256": "c26c1c983f290c404bc66d2803ecc1f76a9dce51bdec64440a43fe64e3fc0c30",
+    "data_scope": "saved observed development S0 records only",
+    "formal_certification": false,
+    "source": {
+      "path": "/root/autodl-fs/route6-B0-v1-9f963f9-20261103T0959Z/source/data.hdf5",
+      "sha256": "08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114",
+      "bytes": 13688159632,
+      "rows": 5233329,
+      "dimension": 640,
+      "metric": "normalized",
+      "revision": "a91cc76a3ab66b0353032e8427b9e34dcee22ded",
+      "layout": {
+        "offset": 6144,
+        "dtype": "<f4",
+        "order": "C",
+        "chunks": null,
+        "compression": null,
+        "virtual": false
+      }
+    },
+    "environment": {
+      "versions": {
+        "numpy": "1.26.4",
+        "scipy": "1.13.0",
+        "h5py": "3.11.0",
+        "faiss-cpu": "1.8.0",
+        "torch": "2.8.0+cu128"
+      },
+      "physical_identity": "GPU-0c08388b-2980-4723-8c2e-2318f276cd0c, NVIDIA A800 80GB PCIe, 580.82.07",
+      "gpu_identity_observation_error": null,
+      "python": "3.12.3 | packaged by Anaconda, Inc. | (main, May  6 2024, 19:46:43) [GCC 11.2.0]",
+      "executable": "/root/autodl-fs/gaussian-benchmark-space-v1/env/bin/python",
+      "threads": {
+        "OPENBLAS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "VECLIB_MAXIMUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1"
+      },
+      "package_binaries": {
+        "numpy": "22cd1535fa14d74ef6f457cca149ffdc80875f460be313b8f895273f78bc402e",
+        "scipy": "f09d8a342acb52bb982073fbeb2594d9363ff55433d3dd710066142db7c0bee9",
+        "h5py": "23f92661084bd227615659414618fdf655e0558ff7ce1a739f4353b93899776a",
+        "faiss": "2c5ea56bcb1c4da095b5f31467a4c05a2ecbcf5966ee9b39fdbf16da2f77006a",
+        "torch": "2f0deb66d5dff6b9c02a62832c3bf3824c2ee031c462a3afeb9ca170466da5bf"
+      }
+    },
+    "allocation": {
+      "memory_bytes": 128849018880,
+      "cpu_threads": 14.0
+    },
+    "frozen_timing_config": {
+      "warmup": 2,
+      "repeats": 3,
+      "faiss_threads": 14,
+      "blas_threads": 1,
+      "sensitivity_queries": 16,
+      "cpu_queries_per_role": 16,
+      "gpu_queries": 128,
+      "cohort_seed": 2026110361
+    },
+    "source_bindings": {
+      "mechanism/tls_rag_step5_route6_representation_v1.py": "23edb091872432c1a77b0ee54234a30a38eb4bfaaa33328c82d83f2bc097b162",
+      "mechanism/tls_rag_step5_route6_representation_v2.py": "81d1d7c883a9ec08495fbf8444d2a580c768f8808276cf58cdc90345743aa161",
+      "mechanism/tls_rag_step5_route6_representation_screen_v1.py": "fee0c3e29c64c12a07eee1b1223ab65bb1f73dade3a9ffda808d7c2a08563d17",
+      "mechanism/tls_rag_step5_route6_representation_screen_v2.py": "18e6ec5c514fbd9acc2b664907c729f5f94339402336e35001a68078d16ca7f3"
+    },
+    "input_files": [
+      {
+        "path": "source_freeze.json",
+        "bytes": 13800,
+        "sha256": "6f48bb0ca0beb84e77bec7673b1036a06949365c7b4c8df04ee184839812a28e"
+      },
+      {
+        "path": "roles.json",
+        "bytes": 33806,
+        "sha256": "a9f4549391ed42a3bbd5c1a28ba3eb2e07eab2a85793721f3b7aefd44d8ac795"
+      },
+      {
+        "path": "inputs.json",
+        "bytes": 655,
+        "sha256": "5e255ace474a6e96f28d249e6cd9017bd7095c0cd93dfc7372f7e21ed9600b5c"
+      },
+      {
+        "path": "published_truth.npy",
+        "bytes": 102528,
+        "sha256": "ea60bd6c7f1d2ff3fa5cc09af2b7f0c2744fb4d7595578c1ff6c027a719007f7"
+      },
+      {
+        "path": "published_cutoffs.npy",
+        "bytes": 640,
+        "sha256": "0a3d5649f54426bcf8cc9802993e2256381f81b662b916ffa7c8edabd74c9fb9"
+      },
+      {
+        "path": "queries.npy",
+        "bytes": 327808,
+        "sha256": "536bd947334aabf7fbedc869eb29a6cc25d79f7c82e5ff03d877d866d9ba8ce5"
+      },
+      {
+        "path": "ivf/opq64/64/timings.json",
+        "bytes": 444970,
+        "sha256": "1b27efa37afcff45504dea5e2af4304e515547b28520fbc49f58b3045cde1bbd"
+      },
+      {
+        "path": "ivf/opq64/64/points.json",
+        "bytes": 3080,
+        "sha256": "4257ccef9f7274ce3499e9d73c57e06eeaa57fc071040500411d0cb09c28f97f"
+      },
+      {
+        "path": "ivf/opq64/64/candidates.npy",
+        "bytes": 3276928,
+        "sha256": "55a4c220756484365d73454cea8133c12b7e5f42ab7466b70cdb77fb47541292"
+      },
+      {
+        "path": "ivf/opq64/64/quality.json",
+        "bytes": 5608577,
+        "sha256": "feb3308369a17935ad209d64a51d116ce5a7b1d1a6faa9875af10621c0c5cf91"
+      },
+      {
+        "path": "ivf/opq64/256/timings.json",
+        "bytes": 889970,
+        "sha256": "a00e725318cfe5144a22a86e6efbf84df0885bb6747353086676e16e0c637e6e"
+      },
+      {
+        "path": "ivf/opq64/256/points.json",
+        "bytes": 6210,
+        "sha256": "8a1abbd500878dfce85949e5cac8a60caf2443056f8b652d60766d1a17082e55"
+      },
+      {
+        "path": "ivf/opq64/256/candidates.npy",
+        "bytes": 3276928,
+        "sha256": "4b4fd10ba6fe670d81b2508ff577515e827cd0421204e64cdec68d9703a286de"
+      },
+      {
+        "path": "ivf/opq64/256/quality.json",
+        "bytes": 5606089,
+        "sha256": "f7b1e65e2a489f007ab495679b2b9e88a177aabab9702673b61ac0aa43f9b469"
+      },
+      {
+        "path": "representations/pq64/cpu14/timings.json",
+        "bytes": 889757,
+        "sha256": "d089fb9aeaa668471a832d82c50a7a22f7f6d1cd0dcdbab8db3f8e1f3072b972"
+      },
+      {
+        "path": "representations/pq64/cpu14/points.json",
+        "bytes": 5488,
+        "sha256": "de4138e2fdee9c826d9208b91e9dff93b1e52bacb5148414f9bb1c5421695950"
+      },
+      {
+        "path": "representations/pq64/faiss_candidates.npy",
+        "bytes": 3276928,
+        "sha256": "03b68ef66b55678f50cdfecd434d76a22a976fbef017a7f17ab8057aefbfc2e3"
+      },
+      {
+        "path": "representations/pq64/faiss_quality.json",
+        "bytes": 5604956,
+        "sha256": "0a35aaa112e0184a9f394fe1366a58df8a43bfd50d5ae4cbb625fdd261dccd15"
+      }
+    ],
+    "candidate_hash_matches": 288,
+    "timed_quality_matches": 288,
+    "query_rows": 96,
+    "call_rows": 288,
+    "bootstrap": {
+      "unit": "query with all three calls averaged first",
+      "replicates": 10000,
+      "seed": 2026110405,
+      "interval": "95% percentile",
+      "roles_separate": true,
+      "common_draws_for_paired_statistics": true,
+      "includes_future_hardware_drift": false,
+      "independent_certification": false,
+      "not_simultaneous_intervals": true
+    },
+    "groups": [
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_discovery",
+        "budget": 6400,
+        "queries": 16,
+        "calls": 48,
+        "total_ms": {
+          "mean": 15.959205261121195,
+          "median": 15.045478319128355,
+          "p95": 20.26264648884535,
+          "minimum": 14.004458983739218,
+          "maximum": 27.401801198720932
+        },
+        "rerank_ms": {
+          "mean": 4.784111864864826,
+          "median": 4.6891892949740095,
+          "p95": 5.246270137528579,
+          "minimum": 4.389386624097824,
+          "maximum": 5.2992018560568495
+        },
+        "search_ms": {
+          "mean": 11.172649062549075,
+          "median": 10.238787159323692,
+          "p95": 15.5249477053682,
+          "minimum": 9.545575827360153,
+          "maximum": 22.363113860289257
+        },
+        "total_mean_ci95": [
+          14.854012487921864,
+          17.74083971201132
+        ],
+        "rerank_mean_ci95": [
+          4.623242322122679,
+          4.946336415984358
+        ],
+        "rerank_fraction_ratio_of_means": 0.2997713098232765,
+        "rerank_fraction_ci95": [
+          0.2707970736198483,
+          0.3223758688764191
+        ],
+        "per_query_fraction": {
+          "mean": 0.3062178620417152,
+          "median": 0.3135267931289538,
+          "p95": 0.3430658706797202,
+          "minimum": 0.18379514606641773,
+          "maximum": 0.3500057064620841
+        },
+        "wrapper_residual_ms": {
+          "mean": 0.002444333707292634,
+          "median": 0.0023351361354189137,
+          "p95": 0.003351519505181866,
+          "minimum": 0.001969436804454716,
+          "maximum": 0.00395129124323379
+        },
+        "timing_cohort_recall": 0.938125,
+        "timing_cohort_strict_id": 0.9,
+        "full64_recall": 0.95453125,
+        "full64_strict_id": 0.91484375,
+        "max_free_f_speedup": 1.4281048663510494,
+        "virtual_page_coverage_bytes_4k": {
+          "mean": 39308288.0,
+          "median": 39327744.0,
+          "p95": 39453696.0,
+          "minimum": 38965248.0,
+          "maximum": 39481344.0
+        }
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_check",
+        "budget": 6400,
+        "queries": 16,
+        "calls": 48,
+        "total_ms": {
+          "mean": 15.149721099684635,
+          "median": 15.048048769434294,
+          "p95": 16.65906732281049,
+          "minimum": 13.817728807528814,
+          "maximum": 16.8985774119695
+        },
+        "rerank_ms": {
+          "mean": 4.771083127707243,
+          "median": 4.762476310133934,
+          "p95": 5.282356403768063,
+          "minimum": 4.342447966337204,
+          "maximum": 5.369182676076889
+        },
+        "search_ms": {
+          "mean": 10.376227631544072,
+          "median": 10.450280581911404,
+          "p95": 11.37386045108239,
+          "minimum": 9.176269173622131,
+          "maximum": 11.526300261418024
+        },
+        "total_mean_ci95": [
+          14.76530748574684,
+          15.555280761327593
+        ],
+        "rerank_mean_ci95": [
+          4.596568477184822,
+          4.947355463324736
+        ],
+        "rerank_fraction_ratio_of_means": 0.31492877633282373,
+        "rerank_fraction_ci95": [
+          0.306596450435955,
+          0.32375222711358065
+        ],
+        "per_query_fraction": {
+          "mean": 0.3149541647258042,
+          "median": 0.3159468049143346,
+          "p95": 0.3435810553173827,
+          "minimum": 0.28635628093841115,
+          "maximum": 0.36276441493466294
+        },
+        "wrapper_residual_ms": {
+          "mean": 0.002410340433319058,
+          "median": 0.00234693288803145,
+          "p95": 0.003104408582051077,
+          "minimum": 0.0018527110417680959,
+          "maximum": 0.0031342109044389943
+        },
+        "timing_cohort_recall": 0.975,
+        "timing_cohort_strict_id": 0.92625,
+        "full64_recall": 0.95828125,
+        "full64_strict_id": 0.9129687499999999,
+        "max_free_f_speedup": 1.459702240370008,
+        "virtual_page_coverage_bytes_4k": {
+          "mean": 39329280.0,
+          "median": 39327744.0,
+          "p95": 39578624.0,
+          "minimum": 38969344.0,
+          "maximum": 39649280.0
+        }
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_discovery",
+        "budget": 6400,
+        "queries": 16,
+        "calls": 48,
+        "total_ms": {
+          "mean": 37.81954990699887,
+          "median": 36.83334464828173,
+          "p95": 42.675409776469074,
+          "minimum": 34.17421132326126,
+          "maximum": 50.02229039867719
+        },
+        "rerank_ms": {
+          "mean": 5.540068882207076,
+          "median": 5.319381753603617,
+          "p95": 7.231545324126879,
+          "minimum": 4.676065097252528,
+          "maximum": 8.221472303072611
+        },
+        "search_ms": {
+          "mean": 32.27662807330489,
+          "median": 31.58759201566378,
+          "p95": 35.55583953857422,
+          "minimum": 29.251599063475926,
+          "maximum": 41.795384138822556
+        },
+        "total_mean_ci95": [
+          36.424361648581296,
+          39.77040309303751
+        ],
+        "rerank_mean_ci95": [
+          5.143998485679427,
+          6.016260269097984
+        ],
+        "rerank_fraction_ratio_of_means": 0.1464869067937224,
+        "rerank_fraction_ci95": [
+          0.14043276452176395,
+          0.15269814184802213
+        ],
+        "per_query_fraction": {
+          "mean": 0.14580157129528243,
+          "median": 0.14434392790891093,
+          "p95": 0.16615911967082747,
+          "minimum": 0.12909377868405075,
+          "maximum": 0.1715679543785918
+        },
+        "wrapper_residual_ms": {
+          "mean": 0.0028529514869055084,
+          "median": 0.002676000197729067,
+          "p95": 0.004872369269534271,
+          "minimum": 0.002001722653708349,
+          "maximum": 0.005433956782026073
+        },
+        "timing_cohort_recall": 0.99125,
+        "timing_cohort_strict_id": 0.970625,
+        "full64_recall": 0.9962500000000001,
+        "full64_strict_id": 0.9732812500000001,
+        "max_free_f_speedup": 1.17162818937368,
+        "virtual_page_coverage_bytes_4k": {
+          "mean": 39301120.0,
+          "median": 39309312.0,
+          "p95": 39443456.0,
+          "minimum": 38944768.0,
+          "maximum": 39452672.0
+        }
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_check",
+        "budget": 6400,
+        "queries": 16,
+        "calls": 48,
+        "total_ms": {
+          "mean": 36.36666713282466,
+          "median": 36.35866629580657,
+          "p95": 37.498325730363526,
+          "minimum": 34.90333134929339,
+          "maximum": 37.594119707743324
+        },
+        "rerank_ms": {
+          "mean": 5.029426577190558,
+          "median": 4.959976921478908,
+          "p95": 5.483232128123442,
+          "minimum": 4.595480859279633,
+          "maximum": 5.782941977183024
+        },
+        "search_ms": {
+          "mean": 31.334750819951296,
+          "median": 31.45446628332138,
+          "p95": 32.43901580572128,
+          "minimum": 29.86394241452217,
+          "maximum": 32.65204653143883
+        },
+        "total_mean_ci95": [
+          35.93531195268345,
+          36.78199254209175
+        ],
+        "rerank_mean_ci95": [
+          4.8890907686048495,
+          5.186338262865321
+        ],
+        "rerank_fraction_ratio_of_means": 0.13829770429116348,
+        "rerank_fraction_ci95": [
+          0.13463922512225757,
+          0.1424167866044471
+        ],
+        "per_query_fraction": {
+          "mean": 0.13831722166774252,
+          "median": 0.13644862934888458,
+          "p95": 0.1531271503454577,
+          "minimum": 0.12778766973197822,
+          "maximum": 0.15435010678469782
+        },
+        "wrapper_residual_ms": {
+          "mean": 0.0024897356828048056,
+          "median": 0.002478559811911918,
+          "p95": 0.0028635064760804685,
+          "minimum": 0.002065052588780425,
+          "maximum": 0.0028784076372767586
+        },
+        "timing_cohort_recall": 0.9981249999999999,
+        "timing_cohort_strict_id": 0.97625,
+        "full64_recall": 0.9979687500000001,
+        "full64_strict_id": 0.97671875,
+        "max_free_f_speedup": 1.1604936008408795,
+        "virtual_page_coverage_bytes_4k": {
+          "mean": 39317248.0,
+          "median": 39325696.0,
+          "p95": 39573504.0,
+          "minimum": 38907904.0,
+          "maximum": 39677952.0
+        }
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_discovery",
+        "budget": 3200,
+        "queries": 16,
+        "calls": 48,
+        "total_ms": {
+          "mean": 138.42364757632214,
+          "median": 134.60453413426876,
+          "p95": 155.38184810429811,
+          "minimum": 132.98528641462326,
+          "maximum": 158.2813896238804
+        },
+        "rerank_ms": {
+          "mean": 2.8867488726973534,
+          "median": 2.6981433232625323,
+          "p95": 3.6250799894332886,
+          "minimum": 2.613040308157603,
+          "maximum": 4.985559731721878
+        },
+        "search_ms": {
+          "mean": 135.53405669517815,
+          "median": 131.94693749149639,
+          "p95": 151.7872136707107,
+          "minimum": 130.35046060880026,
+          "maximum": 153.29214806358019
+        },
+        "total_mean_ci95": [
+          134.71892504021523,
+          142.735298043893
+        ],
+        "rerank_mean_ci95": [
+          2.6877818570937966,
+          3.207748905212308
+        ],
+        "rerank_fraction_ratio_of_means": 0.02085444881161434,
+        "rerank_fraction_ci95": [
+          0.019722529671469913,
+          0.022681879549318322
+        ],
+        "per_query_fraction": {
+          "mean": 0.020758383260420253,
+          "median": 0.01990064699773372,
+          "p95": 0.025345814084719812,
+          "minimum": 0.018878005843706695,
+          "maximum": 0.0314980791081562
+        },
+        "wrapper_residual_ms": {
+          "mean": 0.0028420084466542483,
+          "median": 0.0026170164346741576,
+          "p95": 0.004230998456475676,
+          "minimum": 0.0021805365880331884,
+          "maximum": 0.0045783817768003665
+        },
+        "timing_cohort_recall": 1.0,
+        "timing_cohort_strict_id": 0.98125,
+        "full64_recall": 0.99265625,
+        "full64_strict_id": 0.966875,
+        "max_free_f_speedup": 1.0212986197877356,
+        "virtual_page_coverage_bytes_4k": {
+          "mean": 19627008.0,
+          "median": 19646464.0,
+          "p95": 19742720.0,
+          "minimum": 19509248.0,
+          "maximum": 19755008.0
+        }
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_check",
+        "budget": 3200,
+        "queries": 16,
+        "calls": 48,
+        "total_ms": {
+          "mean": 137.27285674152273,
+          "median": 135.22465340793133,
+          "p95": 148.7213137249152,
+          "minimum": 133.1398164232572,
+          "maximum": 150.4505711297194
+        },
+        "rerank_ms": {
+          "mean": 2.8626184600094953,
+          "median": 2.6950060079495115,
+          "p95": 3.904361898700396,
+          "minimum": 2.6059970259666443,
+          "maximum": 4.3065982560316725
+        },
+        "search_ms": {
+          "mean": 134.40756204848486,
+          "median": 132.57049334545928,
+          "p95": 145.62698608885208,
+          "minimum": 130.48707569638887,
+          "maximum": 146.13991851607958
+        },
+        "total_mean_ci95": [
+          135.08247428302033,
+          139.96507898943187
+        ],
+        "rerank_mean_ci95": [
+          2.6750590186566114,
+          3.1214684674826763
+        ],
+        "rerank_fraction_ratio_of_means": 0.020853492292359364,
+        "rerank_fraction_ci95": [
+          0.019632880503572262,
+          0.022433423489118434
+        ],
+        "per_query_fraction": {
+          "mean": 0.020799245545712518,
+          "median": 0.019943516961110762,
+          "p95": 0.027211584613862614,
+          "minimum": 0.018129926660843742,
+          "maximum": 0.028624672034767464
+        },
+        "wrapper_residual_ms": {
+          "mean": 0.002676233028372138,
+          "median": 0.00243882338206447,
+          "p95": 0.0037013863523800428,
+          "minimum": 0.0021532177925109863,
+          "maximum": 0.004054357608159087
+        },
+        "timing_cohort_recall": 0.9924999999999999,
+        "timing_cohort_strict_id": 0.958125,
+        "full64_recall": 0.9921875,
+        "full64_strict_id": 0.95859375,
+        "max_free_f_speedup": 1.0212976220904684,
+        "virtual_page_coverage_bytes_4k": {
+          "mean": 19682816.0,
+          "median": 19697664.0,
+          "p95": 19796992.0,
+          "minimum": 19529728.0,
+          "maximum": 19824640.0
+        }
+      }
+    ],
+    "paired_pipeline_comparisons": [
+      {
+        "role": "geometry_discovery",
+        "left": "opq64_ivf64",
+        "right": "opq64_ivf256",
+        "paired_queries": 16,
+        "total_difference_ms": -21.86034464587768,
+        "total_difference_ci95": [
+          -23.756274410213035,
+          -19.985560387916248
+        ],
+        "rerank_difference_ms": -0.7559570173422494,
+        "rerank_difference_ci95": [
+          -1.2550985848065457,
+          -0.3392148724136253
+        ],
+        "qualification": "same cohort/hardware profile; distinct sequential jobs, not interleaved randomized trials"
+      },
+      {
+        "role": "geometry_discovery",
+        "left": "opq64_ivf64",
+        "right": "pq64_flat",
+        "paired_queries": 16,
+        "total_difference_ms": -122.46444231520096,
+        "total_difference_ci95": [
+          -127.04583181766793,
+          -118.27243308265075
+        ],
+        "rerank_difference_ms": 1.8973629921674728,
+        "rerank_difference_ci95": [
+          1.5077415911946448,
+          2.212638130489116
+        ],
+        "qualification": "same cohort/hardware profile; distinct sequential jobs, not interleaved randomized trials"
+      },
+      {
+        "role": "geometry_check",
+        "left": "opq64_ivf64",
+        "right": "opq64_ivf256",
+        "paired_queries": 16,
+        "total_difference_ms": -21.216946033140022,
+        "total_difference_ci95": [
+          -21.687534117760766,
+          -20.662888059935835
+        ],
+        "rerank_difference_ms": -0.2583434494833152,
+        "rerank_difference_ci95": [
+          -0.4974263933642451,
+          -0.031988877647866586
+        ],
+        "qualification": "same cohort/hardware profile; distinct sequential jobs, not interleaved randomized trials"
+      },
+      {
+        "role": "geometry_check",
+        "left": "opq64_ivf64",
+        "right": "pq64_flat",
+        "paired_queries": 16,
+        "total_difference_ms": -122.1231356418381,
+        "total_difference_ci95": [
+          -124.78824675199576,
+          -119.95396643372563
+        ],
+        "rerank_difference_ms": 1.9084646676977475,
+        "rerank_difference_ci95": [
+          1.571154099656269,
+          2.195214214346682
+        ],
+        "qualification": "same cohort/hardware profile; distinct sequential jobs, not interleaved randomized trials"
+      }
+    ],
+    "sensitivity": [
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_discovery",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 0.25,
+        "mean_aux_allowance_ms": 0.39806770316014684,
+        "aux_allowance_ci95_low": 0.3125342715065928,
+        "aux_allowance_ci95_high": 0.46167159879890596,
+        "queries_with_nonnegative_allowance": 15,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.1667938136890965,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_discovery",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 0.5,
+        "mean_aux_allowance_ms": 1.5940956693763533,
+        "aux_allowance_ci95_low": 1.4973924805720646,
+        "aux_allowance_ci95_high": 1.6855822760650578,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.1667938136890965,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_discovery",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 0.75,
+        "mean_aux_allowance_ms": 2.79012363559256,
+        "aux_allowance_ci95_low": 2.6684132588949674,
+        "aux_allowance_ci95_high": 2.914807423949242,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.1667938136890965,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_discovery",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 1.0,
+        "mean_aux_allowance_ms": 3.9861516018087664,
+        "aux_allowance_ci95_low": 3.831766422954388,
+        "aux_allowance_ci95_high": 4.146696388100584,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.1667938136890965,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_discovery",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 0.25,
+        "mean_aux_allowance_ms": -0.3998925598959129,
+        "aux_allowance_ci95_low": -0.5709696166256132,
+        "aux_allowance_ci95_high": -0.29189027545119944,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.333587627378193,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_discovery",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 0.5,
+        "mean_aux_allowance_ms": 0.7961354063202937,
+        "aux_allowance_ci95_low": 0.6250685430131856,
+        "aux_allowance_ci95_high": 0.9233431975978119,
+        "queries_with_nonnegative_allowance": 15,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.333587627378193,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_discovery",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 0.75,
+        "mean_aux_allowance_ms": 1.9921633725365002,
+        "aux_allowance_ci95_low": 1.8142006146566318,
+        "aux_allowance_ci95_high": 2.145420004768918,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.333587627378193,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_discovery",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 1.0,
+        "mean_aux_allowance_ms": 3.1881913387527065,
+        "aux_allowance_ci95_low": 2.9947849611441293,
+        "aux_allowance_ci95_high": 3.3711645521301157,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.333587627378193,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_discovery",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 0.25,
+        "mean_aux_allowance_ms": -1.9958130860080323,
+        "aux_allowance_ci95_low": -2.3405509233513535,
+        "aux_allowance_ci95_high": -1.786061917082407,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.667175254756386,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_discovery",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 0.5,
+        "mean_aux_allowance_ms": -0.7997851197918258,
+        "aux_allowance_ci95_low": -1.1419392332512264,
+        "aux_allowance_ci95_high": -0.5837805509023989,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.667175254756386,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_discovery",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 0.75,
+        "mean_aux_allowance_ms": 0.3962428464243808,
+        "aux_allowance_ci95_low": 0.05460854319001886,
+        "aux_allowance_ci95_high": 0.6288286274260217,
+        "queries_with_nonnegative_allowance": 14,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.667175254756386,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_discovery",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 1.0,
+        "mean_aux_allowance_ms": 1.5922708126405873,
+        "aux_allowance_ci95_low": 1.2501370860263712,
+        "aux_allowance_ci95_high": 1.8466863951956238,
+        "queries_with_nonnegative_allowance": 15,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.667175254756386,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_check",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 0.25,
+        "mean_aux_allowance_ms": 0.43528472694257897,
+        "aux_allowance_ci95_low": 0.40198428692140914,
+        "aux_allowance_ci95_high": 0.4693795558220396,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.15876605682790604,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_check",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 0.5,
+        "mean_aux_allowance_ms": 1.6280555088693898,
+        "aux_allowance_ci95_low": 1.5530438052761986,
+        "aux_allowance_ci95_high": 1.7041415771624693,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.15876605682790604,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_check",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 0.75,
+        "mean_aux_allowance_ms": 2.8208262907962003,
+        "aux_allowance_ci95_low": 2.7028138279759633,
+        "aux_allowance_ci95_high": 2.940728807686052,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.15876605682790604,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_check",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 1.0,
+        "mean_aux_allowance_ms": 4.0135970727230115,
+        "aux_allowance_ci95_low": 3.8516977457523653,
+        "aux_allowance_ci95_high": 4.177687477495056,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.15876605682790604,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_check",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 0.25,
+        "mean_aux_allowance_ms": -0.3222013280416529,
+        "aux_allowance_ci95_low": -0.35376048947606864,
+        "aux_allowance_ci95_high": -0.287633172022955,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.3175321136558121,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_check",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 0.5,
+        "mean_aux_allowance_ms": 0.8705694538851579,
+        "aux_allowance_ci95_low": 0.8039685738428183,
+        "aux_allowance_ci95_high": 0.9387591116440792,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.3175321136558121,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_check",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 0.75,
+        "mean_aux_allowance_ms": 2.063340235811969,
+        "aux_allowance_ci95_low": 1.9551185307985481,
+        "aux_allowance_ci95_high": 2.172901416682483,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.3175321136558121,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_check",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 1.0,
+        "mean_aux_allowance_ms": 3.2561110177387795,
+        "aux_allowance_ci95_low": 3.106087610552397,
+        "aux_allowance_ci95_high": 3.4082831543249386,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.3175321136558121,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_check",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 0.25,
+        "mean_aux_allowance_ms": -1.8371734380101168,
+        "aux_allowance_ci95_low": -1.893342171582238,
+        "aux_allowance_ci95_high": -1.7783967370633036,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.6350642273116242,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_check",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 0.5,
+        "mean_aux_allowance_ms": -0.6444026560833058,
+        "aux_allowance_ci95_low": -0.7075209789521373,
+        "aux_allowance_ci95_high": -0.57526634404591,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.6350642273116242,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_check",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 0.75,
+        "mean_aux_allowance_ms": 0.5483681258435049,
+        "aux_allowance_ci95_low": 0.45233820012072085,
+        "aux_allowance_ci95_high": 0.6474975241386952,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.6350642273116242,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf64",
+        "role": "geometry_check",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 1.0,
+        "mean_aux_allowance_ms": 1.7411389077703159,
+        "aux_allowance_ci95_low": 1.6079371476856366,
+        "aux_allowance_ci95_high": 1.8775182232881584,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.6350642273116242,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_discovery",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 0.25,
+        "mean_aux_allowance_ms": -0.5059602747981748,
+        "aux_allowance_ci95_low": -0.5509383032525274,
+        "aux_allowance_ci95_high": -0.4583111145378401,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.341327433928332,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_discovery",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 0.5,
+        "mean_aux_allowance_ms": 0.8790569457535942,
+        "aux_allowance_ci95_low": 0.742129348703505,
+        "aux_allowance_ci95_high": 1.0327341151423746,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.341327433928332,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_discovery",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 0.75,
+        "mean_aux_allowance_ms": 2.264074166305363,
+        "aux_allowance_ci95_low": 2.03086984809488,
+        "aux_allowance_ci95_high": 2.53632867175232,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.341327433928332,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_discovery",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 1.0,
+        "mean_aux_allowance_ms": 3.6490913868571324,
+        "aux_allowance_ci95_low": 3.3197326134541068,
+        "aux_allowance_ci95_high": 4.039372229308355,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.341327433928332,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_discovery",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 0.25,
+        "mean_aux_allowance_ms": -2.3969377701481185,
+        "aux_allowance_ci95_low": -2.4889538801896074,
+        "aux_allowance_ci95_high": -2.3287005222906974,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.682654867856664,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_discovery",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 0.5,
+        "mean_aux_allowance_ms": -1.0119205495963497,
+        "aux_allowance_ci95_low": -1.1018766065050547,
+        "aux_allowance_ci95_high": -0.9166222290756803,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.682654867856664,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_discovery",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 0.75,
+        "mean_aux_allowance_ms": 0.3730966709554194,
+        "aux_allowance_ci95_low": 0.19559329705468068,
+        "aux_allowance_ci95_high": 0.568940121350655,
+        "queries_with_nonnegative_allowance": 14,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.682654867856664,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_discovery",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 1.0,
+        "mean_aux_allowance_ms": 1.7581138915071883,
+        "aux_allowance_ci95_low": 1.48425869740701,
+        "aux_allowance_ci95_high": 2.065468230284749,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.682654867856664,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_discovery",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 0.25,
+        "mean_aux_allowance_ms": -6.178892760848006,
+        "aux_allowance_ci95_low": -6.462099107836065,
+        "aux_allowance_ci95_high": -5.983345509836607,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 1.365309735713328,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_discovery",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 0.5,
+        "mean_aux_allowance_ms": -4.793875540296237,
+        "aux_allowance_ci95_low": -4.977907760379215,
+        "aux_allowance_ci95_high": -4.657401044581395,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 1.365309735713328,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_discovery",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 0.75,
+        "mean_aux_allowance_ms": -3.408858319744468,
+        "aux_allowance_ci95_low": -3.545757752726787,
+        "aux_allowance_ci95_high": -3.2739147736962586,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 1.365309735713328,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_discovery",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 1.0,
+        "mean_aux_allowance_ms": -2.0238410991926994,
+        "aux_allowance_ci95_low": -2.2037532130101094,
+        "aux_allowance_ci95_high": -1.8332444581513605,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 1.365309735713328,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_check",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 0.25,
+        "mean_aux_allowance_ms": -0.5609767123435935,
+        "aux_allowance_ci95_low": -0.595818087555623,
+        "aux_allowance_ci95_high": -0.5225362417210514,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.3615389008535751,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_check",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 0.5,
+        "mean_aux_allowance_ms": 0.6963799319540461,
+        "aux_allowance_ci95_low": 0.6303667875666477,
+        "aux_allowance_ci95_high": 0.7711536979574404,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.3615389008535751,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_check",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 0.75,
+        "mean_aux_allowance_ms": 1.9537365762516856,
+        "aux_allowance_ci95_low": 1.8545551730009417,
+        "aux_allowance_ci95_high": 2.0662579367247726,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.3615389008535751,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_check",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 1.0,
+        "mean_aux_allowance_ms": 3.2110932205493254,
+        "aux_allowance_ci95_low": 3.0770643275657985,
+        "aux_allowance_ci95_high": 3.363361022784375,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.3615389008535751,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_check",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 0.25,
+        "mean_aux_allowance_ms": -2.379310068984826,
+        "aux_allowance_ci95_low": -2.426037626282777,
+        "aux_allowance_ci95_high": -2.3315656812822763,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.7230778017071502,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_check",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 0.5,
+        "mean_aux_allowance_ms": -1.121953424687187,
+        "aux_allowance_ci95_low": -1.191636175111246,
+        "aux_allowance_ci95_high": -1.0450724834421028,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.7230778017071502,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_check",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 0.75,
+        "mean_aux_allowance_ms": 0.13540321961045257,
+        "aux_allowance_ci95_low": 0.03550392750185013,
+        "aux_allowance_ci95_high": 0.2472903188512039,
+        "queries_with_nonnegative_allowance": 11,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.7230778017071502,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_check",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 1.0,
+        "mean_aux_allowance_ms": 1.3927598639080923,
+        "aux_allowance_ci95_low": 1.2607335751332953,
+        "aux_allowance_ci95_high": 1.5423073959148808,
+        "queries_with_nonnegative_allowance": 16,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 0.7230778017071502,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_check",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 0.25,
+        "mean_aux_allowance_ms": -6.015976782267293,
+        "aux_allowance_ci95_low": -6.097165372242064,
+        "aux_allowance_ci95_high": -5.932790425819502,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 1.4461556034143004,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_check",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 0.5,
+        "mean_aux_allowance_ms": -4.758620137969652,
+        "aux_allowance_ci95_low": -4.852075252565554,
+        "aux_allowance_ci95_high": -4.6631313625645525,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 1.4461556034143004,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_check",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 0.75,
+        "mean_aux_allowance_ms": -3.5012634936720133,
+        "aux_allowance_ci95_low": -3.6149847670458253,
+        "aux_allowance_ci95_high": -3.380539774855909,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 1.4461556034143004,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "opq64_ivf256",
+        "role": "geometry_check",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 1.0,
+        "mean_aux_allowance_ms": -2.243906849374374,
+        "aux_allowance_ci95_low": -2.383272350222492,
+        "aux_allowance_ci95_high": -2.0901449668842056,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 1.4461556034143004,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_discovery",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 0.25,
+        "mean_aux_allowance_ms": -6.199495160641771,
+        "aux_allowance_ci95_low": -6.370904908593123,
+        "aux_allowance_ci95_high": -6.055974389115969,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 2.3975699598521065,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_discovery",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 0.5,
+        "mean_aux_allowance_ms": -5.477807942467431,
+        "aux_allowance_ci95_low": -5.628828980552498,
+        "aux_allowance_ci95_high": -5.358371838131765,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 2.3975699598521065,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_discovery",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 0.75,
+        "mean_aux_allowance_ms": -4.756120724293092,
+        "aux_allowance_ci95_low": -4.916225405953203,
+        "aux_allowance_ci95_high": -4.615479021643599,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 2.3975699598521065,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_discovery",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 1.0,
+        "mean_aux_allowance_ms": -4.034433506118755,
+        "aux_allowance_ci95_low": -4.214097743291252,
+        "aux_allowance_ci95_high": -3.836559793562628,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 2.3975699598521065,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_discovery",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 0.25,
+        "mean_aux_allowance_ms": -13.120677539457876,
+        "aux_allowance_ci95_low": -13.503658261227734,
+        "aux_allowance_ci95_high": -12.793515043546599,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 4.795139919704213,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_discovery",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 0.5,
+        "mean_aux_allowance_ms": -12.398990321283542,
+        "aux_allowance_ci95_low": -12.741809817186246,
+        "aux_allowance_ci95_high": -12.111948778231937,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 4.795139919704213,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_discovery",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 0.75,
+        "mean_aux_allowance_ms": -11.6773031031092,
+        "aux_allowance_ci95_low": -11.992719661211595,
+        "aux_allowance_ci95_high": -11.42041941037557,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 4.795139919704213,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_discovery",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 1.0,
+        "mean_aux_allowance_ms": -10.955615884934861,
+        "aux_allowance_ci95_low": -11.257657961104997,
+        "aux_allowance_ci95_high": -10.71674367626353,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 4.795139919704213,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_discovery",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 0.25,
+        "mean_aux_allowance_ms": -26.963042297090098,
+        "aux_allowance_ci95_low": -27.777808477403592,
+        "aux_allowance_ci95_high": -26.269001574449558,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 9.590279839408426,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_discovery",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 0.5,
+        "mean_aux_allowance_ms": -26.241355078915753,
+        "aux_allowance_ci95_low": -27.00731652245547,
+        "aux_allowance_ci95_high": -25.587030087093197,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 9.590279839408426,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_discovery",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 0.75,
+        "mean_aux_allowance_ms": -25.519667860741414,
+        "aux_allowance_ci95_low": -26.241390121964898,
+        "aux_allowance_ci95_high": -24.908796826881975,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 9.590279839408426,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_discovery",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 1.0,
+        "mean_aux_allowance_ms": -24.797980642567083,
+        "aux_allowance_ci95_low": -25.48361963437249,
+        "aux_allowance_ci95_high": -24.223897556463875,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 9.590279839408426,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_check",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 0.25,
+        "mean_aux_allowance_ms": -6.147988222073764,
+        "aux_allowance_ci95_low": -6.252217821990296,
+        "aux_allowance_ci95_high": -6.067524751124438,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 2.3976799328868195,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_check",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 0.5,
+        "mean_aux_allowance_ms": -5.43233360707139,
+        "aux_allowance_ci95_low": -5.535989820685547,
+        "aux_allowance_ci95_high": -5.353349242747451,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 2.3976799328868195,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_check",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 0.75,
+        "mean_aux_allowance_ms": -4.716678992069015,
+        "aux_allowance_ci95_low": -4.844597295838565,
+        "aux_allowance_ci95_high": -4.596115538831024,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 2.3976799328868195,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_check",
+        "target_fraction": 0.05,
+        "assumed_cancelled_fraction_of_all_rerank": 1.0,
+        "mean_aux_allowance_ms": -4.001024377066642,
+        "aux_allowance_ci95_low": -4.162720439489932,
+        "aux_allowance_ci95_high": -3.824587513518056,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 2.3976799328868195,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_check",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 0.25,
+        "mean_aux_allowance_ms": -13.011631059149902,
+        "aux_allowance_ci95_low": -13.246486470937576,
+        "aux_allowance_ci95_high": -12.825335581437683,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 4.795359865773639,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_check",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 0.5,
+        "mean_aux_allowance_ms": -12.295976444147527,
+        "aux_allowance_ci95_low": -12.504435643980592,
+        "aux_allowance_ci95_high": -12.135049502248876,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 4.795359865773639,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_check",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 0.75,
+        "mean_aux_allowance_ms": -11.580321829145152,
+        "aux_allowance_ci95_low": -11.781468930130359,
+        "aux_allowance_ci95_high": -11.435329896339681,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 4.795359865773639,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_check",
+        "target_fraction": 0.1,
+        "assumed_cancelled_fraction_of_all_rerank": 1.0,
+        "mean_aux_allowance_ms": -10.86466721414278,
+        "aux_allowance_ci95_low": -11.071979641371094,
+        "aux_allowance_ci95_high": -10.706698485494902,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 4.795359865773639,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_check",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 0.25,
+        "mean_aux_allowance_ms": -26.738916733302176,
+        "aux_allowance_ci95_low": -27.2394531070798,
+        "aux_allowance_ci95_high": -26.335791245607346,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 9.590719731547278,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_check",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 0.5,
+        "mean_aux_allowance_ms": -26.023262118299805,
+        "aux_allowance_ci95_low": -26.492972941875152,
+        "aux_allowance_ci95_high": -25.650671162875366,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 9.590719731547278,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_check",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 0.75,
+        "mean_aux_allowance_ms": -25.307607503297426,
+        "aux_allowance_ci95_low": -25.74287441888979,
+        "aux_allowance_ci95_high": -24.96353039188155,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 9.590719731547278,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      },
+      {
+        "pipeline": "pq64_flat",
+        "role": "geometry_check",
+        "target_fraction": 0.2,
+        "assumed_cancelled_fraction_of_all_rerank": 1.0,
+        "mean_aux_allowance_ms": -24.591952888295054,
+        "aux_allowance_ci95_low": -25.008871287961185,
+        "aux_allowance_ci95_high": -24.27009900449775,
+        "queries_with_nonnegative_allowance": 0,
+        "queries": 16,
+        "required_rerank_fraction_if_aux_free": 9.590719731547278,
+        "model": "optimistic affine cost envelope, not measured cancellation"
+      }
+    ],
+    "gate1_status": "unresolved_C1_actual_read_compute_not_measured",
+    "actual_physical_read_requests": null,
+    "actual_dram_bytes": null,
+    "actual_ssd_bytes": null,
+    "cancellable_gather_time_ms": null,
+    "missing": [
+      "full original vectors for actual callback replay",
+      "gather/copy vs distance/selection/full callback timings",
+      "real survivors address/batch costs and complete paired replay",
+      "auxiliary/control cost (no gate2 implementation in C0)",
+      "physical traffic counters if supported; otherwise explicitly unmeasured"
+    ]
+  },
+  "query_level_csv": "pipeline,role,query_id,query_index,budget,calls,total_ms,rerank_ms,search_ms,wrapper_residual_ms,rerank_fraction,total_repeat_range_ms,rerank_repeat_range_ms,recall,strict_id,candidate_sha256,logical_candidate_vectors,logical_output_reread_vectors,logical_candidate_payload_bytes,logical_output_reread_payload_bytes,logical_total_gather_payload_bytes,unique_source_vectors,unique_virtual_pages_4k,virtual_page_coverage_bytes_4k,unique_virtual_pages_64k,virtual_page_coverage_bytes_64k,source_address_order_hash\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048392,3,6400,3,15.015271802743277,5.024870236714681,9.988121688365936,0.0022798776626586914,0.33465063454906235,1.0231174528598785,1.0631643235683441,1.0,0.93,8a611c75e2f3df293a8d8b6cb51cb8e9ec4e26740f4f421ea687e3cc91ef8c89,6400,100,16384000,256000,16640000,6400,9567,39186432,6481,424738816,221a491f33c697643c94e0cb605c63a8a30d2741f25c222bde29de9734445d5e\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062785,4,6400,3,15.992390612761179,5.179842313130696,10.809840013583502,0.0027082860469818115,0.32389418433773276,0.5458034574985504,0.5213990807533264,1.0,1.0,77a197b138b722de9e9284e4e2674ff72043acd599dae5a94557c19c20e9ce6c,6400,100,16384000,256000,16640000,6400,9639,39481344,6487,425132032,5e732da9814be21c310299e8b84f391fe0690746ab904772a4ef5f665649ba91\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016991,7,6400,3,14.327806731065115,4.432130604982376,9.893245995044708,0.0024301310380299888,0.30933768776855186,0.15248358249664307,0.09645894169807434,1.0,0.98,afd93f29dca8652e5f93dbb2569aafab9e0df44c74e8c0b6cf998adae2530920,6400,100,16384000,256000,16640000,6400,9630,39444480,6514,426901504,f17ae908596240fd39206ddec3aebf927e5a815630d3852cd10c20944d196c0b\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00022297,9,6400,3,14.978636056184769,5.104009062051773,9.872165819009146,0.0024611751238505044,0.34075259208559894,0.9945742785930634,0.8711293339729309,1.0,0.98,4ef136049210dc7c7084109b894fab688205c4bcb090dd4bac8f8a5f998840ef,6400,100,16384000,256000,16640000,6400,9589,39276544,6531,428015616,135f70096e8d1f06ecff03a3d8ace17ce4217cec4f0d97751384451935b8a639\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00030348,10,6400,3,16.051457573970158,5.2992018560568495,10.748304426670074,0.0039512912432352705,0.33013835856566065,1.013297587633133,0.8159056305885315,0.61,0.59,9ca1777c4ec499a5760534805dfe65bbbfb59c5745a029079fd8bee6ccfe81ad,6400,100,16384000,256000,16640000,6400,9620,39403520,6501,426049536,ef35698249f2d2bde464755f20f5f2b222f2cc9053cc6d79bbeceb7b304d98a6\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00003283,18,6400,3,14.282899598280588,4.40511479973793,9.875682493050894,0.0021023054917653403,0.30841880315872483,0.03734603524208069,0.05930289626121521,0.94,0.89,74acf564b3ca2a3860578005dc0fb54389c491d325404b95c277d64ce50067e1,6400,100,16384000,256000,16640000,6400,9568,39190528,6503,426180608,03040161edb0d2ab4ea9e1eeb35023a84988c79bbab7738cfb61317f5436565d\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00031120,21,6400,3,15.619813154141108,5.127208928267161,10.489452630281448,0.0031515955924987793,0.32825033677869836,0.9659044444561005,0.91606006026268,0.85,0.8,bdd20de40c82138dad424fb2b580613ebbd69fb44d7e8c19a7725e44d83f7ed5,6400,100,16384000,256000,16640000,6400,9513,38965248,6483,424869888,b2ee3e058b09d6fdc41e1c4f4a6275f5f0ca627aeea6706c836008dc7ed60a22\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062191,23,6400,3,15.891000628471375,4.743310312430064,11.145280053218206,0.0024102628231048584,0.2984903483001337,0.9887628257274628,0.2886056900024414,0.98,0.92,cb80eadefc8e565b24f1a42f80c16e412a5801bd38a75ca41ec567c1b7e075c3,6400,100,16384000,256000,16640000,6400,9592,39288832,6515,426967040,8f6f825f3f1b75f98756e26066e9af904173c1eeb428ca353b9dd19b6d503f22\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00074921,26,6400,3,14.107959965864817,4.451318333546321,9.654611349105835,0.002030283212661743,0.3155182141370257,0.5521290004253387,0.4377029836177826,0.99,0.96,884c158833521479bffe28ee105f82261affc851aafd93bdf690c4ed8968c61a,6400,100,16384000,256000,16640000,6400,9610,39362560,6487,425132032,7ae8fea908d3489e36da5b13f4d44d2a1772daf3209f6acc2de3d7d10ad0f464\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00019898,30,6400,3,15.479755898316702,4.389386624097824,11.088312913974127,0.0020563602447509766,0.28355657885891694,1.2831687927246094,0.08594989776611328,1.0,0.97,ed5f06e33bd6d5dfc532ef8d2b25c9946ba6a5a2a5d5b4b9b0e1a25a889c7fb2,6400,100,16384000,256000,16640000,6400,9627,39432192,6503,426180608,00332ab3ca76fc325ddeb07238518e6ae356762fcd46a5bbb9317d7d737b5824\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00088023,36,6400,3,14.004458983739218,4.456811894973119,9.545575827360153,0.0020712614059448242,0.3182423469659191,0.3570951521396637,0.24044141173362732,0.97,0.92,ab65e31190a1f25d50e1ac9856eff0ed66f8f58753711dedd8ab01686a9e9532,6400,100,16384000,256000,16640000,6400,9593,39292928,6490,425328640,3f4ae74a297cd05139d52605c70d41c35fd0e321072a61eb86fac8e12950e7ca\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00038057,39,6400,3,17.882928252220154,4.635068277517955,13.245558987061182,0.002300987641016642,0.2591895584517885,4.143424332141876,0.34089013934135437,1.0,0.98,26b9192d3d4fd477a961eae591217dea20df075be5bb48854d2943dd869f858b,6400,100,16384000,256000,16640000,6400,9578,39231488,6469,423952384,e3fe9dd90da2821ced75a7bff41c2a2d8a163be75eef17105967d75d2ac2f43a\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00063164,40,6400,3,27.401801198720932,5.036318053801854,22.363113860289257,0.0023692846298217773,0.18379514606641773,1.6392990946769714,0.4658736288547516,0.91,0.84,093afecd78d4036bb3ee361f68d2b1f68484d63027251210ba2ab8f1e290b81a,6400,100,16384000,256000,16640000,6400,9620,39403520,6476,424411136,e1ac01e3da31548141c08357b68ff998bbf78fdff489f64874d6884e84b1a2db\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078114,50,6400,3,14.296730359395346,4.45393721262614,9.840715676546097,0.0020774702231089273,0.31153537212088195,0.9844116866588593,0.26656314730644226,0.82,0.77,33f90836d4771513e6adbfbc8d72d5fd8621cbcf3b5ab980f7c14dbdb6f7443f,6400,100,16384000,256000,16640000,6400,9559,39153664,6513,426835968,99711c0798a37be4262c717db900ed80b716a73cbcb6a3832c81ae9d2e1c288b\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046730,61,6400,3,15.075684835513433,4.578635096549988,10.495080302158991,0.0019694368044535318,0.30370992406024605,0.530928373336792,0.4825592041015625,1.0,0.98,5a946f5ce4637385cbf494e8d18a2e970601c9a5e3d920aa12b398ee8c727cf7,6400,100,16384000,256000,16640000,6400,9622,39411712,6491,425394176,fb3d8b75d7cdfc994047cbac50f5ded1cc96c97a2b8a59ffd83bc2e7ecbc05a7\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00018100,62,6400,3,14.938688526550928,5.2286262313524885,9.707322965065638,0.0027393301328023276,0.3500057064620841,1.0151639580726624,0.8666031062602997,0.94,0.89,d04c62851f64422f99bf6fb1cf0b716b9b770e24154fb450fa972ca19308e572,6400,100,16384000,256000,16640000,6400,9621,39407616,6508,426508288,2624e79b05b8f4309de5ec36f0ff814bb94dd23225838b43cde9585dc3a4901a\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00035975,64,6400,3,15.456847846508026,4.944354295730591,10.510029892126719,0.002463658650716146,0.3198811520194661,0.49786269664764404,0.6494000554084778,1.0,0.94,77f61fae8b6bb2f0a3ef88b0caed2c4e77e2d69ede70588f451b6282a1ffefc2,6400,100,16384000,256000,16640000,6400,9645,39505920,6496,425721856,c4955962a1879c461fb9e310a3a76d0070ba782babc004638395cc4e1ca38094\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048389,72,6400,3,14.90076631307602,5.024338761965434,9.87346222003301,0.0029653310775756836,0.33718660211162266,1.3984665274620056,1.1502131819725037,0.98,0.91,3dd1dc9c5dec2eb6c7511ba6b3e7f97766b1ecc5fbec6db50c5200c99af704b3,6400,100,16384000,256000,16640000,6400,9609,39358464,6489,425263104,2a48449b038931eba738d5a1be924b3c14c9952ac01e04d207cf425c4eb9add8\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00075671,73,6400,3,16.8985774119695,5.369182676076889,11.526300261418024,0.00309447447458903,0.31772986241278633,0.7589869201183319,0.6695054471492767,1.0,0.94,6cba1ba944c7e8475d8b70da41735e668e20eef5d1f2d8b817b22adbb3ed45f4,6400,100,16384000,256000,16640000,6400,9607,39350272,6492,425459712,f8a7d63c336f6a20d5c585cd1fe13deeddc7ee02cda30f21ee0a9e247701cc4a\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00068009,82,6400,3,15.778011331955591,5.200337618589401,10.575193911790848,0.002479801575342814,0.3295939842594124,0.7677525281906128,0.8166581392288208,1.0,0.95,da3f1e13e27346a7a800f62aae99077d1909c6c3a069978c685532b4f8098019,6400,100,16384000,256000,16640000,6400,9578,39231488,6496,425721856,a26e18aa03301472b5687b809fc873aa6527a6c1da528c4ca4ad3938307344b0\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00065925,87,6400,3,13.817728807528814,4.352949559688568,9.462778766949972,0.002000480890274048,0.3150264142770549,0.39928779006004333,0.39793550968170166,1.0,0.98,b475f62669ebdedfbe4db1f67689903a92c8a5e1aff5bb20150b87a6c11c4570,6400,100,16384000,256000,16640000,6400,9652,39534592,6511,426704896,924a66ba1b2e2c1a3fc13e5d4dec75600b606dd83b0f4e147c53fc7a2709c051\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00047135,89,6400,3,14.403982708851496,5.2252523601055145,9.176269173622131,0.0024611751238505044,0.36276441493466294,1.4312826097011566,1.073259860277176,1.0,0.99,22d7e9ab4ac5fa39efb0ed867a91b8f27bf5f043948901b8e8d38c9ba729c5cf,6400,100,16384000,256000,16640000,6400,9624,39419904,6486,425066496,6cf860c32c5bd3ba0d8cb7e87b13db29f29d0144780e17f94439e9a2329d3e5d\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00039730,90,6400,3,16.579230626424152,5.253414312998454,11.32304718097051,0.002769132455190023,0.31686719555161424,1.1666007339954376,0.5578361451625824,1.0,0.99,247e3217afb10fa11ab6dc5494c768304ad391a1bf2c1e0c9bb2cdbf2cb80428,6400,100,16384000,256000,16640000,6400,9575,39219200,6522,427425792,d71c16f8ec267305a997ea5004695dedf51ebde1e10f76647feb8ead2f05943e\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016473,91,6400,3,15.485147635142008,4.721616705258687,10.761269678672155,0.002261251211166382,0.30491260506573703,0.6067976355552673,0.5175769329071045,1.0,0.95,e3e4ba25d1d5012116ee55b23e2f0f7bc49c291214ba74da6ebf8839deaebddb,6400,100,16384000,256000,16640000,6400,9514,38969344,6521,427360256,d425cc741ff9f9a17d97b1e9ee81dadcfc8f7d51afc3b514af26938338010370\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00024323,94,6400,3,15.456086645523706,4.9848320583502455,10.468120376269022,0.0031342109044392905,0.3225157941123422,0.1478046178817749,0.3825649619102478,1.0,0.95,8f848498efac68e65a65c3319b5f0e2343b017d14159efe9e8855c8444aee97b,6400,100,16384000,256000,16640000,6400,9637,39473152,6506,426377216,c186e34204a44aa8cea9f1b4ac77379acb90bb85832444108ac4a180895a3160\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00010602,97,6400,3,14.117134114106497,4.342447966337204,9.772544105847677,0.0021420419216156006,0.3076012405377681,0.19507482647895813,0.1819021999835968,1.0,0.93,d20ff69f22bc4fd214e1c0615f765e2592e8f845da8813f4d4049956044c0317,6400,100,16384000,256000,16640000,6400,9569,39194624,6483,424869888,17a22f16befec86f2a08a03fcd6b326bc32c9cfccdd2daae072a9d351d725a9e\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00070628,100,6400,3,14.938527097304663,4.803335915009181,10.133082667986551,0.0021085143089294434,0.32154012800069426,0.17372146248817444,0.1930929720401764,0.76,0.72,3afeb4ee3d3f15c2586b019ee3dc0da14d14464608fae19bb5a8a0f0a73c7584,6400,100,16384000,256000,16640000,6400,9561,39161856,6512,426770432,692441d7a9fb38aa1bb14928352907d6b356620a8f9242536af0e18a61b1ac16\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078557,103,6400,3,14.764515062173208,4.343099892139435,10.419011116027832,0.0024040540059407554,0.2941579776816705,0.2997741103172302,0.2054646611213684,1.0,0.99,96b7c40fa5c1e7e43b8c866b7f48cf1add3312172d24aa34336e3db99e8bb869,6400,100,16384000,256000,16640000,6400,9596,39305216,6489,425263104,2f2413fe36da7e6598fccddf76159c4b5800c7317837550d6c3dd080fdfea13f\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00058515,110,6400,3,15.157570441563925,4.549243797858556,10.606036831935247,0.0022898117701212564,0.30013014390379933,0.615585595369339,0.5310811102390289,0.99,0.93,941b7d9cdcb027def7ce1955a52c93d1c70c87301454e82d7184e550d4263d0f,6400,100,16384000,256000,16640000,6400,9546,39100416,6508,426508288,42611d077733e97e98a8314efb7702f8474cf429ee18371c3d268983d5a97c16\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00091479,115,6400,3,14.285412927468618,4.354848215977351,9.928712000449499,0.0018527110417683919,0.3048458058642224,0.192396342754364,0.26056915521621704,0.99,0.95,132b6d0d368e05cf4613972596052dcaed8c6d14eb5d4a712cfdec941898bd13,6400,100,16384000,256000,16640000,6400,9680,39649280,6494,425590784,019f63edd39f8d9246a34b268b50a86c78a935cd787c75df8e1086ef9a98b3fc\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00006392,124,6400,3,15.488723913828531,4.43529337644577,11.05134313305219,0.0020874043305714927,0.28635628093841115,0.48895180225372314,0.3706738352775574,0.93,0.89,c0e9a44e39fb73607554e7cd0126b179bfbb8f9b03301ea9d2a8f07f3ab9090b,6400,100,16384000,256000,16640000,6400,9657,39555072,6486,425066496,d3afeee00e6c5ceed9e11696d891c2f562aee855847c8291fcfd6f7a5b7cfa91\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046881,125,6400,3,14.867274711529413,4.432782530784607,10.432440787553787,0.002051393191019694,0.2981570339416027,0.44890493154525757,0.4123114049434662,0.95,0.81,e715e5a8118b7477ec773da6e167552e211bc7422b745413c3e22715c87f3698,6400,100,16384000,256000,16640000,6400,9580,39239680,6514,426901504,f01c8a51103c3c533fd46d14563862f47c0745d05c7e23e813e655bf14b01e2b\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048392,3,6400,3,40.22644956906637,6.901569664478302,33.32019473115603,0.0046851734320322675,0.1715679543785918,10.747238993644714,4.6165212988853455,1.0,0.98,945629211621565e4dc68374dab167615fab48c08bf06b367a4e51238c14de98,6400,100,16384000,256000,16640000,6400,9581,39243776,6473,424214528,bc173ce2592d8c91e5f5c16d677fe485626c2d0311ffe06fde9794bc27d9cc86\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062785,4,6400,3,36.57840192317963,5.355358123779297,31.22068444887797,0.0023593505223592124,0.1464076570383361,1.136675477027893,1.3369284570217133,1.0,1.0,56dd1e84dbff3338b1639cbe898b49c85f02b706536af35e01e85246da5f6b3e,6400,100,16384000,256000,16640000,6400,9628,39436288,6490,425328640,634c5f8057fb122120ce264613ebe87310585be01f58a3c47238f71423550f27\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016991,7,6400,3,37.32211763660113,5.3990135590235395,31.92051375905673,0.002590318520863851,0.14465989340671345,1.57918781042099,0.9201914072036743,1.0,1.0,c40bade044704cdaa30261f4a0b044204f9f9ffc1bdd7d796854c9f00c63775d,6400,100,16384000,256000,16640000,6400,9628,39436288,6515,426967040,fa1a7803ebe491c812b382c9884d0a482cf1437aa552fa722cf5fd36e700a409\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00022297,9,6400,3,36.647895971934,5.2834053834279375,31.36177733540535,0.0027132531007130942,0.1441666770576439,0.7161423563957214,0.6475485861301422,1.0,0.99,cd8db261aceb2170fd10b70a70ee621973c749e15a9154a1b3e2fe88a1c697e8,6400,100,16384000,256000,16640000,6400,9589,39276544,6531,428015616,1ef10bccce00864b29772af67c31f0ef559579b283e0c3e01f102a08687dd0c9\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00030348,10,6400,3,36.403736720482506,4.69949593146642,31.70201927423477,0.0022215147813161216,0.12909377868405075,0.40191784501075745,0.14062970876693726,0.88,0.84,30c88fde3811f1888b9dc1aecd96d0cf953ed20ad8d55774e6114705af0e0b3a,6400,100,16384000,256000,16640000,6400,9632,39452672,6512,426770432,ce15b460cc476a208da9d78f8c08f6338fdd17be1ebf11f026640e8a597392b9\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00003283,18,6400,3,35.76736773053805,5.057285229365031,30.70741022626559,0.002672274907430013,0.14139383326906496,0.9291693568229675,0.6920769810676575,1.0,0.98,849b79fc33adfcd66fdc73c7a832fe8a5ac1f6422efc8775dc6a43a30f89a800,6400,100,16384000,256000,16640000,6400,9568,39190528,6503,426180608,7e93fb036b3f720f04f3faf9bb732f1c2d7669fb377a3de76cb835ae2f26494e\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00031120,21,6400,3,35.704941799243294,4.806750764449437,30.896189312140148,0.0020017226537068686,0.1346242430943077,0.2870410680770874,0.10901317000389099,1.0,0.96,860d195b9fc6bc44e2b0fd1a91cd96ee43af0702b9c31f343b86714ac2b2872b,6400,100,16384000,256000,16640000,6400,9508,38944768,6478,424542208,27804f47a2c5e64a966ae2fe0b35729e686fb6c073ae79fdc696d1665963f786\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062191,23,6400,3,35.00168149669965,4.676065097252528,30.323473115762074,0.0021432836850484214,0.13359544162738124,0.4225894808769226,0.2740807831287384,1.0,0.96,2e69c56a3b004c1a29f4794555bfa8b78258ddb9e2d4b20f2ed4502b871f54b8,6400,100,16384000,256000,16640000,6400,9600,39321600,6516,427032576,f265e6da6b9a52b24b8252a13a8c09eb4c6244bc190e5d076193e1640792886b\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00074921,26,6400,3,38.05180390675863,5.6168995797634125,32.43215506275495,0.0027492642402648926,0.14761191331498894,4.953008145093918,1.9794926047325134,1.0,0.99,ea0b197f4aa5a927d46dfe32c1cf8bf1dc5cb70f08d154b6cabad4cc93f3a7e1,6400,100,16384000,256000,16640000,6400,9602,39329792,6488,425197568,425a70fb704039992360b5b17c3d6034b7dc554dd300bb1191df03128a1c1aa1\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00019898,30,6400,3,36.45676001906395,4.981104284524918,31.473164757092793,0.0024909774462381997,0.13663047078018456,0.6912238895893097,0.14489144086837769,1.0,0.98,d274bce0471895dd665b5da3f2f95403b53bae14b424221c3eb53d1f52157d7e,6400,100,16384000,256000,16640000,6400,9629,39440384,6500,425984000,36ece369bfc87bf6dbc4b2a360217fcd6bb4b0fdcc3c603ff244d0fed49c46b3\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00088023,36,6400,3,34.17421132326126,4.9203795691331225,29.251599063475926,0.0022326906522115073,0.14397931594061344,0.09279325604438782,0.04914030432701111,1.0,1.0,edd86c867f91518f7bcdfde8df2920964d4dc2c3083714447366c5294d3413e4,6400,100,16384000,256000,16640000,6400,9590,39280640,6487,425132032,8068d2d90cf2513d5d954fb4fe3c453deddf7487589f30dcf1ad54549884c0a5\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00038057,39,6400,3,50.02229039867719,8.221472303072611,41.795384138822556,0.005433956782023112,0.16435617476823938,1.2970417737960815,1.4663077890872955,1.0,0.99,b677824869cde13373d3d048b88984dcccaca08ce6aff66dfcb37166c41d08de,6400,100,16384000,256000,16640000,6400,9579,39235584,6470,424017920,71fade62d64a8142d5c98c9df98de40f0cd9f179c34c431718fffa64402c6537\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00063164,40,6400,3,39.8837241033713,6.404716521501541,33.47599133849144,0.0030162433783213296,0.1605847163344549,1.6714371740818024,0.3987811505794525,1.0,0.99,0dd3d1d520b0e4e4a1331ad6ea77dbbe1248b9d26cd2612b92f0d2b6bfaf0020,6400,100,16384000,256000,16640000,6400,9594,39297024,6481,424738816,ce3744c0ddeb06d690188da12d514476621e5d74f522b51bf64da0db1de54203\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078114,50,6400,3,38.19617008169492,4.983314623435338,33.21017573277155,0.002679725488026937,0.13046634290236167,3.6198310554027557,0.8078515529632568,0.99,0.93,6e8fbaaece40fdbd09707d762867c35d72b54ce8f84d3fb854f26cbf1f7cbc48,6400,100,16384000,256000,16640000,6400,9555,39137280,6502,426115072,e925fd4592eb2eafffa52a7918e42fcd53d1269c95e8e45d357a891b1762080c\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046730,61,6400,3,37.656452506780624,5.4421549042065935,32.21151605248451,0.002781550089518229,0.14452117876017795,2.2662170231342316,1.5408173203468323,1.0,1.0,982d3db23cb39ff890a44ca1be49557f395a140ca11eddbde0c3861312464eb5,6400,100,16384000,256000,16640000,6400,9622,39411712,6485,425000960,5ebb1e78d10c612a550655305348918ffb6e4a68ad3a667ae61c3958ecd1a283\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00018100,62,6400,3,37.01879332462946,5.892116576433182,31.123800824085873,0.0028759241104125977,0.15916554936740793,2.6678331196308136,2.7085095643997192,0.99,0.94,6285edcf0e43a9a8484ea46a04ebca6f727986b1e9b19fc81f4512bf70be4a2c,6400,100,16384000,256000,16640000,6400,9615,39383040,6522,427425792,c45cb9f60c5a95245f464172e776b8bd3043510efee7ea53547e7ad56cb64c7c\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00035975,64,6400,3,36.1638143658638,4.966749499241511,31.19495635231336,0.0021085143089294434,0.13734031064847482,0.24737417697906494,0.21792948246002197,1.0,1.0,ffde4bfe17c994e8f6f25c73df8aa07c9e5b16633fc77da35dc98671f4321d9c,6400,100,16384000,256000,16640000,6400,9653,39538688,6507,426442752,341b81cda8311817e63926d0b92066480a8033f1ad36453543b051af999e0e7a\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048389,72,6400,3,36.136782417694725,5.287541697422664,30.846362312634785,0.002878407637278239,0.14632021291507039,1.6314797103404999,1.0936819016933441,1.0,0.95,0c568087ca77e3b666b3a181e4f21aa89398859e4435339c4a76560353b9ffa9,6400,100,16384000,256000,16640000,6400,9619,39399424,6491,425394176,4b0249511310969eb2f6b81d78f0d4a995d0356b7f70eae1a7c8839f7d4c900d\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00075671,73,6400,3,35.00332062443098,4.595480859279633,30.40539224942525,0.0024475157260894775,0.1312869972705436,0.08615851402282715,0.08879601955413818,1.0,0.96,a440b91124e7123fcec7e4ace51fd2ca5a36ef25312c4b9e80ae268a410fed29,6400,100,16384000,256000,16640000,6400,9607,39350272,6492,425459712,11b51c94cde19c3598e25cb3a469113d71dc2323940cd23f1b447089a5075f8a\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00068009,82,6400,3,36.89880048235258,5.243930965662003,31.652141362428665,0.002728154261906942,0.14211657010828832,0.6096623837947845,0.7379688322544098,1.0,0.99,3fa4b5fe3bfb45adbf74ad3f0ce32e6a8ea39f50fa8a215c9745361480572054,6400,100,16384000,256000,16640000,6400,9583,39251968,6500,425984000,d81c41e35ad4395f511d8bfe468e5e104e973b269b98e40743d5dbe08fb1da37\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00065925,87,6400,3,35.186675687630974,4.769798368215561,30.41436771551768,0.0025096038977305093,0.13555694804929436,0.18900632858276367,0.11472776532173157,1.0,1.0,d1c0fa10ab9fc56a46c4e49d98bcf57187919bc15d64b73eca1d94655b313f5c,6400,100,16384000,256000,16640000,6400,9653,39538688,6514,426901504,ff38b9386f300443ea8feb8ffbf53ccd4f1de1cf95398a1a2e41bd13182d01e3\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00047135,89,6400,3,34.90333134929339,4.953204343716304,29.94771922628085,0.0024077792962392173,0.14191207979970027,0.9019225835800171,0.45175477862358093,1.0,1.0,e25dc48bb180df0753690f9a9211a3ccc830385e6d1e4bac93dbd53ee455e95e,6400,100,16384000,256000,16640000,6400,9621,39407616,6484,424935424,9da7df73f5a64325b1b24eace08c6642d66e9fda68b0647755ab5649b510f86b\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00039730,90,6400,3,36.325411250193916,5.27992844581604,31.043040255705517,0.002442548672358195,0.1453508236823569,1.9345954060554504,1.5377327799797058,1.0,1.0,b0ffe1bf30038fc0cb639cea0133f244248d4421a92822e3a1bdd5b55d943245,6400,100,16384000,256000,16640000,6400,9570,39198720,6516,427032576,836a28b4e86d5008ad34c0b5a32a76a476bb5ce43312ee793becfb201bda0b1b\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016473,91,6400,3,37.594119707743324,4.939215878645579,32.65204653143883,0.002857297658920288,0.131382671466789,0.40354207158088684,0.10984018445014954,1.0,1.0,32bae27b642788759a7103f4db4d559f8b66e5512babf9c5fec6694a756ebc26,6400,100,16384000,256000,16640000,6400,9499,38907904,6517,427098112,d91beafa626d3be8b6932aeb1e31dda030c673be5ebf7db45549c1e48e256f69\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00024323,94,6400,3,37.05400973558426,5.153535554806392,31.89837063352267,0.0021035472551981607,0.13908172399105492,1.0713264346122742,0.9433776140213013,1.0,0.97,c55176a98e14dc93081e63eaffceea8c354ec5d035ef899d367d5c57b77ab31a,6400,100,16384000,256000,16640000,6400,9631,39448576,6507,426442752,93a2f017ba4c6c691e9f029b7cd0552ba1454389815e1588141e841b062ee529\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00010602,97,6400,3,35.24978086352348,5.3833288451035815,29.86394241452217,0.0025096038977305093,0.15271949819904432,0.753939151763916,0.7732324302196503,1.0,0.98,5afb1755b8a56052023b5a540fb4a60e485f611ed952dd057d6c0eadaa9a32ba,6400,100,16384000,256000,16640000,6400,9546,39100416,6472,424148992,f59c5d0070d975a8699ab2033581a06d04a47b3db8848ca866c8cbd096873a53\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00070628,100,6400,3,36.39192134141922,4.650438825289409,31.739292045434315,0.0021904706954956055,0.12778766973197822,0.09457394480705261,0.04701688885688782,0.97,0.92,6fd6ca7a9b2b33784800ad51a75f503af875aee4df6299a564178236a887fc95,6400,100,16384000,256000,16640000,6400,9561,39161856,6510,426639360,78bbaa3a25044f3586b6537ff612255d576af521bc163b22c5143643613cdc92\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078557,103,6400,3,36.979137609402336,4.934130857388179,32.042267421881355,0.0027393301328023276,0.1334301223978145,1.0464973747730255,0.10216236114501953,1.0,1.0,6f0c92c5ed78659c7dbdaa92f1c5d504bdbb8f8497a7efa5f0b5c5f0f1bc88b4,6400,100,16384000,256000,16640000,6400,9595,39301120,6490,425328640,8d83b929391406d9f3e9303efe2b106e123dec92d235cb7175bc739bc0240dcc\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00058515,110,6400,3,37.383402387301125,5.012538284063339,32.36800556381544,0.002858539422353109,0.13408459273268455,3.8981586694717407,0.23547187447547913,1.0,0.99,1f32f78c5a21ea9880987aec63a6acc0771a530b5b025f1d48ff6332bf94a23a,6400,100,16384000,256000,16640000,6400,9540,39075840,6502,426115072,23ebea9aad7372193e6787ae48c50f5b071475ee57412322d22f624745f83f05\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00091479,115,6400,3,36.003321409225464,4.744465152422587,31.256791204214096,0.002065052588780721,0.13177854061005798,0.5826912820339203,0.1468360424041748,1.0,0.98,88d27c2597af248af78f8d1e832c1bfd20fbc9112747ef0519f13675d5ce18d4,6400,100,16384000,256000,16640000,6400,9687,39677952,6494,425590784,b0ca3dcc18b8b35ef96b713e14b4ec4c6dc2d402100b107d87df16af56dbb000\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00006392,124,6400,3,37.126450488964714,4.773595680793126,32.350558787584305,0.00229602058728536,0.12857667829603064,0.9805411100387573,0.0919736921787262,1.0,1.0,dbd5481f3392fc20671e98ea043f19aad80b497c5a2fa3e57b0f06210a2747e4,6400,100,16384000,256000,16640000,6400,9649,39522304,6483,424869888,13b687c1007665c8d8bd560ca9c31a9c7cdfb40ef8634ce028bf692d3b8e6e12\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046881,125,6400,3,37.46639440457026,5.782941977183024,31.68075904250145,0.002693384885787964,0.15435010678469782,1.4421381056308746,1.6042552888393402,1.0,0.88,b51bd1071c1c0101556595484c9e0477b8b156bc04560f7ed2a119116c9d1a22,6400,100,16384000,256000,16640000,6400,9569,39194624,6514,426901504,987c2ea468f4abc8b825f58eb968eb77c1d45786200010d42c659a6471920f8b\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048392,3,3200,3,133.38453446825346,2.710846563180288,130.67112738887468,0.0025605161984761557,0.02032354480965325,0.163983553647995,0.03729015588760376,1.0,0.95,701879a79987a1787632f3da5ec8d507bdbc8a9aee347be75727c3ca3ebbecdd,3200,100,8192000,256000,8448000,3200,4797,19648512,3265,213975040,434a7b9f4f8b32d0be2783bc0e19fc1516358aabe14c44751ef656b9553349e9\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062785,4,3200,3,133.3905595044295,2.613040308157603,130.7729408144951,0.004578381776809692,0.019589394615822358,1.0800957679748535,0.05095824599266052,1.0,1.0,faf22f010eed851b54f8106b9bee59579f40b1b399d16ffed7e85ec8aba05ab5,3200,100,8192000,256000,8448000,3200,4787,19607552,3282,215089152,740807e4ed5cb1b57f2554829d61712c65918d2f802a6b2ffb9b1203a77912fd\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016991,7,3200,3,134.55594703555107,2.668077747027079,131.88564777374268,0.0022215147813161216,0.01982876123878899,2.643704414367676,0.14771893620491028,1.0,1.0,e5f40fbedd93f7eb0b1f41cdac80ce64a0ee549144ffd97a09adff3802590258,3200,100,8192000,256000,8448000,3200,4766,19521536,3262,213778432,db07c8ea5b7243d6d1a95514a5ae6dc015736160864b18266cb0229a4c175c25\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00022297,9,3200,3,133.31730042894682,2.6953096191088357,130.61981027324995,0.0021805365880330405,0.020217253202972976,0.49599260091781616,0.024236738681793213,1.0,0.93,04f5e38227ebea514054bd4d6a2b7727907e7643d742616711a0e64cbaabbd98,3200,100,8192000,256000,8448000,3200,4764,19513344,3268,214171648,2a84fdfcea62585d56a1c2cb9e24136d598b5c6d82e91245e9a8a189aeb9fad4\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00030348,10,3200,3,134.7168137629827,2.706073224544525,132.00822720925012,0.002513329188028971,0.020087123121138546,2.2147484123706818,0.06437301635742188,1.0,0.97,823f5a1541c8b7166dcdc8d4f53db91c8610877ddc419d84b4cd33778624a9cc,3200,100,8192000,256000,8448000,3200,4823,19755008,3284,215220224,d631eea7ee8dc90fd33a6ae1ac6c9427cf350b23c73d85091f1c7552bc16e9ed\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00003283,18,3200,3,136.1484738687674,3.171586742003759,132.97420491774878,0.002682209014892578,0.023295059076907685,3.0235126614570618,0.8926764130592346,1.0,0.99,b876dd1e11b2730f185645854ed000f447233ce8eadd1fb2b17449598c770c50,3200,100,8192000,256000,8448000,3200,4799,19656704,3298,216137728,e73e0d6cee39625b86943ab7b07973b4cec53665535c78caa292725b6e47d3bc\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00031120,21,3200,3,133.789441237847,2.7009770274162292,131.08609865109125,0.0023655593395233154,0.020188267492757598,1.280859112739563,0.10575354099273682,1.0,0.98,2d373cb1c33b7cec148c7436ae1fd9d232e543d39924ed6f299e4bf3b5f468d7,3200,100,8192000,256000,8448000,3200,4785,19599360,3267,214106112,afd9c49a88219f7a8bd4e3fe80f391c665c981e53f1a5f015db322c3122069b1\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062191,23,3200,3,134.65312123298645,2.6198215782642365,132.03062613805136,0.0026735166708628335,0.019456077618366038,2.181112766265869,0.08364394307136536,1.0,0.98,4bcc50215457102ce49b409f80b953edc5aa2bee637fec3e206c1bcc8127580c,3200,100,8192000,256000,8448000,3200,4808,19693568,3295,215941120,555093801702f2bdbb8a6d95bc8be07a5ebb8e2d5fb7858622aeeb51b0b11617\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00074921,26,3200,3,152.7692178885142,2.8839781880378723,149.8820719619592,0.0031677385171254477,0.018878005843706695,42.060937732458115,0.389881432056427,1.0,1.0,6bfe98e94f54166d1d201d76ff53b62f124f86014fc8252f85be900284b82d2b,3200,100,8192000,256000,8448000,3200,4765,19517440,3267,214106112,cca94eda7514a2058b0fc92990a72f8ccba0573a91a2cd00c9c3231669e76e6c\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00019898,30,3200,3,154.41533426443735,3.125650187333425,151.28556887308756,0.004115204016367595,0.020241838041685205,37.467461079359055,0.23218244314193726,1.0,0.97,7116350c9a20e1d74ead71e9b08cc8d23d1f9c02651d1136da06e36c9e9bbdda,3200,100,8192000,256000,8448000,3200,4819,19738624,3276,214695936,cb6946c962996eda86adeecf6a0e7a8ee9d28441d4c7e2fd47347c2ff88101c1\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00088023,36,3200,3,139.46120316783586,2.715731660525004,136.7431009809176,0.002370526393254598,0.01947302618102851,12.262754142284393,0.04620477557182312,1.0,0.98,71f853b92fdd74b32d4d856909973eb78d788dfbcebebb1f3730a2e6025ed39c,3200,100,8192000,256000,8448000,3200,4763,19509248,3267,214106112,9a71646fc0a5413615f57143fc4d675b8aa0e74f9b6b44533f7a52fe6a93a293\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00038057,39,3200,3,158.2813896238804,4.985559731721878,153.29214806358019,0.003681828578313192,0.0314980791081562,12.29020208120346,0.1033879816532135,1.0,1.0,63d86247091d1f0aefe6233e889a9776bd9b136e7a9220625feebf03d4a82ae5,3200,100,8192000,256000,8448000,3200,4805,19681280,3259,213581824,daa316a0c7333b5f08d01534ea9774c6b7e58b53676642a18241602f5c7d44d8\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00063164,40,3200,3,133.10942302147546,2.658532311518987,130.44836993018785,0.002520779768625895,0.01997253275667845,0.06253644824028015,0.03929436206817627,1.0,0.98,769394f7c7c5484f57130925e7b94bdd618a80c20894da521a226ef6ff34adf7,3200,100,8192000,256000,8448000,3200,4774,19554304,3278,214827008,700b78d5615c263edc7164369d24b7979fb4fe785d1108fdbe449d7b51736edc\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078114,50,3200,3,136.52977844079336,2.6864645381768546,133.8406279683113,0.00268593430519104,0.0196767662619613,7.738519459962845,0.025022774934768677,1.0,0.98,8ade52765e092a8cebfccd29e5bc57a28018ace6b2e19ce886086ba6624e9a97,3200,100,8192000,256000,8448000,3200,4796,19644416,3273,214499328,aaf2063a6a17125e3a7bb68344e2fac8318e6d5ff353f15f7e1928bf4cf65f1d\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046730,61,3200,3,132.98528641462326,2.6324105759461722,130.35046060880026,0.002415229876836141,0.019794750584202287,0.1687183976173401,0.04057586193084717,1.0,0.99,36b226249ea607bfb90e6968628dc013d144caf0d01ea2076dd86d94c8c3cf10,3200,100,8192000,256000,8448000,3200,4805,19681280,3282,215089152,18e884b00912f0bcf111667ef0b31ad5363e37a416562dfd8719fafcc0731423\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00018100,62,3200,3,133.27053685983023,2.6139219601949057,130.6538755695025,0.0027393301328023276,0.01961365221289794,0.057872384786605835,0.0968538224697113,1.0,1.0,8ebe52e6ae1c89a38b41de82433981a517dd6a559db71056e3190d9d186ab04e,3200,100,8192000,256000,8448000,3200,4812,19709952,3286,215351296,5c0b5d846049f0aa77040858f6ac77d90ce8f2a1410d1af190c2a5e5ee4392f9\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00035975,64,3200,3,140.1077409585317,2.7114003896713257,137.39275683959326,0.0035837292671203613,0.019352252567356936,13.926997780799866,0.06335973739624023,1.0,0.99,14b32c44d4274d9730cd42ea8395fcf3970a6d99bf59729cde2a4a74e0013bee,3200,100,8192000,256000,8448000,3200,4811,19705856,3293,215810048,5b736de9e08cae341c14d52ef732605daed308bd6814904d8c0debe1fabde4da\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048389,72,3200,3,133.1398164232572,2.6504062116146088,130.48707569638887,0.0023345152537027993,0.01990693905712513,0.2882853150367737,0.033464282751083374,1.0,0.98,023f97c4d1cd57b969c1b7e21f58bb9712e6b0abb1bfe94d219c5708b1810bce,3200,100,8192000,256000,8448000,3200,4831,19787776,3263,213843968,575b2bf16aedaf383fdecce3cc30c4a2cc3f6c713c87e403614e65adc9becaad\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00075671,73,3200,3,135.80507412552834,2.6246048510074615,133.17804038524628,0.002428889274597168,0.01932626500083103,2.9982924461364746,0.0948980450630188,1.0,0.93,fc49fec5f287b6ce1311e9fa154f5cb9343959a50c3ce6a245e8ec4f77998fa3,3200,100,8192000,256000,8448000,3200,4808,19693568,3268,214171648,ef37d74947d19aedf009f1766700bd46ab88eebe6cf99b0f69b194be1339bfb2\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00068009,82,3200,3,133.52053488294283,2.6527754962444305,130.86560616890588,0.0021532177925109863,0.01986792142924018,0.8730515837669373,0.12218579649925232,0.98,0.93,f40e9849538f95b0a68ca615d6e828fb1585a3be7c5f631b9cd0fb4ded6a67cc,3200,100,8192000,256000,8448000,3200,4815,19722240,3276,214695936,eb6701019b014edc79fbc1e55f122b8a640d7e1fa846a89a009841f5dda885f8\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00065925,87,3200,3,135.5960170427958,2.728048712015152,132.86550715565681,0.0024611751238505044,0.02011894428399136,1.668974757194519,0.13550370931625366,1.0,0.99,4242bc082abf5c6148d33159237d1d57f9d477f69ec06e21a1a9926735184fff,3200,100,8192000,256000,8448000,3200,4798,19652608,3282,215089152,3d21747b4e87d9bcaafcdfc1605f1c6daa45e80c6c43fddd06745126b0dec063\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00047135,89,3200,3,134.6429648498694,2.6336523393789926,132.00665762027106,0.002654890219370524,0.019560266979530547,1.4426037669181824,0.2439729869365692,1.0,1.0,9cef419fe98f9ae191582754d568393c967f45d185664ff1a7f36a60f7a75781,3200,100,8192000,256000,8448000,3200,4817,19730432,3284,215220224,447cac57aaf02eaf6889bf637827bf5a9f04844256bce4c245796db70b1bc86b\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00039730,90,3200,3,134.9912496904532,2.7009124557177224,132.28784749905267,0.0024897356828053794,0.020008055795550837,0.8666962385177612,0.028740614652633667,0.98,0.93,8de5c894b54b73e982bb82e02ad0ee8faf9a5124a97060e7d9b63902c4cab759,3200,100,8192000,256000,8448000,3200,4787,19607552,3264,213909504,e0f25140361552b1905cbf6ce1c343928393bdbc058b6c3bd19730b800410409\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016473,91,3200,3,135.0103678802649,2.6975199580192566,132.31049353877702,0.0023543834686279297,0.019980094865096398,1.0621994733810425,0.05441904067993164,1.0,0.94,06246771f2ed998fa69c010ea9bdf46e031b3e22dd4b1c911ec3e7a3a2f3f19a,3200,100,8192000,256000,8448000,3200,4776,19562496,3275,214630400,5b043bfc46477ba3bef7918e3353562e94bf55e096dc96be7f1e1118bc689600\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00024323,94,3200,3,140.99494367837906,3.770283112923304,137.221227089564,0.003433475891749064,0.026740555473561,19.244834780693054,3.2819807529449463,1.0,1.0,faf64e09528af7dc4010065538463b29be6b0d977c9193ca77a80ec6e7a6d09a,3200,100,8192000,256000,8448000,3200,4840,19824640,3283,215154688,c6658ffe584229ddde4f33c751cd0bff06327831e164fc8e2044d048a502ddf9\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00010602,97,3200,3,136.09959185123444,3.002608815828959,133.09460009137788,0.0023829440275828042,0.022061850259705428,0.7148347795009613,0.8961521089076996,1.0,1.0,242974765ab9c6385fb993dc1345f1081a4192e513c58c428bfcda405d73ebc1,3200,100,8192000,256000,8448000,3200,4768,19529728,3263,213843968,bd1891e8fac86afbd3cbdd27f8b77fa84a8c25884b19b71c578ddf2d8449be5f\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00070628,100,3200,3,134.52372575799623,2.723333736260732,131.79819410045943,0.0021979212760925293,0.020244263388600463,0.7639825344085693,0.10947883129119873,0.99,0.94,ef376474d958ec910454c0476c72575ae3157cb1244b2284628b91fde32df87d,3200,100,8192000,256000,8448000,3200,4779,19574784,3289,215547904,3f3b43885309c316a478d40006f77c35c36471df9f5a50984fda407ea8ed6c81\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078557,103,3200,3,134.31377212206522,2.692492057879766,131.61886110901833,0.002418955167134603,0.02004628427405651,1.487433910369873,0.06739050149917603,1.0,1.0,56c876317846adeb4aacf3d18c019345af571f2d7637d2206efcc09a0b15a365,3200,100,8192000,256000,8448000,3200,4803,19673088,3269,214237184,023db2b157d6de9d1e913390bb3927a89a3e5a4d3280229a9b21228d3a661900\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00058515,110,3200,3,148.14489458998045,2.6858560740947723,145.4560086131096,0.003029902776082357,0.018129926660843742,25.934159755706787,0.07375702261924744,1.0,0.95,fd7ae4e70874f58194d8a93f0f902f393d42b23ec2b6d8ec9d365f83338662e0,3200,100,8192000,256000,8448000,3200,4810,19701760,3269,214237184,248370ff83250c9a4e24daddfb1a7d7ec1f4886358a5056328fd4819a1acef5a\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00091479,115,3200,3,135.43893893559775,2.6059970259666443,132.83049315214157,0.0024487574895222983,0.019241121101855472,3.5908930003643036,0.059548765420913696,1.0,0.97,a78828a3abe731f723078278ca9ad6f2f44f2a2657e629e5bbec0a394d8c22d6,3200,100,8192000,256000,8448000,3200,4825,19763200,3287,215416832,d20701b148d354660e1b2d76718ae4f3ebc494b150770228226e1e1d1dfa3782\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00006392,124,3200,3,150.4505711297194,4.3065982560316725,146.13991851607958,0.004054357608159383,0.028624672034767464,15.353355556726456,2.2301524877548218,1.0,0.99,d3706db9e771ca0e0b6c2e0153fa718708e62a1e7e61a9c38d1d2348e53890ff,3200,100,8192000,256000,8448000,3200,4805,19681280,3267,214106112,98d524fa2ebc7d89b2044b60e409cde3f181a74fa4812f5f767e7ec5eabf5d56\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046881,125,3200,3,133.585503945748,2.615405867497126,130.96770520011583,0.0023928781350453696,0.019578515559287777,0.9338520467281342,0.11342763900756836,0.93,0.79,b2a30a22ed235c3313cca723910fd82ebe4d5c70cbe6e2b6d308133989af675d,3200,100,8192000,256000,8448000,3200,4813,19714048,3283,215154688,d72e264bfbb377e8bd44df7bdde0aa97606d0331855621d951c6cf0fe160d5e8\n",
+  "paired_call_csv": "pipeline,role,query_id,query_index,budget,repeat,total_ms,rerank_ms,search_ms,wrapper_residual_ms,candidate_sha256\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062785,4,6400,0,16.124557703733444,5.241326987743378,10.880224406719208,0.0030063092708587646,77a197b138b722de9e9284e4e2674ff72043acd599dae5a94557c19c20e9ce6c\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062785,4,6400,1,16.199208796024323,5.409799516201019,10.786622762680054,0.0027865171432495117,77a197b138b722de9e9284e4e2674ff72043acd599dae5a94557c19c20e9ce6c\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062785,4,6400,2,15.653405338525772,4.888400435447693,10.762672871351242,0.002332031726837158,77a197b138b722de9e9284e4e2674ff72043acd599dae5a94557c19c20e9ce6c\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048392,3,6400,0,15.652354806661606,5.7089366018772125,9.94105264544487,0.0023655593395233154,8a611c75e2f3df293a8d8b6cb51cb8e9ec4e26740f4f421ea687e3cc91ef8c89\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048392,3,6400,1,14.629237353801727,4.645772278308868,9.98121127486229,0.002253800630569458,8a611c75e2f3df293a8d8b6cb51cb8e9ec4e26740f4f421ea687e3cc91ef8c89\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048392,3,6400,2,14.764223247766495,4.719901829957962,10.04210114479065,0.0022202730178833008,8a611c75e2f3df293a8d8b6cb51cb8e9ec4e26740f4f421ea687e3cc91ef8c89\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00035975,64,6400,0,15.193656086921692,4.6211183071136475,10.570462793111801,0.002074986696243286,77f61fae8b6bb2f0a3ef88b0caed2c4e77e2d69ede70588f451b6282a1ffefc2\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00035975,64,6400,1,15.48536866903305,4.941426217556,10.541185736656189,0.0027567148208618164,77f61fae8b6bb2f0a3ef88b0caed2c4e77e2d69ede70588f451b6282a1ffefc2\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00035975,64,6400,2,15.691518783569336,5.270518362522125,10.418441146612167,0.002559274435043335,77f61fae8b6bb2f0a3ef88b0caed2c4e77e2d69ede70588f451b6282a1ffefc2\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00018100,62,6400,0,15.3583362698555,5.564853549003601,9.79008898139,0.0033937394618988037,d04c62851f64422f99bf6fb1cf0b716b9b770e24154fb450fa972ca19308e572\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00018100,62,6400,1,14.343172311782837,4.698250442743301,9.642623364925385,0.002298504114151001,d04c62851f64422f99bf6fb1cf0b716b9b770e24154fb450fa972ca19308e572\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00018100,62,6400,2,15.11455699801445,5.422774702310562,9.68925654888153,0.0025257468223571777,d04c62851f64422f99bf6fb1cf0b716b9b770e24154fb450fa972ca19308e572\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00031120,21,6400,0,15.249591320753098,4.789866507053375,10.456893593072891,0.0028312206268310547,bdd20de40c82138dad424fb2b580613ebbd69fb44d7e8c19a7725e44d83f7ed5\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00031120,21,6400,1,15.394352376461029,4.885833710432053,10.50608977675438,0.002428889274597168,bdd20de40c82138dad424fb2b580613ebbd69fb44d7e8c19a7725e44d83f7ed5\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00031120,21,6400,2,16.215495765209198,5.705926567316055,10.505374521017075,0.004194676876068115,bdd20de40c82138dad424fb2b580613ebbd69fb44d7e8c19a7725e44d83f7ed5\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00030348,10,6400,0,16.128353774547577,5.465183407068253,10.661117732524872,0.0020526349544525146,9ca1777c4ec499a5760534805dfe65bbbfb59c5745a029079fd8bee6ccfe81ad\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00030348,10,6400,1,15.506360679864883,4.808258265256882,10.690558701753616,0.007543712854385376,9ca1777c4ec499a5760534805dfe65bbbfb59c5745a029079fd8bee6ccfe81ad\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00030348,10,6400,2,16.519658267498016,5.624163895845413,10.893236845731735,0.00225752592086792,9ca1777c4ec499a5760534805dfe65bbbfb59c5745a029079fd8bee6ccfe81ad\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00075671,73,6400,0,17.208244651556015,5.582451820373535,11.622630059719086,0.003162771463394165,6cba1ba944c7e8475d8b70da41735e668e20eef5d1f2d8b817b22adbb3ed45f4\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00075671,73,6400,1,17.03822985291481,4.927795380353928,12.108154594898224,0.0022798776626586914,6cba1ba944c7e8475d8b70da41735e668e20eef5d1f2d8b817b22adbb3ed45f4\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00075671,73,6400,2,16.449257731437683,5.597300827503204,10.848116129636765,0.0038407742977142334,6cba1ba944c7e8475d8b70da41735e668e20eef5d1f2d8b817b22adbb3ed45f4\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00068009,82,6400,0,16.183868050575256,5.633506923913956,10.547846555709839,0.002514570951461792,da3f1e13e27346a7a800f62aae99077d1909c6c3a069978c685532b4f8098019\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00068009,82,6400,1,15.416115522384644,4.816848784685135,10.597098618745804,0.002168118953704834,da3f1e13e27346a7a800f62aae99077d1909c6c3a069978c685532b4f8098019\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00068009,82,6400,2,15.734050422906876,5.150657147169113,10.5806365609169,0.0027567148208618164,da3f1e13e27346a7a800f62aae99077d1909c6c3a069978c685532b4f8098019\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00024323,94,6400,0,15.53235948085785,5.0393156707286835,10.489489883184433,0.003553926944732666,8f848498efac68e65a65c3319b5f0e2343b017d14159efe9e8855c8444aee97b\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00024323,94,6400,1,15.451345592737198,5.14887273311615,10.299600660800934,0.0028721988201141357,8f848498efac68e65a65c3319b5f0e2343b017d14159efe9e8855c8444aee97b\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00024323,94,6400,2,15.384554862976074,4.766307771205902,10.615270584821701,0.0029765069484710693,8f848498efac68e65a65c3319b5f0e2343b017d14159efe9e8855c8444aee97b\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00019898,30,6400,0,15.08832722902298,4.4139958918094635,10.672681033611298,0.001650303602218628,ed5f06e33bd6d5dfc532ef8d2b25c9946ba6a5a2a5d5b4b9b0e1a25a889c7fb2\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00019898,30,6400,1,15.033885836601257,4.420056939125061,10.611474514007568,0.0023543834686279297,ed5f06e33bd6d5dfc532ef8d2b25c9946ba6a5a2a5d5b4b9b0e1a25a889c7fb2\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00019898,30,6400,2,16.317054629325867,4.334107041358948,11.980783194303513,0.002164393663406372,ed5f06e33bd6d5dfc532ef8d2b25c9946ba6a5a2a5d5b4b9b0e1a25a889c7fb2\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00003283,18,6400,0,14.294054359197617,4.443477839231491,9.848419576883316,0.0021569430828094482,74acf564b3ca2a3860578005dc0fb54389c491d325404b95c277d64ce50067e1\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00003283,18,6400,1,14.258649200201035,4.384174942970276,9.87238809466362,0.002086162567138672,74acf564b3ca2a3860578005dc0fb54389c491d325404b95c277d64ce50067e1\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00003283,18,6400,2,14.295995235443115,4.387691617012024,9.906239807605743,0.0020638108253479004,74acf564b3ca2a3860578005dc0fb54389c491d325404b95c277d64ce50067e1\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00006392,124,6400,0,15.731900930404663,4.623983055353165,11.105682700872421,0.0022351741790771484,c0e9a44e39fb73607554e7cd0126b179bfbb8f9b03301ea9d2a8f07f3ab9090b\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00006392,124,6400,1,15.491321682929993,4.428587853908539,11.060688644647598,0.002045184373855591,c0e9a44e39fb73607554e7cd0126b179bfbb8f9b03301ea9d2a8f07f3ab9090b\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00006392,124,6400,2,15.24294912815094,4.253309220075607,10.987658053636551,0.0019818544387817383,c0e9a44e39fb73607554e7cd0126b179bfbb8f9b03301ea9d2a8f07f3ab9090b\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062191,23,6400,0,16.31820574402809,4.898283630609512,11.417705565690994,0.002216547727584839,cb80eadefc8e565b24f1a42f80c16e412a5801bd38a75ca41ec567c1b7e075c3\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062191,23,6400,1,16.025353223085403,4.721969366073608,11.300645768642426,0.002738088369369507,cb80eadefc8e565b24f1a42f80c16e412a5801bd38a75ca41ec567c1b7e075c3\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062191,23,6400,2,15.329442918300629,4.609677940607071,10.717488825321198,0.0022761523723602295,cb80eadefc8e565b24f1a42f80c16e412a5801bd38a75ca41ec567c1b7e075c3\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078114,50,6400,0,13.972427695989609,4.414860159158707,9.555492550134659,0.002074986696243286,33f90836d4771513e6adbfbc8d72d5fd8621cbcf3b5ab980f7c14dbdb6f7443f\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078114,50,6400,1,13.966675847768784,4.3401941657066345,9.624335914850235,0.0021457672119140625,33f90836d4771513e6adbfbc8d72d5fd8621cbcf3b5ab980f7c14dbdb6f7443f\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078114,50,6400,2,14.951087534427643,4.606757313013077,10.342318564653397,0.0020116567611694336,33f90836d4771513e6adbfbc8d72d5fd8621cbcf3b5ab980f7c14dbdb6f7443f\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016473,91,6400,0,15.785463154315948,4.987064749002457,10.795935988426208,0.002462416887283325,e3e4ba25d1d5012116ee55b23e2f0f7bc49c291214ba74da6ebf8839deaebddb\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016473,91,6400,1,15.491314232349396,4.708297550678253,10.78088954091072,0.002127140760421753,e3e4ba25d1d5012116ee55b23e2f0f7bc49c291214ba74da6ebf8839deaebddb\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016473,91,6400,2,15.178665518760681,4.469487816095352,10.706983506679535,0.0021941959857940674,e3e4ba25d1d5012116ee55b23e2f0f7bc49c291214ba74da6ebf8839deaebddb\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00065925,87,6400,0,14.070641249418259,4.592146724462509,9.476546198129654,0.001948326826095581,b475f62669ebdedfbe4db1f67689903a92c8a5e1aff5bb20150b87a6c11c4570\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00065925,87,6400,1,13.711191713809967,4.272490739822388,9.436741471290588,0.001959502696990967,b475f62669ebdedfbe4db1f67689903a92c8a5e1aff5bb20150b87a6c11c4570\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00065925,87,6400,2,13.671353459358215,4.1942112147808075,9.475048631429672,0.0020936131477355957,b475f62669ebdedfbe4db1f67689903a92c8a5e1aff5bb20150b87a6c11c4570\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00022297,9,6400,0,14.500819146633148,4.726249724626541,9.772654622793198,0.0019147992134094238,4ef136049210dc7c7084109b894fab688205c4bcb090dd4bac8f8a5f998840ef\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00022297,9,6400,1,14.939695596694946,4.988398402929306,9.948723018169403,0.0025741755962371826,4ef136049210dc7c7084109b894fab688205c4bcb090dd4bac8f8a5f998840ef\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00022297,9,6400,2,15.495393425226212,5.597379058599472,9.895119816064835,0.0028945505619049072,4ef136049210dc7c7084109b894fab688205c4bcb090dd4bac8f8a5f998840ef\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046881,125,6400,0,15.09752869606018,4.655659198760986,10.43955609202385,0.0023134052753448486,e715e5a8118b7477ec773da6e167552e211bc7422b745413c3e22715c87f3698\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046881,125,6400,1,14.855671674013138,4.399340599775314,10.454460978507996,0.0018700957298278809,e715e5a8118b7477ec773da6e167552e211bc7422b745413c3e22715c87f3698\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046881,125,6400,2,14.648623764514923,4.24334779381752,10.403305292129517,0.0019706785678863525,e715e5a8118b7477ec773da6e167552e211bc7422b745413c3e22715c87f3698\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00058515,110,6400,0,15.550576150417328,4.83538955450058,10.71251928806305,0.0026673078536987305,941b7d9cdcb027def7ce1955a52c93d1c70c87301454e82d7184e550d4263d0f\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00058515,110,6400,1,14.987144619226456,4.508033394813538,10.477200150489807,0.001911073923110962,941b7d9cdcb027def7ce1955a52c93d1c70c87301454e82d7184e550d4263d0f\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00058515,110,6400,2,14.934990555047989,4.304308444261551,10.628391057252884,0.002291053533554077,941b7d9cdcb027def7ce1955a52c93d1c70c87301454e82d7184e550d4263d0f\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078557,103,6400,0,14.802895486354828,4.316240549087524,10.48397645354271,0.002678483724594116,96b7c40fa5c1e7e43b8c866b7f48cf1add3312172d24aa34336e3db99e8bb869\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078557,103,6400,1,14.595437794923782,4.253797233104706,10.339539498090744,0.0021010637283325195,96b7c40fa5c1e7e43b8c866b7f48cf1add3312172d24aa34336e3db99e8bb869\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078557,103,6400,2,14.895211905241013,4.459261894226074,10.433517396450043,0.00243261456489563,96b7c40fa5c1e7e43b8c866b7f48cf1add3312172d24aa34336e3db99e8bb869\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00047135,89,6400,0,13.704296201467514,4.74938377737999,8.952822536230087,0.002089887857437134,22d7e9ab4ac5fa39efb0ed867a91b8f27bf5f043948901b8e8d38c9ba729c5cf\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00047135,89,6400,1,15.13557881116867,5.8226436376571655,9.309962391853333,0.0029727816581726074,22d7e9ab4ac5fa39efb0ed867a91b8f27bf5f043948901b8e8d38c9ba729c5cf\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00047135,89,6400,2,14.372073113918304,5.103729665279388,9.266022592782974,0.0023208558559417725,22d7e9ab4ac5fa39efb0ed867a91b8f27bf5f043948901b8e8d38c9ba729c5cf\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00038057,39,6400,0,20.632296800613403,4.555698484182358,16.07455313205719,0.002045184373855591,26b9192d3d4fd477a961eae591217dea20df075be5bb48854d2943dd869f858b\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00038057,39,6400,1,16.52761548757553,4.504308104515076,12.020915746688843,0.002391636371612549,26b9192d3d4fd477a961eae591217dea20df075be5bb48854d2943dd869f858b\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00038057,39,6400,2,16.488872468471527,4.84519824385643,11.641208082437515,0.002466142177581787,26b9192d3d4fd477a961eae591217dea20df075be5bb48854d2943dd869f858b\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00088023,36,6400,0,13.862773776054382,4.350893199443817,9.50990617275238,0.0019744038581848145,ab65e31190a1f25d50e1ac9856eff0ed66f8f58753711dedd8ab01686a9e9532\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00088023,36,6400,1,13.930734246969223,4.428207874298096,9.500183165073395,0.002343207597732544,ab65e31190a1f25d50e1ac9856eff0ed66f8f58753711dedd8ab01686a9e9532\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00088023,36,6400,2,14.219868928194046,4.5913346111774445,9.626638144254684,0.0018961727619171143,ab65e31190a1f25d50e1ac9856eff0ed66f8f58753711dedd8ab01686a9e9532\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048389,72,6400,0,14.397505670785904,4.59502637386322,9.799446910619736,0.003032386302947998,3dd1dc9c5dec2eb6c7511ba6b3e7f97766b1ecc5fbec6db50c5200c99af704b3\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048389,72,6400,1,14.508821070194244,4.732750356197357,9.773500263690948,0.0025704503059387207,3dd1dc9c5dec2eb6c7511ba6b3e7f97766b1ecc5fbec6db50c5200c99af704b3\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048389,72,6400,2,15.79597219824791,5.745239555835724,10.047439485788345,0.003293156623840332,3dd1dc9c5dec2eb6c7511ba6b3e7f97766b1ecc5fbec6db50c5200c99af704b3\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00063164,40,6400,0,26.752356439828873,4.867140203714371,21.88299223780632,0.0022239983081817627,093afecd78d4036bb3ee361f68d2b1f68484d63027251210ba2ab8f1e290b81a\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00063164,40,6400,1,27.06139162182808,4.90880012512207,22.15046063065529,0.002130866050720215,093afecd78d4036bb3ee361f68d2b1f68484d63027251210ba2ab8f1e290b81a\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00063164,40,6400,2,28.391655534505844,5.333013832569122,23.05588871240616,0.0027529895305633545,093afecd78d4036bb3ee361f68d2b1f68484d63027251210ba2ab8f1e290b81a\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00074921,26,6400,0,14.02093842625618,4.3524205684661865,9.666558355093002,0.001959502696990967,884c158833521479bffe28ee105f82261affc851aafd93bdf690c4ed8968c61a\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00074921,26,6400,1,13.875406235456467,4.281915724277496,9.591486304998398,0.0020042061805725098,884c158833521479bffe28ee105f82261affc851aafd93bdf690c4ed8968c61a\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00074921,26,6400,2,14.427535235881805,4.719618707895279,9.705789387226105,0.002127140760421753,884c158833521479bffe28ee105f82261affc851aafd93bdf690c4ed8968c61a\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016991,7,6400,0,14.263570308685303,4.385743290185928,9.875703603029251,0.002123415470123291,afd93f29dca8652e5f93dbb2569aafab9e0df44c74e8c0b6cf998adae2530920\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016991,7,6400,1,14.416053891181946,4.482202231884003,9.93090495467186,0.002946704626083374,afd93f29dca8652e5f93dbb2569aafab9e0df44c74e8c0b6cf998adae2530920\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016991,7,6400,2,14.303795993328094,4.428446292877197,9.873129427433014,0.0022202730178833008,afd93f29dca8652e5f93dbb2569aafab9e0df44c74e8c0b6cf998adae2530920\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046730,61,6400,0,15.388350933790207,4.857085645198822,10.52921637892723,0.0020489096641540527,5a946f5ce4637385cbf494e8d18a2e970601c9a5e3d920aa12b398ee8c727cf7\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046730,61,6400,1,14.981281012296677,4.504293203353882,10.475043207406998,0.0019446015357971191,5a946f5ce4637385cbf494e8d18a2e970601c9a5e3d920aa12b398ee8c727cf7\nopq64_ivf64,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046730,61,6400,2,14.857422560453415,4.3745264410972595,10.480981320142746,0.0019147992134094238,5a946f5ce4637385cbf494e8d18a2e970601c9a5e3d920aa12b398ee8c727cf7\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00070628,100,6400,0,14.91478830575943,4.820629954338074,10.092005133628845,0.0021532177925109863,3afeb4ee3d3f15c2586b019ee3dc0da14d14464608fae19bb5a8a0f0a73c7584\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00070628,100,6400,1,14.863535761833191,4.698142409324646,10.163228958845139,0.002164393663406372,3afeb4ee3d3f15c2586b019ee3dc0da14d14464608fae19bb5a8a0f0a73c7584\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00070628,100,6400,2,15.037257224321365,4.891235381364822,10.144013911485672,0.0020079314708709717,3afeb4ee3d3f15c2586b019ee3dc0da14d14464608fae19bb5a8a0f0a73c7584\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00039730,90,6400,0,15.953827649354935,4.923291504383087,11.027824133634567,0.0027120113372802734,247e3217afb10fa11ab6dc5494c768304ad391a1bf2c1e0c9bb2cdbf2cb80428\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00039730,90,6400,1,17.120428383350372,5.4811276495456696,11.636283248662949,0.0030174851417541504,247e3217afb10fa11ab6dc5494c768304ad391a1bf2c1e0c9bb2cdbf2cb80428\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00039730,90,6400,2,16.663435846567154,5.355823785066605,11.305034160614014,0.0025779008865356445,247e3217afb10fa11ab6dc5494c768304ad391a1bf2c1e0c9bb2cdbf2cb80428\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00010602,97,6400,0,14.191392809152603,4.425287246704102,9.763911366462708,0.0021941959857940674,d20ff69f22bc4fd214e1c0615f765e2592e8f845da8813f4d4049956044c0317\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00010602,97,6400,1,14.16369155049324,4.358671605587006,9.802956134080887,0.0020638108253479004,d20ff69f22bc4fd214e1c0615f765e2592e8f845da8813f4d4049956044c0317\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00010602,97,6400,2,13.996317982673645,4.243385046720505,9.750764816999435,0.002168118953704834,d20ff69f22bc4fd214e1c0615f765e2592e8f845da8813f4d4049956044c0317\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00091479,115,6400,0,14.367938041687012,4.4910721480846405,9.874958544969559,0.0019073486328125,132b6d0d368e05cf4613972596052dcaed8c6d14eb5d4a712cfdec941898bd13\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00091479,115,6400,1,14.312759041786194,4.342969506978989,9.968020021915436,0.0017695128917694092,132b6d0d368e05cf4613972596052dcaed8c6d14eb5d4a712cfdec941898bd13\nopq64_ivf64,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00091479,115,6400,2,14.175541698932648,4.2305029928684235,9.943157434463501,0.0018812716007232666,132b6d0d368e05cf4613972596052dcaed8c6d14eb5d4a712cfdec941898bd13\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00019898,30,6400,0,36.24100238084793,5.028765648603439,31.20974451303482,0.0024922192096710205,d274bce0471895dd665b5da3f2f95403b53bae14b424221c3eb53d1f52157d7e\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00019898,30,6400,1,36.219026893377304,4.884827882051468,31.33165091276169,0.0025480985641479492,d274bce0471895dd665b5da3f2f95403b53bae14b424221c3eb53d1f52157d7e\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00019898,30,6400,2,36.910250782966614,5.029719322919846,31.878098845481873,0.00243261456489563,d274bce0471895dd665b5da3f2f95403b53bae14b424221c3eb53d1f52157d7e\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00058515,110,6400,0,35.462405532598495,4.953227937221527,30.506696552038193,0.0024810433387756348,1f32f78c5a21ea9880987aec63a6acc0771a530b5b025f1d48ff6332bf94a23a\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00058515,110,6400,1,39.360564202070236,5.159929394721985,34.197285771369934,0.0033490359783172607,1f32f78c5a21ea9880987aec63a6acc0771a530b5b025f1d48ff6332bf94a23a\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00058515,110,6400,2,37.32723742723465,4.924457520246506,32.40003436803818,0.0027455389499664307,1f32f78c5a21ea9880987aec63a6acc0771a530b5b025f1d48ff6332bf94a23a\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00035975,64,6400,0,36.29055991768837,5.088143050670624,31.20030090212822,0.002115964889526367,ffde4bfe17c994e8f6f25c73df8aa07c9e5b16633fc77da35dc98671f4321d9c\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00035975,64,6400,1,36.157697439193726,4.9418918788433075,31.213555485010147,0.002250075340270996,ffde4bfe17c994e8f6f25c73df8aa07c9e5b16633fc77da35dc98671f4321d9c\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00035975,64,6400,2,36.043185740709305,4.870213568210602,31.171012669801712,0.001959502696990967,ffde4bfe17c994e8f6f25c73df8aa07c9e5b16633fc77da35dc98671f4321d9c\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00088023,36,6400,0,34.159135073423386,4.912681877613068,29.244553297758102,0.0018998980522155762,edd86c867f91518f7bcdfde8df2920964d4dc2c3083714447366c5294d3413e4\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00088023,36,6400,1,34.135352820158005,4.899658262729645,29.233213514089584,0.0024810433387756348,edd86c867f91518f7bcdfde8df2920964d4dc2c3083714447366c5294d3413e4\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00088023,36,6400,2,34.22814607620239,4.948798567056656,29.277030378580093,0.0023171305656433105,edd86c867f91518f7bcdfde8df2920964d4dc2c3083714447366c5294d3413e4\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046730,61,6400,0,37.25580871105194,4.940368235111237,32.31220692396164,0.0032335519790649414,982d3db23cb39ff890a44ca1be49557f395a140ca11eddbde0c3861312464eb5\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046730,61,6400,1,38.98988291621208,6.463456898927689,32.52343088388443,0.002995133399963379,982d3db23cb39ff890a44ca1be49557f395a140ca11eddbde0c3861312464eb5\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046730,61,6400,2,36.72366589307785,4.922639578580856,31.798910349607468,0.002115964889526367,982d3db23cb39ff890a44ca1be49557f395a140ca11eddbde0c3861312464eb5\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062785,4,6400,0,36.678217351436615,4.924315959215164,31.751684844493866,0.002216547727584839,56dd1e84dbff3338b1639cbe898b49c85f02b706536af35e01e85246da5f6b3e\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062785,4,6400,1,37.09683194756508,6.23934343457222,30.8547206223011,0.002767890691757202,56dd1e84dbff3338b1639cbe898b49c85f02b706536af35e01e85246da5f6b3e\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062785,4,6400,2,35.960156470537186,4.902414977550507,31.055647879838943,0.0020936131477355957,56dd1e84dbff3338b1639cbe898b49c85f02b706536af35e01e85246da5f6b3e\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00063164,40,6400,0,39.51229900121689,6.528913974761963,32.980259507894516,0.003125518560409546,0dd3d1d520b0e4e4a1331ad6ea77dbbe1248b9d26cd2612b92f0d2b6bfaf0020\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00063164,40,6400,1,39.23371806740761,6.5420083701610565,32.68897160887718,0.002738088369369507,0dd3d1d520b0e4e4a1331ad6ea77dbbe1248b9d26cd2612b92f0d2b6bfaf0020\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00063164,40,6400,2,40.90515524148941,6.143227219581604,34.75874289870262,0.0031851232051849365,0dd3d1d520b0e4e4a1331ad6ea77dbbe1248b9d26cd2612b92f0d2b6bfaf0020\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00038057,39,6400,0,49.38710853457451,7.451746612787247,41.92952439188957,0.005837529897689819,b677824869cde13373d3d048b88984dcccaca08ce6aff66dfcb37166c41d08de\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00038057,39,6400,1,50.68415030837059,8.294615894556046,42.38542541861534,0.004108995199203491,b677824869cde13373d3d048b88984dcccaca08ce6aff66dfcb37166c41d08de\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00038057,39,6400,2,49.99561235308647,8.918054401874542,41.07120260596275,0.006355345249176025,b677824869cde13373d3d048b88984dcccaca08ce6aff66dfcb37166c41d08de\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00068009,82,6400,0,36.628808826208115,5.000732839107513,31.625468283891678,0.00260770320892334,3fa4b5fe3bfb45adbf74ad3f0ce32e6a8ea39f50fa8a215c9745361480572054\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00068009,82,6400,1,36.82912141084671,4.996545612812042,31.829893589019775,0.002682209014892578,3fa4b5fe3bfb45adbf74ad3f0ce32e6a8ea39f50fa8a215c9745361480572054\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00068009,82,6400,2,37.2384712100029,5.734514445066452,31.501062214374542,0.0028945505619049072,3fa4b5fe3bfb45adbf74ad3f0ce32e6a8ea39f50fa8a215c9745361480572054\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046881,125,6400,0,36.806996911764145,4.9908943474292755,31.81329369544983,0.002808868885040283,b51bd1071c1c0101556595484c9e0477b8b156bc04560f7ed2a119116c9d1a22\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046881,125,6400,1,38.24913501739502,6.595149636268616,31.650904566049576,0.003080815076828003,b51bd1071c1c0101556595484c9e0477b8b156bc04560f7ed2a119116c9d1a22\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046881,125,6400,2,37.34305128455162,5.762781947851181,31.578078866004944,0.0021904706954956055,b51bd1071c1c0101556595484c9e0477b8b156bc04560f7ed2a119116c9d1a22\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048392,3,6400,0,36.69748455286026,5.3011104464530945,31.393714249134064,0.0026598572731018066,945629211621565e4dc68374dab167615fab48c08bf06b367a4e51238c14de98\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048392,3,6400,1,47.364551573991776,9.91763174533844,37.4385230243206,0.008396804332733154,945629211621565e4dc68374dab167615fab48c08bf06b367a4e51238c14de98\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048392,3,6400,2,36.61731258034706,5.485966801643372,31.128346920013428,0.002998858690261841,945629211621565e4dc68374dab167615fab48c08bf06b367a4e51238c14de98\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00010602,97,6400,0,35.06854549050331,5.198106169700623,29.86782416701317,0.0026151537895202637,5afb1755b8a56052023b5a540fb4a60e485f611ed952dd057d6c0eadaa9a32ba\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00010602,97,6400,1,34.96342897415161,5.089323967695236,29.871635138988495,0.002469867467880249,5afb1755b8a56052023b5a540fb4a60e485f611ed952dd057d6c0eadaa9a32ba\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00010602,97,6400,2,35.71736812591553,5.8625563979148865,29.85236793756485,0.0024437904357910156,5afb1755b8a56052023b5a540fb4a60e485f611ed952dd057d6c0eadaa9a32ba\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00022297,9,6400,0,36.31601855158806,5.046617239713669,31.26680478453636,0.002596527338027954,cd8db261aceb2170fd10b70a70ee621973c749e15a9154a1b3e2fe88a1c697e8\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00022297,9,6400,1,36.595508456230164,5.109433084726334,31.483490020036697,0.0025853514671325684,cd8db261aceb2170fd10b70a70ee621973c749e15a9154a1b3e2fe88a1c697e8\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00022297,9,6400,2,37.03216090798378,5.694165825843811,31.33503720164299,0.0029578804969787598,cd8db261aceb2170fd10b70a70ee621973c749e15a9154a1b3e2fe88a1c697e8\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016991,7,6400,0,36.658696830272675,4.968613386154175,31.687453389167786,0.0026300549507141113,c40bade044704cdaa30261f4a0b044204f9f9ffc1bdd7d796854c9f00c63775d\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016991,7,6400,1,37.06977143883705,5.339622497558594,31.72735497355461,0.0027939677238464355,c40bade044704cdaa30261f4a0b044204f9f9ffc1bdd7d796854c9f00c63775d\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016991,7,6400,2,38.237884640693665,5.888804793357849,32.346732914447784,0.002346932888031006,c40bade044704cdaa30261f4a0b044204f9f9ffc1bdd7d796854c9f00c63775d\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00070628,100,6400,0,36.38172522187233,4.672776907682419,31.70681744813919,0.002130866050720215,6fd6ca7a9b2b33784800ad51a75f503af875aee4df6299a564178236a887fc95\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00070628,100,6400,1,36.44430637359619,4.652779549360275,31.789228320121765,0.002298504114151001,6fd6ca7a9b2b33784800ad51a75f503af875aee4df6299a564178236a887fc95\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00070628,100,6400,2,36.34973242878914,4.625760018825531,31.721830368041992,0.0021420419216156006,6fd6ca7a9b2b33784800ad51a75f503af875aee4df6299a564178236a887fc95\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00018100,62,6400,0,37.92295604944229,7.685285061597824,30.233845114707947,0.0038258731365203857,6285edcf0e43a9a8484ea46a04ebca6f727986b1e9b19fc81f4512bf70be4a2c\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00018100,62,6400,1,37.87830099463463,4.976775497198105,32.899320125579834,0.002205371856689453,6285edcf0e43a9a8484ea46a04ebca6f727986b1e9b19fc81f4512bf70be4a2c\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00018100,62,6400,2,35.25512292981148,5.014289170503616,30.238237231969833,0.002596527338027954,6285edcf0e43a9a8484ea46a04ebca6f727986b1e9b19fc81f4512bf70be4a2c\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00039730,90,6400,0,35.445570945739746,4.671663045883179,30.771996825933456,0.001911073923110962,b0ffe1bf30038fc0cb639cea0133f244248d4421a92822e3a1bdd5b55d943245\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00039730,90,6400,1,37.3801663517952,6.2093958258628845,31.168192625045776,0.0025779008865356445,b0ffe1bf30038fc0cb639cea0133f244248d4421a92822e3a1bdd5b55d943245\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00039730,90,6400,2,36.1504964530468,4.958726465702057,31.188931316137314,0.0028386712074279785,b0ffe1bf30038fc0cb639cea0133f244248d4421a92822e3a1bdd5b55d943245\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00030348,10,6400,0,36.35915368795395,4.73824143409729,31.618673354387283,0.0022388994693756104,30c88fde3811f1888b9dc1aecd96d0cf953ed20ad8d55774e6114705af0e0b3a\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00030348,10,6400,1,36.22506931424141,4.609808325767517,31.612902879714966,0.0023581087589263916,30c88fde3811f1888b9dc1aecd96d0cf953ed20ad8d55774e6114705af0e0b3a\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00030348,10,6400,2,36.62698715925217,4.750438034534454,31.874481588602066,0.0020675361156463623,30c88fde3811f1888b9dc1aecd96d0cf953ed20ad8d55774e6114705af0e0b3a\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00024323,94,6400,0,37.694402039051056,5.777634680271149,31.914573162794113,0.0021941959857940674,c55176a98e14dc93081e63eaffceea8c354ec5d035ef899d367d5c57b77ab31a\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00024323,94,6400,1,36.62307560443878,4.834257066249847,31.786665320396423,0.0021532177925109863,c55176a98e14dc93081e63eaffceea8c354ec5d035ef899d367d5c57b77ab31a\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00024323,94,6400,2,36.84455156326294,4.848714917898178,31.993873417377472,0.0019632279872894287,c55176a98e14dc93081e63eaffceea8c354ec5d035ef899d367d5c57b77ab31a\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00003283,18,6400,0,35.91131791472435,5.450770258903503,30.457884073257446,0.0026635825634002686,849b79fc33adfcd66fdc73c7a832fe8a5ac1f6422efc8775dc6a43a30f89a800\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00003283,18,6400,1,36.159977316856384,4.962392151355743,31.19465336203575,0.0029318034648895264,849b79fc33adfcd66fdc73c7a832fe8a5ac1f6422efc8775dc6a43a30f89a800\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00003283,18,6400,2,35.23080796003342,4.758693277835846,30.46969324350357,0.002421438694000244,849b79fc33adfcd66fdc73c7a832fe8a5ac1f6422efc8775dc6a43a30f89a800\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00075671,73,6400,0,34.967388957738876,4.646368324756622,30.318502336740494,0.002518296241760254,a440b91124e7123fcec7e4ace51fd2ca5a36ef25312c4b9e80ae268a410fed29\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00075671,73,6400,1,34.98902544379234,4.557572305202484,30.429024249315262,0.002428889274597168,a440b91124e7123fcec7e4ace51fd2ca5a36ef25312c4b9e80ae268a410fed29\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00075671,73,6400,2,35.0535474717617,4.582501947879791,30.46865016222,0.0023953616619110107,a440b91124e7123fcec7e4ace51fd2ca5a36ef25312c4b9e80ae268a410fed29\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062191,23,6400,0,34.9201001226902,4.629641771316528,30.288387089967728,0.0020712614059448242,2e69c56a3b004c1a29f4794555bfa8b78258ddb9e2d4b20f2ed4502b871f54b8\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062191,23,6400,1,35.25376692414284,4.836317151784897,30.415374785661697,0.002074986696243286,2e69c56a3b004c1a29f4794555bfa8b78258ddb9e2d4b20f2ed4502b871f54b8\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062191,23,6400,2,34.831177443265915,4.5622363686561584,30.2666574716568,0.0022836029529571533,2e69c56a3b004c1a29f4794555bfa8b78258ddb9e2d4b20f2ed4502b871f54b8\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00091479,115,6400,0,36.34238243103027,4.817213863134384,31.522806733846664,0.0023618340492248535,88d27c2597af248af78f8d1e832c1bfd20fbc9112747ef0519f13675d5ce18d4\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00091479,115,6400,1,35.907890647649765,4.745803773403168,31.160254031419754,0.0018328428268432617,88d27c2597af248af78f8d1e832c1bfd20fbc9112747ef0519f13675d5ce18d4\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00091479,115,6400,2,35.75969114899635,4.670377820730209,31.08731284737587,0.002000480890274048,88d27c2597af248af78f8d1e832c1bfd20fbc9112747ef0519f13675d5ce18d4\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00047135,89,6400,0,34.94374081492424,5.210760980844498,29.730793088674545,0.0021867454051971436,e25dc48bb180df0753690f9a9211a3ccc830385e6d1e4bac93dbd53ee455e95e\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00047135,89,6400,1,35.334087908267975,4.889845848083496,30.441436916589737,0.0028051435947418213,e25dc48bb180df0753690f9a9211a3ccc830385e6d1e4bac93dbd53ee455e95e\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00047135,89,6400,2,34.43216532468796,4.759006202220917,29.670927673578262,0.0022314488887786865,e25dc48bb180df0753690f9a9211a3ccc830385e6d1e4bac93dbd53ee455e95e\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00074921,26,6400,0,36.33948042988777,6.861560046672821,29.475435614585876,0.0024847686290740967,ea0b197f4aa5a927d46dfe32c1cf8bf1dc5cb70f08d154b6cabad4cc93f3a7e1\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00074921,26,6400,1,41.29248857498169,4.882067441940308,36.407798528671265,0.0026226043701171875,ea0b197f4aa5a927d46dfe32c1cf8bf1dc5cb70f08d154b6cabad4cc93f3a7e1\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00074921,26,6400,2,36.52344271540642,5.107071250677109,31.413231045007706,0.0031404197216033936,ea0b197f4aa5a927d46dfe32c1cf8bf1dc5cb70f08d154b6cabad4cc93f3a7e1\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016473,91,6400,0,37.83440589904785,5.0042420625686646,32.82758966088295,0.0025741755962371826,32bae27b642788759a7103f4db4d559f8b66e5512babf9c5fec6694a756ebc26\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016473,91,6400,1,37.517089396715164,4.9190036952495575,32.59473666548729,0.0033490359783172607,32bae27b642788759a7103f4db4d559f8b66e5512babf9c5fec6694a756ebc26\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016473,91,6400,2,37.430863827466965,4.894401878118515,32.53381326794624,0.002648681402206421,32bae27b642788759a7103f4db4d559f8b66e5512babf9c5fec6694a756ebc26\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078557,103,6400,0,36.6223081946373,4.878625273704529,31.74116089940071,0.002522021532058716,6f0c92c5ed78659c7dbdaa92f1c5d504bdbb8f8497a7efa5f0b5c5f0f1bc88b4\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078557,103,6400,1,36.64629906415939,4.942979663610458,31.700406223535538,0.002913177013397217,6f0c92c5ed78659c7dbdaa92f1c5d504bdbb8f8497a7efa5f0b5c5f0f1bc88b4\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078557,103,6400,2,37.668805569410324,4.980787634849548,32.685235142707825,0.00278279185295105,6f0c92c5ed78659c7dbdaa92f1c5d504bdbb8f8497a7efa5f0b5c5f0f1bc88b4\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00065925,87,6400,0,35.188138484954834,4.791587591171265,30.39385750889778,0.002693384885787964,d1c0fa10ab9fc56a46c4e49d98bcf57187919bc15d64b73eca1d94655b313f5c\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00065925,87,6400,1,35.28044745326042,4.816267639398575,30.461885035037994,0.002294778823852539,d1c0fa10ab9fc56a46c4e49d98bcf57187919bc15d64b73eca1d94655b313f5c\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00065925,87,6400,2,35.09144112467766,4.701539874076843,30.387360602617264,0.0025406479835510254,d1c0fa10ab9fc56a46c4e49d98bcf57187919bc15d64b73eca1d94655b313f5c\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00006392,124,6400,0,37.75753080844879,4.777699708938599,32.97761082649231,0.0022202730178833008,dbd5481f3392fc20671e98ea043f19aad80b497c5a2fa3e57b0f06210a2747e4\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00006392,124,6400,1,36.844830960035324,4.817530512809753,32.025035470724106,0.0022649765014648438,dbd5481f3392fc20671e98ea043f19aad80b497c5a2fa3e57b0f06210a2747e4\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00006392,124,6400,2,36.776989698410034,4.725556820631027,32.0490300655365,0.0024028122425079346,dbd5481f3392fc20671e98ea043f19aad80b497c5a2fa3e57b0f06210a2747e4\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078114,50,6400,0,35.899173468351364,4.638403654098511,31.258709728717804,0.0020600855350494385,6e8fbaaece40fdbd09707d762867c35d72b54ce8f84d3fb854f26cbf1f7cbc48\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078114,50,6400,1,39.51900452375412,4.865285009145737,34.65065360069275,0.0030659139156341553,6e8fbaaece40fdbd09707d762867c35d72b54ce8f84d3fb854f26cbf1f7cbc48\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078114,50,6400,2,39.17033225297928,5.446255207061768,33.721163868904114,0.002913177013397217,6e8fbaaece40fdbd09707d762867c35d72b54ce8f84d3fb854f26cbf1f7cbc48\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00031120,21,6400,0,35.53985059261322,4.735317081212997,30.802540481090546,0.001993030309677124,860d195b9fc6bc44e2b0fd1a91cd96ee43af0702b9c31f343b86714ac2b2872b\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00031120,21,6400,1,35.748083144426346,4.844330251216888,30.901771038770676,0.0019818544387817383,860d195b9fc6bc44e2b0fd1a91cd96ee43af0702b9c31f343b86714ac2b2872b\nopq64_ivf256,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00031120,21,6400,2,35.82689166069031,4.8406049609184265,30.98425641655922,0.002030283212661743,860d195b9fc6bc44e2b0fd1a91cd96ee43af0702b9c31f343b86714ac2b2872b\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048389,72,6400,0,35.0964181125164,4.868689924478531,30.22526204586029,0.002466142177581787,0c568087ca77e3b666b3a181e4f21aa89398859e4435339c4a76560353b9ffa9\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048389,72,6400,1,36.58603131771088,5.962371826171875,30.620109289884567,0.003550201654434204,0c568087ca77e3b666b3a181e4f21aa89398859e4435339c4a76560353b9ffa9\nopq64_ivf256,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048389,72,6400,2,36.7278978228569,5.031563341617584,31.6937156021595,0.0026188790798187256,0c568087ca77e3b666b3a181e4f21aa89398859e4435339c4a76560353b9ffa9\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00019898,30,3200,0,136.6555243730545,3.0323192477226257,133.61920043826103,0.004004687070846558,7116350c9a20e1d74ead71e9b08cc8d23d1f9c02651d1136da06e36c9e9bbdda\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00019898,30,3200,1,152.467492967844,3.264501690864563,149.19836074113846,0.004630535840988159,7116350c9a20e1d74ead71e9b08cc8d23d1f9c02651d1136da06e36c9e9bbdda\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00019898,30,3200,2,174.12298545241356,3.080129623413086,171.0391454398632,0.0037103891372680664,7116350c9a20e1d74ead71e9b08cc8d23d1f9c02651d1136da06e36c9e9bbdda\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00058515,110,3200,0,133.2414299249649,2.636916935443878,130.60207664966583,0.002436339855194092,fd7ae4e70874f58194d8a93f0f902f393d42b23ec2b6d8ec9d365f83338662e0\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00058515,110,3200,1,159.1755896806717,2.7106739580631256,156.46082907915115,0.00408664345741272,fd7ae4e70874f58194d8a93f0f902f393d42b23ec2b6d8ec9d365f83338662e0\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00058515,110,3200,2,152.01766416430473,2.7099773287773132,149.30512011051178,0.002566725015640259,fd7ae4e70874f58194d8a93f0f902f393d42b23ec2b6d8ec9d365f83338662e0\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00035975,64,3200,0,135.43590903282166,2.7031227946281433,132.73047283291817,0.0023134052753448486,14b32c44d4274d9730cd42ea8395fcf3970a6d99bf59729cde2a4a74e0013bee\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00035975,64,3200,1,149.36290681362152,2.6838593184947968,146.67632058262825,0.002726912498474121,14b32c44d4274d9730cd42ea8395fcf3970a6d99bf59729cde2a4a74e0013bee\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00035975,64,3200,2,135.52440702915192,2.747219055891037,132.77147710323334,0.005710870027542114,14b32c44d4274d9730cd42ea8395fcf3970a6d99bf59729cde2a4a74e0013bee\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00088023,36,3200,0,147.62639999389648,2.746209502220154,144.87744495272636,0.0027455389499664307,71f853b92fdd74b32d4d856909973eb78d788dfbcebebb1f3730a2e6025ed39c\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00088023,36,3200,1,135.3636458516121,2.7009807527065277,132.6606571674347,0.0020079314708709717,71f853b92fdd74b32d4d856909973eb78d788dfbcebebb1f3730a2e6025ed39c\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00088023,36,3200,2,135.39356365799904,2.7000047266483307,132.69120082259178,0.0023581087589263916,71f853b92fdd74b32d4d856909973eb78d788dfbcebebb1f3730a2e6025ed39c\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046730,61,3200,0,132.9086869955063,2.6407502591609955,130.2652694284916,0.0026673078536987305,36b226249ea607bfb90e6968628dc013d144caf0d01ea2076dd86d94c8c3cf10\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046730,61,3200,1,132.96976685523987,2.607952803373337,130.35936653614044,0.0024475157260894775,36b226249ea607bfb90e6968628dc013d144caf0d01ea2076dd86d94c8c3cf10\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046730,61,3200,2,133.07740539312363,2.648528665304184,130.42674586176872,0.002130866050720215,36b226249ea607bfb90e6968628dc013d144caf0d01ea2076dd86d94c8c3cf10\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062785,4,3200,0,134.10399109125137,2.639424055814743,131.45626336336136,0.008303672075271606,faf22f010eed851b54f8106b9bee59579f40b1b399d16ffed7e85ec8aba05ab5\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062785,4,3200,1,133.0437920987606,2.6112310588359833,130.42977079749107,0.0027902424335479736,faf22f010eed851b54f8106b9bee59579f40b1b399d16ffed7e85ec8aba05ab5\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062785,4,3200,2,133.02389532327652,2.5884658098220825,130.43278828263283,0.002641230821609497,faf22f010eed851b54f8106b9bee59579f40b1b399d16ffed7e85ec8aba05ab5\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00063164,40,3200,0,133.13265517354012,2.67636775970459,130.4534338414669,0.002853572368621826,769394f7c7c5484f57130925e7b94bdd618a80c20894da521a226ef6ff34adf7\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00063164,40,3200,1,133.07011872529984,2.6621557772159576,130.4057203233242,0.0022426247596740723,769394f7c7c5484f57130925e7b94bdd618a80c20894da521a226ef6ff34adf7\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00063164,40,3200,2,133.12549516558647,2.6370733976364136,130.48595562577248,0.002466142177581787,769394f7c7c5484f57130925e7b94bdd618a80c20894da521a226ef6ff34adf7\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00038057,39,3200,0,150.72735399007797,4.943486303091049,145.77971771359444,0.004149973392486572,63d86247091d1f0aefe6233e889a9776bd9b136e7a9220625feebf03d4a82ae5\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00038057,39,3200,1,161.09925881028175,4.966318607330322,156.1303548514843,0.0025853514671325684,63d86247091d1f0aefe6233e889a9776bd9b136e7a9220625feebf03d4a82ae5\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00038057,39,3200,2,163.01755607128143,5.046874284744263,157.96637162566185,0.004310160875320435,63d86247091d1f0aefe6233e889a9776bd9b136e7a9220625feebf03d4a82ae5\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00068009,82,3200,0,134.0409703552723,2.6890113949775696,131.3498690724373,0.002089887857437134,f40e9849538f95b0a68ca615d6e828fb1585a3be7c5f631b9cd0fb4ded6a67cc\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00068009,82,3200,1,133.35271552205086,2.695750445127487,130.65487518906593,0.002089887857437134,f40e9849538f95b0a68ca615d6e828fb1585a3be7c5f631b9cd0fb4ded6a67cc\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00068009,82,3200,2,133.16791877150536,2.573564648628235,130.59207424521446,0.0022798776626586914,f40e9849538f95b0a68ca615d6e828fb1585a3be7c5f631b9cd0fb4ded6a67cc\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046881,125,3200,0,133.3570033311844,2.6904605329036713,130.66400960087776,0.0025331974029541016,b2a30a22ed235c3313cca723910fd82ebe4d5c70cbe6e2b6d308133989af675d\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046881,125,3200,1,134.1666802763939,2.5787241756916046,131.58569857478142,0.00225752592086792,b2a30a22ed235c3313cca723910fd82ebe4d5c70cbe6e2b6d308133989af675d\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00046881,125,3200,2,133.23282822966576,2.577032893896103,130.65340742468834,0.002387911081314087,b2a30a22ed235c3313cca723910fd82ebe4d5c70cbe6e2b6d308133989af675d\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048392,3,3200,0,133.40838998556137,2.692215144634247,130.71365281939507,0.002522021532058716,701879a79987a1787632f3da5ec8d507bdbc8a9aee347be75727c3ca3ebbecdd\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048392,3,3200,1,133.4545984864235,2.7108192443847656,130.74129074811935,0.0024884939193725586,701879a79987a1787632f3da5ec8d507bdbc8a9aee347be75727c3ca3ebbecdd\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048392,3,3200,2,133.2906149327755,2.7295053005218506,130.55843859910965,0.0026710331439971924,701879a79987a1787632f3da5ec8d507bdbc8a9aee347be75727c3ca3ebbecdd\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00010602,97,3200,0,135.92591509222984,2.6628710329532623,133.26072320342064,0.0023208558559417725,242974765ab9c6385fb993dc1345f1081a4192e513c58c428bfcda405d73ebc1\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00010602,97,3200,1,136.5438476204872,3.559023141860962,132.9822950065136,0.0025294721126556396,242974765ab9c6385fb993dc1345f1081a4192e513c58c428bfcda405d73ebc1\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00010602,97,3200,2,135.82901284098625,2.785932272672653,133.04078206419945,0.002298504114151001,242974765ab9c6385fb993dc1345f1081a4192e513c58c428bfcda405d73ebc1\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00022297,9,3200,0,133.64038988947868,2.68545001745224,130.9528686106205,0.0020712614059448242,04f5e38227ebea514054bd4d6a2b7727907e7643d742616711a0e64cbaabbd98\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00022297,9,3200,1,133.1671141088009,2.709686756134033,130.45526668429375,0.00216066837310791,04f5e38227ebea514054bd4d6a2b7727907e7643d742616711a0e64cbaabbd98\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00022297,9,3200,2,133.14439728856087,2.6907920837402344,130.4512955248356,0.0023096799850463867,04f5e38227ebea514054bd4d6a2b7727907e7643d742616711a0e64cbaabbd98\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016991,7,3200,0,133.1743225455284,2.5736093521118164,130.59840351343155,0.0023096799850463867,e5f40fbedd93f7eb0b1f41cdac80ce64a0ee549144ffd97a09adff3802590258\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016991,7,3200,1,135.8180269598961,2.7092956006526947,133.10649245977402,0.0022388994693756104,e5f40fbedd93f7eb0b1f41cdac80ce64a0ee549144ffd97a09adff3802590258\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016991,7,3200,2,134.6754916012287,2.7213282883167267,131.95204734802246,0.002115964889526367,e5f40fbedd93f7eb0b1f41cdac80ce64a0ee549144ffd97a09adff3802590258\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00070628,100,3200,0,134.53730568289757,2.654667943716049,131.88040256500244,0.0022351741790771484,ef376474d958ec910454c0476c72575ae3157cb1244b2284628b91fde32df87d\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00070628,100,3200,1,134.89892706274986,2.764146775007248,132.13258609175682,0.0021941959857940674,ef376474d958ec910454c0476c72575ae3157cb1244b2284628b91fde32df87d\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00070628,100,3200,2,134.1349445283413,2.751186490058899,131.381593644619,0.002164393663406372,ef376474d958ec910454c0476c72575ae3157cb1244b2284628b91fde32df87d\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00018100,62,3200,0,133.24490562081337,2.5535710155963898,130.6886114180088,0.002723187208175659,8ebe52e6ae1c89a38b41de82433981a517dd6a559db71056e3190d9d186ab04e\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00018100,62,3200,1,133.26392695307732,2.650424838066101,130.61104714870453,0.0024549663066864014,8ebe52e6ae1c89a38b41de82433981a517dd6a559db71056e3190d9d186ab04e\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00018100,62,3200,2,133.30277800559998,2.637770026922226,130.6619681417942,0.003039836883544922,8ebe52e6ae1c89a38b41de82433981a517dd6a559db71056e3190d9d186ab04e\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00039730,90,3200,0,135.2097950875759,2.6836879551410675,132.52346217632294,0.002644956111907959,8de5c894b54b73e982bb82e02ad0ee8faf9a5124a97060e7d9b63902c4cab759\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00039730,90,3200,1,135.31532511115074,2.706620842218399,132.60619342327118,0.00251084566116333,8de5c894b54b73e982bb82e02ad0ee8faf9a5124a97060e7d9b63902c4cab759\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00039730,90,3200,2,134.44862887263298,2.712428569793701,131.73388689756393,0.0023134052753448486,8de5c894b54b73e982bb82e02ad0ee8faf9a5124a97060e7d9b63902c4cab759\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00030348,10,3200,0,134.6469633281231,2.6744306087493896,131.9701001048088,0.00243261456489563,823f5a1541c8b7166dcdc8d4f53db91c8610877ddc419d84b4cd33778624a9cc\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00030348,10,3200,1,133.64436477422714,2.7049854397773743,130.93678653240204,0.002592802047729492,823f5a1541c8b7166dcdc8d4f53db91c8610877ddc419d84b4cd33778624a9cc\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00030348,10,3200,2,135.85911318659782,2.7388036251068115,133.11779499053955,0.002514570951461792,823f5a1541c8b7166dcdc8d4f53db91c8610877ddc419d84b4cd33778624a9cc\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00024323,94,3200,0,134.41812992095947,2.6654377579689026,131.75038620829582,0.002305954694747925,faf64e09528af7dc4010065538463b29be6b0d977c9193ca77a80ec6e7a6d09a\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00024323,94,3200,1,134.90373641252518,2.6979930698871613,132.20350071787834,0.0022426247596740723,faf64e09528af7dc4010065538463b29be6b0d977c9193ca77a80ec6e7a6d09a\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00024323,94,3200,2,153.66296470165253,5.947418510913849,147.70979434251785,0.005751848220825195,faf64e09528af7dc4010065538463b29be6b0d977c9193ca77a80ec6e7a6d09a\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00003283,18,3200,0,136.05349138379097,3.242362290620804,132.80845433473587,0.0026747584342956543,b876dd1e11b2730f185645854ed000f447233ce8eadd1fb2b17449598c770c50\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00003283,18,3200,1,134.68420878052711,3.5825371742248535,131.09876587986946,0.002905726432800293,b876dd1e11b2730f185645854ed000f447233ce8eadd1fb2b17449598c770c50\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00003283,18,3200,2,137.70772144198418,2.689860761165619,135.01539453864098,0.002466142177581787,b876dd1e11b2730f185645854ed000f447233ce8eadd1fb2b17449598c770c50\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00075671,73,3200,0,134.6118375658989,2.5852471590042114,132.02406838536263,0.002522021532058716,fc49fec5f287b6ce1311e9fa154f5cb9343959a50c3ce6a245e8ec4f77998fa3\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00075671,73,3200,1,137.61013001203537,2.608422189950943,134.99952480196953,0.0021830201148986816,fc49fec5f287b6ce1311e9fa154f5cb9343959a50c3ce6a245e8ec4f77998fa3\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00075671,73,3200,2,135.19325479865074,2.6801452040672302,132.51052796840668,0.0025816261768341064,fc49fec5f287b6ce1311e9fa154f5cb9343959a50c3ce6a245e8ec4f77998fa3\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062191,23,3200,0,134.0842768549919,2.5713369250297546,131.5104253590107,0.002514570951461792,4bcc50215457102ce49b409f80b953edc5aa2bee637fec3e206c1bcc8127580c\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062191,23,3200,1,136.02809980511665,2.65498086810112,133.37043300271034,0.00268593430519104,4bcc50215457102ce49b409f80b953edc5aa2bee637fec3e206c1bcc8127580c\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00062191,23,3200,2,133.84698703885078,2.6331469416618347,131.211020052433,0.002820044755935669,4bcc50215457102ce49b409f80b953edc5aa2bee637fec3e206c1bcc8127580c\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00091479,115,3200,0,134.02505218982697,2.6041455566883087,131.41832873225212,0.0025779008865356445,a78828a3abe731f723078278ca9ad6f2f44f2a2657e629e5bbec0a394d8c22d6\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00091479,115,3200,1,137.61594519019127,2.5771483778953552,135.03656163811684,0.0022351741790771484,a78828a3abe731f723078278ca9ad6f2f44f2a2657e629e5bbec0a394d8c22d6\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00091479,115,3200,2,134.67581942677498,2.636697143316269,132.03658908605576,0.0025331974029541016,a78828a3abe731f723078278ca9ad6f2f44f2a2657e629e5bbec0a394d8c22d6\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00047135,89,3200,0,134.87515226006508,2.580113708972931,132.2922706604004,0.002767890691757202,9cef419fe98f9ae191582754d568393c967f45d185664ff1a7f36a60f7a75781\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00047135,89,3200,1,133.80556926131248,2.538435161113739,131.2646083533764,0.0025257468223571777,9cef419fe98f9ae191582754d568393c967f45d185664ff1a7f36a60f7a75781\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00047135,89,3200,2,135.24817302823067,2.7824081480503082,132.46309384703636,0.0026710331439971924,9cef419fe98f9ae191582754d568393c967f45d185664ff1a7f36a60f7a75781\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00074921,26,3200,0,138.2746361196041,2.715896815061569,135.55652275681496,0.002216547727584839,6bfe98e94f54166d1d201d76ff53b62f124f86014fc8252f85be900284b82d2b\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00074921,26,3200,1,180.33557385206223,2.8302595019340515,177.500419318676,0.004895031452178955,6bfe98e94f54166d1d201d76ff53b62f124f86014fc8252f85be900284b82d2b\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00074921,26,3200,2,139.69744369387627,3.105778247117996,136.58927381038666,0.002391636371612549,6bfe98e94f54166d1d201d76ff53b62f124f86014fc8252f85be900284b82d2b\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016473,91,3200,0,134.61434468626976,2.6748068630695343,131.9369077682495,0.0026300549507141113,06246771f2ed998fa69c010ea9bdf46e031b3e22dd4b1c911ec3e7a3a2f3f19a\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016473,91,3200,1,134.7402147948742,2.729225903749466,132.00858235359192,0.0024065375328063965,06246771f2ed998fa69c010ea9bdf46e031b3e22dd4b1c911ec3e7a3a2f3f19a\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00016473,91,3200,2,135.6765441596508,2.6885271072387695,132.98599049448967,0.0020265579223632812,06246771f2ed998fa69c010ea9bdf46e031b3e22dd4b1c911ec3e7a3a2f3f19a\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078557,103,3200,0,135.2584920823574,2.6568248867988586,132.59947672486305,0.0021904706954956055,56c876317846adeb4aacf3d18c019345af571f2d7637d2206efcc09a0b15a365\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078557,103,3200,1,133.91176611185074,2.7242153882980347,131.18503242731094,0.002518296241760254,56c876317846adeb4aacf3d18c019345af571f2d7637d2206efcc09a0b15a365\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078557,103,3200,2,133.77105817198753,2.696435898542404,131.07207417488098,0.0025480985641479492,56c876317846adeb4aacf3d18c019345af571f2d7637d2206efcc09a0b15a365\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00065925,87,3200,0,136.29192113876343,2.7321167290210724,133.5575059056282,0.002298504114151001,4242bc082abf5c6148d33159237d1d57f9d477f69ec06e21a1a9926735184fff\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00065925,87,3200,1,134.6229463815689,2.7937665581703186,131.82643800973892,0.0027418136596679688,4242bc082abf5c6148d33159237d1d57f9d477f69ec06e21a1a9926735184fff\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00065925,87,3200,2,135.87318360805511,2.658262848854065,133.21257755160332,0.002343207597732544,4242bc082abf5c6148d33159237d1d57f9d477f69ec06e21a1a9926735184fff\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00006392,124,3200,0,157.81524032354355,3.92744317650795,153.88496220111847,0.0028349459171295166,d3706db9e771ca0e0b6c2e0153fa718708e62a1e7e61a9c38d1d2348e53890ff\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00006392,124,3200,1,142.4618847668171,3.3810995519161224,139.07746598124504,0.0033192336559295654,d3706db9e771ca0e0b6c2e0153fa718708e62a1e7e61a9c38d1d2348e53890ff\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00006392,124,3200,2,151.0745882987976,5.611252039670944,145.45732736587524,0.006008893251419067,d3706db9e771ca0e0b6c2e0153fa718708e62a1e7e61a9c38d1d2348e53890ff\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078114,50,3200,0,141.45571365952492,2.6994869112968445,138.75341042876244,0.002816319465637207,8ade52765e092a8cebfccd29e5bc57a28018ace6b2e19ce886086ba6624e9a97\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078114,50,3200,1,133.71719419956207,2.674464136362076,131.04043900966644,0.002291053533554077,8ade52765e092a8cebfccd29e5bc57a28018ace6b2e19ce886086ba6624e9a97\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00078114,50,3200,2,134.41642746329308,2.685442566871643,131.72803446650505,0.002950429916381836,8ade52765e092a8cebfccd29e5bc57a28018ace6b2e19ce886086ba6624e9a97\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00031120,21,3200,0,134.52833518385887,2.765301614999771,131.76069408655167,0.002339482307434082,2d373cb1c33b7cec148c7436ae1fd9d232e543d39924ed6f299e4bf3b5f468d7\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00031120,21,3200,1,133.2474760711193,2.6595480740070343,130.58561831712723,0.0023096799850463867,2d373cb1c33b7cec148c7436ae1fd9d232e543d39924ed6f299e4bf3b5f468d7\npq64_flat,geometry_discovery,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00031120,21,3200,2,133.59251245856285,2.6780813932418823,130.91198354959488,0.0024475157260894775,2d373cb1c33b7cec148c7436ae1fd9d232e543d39924ed6f299e4bf3b5f468d7\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048389,72,3200,0,133.1378072500229,2.643279731273651,130.49214333295822,0.002384185791015625,023f97c4d1cd57b969c1b7e21f58bb9712e6b0abb1bfe94d219c5708b1810bce\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048389,72,3200,1,132.99667835235596,2.637237310409546,130.35709038376808,0.0023506581783294678,023f97c4d1cd57b969c1b7e21f58bb9712e6b0abb1bfe94d219c5708b1810bce\npq64_flat,geometry_check,vibe:sha256:08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114:learn:00048389,72,3200,2,133.28496366739273,2.6707015931606293,130.61199337244034,0.0022687017917633057,023f97c4d1cd57b969c1b7e21f58bb9712e6b0abb1bfe94d219c5708b1810bce\n",
+  "independent_review": {
+    "method": "independent stdlib fmean and algebra from original saved calls; no new search",
+    "query_groups_checked": 96,
+    "sensitivity_rows_checked": 72,
+    "candidate_hashes_checked_by_primary_audit": 288,
+    "status": "consistent",
+    "c1_read_compute": "unmeasured",
+    "scientific_sources_modified": false,
+    "tampered_recovery_receipt_rejected": true,
+    "unverified_path_rejected": true,
+    "independent_endpoint_page_unions_checked": 192,
+    "logical_payload_rows_checked": 96
+  },
+  "C1_minimum_input_manifest": {
+    "purpose": "C1 preparation only; no server access or measurement",
+    "source_run": "/root/autodl-tmp/route6-S0-manual-r2-3d372f9-20261104",
+    "source_index_sha256": "003ccbbca3c10ad6725462556d79554c8c0c4deb5329999219313c97bb0dad1a",
+    "full_source": {
+      "path": "/root/autodl-fs/route6-B0-v1-9f963f9-20261103T0959Z/source/data.hdf5",
+      "sha256": "08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114",
+      "bytes": 13688159632,
+      "rows": 5233329,
+      "dimension": 640,
+      "metric": "normalized",
+      "revision": "a91cc76a3ab66b0353032e8427b9e34dcee22ded",
+      "layout": {
+        "offset": 6144,
+        "dtype": "<f4",
+        "order": "C",
+        "chunks": null,
+        "compression": null,
+        "virtual": false
+      }
+    },
+    "existing_server_products": [
+      {
+        "path": "queries.npy",
+        "bytes": 327808,
+        "sha256": "536bd947334aabf7fbedc869eb29a6cc25d79f7c82e5ff03d877d866d9ba8ce5"
+      },
+      {
+        "path": "roles.json",
+        "bytes": 33806,
+        "sha256": "a9f4549391ed42a3bbd5c1a28ba3eb2e07eab2a85793721f3b7aefd44d8ac795"
+      },
+      {
+        "path": "inputs.json",
+        "bytes": 655,
+        "sha256": "5e255ace474a6e96f28d249e6cd9017bd7095c0cd93dfc7372f7e21ed9600b5c"
+      },
+      {
+        "path": "prepared.json",
+        "bytes": 1436,
+        "sha256": "6344864e52a9f54bb4eefc6a0bf70084b50e8490d602f54a2631fa925b8c03cc"
+      },
+      {
+        "path": "source_freeze.json",
+        "bytes": 13800,
+        "sha256": "6f48bb0ca0beb84e77bec7673b1036a06949365c7b4c8df04ee184839812a28e"
+      },
+      {
+        "path": "ivf/opq64.faiss",
+        "bytes": 380084860,
+        "sha256": "e40aa069d41872c801636a5eed5f68aa1117e6d5104432ca9d47273c8939430c"
+      },
+      {
+        "path": "ivf/opq64/matrix.npy",
+        "bytes": 1638528,
+        "sha256": "5c1b4c106727013899076462439e2e5b16a785b7de292f292575f910419bb090"
+      },
+      {
+        "path": "ivf/opq64/mean.npy",
+        "bytes": 5248,
+        "sha256": "fa7edd766304e07f542df291117e3a328e3fdb3e550d12f03e67f0aca4d143da"
+      },
+      {
+        "path": "ivf/opq64/model_identity.json",
+        "bytes": 345,
+        "sha256": "be9c4813e08e4cf688c586689d1fb89bb77f5efb4806a79610db806aa9515140"
+      },
+      {
+        "path": "ivf/opq64/64/candidates.npy",
+        "bytes": 3276928,
+        "sha256": "55a4c220756484365d73454cea8133c12b7e5f42ab7466b70cdb77fb47541292"
+      },
+      {
+        "path": "ivf/opq64/256/candidates.npy",
+        "bytes": 3276928,
+        "sha256": "4b4fd10ba6fe670d81b2508ff577515e827cd0421204e64cdec68d9703a286de"
+      },
+      {
+        "path": "ivf/opq64/64/timings.json",
+        "bytes": 444970,
+        "sha256": "1b27efa37afcff45504dea5e2af4304e515547b28520fbc49f58b3045cde1bbd"
+      },
+      {
+        "path": "ivf/opq64/256/timings.json",
+        "bytes": 889970,
+        "sha256": "a00e725318cfe5144a22a86e6efbf84df0885bb6747353086676e16e0c637e6e"
+      }
+    ],
+    "raw_source_download_required": false,
+    "new_training_required": false,
+    "gpu_required": false,
+    "query_scope": "same saved 16 discovery + 16 check CPU cohort",
+    "full_source_read_here": false,
+    "omit_low_headroom_pq_flat_replay": true,
+    "physical_traffic_counters": "unsupported counters must remain unmeasured"
+  },
+  "analysis_delivery_index": {
+    "kind": "C0 read-only analysis and C1 preparation; no new scientific measurements",
+    "source_index_sha256": "003ccbbca3c10ad6725462556d79554c8c0c4deb5329999219313c97bb0dad1a",
+    "script": "scripts/analyze_pq_refinement_cost_space.py",
+    "script_sha256": "c26c1c983f290c404bc66d2803ecc1f76a9dce51bdec64440a43fe64e3fc0c30",
+    "files": [
+      {
+        "path": "C1_input_manifest.json",
+        "bytes": 3127,
+        "sha256": "21ae2d1e21b5b817ca16ffcc49a52a62cb4070ede29d27a16955c651f676a74e"
+      },
+      {
+        "path": "analysis_zh.md",
+        "bytes": 6856,
+        "sha256": "1661ae12c427b4f9d60b2724f57e89b414d62b597e0dafd0202a294aea4726e7"
+      },
+      {
+        "path": "calls.csv",
+        "bytes": 78894,
+        "sha256": "f75b19b769b0576d70b2563ffcb2eea798d485965953bd44d12b818998f6a6c3"
+      },
+      {
+        "path": "cost_space_audit.json",
+        "bytes": 59385,
+        "sha256": "68e3a8289d6be8ebd24c70b6f91b6cb8e05eb059e503f049f66abfd4bda9745a"
+      },
+      {
+        "path": "coverage.csv",
+        "bytes": 1248,
+        "sha256": "0e9f3ba99631b923b0fa70be4b8c43a1e1ccab92cc3f437d80e10e8920882140"
+      },
+      {
+        "path": "independent_review.json",
+        "bytes": 484,
+        "sha256": "d5a89c20e42c8c32562f610eb9d19dbd3da335fed5aed6e0709203e704258fea"
+      },
+      {
+        "path": "paired_pipeline_comparisons.csv",
+        "bytes": 1189,
+        "sha256": "47fa7fe9d1fdca1db669068be683127c8aca90db5f0a66c82420d63d603c1d93"
+      },
+      {
+        "path": "per_query.csv",
+        "bytes": 45955,
+        "sha256": "144c9d59d35311d6b6a8bef58fe288a9762a3db92b18fff35f7f859dc427f4c2"
+      },
+      {
+        "path": "sensitivity.csv",
+        "bytes": 13276,
+        "sha256": "19218fc3cd2cb6fc228eeaf805810e65db3db0be78419f3796516da68e06ae59"
+      }
+    ]
+  },
+  "analysis_delivery_index_sha256": "f9978b7e6fad25609663e706f2318adc1bf32074393e4ffd2806f410f8cbb0fe",
+  "analysis_runtime": {
+    "python": "3.9.6 (default, May 22 2026, 11:13:45) \n[Clang 21.0.0 (clang-2100.1.1.101)]",
+    "numpy": "1.26.4",
+    "executable": "/private/tmp/route6-b0-local-env-20261103/bin/python",
+    "timing_environment_in_audit_is_the_original_server": true
+  }
+}

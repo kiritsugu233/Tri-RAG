@@ -17,6 +17,18 @@ notify the user to power it on. No gate2/3, new Gaussian representation or Tri
 controller. Schemes1–4 are retired from active context; route5 and completed
 route6 science are reference only. Keep protected contracts and evidence.
 
+**C0 is complete; gate1 remains unresolved pending C1.** Saved288 calls/96
+query-pipeline groups match their candidate hashes/outputs. Primary check
+rerank fraction31.493% (query-cluster95% interval30.660%–32.375%); halving all
+rerank leaves0.870569ms for added work at10% total reduction. PQ Flat has only
+2.085% even if all rerank is free. See plan sections10–11 and
+[recorded evidence](docs/pq_refinement_cost_c0_evidence_v0.json).
+Local C1 input/address preparation is done. Full original vectors remain on
+the server; actual gather/read/compute costs have not been measured. The precise
+C1 eight-path implementation proposal is pending consent; no C1 code/runtime or
+server work has started. CPU is sufficient; request power-on with at least32GiB
+RAM. A changed CPU allocation requires a newly paired full baseline.
+
 Earlier completed checkpoints follow; they are not current pending tasks.
 
 **S0 analysis data recovered and audited locally (2026-11-04).** The user chose
