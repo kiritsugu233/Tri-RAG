@@ -8,6 +8,28 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**S0 manual-r2 started in a new directory (2026-11-04).** The user explicitly
+requested launch and cleanup of interrupted outputs if a restart was needed.
+The current runner cannot resume r1 products across its namespace/fingerprint
+boundary; this is a fresh same-configuration run, reusing only the existing
+validated v1 PQ64 training/codes through the implemented reuse contract.
+Three independent CUDA checks passed in53.021s; all26 closed files were verified
+on node. Scientific checkout is clean3d372f9. Controller2169 started the real run
+at08:04:19Z in `/root/autodl-tmp/route6-S0-manual-r2-3d372f9-20261104`;
+prepare worker2178 started. This is launch evidence, not scientific completion.
+Checks/reports are every300s, with no supervisor timeout/resource abort.
+Audited cleanup removed38 duplicate/backed-up files (623741371 bytes): r1 arrays
+and two transport archives. All r1 JSON results/failure evidence remain; original
+r1 index is historical and no longer describes a complete server inventory.
+Unique removed arrays remain verified locally; PQ codes are identical in live v1.
+Source/roles/B0/v1/environment were retained; fastdisk has35210194944 bytes free
+after cleanup. First300s snapshot: prepare complete, raw640 Faiss quality active,
+no complete configurations yet, RSS25.96GiB/free32.75GiB, no compute error.
+GPU value was stale and is not evidence of current usage. All26 device products
+also verified locally. See [section73](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#73-s0-manual-r2启动评估重复产物清理与新轮2026-11-04).
+
+Earlier entries below are historical checkpoints.
+
 **Manual S0 supervision implemented; full664 CPU tests pass (2026-11-04).**
 Actual §71 consent: “批准七路径、完整测试与同步”. Current namespace is
 `tls-rag-route6-representation-screen-v2-manual-r2`. Production no longer

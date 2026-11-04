@@ -3,6 +3,17 @@
 Updated2026-11-04. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
 maintained branch `codex/tls-rag-step5-ann`.
 
+## 当前运行：新目录S0 manual-r2，已清理旧轮重复大文件
+
+- 用户当前明确要求“启动实验”，并授权必要重测时清理旧中断结果。当前程序没有跨r1 namespace的断点续跑；采用现有已测试流程新目录重测，不改cache合同，不把旧部分结果拼成新轮complete。仅按原实现校验复用v1 PQ64训练/编码和历史预处理费用。
+- 节点clean3d372f9；完整664 CPU/Linux49既有验证仍适用，本次未改科学代码。三次独立实际CUDA门全部通过，53.021秒（45.853/3.525/3.424秒）；26项关闭大小/SHA在节点验证，receipt SHA `e8e4fb55221362b80542ec7488fb9c6a39ba19254996c3e26a79d3aa2fc3ec29`。
+- 正式controller2169于2026-11-04T08:04:19Z启动，run `/root/autodl-tmp/route6-S0-manual-r2-3d372f9-20261104`，初始prepare worker2178。24配置、原完整库/128 learn角色、原预算/seed/精度/计时合同；无test、新MC或Tri阶段。每300秒只读status并报告，监督超时/资源阈值不终止，由用户决定停止。
+- 清理前逐SHA核对本机旧轮106份文件；删除r1的36个数组和两个重复传输包，共623741371B（约595MiB）。unique数组本机保留，PQ代码与完整v1缓存逐SHA相同；r1所有JSON逐query结果、日志/失败/来源证据仍在，旧目录剩74064121B。旧index保持原样，现仅是历史清单，不再声称服务器可完整verify旧r1目录。完整输入/roles/B0/v1/环境未删；快速盘剩35210194944B（约32.8GiB）。
+- 启动/清理/设备门凭证保存在 `runs/route6-S0-manual-r2-launch-20261104/`；[第73节](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#73-s0-manual-r2启动评估重复产物清理与新轮2026-11-04)给出准确重放命令。正式轮仍运行；质量/费用/ANN/oracle完成与结果分析待实际产出，启动不等于完成。
+- 首个300.051秒快照（SSH复用失效后重新认证，约347秒读到）：prepare完成，raw640:faiss_quality/worker2186仍运行，完整配置0；RSS27869704192B（25.96GiB）、free35166728192B（32.75GiB），快照无计算错误。GPU保存样本读取时已347.6秒旧，不能由旧0值声称当前GPU空闲。设备门26项也在本机逐SHA通过；本轮仅L1交接文档更新，不重复运行已通过的664项。
+
+以下旧检查点记录当时状态；本节启动授权取代之前“不得新启动”。
+
 ## 当前完成：S0人工监督，完整664项/Linux49项通过并同步
 
 - 实际同意：“批准七路径、完整测试与同步”（第71节）。新manual-r2 namespace已实现，生产supervise明确使用ManualSupervisor/manual_run_job/manual_reporter；旧强制模式仅为独立历史回归。

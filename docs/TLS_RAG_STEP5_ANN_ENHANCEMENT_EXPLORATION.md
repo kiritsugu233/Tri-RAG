@@ -7101,3 +7101,103 @@ stop会说明正在封存，不假报又终止了计算。正常完成或真实�
 关闭索引逐大小/SHA通过。保护287项最终通过，canonical跟踪改动均在获准七路径和四L1维护范围。
 本轮完成监督方式修改/测试/同步；下一次科学实验需另行明确启动，没有擅自续跑第70节失败轮。
 人工状态/停止命令见当前协议manual-r2节；所有旧数据/失败/闭合产物保持原样，后续每5分钟检查。
+
+## 73 S0 manual-r2启动评估、重复产物清理与新轮（2026-11-04）
+
+用户本次实际指令：
+
+> 启动实验，是继续补完之前的，还是重新测，你评估一下，如果需要重新测，请把之前测到一半就结束的结果清理一下，服务器空间不大。
+
+这次指令授权在既有manual-r2合同下启动，不再沿用第72节的“只改代码、不启动”边界。
+它也明确允许必要重测时清理旧中断轮。未扩展到修改L0公式/cache合同、重新选query、安装依赖、
+开启test或新MC/Tri阶段。本次只维护四L1交接文档，科学实现/协议/配置不改。
+
+### 73.1 为什么用新目录，而不是直接续跑
+
+当前supervise独占创建新root，prepare后依次quality/timing/IVF/oracle/finalize，没有resume入口。
+model_from_products会核对当前namespace、spec、matrix/mean SHA和model fingerprint；旧r1模型
+不能直接作为manual-r2产物加载。把旧完成标记/元数据改成新版本会破坏来源合同，未这样做。
+新增真正的跨版本resume需要另行设计与L0具体批准；当前采用已经通过完整664项/Linux49项的
+既有新目录流程，不为一次补测再引入迁移路径。旧5项质量仍可作为历史数据，未判为科学无效。
+
+新轮沿用24个配置、完整5233329竞争者、128 learn开发query/原64+64角色、原真值/k/M/seed/
+训练/精度/计时配置。prepare对完整v1 delivery_index逐文件校验，_reuse_pq64按原实现复用
+v1 PQ64训练/编码，并保留历史fit/encoding费用和当前加载费用；其余质量/实际费用在新目录重测。
+新轮不拼接r1结果，不声称断点续跑或已完成真实RAG收益验证。
+
+### 73.2 磁盘盘点与实际清理
+
+SSH检查节点clean3d372f9，无representation实验进程；快速盘50G/可用约33G，共享盘200G/可用159G。
+旧r1约464MiB、v1约435MiB，B0参考约323MiB。空间足够现有流程，不复制13.7GB完整源。
+v1全部71项仍是prepare的活依赖，不能只留下codes；完整v1、B0、VIBE源/角色和环境全部保留。
+
+本机先对旧r1的106个可用文件逐大小/SHA重验。节点再次核对原index SHA
+`675839be2bd46a422f6836fc829f013576e1ce7da26b5170b78d1de41bd3cbef`及每个待删文件，
+所有核对通过后才删除：
+
+- r1目录36个.npy：唯一数组已有本机校验副本；PQ64 codes的334933184B与保留的完整v1逐SHA相同。
+- r1 preparation中重复的s0-closed-small-products.tar（150794240B）及.tar.gz（61485751B）。
+  压缩包本机保留且逐SHA匹配，解包后的106文件也已独立核对。
+
+合计38文件/623741371B（约595MiB）；清理前free34586329088B、清理后35210194944B（约32.8GiB）。
+旧r1仍保留74064121B：全部JSON逐query质量/完成标记、源码freeze、执行日志/失败、原delivery_index。
+原index不修改，现明确作为历史库存；清理后的服务器r1不再是一份完整可verify目录。
+没有删失独特科学数值：唯一数组在本机，codes在活v1；没有把保留的complete marker当新轮结果。
+该次清理由用户当前条件指令授权，取代第72节对这些可恢复大数组/重复包的原件保留约束。
+
+精确清单、来源和前后字节数见本机
+`runs/route6-S0-manual-r2-launch-20261104/cleanup-plan.json`与`cleanup-receipt.json`；
+服务器准备目录 `/root/autodl-tmp/route6-S0-manual-r2-launch-3d372f9-20261104`有同份凭证。
+
+### 73.3 新CUDA门与正式启动
+
+维护HEAD `3d372f9dda99463b80808753b6c070043cd53499`，科学代码f6a90d7；跟踪工作区干净。
+新device root `/root/autodl-tmp/route6-S0-manual-r2-device-3d372f9-20261104`，
+controller2142，三独立worker2151/2157/2161全部数值通过并退出，耗时45.853/3.525/3.424秒，
+总53.021秒。慢的首启动没有被旧3秒/其他监督限额终止，不对其延迟原因作未验证归因。
+26项关闭文件节点逐大小/SHA验证，device index SHA
+`7e2b4dff72e4ec6cfd86e68a6acdac381e3b68767b3e54467f64272a03fa3aac`，receipt SHA
+`e8e4fb55221362b80542ec7488fb9c6a39ba19254996c3e26a79d3aa2fc3ec29`。
+5分钟采样下GPU显存最大值未知，不能把tiny记为连续资源合规或真实峰值测量。
+
+正式run `/root/autodl-tmp/route6-S0-manual-r2-3d372f9-20261104`，controller2169于
+2026-11-04T08:04:19Z（北京时间16:04:19）启动，初始prepare worker2178。
+启动时status为running、active_stage=prepare，未宣称质量/计时/ANN/oracle完成。
+stdout在新preparation/s0-console.log，确切argv/PID/commit/device SHA在s0-launch.json。
+
+精确命令（新目录独占；以下已执行，不可对原目录再次执行）：
+
+```sh
+cd /root/autodl-tmp/Tri-RAG-git
+export PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src CUBLAS_WORKSPACE_CONFIG=:4096:8
+export OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 OMP_NUM_THREADS=1
+export VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+/root/autodl-fs/gaussian-benchmark-space-v1/env/bin/python scripts/run_tls_rag_step5_route6_representation_v2.py device-check --run-dir /root/autodl-tmp/route6-S0-manual-r2-device-3d372f9-20261104
+/root/autodl-fs/gaussian-benchmark-space-v1/env/bin/python scripts/run_tls_rag_step5_route6_representation_v2.py run --run-dir /root/autodl-tmp/route6-S0-manual-r2-3d372f9-20261104 --device-receipt /root/autodl-tmp/route6-S0-manual-r2-device-3d372f9-20261104/device_receipt.json
+```
+
+实际经subprocess.Popen独立session启动，stdin=/dev/null、stdout/stderr写独占console；
+SSH/聊天断开不应自动终止controller。用户要求每5分钟检查，status只读已有记录；
+节点本身每300秒采样不使用模型token，监督超时/资源值只供人工判断，不自动kill。
+算法数值/来源/IO真实错误仍会如实失败。完整质量/费用、Oracle及来源后SHA仍待实际计算，
+不把设备门或正式启动当成完整科学结果；没有自动第二次尝试。
+
+### 73.4 首个五分钟状态及启动里程碑核验
+
+设备门全部26文件已复制到本机device-verified，逐大小/SHA与原index核对通过；
+cleanup receipt/plan、device/real launch ledger和console同步回收，local-receipt-verification.json
+记录独立复核。本次未改科学实现，沿用第72节完整664/Linux49项证据，不为四L1交接文档重复跑套件。
+保护287项、diff空白检查和exploration旧前缀保持检查通过。
+
+第一次正式status在启动约300秒发起；原SSH复用失效，重新使用既有凭据连接后约347秒读到。
+此连接变化未重启/终止后台计算，没有额外NVML探针。保存的300.051秒快照：
+
+- prepare已正常完成，active_stage=quality-raw640、worker2186，当前phase=raw640:faiss_quality。
+- 完整quality配置0，completed_stages=1；无计算错误/资源advisory，不将运行中阶段写为完成。
+- RSS27869704192B（25.96GiB），free35166728192B（32.75GiB），当前产物43101507B。
+- GPU保存值0来自较早成功样本；快照中age299.928s、读取时347.613s。当前GPU占用未知，
+  没有由旧0推断GPU空闲，也没有因为样本旧而终止实验。
+
+摘录保存在first-status-extract.json。正式轮继续按既有manual-r2每300秒记录，由用户决定停止；
+实际质量/计时/IVF/oracle与最终输入post-SHA仍未完成。运行checkout保持3d372f9；
+本次启动交接只在canonical/GitHub维护四L1文档，不在科学计算中切换节点checkout。

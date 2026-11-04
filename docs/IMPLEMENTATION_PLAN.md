@@ -4,6 +4,14 @@ Updated 2026-11-04. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
+## 当前执行：S0 manual-r2重测与旧中断轮空间清理
+
+- [x] 用户明确启动；评估现有runner无跨namespace断点续跑，选择新目录同配置重测，仅复用已有受校验v1 PQ64训练/编码。
+- [x] 核对快速盘约33GiB可用；旧r1本机106项逐SHA通过，清理36个已备份/重复数组及两个传输包623741371B，保留全部JSON结果/失败/原历史index与完整输入/B0/v1依赖，记录清理receipt及旧目录不再完整verify。
+- [x] clean3d372f9实际三次独立CUDA检查通过53.021秒，26项封存节点验证；正式controller2169在新目录启动，prepare worker2178。
+- [x] 设备门26项本机逐SHA复核；首个300秒快照prepare完成/raw640 Faiss质量运行，RSS25.96GiB/free32.75GiB，无计算错误；GPU旧样本不当当前值。
+- [ ] 每5分钟只读状态/汇报，由用户决定停止；完成24配置质量、实际费用/ANN/oracle后核验回收与分析。当前仅启动，不声称完整科学结果。
+
 ## 当前请求：S0人工监督、每5分钟报告
 
 - [x] 用户明确要求取消监督超时停止；选定5分钟周期，检查worker/阶段/全局/关闭索引等全部隐含时限。
