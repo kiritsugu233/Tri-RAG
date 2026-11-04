@@ -285,7 +285,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "b4feb9736dd0e60f9499e902432b4b0d51f33c008f1a82cf9410f3f41e423955"
+      "sha256": "2c46fe88f490d525890d2b56db6ac91a96a3410a2e99dbeb3c71906147f05f42"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -1864,19 +1864,19 @@
       "path": "configs/tls_rag_step5_route6_representation_v2.json",
       "level": "L0",
       "reason": "User-approved §62 S0 v2: Same24 configurations/source/roles; approved telemetry/cohort/one-run v2 contract",
-      "sha256": "6d4eafa981bf526e6c090c33b8f0f6eb7be65328ff6a5311abdb7b424d99b92f"
+      "sha256": "adecd20cf1dea7ace52b4d1ae664d4e56cf8b3019a9a1ee60dc9a4291947cfb1"
     },
     {
       "path": "tests/test_tls_rag_step5_route6_representation_v2.py",
       "level": "L0",
       "reason": "User-approved §62 S0 v2: Independent mmap/cache/role/cost and actual reporter/owned-process CPU regressions",
-      "sha256": "ae8caac2cd2b6ebb3be1ddbdaf319723a30caf8c7f1a07f82e000c2b36c044b2"
+      "sha256": "c08eed68cc1cc7c42df1fd3804b44f5ed85e50abf6c4fb38b94e8cf79d7f2d1a"
     },
     {
       "path": "docs/TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V2.md",
       "level": "L0",
       "reason": "User-approved §62 S0 v2: Frozen v2 timing/telemetry/staging/lifecycle contract with old scientific boundaries",
-      "sha256": "66a87ddc73312cecca1c273dfb733e6eb7f0072f41e80b56ce86e63d45fac22f"
+      "sha256": "37a8573fbe661e3f4d06fec700b8eee24c304e83bf9596b70251a3eb5d7f5b91"
     },
     {
       "path": "scripts/run_tls_rag_step5_route6_representation_v2.py",
@@ -2488,5 +2488,20 @@
     "scope": "Six new v2 files, test membership and two append-only registers; full tests/sync/tiny then one new-directory7200s/9000s/RSS64GiB/GPU48GiB run;32CPU/128GPU timing,3s telemetry; no old source/result/test/MC/Tri changes",
     "old_entries_preserved": "All existing classifications/scientific hashes and root metadata unchanged except explicitly approved human-register hash; prior approvals preserved",
     "validation": "Final full645 CPU/offline tests passed, zero skips,80.596s;30 new tests; log SHA256 80a551f097d4a81c4d5d2724c25f1c05c331681af5338dfa76c596ba05d76ecf. First failed tiny retained; unchanged3s query-start age/CLI limit,0.1s start-anchored cadence. Actual fresh tiny and one real S0 remain required."
+  },
+  "route6_s0_v2_nvml_r1_authorization": {
+    "date": "2026-11-04",
+    "actual_user_consent": "批准六路径、测试同步、设备门及通过后一次S0",
+    "proposal": "docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md §68.2–68.3 at bdbe7536a830b5c0226b2f3d997617e0cc88522c",
+    "scope": [
+      "scripts/run_tls_rag_step5_route6_representation_v2.py",
+      "configs/tls_rag_step5_route6_representation_v2.json",
+      "tests/test_tls_rag_step5_route6_representation_v2.py",
+      "docs/TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V2.md",
+      "docs/CODE_PROTECTION.md",
+      "docs/code_protection.json"
+    ],
+    "limits": "Persistent existing NVML v3/ABI/provider; new r1 namespace; unchanged3s query-start age/250ms parent and caps. Full tests/sync then one three-startup120s/180s device gate; all pass before one same24/128-role7200s/9000s S0. No install/download/test/MC/Tri/retry; both scientific modules and old artifacts unchanged.",
+    "validation": "Full651 CPU/offline tests passed, zero skips,80.699s;36 v2 methods. Log SHA256 d96be8574d50e38de1035525b2753fce36e08fdc991a91e5d815bd9362d8ee18. Both scientific modules and prior rows/root metadata remain unchanged except four approved SHA rows."
   }
 }

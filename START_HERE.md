@@ -8,6 +8,19 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**NVML r1 approved; final local regression passed (2026-11-04).** Actual consent
+for exploration §68.2–68.3: “批准六路径、测试同步、设备门及通过后一次S0”.
+Six scoped paths now implement persistent pinned NVML, unchanged3s query-start
+age/250ms polling and three independent CUDA startups under one120s/180s gate.
+Full651 CPU/offline tests passed, zero skips,80.699s;36 v2 cases included.
+Both v2 scientific modules/old protection rows and old failures are unchanged.
+Node clean7f44240, GPU idle, existing library SHA matches. Next: reviewed source
+GitHub/Linux sync/tests, one new device gate, then only if all three pass one
+same-configuration7200s/9000s S0. No new gate or benchmark data yet.
+See [section69](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#69-nvml-r1批准与实现验证2026-11-04).
+
+Earlier checkpoints below are historical and superseded by this entry.
+
 **Final real-v2 status: monitor_failed before any benchmark data (2026-11-04).**
 The one approved real run7f44240 started02:50:50Z and stopped after5.148s in
 prepare/backend initialization. A GPU CLI call actually exceeded3s; denser

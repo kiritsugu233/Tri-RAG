@@ -1,5 +1,7 @@
 """CPU-only v2 fixtures: source layout, cold costs, paired roles and real stops."""
 import copy
+import ctypes
+import struct
 import inspect
 import json
 import os
@@ -25,6 +27,31 @@ class Buffer:
     def __init__(self,shape,dtype='torch.float32',device='cuda:0'):
         self.shape=shape;self.dtype=dtype;self.device=device
     def __len__(self):return self.shape[0]
+
+
+class FakeNVML:
+    """Independent packed C bytes; never constructs the production structure."""
+    def __init__(self,steps=None):
+        self.steps=list(steps or [(0,0,[]) ]);self.init_count=0;self.shutdown_count=0
+        self.driver='580.82.07';self.version='13.580.82.07';self.count=1
+        self.uuid='GPU-0c08388b-2980-4723-8c2e-2318f276cd0c';self.calls=0
+        def uint(pointer,value):ctypes.cast(pointer,ctypes.POINTER(ctypes.c_uint))[0]=value
+        def string(buffer,size,value):ctypes.memmove(buffer,value.encode()+b'\0',len(value)+1);return 0
+        def init():self.init_count+=1;return 0
+        def shutdown():self.shutdown_count+=1;return 0
+        def handle(index,pointer):ctypes.cast(pointer,ctypes.POINTER(ctypes.c_void_p))[0]=123;return 0
+        def count(pointer):uint(pointer,self.count);return 0
+        def query(handle,pointer,buffer):
+            self.calls+=1;code,n,rows=self.steps.pop(0);uint(pointer,n)
+            if buffer is not None and rows:
+                packed=b''.join(struct.pack('=I4xQII',pid,memory,0xffffffff,0xffffffff) for pid,memory in rows)
+                ctypes.memmove(buffer,packed,len(packed))
+            return code
+        functions=dict(nvmlInit_v2=init,nvmlShutdown=shutdown,nvmlDeviceGetCount_v2=count,
+            nvmlDeviceGetHandleByIndex_v2=handle,nvmlSystemGetDriverVersion=lambda b,n:string(b,n,self.driver),
+            nvmlSystemGetNVMLVersion=lambda b,n:string(b,n,self.version),
+            nvmlDeviceGetUUID=lambda h,b,n:string(b,n,self.uuid),nvmlDeviceGetComputeRunningProcesses_v3=query)
+        for name,function in functions.items():setattr(self,name,mock.Mock(side_effect=function))
 
 
 class RepresentationV2Tests(unittest.TestCase):
@@ -227,7 +254,7 @@ class RepresentationV2Tests(unittest.TestCase):
             self.assertEqual(len(lifecycle['costs']),8)
 
     def sample(self,root,**changes):
-        value=dict(nonce='n',reporter_pid=123,owner_pid=os.getpid(),sequence=1,
+        value=dict(provider=runner.provider_identity(self.cfg['monitor']),nonce='n',reporter_pid=123,owner_pid=os.getpid(),sequence=1,
             started_monotonic=10.,completed_monotonic=10.1,memory_bytes={})
         value.update(changes);runner.atomic_json(Path(root)/'telemetry.json',value)
 
@@ -375,6 +402,120 @@ class RepresentationV2Tests(unittest.TestCase):
             result=runner.close_run(tmp,dict(status='complete'),runner.monotonic()-10,5)
             self.assertEqual(result['status'],'resource_stop')
             self.assertFalse((Path(tmp)/'delivery_index.json').exists())
+
+
+    def nvml(self,library):
+        with mock.patch.object(runner,'sha',return_value=self.cfg['monitor']['library_sha256']),mock.patch.object(runner.ctypes,'CDLL',return_value=library):
+            return runner.NVMLProvider(self.cfg['monitor'])
+
+    def test_nvml_independent_abi_bytes_and_persistent_initialization(self):
+        library=FakeNVML([(7,2,[]),(0,2,[(101,1234567),(202,0)]),(0,0,[])])
+        provider=self.nvml(library)
+        try:
+            self.assertEqual(ctypes.sizeof(runner.NVMLProcess),len(struct.pack('=I4xQII',1,2,3,4)))
+            self.assertEqual(provider.query(),{101:1234567,202:0});self.assertEqual(provider.query(),{})
+            self.assertEqual(library.init_count,1);self.assertEqual(library.calls,3)
+            self.assertEqual(len(library.nvmlDeviceGetComputeRunningProcesses_v3.argtypes),3)
+        finally:provider.close()
+        self.assertEqual(library.shutdown_count,1)
+
+    def test_nvml_na_unknown_errors_counts_and_capacity_fail_closed(self):
+        cases=[[(3,0,[])],[(0,1,[])],[(7,1025,[])],[(7,1,[]),(7,20,[]),(7,30,[])],
+            [(7,1,[]),(0,1,[(12,2**64-1)])],[(7,2,[]),(0,2,[(12,1),(12,2)])],
+            [(7,1,[]),(0,1,[(0,1)])],[(7,1,[]),(0,1,[])] ]
+        for steps in cases:
+            with self.subTest(steps=steps):
+                library=FakeNVML(steps);provider=self.nvml(library)
+                try:
+                    with self.assertRaises(RuntimeError):provider.query()
+                    self.assertLessEqual(library.calls,3)
+                finally:provider.close()
+        library=FakeNVML([(7,1,[]),(7,20,[]),(0,1,[(5,77)])]);provider=self.nvml(library)
+        try:self.assertEqual(provider.query(),{5:77})
+        finally:provider.close()
+
+    def test_nvml_wrong_library_device_version_or_mutation_rejected(self):
+        with mock.patch.object(runner,'sha',return_value='bad'),mock.patch.object(runner.ctypes,'CDLL') as loader:
+            with self.assertRaises(RuntimeError):runner.NVMLProvider(self.cfg['monitor'])
+            loader.assert_not_called()
+        for field,value in [('driver','wrong'),('version','wrong'),('uuid','wrong'),('count',2)]:
+            library=FakeNVML();setattr(library,field,value)
+            with self.assertRaises(RuntimeError):self.nvml(library)
+            self.assertEqual(library.shutdown_count,1)
+        library=FakeNVML();provider=self.nvml(library)
+        try:
+            library.driver='changed'
+            with self.assertRaises(RuntimeError):provider.query()
+            library.driver='580.82.07';provider.last_hash=runner.monotonic()-11
+            with mock.patch.object(runner,'sha',return_value='changed'):
+                with self.assertRaises(RuntimeError):provider.query()
+        finally:provider.close()
+
+    def test_provider_mismatch_and_stale_error_contains_actual_age(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self.sample(tmp,provider=dict(backend='unapproved'))
+            with self.assertRaisesRegex(RuntimeError,'age_seconds.*1.0'):
+                runner.telemetry_memory(tmp,'n',123,[],self.cfg['monitor'],now=11)
+            self.sample(tmp,memory_bytes={'01':1})
+            with self.assertRaises(RuntimeError):runner.telemetry_memory(tmp,'n',123,[],self.cfg['monitor'],now=11)
+
+    def test_actual_native_query_block_stops_parent_and_owned_worker(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);guard=runner.Guard(root,self.limits(),self.cfg['monitor'])
+            # Native sleep is inside the reporter process, with no subprocess
+            # timeout to rescue it. Only the parent's unchanged3s age can stop.
+            code="""import ctypes,os
+from scripts import run_tls_rag_step5_route6_representation_v2 as r
+class Provider:
+ def __init__(self,settings):self.n=0
+ def query(self):
+  self.n+=1
+  if self.n>1:ctypes.CDLL(None).sleep(20)
+  return {}
+ def close(self):pass
+r.NVMLProvider=Provider
+r.reporter(ROOT,NONCE,OWNER,r.config()['monitor'])
+""".replace('ROOT',repr(str(root))).replace('NONCE',repr(guard.nonce)).replace('OWNER',str(os.getpid()))
+            guard.report=subprocess.Popen([sys.executable,'-c',code],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True)
+            try:
+                guard.ready();tick=time.monotonic();result=self.job(root,guard,'native-block','import time;time.sleep(30)')
+                self.assertEqual(result['status'],'monitor_failed');self.assertIn('age_seconds',result['monitor_error'])
+                self.assertLess(time.monotonic()-tick,4.5)
+                with self.assertRaises(ProcessLookupError):os.kill(result['worker_pid'],0)
+            finally:guard.close()
+            self.assertIsNotNone(guard.report.poll())
+
+    def gate_fixture(self,root):
+        freeze=dict(sources={'a':'sha'},environment={'native':'same'})
+        runner.write_json(root/'source_freeze.json',freeze);results=[]
+        for i in range(1,4):
+            name='tiny-startup'+str(i);folder=root/'stages'/name;folder.mkdir(parents=True)
+            child=subprocess.Popen([sys.executable,'-c','pass']);child.wait()
+            results.append(dict(name=name,status='complete',worker_pid=child.pid))
+            receipt=dict(status='passed',worker_pid=child.pid,provider=runner.provider_identity(self.cfg['monitor']),
+                sources=freeze['sources'],config=self.cfg,environment=freeze['environment'],binary_sha256={'native':'same'},
+                precision={'exact':True},checks=[dict(kind=k,cpu_cuda_exact=True) for k in ('raw','gaussian','pca','hybrid')])
+            runner.write_json(folder/'device_receipt.json',receipt)
+        return results
+
+    def test_gate_requires_three_independent_exited_identical_startups(self):
+        for defect in ('none','missing','failed','pid','native','provider','check'):
+            with self.subTest(defect=defect),tempfile.TemporaryDirectory() as tmp:
+                root=Path(tmp);results=self.gate_fixture(root);path=root/'stages/tiny-startup3/device_receipt.json'
+                receipt=json.loads(path.read_text())
+                if defect=='missing':results.pop()
+                if defect=='failed':results[-1]['status']='worker_failed'
+                if defect=='pid':receipt['worker_pid']=results[0]['worker_pid']
+                if defect=='native':receipt['binary_sha256']={'native':'changed'}
+                if defect=='provider':receipt['provider']={}
+                if defect=='check':receipt['checks'][0]['cpu_cuda_exact']=False
+                runner.atomic_json(path,receipt)
+                if defect=='none':
+                    saved=runner.seal_device_gate(root,self.cfg,results,runner.provider_identity(self.cfg['monitor']))
+                    self.assertEqual(saved['independent_cuda_workers'],3);self.assertEqual(len(saved['startup_receipt_sha256']),3)
+                else:
+                    with self.assertRaises(RuntimeError):runner.seal_device_gate(root,self.cfg,results,runner.provider_identity(self.cfg['monitor']))
+                    self.assertFalse((root/'device_receipt.json').exists())
 
     def test_frozen_old_inventory_training_and_new_limits(self):
         old=json.loads((runner.ROOT/'configs/tls_rag_step5_route6_representation_v1.json').read_text())

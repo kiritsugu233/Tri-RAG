@@ -3,6 +3,15 @@
 Updated2026-11-04. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
 maintained branch `codex/tls-rag-step5-ann`.
 
+## 当前实施：NVML r1完整651项通过，准备同步/三次启动设备门
+
+- 实际批准：“批准六路径、测试同步、设备门及通过后一次S0”（第68.2–68.3节）。六路径完成持久NVML/冻结身份ABI/r1 namespace和3次独立CUDA启动门；3秒query-start年龄/250ms及原上限保持，两科学模块字节不改。
+- 完整651项、0skip、80.699秒通过（原615＋新模块36）；日志 `runs/route6-S0-nvml-r1-preparation-20261104/full-tests.log` SHA256 `d96be8574d50e38de1035525b2753fce36e08fdc991a91e5d815bd9362d8ee18`。首轮模块36项12.698秒也通过；实际原生阻塞/拥有worker停止及三次凭据拒绝均被验证。
+- 287项保护通过；旧登记/旧根值除获批四行SHA外不变，两科学模块与旧失败保留。节点已重新认证，clean7f44240，GPU空闲、工作盘35,287,248,896B、NVML库SHA一致；没有新CUDA/benchmark执行。
+- 下一项：canonical提交/push/核对GitHub、SHA bundle干净Linux同步/CPU36，再执行一次≤180秒门（同一reporter、3独立CUDA初始化）。全部通过才执行获批的一轮新目录7200秒科学/9000秒总S0；不自动重试、安装、开test或增MC/Tri。
+
+以下保留旧检查点；“未批准/未实现/一次已用完”描述当时状态，新同意见上。
+
 ## 当前结果：正式v2准备阶段监控失败，新增benchmark数据为0
 
 - 唯一正式v2科学7f44240于2026-11-04T02:50:50.322Z启动（北京时间10:50:50），5.148秒monitor_failed；prepare worker2052返回-15，parent2040已退出。未进入source_full_sha，未打开真实query或产出表示/计时/ANN/oracle结果。

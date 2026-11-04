@@ -6838,3 +6838,26 @@ global≤9000秒、component≤1200秒、RSS64GiB/GPU48GiB/CPU14/artifacts8GiB/n
 
 依据AGENTS.md：“Before any edit, obtain explicit user approval for the exact affected paths and intended change.”
 第62节同意的一次真实轮已经用完，新provider/冻结门/新一轮须明确批准；这不是要求重复批准旧范围。
+
+## 69 NVML r1批准与实现验证（2026-11-04）
+
+用户对第68.2–68.3节精确六路径及门/正式轮问题实际回答：
+
+> 批准六路径、测试同步、设备门及通过后一次S0
+
+该同意已生效，不重复索取。持久ctypes NVML、冻结身份/ABI、r1 namespace与同一reporter下
+3个独立CUDA启动门正在按批准范围验证；两项v2科学模块保持原字节，旧失败全部保留。
+首轮新增CPU模块36项全部通过（12.698s），包括独立packed ABI、bytes/NA/容量/身份、
+实际原生阻塞与独立parent3秒失联停止、三次凭据不全或不一致拒绝。尚未执行新设备门或S0。
+完整回归与同步结果及实际节点产物将在下文追加，不能从离线测试推断实验完成。
+
+### 69.1 完整本地验收与节点同步前状态
+
+最终完整651项、0skip、80.699秒通过（原615＋v2模块36）。命令沿用第63节五个固定解释器/native
+参数与三项单线程变量，`sh scripts/run_tests.sh`，日志
+`runs/route6-S0-nvml-r1-preparation-20261104/full-tests.log`，SHA256
+`d96be8574d50e38de1035525b2753fce36e08fdc991a91e5d815bd9362d8ee18`。
+287项保护通过；与bdbe逐项比较仅获准config/test/protocol/人类登记四行SHA变化，旧根字段原样。
+两科学模块逐字节相同。跨进程时钟、post-exit新鲜空GPU样本和真实worker回收合同保留。
+只读重连：节点clean7f44240、GPU空闲、fastdisk35,287,248,896B、库SHA同第67节。
+未运行新的设备门或S0；先提交/GitHub核对/干净Linux同步及CPU模块测试。

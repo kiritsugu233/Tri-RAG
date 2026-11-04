@@ -3,6 +3,7 @@ import time
 ENTRY_UNIX = time.time()
 ENTRY_MONOTONIC = time.clock_gettime(time.CLOCK_MONOTONIC)
 import argparse
+import ctypes
 import hashlib
 import importlib.metadata
 import importlib.util
@@ -50,11 +51,13 @@ def source_map():
 
 def config():
     cfg = json.loads(CONFIG.read_text())
-    if (cfg['namespace'] != 'tls-rag-route6-representation-screen-v2' or len(cfg['representations']) != 24
+    if (cfg['namespace'] != 'tls-rag-route6-representation-screen-v2-nvml-r1' or len(cfg['representations']) != 24
             or cfg['queries'] != 128 or cfg['query_dataset'] != 'learn' or cfg['k'] != 100
             or cfg['new_mc_samples'] != 0 or cfg['tri_stage'] or cfg['timing']['cpu_queries_per_role'] != 16
             or cfg['timing']['gpu_queries'] != 128 or cfg['monitor']['gpu_max_age_seconds'] != 3.):
         raise ValueError('frozen v2 scope')
+    if cfg['monitor'] != MONITOR or cfg['device_gate'] != dict(independent_cuda_workers=3,scientific_seconds=120,total_seconds=180):
+        raise ValueError('frozen NVML r1 monitor/gate')
     return cfg
 
 
@@ -88,43 +91,151 @@ def parse_gpu(text):
     return rows
 
 
+# Official nvmlProcessInfo_t ABI for nvmlDeviceGetComputeRunningProcesses_v3.
+# Pin the installed driver; unsupported/unknown/NA never means zero memory.
+MONITOR = dict(poll_seconds=.25,command_seconds=3.,gpu_max_age_seconds=3.,report_seconds=.1,
+    backend='persistent-nvml-v3',library_path='/usr/lib/x86_64-linux-gnu/libnvidia-ml.so.580.82.07',
+    library_sha256='008cc04afc61b8317ed4ddccfa2d1bd367ceb6e71334eb352dc846e0ac450340',
+    driver_version='580.82.07',nvml_version='13.580.82.07',
+    device_uuid='GPU-0c08388b-2980-4723-8c2e-2318f276cd0c',max_processes=1024)
+
+
+class NVMLProcess(ctypes.Structure):
+    _fields_=[('pid',ctypes.c_uint),('usedGpuMemory',ctypes.c_ulonglong),
+              ('gpuInstanceId',ctypes.c_uint),('computeInstanceId',ctypes.c_uint)]
+
+
+def provider_identity(settings):
+    return {key:settings[key] for key in ('backend','library_path','library_sha256',
+        'driver_version','nvml_version','device_uuid')}
+
+
+class NVMLProvider:
+    def __init__(self,settings):
+        self.settings=settings;self.active=False;self.handle=ctypes.c_void_p()
+        if (ctypes.sizeof(NVMLProcess)!=24 or ctypes.alignment(NVMLProcess)!=8
+                or [getattr(NVMLProcess,n).offset for n,_ in NVMLProcess._fields_]!=[0,8,16,20]):
+            raise RuntimeError('unsupported NVML process ABI')
+        if sha(settings['library_path'])!=settings['library_sha256']:
+            raise RuntimeError('NVML library SHA mismatch')
+        self.lib=ctypes.CDLL(settings['library_path'])
+        signatures={
+            'nvmlInit_v2':[], 'nvmlShutdown':[],
+            'nvmlSystemGetDriverVersion':[ctypes.c_void_p,ctypes.c_uint],
+            'nvmlSystemGetNVMLVersion':[ctypes.c_void_p,ctypes.c_uint],
+            'nvmlDeviceGetCount_v2':[ctypes.POINTER(ctypes.c_uint)],
+            'nvmlDeviceGetHandleByIndex_v2':[ctypes.c_uint,ctypes.POINTER(ctypes.c_void_p)],
+            'nvmlDeviceGetUUID':[ctypes.c_void_p,ctypes.c_void_p,ctypes.c_uint],
+            'nvmlDeviceGetComputeRunningProcesses_v3':[ctypes.c_void_p,ctypes.POINTER(ctypes.c_uint),ctypes.POINTER(NVMLProcess)]}
+        for name,args in signatures.items():
+            function=getattr(self.lib,name);function.argtypes=args;function.restype=ctypes.c_int
+        self.ok(self.lib.nvmlInit_v2(),'init');self.active=True
+        try:
+            self.ok(self.lib.nvmlDeviceGetHandleByIndex_v2(0,ctypes.byref(self.handle)),'handle')
+            self.validate_identity();self.last_hash=monotonic()
+        except BaseException:
+            self.close();raise
+
+    @staticmethod
+    def ok(code,operation):
+        if code!=0:raise RuntimeError('NVML '+operation+' return code '+str(code))
+
+    def text(self,function,*args):
+        buffer=ctypes.create_string_buffer(96)
+        self.ok(function(*args,buffer,len(buffer)),'identity')
+        return buffer.value.decode('ascii',errors='strict')
+
+    def validate_identity(self):
+        count=ctypes.c_uint()
+        self.ok(self.lib.nvmlDeviceGetCount_v2(ctypes.byref(count)),'device count')
+        if (count.value!=1 or self.text(self.lib.nvmlSystemGetDriverVersion)!=self.settings['driver_version']
+                or self.text(self.lib.nvmlSystemGetNVMLVersion)!=self.settings['nvml_version']
+                or self.text(self.lib.nvmlDeviceGetUUID,self.handle)!=self.settings['device_uuid']):
+            raise RuntimeError('NVML device/version identity mismatch')
+        return provider_identity(self.settings)
+
+    def query(self):
+        self.validate_identity()
+        if monotonic()-self.last_hash>=10:
+            if sha(self.settings['library_path'])!=self.settings['library_sha256']:
+                raise RuntimeError('NVML library changed')
+            self.last_hash=monotonic()
+        count=ctypes.c_uint(0);function=self.lib.nvmlDeviceGetComputeRunningProcesses_v3
+        code=function(self.handle,ctypes.byref(count),None)
+        if code==0 and count.value==0:return {}
+        if code!=7:raise RuntimeError('NVML process count return code '+str(code))
+        capacity=count.value
+        for attempt in range(2):
+            if not 0<capacity<=self.settings['max_processes']:raise RuntimeError('NVML process capacity limit')
+            capacity=min(self.settings['max_processes'],max(16,capacity+8))
+            rows=(NVMLProcess*capacity)();count=ctypes.c_uint(capacity)
+            code=function(self.handle,ctypes.byref(count),rows)
+            if code==7:
+                capacity=max(count.value,capacity+1);continue
+            self.ok(code,'process query')
+            if count.value>capacity:raise RuntimeError('NVML invalid returned count')
+            result={}
+            for row in rows[:count.value]:
+                if row.pid<=0 or row.pid in result or row.usedGpuMemory==2**64-1:
+                    raise RuntimeError('NVML unknown/duplicate PID or NA memory')
+                result[row.pid]=int(row.usedGpuMemory)  # bytes, not MiB
+            return result
+        raise RuntimeError('NVML process capacity changed twice')
+
+    def close(self):
+        if self.active:
+            self.active=False;self.ok(self.lib.nvmlShutdown(),'shutdown')
+
+
 def reporter(root, nonce, owner_pid, settings, query_command=None):
-    root = Path(root)
-    command = query_command or ['nvidia-smi','--query-compute-apps=pid,used_memory','--format=csv,noheader,nounits']
-    sequence = 0
+    root=Path(root);sequence=0;provider=None;identity=provider_identity(settings)
+    # The explicit command adapter is CPU-fixture-only. Production always uses
+    # the pinned persistent native provider, with no CLI retry/fallback.
+    if query_command:identity=dict(backend='cpu-command-fixture')
     with (root/'telemetry.log').open('x') as log:
-        while os.getppid() == owner_pid:
-            started = monotonic()
-            try:
-                result = subprocess.run(command,capture_output=True,text=True,check=True,
-                                        timeout=settings['command_seconds'])
-                values = parse_gpu(result.stdout)
-                sequence += 1
-                sample = dict(nonce=nonce, reporter_pid=os.getpid(), owner_pid=owner_pid,
-                    sequence=sequence, started_monotonic=started, completed_monotonic=monotonic(),
-                    memory_bytes={str(p):v for p,v in values.items()})
-                atomic_json(root/'telemetry.json',sample)
-                log.write(json.dumps(dict(sequence=sequence,query_seconds=monotonic()-started,valid=True))+'\n')
-            except Exception as exc:
-                # Retain the last valid sample, never fabricate a zero sample.
-                log.write(json.dumps(dict(sequence=sequence,valid=False,error=type(exc).__name__+': '+str(exc)))+'\n')
-            log.flush()
-            # Anchor cadence to query start. An extra fixed sleep after a slow
-            # but valid call can make the preceding sample exceed the3s age.
-            time.sleep(max(0.,settings['report_seconds']-(monotonic()-started)))
+        try:
+            if not query_command:provider=NVMLProvider(settings)
+            while os.getppid()==owner_pid:
+                started=monotonic()
+                event=dict(sequence=sequence,started_monotonic=started,provider=identity)
+                try:
+                    if query_command:
+                        result=subprocess.run(query_command,capture_output=True,text=True,check=True,
+                                              timeout=settings['command_seconds'])
+                        values=parse_gpu(result.stdout)
+                    else:values=provider.query()
+                    completed=monotonic();sequence+=1
+                    sample=dict(nonce=nonce,reporter_pid=os.getpid(),owner_pid=owner_pid,provider=identity,
+                        sequence=sequence,started_monotonic=started,completed_monotonic=completed,
+                        memory_bytes={str(p):v for p,v in values.items()})
+                    atomic_json(root/'telemetry.json',sample)
+                    event.update(sequence=sequence,completed_monotonic=completed,query_seconds=completed-started,valid=True)
+                except Exception as exc:
+                    event.update(completed_monotonic=monotonic(),valid=False,error=type(exc).__name__+': '+str(exc))
+                    log.write(json.dumps(event)+'\n');log.flush()
+                    raise  # fail closed; never reuse a sample after an explicit API error
+                log.write(json.dumps(event)+'\n');log.flush()
+                time.sleep(max(0.,settings['report_seconds']-(monotonic()-started)))
+        except BaseException as exc:
+            log.write(json.dumps(dict(valid=False,provider=identity,error=type(exc).__name__+': '+str(exc),
+                started_monotonic=monotonic(),completed_monotonic=monotonic(),sequence=sequence))+'\n');log.flush()
+            raise
+        finally:
+            if provider:provider.close()
 
 
-def telemetry_memory(root, nonce, reporter_pid, owned, settings, now=None, retired_owned=()):
+def telemetry_memory(root, nonce, reporter_pid, owned, settings, now=None, retired_owned=(), expected_provider=None, return_sample=False):
     value = json.loads((Path(root)/'telemetry.json').read_text())
     now = monotonic() if now is None else now
-    if (value['nonce'] != nonce or value['reporter_pid'] != reporter_pid or value['owner_pid'] != os.getpid()
-            or not isinstance(value['sequence'],int) or value['sequence'] < 1
+    expected_provider=provider_identity(settings) if expected_provider is None else expected_provider
+    if (value.get('provider')!=expected_provider or value['nonce'] != nonce or value['reporter_pid'] != reporter_pid or value['owner_pid'] != os.getpid()
+            or type(value['sequence']) is not int or value['sequence'] < 1
             or not 0 <= now-value['started_monotonic'] <= settings['gpu_max_age_seconds']
             or not value['started_monotonic'] <= value['completed_monotonic'] <= now):
-        raise RuntimeError('GPU telemetry identity/staleness')
+        raise RuntimeError('GPU telemetry identity/staleness: '+json.dumps(dict(age_seconds=now-value['started_monotonic'],sequence=value['sequence'],provider=value.get('provider'),expected_provider=expected_provider)))
     memory = {}
     for pid, amount in value['memory_bytes'].items():
-        if not pid.isdigit() or type(amount) is not int or amount < 0:
+        if not pid.isdigit() or int(pid)<=0 or str(int(pid))!=pid or type(amount) is not int or amount < 0:
             raise RuntimeError('invalid GPU memory sample')
         memory[int(pid)] = amount
     # A fresh sample can still describe our just-reaped worker. Accept only
@@ -135,7 +246,7 @@ def telemetry_memory(root, nonce, reporter_pid, owned, settings, now=None, retir
         try:os.kill(pid,0)
         except ProcessLookupError:allowed.add(pid)
     if set(memory)-allowed: raise RuntimeError('unrelated GPU compute process appeared')
-    return sum(memory.values())
+    return (sum(memory.values()),value) if return_sample else sum(memory.values())
 
 
 def environment(cfg):
@@ -176,6 +287,7 @@ class Guard:
         self.scientific_start=None;self.report=None;self.nonce=secrets.token_hex(16)
         self.peak_rss=self.peak_gpu=0;self.use_gpu=use_gpu;self.query_command=query_command
         self.known_owned=set()
+        self.provider=dict(backend='cpu-command-fixture') if query_command else provider_identity(settings)
         self.first_sample_deadline=monotonic()+settings['gpu_max_age_seconds']
 
     def start_reporter(self):
@@ -196,7 +308,7 @@ class Guard:
             if self.report is None or self.report.poll() is not None:raise RuntimeError('GPU reporter exited')
             if not (self.root/'telemetry.json').exists() and now <= self.first_sample_deadline:
                 waiting=True
-            else:used=telemetry_memory(self.root,self.nonce,self.report.pid,set(tree),self.settings,retired_owned=self.known_owned)
+            else:used=telemetry_memory(self.root,self.nonce,self.report.pid,set(tree),self.settings,retired_owned=self.known_owned,expected_provider=self.provider)
         self.peak_rss=max(self.peak_rss,rss);self.peak_gpu=max(self.peak_gpu,used)
         disk,artifacts=storage_sizes(self.root)
         values=dict(rss_bytes=rss,gpu_bytes=used,disk_bytes=disk,artifact_bytes=artifacts)
@@ -241,12 +353,12 @@ def run_job(command, root, guard, name, env=None):
     status=('monitor_failed' if failure else 'component_stop' if reason and reason.startswith('component_seconds:')
             else 'resource_stop' if reason else 'complete' if code==0 else 'worker_failed')
     result=dict(name=name,status=status,reason=reason,monitor_error=failure,returncode=code,
-        seconds=monotonic()-started,worker_pid=child.pid,peak_rss_bytes=guard.peak_rss,peak_gpu_bytes=guard.peak_gpu)
+        seconds=monotonic()-started,exited_monotonic=monotonic(),worker_pid=child.pid,peak_rss_bytes=guard.peak_rss,peak_gpu_bytes=guard.peak_gpu)
     write_json(stage/'execution.json',result)
     return result
 
 
-def tiny(cfg,root,torch,check):
+def tiny(cfg,root,torch,check,stage_name):
     import numpy as np
     from mechanism import tls_rag_step5_route6_representation_v2 as rep
     rng=np.random.Generator(np.random.PCG64(23));x=rng.normal(size=(64,16)).astype(np.float32)
@@ -265,8 +377,8 @@ def tiny(cfg,root,torch,check):
             h2d_seconds=cache['h2d_seconds'],norm_prepare_seconds=cache['norm_prepare_seconds']))
         del cache;torch.cuda.empty_cache()
     freeze=json.loads((Path(root)/'source_freeze.json').read_text())
-    native=json.loads((Path(root)/'stages/tiny/binary_identity.json').read_text())
-    write_json(Path(root)/'device_receipt.json',dict(status='passed',sources=freeze['sources'],config=cfg,
+    native=json.loads((Path(root)/'stages'/stage_name/'binary_identity.json').read_text())
+    write_json(Path(root)/'stages'/stage_name/'device_receipt.json',dict(status='passed',worker_pid=os.getpid(),provider=provider_identity(cfg['monitor']),sources=freeze['sources'],config=cfg,
         environment=freeze['environment'],checks=outputs,binary_sha256=native['binary_sha256'],precision=native['precision']))
 
 
@@ -296,7 +408,7 @@ def worker(root,cfg,stage,ident=None,pipeline=None):
         write_json(root/'stages'/freeze_stage_name(stage,ident,pipeline)/'binary_identity.json',
                    dict(binary_sha256=binaries,precision=precision))
         check()
-        if stage=='tiny':tiny(cfg,root,torch,check)
+        if stage=='tiny':tiny(cfg,root,torch,check,freeze_stage_name(stage,ident,pipeline))
         elif stage=='prepare':screen.prepare(cfg,root,torch,check,phase)
         elif stage=='quality':screen.quality(cfg,root,ident,torch,check,phase)
         elif stage=='timing':screen.linear_timing(cfg,root,ident,torch,check,phase)
@@ -328,6 +440,45 @@ def worker(root,cfg,stage,ident=None,pipeline=None):
 
 def freeze_stage_name(stage,ident=None,pipeline=None):
     return stage+('-'+ident if ident else '')+('-'+pipeline.replace(':','-') if pipeline else '')
+
+
+def await_gpu_idle(root,guard,exited):
+    deadline=monotonic()+guard.settings['gpu_max_age_seconds']
+    while True:
+        guard.ready()
+        memory,sample=telemetry_memory(root,guard.nonce,guard.report.pid,set(process_tree(os.getpid())),
+            guard.settings,retired_owned=guard.known_owned,return_sample=True)
+        if memory==0 and sample['started_monotonic']>=exited:return
+        if monotonic()>=deadline:raise MonitorFailure('no post-exit empty GPU sample')
+        time.sleep(guard.settings['poll_seconds'])
+
+
+def seal_device_gate(root,cfg,results,provider):
+    """All three exited startups, never the best one, authorize the real run."""
+    root=Path(root);freeze=json.loads((root/'source_freeze.json').read_text());cases=[];pids=set()
+    if len(results)!=cfg['device_gate']['independent_cuda_workers']:raise RuntimeError('three startups required')
+    for number,result in enumerate(results,1):
+        name='tiny-startup'+str(number)
+        if result['name']!=name or result['status']!='complete':raise RuntimeError('startup gate incomplete')
+        receipt=json.loads((root/'stages'/name/'device_receipt.json').read_text())
+        pid=receipt['worker_pid']
+        if pid in pids or pid!=result['worker_pid']:raise RuntimeError('independent startup PID mismatch')
+        try:os.kill(pid,0)
+        except ProcessLookupError:pass
+        else:raise RuntimeError('startup worker still alive')
+        pids.add(pid)
+        if (receipt['status']!='passed' or receipt['sources']!=freeze['sources'] or receipt['config']!=cfg
+                or receipt['environment']!=freeze['environment'] or receipt['provider']!=provider
+                or [c['kind'] for c in receipt['checks']]!=['raw','gaussian','pca','hybrid']
+                or not all(c['cpu_cuda_exact'] for c in receipt['checks'])):
+            raise RuntimeError('startup receipt identity/check mismatch')
+        if cases and any(receipt[k]!=cases[0][k] for k in ('binary_sha256','precision','provider')):
+            raise RuntimeError('startup native/precision/provider changed')
+        cases.append(receipt)
+    saved=dict(cases[0],independent_cuda_workers=len(cases),worker_pids=sorted(pids),
+        startup_receipt_sha256=[sha(root/'stages'/r['name']/'device_receipt.json') for r in results])
+    saved.pop('worker_pid');write_json(root/'device_receipt.json',saved)
+    return saved
 
 
 def close_run(root,result,start,total_seconds):
@@ -376,7 +527,7 @@ def supervise(root,cfg,receipt=None,device_only=False):
     if sys.platform!='linux':raise RuntimeError('real screen requires Linux node')
     root=Path(root).resolve();root.mkdir(exist_ok=False)
     limits=dict(cfg['limits'])
-    if device_only:limits.update(scientific_seconds=120,total_seconds=180)
+    if device_only:limits.update(scientific_seconds=cfg['device_gate']['scientific_seconds'],total_seconds=cfg['device_gate']['total_seconds'])
     guard=Guard(root,limits,cfg['monitor'],start=ENTRY_MONOTONIC);results=[];failure=None;status='preflight_failed'
     childenv=dict(os.environ,PYTHONDONTWRITEBYTECODE='1',CUBLAS_WORKSPACE_CONFIG=':4096:8')
     try:
@@ -391,7 +542,7 @@ def supervise(root,cfg,receipt=None,device_only=False):
             raise RuntimeError('GPU busy before science')
         if not device_only:
             saved=json.loads(Path(receipt).read_text())
-            if saved['status']!='passed' or saved['sources']!=sources or saved['config']!=cfg or saved['environment']!=env:
+            if saved['status']!='passed' or saved['sources']!=sources or saved['config']!=cfg or saved['environment']!=env or saved.get('provider')!=guard.provider or saved.get('independent_cuda_workers')!=3 or len(saved.get('startup_receipt_sha256',[]))!=3 or len(set(saved.get('worker_pids',[])))!=3:
                 raise RuntimeError('missing/mismatched successful tiny CUDA receipt')
         write_json(root/'source_freeze.json',dict(config=cfg,sources=sources,environment=env,allocation=allocation,
             parent_pid=os.getpid(),global_start_unix=ENTRY_UNIX,global_start_monotonic=ENTRY_MONOTONIC,
@@ -409,7 +560,11 @@ def supervise(root,cfg,receipt=None,device_only=False):
             if result['status']=='complete':return True
             if allow_component and result['status']=='component_stop':return False
             raise RuntimeError('stage stopped: '+json.dumps(result))
-        if device_only:job('tiny')
+        if device_only:
+            for number in range(1,4):
+                job('tiny',ident='startup'+str(number))
+                await_gpu_idle(root,guard,results[-1]['exited_monotonic'])
+            seal_device_gate(root,cfg,results,guard.provider)
         else:
             job('prepare');order=json.loads((root/'schedule.json').read_text())['configuration_order']
             for ident in order:

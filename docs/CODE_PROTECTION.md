@@ -676,3 +676,26 @@ unchanged. Full CPU regression/GitHub and clean Linux sync/tiny CUDA precede one
 new-directory v2,7200s science/9000s global,RSS64GiB/GPU48GiB,CPU14,artifacts8GiB/
 newdisk12GiB/free>=16GiB. Same full source/128 development roles; no test/MC/Tri,
 install/download or automatic retry. Actual consent is recorded, not inferred.
+
+## Approved R6-S0 v2 persistent NVML r1 (2026-11-04)
+
+Actual user answer to exploration §68.2–68.3 exact six-path question:
+
+> 批准六路径、测试同步、设备门及通过后一次S0
+
+Only `scripts/run_tls_rag_step5_route6_representation_v2.py`,
+`configs/tls_rag_step5_route6_representation_v2.json`,
+`tests/test_tls_rag_step5_route6_representation_v2.py`,
+`docs/TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V2.md`, this register and
+`docs/code_protection.json` change within the approved monitoring revision.
+Pin the existing NVML library/API/ABI/provider identity; persistent native queries,
+unchanged3s query-start age/250ms parent polling/limits; new r1 namespace.
+Three independent tiny CUDA startups in one<=120s science/180s total gate must
+all exit/pass and share native/precision/provider/source identities before one
+new-directory same24/128-role S0<=7200s science/9000s total. Full regression,
+commit/push/verified node sync precede gate. No install/download/test/MC/Tri,
+automatic retry or monitor grace. Prior v1/v2 failures and results remain;
+the two v2 scientific modules, old classifications/root records/hashes stay
+unchanged. Only approved config/test/protocol/this-register hashes refresh;
+append actual consent, never replace earlier authorization. Four L1 handoff
+documents record progress and measured outcomes separately from software checks.

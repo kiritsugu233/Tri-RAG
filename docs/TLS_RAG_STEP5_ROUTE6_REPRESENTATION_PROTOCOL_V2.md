@@ -1,6 +1,7 @@
 # R6-S0 representation screen v2
 
-Frozen namespace `tls-rag-route6-representation-screen-v2`. Actual2026-11-04 consent
+Current frozen namespace `tls-rag-route6-representation-screen-v2-nvml-r1`.
+The earlier v2 namespace/source/failures remain immutable in Git and closed run directories. Actual2026-11-04 consent
 to exploration §62.2–62.3's exact nine paths, testing/sync and one new run:
 
 > 批准第62节九路径、测试同步及一次v2补测
@@ -124,27 +125,61 @@ input SHA/norm audit shown separately and included in cold-verification totals.
 Model/ID/norm/retainedraw bytes, actual duplicates, disk bytes and observed
 CPU/GPU peaks remain distinct. No full-system PQ compression claim from codes alone.
 
+## Approved NVML r1 revision (2026-11-04)
+
+Actual answer to exploration §68.2–68.3 exact six-path question:
+
+> 批准六路径、测试同步、设备门及通过后一次S0
+
+Only runner/config/test/this protocol and two append-only protection registers
+change. Both v2 scientific modules stay byte-identical. No install or fallback.
+Existing `/usr/lib/x86_64-linux-gnu/libnvidia-ml.so.580.82.07` is loaded through
+stdlib ctypes. SHA256 `008cc04afc61b8317ed4ddccfa2d1bd367ceb6e71334eb352dc846e0ac450340`,
+driver580.82.07, NVML13.580.82.07, one device UUID
+`GPU-0c08388b-2980-4723-8c2e-2318f276cd0c` are frozen. Initialize once and keep
+the device handle; each query validates count/version/UUID, and library SHA is
+rechecked at least every10s between calls. Library ABI is 64-bit process struct
+size24/alignment8/offsets0,8,16,20: uint PID, uint64 usedGpuMemory bytes,
+uint gpuInstanceId, uint computeInstanceId. Only v3 compute-process API is used.
+NA (`2**64-1`), unknown errors, bad/duplicate PID, ABI or identity mismatch fail.
+Count enquiry may return SUCCESS/0 or INSUFFICIENT_SIZE; at most two bounded
+array queries, capacity<=1024, otherwise stop. Explicit API errors stop reporter;
+blocked native calls are stopped by the independent parent freshness rule.
+
+One device gate uses this same reporter for three serial independent CUDA
+workers, each performing all four original tiny checks. Each worker must exit;
+then require a validated empty GPU sample whose query started after its exit.
+Three source/config/environment/provider/native/precision identities must match;
+only all three passing create the aggregate receipt, binding the three per-case
+receipt hashes and distinct worker PIDs. No selection of a favorable startup.
+Science<=120s/total<=180s for the whole gate, not per worker. A real run rejects
+old one-startup/CLI receipts. After full regression, GitHub/clean node sync and
+this one gate passing, only one new-directory same-configuration S0 is allowed.
+A gate failure prevents real S0; no automatic retry or relaxed3s threshold.
+
 ## Monitoring and stop contract change
 
 Global timer starts at the stdlib entry before preflight/imports. Reporter is
-a separate owned session and calls the GPU CLI with a3s timeout. Successful
-queries follow a0.1s start-to-start target cadence; subtract query duration
+a separate owned session with the persistent NVML provider above. The GPU CLI
+is used only for idle preflight physical identity, bounded by3s. Successful
+native queries follow a0.1s start-to-start target cadence; subtract query duration
 from the wait, so slow valid calls are followed immediately by the next query.
 This is denser sampling, not a longer valid-sample age: age still begins at
 query start and cannot exceed3s. Parent polling remains250ms.
 Successful
-atomic samples carry nonce/owner/reporter PID, monotonic start/end/sequence and
+atomic samples carry provider identity, nonce/owner/reporter PID, monotonic start/end/sequence and
 actual process-memory bytes. Cross-process timestamps use POSIX CLOCK_MONOTONIC
-(the same system origin, including Python3.9/mac CPU fixtures). Failures are logged and do not replace the last
-valid sample with zero. First valid sample must arrive within3s before heavy
+(the same system origin, including Python3.9/mac CPU fixtures). Start/end/sequence/provider/status/errors are logged; explicit errors terminate
+the reporter and never replace the last valid sample with zero. Freshness failures
+include actual sample age and provider identity. First valid sample must arrive within3s before heavy
 science. Any sample older than3s, malformed/unknown memory, identity mismatch,
 external GPU process or dead reporter stops owned science and reporter.
 Fresh samples describing a just-reaped, previously observed owned PID are
 accepted only while that PID no longer exists; live/reused external PIDs fail.
 
 Parent polls owned tree RSS, wall/scientific deadline, disk and sample freshness
-every250ms independently of the reporter's blocked CLI. All owned descendants,
-including telemetry commands, count toward RSS. Delayed sampling/kill overshoot
+every250ms independently of the reporter's blocked native API. All owned descendants,
+including telemetry fixture commands, count toward RSS. Delayed sampling/kill overshoot
 remains possible;3s is explicitly weaker GPU observability than v1's<=1s/.75s
 contract and is separately approved. This is no zero-overshoot resource theorem.
 Atomic telemetry files are counted; their rename races cannot create a false
