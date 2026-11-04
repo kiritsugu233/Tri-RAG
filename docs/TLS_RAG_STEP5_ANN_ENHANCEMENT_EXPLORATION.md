@@ -6685,3 +6685,22 @@ Linux直连git fetch在60秒上限超时，未merge，仍干净140e9de；没有�
 `full-tests-rowwise-query.log` SHA256 `af8da0a68e82f96bd39f559264990ccd083875b0dd31a3bddef5075d199cb2e5`。
 642阶段日志和全部失败/修正证据保留。287项保护通过；真实v2尚未启动，原一次新轮仍待最终源码
 提交/GitHub/节点核对、Linux28 CPU与新tiny CUDA凭据后执行，不把任一旧tiny当新版本通过。
+
+## 65 S0 v2节点同步与native凭据锁、最终644项验收（2026-11-04）
+
+b59c6ed0b90930b6eb0a8463b82125a2338f2587已push并独立核对GitHub；节点验证62,275字节增量bundle
+SHA256 `2ba7f42f50aafeb93b8223330d3177bf757e15e4ac32d5cd505833fbd0468ec0`、先决140e9de、
+HEAD和原branch后ff-only成功，origin不改、跟踪文件干净。Linux新增28项**7.917秒、0跳过通过**；
+原fetch60秒失败及环境/prep/CPU日志保留，本机未据此冒称实际CUDA或真实v2通过。
+
+最后合规复核补齐新runner的native凭据：除了distribution/init元数据，实际tiny和每个真实worker
+还记录/核对加载的NumPy multiarray、Torch_C及Faiss SWIG扩展SHA（具体键为实际`faiss._swigfaiss*`模块）
+以及IEEE/TF32禁用、deterministic/cuBLAS workspace精度设置。正式worker必须与成功tiny的相同
+native SHA/精度完全匹配，否则停止；该检查只在已获准新runner/test路径内，无新依赖或旧helper编辑。
+新增CPU假库文件变更回归验证指纹改变，实际GPU/库身份仍必须由下一项节点tiny取得。
+
+最终完整验收：**644项通过、0跳过、76.189秒**（原615＋新29）。
+`full-tests-native-receipt.log` SHA256 `b7f05e1156e9712b40d73ca1e63c3d5a42dc29c0e87105f28e9299f9c4207c12`。
+全部642/643检查点和失败日志保留；287项保护通过。当前尚无真实v2输入/训练/检索或tiny CUDA。
+接下来推送并验证最终版本、节点增量bundle/干净快进、新29项CPU及新目录tiny；通过后执行一次
+7200/9000秒新目录v2。已有第62节同意覆盖这些新文件内的实现验收，不再重复请求同一批准。

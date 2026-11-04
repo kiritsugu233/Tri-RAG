@@ -1870,7 +1870,7 @@
       "path": "tests/test_tls_rag_step5_route6_representation_v2.py",
       "level": "L0",
       "reason": "User-approved §62 S0 v2: Independent mmap/cache/role/cost and actual reporter/owned-process CPU regressions",
-      "sha256": "b04f042a5fe8c93559a13ce4be79b576eee5377c5f4fe2a4cce77bfab278fbd0"
+      "sha256": "ace2ce9fbfee8854af0718f69ff205797dd73312773b415023ae052dc2317a00"
     },
     {
       "path": "docs/TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V2.md",
@@ -2487,6 +2487,6 @@
     "proposal": "docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md §62.2–62.3",
     "scope": "Six new v2 files, test membership and two append-only registers; full tests/sync/tiny then one new-directory7200s/9000s/RSS64GiB/GPU48GiB run;32CPU/128GPU timing,3s telemetry; no old source/result/test/MC/Tri changes",
     "old_entries_preserved": "All existing classifications/scientific hashes and root metadata unchanged except explicitly approved human-register hash; prior approvals preserved",
-    "validation": "Final full643 CPU/offline tests passed, zero skips,77.816s; log SHA256 af8da0a68e82f96bd39f559264990ccd083875b0dd31a3bddef5075d199cb2e5. This is prelaunch validation, not a real-data result; Linux and tiny CUDA still required."
+    "validation": "Final full644 CPU/offline tests passed, zero skips,76.189s;29 new tests; log SHA256 b7f05e1156e9712b40d73ca1e63c3d5a42dc29c0e87105f28e9299f9c4207c12. This records prelaunch validation; actual tiny CUDA and real v2 results are separate."
   }
 }

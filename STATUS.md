@@ -3,7 +3,7 @@
 Updated2026-11-04. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
 maintained branch `codex/tls-rag-step5-ann`.
 
-## 当前实施：S0 v2最终完整643项通过，准备节点同步
+## 当前实施：S0 v2最终完整644项通过，准备最终节点/tiny核对
 
 - 实际用户答复：“批准第62节九路径、测试同步及一次v2补测”。六个v2文件和窄幅测试/登记实现完成；旧v1科学、失败和治理规则不改。
 - 已只读重连：单A80080GiB空闲，工作盘空闲35,289,018,368字节，原完整源/关闭索引/PQ编码均在；节点跟踪干净、科学140e9de，无新实际训练/检索。
@@ -12,6 +12,7 @@ maintained branch `codex/tls-rag-step5-ann`.
 - 287项保护通过（L0=202/L1=82/L2=3）；旧281行/旧根元数据除获批人类登记SHA外逐项保留。同步/tiny实际CUDA通过前，不启动真实v2。节点旧文件保持，旧一次S0不续算/拼成complete。
 - [第63节](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#63-s0-v2实际批准实现与本地验收2026-11-04)记录实际实现/命令/失败；下一项为验收后提交同步、Linux CPU/tiny，再执行唯一新目录v2。
 - 启动前发现FP32批量/逐行query变换有约1.94e-7坐标差；新v2质量/参考改为部署的逐行路径，新增实际Faiss边界回归。最终完整643项、0跳过、77.816秒通过，旧642日志保留。9baa5c4已核对GitHub，但Linux直连fetch60秒超时、HEAD未变；改用GitHub提交核对后的bundle快进，origin不变。见[第64节](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#64-s0-v2启动前查询浮点路径一致性与最终643项验收2026-11-04)。
+- b59c6ed已GitHub核对并经SHA验证bundle干净ff-only到节点，origin保持；Linux28项7.917秒通过。随后补齐实际native扩展和精度凭据锁，新29项纳入最终完整644项（0skip/76.189秒）。[第65节](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#65-s0-v2节点同步与native凭据锁最终644项验收2026-11-04)记录日志SHA和来源；新tiny/真实v2尚未启动。
 
 ## 当前收尾：S0监控失败，部分数据有效，整轮未完成
 

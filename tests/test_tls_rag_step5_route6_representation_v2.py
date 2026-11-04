@@ -251,6 +251,16 @@ class RepresentationV2Tests(unittest.TestCase):
         after=time.clock_gettime(time.CLOCK_MONOTONIC)
         self.assertLessEqual(before,child);self.assertLessEqual(child,after)
 
+    def test_native_receipt_binds_loaded_extensions_and_mutations(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/'fixture.so';path.write_bytes(b'first')
+            stub=SimpleNamespace(_C=SimpleNamespace(__file__=str(path)))
+            first=runner.native_binary_identity(stub)
+            self.assertIn('numpy',first);self.assertIn('torch',first)
+            self.assertTrue(any(n.startswith('faiss.') for n in first))
+            path.write_bytes(b'second');second=runner.native_binary_identity(stub)
+            self.assertNotEqual(first['torch'],second['torch']);self.assertEqual(first['numpy'],second['numpy'])
+
     def test_fresh_retired_owned_sample_does_not_authorize_live_external_pid(self):
         with tempfile.TemporaryDirectory() as tmp:
             self.sample(tmp,memory_bytes={str(os.getpid()):1024})

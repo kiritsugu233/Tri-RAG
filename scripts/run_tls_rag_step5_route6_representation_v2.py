@@ -149,6 +149,16 @@ def environment(cfg):
         package_binaries={n:sha(importlib.util.find_spec(n).origin) for n in ('numpy','scipy','h5py','faiss','torch')})
 
 
+def native_binary_identity(torch):
+    """Bind loaded native extensions as well as distribution/init metadata."""
+    import numpy as np
+    paths=dict(numpy=np.core._multiarray_umath.__file__,torch=torch._C.__file__)
+    paths.update({name:module.__file__ for name,module in sys.modules.copy().items()
+        if name.startswith('faiss._swigfaiss') and hasattr(module,'__file__')})
+    if not any(name.startswith('faiss.') for name in paths):raise RuntimeError('loaded Faiss native binary missing')
+    return {name:sha(path) for name,path in paths.items()}
+
+
 class ResourceStop(RuntimeError):
     pass
 
@@ -253,8 +263,9 @@ def tiny(cfg,root,torch,check):
             h2d_seconds=cache['h2d_seconds'],norm_prepare_seconds=cache['norm_prepare_seconds']))
         del cache;torch.cuda.empty_cache()
     freeze=json.loads((Path(root)/'source_freeze.json').read_text())
+    native=json.loads((Path(root)/'stages/tiny/binary_identity.json').read_text())
     write_json(Path(root)/'device_receipt.json',dict(status='passed',sources=freeze['sources'],config=cfg,
-        environment=freeze['environment'],checks=outputs))
+        environment=freeze['environment'],checks=outputs,binary_sha256=native['binary_sha256'],precision=native['precision']))
 
 
 def worker(root,cfg,stage,ident=None,pipeline=None):
@@ -277,6 +288,11 @@ def worker(root,cfg,stage,ident=None,pipeline=None):
         from mechanism import tls_rag_step5_route6_representation_screen_v2 as screen
         import faiss
         torch,precision=torch_backend();torch.set_num_threads(1);faiss.omp_set_num_threads(cfg['timing']['faiss_threads'])
+        binaries=native_binary_identity(torch)
+        if freeze.get('native_binary_sha256') is not None and (binaries!=freeze['native_binary_sha256'] or precision!=freeze['precision']):
+            raise RuntimeError('native binary/precision differs from successful tiny receipt')
+        write_json(root/'stages'/freeze_stage_name(stage,ident,pipeline)/'binary_identity.json',
+                   dict(binary_sha256=binaries,precision=precision))
         check()
         if stage=='tiny':tiny(cfg,root,torch,check)
         elif stage=='prepare':screen.prepare(cfg,root,torch,check,phase)
@@ -378,6 +394,8 @@ def supervise(root,cfg,receipt=None,device_only=False):
         write_json(root/'source_freeze.json',dict(config=cfg,sources=sources,environment=env,allocation=allocation,
             parent_pid=os.getpid(),global_start_unix=ENTRY_UNIX,global_start_monotonic=ENTRY_MONOTONIC,
             deadline_monotonic=ENTRY_MONOTONIC+limits['total_seconds'],device_receipt_sha256=sha(receipt) if receipt else None,
+            native_binary_sha256=saved['binary_sha256'] if not device_only else None,
+            precision=saved['precision'] if not device_only else None,
             commit=subprocess.run(['git','rev-parse','HEAD'],cwd=ROOT,capture_output=True,text=True,check=True,timeout=5).stdout.strip(),
             mode='tiny only' if device_only else 'one approved S0 v2'))
         def job(stage,ident=None,pipeline=None,allow_component=False):

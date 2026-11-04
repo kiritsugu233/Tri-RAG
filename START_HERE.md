@@ -15,10 +15,11 @@ read-only mmap, once-per-index CUDA norms, actual hardware cold costs,
 quality-first serial workers and independent3s telemetry. Same24 configurations,
 full128 quality, fixed32CPU/128GPU timing cohorts. Old v1 science/results stay fixed.
 Node is on: original source/PQ/index retained, A800 idle, fastdisk32.9GiB free,
-tracked checkout clean140e9de.28 new CPU fixtures include real blocked telemetry/
+tracked checkout cleanb59c6ed after verified bundle sync.29 new CPU fixtures include real blocked telemetry/
 owned stops, staged CPU quality/restore/IVF/cost and rowwise query conformance.
-Final full643 passed,zero skips,77.816s; no real v2 data/training/search yet.
-Read [section64](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#64-s0-v2启动前查询浮点路径一致性与最终643项验收2026-11-04).
+Final full644 passed,zero skips,76.189s; Linux28 passed onb59c6ed before the
+native-extension/precision-lock refinement. No real v2 data/training/search yet.
+Read [section65](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#65-s0-v2节点同步与native凭据锁最终644项验收2026-11-04).
 Next: canonical commit/push/remote verification,
 clean Linux sync/CPU and fresh actual tiny CUDA, then only the approved one
 scientific7200s/global9000s v2. No automatic retry or later Tri stage.
