@@ -8,6 +8,20 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**R6-S0 v2 approved; local full regression passed (2026-11-04).** Actual
+answer to §62.2–62.3: “批准第62节九路径、测试同步及一次v2补测”. The six v2 files,
+membership-only test addition and append-only protection registration implement
+read-only mmap, once-per-index CUDA norms, actual hardware cold costs,
+quality-first serial workers and independent3s telemetry. Same24 configurations,
+full128 quality, fixed32CPU/128GPU timing cohorts. Old v1 science/results stay fixed.
+Node is on: original source/PQ/index retained, A800 idle, fastdisk32.9GiB free,
+tracked checkout clean140e9de.27 new CPU fixtures include real blocked telemetry/
+owned stops and a staged CPU quality/restore/IVF/cost smoke. Full642 passed,
+zero skips,77.052s; no real v2 data/training/search yet. Read [section63](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#63-s0-v2实际批准实现与本地验收2026-11-04).
+Next: canonical commit/push/remote verification,
+clean Linux sync/CPU and fresh actual tiny CUDA, then only the approved one
+scientific7200s/global9000s v2. No automatic retry or later Tri stage.
+
 **R6-S0 closed with partial results; the real experiment did not complete (2026-11-04).**
 Scientific commit `140e9de8244b354a157286e79cf260ce4aeaa774` remains unchanged.
 After1867.539s, one `nvidia-smi` query exceeded0.75s; the supervisor recorded

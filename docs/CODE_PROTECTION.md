@@ -654,3 +654,25 @@ and one S0, scientific7200s/total9000s/RSS64GiB/GPU48GiB/artifacts8GiB/newdisk12
 Reuse complete source/original128 learn roles; open only corresponding published
 learn_neighbors rows. Official test stays closed; no new MC/Tri stage/install/
 automatic retry. Four L1 handoff documents record actual progress.
+
+## Approved R6-S0 representation screen v2 (2026-11-04)
+
+Actual user answer to exploration §62.2–62.3 exact nine-path/test/sync/one-v2 question:
+
+> 批准第62节九路径、测试同步及一次v2补测
+
+| New path | Level | Approved scope |
+| --- | --- | --- |
+| `mechanism/tls_rag_step5_route6_representation_v2.py` | L0 | Read-only validated source mmap, frozen transforms, fingerprinted once-per-index CUDA norms and exact model/code restoration |
+| `mechanism/tls_rag_step5_route6_representation_screen_v2.py` | L0 | Quality-first staged screen, fixed32/128 timing cohorts, hardware-specific cold ledger and matched-cohort oracle |
+| `configs/tls_rag_step5_route6_representation_v2.json` | L0 | Same24/source/128 roles/training/seeds, explicit3s telemetry and32CPU/128GPU timing changes, one-run caps |
+| `tests/test_tls_rag_step5_route6_representation_v2.py` | L0 | Independent mmap/cache/ADC/cohort/cost/telemetry and actual owned-worker stop regressions |
+| `docs/TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V2.md` | L0 | Frozen new stopping/timing/stage/cost contracts and unchanged scientific boundaries |
+| `scripts/run_tls_rag_step5_route6_representation_v2.py` | L1 | Stdlib staged parent/reporter ownership, bounded CLI/staleness and serial component recovery; scientific semantics inherit L0 |
+
+Only new test membership, these six rows and necessary new hashes/human-register
+hash are changed. Old scientific code, levels, hashes and v1 failure/results stay
+unchanged. Full CPU regression/GitHub and clean Linux sync/tiny CUDA precede one
+new-directory v2,7200s science/9000s global,RSS64GiB/GPU48GiB,CPU14,artifacts8GiB/
+newdisk12GiB/free>=16GiB. Same full source/128 development roles; no test/MC/Tri,
+install/download or automatic retry. Actual consent is recorded, not inferred.

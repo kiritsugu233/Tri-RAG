@@ -6615,3 +6615,53 @@ epsilon、训练65536行/OPQ默认、投影seed和Gaussian方差/无后归一化
 当前依据[AGENTS.md](../AGENTS.md)：“Before any edit, obtain explicit user approval for the exact affected paths and intended change.”
 本节新增路径和停止/计时合同未获新批准，尚未创建六个v2文件、修改测试/登记或请求新节点计算。
 用户服务器已关机，本轮分析/收尾无需开机；只有后续明确批准并准备补测时再请用户开启。
+
+## 63 S0 v2实际批准、实现与本地验收（2026-11-04）
+
+用户已重新开机并要求补测。对第62.2–62.3节精确九路径、3秒独立遥测、CPU32/GPU128计时、
+完整回归/同步/tiny及一次新目录7200/9000秒范围，实际回答：
+
+> 批准第62节九路径、测试同步及一次v2补测
+
+这已经覆盖新六文件和测试/保护窄幅更新，不重复问同一批准。旧v1模块/配置/协议/断言/产物不改。
+重连只读核验原13,688,159,632字节source、v1关闭索引和334,933,184字节PQ编码存在；
+A80080GiB无计算进程、工作盘空闲35,289,018,368字节（约32.87GiB），节点干净140e9de/原Step5分支。
+非登录shell没有python3别名，使用原批准环境绝对路径即成功，无安装或环境改写。
+
+实现六项v2文件及新测试归类、仅追加6行和实际同意的保护登记；287项（L0=202/L1=82/L2=3）。
+核心变更为只读mmap、每准备索引一次FP32 corpus norm、CPU/GPU各自冷费用、全部质量优先的串行
+worker以及独立遥测reporter。原24项/完整库/128质量/fit样本/种子/OPQ训练不变。
+CPU主计时每角色16条哈希队列、GPU128；固定预算仍由完整discovery质量选定，额外列出配对计时队列
+质量；oracle只在对应相同query/hardware表上求解，不拼旧v1时间。组件失败关闭后前进，其他资源/监控
+失败停止；scientific timer跨组件累计。GPU冷费用不再复用CPU Flat构建，raw/实际副本/ID/norm/码本照计。
+
+新27项CPU fixture含独立非单位范数直接距离、mmap只读/源布局错配、真实PQ恢复、队列/费用、
+实际拥有worker组件停止/全局停止/错误遥测/旧0.75秒以上查询，以及CPU分阶段质量→恢复→计时→
+IVF自身参考→生命周期smoke。GPU部分仍须节点实际tiny验证，CPU替代fixture不冒称CUDA结果。
+新增监控测试首先暴露本机ps沙箱限制；原工具回执保留，按已有测试同意用实际可读ps的沙箱外检查，
+没有skip。首个沙箱外日志暴露采样时间读取竞态；又以独立子进程核验发现Python3.9/mac的
+time.monotonic按进程取原点。新实现统一POSIX CLOCK_MONOTONIC，跨进程截止/样本时间同源；
+原失败日志和clock probe保留。22项阶段回归7–8秒通过。新完整链路fixture的input/output同名冲突
+保留并修正为不同目录；实际CPU staged smoke通过，不修改旧测试断言或数据。
+
+当前运行完整旧＋新离线回归；通过前不把计数称为正式验收，不提交或启动真实v2。
+证据目录`runs/route6-S0-v2-preparation-20261104/`保存实际同意、所有失败/复验和最终测试日志。
+本地实际完整命令同第56节的固定临时Python/native库/线程，输出`full-tests-first.log`。
+下一项为最终验收/保护diff核对、canonical commit/push/远端SHA、Linux干净ff-only/新CPU/tiny实际
+CUDA，成功后只启动一次新目录v2。限额内可能仍有未决项，不能因未测到而否定某表示，也不自动再跑。
+
+最终完整验收：**642项通过、0跳过、77.052秒**（原615＋新27）。
+`full-tests-first.log` SHA256 `e2836967a4a7ebed91b0a5f38e05c68a81f4ff8a073243bb4f2a91cee32d6e76`。
+全部281个旧登记和原根元数据逐项一致，仅获批人类登记SHA更新；5个新L0/1个新L1追加，
+journal的489,111字节原HEAD前缀完整。实际完整命令：
+
+```sh
+TRI_RAG_TEST_PYTHON=/private/tmp/route6-b0-local-env-20261103/bin/python \
+STEP5_ROUTE1_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/route1.dylib \
+STEP5_COMPARATORS_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/comparators_v2.dylib \
+STEP5_CONTINUATION_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v1.dylib \
+STEP5_CONTINUATION_V2_NATIVE=/private/tmp/step5-ann-enhancement-native-20261028/continuation_v2.dylib \
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 sh scripts/run_tests.sh
+```
+
+没有新真实v2输入/训练/检索或CUDA；下一项为提交同步后的Linux27项CPU及绑定最终源码的tiny CUDA。

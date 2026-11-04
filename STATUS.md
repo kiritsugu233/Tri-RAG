@@ -3,6 +3,15 @@
 Updated2026-11-04. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
 maintained branch `codex/tls-rag-step5-ann`.
 
+## 当前实施：S0 v2本地完整642项通过，准备节点同步
+
+- 实际用户答复：“批准第62节九路径、测试同步及一次v2补测”。六个v2文件和窄幅测试/登记实现完成；旧v1科学、失败和治理规则不改。
+- 已只读重连：单A80080GiB空闲，工作盘空闲35,289,018,368字节，原完整源/关闭索引/PQ编码均在；节点跟踪干净、科学140e9de，无新实际训练/检索。
+- 新27项CPU回归覆盖只读布局/cache指纹/配对队列/冷费用、真实拥有进程/遥测超时及CPU分阶段质量/恢复/IVF账本smoke。初次ps沙箱拒绝保留；已批准的实际进程测试在沙箱外执行，不跳过。
+- 修复新监控的读样本时序竞态和Python3.9/mac跨进程时钟原点差异，统一POSIX CLOCK_MONOTONIC；22项阶段性回归通过，新增完整链路fixture初次路径冲突保留并修正。最终完整642项、0跳过、77.052秒通过（原615＋新27）。full-tests-first.log SHA e2836967a4a7ebed91b0a5f38e05c68a81f4ff8a073243bb4f2a91cee32d6e76。
+- 287项保护通过（L0=202/L1=82/L2=3）；旧281行/旧根元数据除获批人类登记SHA外逐项保留。同步/tiny实际CUDA通过前，不启动真实v2。节点旧文件保持，旧一次S0不续算/拼成complete。
+- [第63节](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#63-s0-v2实际批准实现与本地验收2026-11-04)记录实际实现/命令/失败；下一项为验收后提交同步、Linux CPU/tiny，再执行唯一新目录v2。
+
 ## 当前收尾：S0监控失败，部分数据有效，整轮未完成
 
 - 唯一真实S0科学提交140e9de，实际命令见[第59节](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#59-r6-s0-唯一真实运行启动2026-11-03)。1867.539秒后因一次`nvidia-smi`超过0.75秒退出，状态monitor_failed/worker返回-15；不是正常complete，也不是质量门失败。
