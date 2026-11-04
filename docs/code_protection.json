@@ -1852,13 +1852,13 @@
       "path": "mechanism/tls_rag_step5_route6_representation_v2.py",
       "level": "L0",
       "reason": "User-approved §62 S0 v2: Read-only source mmap and fingerprinted CUDA norm cache; unchanged frozen transform calls",
-      "sha256": "60b22005e193588b86ee12d0dad80bb2371cb15504e078fd6ca21318d09bab32"
+      "sha256": "81d1d7c883a9ec08495fbf8444d2a580c768f8808276cf58cdc90345743aa161"
     },
     {
       "path": "mechanism/tls_rag_step5_route6_representation_screen_v2.py",
       "level": "L0",
       "reason": "User-approved §62 S0 v2: Quality-first staged development screen,32CPU/128GPU timing, cold costs and paired oracle",
-      "sha256": "c3dda04f88503d77ab9fdc574b68d541feb567af4fa6cf047dca30a3a6d2576b"
+      "sha256": "426cd4cc3df722324c23b085ea510d45d91bd99e6bc1d296c95768620738c63c"
     },
     {
       "path": "configs/tls_rag_step5_route6_representation_v2.json",
@@ -1870,13 +1870,13 @@
       "path": "tests/test_tls_rag_step5_route6_representation_v2.py",
       "level": "L0",
       "reason": "User-approved §62 S0 v2: Independent mmap/cache/role/cost and actual reporter/owned-process CPU regressions",
-      "sha256": "2da6a4ea7be201e950be0ac9bf8990703a607a4e1a1cbf4695e2391ef9fea3b7"
+      "sha256": "b04f042a5fe8c93559a13ce4be79b576eee5377c5f4fe2a4cce77bfab278fbd0"
     },
     {
       "path": "docs/TLS_RAG_STEP5_ROUTE6_REPRESENTATION_PROTOCOL_V2.md",
       "level": "L0",
       "reason": "User-approved §62 S0 v2: Frozen v2 timing/telemetry/staging/lifecycle contract with old scientific boundaries",
-      "sha256": "b4713d9af7e4b7328fec571a86d54af133469d7db218fab406c2e27396743dbc"
+      "sha256": "bb9c47c5664525b6ab8d6d6285f1c6aa855a34fa3936be8732fae8fcad5842ea"
     },
     {
       "path": "scripts/run_tls_rag_step5_route6_representation_v2.py",
@@ -2487,6 +2487,6 @@
     "proposal": "docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md §62.2–62.3",
     "scope": "Six new v2 files, test membership and two append-only registers; full tests/sync/tiny then one new-directory7200s/9000s/RSS64GiB/GPU48GiB run;32CPU/128GPU timing,3s telemetry; no old source/result/test/MC/Tri changes",
     "old_entries_preserved": "All existing classifications/scientific hashes and root metadata unchanged except explicitly approved human-register hash; prior approvals preserved",
-    "validation": "Full642 CPU/offline tests passed, zero skips,77.052s; log SHA256 e2836967a4a7ebed91b0a5f38e05c68a81f4ff8a073243bb4f2a91cee32d6e76. Linux/new tiny and real v2 not yet run."
+    "validation": "Final full643 CPU/offline tests passed, zero skips,77.816s; log SHA256 af8da0a68e82f96bd39f559264990ccd083875b0dd31a3bddef5075d199cb2e5. This is prelaunch validation, not a real-data result; Linux and tiny CUDA still required."
   }
 }

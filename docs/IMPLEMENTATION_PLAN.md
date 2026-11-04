@@ -15,6 +15,7 @@ Unchecked historical items are not execution authorization.
 - [x] 第61节收尾和第62节v2精确修正提案；保留原v1科学/失败，不自动重跑；用户已关机，本地收尾无需重启。
 - [x] v2新九路径/测试同步及一次新轮明确批准；新实现/分类完成，旧科学保持。
 - [x] v2完整642项CPU回归通过，零skip、77.052秒；原281行/旧科学及journal原前缀保留，287项保护通过。
+- [x] 启动前逐query FP32质量/部署路径统一，边界回归增加；最终643项、零skip、77.816秒通过，无真实v2科学执行。
 - [ ] canonical提交/push/远端及Linux同步、新CPU/tiny CUDA；通过后唯一一次补测。
 - [ ] 完整表示/实际后端筛选、同维/同字节/全生命周期账本、实测费用oracle与实际结果分析。
 - [ ] 根据筛选结果提出Tri增量的具体下一范围；一般Gram尾/线上联合信息/静态选维与标量公式不提前部署。
@@ -333,6 +334,7 @@ Frozen v1 source and failed run stay unchanged; no second run has been authorize
 - [x] Record cached-norm/cold-cost/monitor/scheduling defects and exact new-version proposal in §62; no implementation.
 - [x] New scoped v2 approval: “批准第62节九路径、测试同步及一次v2补测”. Six files/test membership/protection implemented;27 new CPU fixtures.
 - [x] Full642 CPU regressions/0skip/77.052s;27 new cases including actual reporter/stops and staged CPU/IVF smoke.
+- [x] Final full643/0skip/77.816s after rowwise query-rounding conformance;28 new cases.
 - [ ] Synchronization, fresh actual tiny receipt, then one additional bounded v2.
 - [x] User powered node on; read-only original source/artifact/GPU/Git inventory complete. No v2 science yet.
 - [ ] Node code/documentation fast-forward sync after reviewed local validation.

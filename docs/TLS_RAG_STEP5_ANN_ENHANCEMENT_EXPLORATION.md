@@ -6665,3 +6665,23 @@ OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 sh scripts/run
 ```
 
 没有新真实v2输入/训练/检索或CUDA；下一项为提交同步后的Linux27项CPU及绑定最终源码的tiny CUDA。
+
+## 64 S0 v2启动前查询浮点路径一致性与最终643项验收（2026-11-04）
+
+9baa5c4a9905083bf298e7173552ae805fc9856f已canonical提交/push并独立核对GitHub。
+Linux直连git fetch在60秒上限超时，未merge，仍干净140e9de；没有遗留git进程。
+原NumPy1.26.4/SciPy1.13.0/h5py3.11.0/Faiss1.8/Torch2.8.0+cu128和14CPU/120GiB配额再次只读核对。
+采用已核对GitHub HEAD的增量bundle中转，逐SHA核对再ff-only，origin保持不变，不强推或改默认分支。
+
+等待同步时，启动前数字路径复核重现了一个新v2内可修的契约细节：CPU BLAS的批量query GEMM
+与部署逐query调用不一定逐bit一致。固定seed742的128×640单位向量Gaussian256 fixture中，
+29,708个坐标不同，最大1.9371509552001953e-7（无真实payload）。此前质量表用batch变换，
+部署调用用row变换，边界可能因此不一致。新v2的`query_coordinates`统一采用部署逐行FP32路径，
+质量/FP64参考/IVF查询均调用它；全库既定block变换、矩阵/seed/训练/范数/指标/容差不改。
+新回归使用这两个路径产生的相邻竞争者，直接比较实际Faiss质量查询与部署搜索，不放宽浮点或ID断言。
+改动仍只在已批准的v2科学/测试/协议及必要新hash内；v1字节和失败结果保持，不重新解释旧轮。
+
+**最终完整643项通过、0跳过、77.816秒**（原615＋新28）。
+`full-tests-rowwise-query.log` SHA256 `af8da0a68e82f96bd39f559264990ccd083875b0dd31a3bddef5075d199cb2e5`。
+642阶段日志和全部失败/修正证据保留。287项保护通过；真实v2尚未启动，原一次新轮仍待最终源码
+提交/GitHub/节点核对、Linux28 CPU与新tiny CUDA凭据后执行，不把任一旧tiny当新版本通过。

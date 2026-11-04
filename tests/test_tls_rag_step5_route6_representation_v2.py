@@ -169,6 +169,18 @@ class RepresentationV2Tests(unittest.TestCase):
     def test_search_is_label_free(self):
         self.assertFalse(set(inspect.signature(rep.search_backend).parameters)&{'truth','recall','labels','oracle','cutoff'})
 
+    def test_quality_query_path_matches_deployed_search_at_numeric_boundary(self):
+        x=np.random.default_rng(742).normal(size=(128,640)).astype(np.float32)
+        x/=np.linalg.norm(x,axis=1)[:,None]
+        model=rep.fit_representation(dict(id='g',kind='gaussian',dim=256,seed=2026110353),x,None,self.cfg)
+        batch=rep.transform_batch(model,x)[0];single=rep.transform_batch(model,x[:1])[0]
+        # Two boundary competitors expose batch-vs-row rounding where the
+        # installed BLAS paths differ; canonical ties also work if they agree.
+        index=faiss.IndexFlatL2(256);index.add(np.stack([batch,single]))
+        expected=rep.search_backend(model,x[0],1,index=index)
+        actual=rep.faiss_search(index,rep.query_coordinates(model,x)[0],1,'l2')
+        np.testing.assert_array_equal(actual,expected)
+
     def test_cpu_staged_quality_restore_timing_and_lifecycle_smoke(self):
         # Exercise real CPU IO/metrics/index/cost paths. CUDA is independently
         # required on the node; this fixture substitutes only that device work.

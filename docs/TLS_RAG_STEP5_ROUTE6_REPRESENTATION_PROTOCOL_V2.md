@@ -53,6 +53,9 @@ FP64 full-corpus audits decode each method's own stored coordinates/codes in
 bounded chunks. No CPU IndexPQ is substituted for IVFPQ's residual codebook.
 Tie expansion/canonical IDs remain the v1 rule. Numeric references are FP64,
 not interval-certified or a proof of real-arithmetic ranking.
+Quality/reference query coordinates use the deployed rowwise FP32 transform;
+batch GEMM query rounding cannot substitute for the batch1 deployment path.
+Corpus transformation remains the same bounded-block stored-coordinate path.
 
 For each prepared CUDA L2 index compute static corpus norms once, in blocks,
 using the same storedFP32 coordinates. Store N FP32 norms20,933,316 bytes.

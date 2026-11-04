@@ -241,7 +241,7 @@ def quality(cfg, root, ident, torch, check, phase):
         values=None
     else:
         values=_values(model,raw,cfg,check);encode_seconds=time.monotonic()-tick;code_write=0.
-    transformed=rep.transform_batch(model,queries)
+    transformed=rep.query_coordinates(model,queries)
     phase(ident+':fp64_reference');tick=time.monotonic()
     reference=rep.exact_representation_search(values,transformed,max(cfg['budgets']),model['metric'],
         codes,centers,torch,check,cfg['query_batch'],cfg['block'])
@@ -505,7 +505,7 @@ def ivf(cfg,root,ident,torch,check,phase):
         offsets.append(offsets[-1]+size)
     products.array(prefix+'/list_rows.npy',np.concatenate(lists));products.array(prefix+'/list_offsets.npy',np.asarray(offsets,np.int64))
     write=time.monotonic()-tick;del lists
-    transformed=rep.transform_batch(model,queries);phase(ident+':ivf_same_code_reference')
+    transformed=rep.query_coordinates(model,queries);phase(ident+':ivf_same_code_reference')
     reference=rep.exact_representation_search(rep.IVFDecodedView(index),transformed,max(cfg['budgets']),model['metric'],
         torch=torch,check=check,batch=cfg['query_batch'],block=cfg['block'])
     full=rep.ivf_same_code_reference(index,transformed,max(cfg['budgets']))

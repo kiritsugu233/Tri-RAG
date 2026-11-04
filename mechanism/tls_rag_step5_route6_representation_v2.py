@@ -166,6 +166,11 @@ def cached_scores(values, query, norms, metric):
     return scores
 
 
+def query_coordinates(model, queries):
+    """Match the deployed batch1 transform, including its FP32 operation path."""
+    return np.asarray([transform_batch(model,np.asarray(q)[None])[0] for q in queries])
+
+
 def search_backend(model, raw_query, count, index=None, cuda_index=None, torch=None):
     """Label-free actual backend; query transform, GPU topk/transfers paid."""
     q = transform_batch(model, np.asarray(raw_query)[None])[0]
