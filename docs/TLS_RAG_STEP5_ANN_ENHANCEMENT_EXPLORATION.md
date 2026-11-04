@@ -7087,3 +7087,17 @@ stop会说明正在封存，不假报又终止了计算。正常完成或真实�
 完全相同。保护旧行/根记录除获准screen/config/test/protocol/人类登记五行SHA外保持。
 287项保护通过。完整源、旧失败/结果和封闭角色不动，无新A800运行/设备门/下载/安装。
 下一项canonical提交/push/核对GitHub和节点干净同步、Linux CPU49，实际结果另行追加。
+
+### 72.3 提交、Linux同步与最终交接
+
+科学代码`f6a90d780bb9eed73b1cae9191f5b0ae8bed96e7`提交/push，独立ls-remote通过。
+节点从clean3704a58经增量bundle（SHA `9021cafb11a15fcff89bb3ed3b62bd2bcb4c48a8dc49d78459b2ccc4cd75ea42`）
+干净ff-only至同HEAD，origin不变。仅运行离线CPU49项，17.350秒全部通过，原36＋manual13；
+日志SHA `c1a2e2a651521027bf58d4d8701262c51f73615784726dc9d41d453b93edd626`，已回收到本机逐SHA确认。
+五线程变量全部1、PYTHONPATH=src:.:tests、PYTHONDONTWRITEBYTECODE=1，使用原env/bin/python执行
+`-m unittest -v test_tls_rag_step5_route6_representation_v2`。无实际CUDA初始化/新device门/benchmark。
+
+本机`runs/route6-S0-manual-r2-preparation-20261104/`保存完整/失败/新旧模块日志、AST/范围核对和Linux凭证，
+关闭索引逐大小/SHA通过。保护287项最终通过，canonical跟踪改动均在获准七路径和四L1维护范围。
+本轮完成监督方式修改/测试/同步；下一次科学实验需另行明确启动，没有擅自续跑第70节失败轮。
+人工状态/停止命令见当前协议manual-r2节；所有旧数据/失败/闭合产物保持原样，后续每5分钟检查。

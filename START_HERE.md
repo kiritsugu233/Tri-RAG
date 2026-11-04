@@ -21,8 +21,10 @@ Representation/metric/data/precision checks and actual compute errors remain.
 Full664/0skip/90.191s passed (615 earlier +49 v2, including13 manual fixtures).
 Source audit confirms the representation module byte-identical and screen
 changes limited to Products/factory calls. Old failures/data stay unchanged.
-No new A800 run/device gate. Next: source commit/GitHub/clean Linux sync and
-CPU49; this change-only approval does not restart science. See [section72](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#72-manual-r2精确批准实施与完整664项验收2026-11-04).
+Scientific codef6a90d7 was GitHub-verified and cleanly ff-only synced to Linux;
+all49 module CPU tests passed17.350s. Full664 and287-file protection pass.
+Status/stop commands are in the current protocol. No new A800 run/device gate;
+this change-only approval does not restart science. See [section72](docs/TLS_RAG_STEP5_ANN_ENHANCEMENT_EXPLORATION.md#72-manual-r2精确批准实施与完整664项验收2026-11-04).
 
 Earlier entries below are historical checkpoints.
 

@@ -10,7 +10,7 @@ Unchecked historical items are not execution authorization.
 - [x] 第71节七路径具体方案：监督资源阈值只汇报、人工停止、保留科学校验/历史结果；无新实验启动。
 - [x] 七路径明确同意：“批准七路径、完整测试与同步”；manual-r2实现/注册，全部监督终止取消，人工stop/5分钟记录就绪。
 - [x] 原36项及新13项回归保留；最终完整664项、0skip、90.191秒通过，源/注册范围独立核对通过。
-- [ ] canonical提交/push/远端核对、干净Linux代码同步与CPU49；仅代码同步，不启动新设备门/科学轮。
+- [x] f6a90d7 canonical提交/push/独立远端核对、SHA bundle干净Linux同步与CPU49项17.350秒通过；仅代码同步，无新设备门/科学轮。
 
 ## 当前任务：R6-S0表示/接入点筛选与免费预算oracle
 
