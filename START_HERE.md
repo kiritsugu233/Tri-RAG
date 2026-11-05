@@ -8,30 +8,30 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
-**Current task: resumed C1 CPU cost replay (2026-11-05).** The user's new actual
-instruction “服务器已开启，继续” resumes the exact previously presented section11
-eight-path C1 scope. The earlier deferral remains historical. Read
-[the compact brief](NEXT_AGENT_PROMPT.md), plan sections11/13 and the new
-[C1 protocol](docs/PQ_REFINEMENT_COST_PROTOCOL_V1.md).
-Five new files and narrow test/register additions pass25 new/689 full CPU tests,
-zero skips. SSH preflight confirms14CPU quota/120GiB and existing original
-vectors/index; GPU is unused. Next: commit/push/verified Linux sync and related
-CPU tests, then exactly one C1 replay. No real C1 measurement has started yet.
-No gate2/3, new Gaussian representation or Tri
-controller. Schemes1–4 are retired from active context; route5 and completed
-route6 science are reference only. Keep protected contracts and evidence.
+**C0–C2 first-gate cost audit complete (2026-11-05).** Exactly one CPU C1 at
+scientific commit `2b7d2a934c784b38a19b03ea6044f5b061a90457` finished normally
+in255.044s, including54.970s initial source verification. All75 closed products
+are independently size/SHA-verified on node and locally.5824 formal calls and
+7552 same-input conformance checks completed; two local arithmetic/audit paths
+agree. Software:25 new/689 full CPU tests, zero skips; Linux25 passed.
+Read [the compact brief](NEXT_AGENT_PROMPT.md), [plan section13](docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md#13-c1恢复实现与执行记录2026-11-05)
+and [synchronized evidence](docs/pq_refinement_c1_evidence_v1.json).
 
-**C0 is complete; gate1 remains unresolved pending C1.** Saved288 calls/96
-query-pipeline groups match their candidate hashes/outputs. Primary check
-rerank fraction31.493% (query-cluster95% interval30.660%–32.375%); halving all
-rerank leaves0.870569ms for added work at10% total reduction. PQ Flat has only
-2.085% even if all rerank is free. See plan sections10–11 and
-[recorded evidence](docs/pq_refinement_cost_c0_evidence_v0.json).
-Local C1 input/address preparation is done. Full original vectors remain on
-the server; actual gather/read/compute costs have not been measured. The precise
-C1 is now implemented within the resumed scope. Its code/inputs require sealed
-identity checks and a newly paired full baseline; source/preflight completion
-does not count as a cost-gate or quality pass.
+**Verdict: a conditional cost window, no deployed net gain.** Primary OPQ64/IVF64
+check callback14.964ms includes4.690ms rerank; gather/copy dominates the observed
+rerank. Keeping3200 of6400 candidates saves13.82%–14.48% in check, before separately
+paid mask preparation. At10% total reduction, added-work means across both roles
+and all three half-subset diagnostics allow only0.30–0.67ms. Quality-preserving
+selection and its full cost remain unmeasured. Physical DRAM/SSD traffic is null;
+logical bytes are not physical traffic. IVF256 controls do not robustly meet10%
+with read-only or tested quarter-survivor diagnostics. This is development-cost
+evidence, not independent certification or Tri benefit.
+
+All records/logs needed for analysis are local; the user was told the server may
+be shut down. No further SSH, experiment, gate2/3, training or Tri work is pending
+under this delivery. Await the user's next direction. Schemes1–4 are retired;
+route5 and completed route6 science remain reference only. Preserve scientific
+contracts and historical evidence, including the superseded C1 deferral.
 
 Earlier completed checkpoints follow; they are not current pending tasks.
 

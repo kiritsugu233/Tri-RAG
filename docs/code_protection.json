@@ -1926,6 +1926,16 @@
       "level": "L0",
       "reason": "Resumed section11 separate frozen C1 cost/role/measurement contract; original S0 unchanged",
       "sha256": "b50cb95c90f522a141d524adb287f7502b983baf3ccad33bb9dc29722ad9498c"
+    },
+    {
+      "path": "scripts/analyze_pq_refinement_c1_results.py",
+      "level": "L1",
+      "reason": "Read-only independent audit/report of closed C1 calls and fixed S0 candidate snapshots; no retrieval, role, threshold, policy or scientific-source changes"
+    },
+    {
+      "path": "docs/pq_refinement_c1_evidence_v1.json",
+      "level": "L1",
+      "reason": "Actual closed C1 cost/uncertainty and limitation receipts; cost window conditional, no quality-preserving or Tri net-gain claim"
     }
   ],
   "approved_change_history": [

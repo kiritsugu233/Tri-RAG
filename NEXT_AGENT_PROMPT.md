@@ -1,94 +1,84 @@
-# Step5 compact brief: resumed C1 CPU cost replay
+# Step5 compact brief: first-gate cost audit complete
 
-Updated 2026-11-05. This replaces obsolete active instructions in this file.
-Actual user consent is quoted at the top of the [current plan](docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md).
-The user approved that MD, asked the EXISTING Step5 agent to finish gate 1 first,
-retired schemes 1-4 from working context, and requested notice when server power-on is needed.
+Updated 2026-11-05. Canonical checkout:
+`/Users/guanghongxu/Query-Adaptive-Tri-RAG`; branch `codex/tls-rag-step5-ann`.
+Inspect actual HEAD/status and preserve unrelated archives. No worktree/branch change.
 
 ## Current decision
 
-The user's latest actual instruction is “服务器已开启，继续”, resuming the exact
-section11 eight-path C1 scope previously deferred. Keep C0 unchanged. C1 is
-implemented;25 new tests and full689/0skip passed. Server preflight:14CPU quota,
-120GiB RAM, original source/index present, fixed versions. No real C1 run yet.
-Next: verified commit/push/Linux synchronization and C1 CPU tests, then one
-serial C1 replay, close/verify/analyze it. No automatic retry or later gate.
-Gate 1 remains unresolved: aggregate rerank fraction does not establish actual
-cancellable read/compute costs and cannot count as a completed/pass result.
-Do not enter gate 2 residual/sketch experiments or gate 3 Tri implementation.
-Do not expand representations, action grids or query roles.
+C0–C2 first-gate measurement/audit is complete. Exactly one CPU C1 at scientific
+`2b7d2a934c784b38a19b03ea6044f5b061a90457` completed normally in255.044s,
+including54.970s initial source SHA. No automatic retry, GPU use or training.
+The actual user instruction “服务器已开启，继续” resumed plan section11's exact
+previously presented eight-path scope. The earlier deferral remains historical.
 
-Latest checkpoint: C0 and local C1 preparation are complete; read plan sections10–11.
-Do not repeat the C0 run unless investigating a discrepancy. C1's new exact eight
-paths resumed by the latest user instruction and are implemented with narrow registration.
-Cost gate is unresolved; actual gather/read-vs-compute costs remain unknown.
+**Conditional cost window, no deployed net gain.** Primary OPQ64/IVF64 check:
+complete callback14.964ms, rerank4.690ms. Keeping3200/6400 candidates saves
+13.82%–14.48% before diagnostic preparation. To retain10% total reduction,
+all added-work means allow0.57–0.67ms in check and0.30–0.53ms in discovery.
+Smallest individual95% lower bound is0.024ms, not simultaneous coverage.
+C0's0.87ms half-rerank assumption is superseded by these actual paired diagnostics.
+
+Quality-preserving subset selection and its full overhead remain unmeasured.
+Four full-C modes preserve S0 outputs; nine subset modes only preserve native
+rerank on the same reduced input, not full-C top100. The diagnostic prepaid
+cache plus all nine mask positions costs86.574ms/(query,nprobe); not a gain,
+not a future unavoidable lower bound. Physical DRAM/SSD bytes/requests remain
+null; warm-resident logical payload reduction is not physical traffic evidence.
+
+IVF256 high-quality control: prepaid input saves7.95%; quarter-survivor check
+masks save9.51%–9.87% with intervals crossing10%. Prepaid scores save12.48%,
+so this is not a universal impossibility claim. Existing PQ Flat refinement
+interface remains stopped by C0's2.085% all-free ceiling.
+
+Stop this delivery at gate1. No further server access is required; all needed
+records/logs are local and the user was told the server may be shut down.
+Do not assume that the user has actually powered it off. Do not enter gate2
+geometry/residual/sketch, gate3 Tri, new representations, policies, training or
+another experiment without the user's next direction and scoped L0 approval
+where applicable. Current delivery does not sync later report docs to Linux:
+its scientific checkout remains2b7d2a9; report/evidence synchronize via GitHub.
 
 ## Minimal read set
 
-1. START_HERE.md latest current entry, AGENTS.md, relevant protection entries, this brief.
-2. docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md execution note and sections 2-4/6.
-3. runs/route6-S0-manual-r2-recovery-20261104/analysis/analysis_zh.md.
-4. Its latency_components.csv and ../priority/ivf/opq64/{64,256}/timings.json;
-   ../priority/representations/pq64/cpu14/timings.json. Read other provenance only as needed.
+1. START_HERE.md, AGENTS.md, relevant protection entries, this brief.
+2. docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md sections13.2–13.3.
+3. docs/pq_refinement_c1_evidence_v1.json (tracked quantitative receipt).
+4. runs/pq-refinement-C1-recovery-20261105-v1/analysis/analysis_zh.md.
 
-Canonical checkout: /Users/guanghongxu/Query-Adaptive-Tri-RAG.
-Continuing branch: codex/tls-rag-step5-ann. Pre-handoff HEAD: 15712d15db85bdee034cd8b67b5ff65c8496aa4b.
-Inspect actual HEAD/status, preserve untracked archives, do not create another checkout/branch.
-Protection checks before edits/handoff; exact L0 approval and data-role guards remain binding.
-Routine authorized L1 analysis/docs need no renewed generic approval.
-Classify new files by actual impact; do not treat every new analysis file as L0 automatically.
-Commit/push/verify the continuing branch after authorized work and required checks.
+Do not reread the giant historical exploration journal. Schemes1–4 are retired
+from active context by the user. Route5 is an unimplemented historical proposal;
+completed Gaussian/route6 science is reference only. Preserve every historical
+file, failure, protocol and consent record. Recover a dependency only for a
+concrete current question. No source experiment is pending in this brief.
 
-## Facts to retain
+## Provenance and verification
 
-- Full S0 completed normally. Local recovery verified 798 selected products plus index;
-  17 large caches and the full original source remain on the server, now online.
-- Corpus: 5,233,329 x 640 FP32. k=100. Native clip(1-dot,0,2), original ties unchanged.
-- 128 observed development queries: 64 discovery +64 check; no independent certification.
-- CPU timed cohort: 16 queries per role, 3 calls each; 48 calls are not 48 independent queries.
-- Primary OPQ64/IVF64/M6400: check total15.149721ms, rerank4.771083ms, fraction31.493%.
-- Quality control IVF256/M6400: total36.366667ms, rerank5.029427ms, fraction13.830%.
-- Low-headroom PQ64/Flat/M3200: total137.272857ms, rerank2.862618ms, fraction2.085%.
-- Rerank includes gathering/copying, distance, sorting: not a physical-read counter.
-- Proposed engineering target is10% total reduction; halving primary rerank leaves
-  about0.870569ms for new summary access, query projection and control.
-- C0 independently checks288 candidate hashes/outputs and96 query groups/72 cost
-  assumptions. Primary check F/T query-cluster95% interval30.660%–32.375%; this
-  describes observed development queries, not certification or hardware drift.
-- Free removal of all PQ Flat rerank gives only2.085%; stop that refinement interface.
-- M6400 logical gathers total16,640,000B including100 output rereads; virtual page
-  coverage/NumPy requests are not physical DRAM/SSD traffic. C1 manifest is ready;
-  CPU-only server with >=32GiB RAM can supply original vectors/index already there.
-- Current S0 Gaussian/Hybrid main representations had no competitive Tri entry point.
-  Auxiliary residual summaries are a different, still unverified hypothesis.
+- Fixed corpus5,233,329×640 FP32; k100, native clip(1-dot,0,2), stable ties.
+- Same original OPQ64 IVF, nprobe64/256, upstreamM6400; OPQ64 is64B code,
+  nprobe64 is not representation dimension. No new training/roles/index.
+- Same16 discovery+16 check as C0;2 warmups+7 formal/query/mode,13 modes.
+- 5824 formal calls,7552 same-input conformance checks. Independent audit checks
+  1792 full-C output hashes,4032 subset repeat outputs,11648 page unions,
+  832 query groups,52 means,156 paired fee intervals. Second stdlib mean/algebra
+  review agrees within1e-14. These are observed development cohorts, not fresh
+  certification; formal_certification=false. Intervals have no simultaneous correction.
+- Linux14CPU quota/120GiB RAM; fixed NumPy/FAISS native SHA matches S0.
+  RSS observed highwater8.36GiB excludes full kernel file cache/system memory.
+- 75 scientific files/6,824,318B node/local size+SHA verified. Source index SHA
+  `ae587cb09bc1f9c1d69b6d29e64c8fef63547e69214f70daf822f5ff1b3c5d57`.
+  Full local root: `runs/pq-refinement-C1-recovery-20261105-v1/received/pq-refinement-C1-2b7d2a9-20261105`.
+  Partial failed SFTP copies are not analysis inputs. Original source size/mtime,
+  scientific file hashes and owned-process exit verified; no cleanup/retry needed.
+- Local25 new/689 full tests passed,0skip; Linux25 passed. The final report-only
+  work needs protection/diff/artifact checks, not another full implementation run.
+- All SSH/SCP sessions exited. Credentials were used internally, never written
+  to repository/archives/logs; do not recover them for routine report work.
 
-## Context to retire
+## Handoff rules
 
-- Schemes1-4 are rejected/retired by the user. Remove their pending tasks and long
-  implementation narratives from active summaries. Do not resume or rerun them.
-- Route5 remains an unimplemented historical proposal, not current work.
-- Old Step4 execution details, monitoring incidents, advisor/LID tuning and old
-  controller plans are historical. Do not reread the whole exploration journal.
-- Gaussian cycle/T0/T1/M0/B0 work is reference only; retain necessary conclusions
-  and evidence pointers, not independent theory work as pending tasks.
-- Preserve historical files, scientific contracts, failures and consent records.
-  Context cleanup does not delete evidence or weaken governance.
-- Recover only a targeted historical dependency if a concrete current question needs it.
-- This is working-summary cleanup, not a claim that model history was physically erased.
-  If no supported compaction tool is available, continue directly using this active brief.
-
-## Gate1 deliverables
-
-Query-level cost audit; coverage/provenance; cancellable-work decomposition;
-read-vs-compute evidence or the exact minimal server replay still needed;
-10% target with5%/20% sensitivity; same-hardware paired uncertainty;
-pass/insufficient/unresolved verdict with limitations. Do not declare the gate
-complete while required physical read/compute decomposition remains unmeasured.
-
-When a new L0 contract or file is necessary, prepare exact paths/impact/validation
-for scoped consent while continuing unaffected local analysis. Do not ask whether
-starting gate1 is allowed: the user already instructed it.
-Report in the Step5 chat. No other chat messaging or automatic gate2 start is authorized.
-
-Current evidence: docs/pq_refinement_cost_c0_evidence_v0.json;
-runs/pq-refinement-cost-C0-20261104-v2/analysis_zh.md and C1_input_manifest.json.
+Protection before edits/handoff; exact L0 approval remains binding. New L1
+read-only analysis/receipt rows do not permit scientific semantics changes.
+Commit/push/verify the continuing branch after authorized work and checks.
+Keep current source2b7d2a9, frozen protocol and all scientific files unchanged.
+Await the user's decision about any later research; do not start it autonomously.

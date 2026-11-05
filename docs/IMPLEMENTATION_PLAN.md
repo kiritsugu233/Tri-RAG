@@ -4,14 +4,20 @@ Updated 2026-11-05. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
-## 当前任务：恢复C1 CPU费用分解（2026-11-05）
+## 当前完成：第一门C0–C2成本审核（2026-11-05）
 
 - [x] 实际指令“服务器已开启，继续”恢复已呈示的第11节八路径；保留原暂缓历史。
-- [x] SSH只读预检14CPU/120GiB、原源/索引/固定依赖就绪；未执行真实计量。
+- [x] SSH只读预检14CPU/120GiB、原源/索引/固定依赖就绪。
 - [x] 新五文件/测试归类/窄幅登记完成；新25＋旧664=689项完整通过、零跳过。
-- [ ] 冻结提交/push/核对GitHub、Linux同步和相关CPU测试。
-- [ ] 仅一次C1，逐query保存真实完整callback、分项、诊断子集/预付费用及失败。
-- [ ] 关闭/独立核验/分析实际计量与限制，报告第一门状态；不自动进入第二门。
+- [x] 科学2b7d2a9提交/push/核对GitHub、Linux干净同步，25项相关CPU测试通过。
+- [x] 唯一C1完成255.044秒；5824正式调用/7552同输入检查，保存实际分项/剩余工作/预付准备。
+- [x] 节点及本地75关闭产物逐大小/SHA一致；全记录/额外日志回收，所属进程退出，已告知可关机。
+- [x] 独立复核832查询组/52汇总/156窗口及配对区间，另以标准库核对均值/代数。
+- [x] C2结论：主OPQ64/IVF64有条件费用窗口；半候选约14%降幅，10%目标仅留0.30–0.67ms新增费用。
+- [x] 记录子集质量/选择成本未验证、准备86.574ms单列、DRAM/SSD缺测null、非独立认证等限制。
+- [x] [中文报告](../runs/pq-refinement-C1-recovery-20261105-v1/analysis/analysis_zh.md)及
+  [同步证据](pq_refinement_c1_evidence_v1.json)齐备；第一门计量完成，部署净收益仍未决。
+- [ ] 第二门几何/残差/草图、Tri独立贡献：未开始，不是当前自动执行待办。
 
 ## 历史状态：C0完成及C1暂缓（2026-11-04）
 
