@@ -285,7 +285,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "d506d44d73b3b18625124f3b245d41fe238066eab56f905c52283abbb70ef92e"
+      "sha256": "6c924f9aa570c0190672edee35172506ffdfed9f54ea19604500e1bca37615d7"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -1897,6 +1897,35 @@
       "path": "docs/pq_refinement_cost_c0_evidence_v0.json",
       "level": "L1",
       "reason": "Actual C0 read-only cost audit and query-level receipts from already observed S0 records; unresolved C1 and unmeasured physical traffic retained, no scientific contract or execution authorization"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_pq_refinement_cost_v1.py",
+      "level": "L0",
+      "reason": "Resumed section11 C1 native callback/score/ties/input and cost-only replay contract",
+      "sha256": "e3059efaa46ab9419db92e2d17a70ec24b4ca25521866380e560e09f0c721677"
+    },
+    {
+      "path": "configs/tls_rag_step5_pq_refinement_cost_v1.json",
+      "level": "L0",
+      "reason": "Resumed section11 C1 fixed inputs/cohorts/threads/modes/seeds and disabled later gates",
+      "sha256": "202217b91100adcf10bb7a69e098ee9239f98461f11982b2f823350bf5a38f20"
+    },
+    {
+      "path": "tests/test_tls_rag_step5_pq_refinement_cost_v1.py",
+      "level": "L0",
+      "reason": "Resumed section11 native conformance/cache isolation and real worker/closure regressions",
+      "sha256": "5b72507305de7191dbdddcea8a064a00c45f78bc4b2d988b4a818b5dfcccf9bb"
+    },
+    {
+      "path": "scripts/run_tls_rag_step5_pq_refinement_cost_v1.py",
+      "level": "L1",
+      "reason": "Resumed section11 serial CPU/manual stop/closed evidence orchestration; inherits L0 protocol"
+    },
+    {
+      "path": "docs/PQ_REFINEMENT_COST_PROTOCOL_V1.md",
+      "level": "L0",
+      "reason": "Resumed section11 separate frozen C1 cost/role/measurement contract; original S0 unchanged",
+      "sha256": "b50cb95c90f522a141d524adb287f7502b983baf3ccad33bb9dc29722ad9498c"
     }
   ],
   "approved_change_history": [
@@ -2535,5 +2564,38 @@
     "semantics": "No production supervisor timeout/resource automatic termination;300s observations/status, explicit owned-PID/start/argv manual stop, unknown observation never zero. Products reference budget only in manual mode; default strict fixtures retained. Source/data/native/precision and scientific math unchanged.",
     "execution_scope": "Full offline CPU regression and commit/push/source sync only; no new A800 gate/run/install/download/closed-role access.",
     "validation": "Full664 CPU/offline tests passed, zero skips,90.191s;49 v2 fixtures including13 manual. Log SHA256 d02c7fade9d05fa4076683c74a4ef4a48f4c60f21870e4d1b78ed26cd0b08388. Representation module byte-identical; normalized screen AST differs only in writer/factory calls; old rows/root values preserved except five approved SHA rows. No real A800 run/device gate."
+  },
+  "pq_refinement_cost_v1_authorization": {
+    "date": "2026-11-05",
+    "actual_user_instruction": "服务器已开启，继续",
+    "interpretation": "Explicit resumption of exact section11 C1 eight-path scope previously presented at a627946 and deferred at f5df326; preserve historical deferral",
+    "paths": [
+      "mechanism/tls_rag_step5_pq_refinement_cost_v1.py",
+      "configs/tls_rag_step5_pq_refinement_cost_v1.json",
+      "tests/test_tls_rag_step5_pq_refinement_cost_v1.py",
+      "scripts/run_tls_rag_step5_pq_refinement_cost_v1.py",
+      "docs/PQ_REFINEMENT_COST_PROTOCOL_V1.md",
+      "scripts/run_tests.sh",
+      "docs/CODE_PROTECTION.md",
+      "docs/code_protection.json"
+    ],
+    "boundary": "CPU C1 only, one scientific replay after local tests/GitHub/Linux synchronization; no training/GPU/new roles/gate2/Tri; original scientific sources unchanged",
+    "validation": {
+      "new_tests": 25,
+      "full_tests": 689,
+      "skipped": 0,
+      "unittest_seconds": 88.778,
+      "logs": {
+        "runs/pq-refinement-C1-local-20261105-v1/new-tests-1.log": {
+          "bytes": 6230,
+          "sha256": "f4f5ea5ee0a35c6c723765fef2cf0d1c9f81cb15e30d0ec1abcb373fbfe919f1"
+        },
+        "runs/pq-refinement-C1-local-20261105-v1/full-tests-1.log": {
+          "bytes": 93288,
+          "sha256": "1b6e6e6493363bab2c4d62d2b62c0e33987522e4b8128b28cc055480f3c2c96e"
+        }
+      },
+      "real_C1_started": false
+    }
   }
 }

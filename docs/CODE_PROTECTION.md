@@ -722,3 +722,25 @@ bytes stay fixed. Only approved screen/config/test/protocol/this-register SHA
 rows refresh, with this actual authorization appended. Full CPU regression,
 commit/push/verified sync are authorized; no new scientific run/device gate,
 install/download or reopening closed roles. Four L1 documents record progress.
+
+## PQ refinement C1 cost replay: resumed scope (2026-11-05)
+
+The concrete eight-path proposal is design-plan section11, first delivered in
+`a627946`. The user deferred it with “暂缓C1，保留C0结果” / “暂不开机”;
+those decisions remain in `f5df326`. The actual new instruction is:
+
+> 服务器已开启，继续
+
+This resumes that same previously presented C1 scope. It does not approve gate2,
+Tri, training, new query roles or a GPU experiment. Only five new files below,
+the membership-only addition to `scripts/run_tests.sh`, this append-only register
+entry and the corresponding machine rows/necessary hash change are authorized.
+The old S0 score/search/ties/configuration and all original evidence remain fixed.
+
+| File | Level | Reason |
+|---|---|---|
+| [mechanism/tls_rag_step5_pq_refinement_cost_v1.py](../mechanism/tls_rag_step5_pq_refinement_cost_v1.py) | **L0** | Resumed section11 CPU callback conformance, disjoint cost observation and label-free cost-only subset/oracle replay |
+| [configs/tls_rag_step5_pq_refinement_cost_v1.json](../configs/tls_rag_step5_pq_refinement_cost_v1.json) | **L0** | Fixed C1 source/products/CPU cohorts/threads/modes/seeds and manual supervision; later gates disabled |
+| [tests/test_tls_rag_step5_pq_refinement_cost_v1.py](../tests/test_tls_rag_step5_pq_refinement_cost_v1.py) | **L0** | C1 native score/tie/cache/input isolation and actual owned-worker/closed-evidence regressions |
+| [scripts/run_tls_rag_step5_pq_refinement_cost_v1.py](../scripts/run_tls_rag_step5_pq_refinement_cost_v1.py) | **L1** | Inherits C1 scientific contract; serial CPU worker, manual stop, non-aborting observations and closed SHA evidence |
+| [docs/PQ_REFINEMENT_COST_PROTOCOL_V1.md](PQ_REFINEMENT_COST_PROTOCOL_V1.md) | **L0** | Independent C1 measurement/provenance/cost-diagnostic protocol; unchanged original S0 contracts |

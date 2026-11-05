@@ -1,6 +1,6 @@
 # Query-Adaptive Tri-RAG: current entry
 
-Updated 2026-11-04. Canonical checkout:
+Updated 2026-11-05. Canonical checkout:
 `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 Maintained branch: **`codex/tls-rag-step5-ann`**; continue Step 5 updates there.
 The reviewed/Tri-Law-repaired backup remains `codex/repo-review-code-protection`
@@ -8,12 +8,15 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
-**Current state: retain PQ refinement C0; defer C1 (2026-11-04).** After the
-completed C0 audit and concrete C1 proposal, the user's actual replies were
-“暂缓C1，保留C0结果” and “暂不开机”. Retain all C0 results and the proposal;
-do not implement C1, access SSH, request power-on again or start further measurements
-without a new explicit instruction. Read [the compact brief](NEXT_AGENT_PROMPT.md)
-and [the plan with actual decisions](docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md).
+**Current task: resumed C1 CPU cost replay (2026-11-05).** The user's new actual
+instruction “服务器已开启，继续” resumes the exact previously presented section11
+eight-path C1 scope. The earlier deferral remains historical. Read
+[the compact brief](NEXT_AGENT_PROMPT.md), plan sections11/13 and the new
+[C1 protocol](docs/PQ_REFINEMENT_COST_PROTOCOL_V1.md).
+Five new files and narrow test/register additions pass25 new/689 full CPU tests,
+zero skips. SSH preflight confirms14CPU quota/120GiB and existing original
+vectors/index; GPU is unused. Next: commit/push/verified Linux sync and related
+CPU tests, then exactly one C1 replay. No real C1 measurement has started yet.
 No gate2/3, new Gaussian representation or Tri
 controller. Schemes1–4 are retired from active context; route5 and completed
 route6 science are reference only. Keep protected contracts and evidence.
@@ -26,9 +29,9 @@ rerank leaves0.870569ms for added work at10% total reduction. PQ Flat has only
 [recorded evidence](docs/pq_refinement_cost_c0_evidence_v0.json).
 Local C1 input/address preparation is done. Full original vectors remain on
 the server; actual gather/read/compute costs have not been measured. The precise
-C1 eight-path implementation proposal is explicitly deferred; no C1 code/runtime or
-server work has started. Its CPU/RAM and pairing requirements are retained as
-future proposal details, not active power-on or execution instructions.
+C1 is now implemented within the resumed scope. Its code/inputs require sealed
+identity checks and a newly paired full baseline; source/preflight completion
+does not count as a cost-gate or quality pass.
 
 Earlier completed checkpoints follow; they are not current pending tasks.
 

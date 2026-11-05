@@ -1,9 +1,21 @@
 # Status
 
-Updated2026-11-04. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
+Updated2026-11-05. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
 maintained branch `codex/tls-rag-step5-ann`.
 
-## 当前状态：C0结果保留，C1暂缓，服务器暂不开机
+## 当前状态：恢复第11节C1，代码验收通过、真实计量未开始
+
+- 最新实际指令：“服务器已开启，继续”，恢复已呈示后暂缓的第11节八路径原范围。
+  原暂缓答复作为历史保留。仅C1 CPU费用分解，不进入第二门/Tri，不训练或使用GPU。
+- 五个新文件及测试归类/窄幅登记已完成；新25项、完整689项通过，0skip，unittest88.778秒。
+  覆盖原评分/ties/两次gather、分项同结果、缓存绑定、真实worker停止及关闭封存。
+- 初次旧SSH端口连接被关闭；用户重新确认连接后成功。只读预检：Xeon Gold6348，
+  14CPU配额、120GiB内存，数据盘空闲31,263,625,216B；原源HDF5/IVF索引/清单存在，
+  原固定依赖版本一致，服务器代码clean3d372f9。凭据不写盘或记录。
+- 下一步冻结/提交/push/核对GitHub，Linux同步及相关CPU测试后仅运行一次C1。
+  当前尚无真实新计时或读取分解；C0原结果和第一门未决状态保持。
+
+## 历史检查点：C0保留，C1曾暂缓（2026-11-04）
 
 - 最新实际答复：“暂缓C1，保留C0结果”；服务器选择：“暂不开机”。
   C1八路径范围未批准，状态deferred/not_run；不创建实现、连接SSH、请求开机或启动新计量。

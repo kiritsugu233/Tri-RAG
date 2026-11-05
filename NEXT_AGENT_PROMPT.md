@@ -1,16 +1,18 @@
-# Step5 compact brief: C0 retained, C1 deferred
+# Step5 compact brief: resumed C1 CPU cost replay
 
-Updated 2026-11-04. This replaces obsolete active instructions in this file.
+Updated 2026-11-05. This replaces obsolete active instructions in this file.
 Actual user consent is quoted at the top of the [current plan](docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md).
 The user approved that MD, asked the EXISTING Step5 agent to finish gate 1 first,
 retired schemes 1-4 from working context, and requested notice when server power-on is needed.
 
 ## Current decision
 
-The user's latest actual replies are “暂缓C1，保留C0结果” and “暂不开机”.
-Keep the completed C0 outputs and C1 proposal. Do not create C1 code, run new
-measurements, access SSH, ask for power-on again or create background follow-ups.
-Resume only after a new explicit instruction covering the deferred scope.
+The user's latest actual instruction is “服务器已开启，继续”, resuming the exact
+section11 eight-path C1 scope previously deferred. Keep C0 unchanged. C1 is
+implemented;25 new tests and full689/0skip passed. Server preflight:14CPU quota,
+120GiB RAM, original source/index present, fixed versions. No real C1 run yet.
+Next: verified commit/push/Linux synchronization and C1 CPU tests, then one
+serial C1 replay, close/verify/analyze it. No automatic retry or later gate.
 Gate 1 remains unresolved: aggregate rerank fraction does not establish actual
 cancellable read/compute costs and cannot count as a completed/pass result.
 Do not enter gate 2 residual/sketch experiments or gate 3 Tri implementation.
@@ -18,7 +20,7 @@ Do not expand representations, action grids or query roles.
 
 Latest checkpoint: C0 and local C1 preparation are complete; read plan sections10–11.
 Do not repeat the C0 run unless investigating a discrepancy. C1's new exact eight
-paths are proposed, not approved, and explicitly deferred. No C1 code has been created.
+paths resumed by the latest user instruction and are implemented with narrow registration.
 Cost gate is unresolved; actual gather/read-vs-compute costs remain unknown.
 
 ## Minimal read set
@@ -40,7 +42,7 @@ Commit/push/verify the continuing branch after authorized work and required chec
 ## Facts to retain
 
 - Full S0 completed normally. Local recovery verified 798 selected products plus index;
-  17 large caches and the full original source remain on the server. It may be off.
+  17 large caches and the full original source remain on the server, now online.
 - Corpus: 5,233,329 x 640 FP32. k=100. Native clip(1-dot,0,2), original ties unchanged.
 - 128 observed development queries: 64 discovery +64 check; no independent certification.
 - CPU timed cohort: 16 queries per role, 3 calls each; 48 calls are not 48 independent queries.
@@ -86,7 +88,7 @@ complete while required physical read/compute decomposition remains unmeasured.
 When a new L0 contract or file is necessary, prepare exact paths/impact/validation
 for scoped consent while continuing unaffected local analysis. Do not ask whether
 starting gate1 is allowed: the user already instructed it.
-Report in the Step5 chat when the user resumes work. No other chat messaging or automatic gate2 start is authorized.
+Report in the Step5 chat. No other chat messaging or automatic gate2 start is authorized.
 
 Current evidence: docs/pq_refinement_cost_c0_evidence_v0.json;
 runs/pq-refinement-cost-C0-20261104-v2/analysis_zh.md and C1_input_manifest.json.

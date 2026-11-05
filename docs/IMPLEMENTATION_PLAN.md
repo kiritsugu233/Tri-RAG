@@ -1,10 +1,19 @@
 # Implementation milestones
 
-Updated 2026-11-04. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
+Updated 2026-11-05. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
-## 当前状态：PQ精化C0保留、C1暂缓（2026-11-04）
+## 当前任务：恢复C1 CPU费用分解（2026-11-05）
+
+- [x] 实际指令“服务器已开启，继续”恢复已呈示的第11节八路径；保留原暂缓历史。
+- [x] SSH只读预检14CPU/120GiB、原源/索引/固定依赖就绪；未执行真实计量。
+- [x] 新五文件/测试归类/窄幅登记完成；新25＋旧664=689项完整通过、零跳过。
+- [ ] 冻结提交/push/核对GitHub、Linux同步和相关CPU测试。
+- [ ] 仅一次C1，逐query保存真实完整callback、分项、诊断子集/预付费用及失败。
+- [ ] 关闭/独立核验/分析实际计量与限制，报告第一门状态；不自动进入第二门。
+
+## 历史状态：C0完成及C1暂缓（2026-11-04）
 
 - [x] 用户审阅MD并指示交给现有Step5，先完成第一门。
 - [x] MD持久化、精简NEXT_AGENT_PROMPT及当前导航；方案1–4从活动待办退役，历史证据保留。
