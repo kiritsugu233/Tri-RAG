@@ -8,6 +8,18 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**Progress fix and one extra gate2 run approved (2026-11-05).** Actual reply:
+“批准五路径修复及一次额外运行”. Shared `progress_callback(output)` uses stage
+as positional input and name as metadata; production and tiny now share it.
+Two real-composition regressions pass (module30); independent tiny reaches
+sidePQ progress and12 closed files verify. Full719 passes,0skip,87.659s. AST review
+confirms all22 other geometry functions/config/protocol/clock settings unchanged.
+After local/GitHub/Linux checks, reuse the existing CPU node if online for ONE
+extra same-configuration new-directory run. If offline, notify user to power on.
+Preserve the first failure/G1; no automatic further run or gate3.
+
+The following first-run failure remains historical evidence.
+
 **Gate2 first run closed as compute_failed (2026-11-05).** User power-on:
 “已开启”. Reviewed2cb1c62 synced cleanly through a verified Git bundle after
 server GitHub fetch stalled; Linux28 tests and CPU preflight passed. The single

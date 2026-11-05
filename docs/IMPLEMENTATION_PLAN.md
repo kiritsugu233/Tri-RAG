@@ -4,6 +4,15 @@ Updated 2026-11-05. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
+## 当前任务：五路径进度修复和一次额外轮（2026-11-05）
+
+- [x] 实际批准“批准五路径修复及一次额外运行”已在append-only治理记录登记。
+- [x] 共享真实progress callback修复绑定；生产与tiny同用，原数学/训练/计时/config不变。
+- [x] 新增2组合回归，模块30通过；独立tiny真实回调/12封存文件SHA通过，AST最小差异核对通过。
+- [x] 完整719项/0skip/87.659秒通过；保护/最小差异核对通过，按常设指令提交/push核对后进行Linux验收。
+- [ ] 现节点只读检查，在线则同步评审提交/Linux30验收，随后唯一额外同参数新目录G0–G5。
+- [ ] 成功或失败均关闭封存/云盘/本机回收审计；不再自动重跑，不进入第三门。
+
 ## 当前完成：第二门首轮失败保全与G1分析（2026-11-05）
 
 - [x] 用户确认开机；只读预检14CPU/120GiB、磁盘/旧源在，无第二份G2进程。
@@ -12,7 +21,7 @@ Unchecked historical items are not execution authorization.
 - [x] 137科学/云盘144项分别核验，本机完整回收；进程/SSH退出，已告知服务器可关闭。
 - [x] 独立复核64组/409600候选；norm有利阈值过滤0；不外推未测Gaussian/侧PQ或Tri。
 - [x] 记录实际错误、测试覆盖遗漏、完整失败回执及第16.3节五路径/一次额外轮提案。
-- [ ] 新进度工厂、真实回调tiny/集成回归及一次额外CPU轮：待精确批准，不自动执行。
+- [x] 新进度工厂、真实回调tiny/集成回归及一次额外CPU轮已获随后精确批准，实际进展见当前任务。
 
 ## 当前完成：第二门本地代码及前置验收，待CPU开机（2026-11-05）
 

@@ -767,3 +767,22 @@ or Tri gate3. Raw-source/candidate/score identities and failed evidence remain.
 | `tests/test_tls_rag_step5_pq_refinement_geometry_v1.py` | **L0** | Independent geometry/native/tie/conditional-law/label-isolation/read-trace and tiny/closure fixtures |
 | `scripts/run_tls_rag_step5_pq_refinement_geometry_v1.py` | **L1** | Inherits scoped gate2 contract, CPU tiny/preflight/manual worker/closed evidence using unchanged audited supervision |
 | `docs/PQ_REFINEMENT_GEOMETRY_PROTOCOL_V1.md` | **L0** | Separate gate2 mathematical/numeric/data/cost/decision protocol; formal_certification=false |
+
+## Gate2 progress binding repair and one extra run (2026-11-05)
+
+Actual reply to plan section16.3's exact five-path question:
+
+> 批准五路径修复及一次额外运行
+
+Scope is only `mechanism/tls_rag_step5_pq_refinement_geometry_v1.py`,
+`scripts/run_tls_rag_step5_pq_refinement_geometry_v1.py`,
+`tests/test_tls_rag_step5_pq_refinement_geometry_v1.py`, this append-only register
+and `docs/code_protection.json`. Extract the actual shared progress callback,
+use stage as its positional parameter while retaining name metadata; connect
+that same callback to tiny and regress real Gaussian/sidePQ composition.
+No mathematical/configuration/seed/role/training/clock/budget changes. Preserve
+the original2cb1c62 failure/G1 and every original assertion. Refresh only the
+affected new module/test and this register SHA, append actual consent/validation.
+Local full tests/tiny and verified GitHub/Linux sync precede ONE additional
+same-configuration complete G0–G5 in a new run directory. No old-G1 substitution,
+automatic further retry, new roles, GPU, predictor/adapter or Tri gate3.

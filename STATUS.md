@@ -3,7 +3,17 @@
 Updated2026-11-05. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
 maintained branch `codex/tls-rag-step5-ann`.
 
-## 当前状态：第二门首轮因进度回调错误停止，完整保全；修复/额外一轮待批准
+## 当前任务：进度回调修复及一次额外轮已批准（2026-11-05）
+
+- 用户实际答复“批准五路径修复及一次额外运行”，对应第16.3节精确范围。已抽取共享
+  progress_callback，位置参数stage与name metadata分离；生产/tiny接入同一实现。
+- 新增2项组合回归，模块30项通过；独立tiny真实Gaussian/侧PQ回调及12项封存SHA通过。
+  完整719项/0skip/87.659秒验收通过。AST核查22个其余几何函数不变，run_science仅更换回调来源，
+  runner仅给tiny传入实际callback；config/协议/测试归类与全部旧数值语义不变。
+- 下一步完成全套/保护/差异与GitHub同步核对，再检查现节点；在线则Linux验收后只做一次
+  额外新目录同参数轮，离线则通知用户开CPU。旧失败/G1保留；第三门和自动进一步重跑关闭。
+
+## 历史状态：第二门首轮失败及当时的修复提案
 
 - 用户实际开机回复“已开启”。14CPU/120GiB，数据盘约29GiB/云盘约158GiB空闲，旧源/IVF在。
   GitHub fetch未返回，人工中止网络同步，校验已推送的Git bundle后clean ff-only同步2cb1c62；

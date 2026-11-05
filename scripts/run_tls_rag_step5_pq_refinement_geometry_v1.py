@@ -39,7 +39,7 @@ def local_tiny(root):
     c=dict(g.config(),k=5,dimensions=[2,4],sketch_seeds=[2026110401],side_pq_bytes=[2],
         side_pq_seeds=[2026110501],side_pq_training=dict(niter=2,nredo=1),scan_block=32,build_block=256)
     ctx=g.reconstruction_context(book,A,np.zeros(d),c)
-    summaries,errors,offline=g.build_residual_summaries(raw,book,ctx,np.arange(1024),c)
+    summaries,errors,offline=g.build_residual_summaries(raw,book,ctx,np.arange(1024),c,phase=g.progress_callback(root))
     q=rng.normal(size=d).astype(np.float32);q/=np.linalg.norm(q)
     model=dict(spec=dict(kind='opq'),metric='ip',matrix=A,mean=np.zeros(d))
     search=lambda query:g.cost.stored.search_backend(model,query,256,index=index)

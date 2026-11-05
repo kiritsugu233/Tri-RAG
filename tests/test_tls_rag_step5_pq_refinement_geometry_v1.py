@@ -220,6 +220,36 @@ class RealFaissAndRunnerTests(unittest.TestCase):
         cls.index.cp.niter=2;cls.index.pq.cp.niter=2;cls.index.pq.cp.min_points_per_centroid=1
         cls.index.train(cls.raw);cls.index.add(cls.raw)
 
+    def test_shared_production_progress_accepts_name_and_isolates_run_roots(self):
+        with tempfile.TemporaryDirectory() as d:
+            left=Path(d)/'left';right=Path(d)/'right'
+            a=g.progress_callback(left);b=g.progress_callback(right)
+            a('sketch_build',name='gaussian_example',rows=12)
+            b('side_pq_build',name='sidepq_example')
+            self.assertEqual(json.loads((left/'progress.json').read_text()),
+                dict(phase='sketch_build',name='gaussian_example',rows=12))
+            self.assertEqual(json.loads((right/'progress.json').read_text()),
+                dict(phase='side_pq_build',name='sidepq_example'))
+
+    def test_real_Gaussian_and_sidePQ_build_use_production_progress_callback(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d);actual=g.progress_callback(root);observed=[]
+            def phase(*args,**fields):
+                actual(*args,**fields)
+                observed.append(json.loads((root/'progress.json').read_text()))
+            c=dict(g.config(),k=5,dimensions=[2,4],sketch_seeds=[2026110401],
+                side_pq_bytes=[2],side_pq_seeds=[2026110501],
+                side_pq_training=dict(niter=2,nredo=1),build_block=256)
+            book=g.extract_actual_ivf_codes(self.index,np.arange(len(self.raw)))
+            ctx=g.reconstruction_context(book,np.eye(8),np.zeros(8),c)
+            summaries,_,_=g.build_residual_summaries(self.raw,book,ctx,np.arange(1024),c,phase=phase)
+            self.assertEqual(set(summaries),{'norm','gaussian_2026110401_2','gaussian_2026110401_4','sidepq_2'})
+            self.assertEqual([r['name'] for r in observed if r['phase']=='sketch_build'],
+                ['gaussian_2026110401_2','gaussian_2026110401_4'])
+            self.assertEqual([r['name'] for r in observed if r['phase']=='side_pq_build'],['sidepq_2'])
+            self.assertEqual(observed[-1],dict(phase='side_pq_build',name='sidepq_2'))
+            self.assertEqual(json.loads((root/'progress.json').read_text()),observed[-1])
+
     def test_actual_list_decode_matches_library_and_only_requested_rows(self):
         import faiss
         wanted=np.array([1,5,37,901],np.int64);book=g.extract_actual_ivf_codes(self.index,wanted)

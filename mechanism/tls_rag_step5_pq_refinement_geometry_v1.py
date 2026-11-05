@@ -527,9 +527,17 @@ def summarize_geometry(records,c):
     return summary
 
 
+def progress_callback(output):
+    """Shared production/tiny reporter; summary name is metadata, not stage."""
+    output=Path(output)
+    def phase(stage,**fields):
+        cost.atomic_json(output/'progress.json',dict(phase=stage,**fields))
+    return phase
+
+
 def run_science(c, output):
     output=Path(output);initial=source_map(c)
-    def phase(name,**fields):cost.atomic_json(output/'progress.json',dict(phase=name,**fields))
+    phase=progress_callback(output)
     data=load_geometry_inputs(c,phase);raw=data['raw'];book=data['book'];ctx=data['ctx']
     cost.unique_json(output/'input_receipt.json',dict(source_index_sha256=c['source_index_sha256'],
         original_source_stat=data['original_source_stat'],query_indices=data['indices'],

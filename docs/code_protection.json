@@ -285,7 +285,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "4ea3e2bcc3c6a10ae3d593edd4970cda01cd91d6fe8a4d28e52c891624f291c7"
+      "sha256": "bfa32c7389eeb09b7cd1f95941989e74a26e34def73a77dda1766a8fea20a7d7"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -1946,7 +1946,7 @@
       "path": "mechanism/tls_rag_step5_pq_refinement_geometry_v1.py",
       "level": "L0",
       "reason": "Approved section14 actual-IVF residual reconstruction/summaries/risk/read decisions/quality/cost, separate gate2",
-      "sha256": "5f786040da9a49c0f916e14801f3f749a2de7cded4e7da4b8c3a83b722ef6425"
+      "sha256": "28fb37d91b85396956cbb5eab21d0b13e782f55f5e986f7c829e18fb4f336440"
     },
     {
       "path": "configs/tls_rag_step5_pq_refinement_geometry_v1.json",
@@ -1958,7 +1958,7 @@
       "path": "tests/test_tls_rag_step5_pq_refinement_geometry_v1.py",
       "level": "L0",
       "reason": "Approved independent gate2 reconstruction/numerics/conditional law/reads/ties/isolation/tiny/closure regressions",
-      "sha256": "6732fc370c9a0cfd46c9102d418504640dbcd46c7eb6ae79cf0adb8ef5eedc2a"
+      "sha256": "17e66446c719817114ffc7c688196c7db071ae8a9627e19e9cfd58465024048f"
     },
     {
       "path": "scripts/run_tls_rag_step5_pq_refinement_geometry_v1.py",
@@ -2675,6 +2675,33 @@
       "validation_index_sha256": "d82bca0b6ee98dd4057d0e6cd2600fc012e16e65aaad7ead859e5170276eb65c",
       "standalone_tiny_index_sha256": "65aad7ae972f883d802d46e8cf28f6df8c28a6bf6defcb1b67d8ef7cb7d433de",
       "real_server_run_started": false
+    }
+  },
+  "pq_refinement_geometry_progress_fix_authorization": {
+    "date": "2026-11-05",
+    "actual_user_consent": "批准五路径修复及一次额外运行",
+    "question_reference": "Actual current-task answer to plan16.3 exact five-path progress-callback fix and one extra same-configuration CPU run",
+    "paths": [
+      "mechanism/tls_rag_step5_pq_refinement_geometry_v1.py",
+      "scripts/run_tls_rag_step5_pq_refinement_geometry_v1.py",
+      "tests/test_tls_rag_step5_pq_refinement_geometry_v1.py",
+      "docs/CODE_PROTECTION.md",
+      "docs/code_protection.json"
+    ],
+    "scope": "Only shared progress_callback stage/name binding, real callback in tiny, Gaussian/sidePQ integration regressions; no math/config/seed/role/training/timing changes",
+    "prior_failure_commit": "2cb1c62c546fbee215562b0ce29dd59cbb93a89a",
+    "prior_failure_index_sha256": "9f386b7e86b152b44ace3a60e03cb50bf8c8d1bbc8bcd9b9be31abee430a981e",
+    "extra_scientific_runs_authorized": 1,
+    "boundary": "new commit/new directory after full local/GitHub/Linux checks; preserve old failure/G1, no substitution, automatic further retry or gate3",
+    "validation": {
+      "module_tests": 30,
+      "full_tests": 719,
+      "skipped": 0,
+      "module_seconds": 0.26,
+      "full_unittest_seconds": 87.659,
+      "validation_index_sha256": "ac3f69aa7b8db1af3bca4d6af77623f3459d78493d934af0b07457063867ebb1",
+      "tiny_index_sha256": "bb216c0d09c8e5619cba7029c81a0493608f929d7802834de9d5ce3e2ebc54f9",
+      "extra_real_run_started_at_this_validation": false
     }
   }
 }

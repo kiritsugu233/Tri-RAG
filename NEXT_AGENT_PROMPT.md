@@ -1,10 +1,29 @@
-# Step5 compact brief: failed gate2 preserved; fix/retry pending
+# Step5 compact brief: approved progress fix and one extra run
 
 Updated2026-11-05. Canonical checkout:
 `/Users/guanghongxu/Query-Adaptive-Tri-RAG`; branch `codex/tls-rag-step5-ann`.
 Inspect HEAD/status; preserve unrelated archives. No worktree/branch changes.
 
 ## Current outcome and next boundary
+
+
+Latest actual reply: “批准五路径修复及一次额外运行”. Plan16.3 exact five paths
+are now approved; do NOT ask again. Shared progress_callback(output) takes
+stage plus arbitrary metadata; production/tiny now share it. Two new real
+Gaussian/sidePQ composition tests pass (module30); standalone tiny reaches
+sidePQ progress and12 closed files verify. Full719 passes,0skip,87.659s. AST proof:22
+other geometry functions unchanged, only reporter extraction and tiny wiring;
+config/protocol/test launcher/seeds/roles/training/math/clock are byte-unchanged.
+
+Finish full local checks, commit/push/verify continuing branch, then inspect
+existing SSH node. If online, clean reviewed sync/Linux30/preflight, then ONE
+additional same-config G0–G5 in NEW directory. User explicitly permits reuse of
+current node if online. If offline, notify power-on after code ready; no power
+operation by agent. Preserve old failure/G1 and do not substitute its results.
+No automatic further retry or Tri gate3. No new real run started yet.
+
+The following is the original first-run evidence; old pending-approval wording
+is superseded ONLY by the exact progress-fix and one-extra-run consent above.
 
 Actual initial scope consent: “批准第14节八路径，按顺序准备并执行”. User then
 said “已开启”. Exactly one gate2 at scientific2cb1c62 ran and failed after99.084s
@@ -18,12 +37,11 @@ hashes unchanged, owned processes exited, both SSH sessions exited, credentials
 not written to disk and internal auth cleared. User told server may be shut down;
 no agent power action. No further server access needed for this failed delivery.
 
-**Stop for exact fix/retry decision.** Plan section16.3 proposes five paths:
+**Historical five-path proposal, now approved as above.** Plan16.3 lists:
 geometry module, new runner, new tests, append-only human/machine registers.
 Fix only progress parameter binding, connect real callback to local tiny,
 regress Gaussian AND sidePQ progress, full tests/GitHub/Linux, then ONE extra
-same-configuration new-directory run. No implementation patch/retry authorized
-or started under that new proposal yet. Do not silently restart, swallow error,
+same-configuration new-directory run. That exact patch/one extra run is now authorized; the extra run is not yet started. Do not silently restart, swallow error,
 change math/config/seeds/rows/timing/roles or enter Tri gate3.
 
 ## Minimal read set
