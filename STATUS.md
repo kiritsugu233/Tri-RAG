@@ -3,7 +3,40 @@
 Updated2026-11-05. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
 maintained branch `codex/tls-rag-step5-ann`.
 
-## 当前任务：进度回调修复及一次额外轮已批准（2026-11-05）
+## 当前完成：第二门完整轮与收尾，联合目标未通过（2026-11-05）
+
+- 实际批准“批准五路径修复及一次额外运行”已执行完毕。科学源码
+  `3f82b40ac6812c72bbab0a54ee46911c6b1ae74b`先经本地30/完整719项（0skip、87.659秒）、
+  GitHub核对、校验bundle的Linux干净ff-only同步及Linux30项（0.287秒）验收。
+- 唯一额外目录`/root/autodl-tmp/pq-refinement-G-progressfix-3f82b40-20261105`正常
+  complete/returncode0，1034.142614秒（约17分14秒，含15.837741秒源SHA）；
+  16576正式调用、21376一致性检查。14CPU/120GiB，无GPU；源stat/科学SHA保持。
+- 全16种扫描在4个角色×probe组中均无净收益，各自边际95%配对区间上端均<0。
+  主接口check：基线15.794582ms，Gaussian32主seed27.827163ms（慢76.18%），
+  原向量读取6400→6379，仅少0.328125%；nprobe256为37.671218→49.954258ms。
+  全部观察扫描候选top100保留率为1，不能记成全库100%召回或独立质量认证。
+- Gaussian四seed各维度的最大组均值过滤率仅0.470703%；有利真实终点阈值也未救回费用。
+  侧PQ32/64的有利阈值过滤总数0，侧PQ128仅18/409600。当前界的过滤空间不足，
+  且界计算/分块原型开销很大；不应仅归因于实现慢。建议停止当前接法，不进入Tri第三门。
+  Tri本身未实现，本结果不否定Tri-Law定理或所有可能的ANN接法。
+- 科学2720项/746824690B已节点/云盘逐SHA验证；科学index
+  `8eaf1d2e5e8f28219549177c88d1f71d3867c8c43d145846e398593a3ee29b5b`。
+  云盘`/root/autodl-fs/pq-refinement-G-progressfix-3f82b40-20261105-archive`含完整副本。
+  本机2574项/404311425B全部核验，调用/返回/trace齐全；146个NPZ留云盘，
+  本地不能逐点重算界或完整子集距离。两个原全包下载残片保留且未用于分析。
+- 只读复核16576调用/2368组、2112地址trace、148配对汇总/444费用窗口、128原S0输出组；
+  另以标准库独立核对均值和费用代数（最大差6.94e-18秒）。不读取原13.7GB向量或重跑科学。
+  [完整中文报告](runs/pq-refinement-G-progressfix-recovery-20261105-v1/analysis-v2/analysis_zh.md)、
+  [同步证据](docs/pq_refinement_geometry_results_v1.json)、
+  [实际记录及结论](docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md#17-额外轮实际执行封存与回收2026-11-05)。
+- 实际运行命令：固定环境python执行`...geometry_v1.py run --root`上述新目录；完整argv、
+  CPU/版本/源与测试SHA在同步回执。未测全N摘要部署、真实DRAM/SSD流量；
+  formal_certification=false。旧失败/G1保留；进程和SSH/SCP退出，已告知服务器可以关闭。
+  下一步等待用户决定研究方向；本次范围已收尾，不再启动额外轮或第三门。
+
+下列均为历史检查点，过去的待批准/待开机文字不构成当前任务。
+
+## 历史状态：进度回调修复及一次额外轮已批准（2026-11-05）
 
 - 用户实际答复“批准五路径修复及一次额外运行”，对应第16.3节精确范围。已抽取共享
   progress_callback，位置参数stage与name metadata分离；生产/tiny接入同一实现。

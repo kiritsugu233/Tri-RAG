@@ -1980,6 +1980,16 @@
       "path": "docs/pq_refinement_geometry_failure_v1.json",
       "level": "L1",
       "reason": "Actual failed gate2 closure/recovery/G1 limitation and pending fix proposal receipts; no completed G2/net-gain or authorization claim"
+    },
+    {
+      "path": "scripts/analyze_pq_refinement_geometry_results.py",
+      "level": "L1",
+      "reason": "Read-only independent closed G2 call/trace/quality/paired-cost audit; no original vector reads, model fitting or policy execution"
+    },
+    {
+      "path": "docs/pq_refinement_geometry_results_v1.json",
+      "level": "L1",
+      "reason": "Actual completed or failed extra G2 evidence/limits only; no formal or full-N claim from local proxy"
     }
   ],
   "approved_change_history": [

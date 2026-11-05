@@ -8,6 +8,27 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**Gate2 complete; joint quality/cost target not met (2026-11-05).** The single
+approved extra CPU run at scientific `3f82b40ac6812c72bbab0a54ee46911c6b1ae74b`
+finished normally in1034.143s,16576 formal calls/21376 conformance checks.
+All16 bound scans preserve the observed candidate-top100, but all are slower
+in every role/probe group. Primary Gaussian32 check:15.795ms baseline versus
+27.827ms,6400 versus6379 original rows (0.328% fewer). Even the favorable final
+threshold offers little filtering. Do not enter Tri gate3/adapter or retry.
+This tests the current residual-summary/bound rule; Tri itself was not implemented.
+
+Complete2720 scientific files are verified on node/cloud.2574 records including
+all calls/outputs/read traces are local;146 NPZ arrays remain cloud-only, so local
+pointwise bound/subset-distance recomputation is unavailable. Independent call,
+quality, trace and paired-cost audits agree; formal_certification=false. No owned
+run/SSH remains; server may be closed. Read [plan17–18](docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md#17-额外轮实际执行封存与回收2026-11-05),
+[tracked evidence](docs/pq_refinement_geometry_results_v1.json),
+[full local Chinese report](runs/pq-refinement-G-progressfix-recovery-20261105-v1/analysis-v2/analysis_zh.md)
+and [compact handoff](NEXT_AGENT_PROMPT.md). Current authorized work is complete.
+
+Everything below is historical evidence; old launch/approval instructions do
+not reopen the completed authorization.
+
 **Progress fix and one extra gate2 run approved (2026-11-05).** Actual reply:
 “批准五路径修复及一次额外运行”. Shared `progress_callback(output)` uses stage
 as positional input and name as metadata; production and tiny now share it.

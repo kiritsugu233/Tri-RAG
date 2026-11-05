@@ -4,14 +4,19 @@ Updated 2026-11-05. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
-## 当前任务：五路径进度修复和一次额外轮（2026-11-05）
+## 当前完成：五路径进度修复、唯一额外轮与收尾（2026-11-05）
 
 - [x] 实际批准“批准五路径修复及一次额外运行”已在append-only治理记录登记。
 - [x] 共享真实progress callback修复绑定；生产与tiny同用，原数学/训练/计时/config不变。
 - [x] 新增2组合回归，模块30通过；独立tiny真实回调/12封存文件SHA通过，AST最小差异核对通过。
 - [x] 完整719项/0skip/87.659秒通过；保护/最小差异核对通过，按常设指令提交/push核对后进行Linux验收。
-- [ ] 现节点只读检查，在线则同步评审提交/Linux30验收，随后唯一额外同参数新目录G0–G5。
-- [ ] 成功或失败均关闭封存/云盘/本机回收审计；不再自动重跑，不进入第三门。
+- [x] 科学3f82b40已GitHub核对；现节点只读检查、干净同步/Linux30验收后，唯一额外G0–G5正常完成。
+- [x] 实际1034.143秒/16576正式调用/21376一致性检查；原参数与科学源保持。
+- [x] 2720关闭科学文件云盘逐SHA；本机2574项及全部调用/输出/trace核验，146个NPZ保留云盘。
+- [x] 两条独立分析路径核对质量/读取/配对费用；明确缺测数组不能冒充逐点重算通过。
+- [x] 联合目标未通过：全部16扫描更慢，主Gaussian32仅少读0.328%；结论、限制与回执齐备。
+- [x] 无拥有进程/SSH，服务器可关闭；本次授权收尾，不再自动重跑，不进入第三门。
+- [ ] 新研究方向由用户决定；当前证据不支持推进此接法的Tri/adapter，不是自动待办。
 
 ## 当前完成：第二门首轮失败保全与G1分析（2026-11-05）
 
@@ -48,7 +53,8 @@ Unchecked historical items are not execution authorization.
 - [x] 记录子集质量/选择成本未验证、准备86.574ms单列、DRAM/SSD缺测null、非独立认证等限制。
 - [x] [中文报告](../runs/pq-refinement-C1-recovery-20261105-v1/analysis/analysis_zh.md)及
   [同步证据](pq_refinement_c1_evidence_v1.json)齐备；第一门计量完成，部署净收益仍未决。
-- [ ] 第二门几何/残差/草图、Tri独立贡献：未开始，不是当前自动执行待办。
+- [x] 第二门几何/残差/草图随后获批并完成，联合目标未通过，见本页当前完成记录。
+- [ ] 第三门Tri独立贡献未开始；当前结果不支持自动推进，不是执行授权。
 
 ## 历史状态：C0完成及C1暂缓（2026-11-04）
 
