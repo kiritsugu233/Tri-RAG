@@ -4,6 +4,16 @@ Updated 2026-11-05. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
+## 当前完成：第二门首轮失败保全与G1分析（2026-11-05）
+
+- [x] 用户确认开机；只读预检14CPU/120GiB、磁盘/旧源在，无第二份G2进程。
+- [x] 经校验已推送Git bundle同步2cb1c62（网络fetch未返回），Linux28/保护/CPU预检通过。
+- [x] 唯一批准轮在99.084秒compute_failed；进度回调参数冲突，G0/G1完成，正式调用0。
+- [x] 137科学/云盘144项分别核验，本机完整回收；进程/SSH退出，已告知服务器可关闭。
+- [x] 独立复核64组/409600候选；norm有利阈值过滤0；不外推未测Gaussian/侧PQ或Tri。
+- [x] 记录实际错误、测试覆盖遗漏、完整失败回执及第16.3节五路径/一次额外轮提案。
+- [ ] 新进度工厂、真实回调tiny/集成回归及一次额外CPU轮：待精确批准，不自动执行。
+
 ## 当前完成：第二门本地代码及前置验收，待CPU开机（2026-11-05）
 
 - [x] 用户明确请求第二门，随后批准计划第14节精确八路径；实际回复已登记。
@@ -13,8 +23,8 @@ Unchecked historical items are not execution authorization.
 - [x] 完整旧689＋新28=717回归通过/0skip/86.387秒；首次ps沙箱限制失败日志保留，同命令进程可见环境通过。
 - [x] 独立实际FAISS tiny端到端11回调/11关闭文件SHA通过，旧源/等级/metadata与append-only登记检查通过。
 - [x] 本地准备已就绪，按常设指令提交/同步分支；交付时核对GitHub并通知用户开CPU服务器。
-- [ ] 用户开机后Linux只读预检/同步/相关验收，再执行唯一第二门；本地tiny不算实际结果。
-- [ ] 正常或失败均封存/回收/独立审计；不自动进入第三门Tri。
+- [x] 用户开机后Linux预检/同步/相关验收通过；唯一第二门已执行并失败，见当前记录。
+- [x] 失败封存/回收/独立审计完成；没有第二份运行或第三门Tri。
 
 ## 当前完成：第一门C0–C2成本审核（2026-11-05）
 

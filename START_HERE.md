@@ -8,6 +8,26 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**Gate2 first run closed as compute_failed (2026-11-05).** User power-on:
+“已开启”. Reviewed2cb1c62 synced cleanly through a verified Git bundle after
+server GitHub fetch stalled; Linux28 tests and CPU preflight passed. The single
+run exited after99.084s (including73.602s source SHA), before sidePQ training
+or formal timing. Production progress callback `phase(name, **fields)` collides
+with `phase('sketch_build', name=...)`; the same issue exists at sidePQ progress.
+Local tests/tiny had used a permissive default callback and missed this composition.
+
+G0/G1 are preserved:137 closed scientific files/20,574,190B independently verified
+on node/cloud/local,64 query×probe groups/409600 candidate occurrences audited.
+The norm-only bound filters0 even with the favorable final threshold. This is
+only a negative result for that bound; Gaussian/sidePQ/full-cost results are absent.
+All required data/logs are local, SSH sessions exited and server may be shut down.
+No source fix/retry or gate3 has started. Read
+[actual closure and five-path proposal](docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md#16-第二门首轮失败封存g1复核与最小修复提案2026-11-05),
+[tracked receipt](docs/pq_refinement_geometry_failure_v1.json), and compact brief.
+Further protected edits and one extra run await the exact proposal's approval.
+
+The following local-readiness checkpoint is historical, not a pending launch.
+
 **Gate2 local preparation complete; await CPU power-on (2026-11-05).** Actual
 reply: “批准第14节八路径，按顺序准备并执行”. New independent geometry namespace
 reuses the32 opened CPU queries and actual OPQ IVF; compares norm, fixed Gaussian

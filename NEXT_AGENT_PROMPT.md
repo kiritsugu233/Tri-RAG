@@ -1,89 +1,88 @@
-# Step5 compact brief: gate2 local-ready, wait for CPU power-on
+# Step5 compact brief: failed gate2 preserved; fix/retry pending
 
 Updated2026-11-05. Canonical checkout:
 `/Users/guanghongxu/Query-Adaptive-Tri-RAG`; branch `codex/tls-rag-step5-ann`.
-Inspect actual HEAD/status; preserve unrelated archives. No worktree/branch change.
+Inspect HEAD/status; preserve unrelated archives. No worktree/branch changes.
 
-## Current authorization and next action
+## Current outcome and next boundary
 
-Latest actual direction: “进行第二门，准备好代码和前置工作后，告诉我让我打开服务器”.
-Actual exact-path reply: “批准第14节八路径，按顺序准备并执行”. Plan section14's
-five new files plus one test-launcher membership and two append-only registers
-are approved. Section15 records actual preparation. No extra scope approval is
-needed for that same one CPU gate2 after the user confirms power-on.
+Actual initial scope consent: “批准第14节八路径，按顺序准备并执行”. User then
+said “已开启”. Exactly one gate2 at scientific2cb1c62 ran and failed after99.084s
+(source SHA73.602s included). G0/G1 completed. First Gaussian construction's
+progress callback raised TypeError before sidePQ/timed comparisons. Formal
+calls0/16576. This is NOT completed gate2 and not a Gaussian/Tri failure result.
 
-Local preparation is complete:28 new/717 full tests pass,0skip,86.387s; actual
-FAISS synthetic CLI passes11 callbacks and11 closed size/SHA-verified files.
-Initial one incorrect floating-point round-trip fixture failure is preserved;
-replaced with direct exact seeded-formula assertions. First sandbox full run
-had18errors/6failures from denied ps in OLD own-process tests; same unchanged
-suite passed with process visibility. No old scientific file/test was edited.
+All137 scientific files/20,574,190B closed and independently size/SHA verified on
+node/cloud/local; cloud package144 payloads also verified. Source stat/executed
+hashes unchanged, owned processes exited, both SSH sessions exited, credentials
+not written to disk and internal auth cleared. User told server may be shut down;
+no agent power action. No further server access needed for this failed delivery.
 
-Commit/push/verify this continuing branch before the final power-on handoff.
-Then tell user CPU-only is sufficient: original14CPU quota preferred,>=32GiB RAM
-(64GiB comfortable),>=5GiB free fastdisk recommended, existing original
-source/index/environment retained. No A800/GPU needed. Estimate30–60min real
-CPU, not an automatic cutoff. **No SSH/real gate2 has started.** Wait for user's
-power-on reply before connecting. Do not start a second run or Tri gate3.
-
-After power-on: inspect current endpoint/clean checkout/hardware/disk; preserve
-all data. Sync the reviewed GitHub commit ff-only, Linux28 related tests and
-preflight, then exactly one new-root gate2 CPU run. Runtime commands are in the
-protocol. Supervision is manual300s observations, owned-child stop, no elapsed/
-resource/telemetry abort. The reused old supervisor's C1_running label is only
-informational; freeze/progress/result identify the new geometry namespace.
-Any failure preserves evidence; no automatic retry. Close/recover/audit final
-files and actual quality/cost outcomes before discussing a later stage.
+**Stop for exact fix/retry decision.** Plan section16.3 proposes five paths:
+geometry module, new runner, new tests, append-only human/machine registers.
+Fix only progress parameter binding, connect real callback to local tiny,
+regress Gaussian AND sidePQ progress, full tests/GitHub/Linux, then ONE extra
+same-configuration new-directory run. No implementation patch/retry authorized
+or started under that new proposal yet. Do not silently restart, swallow error,
+change math/config/seeds/rows/timing/roles or enter Tri gate3.
 
 ## Minimal read set
 
-1. START_HERE.md, AGENTS.md, relevant protection rows and this brief.
-2. docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md sections14–15.
-3. docs/PQ_REFINEMENT_GEOMETRY_PROTOCOL_V1.md and new geometry config.
-4. docs/pq_refinement_geometry_preflight_v0.json (inputs/local receipts/limits).
+1. START_HERE.md, AGENTS.md, relevant protection rows, this brief.
+2. docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md section16 (actual results/proposal).
+3. docs/pq_refinement_geometry_failure_v1.json (tracked receipts).
+4. runs/pq-refinement-G-recovery-20261105-v1/analysis/analysis_zh.md.
 
-The giant old journal is not a current task list. Schemes1–4 are retired by the
-user; route5 remains an unimplemented historical proposal. Preserve historical
-files/failures/contracts/consent; recover dependencies only for a concrete need.
+Do not reread giant retired-scheme journals. Schemes1–4 are retired; route5 is
+historical, no pending experiment. Preserve all old failures/contracts/consent.
 
-## Gate2 contract and boundaries
+## Defect and coverage gap
 
-- Same32 opened C0/C1 CPU queries (16 discovery+16 check), original corpus
-  5,233,329×640 FP32, native clip(1-dot,0,2), stable row ties, k100.
-- Same actual OPQ64 residual-IVF, nprobe64/256, upstreamM6400; no main retrain.
-  OPQ64 is64B code, nprobe64 is not dimension.20 bound old products:18 local;
-  actualIVF/list_rows/full original source remain node-only.
-- Candidate union193,903 rows; plus32768 old corpus fit rows totals225,532.
-  G0 actual-code reconstruction/inverse audit, G1 boundaries, then G2/G3 side
-  summaries/limits, G4 read decisions/oracle and G5 paired full clocks/closure.
-- Norm4B; Gaussian8/16/32+norm36/68/132B, four fixed seeds2026110401–04;
-  first seed primary, others sensitivity, no best-seed/adaptive-m selection.
-  Corpus-only side residualPQ32/64/128+norm same payload,20iter/1redo, no query
-  labels. This side-codebook fitting is approved; predictor/adapter is not.
-- Primary scan first100 then blocks256 in originalPQ order; matched fixed
-  prefixes/norm/sidePQ, forced-full-read control and labeled favorable-threshold
-  oracle.37 modes,2warmup/7formal; production16576 calls, not independent queries.
-- Every full callback pays actual search, live ID map, dual transform/LUT/sketch,
-  summary/bounds/scheduling/native read/score/select/output. Unread truth enters
-  only offline audit or explicitly named oracle, never the deployed interface.
-- Charge original-code/label/row/offset and FP64 LUT copies, shared inverse,
-  matrices/side codebooks/IDs/workspace. Local packed-summary timing is a proxy;
-  full-N encoding/layout latency unmeasured. Payload equality is not total RAM
-  equality. Physical DRAM/SSD traffic stays null; actual RSS separately observed.
-- Deterministic-bound/native full-read/source mismatches stop and retain error;
-  legitimate Gaussian tail violations are measured, not silently fixed.
-  Real Gaussian law and FP32/BLAS/PRNG assumptions stay separate;
-  formal_certification=false. Old check is not fresh certification.
-- Original C1/frozen sources remain byte-identical. New exact paths have their
-  own namespace/registration; gate3 Tri/new roles/GPU/predictor remain closed.
+At2cb1c62 geometry module line532 defines phase(name, **fields); Gaussian line195
+calls phase('sketch_build', name=name); sidePQ line217 has the same conflict.
+Python double-binds name before callback body. Static AST and pure-Python
+binding reproduction confirm. Default builder callback accepts *args/**kwargs;
+unit/tiny never composed the production reporter with builder, hence local
+717/0skip and Linux28/0.261s passed but missed this case. Own this implementation
+and integration-test omission. Do not conflate it with memory, inputs or theory.
 
-## First-gate starting evidence
+## Preserved actual G0/G1 evidence
 
-C1 scientific2b7d2a9 completed255.044s/5824calls;75 closed files fully recovered.
-Primary check callback14.964ms, rerank4.690ms. Half candidates saves~14%, but10%
-net target leaves only0.30–0.67ms added-work means across both roles/masks;
-minimum individual lowerCI0.024ms, not simultaneous. No validated quality-aware
-selector/Tri benefit. IVF256 read-only/quarter-survivor results did not robustly
-pass10%; prepaid-scores oracle12.48% forbids a universal impossibility claim.
-Keep C0/C1 evidence unchanged. Gate2 must remeasure paired full baselines on
-its actual CPU and report quality, geometry, real work and net cost separately.
+- CPU Xeon Gold6348,14CPU quota/120GiB; no GPU query/use. Fastdisk~29GiB/cloud
+  ~158GiB free at start; no old-data migration needed. GitHub fetch stalled;
+  interrupted network fetch only. Clean ff-only sync via verified pushed Git
+  bundle SHA35e18909e6d9fe5f4ee8f79c0c6e32f912eb9496bf237029869cfc183094f9b8.
+- Source commit2cb1c62c546fbee215562b0ce29dd59cbb93a89a; Linux28/protection303
+  and CPU preflight passed. Original source/index/versions unchanged.
+- Same32 opened CPU queries,16 per role, nprobe64/256, upstream6400, k100.
+  Candidate union193903; plus32768 old corpus fit rows gives225532 rows.
+- Actual IVF1023 list representatives decode bit-equal to FAISS; inverse condition
+  1.000008462, identity defect7.47e-15. Independent G1 audit64 groups/409600
+  candidate occurrences; stable top100 matches S0 in all64. No native full-batch
+  vs final100 distance difference in these records.
+- Norm bound violations0, but favorable final-threshold skipped candidates0 in
+  ALL64 groups. This fixed norm-only bound is too loose to show read cancellation;
+  do not generalize to unmeasured Gaussian/sidePQ/Tri. Pooled median residual
+  radius~.405–.411; abs normalized gap median~.160–.167.
+- No closed Gaussian quality/cost result; sidePQ training/timed callback did not
+  start. formal_certification=false; observed check is not fresh certification.
+
+## Recovery and replay
+
+Local root runs/pq-refinement-G-recovery-20261105-v1/received/
+  pq-refinement-G-2cb1c62-20261105-archive/{run,extras,...}.
+Cloud /root/autodl-fs/pq-refinement-G-2cb1c62-20261105-archive.
+Science index9f386b7e86b152b44ace3a60e03cb50bf8c8d1bbc8bcd9b9be31abee430a981e.
+Transport62b5a362322e98c1725719be58a5fc3e382ea044b54fb9e5e55545167c311ed7.
+Local read-only analyzer scripts/analyze_pq_refinement_geometry_failure.py binds
+closed failure/S0 records, never reads original13.7GB vectors or executes models.
+Report includes exact replay command, limits, scalar and per-query CSVs.
+A second stdlib integer review agrees; normalized median floating differences
+~1e-16 are recorded, not falsely forced to bit identity.
+
+First-gate prior evidence remains unchanged: half-survivor primary cost window
+~14% before added work;10% total target leaves0.30–0.67ms mean additional fees.
+Actual gate2 must eventually measure its own paired full costs/quality. Packed
+summary/code/ID/label/offset/LUT copies are charged; full-N deployment remains
+unmeasured. Same-payload norm/Gaussian/sidePQ and no new roles/Tri boundaries
+remain in the frozen protocol. No parameter selection from this failed data.

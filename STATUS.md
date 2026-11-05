@@ -3,7 +3,28 @@
 Updated2026-11-05. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
 maintained branch `codex/tls-rag-step5-ann`.
 
-## 当前状态：第二门本地已就绪，待用户开CPU服务器（2026-11-05）
+## 当前状态：第二门首轮因进度回调错误停止，完整保全；修复/额外一轮待批准
+
+- 用户实际开机回复“已开启”。14CPU/120GiB，数据盘约29GiB/云盘约158GiB空闲，旧源/IVF在。
+  GitHub fetch未返回，人工中止网络同步，校验已推送的Git bundle后clean ff-only同步2cb1c62；
+  Linux28项/0.261秒及保护303项/CPU预检通过，没有改参数或环境。
+- 唯一正式轮`pq-refinement-G-2cb1c62-20261105`在99.083809秒后compute_failed/returncode1，
+  源SHA73.601953秒已包含。G0/G1完成，首个Gaussian构建后的进度回调`name`重复绑定，
+  TypeError；侧PQ/16576次计划正式调用尚未开始，实际正式调用0，第二门未完成。
+- 这是进度回调接线的实现与验收遗漏，不是内存/数据/ANN/Tri原理失败。静态AST和纯Python
+  绑定复现证实Gaussian/侧PQ两处都有冲突；当前没有修改冻结科学源码或重跑。
+- 137关闭科学文件/20,574,190B在节点/云盘/本机逐大小/SHA一致；含外部日志与Git bundle
+  的云盘144项也已本机核验。两个SSH会话退出，源size/mtime和执行源码哈希保持；
+  已告诉用户可以关闭服务器，未代用户关机。
+- 独立复核64个G1组/409600候选；1023个实际IVF列表代表重构与FAISS相同，64组top100
+  对上原S0。norm下界违例0，但有利最终阈值可过滤点数也为0，说明该仅范数界太松。
+  这不能外推Gaussian/侧PQ/Tri；本轮没有它们的质量、计时或净收益证据。
+- [中文说明](runs/pq-refinement-G-recovery-20261105-v1/analysis/analysis_zh.md)、
+  [同步失败/G1回执](docs/pq_refinement_geometry_failure_v1.json)、
+  [最小五路径修复与额外一轮提案](docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md#163-最小五路径修复与一次额外轮待批准)。
+  当前交付完成失败保全及分析；新L0修复/额外运行尚未批准，第三门关闭。
+
+## 历史检查点：第二门本地准备完成（2026-11-05）
 
 - 用户指令“进行第二门，准备好代码和前置工作后，告诉我让我打开服务器”；随后对
   第14节精确八路径真实回复“批准第14节八路径，按顺序准备并执行”。新科学实现已按此范围开始，

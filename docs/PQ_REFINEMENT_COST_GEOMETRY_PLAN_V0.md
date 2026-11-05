@@ -33,6 +33,10 @@
 > 第14节保留原提案，第15节记录实际本地准备；当前不连接服务器，代码和验收同步就绪后
 > 再通知开机。第二门尚无服务器科学结果，第三门不自动开始。
 
+> **第二门首轮现已失败收尾**：用户“已开启”后，仅执行一次2cb1c62；99.084秒在摘要
+> 进度回调处TypeError。G0/G1已封存、云盘/本地全部核验；正式计时/侧PQ未开始。
+> 第16节记录实际结果与新五路径修复/一次额外轮提案；当前不改核心、不自动重跑。
+
 # PQ 精化：成本空间与几何空间研究方案 v0
 
 日期：2026-11-04。状态：供讨论的非冻结设计稿；不是新科学协议或实验启动授权。
@@ -746,3 +750,86 @@ FP32/BLAS/有限PRNG的误差模型与原实数Gaussian结论分别列明，form
 [可同步回执](pq_refinement_geometry_preflight_v0.json)含实际同意/20项输入/全部软件验证/限制。
 保护303项通过；后续按常设指令提交/push并核对GitHub，然后通知开CPU服务器。
 当前阶段为`local_ready/server_not_started`，不是第二门科学完成或风险/净收益通过。
+
+## 16. 第二门首轮失败封存、G1复核与最小修复提案（2026-11-05）
+
+### 16.1 实际唯一运行与闭环
+
+用户实际开机回复“已开启”。只读预检确认Xeon Gold6348、14CPU配额/120GiB，
+快盘31,254,335,488B/云盘169,673,699,328B空闲；原源/实际IVF/解释器均在，无已有G2。
+服务器GitHub fetch没有返回，人工中止该网络同步；未更改工作区，改用本机已验证且
+已推送的Git bundle，SHA`35e18909e6d9fe5f4ee8f79c0c6e32f912eb9496bf237029869cfc183094f9b8`。
+服务器bundle verify/目标HEAD/clean ff-only均通过，科学提交为
+`2cb1c62c546fbee215562b0ce29dd59cbb93a89a`。没有force/default-branch操作。
+Linux相关28项通过0.261秒，保护303项及20输入CPU预检通过，固定四依赖版本不变。
+
+仅启动`/root/autodl-tmp/pq-refinement-G-2cb1c62-20261105`，controller1324/worker1326。
+99.083809秒后compute_failed/returncode1，其中完整源SHA73.601953秒包含在总时长内。
+运行错误：`TypeError: run_science.<locals>.phase() got multiple values for argument 'name'`。
+G0/G1已完成；首个Gaussian摘要在报告进度时出错，没有形成可分析的Gaussian筛选/费用
+产物，侧PQ训练/正式callback计时尚未开始，实际正式调用0/计划16576；第二门未完成。
+
+137关闭科学文件/20,574,190B由独立节点脚本逐大小/SHA通过；原源size/mtime、执行
+源码哈希及所属进程退出检查通过。云盘副本
+`/root/autodl-fs/pq-refinement-G-2cb1c62-20261105-archive`包含run及5项外部记录，
+144项payload再次核验。科学index SHA为
+`9f386b7e86b152b44ace3a60e03cb50bf8c8d1bbc8bcd9b9be31abee430a981e`；
+cloud_inventory SHA为`dfc945f1e8b2c8f04167d8738c6b3b183c4c4eb1d1d6159ff0c1bdb46d04680a`。
+本地压缩传输20,467,235B/SHA
+`62b5a362322e98c1725719be58a5fc3e382ea044b54fb9e5e55545167c311ed7`，包和全部文件验证一致。
+初次本地解析要求开始标记前换行而失败（实际与SSH提示符同行），仅修解析定位，原包
+SHA完全一致；没有重跑科学或重传/修改科学记录。SSH已全部退出，已告知用户可以关闭
+服务器，未代用户操作关机。当前失败现场完整保留，不需要继续开机提供数据。
+
+### 16.2 软件原因与仅有的G1几何结论
+
+生产`run_science`内部定义`phase(name, **fields)`（行532），Gaussian构建调用
+`phase('sketch_build', name=name)`（行195），位置参数与keyword重复绑定name，
+在写进度前即抛TypeError。侧PQ进度（行217）同样冲突。静态AST与独立纯Python参数
+绑定复现均证实。已有单元和tiny使用默认`*args/**kwargs`空回调，未把生产回调接入
+构建器，故本地717/Linux28通过没有覆盖这个组合。这是实现/验收遗漏，不是理论失败。
+
+只读复核脚本`analyze_pq_refinement_geometry_failure.py`不执行原向量距离/训练/检索；
+它核验137关闭文件、五执行源Git blob、原S0七项消耗数据和20项输入清单绑定。
+独立重算64 query×probe组/409600候选出现次数，候选顺序及稳定top100均匹配原S0；
+保存的6400批次分数与原最终100重评分数在这批数据无差异。算术审计1e-12仅是读取后
+一致性核对，不改原检索/界容差。二次标准库整数计数一致，归一化中位数跨平台差约1e-16。
+
+实际IVF的1023个列表代表重构与FAISS逐位一致；逆矩阵条件数1.000008462、逆恒等式
+误差7.470e-15。四角色×probe池化残差半径中位数约0.405–0.411，绝对归一化间隔
+中位数约0.160–0.167。norm下界违例0，但全部64组在有利真实最终阈值下也过滤0点。
+因此**这个仅范数保守界没有显示本轮原向量过滤空间**；不能外推到Gaussian、侧PQ、
+其他界或Tri原理。后几项没有实际质量/成本证据，不把未测记成失败或通过。
+
+[完整中文说明](../runs/pq-refinement-G-recovery-20261105-v1/analysis/analysis_zh.md)、
+[可同步失败回执](pq_refinement_geometry_failure_v1.json)与逐query CSV保留全部实际进展。
+analysis index SHA：`6b3c1d6e7a8b0b54234ee0d1ea725bb480c9ab42570252e5c9e7a175d68bb961`。
+formal_certification=false；实际科学提交2cb1c62不变，未启动第二份或第三门。
+
+### 16.3 最小五路径修复与一次额外轮（待批准）
+
+本轮一次运行授权已以真实失败结束。以下是新缺陷的具体修复与额外运行提案，尚未实施。
+AGENTS.md规定：**“Before any edit, obtain explicit user approval for the exact
+affected paths and intended change.”** 新源位于L0，且协议禁止自动重试；不通过L1 wrapper
+monkeypatch或吞掉进度异常来绕过源码/监督合同。原第14节同意与本轮失败如实保留。
+
+| 精确路径 | 最小允许修改 |
+|---|---|
+| `mechanism/tls_rag_step5_pq_refinement_geometry_v1.py` | 抽取共享`progress_callback(output)`，内部位置参数改为stage，保留name metadata；`run_science`使用它，不改数值/训练/过滤/计时/数据语义 |
+| `scripts/run_tls_rag_step5_pq_refinement_geometry_v1.py` | local_tiny把同一个真实progress callback接到摘要构建，而非省略使用空回调；生产监督/stop/封存不改 |
+| `tests/test_tls_rag_step5_pq_refinement_geometry_v1.py` | 补真实callback与Gaussian/侧PQ构建组合、name字段/阶段输出的CPU集成回归；保留全部旧断言与失败证据 |
+| `docs/CODE_PROTECTION.md` | 仅追加本缺陷的真实批准记录，不变更旧保护/授权/结果 |
+| `docs/code_protection.json` | 仅更新上述受影响L0文件及人工表的必要SHA、追加真实修复批准/验收；其余旧行/级别/元数据保持 |
+
+不改config、冻结数学协议、delta、seed、m、拟合行、M/nprobe、线程、块大小、评分/ties、
+角色、容差或预算，不引入新策略/预测器/adapter/第三门。进度JSON仍用phase和name字段，
+仅参数绑定接线修复。新源码fingerprint/commit和新运行目录区分本轮，保留原失败/G1，
+不通过复用旧G1跳过验证或混成新的完成结果；不声称新独立认证。
+
+批准后：先补组合回归/完整原套件/真实callback tiny/保护差异，提交push并核对GitHub；
+然后Linux相关验收和只读预检，允许**仅一次额外同参数完整G0–G5**，新目录、失败即停，
+无自动下一轮。若服务器已关闭，代码就绪后再通知用户开CPU节点，不能代开/付费。
+如仍开启，可在用户批准范围内复用现节点；不需要GPU。预期CPU仍30–60分钟，非自动截止。
+该修复不会改变norm过滤0的既有结果；目的仅是完成尚未测到的固定Gaussian/侧PQ比较。
+当前只同步L1分析/状态和本提案，未实施所提核心修复、未刷新核心/人工表SHA；机器表仅
+例行追加两个L1分析/回执条目，不记录新修复批准，不启动新轮。

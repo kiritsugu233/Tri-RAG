@@ -1970,6 +1970,16 @@
       "level": "L0",
       "reason": "Approved independent gate2 real/finite Gaussian, native score/reading/cost and scope contract",
       "sha256": "f02017a435ee7b898521e40294346e9807a1d22677da57a0dfc885d8047ab9e6"
+    },
+    {
+      "path": "scripts/analyze_pq_refinement_geometry_failure.py",
+      "level": "L1",
+      "reason": "Read-only audit of closed failed gate2 2cb1c62 G0/G1 records and static callback defect; no retrieval/summary training, policy or scientific source change"
+    },
+    {
+      "path": "docs/pq_refinement_geometry_failure_v1.json",
+      "level": "L1",
+      "reason": "Actual failed gate2 closure/recovery/G1 limitation and pending fix proposal receipts; no completed G2/net-gain or authorization claim"
     }
   ],
   "approved_change_history": [
