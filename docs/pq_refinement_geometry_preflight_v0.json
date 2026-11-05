@@ -1,0 +1,561 @@
+{
+  "schema": "pq_refinement_geometry_local_readiness_v1",
+  "date": "2026-11-05",
+  "state": "local_code_tests_ready_waiting_user_CPU_power_on_after_GitHub_sync",
+  "actual_user_scope_consent": "批准第14节八路径，按顺序准备并执行",
+  "initial_readonly_snapshot_before_consent": {
+    "schema": "pq_refinement_geometry_preflight_receipt_v0",
+    "date": "2026-11-05",
+    "state": "preparation_only_exact_L0_scope_pending",
+    "files": [
+      {
+        "path": "runs/pq-refinement-G-local-preflight-20261105-v0/input_inventory.json",
+        "bytes": 6196,
+        "sha256": "f243d7a76a3c000f4236636c10191ad80a3ec06dd2684ccee6cd793f0cd147a6"
+      },
+      {
+        "path": "runs/pq-refinement-G-local-preflight-20261105-v0/local_dependency_and_metadata_check.json",
+        "bytes": 1276,
+        "sha256": "37500ee6515ef06ba9bac8707d8c065a71b13f91f32db8a0406093383edb0a81"
+      }
+    ],
+    "inventory": {
+      "schema": "pq_refinement_geometry_readonly_preflight_v0",
+      "date": "2026-11-05",
+      "status": "local_input_audit_complete_scientific_implementation_scope_pending",
+      "actual_user_instruction": "进行第二门，准备好代码和前置工作后，告诉我让我打开服务器",
+      "scope_approval_status": "direction authorized; exact new L0 paths and intended changes proposed in plan section14; not yet approved",
+      "local_head": "b213a7043272019b62042657b148dbbbef9b7e30",
+      "source_index_sha256": "003ccbbca3c10ad6725462556d79554c8c0c4deb5329999219313c97bb0dad1a",
+      "source": {
+        "path": "/root/autodl-fs/route6-B0-v1-9f963f9-20261103T0959Z/source/data.hdf5",
+        "sha256": "08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114",
+        "bytes": 13688159632,
+        "rows": 5233329,
+        "dimension": 640,
+        "metric": "normalized",
+        "revision": "a91cc76a3ab66b0353032e8427b9e34dcee22ded",
+        "layout": {
+          "offset": 6144,
+          "dtype": "<f4",
+          "order": "C",
+          "chunks": null,
+          "compression": null,
+          "virtual": false
+        }
+      },
+      "source_run": "/root/autodl-tmp/route6-S0-manual-r2-3d372f9-20261104",
+      "source_products": [
+        {
+          "path": "queries.npy",
+          "bytes": 327808,
+          "sha256": "536bd947334aabf7fbedc869eb29a6cc25d79f7c82e5ff03d877d866d9ba8ce5",
+          "available_local": true,
+          "local_verified": true
+        },
+        {
+          "path": "roles.json",
+          "bytes": 33806,
+          "sha256": "a9f4549391ed42a3bbd5c1a28ba3eb2e07eab2a85793721f3b7aefd44d8ac795",
+          "available_local": true,
+          "local_verified": true
+        },
+        {
+          "path": "inputs.json",
+          "bytes": 655,
+          "sha256": "5e255ace474a6e96f28d249e6cd9017bd7095c0cd93dfc7372f7e21ed9600b5c",
+          "available_local": true,
+          "local_verified": true
+        },
+        {
+          "path": "prepared.json",
+          "bytes": 1436,
+          "sha256": "6344864e52a9f54bb4eefc6a0bf70084b50e8490d602f54a2631fa925b8c03cc",
+          "available_local": true,
+          "local_verified": true
+        },
+        {
+          "path": "source_freeze.json",
+          "bytes": 13800,
+          "sha256": "6f48bb0ca0beb84e77bec7673b1036a06949365c7b4c8df04ee184839812a28e",
+          "available_local": true,
+          "local_verified": true
+        },
+        {
+          "path": "ivf/opq64.faiss",
+          "bytes": 380084860,
+          "sha256": "e40aa069d41872c801636a5eed5f68aa1117e6d5104432ca9d47273c8939430c",
+          "available_local": false,
+          "local_verified": false
+        },
+        {
+          "path": "ivf/opq64/matrix.npy",
+          "bytes": 1638528,
+          "sha256": "5c1b4c106727013899076462439e2e5b16a785b7de292f292575f910419bb090",
+          "available_local": true,
+          "local_verified": true
+        },
+        {
+          "path": "ivf/opq64/mean.npy",
+          "bytes": 5248,
+          "sha256": "fa7edd766304e07f542df291117e3a328e3fdb3e550d12f03e67f0aca4d143da",
+          "available_local": true,
+          "local_verified": true
+        },
+        {
+          "path": "ivf/opq64/model_identity.json",
+          "bytes": 345,
+          "sha256": "be9c4813e08e4cf688c586689d1fb89bb77f5efb4806a79610db806aa9515140",
+          "available_local": true,
+          "local_verified": true
+        },
+        {
+          "path": "ivf/opq64/64/candidates.npy",
+          "bytes": 3276928,
+          "sha256": "55a4c220756484365d73454cea8133c12b7e5f42ab7466b70cdb77fb47541292",
+          "available_local": true,
+          "local_verified": true
+        },
+        {
+          "path": "ivf/opq64/256/candidates.npy",
+          "bytes": 3276928,
+          "sha256": "4b4fd10ba6fe670d81b2508ff577515e827cd0421204e64cdec68d9703a286de",
+          "available_local": true,
+          "local_verified": true
+        },
+        {
+          "path": "ivf/opq64/64/timings.json",
+          "bytes": 444970,
+          "sha256": "1b27efa37afcff45504dea5e2af4304e515547b28520fbc49f58b3045cde1bbd",
+          "available_local": true,
+          "local_verified": true
+        },
+        {
+          "path": "ivf/opq64/256/timings.json",
+          "bytes": 889970,
+          "sha256": "a00e725318cfe5144a22a86e6efbf84df0885bb6747353086676e16e0c637e6e",
+          "available_local": true,
+          "local_verified": true
+        },
+        {
+          "path": "ivf/opq64/list_rows.npy",
+          "bytes": 20933444,
+          "sha256": "32ead22eab0f1daeaf06097eee325187ff6c76f095b2b6516646c76ed932b57c",
+          "available_local": false,
+          "local_verified": false
+        },
+        {
+          "path": "ivf/opq64/list_offsets.npy",
+          "bytes": 8328,
+          "sha256": "cc3aea749377c65742752fa3db8b0aca601dde71479b64c9771f69ac1437e755",
+          "available_local": true,
+          "local_verified": true
+        },
+        {
+          "path": "ivf/opq64/coarse.npy",
+          "bytes": 2621568,
+          "sha256": "694d0442fe0c8f1a735be7f80a8f99959fccdc23e5996288c6cd553f3312c5b4",
+          "available_local": true,
+          "local_verified": true
+        },
+        {
+          "path": "fit_rows.npy",
+          "bytes": 524416,
+          "sha256": "34544f9cd466e3e255eeb2e1b6b55b0e42139849026a63069b772d82183c61e2",
+          "available_local": true,
+          "local_verified": true
+        },
+        {
+          "path": "published_truth.npy",
+          "bytes": 102528,
+          "sha256": "ea60bd6c7f1d2ff3fa5cc09af2b7f0c2744fb4d7595578c1ff6c027a719007f7",
+          "available_local": true,
+          "local_verified": true
+        },
+        {
+          "path": "published_cutoffs.npy",
+          "bytes": 640,
+          "sha256": "0a3d5649f54426bcf8cc9802993e2256381f81b662b916ffa7c8edabd74c9fb9",
+          "available_local": true,
+          "local_verified": true
+        },
+        {
+          "path": "native_fp32_top100.npy",
+          "bytes": 102528,
+          "sha256": "0e7e5286a8d6a7613db1c69ec89cac5c1f0d788ef8afeb16fb8a513cd1a78e06",
+          "available_local": true,
+          "local_verified": true
+        }
+      ],
+      "verified_local_products": 18,
+      "server_only_products": [
+        "ivf/opq64.faiss",
+        "ivf/opq64/list_rows.npy"
+      ],
+      "query_indices": [
+        3,
+        4,
+        7,
+        9,
+        10,
+        18,
+        21,
+        23,
+        26,
+        30,
+        36,
+        39,
+        40,
+        50,
+        61,
+        62,
+        64,
+        72,
+        73,
+        82,
+        87,
+        89,
+        90,
+        91,
+        94,
+        97,
+        100,
+        103,
+        110,
+        115,
+        124,
+        125
+      ],
+      "science_files_created": false,
+      "SSH_used": false,
+      "server_power_on_requested": false,
+      "old_scientific_sources_unchanged": true,
+      "new_experiment_run": false,
+      "full_original_source_not_local": true,
+      "no_quality_or_cost_verdict_from_this_preflight": true
+    },
+    "local_checks": {
+      "kind": "read-only saved metadata/identity arithmetic, not a new residual/sketch experiment",
+      "versions": {
+        "numpy": "1.26.4",
+        "scipy": "1.13.0",
+        "h5py": "3.11.0",
+        "faiss": "1.8.0"
+      },
+      "matrix_dtype": "float32",
+      "mean_dtype": "float64",
+      "matrix_shape": [
+        640,
+        640
+      ],
+      "mean_max_abs": 0.0,
+      "matrix_orthogonal_entry_max_defect": 9.986483919810496e-07,
+      "matrix_inversion_performed": false,
+      "cohort_query_norm_min_max": [
+        0.999999926272899,
+        1.0000000716598803
+      ],
+      "candidate_union_rows": 193903,
+      "candidate_union_original_FP32_bytes": 496391680,
+      "proposed_training_rows": 32768,
+      "candidate_and_proposed_training_union_rows": 225532,
+      "fit_prefix_source": "first32768 existing closed fit_rows.npy; corpus only, not query labels",
+      "prototype_risk_constants": {
+        "delta": 0.01,
+        "k": 100,
+        "alpha": 0.0001,
+        "normal_one_sided_quantile": 3.7190164854556804,
+        "z_over_sqrt_m_at_T1": {
+          "8": 1.3148708881051363,
+          "16": 0.9297541213639201,
+          "32": 0.6574354440525682
+        }
+      },
+      "prototype_risk_constants_are_not_observed_geometry_results": true,
+      "no_original_vectors_read": true,
+      "no_IVF_index_reconstructed": true,
+      "no_sketch_generated_or_fitted": true,
+      "no_server_access": true
+    },
+    "scientific_conclusion": null,
+    "L0_implementation_created": false,
+    "server_needed_after_code_and_tests_ready": true,
+    "server_mode": "CPU only; original node quota preferred, at least32GiB RAM and existing original vectors/IVF index; no GPU needed",
+    "server_connection_or_power_on_requested_now": false
+  },
+  "scientific_file_sha256": {
+    "configs/tls_rag_step5_pq_refinement_geometry_v1.json": "8081c73d9f4c00788c619954351318baa9e13bb211e0c42e0139e87e923198fc",
+    "docs/PQ_REFINEMENT_GEOMETRY_PROTOCOL_V1.md": "f02017a435ee7b898521e40294346e9807a1d22677da57a0dfc885d8047ab9e6",
+    "mechanism/tls_rag_step5_pq_refinement_geometry_v1.py": "5f786040da9a49c0f916e14801f3f749a2de7cded4e7da4b8c3a83b722ef6425",
+    "scripts/run_tls_rag_step5_pq_refinement_geometry_v1.py": "03ebfa4430710f4ec86919fc6e2ffb87dfa39e676e198ba86d581095ebb128ab",
+    "tests/test_tls_rag_step5_pq_refinement_geometry_v1.py": "6732fc370c9a0cfd46c9102d418504640dbcd46c7eb6ae79cf0adb8ef5eedc2a"
+  },
+  "local_validation": {
+    "kind": "gate2 local software/readiness validation only; no real server geometry result",
+    "new_tests": 28,
+    "full_tests": 717,
+    "skipped": 0,
+    "full_unittest_seconds": 86.387,
+    "initial_new_fixture_failure_preserved": {
+      "file": "new-tests-1.log",
+      "reason": "inverse scaling round-trip incorrectly required bit identity; changed to direct seeded G[:m]/sqrt(m) exact checks, no scientific tolerance relaxation"
+    },
+    "sandbox_full_failure_preserved": {
+      "file": "full-tests-1.log",
+      "tests": 717,
+      "errors": 18,
+      "failures": 6,
+      "reason": "ps denied by sandbox; original own-process monitoring tests could not run; same test command passed with process visibility"
+    },
+    "passing_full_log": "full-tests-2.log",
+    "passing_new_log": "new-tests-final.log",
+    "standalone_tiny_archive": "runs/pq-refinement-G-local-tiny-20261105-v1/archive_index.json",
+    "scope_review": {
+      "status": "passed",
+      "old_registered_rows_preserved_except_approved_human_register_SHA": 297,
+      "old_scientific_sources_unchanged": true,
+      "old_root_metadata_preserved": true,
+      "human_register_append_only": true,
+      "test_launcher_single_membership_addition": true,
+      "new_registered_paths": [
+        "configs/tls_rag_step5_pq_refinement_geometry_v1.json",
+        "docs/PQ_REFINEMENT_GEOMETRY_PROTOCOL_V1.md",
+        "docs/pq_refinement_geometry_preflight_v0.json",
+        "mechanism/tls_rag_step5_pq_refinement_geometry_v1.py",
+        "scripts/run_tls_rag_step5_pq_refinement_geometry_v1.py",
+        "tests/test_tls_rag_step5_pq_refinement_geometry_v1.py"
+      ],
+      "synthetic_closed_files": 11,
+      "synthetic_closed_bytes": 107890,
+      "synthetic_index_sha256": "65aad7ae972f883d802d46e8cf28f6df8c28a6bf6defcb1b67d8ef7cb7d433de",
+      "synthetic_actual_IVF_search": true,
+      "synthetic_complete_callback_modes": 11,
+      "synthetic_source_identity_matches_current_code": true,
+      "no_SSH": true,
+      "real_gate2_started": false,
+      "gate3_started": false
+    },
+    "files": [
+      {
+        "path": "runs/pq-refinement-G-local-preflight-20261105-v0/full-tests-1.log",
+        "bytes": 144807,
+        "sha256": "3d0919d42c0cafc7b06351402a082dbd3f1b8f49c1d1256d59eab19945fd4c19"
+      },
+      {
+        "path": "runs/pq-refinement-G-local-preflight-20261105-v0/full-tests-2.log",
+        "bytes": 98113,
+        "sha256": "73ceaab72ae920a593cd2d2c1564281803d2e0e6555535509ca0b4b87bd1cfec"
+      },
+      {
+        "path": "runs/pq-refinement-G-local-preflight-20261105-v0/input_inventory.json",
+        "bytes": 6196,
+        "sha256": "f243d7a76a3c000f4236636c10191ad80a3ec06dd2684ccee6cd793f0cd147a6"
+      },
+      {
+        "path": "runs/pq-refinement-G-local-preflight-20261105-v0/local_dependency_and_metadata_check.json",
+        "bytes": 1276,
+        "sha256": "37500ee6515ef06ba9bac8707d8c065a71b13f91f32db8a0406093383edb0a81"
+      },
+      {
+        "path": "runs/pq-refinement-G-local-preflight-20261105-v0/new-tests-1.log",
+        "bytes": 6510,
+        "sha256": "9d32fe4c72a029ea45a57bfde2470ab2ec22e8f90a1943c7e3c4733741e626a0"
+      },
+      {
+        "path": "runs/pq-refinement-G-local-preflight-20261105-v0/new-tests-2.log",
+        "bytes": 4924,
+        "sha256": "54773a71b6017ea02783147fc75df7d6e5dda8c54e6610642b3017edce925cd9"
+      },
+      {
+        "path": "runs/pq-refinement-G-local-preflight-20261105-v0/new-tests-3.log",
+        "bytes": 4924,
+        "sha256": "0f60bf6591b853299c26851c06e3a27ce34e1d25221c08dec2ee2433ddfe1271"
+      },
+      {
+        "path": "runs/pq-refinement-G-local-preflight-20261105-v0/new-tests-4.log",
+        "bytes": 4922,
+        "sha256": "06478989689e06cdc3b0d74aa1b56dfa7d9143f37639ceea3fedc22bf4a7558d"
+      },
+      {
+        "path": "runs/pq-refinement-G-local-preflight-20261105-v0/new-tests-final.log",
+        "bytes": 4924,
+        "sha256": "afbb3473ac1a2bb9f919aa16e70b8f261b155dc034c77b22c31408147a67abd6"
+      },
+      {
+        "path": "runs/pq-refinement-G-local-preflight-20261105-v0/scope_and_artifact_review.json",
+        "bytes": 1030,
+        "sha256": "1578ca26abd70dd093815f725fbdf6cfbfed60f6db95ed1fcc09ec31e53db748"
+      },
+      {
+        "path": "runs/pq-refinement-G-local-preflight-20261105-v0/tiny-cli-1.log",
+        "bytes": 359,
+        "sha256": "c18d4b2d397a9be3c9ff559f56919bc5b98f5c3627fe758784d3c229701ce270"
+      }
+    ]
+  },
+  "validation_index": {
+    "path": "runs/pq-refinement-G-local-preflight-20261105-v0/validation_index.json",
+    "bytes": 4239,
+    "sha256": "d82bca0b6ee98dd4057d0e6cd2600fc012e16e65aaad7ead859e5170276eb65c"
+  },
+  "synthetic_tiny": {
+    "root": "runs/pq-refinement-G-local-tiny-20261105-v1",
+    "index_sha256": "65aad7ae972f883d802d46e8cf28f6df8c28a6bf6defcb1b67d8ef7cb7d433de",
+    "files": 11,
+    "checks": [
+      {
+        "bound_audit": {
+          "fallback": null,
+          "formal_certification": false,
+          "native_score_envelope": 1.668930543001869e-06,
+          "real_base_round_envelope": 9.303956820440457e-07
+        },
+        "name": "norm",
+        "read_rows": 63,
+        "retained": 1.0
+      },
+      {
+        "bound_audit": {
+          "T": 0.31920598516175136,
+          "fallback": null,
+          "formal_certification": false,
+          "native_score_envelope": 1.668930543001869e-06,
+          "real_base_round_envelope": 9.303956820440457e-07,
+          "sketch_error_guard_max": 2.812666466169559e-07
+        },
+        "name": "gaussian_2026110401_2",
+        "read_rows": 62,
+        "retained": 1.0
+      },
+      {
+        "bound_audit": {
+          "T": 1.158009741316083,
+          "fallback": null,
+          "formal_certification": false,
+          "native_score_envelope": 1.668930543001869e-06,
+          "real_base_round_envelope": 9.303956820440457e-07,
+          "sketch_error_guard_max": 1.558876509741699e-07
+        },
+        "name": "gaussian_2026110401_4",
+        "read_rows": 52,
+        "retained": 1.0
+      },
+      {
+        "bound_audit": {
+          "fallback": null,
+          "formal_certification": false,
+          "native_score_envelope": 1.668930543001869e-06,
+          "real_base_round_envelope": 9.303956820440457e-07
+        },
+        "name": "sidepq_2",
+        "read_rows": 15,
+        "retained": 1.0
+      }
+    ],
+    "callback_checks": [
+      {
+        "actual_search_performed": true,
+        "aux_seconds": 0.0,
+        "mode": "baseline",
+        "seconds": 0.00014204200000000888,
+        "unique_read_rows": 256
+      },
+      {
+        "actual_search_performed": true,
+        "aux_seconds": 0.0,
+        "mode": "fullread",
+        "seconds": 0.00040074999999994976,
+        "unique_read_rows": 256
+      },
+      {
+        "actual_search_performed": true,
+        "aux_seconds": 0.0,
+        "mode": "prefix_64",
+        "seconds": 8.4332999999992e-05,
+        "unique_read_rows": 64
+      },
+      {
+        "actual_search_performed": true,
+        "aux_seconds": 5.1584000000048924e-05,
+        "mode": "norm",
+        "seconds": 0.00036433299999993896,
+        "unique_read_rows": 63
+      },
+      {
+        "actual_search_performed": true,
+        "aux_seconds": 0.00014845800000007348,
+        "mode": "gaussian_2026110401_2",
+        "seconds": 0.0004485410000000245,
+        "unique_read_rows": 62
+      },
+      {
+        "actual_search_performed": true,
+        "aux_seconds": 0.00011654199999999726,
+        "mode": "gaussian_2026110401_4",
+        "seconds": 0.000415417000000029,
+        "unique_read_rows": 52
+      },
+      {
+        "actual_search_performed": true,
+        "aux_seconds": 6.445799999998947e-05,
+        "mode": "sidepq_2",
+        "seconds": 0.00025804200000001387,
+        "unique_read_rows": 15
+      },
+      {
+        "actual_search_performed": true,
+        "aux_seconds": 4.912499999998321e-05,
+        "mode": "oracle:norm",
+        "seconds": 0.00025083300000006137,
+        "unique_read_rows": 63
+      },
+      {
+        "actual_search_performed": true,
+        "aux_seconds": 0.00012129100000002335,
+        "mode": "oracle:gaussian_2026110401_2",
+        "seconds": 0.00030116599999996385,
+        "unique_read_rows": 62
+      },
+      {
+        "actual_search_performed": true,
+        "aux_seconds": 0.00011016600000002263,
+        "mode": "oracle:gaussian_2026110401_4",
+        "seconds": 0.00027287500000006126,
+        "unique_read_rows": 52
+      },
+      {
+        "actual_search_performed": true,
+        "aux_seconds": 5.816700000005337e-05,
+        "mode": "oracle:sidepq_2",
+        "seconds": 0.00021170900000000437,
+        "unique_read_rows": 14
+      }
+    ],
+    "synthetic_only": true,
+    "not_a_quality_or_net_gain_experiment": true
+  },
+  "readiness": {
+    "local_ready": true,
+    "server_preflight_done": false,
+    "SSH_used": false,
+    "real_gate2_started": false,
+    "third_gate_started": false,
+    "server_config": "CPU-only, original14CPU quota preferred, >=32GiB RAM;64GiB comfortable. No A800/GPU needed. Existing original source/index/environment retained. >=5GiB free fastdisk recommended for the <=2GiB output reference and scratch.",
+    "estimated_real_CPU_minutes": [
+      30,
+      60
+    ],
+    "estimate_not_a_timeout": true,
+    "notify_user_to_power_on_after_verified_push": true,
+    "no_automatic_start_before_user_power_on_reply": true,
+    "expected_production_formal_calls": 16576,
+    "sampling": "same16 discovery+16 check;37 fixed modes,2warmup+7formal; four fixed Gaussian seeds sensitivity, no seed selection"
+  },
+  "limitations": [
+    "The first preflight snapshot retains the state before exact-path consent; this readiness block is the current state.",
+    "Local synthetic data/software checks do not establish real residual geometry, quality preservation, net speedup, native Linux parity or full-N deployment latency.",
+    "Packed candidate-union summaries and duplicated original-code/ID/label/offset/LUT state are charged explicitly; full-N encoding/layout remains unmeasured.",
+    "Numerical error model is not a hardware BLAS or fixed-seed future-query certificate; formal_certification remains false.",
+    "Shared numeric-slot accounting is nominal raw-array/scalar storage, not all Python metadata/allocator memory; runtime RSS and workspace limits are separate."
+  ]
+}

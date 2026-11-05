@@ -744,3 +744,26 @@ The old S0 score/search/ties/configuration and all original evidence remain fixe
 | [tests/test_tls_rag_step5_pq_refinement_cost_v1.py](../tests/test_tls_rag_step5_pq_refinement_cost_v1.py) | **L0** | C1 native score/tie/cache/input isolation and actual owned-worker/closed-evidence regressions |
 | [scripts/run_tls_rag_step5_pq_refinement_cost_v1.py](../scripts/run_tls_rag_step5_pq_refinement_cost_v1.py) | **L1** | Inherits C1 scientific contract; serial CPU worker, manual stop, non-aborting observations and closed SHA evidence |
 | [docs/PQ_REFINEMENT_COST_PROTOCOL_V1.md](PQ_REFINEMENT_COST_PROTOCOL_V1.md) | **L0** | Independent C1 measurement/provenance/cost-diagnostic protocol; unchanged original S0 contracts |
+
+## PQ refinement gate2 geometry v1: exact scope approved (2026-11-05)
+
+Actual reply to design-plan section14's exact eight-path question:
+
+> 批准第14节八路径，按顺序准备并执行
+
+New user direction: prepare code and prerequisites, then tell the user to power
+on the server. Five new paths below plus membership-only test-launcher addition,
+this append-only register and machine-row/necessary SHA additions are approved.
+Same32 opened CPU queries/actual OPQ IVF, norm/Gaussian8/16/32 and same-payload
+corpus-only residualPQ32/64/128; actual reading/quality/full costs. Local tests
+and verified GitHub sync precede power-on notification, then one CPU gate2 run.
+No original source/config/test/result changes, new roles, GPU, predictor/adapter
+or Tri gate3. Raw-source/candidate/score identities and failed evidence remain.
+
+| File | Level | Reason |
+|---|---|---|
+| `mechanism/tls_rag_step5_pq_refinement_geometry_v1.py` | **L0** | Actual-code reconstruction, scoped residual summaries/bounds/scan, matched quality/cost and numerical limitations |
+| `configs/tls_rag_step5_pq_refinement_geometry_v1.json` | **L0** | Fixed gate2 sources/cohort/side-PQ fit/seeds/numerics/modes/timing; no third gate |
+| `tests/test_tls_rag_step5_pq_refinement_geometry_v1.py` | **L0** | Independent geometry/native/tie/conditional-law/label-isolation/read-trace and tiny/closure fixtures |
+| `scripts/run_tls_rag_step5_pq_refinement_geometry_v1.py` | **L1** | Inherits scoped gate2 contract, CPU tiny/preflight/manual worker/closed evidence using unchanged audited supervision |
+| `docs/PQ_REFINEMENT_GEOMETRY_PROTOCOL_V1.md` | **L0** | Separate gate2 mathematical/numeric/data/cost/decision protocol; formal_certification=false |

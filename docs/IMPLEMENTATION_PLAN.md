@@ -4,6 +4,18 @@ Updated 2026-11-05. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
+## 当前完成：第二门本地代码及前置验收，待CPU开机（2026-11-05）
+
+- [x] 用户明确请求第二门，随后批准计划第14节精确八路径；实际回复已登记。
+- [x] 20项输入清单/18项本机SHA/原依赖就绪，明确2项与完整源仍在服务器；不先连接SSH。
+- [x] 新重构/摘要/界/真实扫描/oracle/完整callback及隔离协议实现；旧科学源和结果不改。
+- [x] 新28测试通过，保留初次浮点fixture失败及按原公式修复证据；不放宽旧测试。
+- [x] 完整旧689＋新28=717回归通过/0skip/86.387秒；首次ps沙箱限制失败日志保留，同命令进程可见环境通过。
+- [x] 独立实际FAISS tiny端到端11回调/11关闭文件SHA通过，旧源/等级/metadata与append-only登记检查通过。
+- [x] 本地准备已就绪，按常设指令提交/同步分支；交付时核对GitHub并通知用户开CPU服务器。
+- [ ] 用户开机后Linux只读预检/同步/相关验收，再执行唯一第二门；本地tiny不算实际结果。
+- [ ] 正常或失败均封存/回收/独立审计；不自动进入第三门Tri。
+
 ## 当前完成：第一门C0–C2成本审核（2026-11-05）
 
 - [x] 实际指令“服务器已开启，继续”恢复已呈示的第11节八路径；保留原暂缓历史。

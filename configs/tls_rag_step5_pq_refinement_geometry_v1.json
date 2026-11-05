@@ -1,0 +1,312 @@
+{
+  "source_run": "/root/autodl-tmp/route6-S0-manual-r2-3d372f9-20261104",
+  "source_index_sha256": "003ccbbca3c10ad6725462556d79554c8c0c4deb5329999219313c97bb0dad1a",
+  "source": {
+    "path": "/root/autodl-fs/route6-B0-v1-9f963f9-20261103T0959Z/source/data.hdf5",
+    "sha256": "08f1c68cc8bb1f24a29cb64d9ffc20ccc6a91c06d286538e4e659d4afb648114",
+    "bytes": 13688159632,
+    "rows": 5233329,
+    "dimension": 640,
+    "metric": "normalized",
+    "revision": "a91cc76a3ab66b0353032e8427b9e34dcee22ded",
+    "layout": {
+      "offset": 6144,
+      "dtype": "<f4",
+      "order": "C",
+      "chunks": null,
+      "compression": null,
+      "virtual": false
+    }
+  },
+  "opq_spec": {
+    "id": "opq64",
+    "family": "opq",
+    "kind": "opq",
+    "dim": 640,
+    "bytes": 64,
+    "pq_bytes": 64,
+    "seed": 2026110353,
+    "diagnostic": false
+  },
+  "versions": {
+    "numpy": "1.26.4",
+    "scipy": "1.13.0",
+    "h5py": "3.11.0",
+    "faiss": "1.8.0"
+  },
+  "single_thread_env": [
+    "OPENBLAS_NUM_THREADS",
+    "MKL_NUM_THREADS",
+    "OMP_NUM_THREADS",
+    "VECLIB_MAXIMUM_THREADS",
+    "NUMEXPR_NUM_THREADS"
+  ],
+  "query_indices": [
+    3,
+    4,
+    7,
+    9,
+    10,
+    18,
+    21,
+    23,
+    26,
+    30,
+    36,
+    39,
+    40,
+    50,
+    61,
+    62,
+    64,
+    72,
+    73,
+    82,
+    87,
+    89,
+    90,
+    91,
+    94,
+    97,
+    100,
+    103,
+    110,
+    115,
+    124,
+    125
+  ],
+  "search_budget": 6400,
+  "k": 100,
+  "nprobe": [
+    64,
+    256
+  ],
+  "timing": {
+    "warmup": 2,
+    "repeats": 7,
+    "faiss_threads": 14,
+    "blas_threads": 1,
+    "batch": 1
+  },
+  "gammas": [
+    0.05,
+    0.1,
+    0.2
+  ],
+  "bootstrap_replicates": 10000,
+  "namespace": "pq-refinement-geometry-v1",
+  "authorization": {
+    "actual_user_consent": "\u6279\u51c6\u7b2c14\u8282\u516b\u8def\u5f84\uff0c\u6309\u987a\u5e8f\u51c6\u5907\u5e76\u6267\u884c",
+    "date": "2026-11-05",
+    "scope": "plan section14 exact eight paths, local code/tests/GitHub first, notify user for CPU power-on, then one gate2; no Tri gate3"
+  },
+  "products": [
+    {
+      "path": "queries.npy",
+      "bytes": 327808,
+      "sha256": "536bd947334aabf7fbedc869eb29a6cc25d79f7c82e5ff03d877d866d9ba8ce5"
+    },
+    {
+      "path": "roles.json",
+      "bytes": 33806,
+      "sha256": "a9f4549391ed42a3bbd5c1a28ba3eb2e07eab2a85793721f3b7aefd44d8ac795"
+    },
+    {
+      "path": "inputs.json",
+      "bytes": 655,
+      "sha256": "5e255ace474a6e96f28d249e6cd9017bd7095c0cd93dfc7372f7e21ed9600b5c"
+    },
+    {
+      "path": "prepared.json",
+      "bytes": 1436,
+      "sha256": "6344864e52a9f54bb4eefc6a0bf70084b50e8490d602f54a2631fa925b8c03cc"
+    },
+    {
+      "path": "source_freeze.json",
+      "bytes": 13800,
+      "sha256": "6f48bb0ca0beb84e77bec7673b1036a06949365c7b4c8df04ee184839812a28e"
+    },
+    {
+      "path": "ivf/opq64.faiss",
+      "bytes": 380084860,
+      "sha256": "e40aa069d41872c801636a5eed5f68aa1117e6d5104432ca9d47273c8939430c"
+    },
+    {
+      "path": "ivf/opq64/matrix.npy",
+      "bytes": 1638528,
+      "sha256": "5c1b4c106727013899076462439e2e5b16a785b7de292f292575f910419bb090"
+    },
+    {
+      "path": "ivf/opq64/mean.npy",
+      "bytes": 5248,
+      "sha256": "fa7edd766304e07f542df291117e3a328e3fdb3e550d12f03e67f0aca4d143da"
+    },
+    {
+      "path": "ivf/opq64/model_identity.json",
+      "bytes": 345,
+      "sha256": "be9c4813e08e4cf688c586689d1fb89bb77f5efb4806a79610db806aa9515140"
+    },
+    {
+      "path": "ivf/opq64/64/candidates.npy",
+      "bytes": 3276928,
+      "sha256": "55a4c220756484365d73454cea8133c12b7e5f42ab7466b70cdb77fb47541292"
+    },
+    {
+      "path": "ivf/opq64/256/candidates.npy",
+      "bytes": 3276928,
+      "sha256": "4b4fd10ba6fe670d81b2508ff577515e827cd0421204e64cdec68d9703a286de"
+    },
+    {
+      "path": "ivf/opq64/64/timings.json",
+      "bytes": 444970,
+      "sha256": "1b27efa37afcff45504dea5e2af4304e515547b28520fbc49f58b3045cde1bbd"
+    },
+    {
+      "path": "ivf/opq64/256/timings.json",
+      "bytes": 889970,
+      "sha256": "a00e725318cfe5144a22a86e6efbf84df0885bb6747353086676e16e0c637e6e"
+    },
+    {
+      "path": "ivf/opq64/list_rows.npy",
+      "bytes": 20933444,
+      "sha256": "32ead22eab0f1daeaf06097eee325187ff6c76f095b2b6516646c76ed932b57c"
+    },
+    {
+      "path": "ivf/opq64/list_offsets.npy",
+      "bytes": 8328,
+      "sha256": "cc3aea749377c65742752fa3db8b0aca601dde71479b64c9771f69ac1437e755"
+    },
+    {
+      "path": "ivf/opq64/coarse.npy",
+      "bytes": 2621568,
+      "sha256": "694d0442fe0c8f1a735be7f80a8f99959fccdc23e5996288c6cd553f3312c5b4"
+    },
+    {
+      "path": "fit_rows.npy",
+      "bytes": 524416,
+      "sha256": "34544f9cd466e3e255eeb2e1b6b55b0e42139849026a63069b772d82183c61e2"
+    },
+    {
+      "path": "published_truth.npy",
+      "bytes": 102528,
+      "sha256": "ea60bd6c7f1d2ff3fa5cc09af2b7f0c2744fb4d7595578c1ff6c027a719007f7"
+    },
+    {
+      "path": "published_cutoffs.npy",
+      "bytes": 640,
+      "sha256": "0a3d5649f54426bcf8cc9802993e2256381f81b662b916ffa7c8edabd74c9fb9"
+    },
+    {
+      "path": "native_fp32_top100.npy",
+      "bytes": 102528,
+      "sha256": "0e7e5286a8d6a7613db1c69ec89cac5c1f0d788ef8afeb16fb8a513cd1a78e06"
+    }
+  ],
+  "dimensions": [
+    8,
+    16,
+    32
+  ],
+  "delta": 0.01,
+  "scan_block": 256,
+  "build_block": 4096,
+  "fit_rows": 32768,
+  "side_pq_bytes": [
+    32,
+    64,
+    128
+  ],
+  "side_pq_seeds": [
+    2026110501,
+    2026110502,
+    2026110503
+  ],
+  "side_pq_training": {
+    "niter": 20,
+    "nredo": 1
+  },
+  "sketch_seeds": [
+    2026110401,
+    2026110402,
+    2026110403,
+    2026110404
+  ],
+  "boundary_bands": [
+    0.01,
+    0.1,
+    1.0
+  ],
+  "fixed_prefix_counts": [
+    1600,
+    3200,
+    4800
+  ],
+  "schedule_seed": 2026110511,
+  "bootstrap_seed": 2026110513,
+  "numerics": {
+    "raw_norm_bound": 2.0,
+    "max_matrix_condition": 2.0,
+    "inverse_identity_max": 1e-10,
+    "minimum_T": 1e-12,
+    "IEEE_model_not_hardware_certificate": true
+  },
+  "supervision": {
+    "manual": true,
+    "observation_seconds": 300,
+    "automatic_timeout": false,
+    "automatic_resource_abort": false
+  },
+  "artifact_reference_bytes": 2147483648,
+  "tri_enabled": false,
+  "formal_certification": false,
+  "old_source_bindings": {
+    "mechanism/tls_rag_step5_route6_representation_v1.py": "23edb091872432c1a77b0ee54234a30a38eb4bfaaa33328c82d83f2bc097b162",
+    "mechanism/tls_rag_step5_route6_representation_v2.py": "81d1d7c883a9ec08495fbf8444d2a580c768f8808276cf58cdc90345743aa161",
+    "mechanism/tls_rag_step5_route6_representation_screen_v1.py": "fee0c3e29c64c12a07eee1b1223ab65bb1f73dade3a9ffda808d7c2a08563d17",
+    "mechanism/tls_rag_step5_route6_representation_screen_v2.py": "18e6ec5c514fbd9acc2b664907c729f5f94339402336e35001a68078d16ca7f3",
+    "mechanism/tls_rag_step5_pq_refinement_cost_v1.py": "e3059efaa46ab9419db92e2d17a70ec24b4ca25521866380e560e09f0c721677",
+    "configs/tls_rag_step5_pq_refinement_cost_v1.json": "202217b91100adcf10bb7a69e098ee9239f98461f11982b2f823350bf5a38f20",
+    "tests/test_tls_rag_step5_pq_refinement_cost_v1.py": "5b72507305de7191dbdddcea8a064a00c45f78bc4b2d988b4a818b5dfcccf9bb",
+    "scripts/run_tls_rag_step5_pq_refinement_cost_v1.py": "3007e584f1eaaafddb4953616f291517d8473d6a160714725c492696c2e6d55e",
+    "docs/PQ_REFINEMENT_COST_PROTOCOL_V1.md": "b50cb95c90f522a141d524adb287f7502b983baf3ccad33bb9dc29722ad9498c"
+  },
+  "modes": [
+    "baseline",
+    "fullread",
+    "prefix_1600",
+    "prefix_3200",
+    "prefix_4800",
+    "norm",
+    "gaussian_2026110401_8",
+    "gaussian_2026110401_16",
+    "gaussian_2026110401_32",
+    "gaussian_2026110402_8",
+    "gaussian_2026110402_16",
+    "gaussian_2026110402_32",
+    "gaussian_2026110403_8",
+    "gaussian_2026110403_16",
+    "gaussian_2026110403_32",
+    "gaussian_2026110404_8",
+    "gaussian_2026110404_16",
+    "gaussian_2026110404_32",
+    "sidepq_32",
+    "sidepq_64",
+    "sidepq_128",
+    "oracle:norm",
+    "oracle:gaussian_2026110401_8",
+    "oracle:gaussian_2026110401_16",
+    "oracle:gaussian_2026110401_32",
+    "oracle:gaussian_2026110402_8",
+    "oracle:gaussian_2026110402_16",
+    "oracle:gaussian_2026110402_32",
+    "oracle:gaussian_2026110403_8",
+    "oracle:gaussian_2026110403_16",
+    "oracle:gaussian_2026110403_32",
+    "oracle:gaussian_2026110404_8",
+    "oracle:gaussian_2026110404_16",
+    "oracle:gaussian_2026110404_32",
+    "oracle:sidepq_32",
+    "oracle:sidepq_64",
+    "oracle:sidepq_128"
+  ]
+}

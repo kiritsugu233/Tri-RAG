@@ -8,6 +8,23 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**Gate2 local preparation complete; await CPU power-on (2026-11-05).** Actual
+reply: “批准第14节八路径，按顺序准备并执行”. New independent geometry namespace
+reuses the32 opened CPU queries and actual OPQ IVF; compares norm, fixed Gaussian
+sketches and same-payload corpus-trained sidePQ. Old science is unchanged.
+Local28/full717 tests pass, zero skips, full86.387s. Standalone real-IVFPQ
+synthetic CLI passes11 complete callbacks;11 closed products size/SHA verified.
+No SSH or real gate2 run has started. Read
+[plan section14–15](docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md#15-第二门实际批准与本地准备2026-11-05),
+[protocol](docs/PQ_REFINEMENT_GEOMETRY_PROTOCOL_V1.md) and the compact brief.
+Local checks are complete; synchronize/verify this continuing branch before the
+power-on handoff. CPU-only>=32GiB (64GiB comfortable), original14CPU quota
+preferred; no A800/GPU. Estimated real30–60min. On user power-on: read-only
+preflight, clean reviewed Git sync/Linux tests, then one approved run.
+Gate3 Tri/predictor/adapter remain closed.
+
+The following first-gate conclusion is retained as the starting evidence.
+
 **C0–C2 first-gate cost audit complete (2026-11-05).** Exactly one CPU C1 at
 scientific commit `2b7d2a934c784b38a19b03ea6044f5b061a90457` finished normally
 in255.044s, including54.970s initial source verification. All75 closed products
@@ -27,9 +44,9 @@ logical bytes are not physical traffic. IVF256 controls do not robustly meet10%
 with read-only or tested quarter-survivor diagnostics. This is development-cost
 evidence, not independent certification or Tri benefit.
 
-All records/logs needed for analysis are local; the user was told the server may
-be shut down. No further SSH, experiment, gate2/3, training or Tri work is pending
-under this delivery. Await the user's next direction. Schemes1–4 are retired;
+All first-gate records/logs are local; that delivery required no further server
+access. The subsequent gate2 preparation request is recorded above; gate3 is
+still closed. Schemes1–4 are retired;
 route5 and completed route6 science remain reference only. Preserve scientific
 contracts and historical evidence, including the superseded C1 deferral.
 

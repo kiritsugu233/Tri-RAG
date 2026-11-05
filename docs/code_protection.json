@@ -285,7 +285,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "6c924f9aa570c0190672edee35172506ffdfed9f54ea19604500e1bca37615d7"
+      "sha256": "4ea3e2bcc3c6a10ae3d593edd4970cda01cd91d6fe8a4d28e52c891624f291c7"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -1936,6 +1936,40 @@
       "path": "docs/pq_refinement_c1_evidence_v1.json",
       "level": "L1",
       "reason": "Actual closed C1 cost/uncertainty and limitation receipts; cost window conditional, no quality-preserving or Tri net-gain claim"
+    },
+    {
+      "path": "docs/pq_refinement_geometry_preflight_v0.json",
+      "level": "L1",
+      "reason": "Read-only existing closed input identities and local dependency/metadata preflight for user-requested gate2; no new geometry/sketch experiment or L0 implementation approval claim"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_pq_refinement_geometry_v1.py",
+      "level": "L0",
+      "reason": "Approved section14 actual-IVF residual reconstruction/summaries/risk/read decisions/quality/cost, separate gate2",
+      "sha256": "5f786040da9a49c0f916e14801f3f749a2de7cded4e7da4b8c3a83b722ef6425"
+    },
+    {
+      "path": "configs/tls_rag_step5_pq_refinement_geometry_v1.json",
+      "level": "L0",
+      "reason": "Approved fixed gate2 source/cohort/side training/modes/numeric/statistical contract",
+      "sha256": "8081c73d9f4c00788c619954351318baa9e13bb211e0c42e0139e87e923198fc"
+    },
+    {
+      "path": "tests/test_tls_rag_step5_pq_refinement_geometry_v1.py",
+      "level": "L0",
+      "reason": "Approved independent gate2 reconstruction/numerics/conditional law/reads/ties/isolation/tiny/closure regressions",
+      "sha256": "6732fc370c9a0cfd46c9102d418504640dbcd46c7eb6ae79cf0adb8ef5eedc2a"
+    },
+    {
+      "path": "scripts/run_tls_rag_step5_pq_refinement_geometry_v1.py",
+      "level": "L1",
+      "reason": "Approved gate2 CPU tiny/preflight/one manual worker; scientific semantics inherit L0"
+    },
+    {
+      "path": "docs/PQ_REFINEMENT_GEOMETRY_PROTOCOL_V1.md",
+      "level": "L0",
+      "reason": "Approved independent gate2 real/finite Gaussian, native score/reading/cost and scope contract",
+      "sha256": "f02017a435ee7b898521e40294346e9807a1d22677da57a0dfc885d8047ab9e6"
     }
   ],
   "approved_change_history": [
@@ -2606,6 +2640,31 @@
         }
       },
       "real_C1_started": false
+    }
+  },
+  "pq_refinement_geometry_v1_authorization": {
+    "date": "2026-11-05",
+    "actual_user_consent": "批准第14节八路径，按顺序准备并执行",
+    "question_reference": "Current task actual answer to exact eight-path plan section14 request; local code/tests/GitHub then notify power-on, one CPU G0-G5; no old science edits or gate3",
+    "paths": [
+      "mechanism/tls_rag_step5_pq_refinement_geometry_v1.py",
+      "configs/tls_rag_step5_pq_refinement_geometry_v1.json",
+      "tests/test_tls_rag_step5_pq_refinement_geometry_v1.py",
+      "scripts/run_tls_rag_step5_pq_refinement_geometry_v1.py",
+      "docs/PQ_REFINEMENT_GEOMETRY_PROTOCOL_V1.md",
+      "scripts/run_tests.sh",
+      "docs/CODE_PROTECTION.md",
+      "docs/code_protection.json"
+    ],
+    "boundary": "32 opened CPU queries, actual IVF; norm/Gaussian8/16/32 plus corpus-only side PQ32/64/128; no predictor/adapter/GPU/new roles/Tri; old science retained",
+    "validation": {
+      "new_tests": 28,
+      "full_tests": 717,
+      "skipped": 0,
+      "full_unittest_seconds": 86.387,
+      "validation_index_sha256": "d82bca0b6ee98dd4057d0e6cd2600fc012e16e65aaad7ead859e5170276eb65c",
+      "standalone_tiny_index_sha256": "65aad7ae972f883d802d46e8cf28f6df8c28a6bf6defcb1b67d8ef7cb7d433de",
+      "real_server_run_started": false
     }
   }
 }
