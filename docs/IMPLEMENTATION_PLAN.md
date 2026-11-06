@@ -1,8 +1,17 @@
 # Implementation milestones
 
-Updated 2026-11-05. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
+Updated 2026-11-06. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
+
+## 当前边界：主路线正式收尾，仅一次归因（2026-11-06）
+
+- [x] 按用户实际指令正式关闭当前PQ精化接口优化主路线，保留全部失败/结果。
+- [x] 只读核对本地点估计/差分误差数组缺口，区分保守界oracle与点估计，未虚构归因结论。
+- [x] 第19节写明唯一检查、停止条件、理论适用范围、精确八路径与云盘数据需求。
+- [ ] 唯一归因：待精确L0路径批准、旧封存数组回收和软件验收；尚未实施/执行。
+- [ ] 如三项证据明确，仅为单一机制形成小实验提案；不自动实验或进入第三门。
+- [x] 其余情况执行用户停止条件，不继续阈值/策略/adapter工程。
 
 ## 当前完成：五路径进度修复、唯一额外轮与收尾（2026-11-05）
 

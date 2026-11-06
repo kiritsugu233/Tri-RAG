@@ -1,7 +1,19 @@
 # Status
 
-Updated2026-11-05. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
+Updated2026-11-06. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
 maintained branch `codex/tls-rag-step5-ann`.
+
+## 当前决定：主路线正式收尾，唯一归因例外待精确范围批准（2026-11-06）
+
+- 用户明确“把当前路线正式收尾，只保留这一次归因检查”；已将建议停止改为正式收尾。
+- 只保留点估计增量、相对误差抵消、廉价识别三项递进归因；任一缺乏足够证据即结束
+  Tri优化当前PQ精化接口的应用研究。明确机制证据只触发单机制小实验提案，不自动执行。
+- 只读核查确认：本地JSON/调用不能回答点估计与相对误差问题，所需逐点NPZ仍在云盘。
+  过去的保守界oracle不是点估计oracle；本轮未生成新机制结果，不将缺测记为不存在。
+- [第19节精确八路径提案](docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md#19-当前路线正式收尾仅保留一次归因检查2026-11-06)
+  已可审核：旧32查询/原候选/固定seed，仅封存数组离线归因，20分钟/4GiB/256MiB；
+  理论核查、费用账本、停止判据和数据缺口明确。新L0实现待批准，未修改科学源码/原结果。
+- 本次只更新收尾与唯一例外边界，保护/差异检查后同步Step5；没有SSH或新运行。
 
 ## 当前完成：第二门完整轮与收尾，联合目标未通过（2026-11-05）
 

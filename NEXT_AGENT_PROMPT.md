@@ -1,9 +1,29 @@
 # Step5 compact brief: gate2 closed, joint target not met
 
-Updated2026-11-05. Canonical checkout:
+Updated2026-11-06. Canonical checkout:
 `/Users/guanghongxu/Query-Adaptive-Tri-RAG`; branch `codex/tls-rag-step5-ann`.
 Inspect HEAD/status; preserve unrelated untracked archives/report_work/runs.
 No worktree/branch changes. Current authorized milestone is COMPLETE.
+
+## Latest user decision (2026-11-06)
+
+The current PQ refinement optimization route is FORMALLY CLOSED. Only ONE
+attribution check remains: point-estimate advantage, relative-error cancellation,
+and cheap label-free identification. If useful evidence is absent for any item,
+end Tri application research at this PQ refinement interface. Clear mechanism
+evidence permits only a targeted small-experiment PROPOSAL, not automatic work.
+
+Plan section19 gives an exact eight-path L0 proposal and one20min CPU offline
+check over old32 queries/seeds/candidates. Exact implementation approval is still
+pending. No code/SSH/science started.146 old NPZ files remain cloud-only; local
+JSON cannot answer point-score/difference diagnostics. Do not mistake previous
+conservative-bound oracle for a point-estimate result. Do not report absence
+from missing data. No new raw-vector reads/retrieval/fits or fresh query roles.
+
+Current exception: attribution_pending_exact_scope_and_arrays. Do not reopen
+gate3 or the broader route. Old source/results/receipts remain unchanged. The
+following gate2 closure is historical evidence, not an instruction to wait for
+an unspecified broader research direction.
 
 ## Current boundary
 
@@ -11,7 +31,7 @@ Actual consent: “批准五路径修复及一次额外运行”. Five-path stag
 fix and ONE extra same-config CPU run are finished. No active job, monitoring,
 SSH or SCP. User told server may be powered off; agent did not power it off.
 Do not reconnect for routine reporting, restart science or enter Tri gate3.
-Wait for the user's new direction; prior pending-launch text is historical.
+Only the section19 attribution exception remains; prior launch text is historical.
 
 Scientific source3f82b40ac6812c72bbab0a54ee46911c6b1ae74b was GitHub-verified,
 cleanly synchronized to Linux through a verified already-pushed Git bundle.
@@ -98,7 +118,7 @@ node/cloud/local retained. Failure receipt docs/pq_refinement_geometry_failure_v
 run runs/pq-refinement-G-recovery-20261105-v1 and plan16 preserve defect/G1.
 Do not replace its failure with new completion or substitute old G1 into newrun.
 
-Schemes1–4 retired, route5 historical. No active pending experiment. Any new
+Schemes1–4 retired, route5 historical. Only the attribution proposal is pending. Any new
 L0 modification/new run requires its own concrete scope consent under AGENTS.md.
 Standing authorization still requires docs/checks/commit/push/remote verification
 on continuing Step5 branch; never change protected scientific files for reporting.

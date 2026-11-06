@@ -1,12 +1,24 @@
 # Query-Adaptive Tri-RAG: current entry
 
-Updated 2026-11-05. Canonical checkout:
+Updated 2026-11-06. Canonical checkout:
 `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 Maintained branch: **`codex/tls-rag-step5-ann`**; continue Step 5 updates there.
 The reviewed/Tri-Law-repaired backup remains `codex/repo-review-code-protection`
 at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
+
+**Current PQ refinement route formally closed (2026-11-06).** The user retains
+only ONE attribution check: point-estimate advantage, relative-error cancellation
+and cheap identification. If any lacks useful evidence, end Tri application
+research at this interface. Clear evidence permits a mechanism-specific proposal,
+not automatic experimentation. Prior gate2 closure/evidence is unchanged.
+
+The exception is pending exact L0 scope and cloud-only arrays, NOT measured or
+passed. [Section19](docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md#19-当前路线正式收尾仅保留一次归因检查2026-11-06)
+defines the eight-path proposal, theory/limits and stopping boundary. No new
+code, SSH, experiment, predictor or gate3 started. Historical data remain sealed.
+
 
 **Gate2 complete; joint quality/cost target not met (2026-11-05).** The single
 approved extra CPU run at scientific `3f82b40ac6812c72bbab0a54ee46911c6b1ae74b`
