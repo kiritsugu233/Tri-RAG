@@ -4,6 +4,14 @@ Updated 2026-11-06. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
+## 新研究：第三轮定量边界与决定（2026-11-06）
+
+- [x] 按“继续”核对CountGauss、Gaussian乘积/TV/chaos/正态近似六份原文，版本/来源/SHA和阅读范围齐备。
+- [x] 给出Tri带误差迁移条件、支持集障碍、矩代理误差、风险选型增量和安全规则费用前沿关系。
+- [x] 12项精确分解核对、9项条件协方差矩、解析常数/尺度检查及重点公式渲染；无真实数据或独立同行认证。
+- [x] 选题判断：通用迁移已存在强先行，停止扩展宽泛主张；完整本地笔记、来源回执和索引齐备。
+- [ ] 仅在有具体便宜摘要、同信息差异及可取消的费用动作时继续机制提案；否则输出否定。不是新实验授权。
+
 ## 新研究：第二轮先行/证明/可观测性（2026-11-06）
 
 - [x] 按“可以你继续做”扩展Kronecker/chaos/预条件一手文献，新增10PDF/版本/来源/SHA/阅读范围。

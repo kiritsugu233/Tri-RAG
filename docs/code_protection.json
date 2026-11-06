@@ -2049,6 +2049,16 @@
       "path": "docs/research_prior_stage2_sources_20261106.json",
       "level": "L1",
       "reason": "Supplementary public-paper provenance, reading scope and deterministic audit receipt; not a frozen scientific result"
+    },
+    {
+      "path": "docs/RESEARCH_TRI_TRANSFER_BOUNDARIES_20261106.md",
+      "level": "L1",
+      "reason": "User-authorized third-stage quantitative research index; nonfrozen notes and prior-art decision, no scientific implementation or protocol"
+    },
+    {
+      "path": "docs/research_prior_stage3_sources_20261106.json",
+      "level": "L1",
+      "reason": "Public-paper and exploratory derivation provenance; not a new experiment or frozen scientific artifact"
     }
   ],
   "approved_change_history": [
