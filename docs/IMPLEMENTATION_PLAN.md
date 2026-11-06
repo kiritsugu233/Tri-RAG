@@ -4,6 +4,16 @@ Updated 2026-11-06. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
+## 新研究：第四轮具体机制审查（2026-11-06）
+
+- [x] 逐步核查独立草图银行、投票、原始均值CS、精确锚点/回退及明确费用动作。
+- [x] 开放反例族和闭式错误率、多数错误趋于1；补右正交不变性下的交换性充分条件，未宣称必要性或新颖性。
+- [x] 固定查询/固定池有限方差CS推导，处理共享块、适应性读取/阈值、tie和查询随机性边界。
+- [x] 同字节/同投影工作两种方差资源比较、真实回退接口分类、下一阶段成本门；无实测净收益。
+- [x] 新增3PDF，累计46/45；确定性复核与原文页渲染、完整笔记/回执/桌面资料包交付。
+- [x] 明确停止通用符号投票版，均值-CS只作基线；未启动实现、真实数据、模型、agent或服务器。
+- [ ] 后续须先有一个具体表示/结构优势及可否定条件；当前无新实验授权。
+
 ## 新研究：第三轮定量边界与决定（2026-11-06）
 
 - [x] 按“继续”核对CountGauss、Gaussian乘积/TV/chaos/正态近似六份原文，版本/来源/SHA和阅读范围齐备。

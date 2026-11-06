@@ -1,0 +1,125 @@
+{
+  "date": "2026-11-06",
+  "actual_user_instruction": "继续",
+  "scope": "concrete independent structured-sketch replication, sign voting, heavy-tail confidence sequences, exact fallback and cost-gate paper audit; no implementation or real-data experiment",
+  "previous_stage_commit": "948143b65095985f145fb4c5f61191003fd3fea5",
+  "new_pdf_count": 3,
+  "total_pdf_count": 46,
+  "distinct_work_count": 45,
+  "independent_peer_review": false,
+  "validation": "46 PDF headers/bytes/SHA/text and bibliography; new primary pages rendered; closed form versus quadrature, strict rational inequalities, binomial tails, exact second moment, variance-resource and conservative MOM scale calculations; own proof audit only",
+  "local_bundle": "/Users/guanghongxu/Desktop/HPC/Tri-law/2026-11-06_先行与命题",
+  "local_note_artifacts": [
+    {
+      "path": "analysis/STAGE4_RESEARCH_DECISION_ZH.md",
+      "bytes": 4576,
+      "sha256": "06c72560799d4da0e9346cd731d6980310d599a348723c6fd9d3fd2156b688c7"
+    },
+    {
+      "path": "analysis/STAGE4_MECHANISM_AUDIT_ZH.md",
+      "bytes": 10276,
+      "sha256": "81ec16f7ae241744e799eb616cba3a403bfe44b7ff65bcd1e8d3bd4a15083a7b"
+    },
+    {
+      "path": "analysis/STAGE4_VOTING_AND_RESOURCE_PROOFS_ZH.md",
+      "bytes": 10515,
+      "sha256": "9045d860435c026cb2d85c4e9b35b35fec00fc21968d347ca6fd734a3d72c1a8"
+    },
+    {
+      "path": "analysis/DETERMINISTIC_CHECKS_STAGE4.json",
+      "bytes": 3532,
+      "sha256": "c7a58ecbd68020cf17f88d165f770c5cc2e9c3cb49972432a2f86973268e8896"
+    },
+    {
+      "path": "analysis/STAGE4_REPLAY_CHECKS.txt",
+      "bytes": 763,
+      "sha256": "a8364d3eb109fc94eae2d7593ec1416eaa0e3f57580a46e1d0a029de3dfce950"
+    },
+    {
+      "path": "manifest_stage4.json",
+      "bytes": 3733,
+      "sha256": "40abfe49614c812fcb94a28339973d0b8a933383fca31f10c38da2e2c1ed1a09"
+    },
+    {
+      "path": "manifest_stage4.csv",
+      "bytes": 1704,
+      "sha256": "d96970809bd49140f54765d896b154378c9d22ffc30dc9ed60df22e2e40c1c87"
+    }
+  ],
+  "sources": [
+    {
+      "id": "BanditMIPS2024",
+      "stem": "2024_BanditMIPS_ICML",
+      "title": "Faster Maximum Inner Product Search in High Dimensions",
+      "authors": "Mo Tiwari; Ryan Kang; Jaeyong Lee; Donghyun Lee; Christopher J. Piech; Sebastian Thrun; Ilan Shomorony; Martin Jinye Zhang",
+      "date": "2024",
+      "version": "ICML 2024 proceedings",
+      "pdf_url": "https://raw.githubusercontent.com/mlresearch/v235/main/assets/tiwari24a/tiwari24a.pdf",
+      "status": "downloaded",
+      "download_attempts": [
+        {
+          "url": "https://proceedings.mlr.press/v235/tiwari24a/tiwari24a.pdf",
+          "status": "failed",
+          "error": "curl: (56) The requested URL returned error: 404\n"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/mlresearch/v235/main/assets/tiwari24a/tiwari24a.pdf",
+          "status": "downloaded"
+        }
+      ],
+      "path": "library/probability_tools/2024_BanditMIPS_ICML.pdf",
+      "bytes": 1827271,
+      "sha256": "ca4b600559b294a65666abb589a18523b22138dc0501e8f71d76a9f389613872",
+      "retrieved_utc": "2026-11-06T13:52:59Z",
+      "pages": 18,
+      "extracted_path": "extracted/BanditMIPS2024.txt",
+      "category": "probability_tools",
+      "source_page": "https://proceedings.mlr.press/v235/tiwari24a.html",
+      "reading_scope": "重点核对 section3 Algorithm1, section3.2 subGaussian CI assumptions, section4 Theorem4.1 scope; rendered PDF p3; no performance reproduction",
+      "metadata_verified": true,
+      "stage": "fourth concrete replicate/CS mechanism and resource audit"
+    },
+    {
+      "id": "CatoniCS2024",
+      "stem": "2024_Catoni_HeavyTail_CS_2202.01250v6",
+      "title": "Catoni-style confidence sequences for heavy-tailed mean estimation",
+      "authors": "Hongjian Wang; Aaditya Ramdas",
+      "date": "2024-02-07",
+      "version": "arXiv v6; SPA publication 2023",
+      "pdf_url": "https://arxiv.org/pdf/2202.01250v6",
+      "status": "downloaded",
+      "path": "library/probability_tools/2024_Catoni_HeavyTail_CS_2202.01250v6.pdf",
+      "bytes": 1033098,
+      "sha256": "5bd09161af75511620fb2e5983d9ba59c2826a2b9eeac4c7b4e36ccad92b37d0",
+      "retrieved_utc": "2026-11-06T13:52:22Z",
+      "pages": 33,
+      "extracted_path": "extracted/CatoniCS2024.txt",
+      "category": "probability_tools",
+      "source_page": "https://arxiv.org/abs/2202.01250v6",
+      "reading_scope": "重点核对 section2 assumptions1/2, section6 Lemma8 and Theorem9; rendered PDF p8; known variance and own-filtration predictability required",
+      "metadata_verified": true,
+      "stage": "fourth concrete replicate/CS mechanism and resource audit"
+    },
+    {
+      "id": "BilinearHash2015",
+      "stem": "2015_Bilinear_Random_Projection_CVPR",
+      "title": "Bilinear Random Projections for Locality-Sensitive Binary Codes",
+      "authors": "Saehoon Kim; Seungjin Choi",
+      "date": "2015",
+      "version": "CVPR 2015 proceedings",
+      "pdf_url": "https://openaccess.thecvf.com/content_cvpr_2015/papers/Kim_Bilinear_Random_Projections_2015_CVPR_paper.pdf",
+      "status": "downloaded",
+      "path": "library/probability_tools/2015_Bilinear_Random_Projection_CVPR.pdf",
+      "bytes": 1163038,
+      "sha256": "49e45cfac1d950fe2229587a429deba57e327bb02a31146c9069b116e83638cc",
+      "retrieved_utc": "2026-11-06T13:52:24Z",
+      "pages": 9,
+      "extracted_path": "extracted/BilinearHash2015.txt",
+      "category": "probability_tools",
+      "source_page": "https://openaccess.thecvf.com/content_cvpr_2015/papers/Kim_Bilinear_Random_Projections_2015_CVPR_paper.pdf",
+      "reading_scope": "定向核对 section3 equations7/8 and Lemma1/Theorem2 kernel scope; rendered PDF p3; cosine+phase+dither differs from raw score-sign voting",
+      "metadata_verified": true,
+      "stage": "fourth concrete replicate/CS mechanism and resource audit"
+    }
+  ]
+}

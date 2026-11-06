@@ -2059,6 +2059,16 @@
       "path": "docs/research_prior_stage3_sources_20261106.json",
       "level": "L1",
       "reason": "Public-paper and exploratory derivation provenance; not a new experiment or frozen scientific artifact"
+    },
+    {
+      "path": "docs/RESEARCH_REPLICATE_MECHANISM_20261106.md",
+      "level": "L1",
+      "reason": "User-authorized concrete replicate/CS mechanism research index; nonfrozen paper analysis only, no scientific implementation or protocol"
+    },
+    {
+      "path": "docs/research_prior_stage4_sources_20261106.json",
+      "level": "L1",
+      "reason": "Public-paper provenance and exploratory deterministic-check receipt; not a frozen scientific result or new experiment"
     }
   ],
   "approved_change_history": [

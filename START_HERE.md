@@ -8,6 +8,20 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**Fourth concrete mechanism review complete (2026-11-06).** On “继续”, audit
+independent structured-sketch replication, progressive reads and exact fallback.
+Read [the fourth-stage index](docs/RESEARCH_REPLICATE_MECHANISM_20261106.md).
+A strict counterexample rejects general sign-majority certification; raw-score
+finite-variance confidence sequences yield a valid fixed-pool baseline without
+Tri. BanditMIPS/Catoni CS are strong direct prior art. Independent replication
+trades lower variance at equal full-bank bytes for more factor projection work;
+no measured net gain or publishable difference is established. Three public PDFs
+bring the local library to46 PDFs/45 works. Stop the general voting version;
+keep the mean-CS controller as a baseline, not an established Tri method. Any
+continuation needs one concrete representation/structure advantage and a cost
+gate. No implementation, real-data run, sampling, training, agent or server task.
+Earlier notes and closed PQ evidence are retained below.
+
 **Third quantitative review complete (2026-11-06).** On the user's “继续”,
 derive explicit structured-to-Gaussian transfer and scalar-proxy criteria,
 plus risk-selection and risk-to-cost frontier bounds. Read
