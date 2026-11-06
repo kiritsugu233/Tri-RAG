@@ -3,6 +3,17 @@
 Updated2026-11-06. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
 maintained branch `codex/tls-rag-step5-ann`.
 
+## 当前完成：第六轮具体分类头接口的结构/成本筛查（2026-11-06）
+
+- 按“可以，继续”选定官方Captum CIFAR CNN显式fc3.weight、84→10、单checkpoint贡献、50000候选；[第六轮索引](docs/RESEARCH_TRACIN_INTERFACE_SCREEN_20261106.md)含完整来源/费用/决定。
+- 原生精确因子缓存只需18.8MB载荷，必须和新方法共享预处理；重复候选forward/840维展开梯度不是公平主要基线。
+- TracIn原文AppendixF已有因子内积/分开投影直接先行；网络ReLU+输出因子符号可先便宜排除，概率控制在此退化为经典标量回归，不需Tri。
+- m=32须在共同简单筛除后的活动集额外排除>38.10%才有理想字节收益；主银行8.4MB，加精确h回退25.2MB。未观测真实过滤、时间或物理I/O，实际费用门未通过，不记为实验失败。
+- 当前不推进该小接口为论文主线，关闭其自动实验推进，不自动换大模型/更多checkpoint；一般纸面数学保留，旧PQ关闭不变。
+- 新增1PDF，合计52/51；Captum源码/notebook/LICENSE和官方元数据固定commit/SHA并仅存txt，模型/权重/数据未下载。教程last-child绑定源级问题已单列，不用其打印性能数。
+- 实际确定性命令为 `STAGE6_REPLAY_COMMANDS.md` 的 `python3 - <<'PY'` 块；13项精确核恒等式、3二分类/3标量回归化简、字节门和源码AST核对通过，原文pp3/14/15渲染。
+- 仅研究索引/进度/来源更新；无科学实现、采样、模型执行、agent或服务器，无需开机；无独立同行认证、新颖性或净收益。按常设指令同步Step5。
+
 ## 当前完成：第五轮不对称因子与可观测风险（2026-11-06）
 
 - 按“继续下一步”提出保留一侧精确因子、另一侧Gaussian草图的具体表示；[第五轮索引](docs/RESEARCH_ASYMMETRIC_FACTOR_20261106.md)含数学、费用和下一门brief。

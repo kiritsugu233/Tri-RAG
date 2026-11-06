@@ -8,6 +8,21 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**Sixth concrete interface/source/cost screen complete (2026-11-06).** On
+“可以，继续”, select the official Captum CIFAR CNN's explicit fc3.weight,
+84-to10, one-checkpoint CE-gradient contribution and50000 candidates. Read
+[the sixth-stage index](docs/RESEARCH_TRACIN_INTERFACE_SCREEN_20261106.md).
+Exact factors require18.8MB FP32 payload; fair baselines cache them and apply
+cheap sign/norm filters. A32-coordinate sketch needs >38.10% additional filtering
+after those gates just to save ideal read payload; actual filtering/latency is
+unknown. TracIn AppendixF directly covers rank1 factor products/separate sketches;
+the controller specializes to classical inner-product regression without Tri.
+Do not advance this small interface as the paper's main method or automatically
+start an experiment/larger model. Retain the general math and this interface as
+a possible conformance fixture; no universal impossibility claim. One PDF brings
+the local library to52 PDFs/51 works. Public source snapshots are pinned and saved
+as reference text only; no model/data/checkpoint or server task is opened.
+
 **Fifth asymmetric-factor observability review complete (2026-11-06).** On
 “继续下一步”, retain one exact candidate factor and sketch the other. Candidate-
 induced conditional regression and sketch residuals give a paper-valid score

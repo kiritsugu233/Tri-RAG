@@ -1,0 +1,164 @@
+{
+  "date": "2026-11-06",
+  "actual_user_instruction": "可以，继续",
+  "scope": "one concrete official Captum classifier-head interface: public-source metadata, exact-factor cache, elementary gates and ideal extra-read cost screen; no scientific implementation, data/model/checkpoint download or experiment",
+  "previous_stage_commit": "299e11c4a2c06a07d2b2a85931e2cab41cf6e259",
+  "new_pdf_count": 1,
+  "total_pdf_count": 52,
+  "distinct_downloaded_work_count": 51,
+  "independent_peer_review": false,
+  "validation": "52 PDF headers/bytes/SHA/text/Bib entries; pinned source SHA/AST;13 rational kernel,3 binary and3 scalar OLS reductions; ideal byte/filter thresholds and planning quantiles; original paper pp3/14/15 rendered",
+  "local_bundle": "/Users/guanghongxu/Desktop/HPC/Tri-law/2026-11-06_先行与命题",
+  "local_note_artifacts": [
+    {
+      "path": "analysis/STAGE6_RESEARCH_DECISION_ZH.md",
+      "bytes": 3318,
+      "sha256": "d4f021d5d81654cdc232b11662807800ff26ccdba46a68337679a08a3c9f029d"
+    },
+    {
+      "path": "analysis/STAGE6_INTERFACE_COST_SCREEN_ZH.md",
+      "bytes": 9242,
+      "sha256": "601d638db29b6b96b07375ec72f2d82e8cad287e68a472e41b13819e49ed3ab3"
+    },
+    {
+      "path": "analysis/STAGE6_REDUCTION_AND_COST_PROOFS_ZH.md",
+      "bytes": 5623,
+      "sha256": "804fee3d9d56e343a08d41d393c799e6c229c9c411cca28e3db48e35c19e8b53"
+    },
+    {
+      "path": "analysis/STAGE6_REPLAY_COMMANDS.md",
+      "bytes": 6266,
+      "sha256": "b406898eb537a09ed0ccb585b298b77bb3ce2b811c7a5745d71b2e12449d8b61"
+    },
+    {
+      "path": "analysis/DETERMINISTIC_CHECKS_STAGE6.json",
+      "bytes": 5622,
+      "sha256": "2238886b62613bd548bc7b2a650822ff5b83005b36c42c40e0a74bcefc56764c"
+    },
+    {
+      "path": "analysis/STAGE6_REPLAY_CHECKS.txt",
+      "bytes": 1501,
+      "sha256": "58dfcf50c9be2965e520b4541b3c5af782cebad506e207911d611921024f64a5"
+    },
+    {
+      "path": "manifest_stage6.json",
+      "bytes": 1078,
+      "sha256": "a5446a0b1a0e9bb8de4ff593e7256e8503ad5b81796aa9fc76d7e70951db6e3c"
+    },
+    {
+      "path": "manifest_stage6.csv",
+      "bytes": 596,
+      "sha256": "d9b22bf30fc057cb2379922a9458d648587569b0a6c49fb50e889689a64b020b"
+    },
+    {
+      "path": "sources/stage6/SOURCE_MANIFEST.json",
+      "bytes": 3693,
+      "sha256": "85daf544474ca2e1d950e340df27dc3ed443d852577b44efd092b7ca01b3292f"
+    }
+  ],
+  "papers": [
+    {
+      "id": "TracIn2020",
+      "category": "gradient_sketches",
+      "stem": "2020_TracIn_2002.08484v3",
+      "title": "Estimating Training Data Influence by Tracing Gradient Descent",
+      "authors": "Garima Pruthi; Frederick Liu; Mukund Sundararajan; Satyen Kale",
+      "date": "2020-11-14",
+      "version": "arXiv v3; NeurIPS2020",
+      "pdf_url": "https://arxiv.org/pdf/2002.08484v3",
+      "source_page": "https://arxiv.org/abs/2002.08484v3",
+      "status": "downloaded",
+      "path": "library/gradient_sketches/2020_TracIn_2002.08484v3.pdf",
+      "bytes": 6742272,
+      "sha256": "fca22d32f8f9337c623e5f6b6922bf51938e4625a9e52c34ce2732fdda225de2",
+      "pages": 17,
+      "extracted_path": "extracted/TracIn2020.txt",
+      "retrieved_utc": "2026-11-06T15:08:45.860184+00:00",
+      "reading_scope": "重点核对 section3.2/3.3 and AppendixF rank1 factor dot products, separate projections and ANN limitation; rendered pp3/14/15; no experimental reproduction",
+      "metadata_verified": true,
+      "stage": "sixth concrete Captum classifier-head structure and total-resource screen"
+    }
+  ],
+  "official_source_capture": {
+    "source_captures": [
+      {
+        "url": "https://api.github.com/repos/meta-pytorch/captum/commits/master",
+        "path": "sources/stage6/captum_HEAD_response.json",
+        "bytes": 8873,
+        "sha256": "cf3f68de1e5b7f1bc63f99e46288dca8589db6cbe53502834d7dee88a8831593",
+        "retrieved_utc": "2026-11-06T15:08:40.468353+00:00",
+        "kind": "public repository commit metadata"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/meta-pytorch/captum/b89cccbe0add104f734793be69488c078164c532/captum/influence/_core/tracincp_fast_rand_proj.py",
+        "path": "sources/stage6/captum_tracincp_fast_rand_proj_source.txt",
+        "bytes": 88985,
+        "sha256": "cc0da8c335b5059a5c072c729b7a684be1b67307473569d6777ec849802e7845",
+        "retrieved_utc": "2026-11-06T15:08:41.153013+00:00",
+        "kind": "reference text only; not imported or executed"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/meta-pytorch/captum/b89cccbe0add104f734793be69488c078164c532/tutorials/TracInCP_Tutorial.ipynb",
+        "path": "sources/stage6/captum_TracInCP_Tutorial_notebook.txt",
+        "bytes": 1233804,
+        "sha256": "52fdd33fcde202549270ff71b8a387d5affb275bb5ca846ddba53bf87884aedc",
+        "retrieved_utc": "2026-11-06T15:08:42.073998+00:00",
+        "kind": "reference text only; not imported or executed"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/meta-pytorch/captum/b89cccbe0add104f734793be69488c078164c532/LICENSE",
+        "path": "sources/stage6/captum_LICENSE.txt",
+        "bytes": 1512,
+        "sha256": "f19a657160766ccb3eb8e79ca25332a69438ce046e8d31bcea77fefee4395357",
+        "retrieved_utc": "2026-11-06T15:08:42.559609+00:00",
+        "kind": "reference text only; not imported or executed"
+      },
+      {
+        "url": "https://captum.ai/tutorials/TracInCP_Tutorial",
+        "path": "sources/stage6/captum_tutorial_page.html",
+        "bytes": 1296043,
+        "sha256": "cf03fa695e23f09983e9a1b13dfed9cb612ab0c4756df00437eee3185612a1b7",
+        "retrieved_utc": "2026-11-06T15:08:43.310254+00:00",
+        "kind": "public documentation snapshot; no dataset/model download"
+      },
+      {
+        "url": "https://cave.cs.toronto.edu/kriz/cifar.html",
+        "path": "sources/stage6/cifar_official_page.html",
+        "bytes": 20260,
+        "sha256": "c95fa60b177f91997e0cb891bafdae1bad862e3a4c1d88621693c8103e0cae93",
+        "retrieved_utc": "2026-11-06T15:08:44.849648+00:00",
+        "kind": "public documentation snapshot; no dataset/model download"
+      },
+      {
+        "url": "https://arxiv.org/pdf/2002.08484v3",
+        "path": "library/gradient_sketches/2020_TracIn_2002.08484v3.pdf",
+        "bytes": 6742272,
+        "sha256": "fca22d32f8f9337c623e5f6b6922bf51938e4625a9e52c34ce2732fdda225de2",
+        "retrieved_utc": "2026-11-06T15:08:45.860184+00:00",
+        "kind": "public research paper"
+      }
+    ],
+    "captum_commit": "b89cccbe0add104f734793be69488c078164c532",
+    "scope": "read-only public source/doc/paper audit; no dataset, checkpoint or model download; code saved as txt and not executed",
+    "reading_scope": {
+      "captum_core": "TracInCPFast._influence_batch_tracincp_fast, _basic_computation_tracincp_fast input hook, projection setup and embedding construction",
+      "notebook": "Net.__init__/forward, CE and data/checkpoint URL definitions, final_fc_layer binding; source parsed, not executed",
+      "cifar": "Official candidate counts and citation request; no dataset download"
+    },
+    "access_notes": [
+      {
+        "url": "https://api.github.com/repos/meta-pytorch/captum/commits/master",
+        "initial_method": "web open",
+        "status": "tool unavailable; ordinary public API request succeeded and response saved; no authentication/challenge bypass"
+      }
+    ]
+  },
+  "screen_status": {
+    "structure": "paper-valid for explicit fc3.weight/CE/one-checkpoint reference",
+    "actual_cost": "not established; no real filtering/time/physical I/O",
+    "novelty": "no independent difference established; direct rank1/separate-projection prior",
+    "decision": "do not advance this small interface as main publication method; no automatic experiment or larger-model continuation",
+    "checkpoint_contents_verified": false,
+    "source_code_executed": false
+  }
+}

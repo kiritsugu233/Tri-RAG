@@ -4,6 +4,16 @@ Updated 2026-11-06. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
+## 新研究：第六轮具体接口结构/费用筛查（2026-11-06）
+
+- [x] 选定官方Captum CIFAR CNN显式fc3.weight接口、精确因子来源、单checkpoint参考与范围。
+- [x] 核对原TracIn AppendixF直接先行，固定公开源码/notebook/LICENSE和官方元数据快照；未下载模型/数据。
+- [x] 给出精确缓存/符号与范数筛除强基线、完整回退载荷、额外f>m/84读字节门和同预算PCA对照。
+- [x] 明确18.8MB/25.2MB是载荷账本，不是实测费用；没有过滤率/时间，实际费用门未通过。
+- [x] 13精确核、3二分类/3标量回归化简、AST/字节门和原文渲染核对；本地完整报告/来源/回执交付。
+- [x] 选题决定：该小接口不推进为论文主线，关闭其自动实验推进；一般数学/可能验收夹具保留，无普遍不可能主张。
+- [x] 无新科学实现、真实运行、训练、agent或服务器；不自动换模型/增加checkpoint；旧PQ关闭不变。
+
 ## 新研究：第五轮不对称因子与可观测性（2026-11-06）
 
 - [x] 固定参考下保留一侧精确因子，建立候选诱导子空间回归，去掉先算分数/额外自Gram的必要性。

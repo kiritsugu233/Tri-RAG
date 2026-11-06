@@ -2079,6 +2079,16 @@
       "path": "docs/research_prior_stage5_sources_20261106.json",
       "level": "L1",
       "reason": "Public literature provenance, exact version/reading scope and exploratory deterministic audit receipt; not a frozen experiment result"
+    },
+    {
+      "path": "docs/RESEARCH_TRACIN_INTERFACE_SCREEN_20261106.md",
+      "level": "L1",
+      "reason": "User-authorized concrete classifier-head interface/source/total-cost screen index; unfrozen research only, no scientific implementation or frozen protocol"
+    },
+    {
+      "path": "docs/research_prior_stage6_sources_20261106.json",
+      "level": "L1",
+      "reason": "Public paper and pinned official source provenance plus exploratory algebra/payload audit receipt; not a frozen experiment result"
     }
   ],
   "approved_change_history": [
