@@ -8,6 +8,19 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**Fifth asymmetric-factor observability review complete (2026-11-06).** On
+“继续下一步”, retain one exact candidate factor and sketch the other. Candidate-
+induced conditional regression and sketch residuals give a paper-valid score
+interval without first computing the reference score or storing a self-Gram.
+Read [the fifth-stage index](docs/RESEARCH_ASYMMETRIC_FACTOR_20261106.md).
+The conditioning rank is at most candidate factor width, not full query rank;
+scalar candidates give classical t inference and matrix responses a conservative
+t-tail. Basic inference has strong direct prior art and needs no Tri. Five PDFs
+bring the local library to51 PDFs/50 works, plus one metadata-only record. This
+passes paper observability only; no novelty or measured net gain is established.
+Next: one concrete interface's read-only structure/total-byte/cost screen. No
+implementation, dataset/model run, sampling, agent or server task is opened.
+
 **Fourth concrete mechanism review complete (2026-11-06).** On “继续”, audit
 independent structured-sketch replication, progressive reads and exact fallback.
 Read [the fourth-stage index](docs/RESEARCH_REPLICATE_MECHANISM_20261106.md).

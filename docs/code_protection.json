@@ -2069,6 +2069,16 @@
       "path": "docs/research_prior_stage4_sources_20261106.json",
       "level": "L1",
       "reason": "Public-paper provenance and exploratory deterministic-check receipt; not a frozen scientific result or new experiment"
+    },
+    {
+      "path": "docs/RESEARCH_ASYMMETRIC_FACTOR_20261106.md",
+      "level": "L1",
+      "reason": "User-authorized fifth-stage asymmetric factor observability research index; unfrozen paper notes only, no new scientific implementation or protocol"
+    },
+    {
+      "path": "docs/research_prior_stage5_sources_20261106.json",
+      "level": "L1",
+      "reason": "Public literature provenance, exact version/reading scope and exploratory deterministic audit receipt; not a frozen experiment result"
     }
   ],
   "approved_change_history": [
