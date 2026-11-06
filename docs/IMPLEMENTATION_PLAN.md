@@ -4,6 +4,15 @@ Updated 2026-11-06. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
+## 新研究：第二轮先行/证明/可观测性（2026-11-06）
+
+- [x] 按“可以你继续做”扩展Kronecker/chaos/预条件一手文献，新增10PDF/版本/来源/SHA/阅读范围。
+- [x] 前轮P0–P5另一推导复核，给出任意矩阵方差、相同前两矩不同反转率的闭式构造。
+- [x] 完整因子Gram充分性、当前在线费用瓶颈、阻尼预条件增秩、低秩残差转移与独立pilot条件。
+- [x] 12项精确Wick核对、闭式/积分、阻尼行列式、19项因子预算枚举，明确无真实数据实验或独立同行认证。
+- [x] 原定理排重表、完整资源账本、第二轮研究决定与本地查阅入口齐备。
+- [ ] 后续：超出经典矩/积分的定量分离或边界、廉价非oracle信息、实际参考的结构相容性；不是系统实验授权。
+
 ## 新研究：先行与命题阶段（2026-11-06）
 
 - [x] 按当前用户指令收集梯度草图和逐查询风险一手文献，27份PDF/26项工作本地保存。

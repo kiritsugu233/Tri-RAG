@@ -8,6 +8,17 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**Second prior/proof/observability review complete (2026-11-06).** The user said
+“可以你继续做”. Read [the second-stage index](docs/RESEARCH_PROOF_OBSERVABILITY_20261106.md).
+Ten additional primary PDFs bring the local library to37 PDFs/36 works.
+Alternative derivations and deterministic checks support the matrix variance,
+equal-moment/different-risk counterexample and preconditioning rank caveats.
+The exact-risk path usually reads geometry sufficient to compute the reference
+score already, so no cheap online gain is established. Prior work covers the
+general variance tools. Keep the narrow fixed-reference mechanism question;
+no online controller/system experiment or server task is opened. This is self-
+audit, not independent peer/agent validation. Earlier stages below are retained.
+
 **New literature/proposition stage complete (2026-11-06).** The user prioritizes
 publishable contributions and authorizes literature collection plus proposition
 analysis, including structured gradient sketches and recent per-query risk

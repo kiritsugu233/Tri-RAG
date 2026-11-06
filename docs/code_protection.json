@@ -2039,6 +2039,16 @@
       "path": "docs/research_prior_sources_20261106.json",
       "level": "L1",
       "reason": "User-authorized source metadata and local PDF provenance; no dataset or frozen protocol"
+    },
+    {
+      "path": "docs/RESEARCH_PROOF_OBSERVABILITY_20261106.md",
+      "level": "L1",
+      "reason": "User-authorized second literature/proof/observability review index; nonfrozen research notes, no scientific implementation or protocol"
+    },
+    {
+      "path": "docs/research_prior_stage2_sources_20261106.json",
+      "level": "L1",
+      "reason": "Supplementary public-paper provenance, reading scope and deterministic audit receipt; not a frozen scientific result"
     }
   ],
   "approved_change_history": [
