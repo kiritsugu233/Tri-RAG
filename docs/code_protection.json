@@ -2029,6 +2029,16 @@
       "path": "docs/pq_attribution_results_v1.json",
       "level": "L1",
       "reason": "Actual attribution progress, result receipts and limitations; not a new protocol or independent certification"
+    },
+    {
+      "path": "docs/RESEARCH_PRIOR_PROPOSITIONS_20261106.md",
+      "level": "L1",
+      "reason": "User-authorized literature-stage index; exploratory notes only, no frozen scientific or approval semantics"
+    },
+    {
+      "path": "docs/research_prior_sources_20261106.json",
+      "level": "L1",
+      "reason": "User-authorized source metadata and local PDF provenance; no dataset or frozen protocol"
     }
   ],
   "approved_change_history": [

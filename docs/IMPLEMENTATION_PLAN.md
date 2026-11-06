@@ -4,6 +4,17 @@ Updated 2026-11-06. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
+## 新研究：先行与命题阶段（2026-11-06）
+
+- [x] 按当前用户指令收集梯度草图和逐查询风险一手文献，27份PDF/26项工作本地保存。
+- [x] 记录固定版本、来源、页数、SHA、阅读范围与未获得条目，生成BibTeX和分组阅读入口。
+- [x] 梳理PQR/ConANN/CTR/ReCIRC等保证对象、独立性/交换性和适应性条件。
+- [x] 对照LoGra/GraSS/LoRIF/EOGP/排序理论等强先行，给出探索性命题、严格反例与标准基线。
+- [x] PDF完整性、相关公式页面渲染、反例确定性函数/精确有理数核对与本地链接核验。
+- [x] 独立研究索引、完整本地笔记、来源回执、后续agent brief已交付；未派发新agent。
+- [ ] 下一研究：扩展数学排重，独立复核证明与多token/预条件/廉价可观测性。不是新实验执行授权。
+- [ ] 若研究空间成立，再提出具体最小数据诊断；当前无训练/GPU/服务器需求，旧PQ路线不重开。
+
 ## 当前边界：主路线正式收尾，仅一次归因（2026-11-06）
 
 - [x] 按用户实际指令正式关闭当前PQ精化接口优化主路线，保留全部失败/结果。

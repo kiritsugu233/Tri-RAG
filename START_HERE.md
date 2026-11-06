@@ -8,6 +8,17 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**New literature/proposition stage complete (2026-11-06).** The user prioritizes
+publishable contributions and authorizes literature collection plus proposition
+analysis, including structured gradient sketches and recent per-query risk
+preprints. Read [the new research index](docs/RESEARCH_PRIOR_PROPOSITIONS_20261106.md).
+The local bundle contains27 PDFs/26 works, source/version/SHA records, a risk
+guarantee comparison and exploratory proofs/counterexamples. Novelty and cheap
+online observability remain unestablished. Next: mathematical prior-art expansion
+and proof/observability review before any concrete experiment proposal. No new
+scientific run, training, agent dispatch or server task has started. The closed
+PQ route below stays closed; this is a separate research stage.
+
 **Current PQ refinement route formally closed (2026-11-06).** The user retains
 only ONE attribution check: point-estimate advantage, relative-error cancellation
 and cheap identification. If any lacks useful evidence, end Tri application
