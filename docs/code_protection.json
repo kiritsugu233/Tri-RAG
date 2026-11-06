@@ -285,7 +285,7 @@
       "path": "docs/CODE_PROTECTION.md",
       "level": "L0",
       "reason": "Scientific/protocol or governance contract; change requires prior scoped user consent",
-      "sha256": "bfa32c7389eeb09b7cd1f95941989e74a26e34def73a77dda1766a8fea20a7d7"
+      "sha256": "9e72a1f0f9360498abe44eca8f5be9729d0b9375f99bcea7834e392a7bba1c7e"
     },
     {
       "path": "docs/EXPERIMENT_PROTOCOL.md",
@@ -1990,6 +1990,35 @@
       "path": "docs/pq_refinement_geometry_results_v1.json",
       "level": "L1",
       "reason": "Actual completed or failed extra G2 evidence/limits only; no formal or full-N claim from local proxy"
+    },
+    {
+      "path": "mechanism/tls_rag_step5_pq_attribution_v1.py",
+      "level": "L0",
+      "reason": "Approved section19 one closed-array PQ attribution: fixed cohort, point ranking/error/proxy diagnostics and stop rules; no serving or old science changes",
+      "sha256": "b9b594d7273568f690c1effd9babe4a687f2c72b1142f8f401f32872d1e64da7"
+    },
+    {
+      "path": "configs/tls_rag_step5_pq_attribution_v1.json",
+      "level": "L0",
+      "reason": "Approved section19 one closed-array PQ attribution: fixed cohort, point ranking/error/proxy diagnostics and stop rules; no serving or old science changes",
+      "sha256": "89fe060d2f38878afb1ed30789ebfd97234ce3dddd40d22965b77c3712d7b9d5"
+    },
+    {
+      "path": "tests/test_tls_rag_step5_pq_attribution_v1.py",
+      "level": "L0",
+      "reason": "Approved section19 one closed-array PQ attribution: fixed cohort, point ranking/error/proxy diagnostics and stop rules; no serving or old science changes",
+      "sha256": "bf33d200d8300eaf969be3aa65a2f79f11953cd0ff127c1c4218835cdeb6dc8a"
+    },
+    {
+      "path": "scripts/run_tls_rag_step5_pq_attribution_v1.py",
+      "level": "L1",
+      "reason": "Approved section19 one closed-array PQ attribution: fixed cohort, point ranking/error/proxy diagnostics and stop rules; no serving or old science changes"
+    },
+    {
+      "path": "docs/PQ_REFINEMENT_ATTRIBUTION_PROTOCOL_V1.md",
+      "level": "L0",
+      "reason": "Approved section19 one closed-array PQ attribution: fixed cohort, point ranking/error/proxy diagnostics and stop rules; no serving or old science changes",
+      "sha256": "aa34b96a94249a982f01b1d2d1cd6a051f443f17011fc57d011dcccaf2721b1e"
     }
   ],
   "approved_change_history": [
@@ -2713,5 +2742,21 @@
       "tiny_index_sha256": "bb216c0d09c8e5619cba7029c81a0493608f929d7802834de9d5ce3e2ebc54f9",
       "extra_real_run_started_at_this_validation": false
     }
+  },
+  "pq_attribution_v1_authorization": {
+    "date": "2026-11-06",
+    "actual_user_consent": "批准第19.4节八路径，仅执行这一次归因",
+    "paths": [
+      "mechanism/tls_rag_step5_pq_attribution_v1.py",
+      "configs/tls_rag_step5_pq_attribution_v1.json",
+      "tests/test_tls_rag_step5_pq_attribution_v1.py",
+      "scripts/run_tls_rag_step5_pq_attribution_v1.py",
+      "docs/PQ_REFINEMENT_ATTRIBUTION_PROTOCOL_V1.md",
+      "scripts/run_tests.sh",
+      "docs/CODE_PROTECTION.md",
+      "docs/code_protection.json"
+    ],
+    "scope": "One CPU closed-array attribution <=1200s/4GiB/256MiB derived; preserve old science; no retrieval/fit/GPU/gate3",
+    "real_run_started": false
   }
 }

@@ -14,13 +14,18 @@ end Tri application research at this PQ refinement interface. Clear mechanism
 evidence permits only a targeted small-experiment PROPOSAL, not automatic work.
 
 Plan section19 gives an exact eight-path L0 proposal and one20min CPU offline
-check over old32 queries/seeds/candidates. Exact implementation approval is still
-pending. No code/SSH/science started.146 old NPZ files remain cloud-only; local
+check over old32 queries/seeds/candidates. Actual exact consent is now “批准第19.4节八路径，仅执行这一次归因”.
+Five-file isolated implementation and19 CPU fixtures prepared; final module
+0.046s and full738/0skip/89.639s passed. First full29 skips were missing original
+native-library env vars; retained log, then reused all4 old libraries successfully.
+Commit/push/verify before data recovery/science. One SSH
+availability check returned Connection closed, no login or data read. Notify user
+for original CPU/no-GPU power-on once local preparation is ready. No real science.146 old NPZ files remain cloud-only; local
 JSON cannot answer point-score/difference diagnostics. Do not mistake previous
 conservative-bound oracle for a point-estimate result. Do not report absence
 from missing data. No new raw-vector reads/retrieval/fits or fresh query roles.
 
-Current exception: attribution_pending_exact_scope_and_arrays. Do not reopen
+Current exception: attribution_approved_preparing_waiting_old_arrays. Do not reopen
 gate3 or the broader route. Old source/results/receipts remain unchanged. The
 following gate2 closure is historical evidence, not an instruction to wait for
 an unspecified broader research direction.

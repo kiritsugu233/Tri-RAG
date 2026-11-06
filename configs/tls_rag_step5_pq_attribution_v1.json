@@ -1,0 +1,117 @@
+{
+  "namespace": "pq-attribution-v1",
+  "authorization": {
+    "date": "2026-11-06",
+    "actual_user_consent": "批准第19.4节八路径，仅执行这一次归因"
+  },
+  "scientific_source_commit": "3f82b40ac6812c72bbab0a54ee46911c6b1ae74b",
+  "science_index_sha256": "8eaf1d2e5e8f28219549177c88d1f71d3867c8c43d145846e398593a3ee29b5b",
+  "s0_directory": "runs/route6-S0-manual-r2-recovery-20261104/priority",
+  "source_directory": "runs/pq-refinement-G-progressfix-recovery-20261105-v1/received/pq-refinement-G-progressfix-3f82b40-20261105-archive/run",
+  "output_directory": "runs/pq-attribution-v1-20261106-science",
+  "query_indices": [
+    3,
+    4,
+    7,
+    9,
+    10,
+    18,
+    21,
+    23,
+    26,
+    30,
+    36,
+    39,
+    40,
+    50,
+    61,
+    62,
+    64,
+    72,
+    73,
+    82,
+    87,
+    89,
+    90,
+    91,
+    94,
+    97,
+    100,
+    103,
+    110,
+    115,
+    124,
+    125
+  ],
+  "nprobe": [
+    64,
+    256
+  ],
+  "seeds": [
+    2026110401,
+    2026110402,
+    2026110403,
+    2026110404
+  ],
+  "dimensions": [
+    8,
+    16,
+    32
+  ],
+  "primary": "gaussian_2026110401_32",
+  "summary_names": [
+    "gaussian_2026110401_8",
+    "gaussian_2026110401_16",
+    "gaussian_2026110401_32",
+    "gaussian_2026110402_8",
+    "gaussian_2026110402_16",
+    "gaussian_2026110402_32",
+    "gaussian_2026110403_8",
+    "gaussian_2026110403_16",
+    "gaussian_2026110403_32",
+    "gaussian_2026110404_8",
+    "gaussian_2026110404_16",
+    "gaussian_2026110404_32",
+    "sidepq_32",
+    "sidepq_64",
+    "sidepq_128"
+  ],
+  "budgets": [
+    1600,
+    3200,
+    4800,
+    6400
+  ],
+  "boundary_ranks": [
+    80,
+    120
+  ],
+  "limits": {
+    "seconds": 1200,
+    "rss_bytes": 4294967296,
+    "output_bytes": 268435456
+  },
+  "formal_certification": false,
+  "original_products": [
+    {
+      "path": "roles.json",
+      "bytes": 33806,
+      "sha256": "a9f4549391ed42a3bbd5c1a28ba3eb2e07eab2a85793721f3b7aefd44d8ac795"
+    },
+    {
+      "path": "queries.npy",
+      "bytes": 327808,
+      "sha256": "536bd947334aabf7fbedc869eb29a6cc25d79f7c82e5ff03d877d866d9ba8ce5"
+    },
+    {
+      "path": "published_truth.npy",
+      "bytes": 102528,
+      "sha256": "ea60bd6c7f1d2ff3fa5cc09af2b7f0c2744fb4d7595578c1ff6c027a719007f7"
+    },
+    {
+      "path": "published_cutoffs.npy",
+      "bytes": 640,
+      "sha256": "0a3d5649f54426bcf8cc9802993e2256381f81b662b916ffa7c8edabd74c9fb9"
+    }
+  ]
+}

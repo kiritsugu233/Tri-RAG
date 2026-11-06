@@ -786,3 +786,20 @@ affected new module/test and this register SHA, append actual consent/validation
 Local full tests/tiny and verified GitHub/Linux sync precede ONE additional
 same-configuration complete G0–G5 in a new run directory. No old-G1 substitution,
 automatic further retry, new roles, GPU, predictor/adapter or Tri gate3.
+
+## One PQ attribution check approved (2026-11-06)
+
+Actual consent: **“批准第19.4节八路径，仅执行这一次归因”**. Exact scope is
+plan19.4: five new files below, test launcher classification only, and these two
+registers. Closed arrays/old32 queries only; no retrieval/raw vectors/fitting/GPU
+or third gate. One local CPU attribution,1200s/4GiB/256MiB derived artifacts.
+Recover old verified arrays by read-only SSH only if available; otherwise notify
+user. Missing arrays are not negative mechanism evidence. Preserve old science.
+
+| Path | Level | Scope |
+|---|---|---|
+| `mechanism/tls_rag_step5_pq_attribution_v1.py` | L0 | Frozen section19 closed-array attribution; no change to old contracts |
+| `configs/tls_rag_step5_pq_attribution_v1.json` | L0 | Frozen section19 closed-array attribution; no change to old contracts |
+| `tests/test_tls_rag_step5_pq_attribution_v1.py` | L0 | Frozen section19 closed-array attribution; no change to old contracts |
+| `scripts/run_tls_rag_step5_pq_attribution_v1.py` | L1 | Frozen section19 closed-array attribution; no change to old contracts |
+| `docs/PQ_REFINEMENT_ATTRIBUTION_PROTOCOL_V1.md` | L0 | Frozen section19 closed-array attribution; no change to old contracts |

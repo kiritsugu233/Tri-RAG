@@ -14,10 +14,14 @@ and cheap identification. If any lacks useful evidence, end Tri application
 research at this interface. Clear evidence permits a mechanism-specific proposal,
 not automatic experimentation. Prior gate2 closure/evidence is unchanged.
 
-The exception is pending exact L0 scope and cloud-only arrays, NOT measured or
-passed. [Section19](docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md#19-当前路线正式收尾仅保留一次归因检查2026-11-06)
-defines the eight-path proposal, theory/limits and stopping boundary. No new
-code, SSH, experiment, predictor or gate3 started. Historical data remain sealed.
+The exact eight-path exception is APPROVED: “批准第19.4节八路径，仅执行这一次归因”.
+Local19/final0.046s and full738/0skip/89.639s pass. Old native libraries reused;
+first environment-only29 skips are retained. Code ready; sync/verify before recovery.
+The old SSH endpoint closed the connection; cloud-only arrays are still needed.
+Notify user for CPU/no-GPU power-on when preparation is complete. No real
+attribution run or mechanism finding yet. [Section19](docs/PQ_REFINEMENT_COST_GEOMETRY_PLAN_V0.md#19-当前路线正式收尾仅保留一次归因检查2026-11-06)
+defines the eight-path proposal, theory/limits and stopping boundary. New code is isolated; one SSH availability check did not log in. No real
+experiment, predictor or gate3 started. Historical data remain sealed.
 
 
 **Gate2 complete; joint quality/cost target not met (2026-11-05).** The single
