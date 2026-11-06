@@ -1,129 +1,89 @@
-# Step5 compact brief: gate2 closed, joint target not met
+# Step5 compact brief: PQ interface research ended; no active task
 
 Updated2026-11-06. Canonical checkout:
 `/Users/guanghongxu/Query-Adaptive-Tri-RAG`; branch `codex/tls-rag-step5-ann`.
 Inspect HEAD/status; preserve unrelated untracked archives/report_work/runs.
-No worktree/branch changes. Current authorized milestone is COMPLETE.
+Do not create worktrees/branches, restart science, contact server or open new roles.
 
-## Latest user decision (2026-11-06)
+## Final decision
 
-The current PQ refinement optimization route is FORMALLY CLOSED. Only ONE
-attribution check remains: point-estimate advantage, relative-error cancellation,
-and cheap label-free identification. If useful evidence is absent for any item,
-end Tri application research at this PQ refinement interface. Clear mechanism
-evidence permits only a targeted small-experiment PROPOSAL, not automatic work.
+The user formally closed the route, retaining only one attribution check under
+plan19.4. Actual consent: “批准第19.4节八路径，仅执行这一次归因”. That exception
+is now COMPLETE and CLOSED. Point advantage failed; observed relative-error
+cancellation is insufficient and fixed cheap proxies have weak identification
+signals. End Tri application research at this PQ refinement interface. No
+follow-up experiment/proposal, threshold/m expansion, adapter or Tri gate3.
+This is not a disproof of Tri-Law or a universal ANN impossibility result.
 
-Plan section19 gives an exact eight-path L0 proposal and one20min CPU offline
-check over old32 queries/seeds/candidates. Actual exact consent is now “批准第19.4节八路径，仅执行这一次归因”.
-Five-file isolated implementation and19 CPU fixtures prepared; final module
-0.046s and full738/0skip/89.639s passed. First full29 skips were missing original
-native-library env vars; retained log, then reused all4 old libraries successfully.
-Commit/push/verify before data recovery/science. One SSH
-availability check returned Connection closed, no login or data read. Notify user
-for original CPU/no-GPU power-on once local preparation is ready. No real science.146 old NPZ files remain cloud-only; local
-JSON cannot answer point-score/difference diagnostics. Do not mistake previous
-conservative-bound oracle for a point-estimate result. Do not report absence
-from missing data. No new raw-vector reads/retrieval/fits or fresh query roles.
+## Actual run, recovery and verification
 
-Current exception: attribution_approved_preparing_waiting_old_arrays. Do not reopen
-gate3 or the broader route. Old source/results/receipts remain unchanged. The
-following gate2 closure is historical evidence, not an instruction to wait for
-an unspecified broader research direction.
+Scientific sourcefcceea9b6ec701e4a4669b93eb080cbc019b2eee was pushed/verified
+before execution; five source/config/protocol/test/runner bytes unchanged.
+Local19 fixtures/full738 CPU tests passed (0skip, full89.639s). First full29
+skips were missing original native-library environment, retained then resolved.
 
-## Current boundary
+No-GPU server0.5CPU/2GiB only served old files. Cloud and fast-disk original
+indexes match8eaf1d2e5e8f28219549177c88d1f71d3867c8c43d145846e398593a3ee29b5b.
+Slow cloud SCP stopped after9 verified files; rsync resumed remaining files from
+same-index data-disk replica.82 NPZ/322188438B all original SHA-verified. Source
+cloud archive remains;64 older G1 NPZ stay cloud-only and are not required here.
+All SSH/copy sessions EXITED, credentials cleared/not written to disk. User told
+server may be powered off. No server training/retrieval/scientific job was started.
 
-Actual consent: “批准五路径修复及一次额外运行”. Five-path stage/name progress
-fix and ONE extra same-config CPU run are finished. No active job, monitoring,
-SSH or SCP. User told server may be powered off; agent did not power it off.
-Do not reconnect for routine reporting, restart science or enter Tri gate3.
-Only the section19 attribution exception remains; prior launch text is historical.
+Unique real run: runs/pq-attribution-v1-20261106-science, complete10.166934625s,
+4608 rankings/2304 relative-error/1536 proxy records, six scientific files + index,
+24165532B. Index7bd46fac2cf0735d3cf985e862eb0f3f06ad30cf38e34b3a24f058f604c0fa35.
+External time measured10.74s but its post-child kern.clockrate query was sandbox
+rejected, wrapper exit1. Scientific status/index are complete; NO RETRY. Internal
+resource checks passed; exact peak RSS unrecorded/null. Do not call this a science
+failure, or retry to obtain resource telemetry.
 
-Scientific source3f82b40ac6812c72bbab0a54ee46911c6b1ae74b was GitHub-verified,
-cleanly synchronized to Linux through a verified already-pushed Git bundle.
-Local30/full719 tests passed,0skip,87.659s; Linux30 passed0.287s.
-Shared progress_callback(output) uses positional stage plus name metadata;
-tiny and real Gaussian/sidePQ integration regressions use the production callback.
-Other22 geometry functions/config/protocol/seed/role/training/clock unchanged.
+Read-only audit verified all closed hashes/coverage and256 old prefix outputs.
+Independent equivalent contraction Q²*sketch*(R q)/||R q||² verified64 primary
+query-probe groups/256 outputs; max point-MSE discrepancy1.56e-17. These are
+verification of the same run, not additional experiments. Real vectors not read.
 
-## Actual complete experiment
+## Results and limits
 
-- Node Xeon Gold6348,14CPU quota/120GiB; FAISS14/BLAS1, GPU not queried/used.
-- Run /root/autodl-tmp/pq-refinement-G-progressfix-3f82b40-20261105.
-  Controller2582/worker2584 EXITED.1034.142614s,returncode0/complete,
-  including15.837741s source SHA;16576 formal calls/21376 conformance checks.
--32 historical opened queries,16 discovery/16 check; same OPQ64-IVF,
-  nprobe64/256, upstream6400/k100.16 bound scans +16 separately labeled
-  favorable-threshold oracles +baseline/fullread/three prefixes =37 modes.
-- All16 scans slower in all4 role/probe groups; each marginal paired CI upper<0.
-  Observed candidate-top100 preserved for all scans, NOT full-corpus100% recall.
-- Primary nprobe64/check: baseline15.794582ms; Gaussian32 seed2026110401
-  27.827163ms (76.18% slower),6400→6379 rows (0.328125% fewer),
-  bound-only5.645608ms. nprobe25637.671218→49.954258ms.
-- Maximum group mean Gaussian filtering across all4 seeds/dimensions0.470703%.
-  Current bounds have little useful rejection even with the true final threshold.
-  Norm/sidePQ32/64 favorable skips0; sidePQ128 sum18 of409600 occurrences.
-  PrimaryGP32 node bound audit counts2 true-top100-point violations but actual
-  losttop100=0; pilot/intermediate threshold may cover those points.
-- Fullread block control20.899411ms vs15.794582ms exposes Python/block/trace
-  costs. Faster implementation is possible, but no evidence this bound can
-  cancel enough work. Do not convert row fraction linearly into timing.
-- Prefix4800 is8.11% faster on maincheck but5/16 queries lose candidate top100;
-  not a same-quality gain. Full benchmark/strict quality is separate.
+Primary nprobe64/check/M3200 candidate-top100 retention: ADC98.75%, Gaussian32
+84.3125% (all16 queries lose), same-payload sidePQ128100%. Discovery99.3125% vs
+86.1875% vs100%; nprobe256 also negative. Four32dim seeds do not reverse result.
+Real reconstruction alone matches ADC truncation quality. All point methods have
+prepaid reconstruction; free arithmetic cannot fix their observed ranking deficit.
+SidePQ32 also reaches observed100% atM3200; not Tri benefit or net-gain result.
 
-Verdict: gate2 joint quality/cost target NOT MET. Recommend stop this current
-residual-summary conservative-bound refinement route, not invest in Tri gate3
-or adapter. Tri was NOT implemented; not a disproof of its theorem or allANN.
-formal_certification=false, no fresh independent cert/test/predictor training.
-Packed local-summary proxy is not measured full-N serving; physical traffic null.
+Primary check point MSE Gaussian/ADC=11.49x, pair MSE=14.17x. Cancellation
+ratio Gaussian.92023 vs ADC.80804 at ADC boundary; at true oracle boundary,
+Gaussian.96230 vs ADC.34098. Some cancellation EXISTS; do not falsely say none.
+Local ADC-window inversions improve5088 vs6248, but true boundary6323 vs6148
+and global retention worsens; do not cherry-pick the local window as a mechanism.
+Fixed proxies' check mean Spearman with cancellation ratio: gap−.01085,
+radius−.00244, sketch difference.09240. No proven cheap identification.
 
-## Evidence and recovery
+32 historical opened queries/16 per role, original candidates/probes, four seeds,
+m8/16/32 and fixed budgets only. formal_certification=false; historical/semantic
+independence not established. Selected pairs/seeds are not independent and no
+full residual Gram was saved. Local arithmetic excludes full serving/map/traffic;
+never combine local CPU timings with server C1 fees as actual end-to-end gain.
 
-Cloud /root/autodl-fs/pq-refinement-G-progressfix-3f82b40-20261105-archive:
-2720 scientific files/746824690B individually verified node/cloud.
-Scientific index8eaf1d2e5e8f28219549177c88d1f71d3867c8c43d145846e398593a3ee29b5b.
-Cloud inventory1a29f99398407c13aec854a96f8e6d1ef6ba51e2b471edcb41b3e448a251fa9b
-covers2727 payloads including extra logs/bundle/index receipts.
+## Minimal read set and artifacts
 
-Local runs/pq-refinement-G-progressfix-recovery-20261105-v1:
--2574 scientific files/404311425B verified, ALL calls/outputs/read traces local.
--146 NPZ/342513265B remain verified cloud-only. Local numeric bound-array and
-  complete subset-distance replay unavailable; do not label these recomputed.
--Two incomplete full-download fragments preserved and never analysis inputs.
--Selected lossless tar.xz2005744B,
- SHAed968a209e34b2fd673a95f3e0c2b9e2a8bf8ae73fea7512c050f7266f8f3f78.
--recovery-verification.json/closure_state.json supersede stale live_state.json.
--Read-only auditor replays16576 calls/2368 groups,2112 trace address groups,
-  148 paired aggregates/444 fee windows,128 originalS0 complete outputs.
-  Separate stdlib mean/fee/quality review agrees (max6.94e-18s difference).
--Use analysis-v2/analysis_zh.md, audit.json, tables.json, CSVs,
-  stdlib_review.json and analysis_delivery_index.json. analysis/ remains preserved;
-  v2 fixes a missing-distance-comparison field from0 to null, not science.
+START_HERE.md, STATUS.md, AGENTS.md, plan21, docs/pq_attribution_results_v1.json.
+Full report and receipts: runs/pq-attribution-v1-preparation-20261106/analysis/:
+analysis_zh.md, audit_and_tables.json, independent_primary_review.json,
+delivery_index.json. Parent contains validation_index, array_recovery_receipt,
+local_environment, real-run stdout/stderr, and preserved software-check logs.
+Old failures/results are unchanged; do not reread giant retired journals.
 
-Tracked docs/pq_refinement_geometry_results_v1.json binds actual outcome,
-source, audits/tables/cost/storage and limits. Plan sections17–18 give analysis.
-Exact replay (closed-record reading only, new output directory):
+Closed-output audit replay only, new output directory required:
 
 ```sh
-OPENBLAS_NUM_THREADS=1 /private/tmp/route6-b0-local-env-20261103/bin/python \
-  scripts/analyze_pq_refinement_geometry_results.py \
-  --recovery runs/pq-refinement-G-progressfix-recovery-20261105-v1 \
-  --s0 runs/route6-S0-manual-r2-recovery-20261104/priority \
-  --output NEW_LOCAL_AUDIT_DIRECTORY
+python3 scripts/analyze_pq_attribution_results_v1.py \
+  --run runs/pq-attribution-v1-20261106-science \
+  --previous runs/pq-refinement-G-progressfix-recovery-20261105-v1/received/pq-refinement-G-progressfix-3f82b40-20261105-archive/run \
+  --output NEW_READONLY_AUDIT_DIRECTORY
 ```
 
-## Preserved history
-
-First gate C1 source2b7d2a9:255.044s,5824 calls/7552 checks,75 verified products;
-conditional half-survivor maincheck savings~14%,10% target added budget0.30–0.67ms.
-No prior measured same-quality selection win; gate2 supplies the negative result.
-
-Initial G2 source2cb1c62c546fbee215562b0ce29dd59cbb93a89a failed99.084s on
-production progress duplicate name binding.0 formal calls,137 scientific files
-node/cloud/local retained. Failure receipt docs/pq_refinement_geometry_failure_v1.json;
-run runs/pq-refinement-G-recovery-20261105-v1 and plan16 preserve defect/G1.
-Do not replace its failure with new completion or substitute old G1 into newrun.
-
-Schemes1–4 retired, route5 historical. Only the attribution proposal is pending. Any new
-L0 modification/new run requires its own concrete scope consent under AGENTS.md.
-Standing authorization still requires docs/checks/commit/push/remote verification
-on continuing Step5 branch; never change protected scientific files for reporting.
+No pending experiment, SSH or automation. New work requires explicit user direction;
+new L0 changes need exact scope under AGENTS.md. Commit/push/remote verification
+of authorized closure docs uses the continuing Step5 branch, never default branch.

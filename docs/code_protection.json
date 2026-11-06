@@ -2019,6 +2019,16 @@
       "level": "L0",
       "reason": "Approved section19 one closed-array PQ attribution: fixed cohort, point ranking/error/proxy diagnostics and stop rules; no serving or old science changes",
       "sha256": "aa34b96a94249a982f01b1d2d1cd6a051f443f17011fc57d011dcccaf2721b1e"
+    },
+    {
+      "path": "scripts/analyze_pq_attribution_results_v1.py",
+      "level": "L1",
+      "reason": "Read-only closed attribution output/hash/original-prefix and aggregate bookkeeping audit; no point estimation, fitting or policy execution"
+    },
+    {
+      "path": "docs/pq_attribution_results_v1.json",
+      "level": "L1",
+      "reason": "Actual attribution progress, result receipts and limitations; not a new protocol or independent certification"
     }
   ],
   "approved_change_history": [
