@@ -2089,6 +2089,16 @@
       "path": "docs/research_prior_stage6_sources_20261106.json",
       "level": "L1",
       "reason": "Public paper and pinned official source provenance plus exploratory algebra/payload audit receipt; not a frozen experiment result"
+    },
+    {
+      "path": "docs/RESEARCH_POSTFILTER_SCREEN_20261107.md",
+      "level": "L1",
+      "reason": "User-directed working-question and staged postfilter interface-screen index; unfrozen research plan only, no new scientific protocol"
+    },
+    {
+      "path": "docs/research_postfilter_sources_20261107.json",
+      "level": "L1",
+      "reason": "Primary metadata reading scopes and local research-brief provenance; no new experiment or frozen scientific result"
     }
   ],
   "approved_change_history": [

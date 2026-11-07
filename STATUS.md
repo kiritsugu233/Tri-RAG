@@ -1,7 +1,16 @@
 # Status
 
-Updated2026-11-06. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
+Updated2026-11-07. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
 maintained branch `codex/tls-rag-step5-ann`.
+
+## 当前入口调整：共享筛除后的摘要空间（2026-11-07）
+
+- 按用户明确建议，研究问题先收敛到强廉价过滤后，短摘要能否以低边际成本取消足够多剩余实际工作；再检验Gaussian/Tri增量。
+- [当前索引](docs/RESEARCH_POSTFILTER_SCREEN_20261107.md)链接可执行brief、两张待筛接口卡和来源阅读范围；共享历史/缓存/阈值、费用加权排除、oracle边界和匹配总预算已落实。
+- 小分类头仅作成本参照，不据其先行/缺测否定其他接口；已有组件也不单独否定系统价值，最终仍须最近方法对照。
+- 主候选为晚交互剩余代码/评分精化，备选为多层影响分数块精化；均待筛，没有把文献性能当本地或经过共享过滤的结果。
+- 本轮只核对PLAID/WARP/TACHIOM/LoRIF原始网页版本/摘要定位，未下载新全文；资料库52PDF/51项工作不变。
+- 无科学实现、实验、模型/数据下载、agent或服务器；仅文档/来源更新。旧L0/结果保留，保护与链接/来源核对后按常设要求同步Step5。
 
 ## 当前完成：第六轮具体分类头接口的结构/成本筛查（2026-11-06）
 

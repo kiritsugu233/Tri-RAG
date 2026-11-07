@@ -1,8 +1,17 @@
 # Implementation milestones
 
-Updated 2026-11-06. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
+Updated 2026-11-07. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
+
+## 当前研究入口：共享廉价筛除后的摘要净收益（2026-11-07）
+
+- [x] 按用户明确建议更新主问题，小头只作成本参照，其他接口不外推判负。
+- [x] 固定先成本/摘要门，再摘要族、Gaussian控制和Tri消融；定义共享H/S₀/缓存/合法阈值和实际可取消动作。
+- [x] 写明完整净收益、变长/共享工作、总存储匹配和oracle诊断边界，避免全库过滤率/MSE代替收益。
+- [x] 交付主/备两张待筛卡和原始网页版本/阅读范围；未新增科学协议/实现/运行。
+- [ ] 下一实质任务：主接口具体代码决策点与共享筛除后剩余费用，再设计最简单摘要的可部署对照；未知不得标通过。
+- [ ] 只有前门有空间后才推进Gaussian/Tri；每次关闭限于具体接口/方法，保留证据。新科学实施仍遵循现有L0流程。
 
 ## 新研究：第六轮具体接口结构/费用筛查（2026-11-06）
 

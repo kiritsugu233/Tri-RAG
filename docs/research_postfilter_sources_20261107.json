@@ -1,0 +1,72 @@
+{
+  "date": "2026-11-07",
+  "actual_user_instruction": "我建议接下来把问题收敛成：在哪类具体接口上，共享廉价筛除之后，短摘要仍然能以足够低的成本排除大量剩余候选？先验证这个问题，再判断 Gaussian 风险控制是否优于其他摘要方法，以及 Tri 是否有独立贡献。目前的小分类头分析只能提供一个成本参照，还不足以否定其他接口。",
+  "scope": "update unfrozen research question and staged postfilter screening brief; two provisional interface cards, primary-web metadata only; no new scientific protocol, implementation or measurement",
+  "previous_commit": "ae67c9beb2eb226e957c5a280f4fc7fdc7cbfce2",
+  "local_bundle": "/Users/guanghongxu/Desktop/HPC/Tri-law/2026-11-07_共享筛除后摘要筛查",
+  "local_artifacts": [
+    {
+      "path": "RESEARCH_BRIEF_ZH.md",
+      "bytes": 8378,
+      "sha256": "6601870e76a2d98f437c718e2fe76152777ff14e59d1224c42a1104e1cdf225c"
+    },
+    {
+      "path": "INTERFACE_SCREEN_CARDS_ZH.md",
+      "bytes": 4238,
+      "sha256": "bfc21180a42289750017ff63cfe3aafb2a00a9afeb3470dcaaf9512dfe707865"
+    },
+    {
+      "path": "sources.json",
+      "bytes": 1944,
+      "sha256": "e3b96046a5ecabe0f977db942f00c2222a4989b2c086d4f4b0b5ca49cb365bef"
+    }
+  ],
+  "sources": [
+    {
+      "id": "PLAID2022_metadata",
+      "title": "PLAID: An Efficient Engine for Late Interaction Retrieval",
+      "url": "https://arxiv.org/abs/2205.09707v1",
+      "version": "v1",
+      "date": "2022-05-19",
+      "reading_scope": "official arXiv abstract/version only; centroid interaction/pruning used solely to locate existing filter stage",
+      "full_text_downloaded_this_turn": false
+    },
+    {
+      "id": "WARP2025_metadata",
+      "title": "WARP: An Efficient Engine for Multi-Vector Retrieval",
+      "url": "https://arxiv.org/abs/2501.17788v3",
+      "version": "v3",
+      "date": "2025-07-06",
+      "reading_scope": "official arXiv abstract/version only; implicit decompression and score-aggregation prior; no speed result reused",
+      "full_text_downloaded_this_turn": false
+    },
+    {
+      "id": "TACHIOM2026_metadata",
+      "title": "Efficient Multivector Retrieval with Token-Aware Clustering and Hierarchical Indexing",
+      "url": "https://arxiv.org/abs/2604.28142v1",
+      "version": "v1",
+      "date": "2026-04-30",
+      "reading_scope": "official arXiv abstract/version only; centroid/token-aware and PQ stage locator, no performance reproduction",
+      "full_text_downloaded_this_turn": false
+    },
+    {
+      "id": "LoRIF2026_existing_pdf",
+      "title": "LoRIF: Pushing the Scalability Frontier of Training Data Attribution",
+      "url": "https://arxiv.org/abs/2601.21929v4",
+      "version": "v4",
+      "date": "2026-11-03",
+      "reading_scope": "official arXiv version and abstract checked; existing local PDF retained, not reread/reproduced in this turn",
+      "full_text_downloaded_this_turn": false
+    }
+  ],
+  "source_depth": "official arXiv version pages and abstracts only; no newly downloaded or read PDF",
+  "new_pdf_count": 0,
+  "existing_pdf_count": 52,
+  "existing_distinct_downloaded_work_count": 51,
+  "results": {
+    "postfilter_headroom_validated": false,
+    "interfaces_passed": [],
+    "current_status": "framework and limited candidate-card preparation only"
+  },
+  "validation": "local Markdown links, JSON, provenance hashes, old governance entries unchanged; scientific tests not rerun because no scientific code changed"
+}

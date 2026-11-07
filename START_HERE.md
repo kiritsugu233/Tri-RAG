@@ -1,12 +1,25 @@
 # Query-Adaptive Tri-RAG: current entry
 
-Updated 2026-11-06. Canonical checkout:
+Updated 2026-11-07. Canonical checkout:
 `/Users/guanghongxu/Query-Adaptive-Tri-RAG`.
 Maintained branch: **`codex/tls-rag-step5-ann`**; continue Step 5 updates there.
 The reviewed/Tri-Law-repaired backup remains `codex/repo-review-code-protection`
 at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
+
+**Research question narrowed by the user (2026-11-07).** Ask where a short
+summary can cheaply cancel substantial remaining work **after shared cheap
+filtering**. Read [the current working brief index](docs/RESEARCH_POSTFILTER_SCREEN_20261107.md).
+Order the gates: postfilter cost, deployable-summary headroom, summary-family
+competition, Gaussian-controller gain, then independent Tri gain. Measure added
+filtering on the same surviving set/history/cache and count actual canceled work.
+The small classification head is a cost reference, not evidence against other
+interfaces. Prior components do not alone rule out a useful system contribution.
+Two provisional cards only: late-interaction candidate refinement first, layered
+influence-score block refinement as reserve; neither has passed its cost/summary
+gate. Current work is unfrozen planning and primary-web metadata, not a new run.
+Old closed PQ evidence and the historical specific-head decision remain intact.
 
 **Sixth concrete interface/source/cost screen complete (2026-11-06).** On
 “可以，继续”, select the official Captum CIFAR CNN's explicit fc3.weight,
