@@ -8,6 +8,19 @@ at `62377d854ddd183925c4b62ca81653e9c14d9c34`.
 
 ## Current stage
 
+**Pinned-source/summary review complete (2026-11-07).** On “可以开始吧”,
+locate the official ColBERT/PLAID CPU cut after both centroid filters and before
+residual decoding/normalization/MaxSim. Read [the source-audit index](docs/RESEARCH_POSTFILTER_SOURCE_AUDIT_20261107.md).
+Default top10 leaves at most64 documents; warm-RAM logical code access and compute
+are the targets, not measured SSD/original-vector I/O. Correct simple bounds for
+normalized reconstructions and the CPU scorer's zero floor; charge added clipped
+centroid-score accumulation/output. Per-document and per-token radii are classical
+controls, with no Gaussian/Tri or novelty claim. Cost/geometry gates remain unknown.
+Three fixed PDFs bring the cross-directory library to55 PDFs/54 works. Public
+sources are pinned reference text only. A concrete nine-path implementation and
+one restricted diagnostic proposal is ready but awaits scoped L0 approval; no
+model/data download, dependency install, native execution, agent or server.
+
 **Research question narrowed by the user (2026-11-07).** Ask where a short
 summary can cheaply cancel substantial remaining work **after shared cheap
 filtering**. Read [the current working brief index](docs/RESEARCH_POSTFILTER_SCREEN_20261107.md).

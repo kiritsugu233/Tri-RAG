@@ -1,0 +1,189 @@
+{
+  "date": "2026-11-07",
+  "actual_user_instruction": "可以开始吧",
+  "scope": "read-only pinned primary-source/cost audit, unfrozen real-arithmetic summary derivations, semantic counterexamples and concrete future implementation proposal; no scientific implementation or measurement",
+  "previous_commit": "b6ffff41c03e48c27fdc285d163e12846ef455d7",
+  "local_bundle": "/Users/guanghongxu/Desktop/HPC/Tri-law/2026-11-07_共享筛除后摘要筛查/source-audit-v1",
+  "ignored_working_bundle": "/Users/guanghongxu/Query-Adaptive-Tri-RAG/runs/research-postfilter-screen-20261107/source-audit-v1",
+  "delivery_files": 60,
+  "old_four_entry_files_preserved": true,
+  "artifacts": [
+    {
+      "path": "SOURCE_AUDIT_ZH.md",
+      "bytes": 8490,
+      "sha256": "0efb8484bca7d038a74cb953d7a8a3b43f5e3e3b8c60c5d34f78fbb42343feb1"
+    },
+    {
+      "path": "SIMPLE_SUMMARY_MATH_ZH.md",
+      "bytes": 5527,
+      "sha256": "3a5ada41aca0559fd70930d0e96a06110c2feefee05b543bbfd1d0a2537b96e7"
+    },
+    {
+      "path": "MEASUREMENT_SCOPE_PROPOSAL_ZH.md",
+      "bytes": 13009,
+      "sha256": "a37afba44f46be37913c6ae6217485a31e9dfc567c386d57586e604c6d969235"
+    },
+    {
+      "path": "SOURCE_MANIFEST.json",
+      "bytes": 18535,
+      "sha256": "22321aed4d8a7a5e5ea8ef65d4604af62a48df3a06583e88cb70896c2a8bb494"
+    },
+    {
+      "path": "PAPERS.json",
+      "bytes": 2758,
+      "sha256": "3aa1297df15596c3a9aa703213bf4d47c71b4d5c855819dc1c163f483b59591b"
+    },
+    {
+      "path": "DETERMINISTIC_AUDIT.json",
+      "bytes": 1560,
+      "sha256": "7e0c80366a180b7ac606a18a2e5c6a852dad2eac784481de63836e6412127ce8"
+    },
+    {
+      "path": "REPLAY_COMMANDS.md",
+      "bytes": 2828,
+      "sha256": "a10f85522f36a5ddc740b0c5504e02197afbb515dd97ec247b66ce11d92f5539"
+    },
+    {
+      "path": "REPLAY_OUTPUT.json",
+      "bytes": 601,
+      "sha256": "68a1366a6a817c8c757e72b78ad8a23dad76d7eb40e118c93516c410e433480a"
+    },
+    {
+      "path": "DELIVERY_INDEX.json",
+      "bytes": 10274,
+      "sha256": "f4d51a4e7ec28d119d73d5b8c1096ea9beb172215c15a1a7027661fbae067dc9"
+    }
+  ],
+  "sources": [
+    {
+      "repository": "stanford-futuredata/ColBERT",
+      "branch": "main",
+      "commit": "cc4f3dc91c0b45d2d08c251d9d95178285c65f1c",
+      "label": "ColBERT"
+    },
+    {
+      "repository": "jlscheerer/xtr-warp",
+      "branch": "main",
+      "commit": "cca97613e6f969ac89f259946b976f8c5a6f1399",
+      "label": "WARP"
+    },
+    {
+      "repository": "TusKANNy/tachiom",
+      "branch": "main",
+      "commit": "506a426aea83d3384d9b32fe108e98cd9dd88e2b",
+      "label": "TACHIOM"
+    }
+  ],
+  "papers": [
+    {
+      "url": "https://arxiv.org/pdf/2205.09707v1",
+      "path": "library/PLAID2022_2205.09707v1.pdf",
+      "kind": "public fixed-version paper",
+      "bytes": 1569420,
+      "sha256": "abb5b497b543a24755218f457228b5bdb6291652d41504a5dcb143892c18d256",
+      "retrieved_utc": "2026-11-07T11:03:55.650734+00:00",
+      "id": "PLAID2022",
+      "arxiv": "2205.09707v1",
+      "title": "PLAID: An Efficient Engine for Late Interaction Retrieval",
+      "authors": "Keshav Santhanam; Omar Khattab; Christopher Potts; Matei Zaharia",
+      "pages": 10,
+      "extracted_path": "extracted/PLAID2022.txt",
+      "source_page": "https://arxiv.org/abs/2205.09707v1",
+      "status": "downloaded; text inspected in stated scope; selected page rendered and viewed",
+      "reading_scope": "pp3-5 centroid interaction/pruning and fixed score architecture; not a full line-by-line review",
+      "rendered_page": "rendered/PLAID-p4.png"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2501.17788v3",
+      "path": "library/WARP2025_2501.17788v3.pdf",
+      "kind": "public fixed-version paper",
+      "bytes": 1109591,
+      "sha256": "46ce45fbe5f25351b85faeab4f49ddda26e24f594de29ee61f75ba4210ddd8f5",
+      "retrieved_utc": "2026-11-07T11:03:57.194543+00:00",
+      "id": "WARP2025",
+      "arxiv": "2501.17788v3",
+      "title": "WARP: An Efficient Engine for Multi-Vector Retrieval",
+      "authors": "Jan Luca Scheerer; Matei Zaharia; Christopher Potts; Gustavo Alonso; Omar Khattab",
+      "pages": 9,
+      "extracted_path": "extracted/WARP2025.txt",
+      "source_page": "https://arxiv.org/abs/2501.17788v3",
+      "status": "downloaded; text inspected in stated scope; selected page rendered and viewed",
+      "reading_scope": "pp3-5 residual lookup scoring/fusion and p9 appendix A3 ColBERT comparison; no transferred performance claims",
+      "rendered_page": "rendered/WARP-p4.png"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2604.28142v1",
+      "path": "library/TACHIOM2026_2604.28142v1.pdf",
+      "kind": "public fixed-version paper",
+      "bytes": 947331,
+      "sha256": "25df9a1b1a6b14c7124ce74d361d4a9a20da80915b7ab221ecf26d557a56e890",
+      "retrieved_utc": "2026-11-07T11:03:58.723499+00:00",
+      "id": "TACHIOM2026",
+      "arxiv": "2604.28142v1",
+      "title": "Efficient Multivector Retrieval with Token-Aware Clustering and Hierarchical Indexing",
+      "authors": "Silvio Martinico; Franco Maria Nardini; Cosimo Rulli; Rossano Venturini",
+      "pages": 6,
+      "extracted_path": "extracted/TACHIOM2026.txt",
+      "source_page": "https://arxiv.org/abs/2604.28142v1",
+      "status": "downloaded; text inspected in stated scope; selected page rendered and viewed",
+      "reading_scope": "pp3-4 centroid-only gather and PQ refinement; no transferred performance claims",
+      "rendered_page": "rendered/TACHIOM-p3.png"
+    }
+  ],
+  "new_pdfs": 3,
+  "cross_directory_library": {
+    "pdfs": 55,
+    "distinct_works": 54,
+    "previous_root_pdf_count": 52,
+    "previous_root_unchanged": true
+  },
+  "metadata_only": {
+    "dataset": {
+      "id": "BeIR/scidocs",
+      "revision": "acebceec772628c6679d76d6cff30ad517d17f4e",
+      "source_corpus_records": 25657,
+      "source_query_records": 1000,
+      "prepared_records": null
+    },
+    "model": {
+      "id": "colbert-ir/colbertv2.0",
+      "revision": "c1e84128e85ef755c096a95bdb06b47793b13acf"
+    },
+    "data_model_files_downloaded": false
+  },
+  "verified": {
+    "captures_sha256": 42,
+    "fraction_fixtures": 4,
+    "semantic_counterexamples": 2,
+    "selected_pdf_pages_rendered_and_viewed": 3,
+    "source_ast_and_text_structure": true,
+    "all_desktop_copy_hashes": true,
+    "protection_old_rows_and_root_fields_unchanged": true
+  },
+  "actual_readonly_replay": "python3 heredoc in source-audit-v1/REPLAY_COMMANDS.md; executed and saved REPLAY_OUTPUT.json",
+  "source_findings": [
+    "CPU default top10 leaves at most64 after two native centroid filters",
+    "residual reads/reconstruction/normalize/MaxSim remain; RAM-resident, no measured SSD or original-vector I/O",
+    "CPU segmented MaxSim zero floor differs from signed centroid score",
+    "radius must use final normalized reconstruction; clipped centroid score requires paid accumulation/output"
+  ],
+  "decision": "one concrete measurement proposal is ready; cost and geometry gates unknown; exact scientific path approval pending",
+  "future_proposal_paths": [
+    "mechanism/tls_rag_postfilter_plaid_probe_v1.py",
+    "mechanism/tls_rag_postfilter_plaid_centroid_probe_v1.cpp",
+    "configs/tls_rag_postfilter_plaid_probe_v1.json",
+    "tests/test_tls_rag_postfilter_plaid_probe_v1.py",
+    "scripts/run_tls_rag_postfilter_plaid_probe_v1.py",
+    "docs/POSTFILTER_PLAID_PROBE_PROTOCOL_V1.md",
+    "scripts/run_tests.sh",
+    "docs/CODE_PROTECTION.md",
+    "docs/code_protection.json"
+  ],
+  "formal_certification": false,
+  "scientific_tests_or_real_measurement_run": false,
+  "scientific_implementation_created": false,
+  "model_or_data_downloaded": false,
+  "dependencies_installed": false,
+  "agent_or_server_started": false,
+  "old_L0_modified": false
+}

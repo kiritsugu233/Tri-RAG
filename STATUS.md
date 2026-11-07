@@ -3,6 +3,16 @@
 Updated2026-11-07. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
 maintained branch `codex/tls-rag-step5-ann`.
 
+## 当前完成：晚交互源码切口、两档摘要与测量提案（2026-11-07）
+
+- 按“可以开始吧”完成[固定源码审查](docs/RESEARCH_POSTFILTER_SOURCE_AUDIT_20261107.md)；ColBERT CPU两次质心筛选后至多64篇，再做残差解码/归一化/MaxSim，剩余成本/几何未测。
+- 摘要半径改用最终归一化重构；CPU零下限使signed质心分数不够，clipped分数的额外累计/输出计费。两档经典界有实数证明，无Gaussian/Tri或新颖性主张。
+- 未改动官方B0是净收益主基线；同锚点B1仅归因。常驻内存逻辑载荷不冒充SSD/实际DRAM读取，离线/全索引存储与在线费用均纳入。
+- 新增PLAID/WARP/TACHIOM三份固定全文与三个commit的官方参考txt；跨两个目录累计55PDF/54项工作。三个重点原文页已渲染查看，来源/阅读范围/SHA封存。
+- 实际确定性复核命令见资料包REPLAY_COMMANDS.md；四个有理数玩具上界、零截断和归一化反例、42条来源SHA及源码AST/文本核对通过；不是原生组合验收或真实测量。
+- 可审阅九路径L0/L1范围及一次SCIDOCS诊断提案已完成，实施仍待精确授权；未创建科学文件、下载模型/数据、安装依赖、派发agent或启动服务器。目前无需开机。
+- 本轮仅研究索引/进度/回执与两个例行L1登记项；旧L0/结果保留，保护/差异/本地交付检查后按常设指令同步Step5。
+
 ## 当前入口调整：共享筛除后的摘要空间（2026-11-07）
 
 - 按用户明确建议，研究问题先收敛到强廉价过滤后，短摘要能否以低边际成本取消足够多剩余实际工作；再检验Gaussian/Tri增量。

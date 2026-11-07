@@ -2099,6 +2099,16 @@
       "path": "docs/research_postfilter_sources_20261107.json",
       "level": "L1",
       "reason": "Primary metadata reading scopes and local research-brief provenance; no new experiment or frozen scientific result"
+    },
+    {
+      "path": "docs/RESEARCH_POSTFILTER_SOURCE_AUDIT_20261107.md",
+      "level": "L1",
+      "reason": "Unfrozen pinned-source/cost and classical-summary research index with exact future L0 scope proposal; no implementation or frozen protocol"
+    },
+    {
+      "path": "docs/research_postfilter_source_audit_20261107.json",
+      "level": "L1",
+      "reason": "Public paper/source provenance and deterministic exploratory source/math audit receipt; no real-data experiment or frozen result"
     }
   ],
   "approved_change_history": [
