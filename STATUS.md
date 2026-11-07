@@ -3,6 +3,16 @@
 Updated2026-11-07. Canonical checkout `/Users/guanghongxu/Query-Adaptive-Tri-RAG`;
 maintained branch `codex/tls-rag-step5-ann`.
 
+## 独立文献支线完成：库内查询与Tri工具匹配（2026-11-07）
+
+- 按用户“应用场景为库内查询……检索近几年的文章……收集起来到一个文件夹内”完成2022–2026-11-07定向检索；本支线不替代下方晚交互研究入口。
+- [桌面阅读入口](</Users/guanghongxu/Desktop/HPC/Tri-law/2026-11-07_库内查询与Tri工具/00_README_先读这里.md>)包含14份公开全文/219页、14份中文卡、数据/baseline矩阵、BibTeX、版本/页数/SHA与阅读范围。工作副本为`report_work/incorpus_tri_literature_20261107/`；PDF不进入Git。
+- 分开全体点kNN图、导航索引构建和下游任务；优先阅读UMAP2026、Dynamic NN-Descent、PiPNN II/GPiPNN、CAGRA。每篇分别判断Tri-Law、Tri-Predict、Tri-Full，条件接口匹配不当作已测净收益或新颖性。
+- 保留PyRKNN全文403的元数据项；排除已撤回2509.11697v4。GRNND维度冲突、Wiki-Qwen跨稿metric差异、UMAP的CPU外推和KNN-DBSCAN预印本/期刊版本分别注明。
+- 实际整理命令：bundled Python执行`/private/tmp/build_incorpus_library_20261107.py`；只读完整性重放代码见资料包`05_交付核对与重取方法.md`。14PDF解析/页数/SHA、14卡片字段、本地链接、14行CSV/BibTeX、72载荷校验和zip CRC通过；不是作者实验复现，无需运行科学测试套件。
+- 桌面zip SHA256：`0d858d8367c63008a289f22f17a54797b1b72eddc59704b3f7ac106fafe5bba5`；72载荷索引SHA256：`d45a2a9165023eae46d10069c6859156ce33113bf3a2f1c639aef3c8dedaf85d`。
+- 未下载数据/模型/权重、未安装依赖或运行作者代码，无采样、agent或服务器；旧科学协议/结果/关闭状态保留。下一步等待Tri作者源码后先做原论文配置核对，再单列新实现范围。
+
 ## 当前完成：晚交互源码切口、两档摘要与测量提案（2026-11-07）
 
 - 按“可以开始吧”完成[固定源码审查](docs/RESEARCH_POSTFILTER_SOURCE_AUDIT_20261107.md)；ColBERT CPU两次质心筛选后至多64篇，再做残差解码/归一化/MaxSim，剩余成本/几何未测。

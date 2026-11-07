@@ -4,6 +4,14 @@ Updated 2026-11-07. Current stage: TLS-RAG Step 5 on `codex/tls-rag-step5-ann`.
 Read [START_HERE](../START_HERE.md) and [STATUS](../STATUS.md) before work.
 Unchecked historical items are not execution authorization.
 
+## 独立文献支线：库内查询与Tri工具（2026-11-07）
+
+- [x] 按用户请求检索2022–2026-11-07的一手文献，收集14PDF/219页并保存版本、来源、SHA与定向阅读范围。
+- [x] 完成14份中文阅读卡：思路/切入点、数据集、baseline、指标、Tri-Law/Tri-Predict/Tri-Full分别适用性与费用门。
+- [x] 区分全体点kNN图、导航索引构建、外部查询和下游聚类/UMAP，提出条件接口但不声称已测增益。
+- [x] 记录PyRKNN全文缺失、撤回稿排除、维度/metric/外推/版本限制；校验PDF、链接、矩阵和压缩包，桌面资料包见STATUS。
+- [ ] 等待导师提供Tri母文源码，先核对锚点抽样、LID邻域/估计式、表示与数值配置，再准备具体复现范围；本次不运行科学实验，不恢复旧PQ/HNSW等授权。
+
 ## 当前完成：晚交互源码/摘要审查（2026-11-07）
 
 - [x] 固定官方ColBERT/WARP/TACHIOM源码并只保存参考txt，新增三份固定全文/阅读范围/SHA和原文页渲染。
